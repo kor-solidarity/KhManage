@@ -42,7 +42,7 @@
 		<!-- NAVBAR -->
 		<nav class="navbar navbar-default navbar-fixed-top">
 			<div class="brand">
-				<a href="index.html"> <img
+				<a href="index.jsp"> <img
 					src="<c:url value="/resources/assets/img/newlogo.png"/>"
 					style="width: 30px; height: 35px;"> <img
 					src="<c:url value="/resources/assets/img/newlogoText.png"/>"
