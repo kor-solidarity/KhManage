@@ -58,6 +58,16 @@
   </servlet>
   
   <servlet>
+    <servlet-name>Admin</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>/WEB-INF/config/admin-servlet.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  
+  <servlet>
     <servlet-name>Work</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <init-param>
@@ -90,5 +100,10 @@
   <servlet-mapping>
     <servlet-name>Work</servlet-name>
     <url-pattern>*.wk</url-pattern>
+  </servlet-mapping>
+  
+   <servlet-mapping>
+    <servlet-name>Admin</servlet-name>
+    <url-pattern>*.am</url-pattern>
   </servlet-mapping>
 </web-app>

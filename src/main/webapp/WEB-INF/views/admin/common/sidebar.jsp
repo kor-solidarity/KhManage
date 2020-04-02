@@ -25,9 +25,9 @@
 								<i class="icon-submenu lnr lnr-chevron-left"></i></a>
 						</li>
 						
-						<li><a href="#subPages2" data-toggle="collapse"
+						<li><a href="menuManege.am" 
 							class="collapsed"><i class="lnr lnr-sort-amount-asc"></i><span>메뉴관리</span>
-								<i class="icon-submenu lnr lnr-chevron-left"></i></a>
+						</a>
 						</li>
 						
 						<li><a href="#subPages3" data-toggle="collapse"
