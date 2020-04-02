@@ -12,4 +12,9 @@ public class MemberController {
 		return "user/main/userMainPage";
 	}
 	
+	@RequestMapping("/adminShowMain.me")
+	public String showAdminPage() {
+		
+		return "admin/main/adminMainPage";
+	}
 }
