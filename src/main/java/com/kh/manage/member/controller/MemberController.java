@@ -18,7 +18,7 @@ public class MemberController {
 		return "admin/main/adminMainPage";
 	}
 	
-	@RequestMapping("/userManagement.um")
+	@RequestMapping("/userManagement.me")
 	public String userManagementMain() {
 
 		return "admin/userManagement/userManagement";
