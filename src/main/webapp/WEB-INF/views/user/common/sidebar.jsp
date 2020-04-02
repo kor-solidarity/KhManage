@@ -37,7 +37,7 @@
 								<i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages2" class="collapse ">
 								<ul class="nav">
-									<li><a href="projectCenter.do" class="" style="background:#24415C; height:56px;"><label class="menuName">프로젝트 센터</label></a></li>
+									<li><a href="projectCenter.pr" class="" style="background:#24415C; height:56px;"><label class="menuName">프로젝트 센터</label></a></li>
 									<li><a href="#" class="" style="background:#24415C; height:56px;"><label class="menuName">프로젝트 산출물</label></a></li>
 									<li><a href="#" class="" style="background:#24415C; height:56px;"><label class="menuName">프로젝트 작업 승인</label></a></li>
 								</ul>
@@ -81,5 +81,8 @@
 				</nav>
 			</div>
 		</div>
+<div class="main">
+	<div class="container-fluid">
+	<label id="route1" style="margin-top:5px;"></label> > <label id="route2" style="margin-top:5px;"></label>
 </body>
 </html>

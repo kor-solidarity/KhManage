@@ -25,7 +25,7 @@ body{
 	width: 500px;
 	height: 360px;
 	margin: 0 auto;
-	margin-top: 250px;
+	margin-top: 200px;
 }
 
 .form-control {
@@ -64,11 +64,10 @@ body{
 			<%-- <img src="<c:url value="/resources/assets/img/newlogo.png"/>"style="width: 30px; height: 35px;"> 
 			<img src="<c:url value="/resources/assets/img/newlogoText.png"/>"style="width: 150px; height: 27px;"> --%>
 		</div> <!-- End Logo -->
-		
 		<!-- Begin Login Form -->
 		<div class="content"> 
 			<h3 align="center" class="form-title" style="font-size: 35px; padding-top: 30px; color:#45B6AF;">로그인</h3>
-			<form action="">
+			<form action="login.me" method="post">
 				<!-- <div class="alert alert-danger display-hide">
                	<button class="close" data-close="alert"></button>
                 <span>
