@@ -86,11 +86,12 @@
 								<li><a href="#" class="more">See all notifications</a></li>
 							</ul></li>
 
-
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
+						<!-- 채팅 -->
+						<li class="dropdown"><a id="chat" class="dropdown-toggle"
 							data-toggle="dropdown"> <i class="fas fa-comment-dots" style="font-size: 25px; color: #1E2B44;"></i>
 							</a></li>
-
+						
+						<!-- 메일 -->
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
 							data-toggle="dropdown"> <i class="fas fa-envelope"
 								style="font-size: 25px; color: #1E2B44;"></i></a></li>
@@ -110,7 +111,13 @@
 				</div>
 			</div>
 		</nav>
-		
+		<script>
+			$(function(){
+				$("#chat").click(function(){
+					window.open('selectChat.ct', 'pop01', 'top=190, left=1050, width=500, height=600, status=no, menubar=no, toolbar=no, resizable=no');
+				});
+			});
+		</script>
 </body>
 
 </html>
