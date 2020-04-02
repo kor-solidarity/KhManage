@@ -50,7 +50,7 @@
 								<i class="icon-submenu lnr lnr-chevron-left"></i></a>
 						</li>
 						
-						<li><a href="#subPages5" data-toggle="collapse"
+						<li><a href="userManagement.um" data-toggle="collapse"
 							class="collapsed"><i class="lnr lnr-user"></i><span>사용자 관리</span>
 								<i class="icon-submenu lnr lnr-chevron-left"></i></a>
 						</li>

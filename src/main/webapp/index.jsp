@@ -1,23 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
 
-html{
+html {
 	width:1440px;
 	background: #1E2B44;
 	margin:0 auto;
 }
-body{
+body {
 	margin: 0 auto;
 }
-.LogoArea{
+
+.LogoArea {
 	align: center;
 	margin: 0 auto;
+		
 }
 
 .content {
@@ -58,16 +61,17 @@ body{
 </head>
 <body>
 	<div id="wrap">
+		 
+		 <!-- Begin Logo -->
+			<div class="LogoArea" style="align:center">
+				<%-- <img src="<c:url value="/resources/assets/img/newlogowhite.png"/>"style="width: 20%; height: 20%;"> --%> 
+			</div> <!-- End Logo -->
 		
-		<!-- Begin Logo -->
-		<div class="LogoArea">
-			<%-- <img src="<c:url value="/resources/assets/img/newlogo.png"/>"style="width: 30px; height: 35px;"> 
-			<img src="<c:url value="/resources/assets/img/newlogoText.png"/>"style="width: 150px; height: 27px;"> --%>
-		</div> <!-- End Logo -->
 		<!-- Begin Login Form -->
 		<div class="content"> 
 			<h3 align="center" class="form-title" style="font-size: 35px; padding-top: 30px; color:#45B6AF;">로그인</h3>
 			<form action="login.me" method="post">
+			
 				<!-- <div class="alert alert-danger display-hide">
                	<button class="close" data-close="alert"></button>
                 <span>
@@ -100,10 +104,6 @@ body{
 	            </table>
 			</form>
 		</div> <!-- End Login Form -->
-	
-	
-	
-	
 	
 	
 	
