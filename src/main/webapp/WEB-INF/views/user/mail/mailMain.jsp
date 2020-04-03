@@ -7,6 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>ye</h1>
+	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
+	<jsp:include page="/WEB-INF/views/user/common/mailSidebar.jsp"/>
+	
+	
 </body>
 </html>

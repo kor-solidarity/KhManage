@@ -92,8 +92,7 @@
 							</a></li>
 						
 						<!-- 메일 -->
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown"> <i class="fas fa-envelope"
+						<li class="dropdown"><a href="mailMain.ma" class="dropdown-toggle"> <i class="fas fa-envelope"
 								style="font-size: 25px; color: #1E2B44;"></i></a></li>
 
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
