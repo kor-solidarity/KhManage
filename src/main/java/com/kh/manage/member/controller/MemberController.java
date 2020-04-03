@@ -24,4 +24,11 @@ public class MemberController {
 		return "admin/userManagement/userManagement";
 	}
 	
+	@RequestMapping("/registerUser.me")
+	public String registerUser() {
+		
+		return "admin/userManagement/registerUser";
+	}
+	
+		
 }
