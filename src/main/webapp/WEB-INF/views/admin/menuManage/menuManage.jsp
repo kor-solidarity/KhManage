@@ -50,6 +50,30 @@ ul{
 	margin-top:20px;
 	width:80%;
 }
+.projectBtn{
+		width:70px;
+		height:30px;
+		border:none;
+		background:#1E2B44;
+		color:white;
+		font-weight:600;
+		border-radius: 5px;
+		margin-left:50px;
+		font-size:14px;
+		margin-top:10px;
+	}
+.cancleBtn{
+		width:70px;
+		height:30px;
+		border:none;
+		background:#E5E5E5;
+		color:white;
+		font-weight:600;
+		border-radius: 5px;
+		margin-left:50px;
+		font-size:14px;
+		margin-top:10px;
+}	
 .tree_box { width:400px; border:1px solid #ccd3d9;margin: 30px auto;}
 .tree_box .title { padding:5px 0 5px 19px ;background:#f8f8f9;border-bottom:1px solid #ccd3d9;}
 .tree_box .title strong {margin-right:12px;}
@@ -79,7 +103,14 @@ ul{
 	width:45%;
 	height:300px;
 	border:1px solid #EEEEEE;
-	display:inline-flex;
+	display:inline-block;
+	overflow:auto; 
+}
+#div1{
+	width:15px;
+	height:300px;
+	display:inline-block;
+	overflow:hidden; 
 }
 </style>
 </head>
@@ -188,16 +219,45 @@ ul{
 								<input type="radio" id="noUse" style="margin-left:40px;"><label for="noUse" style="font-size:14px;">사용안함</label>
 							</td>
 						</tr>
+						<tr height="40px;"></tr>
 						<tr>
 							<td class="titleId">메뉴권한 그룹</td> 
 							<td>
-								<div id="groupList"></div>
-								<img id="folderImg2"src="<c:url value="/resources/assets/img/arrow.png"/>" style="width:15px; height:20px; margin:0 atuo;">
-								<div id="groupList"></div>
+								<div id="groupList">
+									<div align="center" style="width:100%; height:30px; border:1px solid #EEEEEE; border-bottom:3px solid #EEEEEE; padding-top:3px; font-size:14px;">권한그룹리스트</div>
+									<table>
+										<tr>
+											<td>ss</td>
+										</tr>
+									</table>
+								</div>
+								<div id="div1">
+								<img src="<c:url value="/resources/img/arrow.png"/>" style="width:15px; height:20px; margin:0 atuo; margin-top:140px;">
+								
+								</div>
+								<div id="groupList">
+									<div align="center" style="width:100%; height:30px; border:1px solid #EEEEEE; border-bottom:3px solid #EEEEEE; padding-top:3px; font-size:14px;">메뉴사용권한그룹</div>
+									<table>
+										<tr>
+											<td>PL담당그룹</td>
+										</tr>
+									</table>
+								</div>
 							</td>
 						</tr>
-						
-						
+						<tr height="40px;"></tr>
+						<tr>
+							<td colspan="2"><div
+									style="width: 100%; height: 2px; background: #EEEEEE; margin: 0 auto;"></div></td>
+						</tr>
+						<tr>
+							<td>
+								<button class="projectBtn"><i class="fas fa-check"></i>&nbsp;저장</button>
+							</td>
+							<td>
+								 <button class="cancleBtn"><i class="fas fa-ban"></i>&nbsp;취소</button>
+							</td>
+						</tr>
 					</table>
 				</div>
 			</div>

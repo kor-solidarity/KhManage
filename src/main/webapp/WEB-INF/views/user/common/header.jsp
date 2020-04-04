@@ -32,6 +32,7 @@
 	<script src="<c:url value="/resources/assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"/>"></script>
 	<script src="<c:url value="/resources/assets/vendor/chartist/js/chartist.min.js"/>"></script>
 	<script src="<c:url value="/resources/assets/scripts/klorofil-common.js"/>"></script>
+	
 <style>
 </style>
 </head>
@@ -113,7 +114,7 @@
 		<script>
 			$(function(){
 				$("#chat").click(function(){
-					window.open('selectChat.ct', 'pop01', 'top=190, left=1050, width=500, height=600, status=no, menubar=no, toolbar=no, resizable=no');
+					window.open('showChatPage.ct', 'pop01', 'top=190, left=900, width=500, height=600, status=no, menubar=no, toolbar=no, resizable=no');
 				});
 			});
 		</script>
