@@ -30,9 +30,9 @@
 						</a>
 						</li>
 						
-						<li><a href="#subPages3" data-toggle="collapse"
+						<li><a href="accessManage.am" 
 							class="collapsed"><i class="lnr lnr-hand"></i><span>권한그룹 관리</span>
-								<i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							</a>
 						</li>
 						
 						<li><a href="#subPages4" data-toggle="collapse"
@@ -45,9 +45,9 @@
 								<i class="icon-submenu lnr lnr-chevron-left"></i></a>
 						</li>
 						
-						<li><a href="#subPages5" data-toggle="collapse"
+						<li><a href="departmentManage.am"
 							class="collapsed"><i class="lnr lnr-layers"></i><span>부서 관리</span>
-								<i class="icon-submenu lnr lnr-chevron-left"></i></a>
+						</a>
 						</li>
 						
 						<li><a href="userManagement.me"
