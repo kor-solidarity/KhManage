@@ -56,12 +56,12 @@
 						</li>
 						
 						<li><a href="#subPages4" data-toggle="collapse"
-							class="collapsed"><i class="lnr lnr-file-empty"></i><span>일반작업</span>
+							class="collapsed"><i class="lnr lnr-file-empty"></i><span>일반업무</span>
 								<i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages4" class="collapse ">
 								<ul class="nav">
-									<li><a href="#" class="" style="background:#24415C; height:56px;"><label class="menuName">이슈관리</label></a></li>
-									<li><a href="#" class="" style="background:#24415C; height:56px;"><label class="menuName">변경요청</label></a></li>
+									<li><a href="issueList.iu" class="" style="background:#24415C; height:56px;"><label class="menuName">이슈관리</label></a></li>
+									<li><a href="changeRequestList.iu" class="" style="background:#24415C; height:56px;"><label class="menuName">변경요청</label></a></li>
 								</ul>
 							</div>
 						</li>
