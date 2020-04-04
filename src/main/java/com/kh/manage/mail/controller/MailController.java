@@ -12,4 +12,17 @@ public class MailController {
 		return "user/mail/mailMain";
 	}
 	
+	@RequestMapping("/mailReceived.ma")
+	public String mailReceived() {
+		
+		return "user/mail/mailReceived";
+	}
+	
+	@RequestMapping("/mailSend.ma")
+	public String mailSend() {
+		
+		return "user/mail/mailSend";
+	}
+	
+	
 }
