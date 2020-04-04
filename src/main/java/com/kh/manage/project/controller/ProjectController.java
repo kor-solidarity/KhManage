@@ -10,4 +10,11 @@ public class ProjectController {
 	public String projectSelectAll() {
 		return "user/project/projectSelectAll";
 	}
+	
+	@RequestMapping("/projectRegister.pr")
+	public String projectCreatePage(){
+		System.out.println("projectRegister");
+		return "user/project/projectReg";
+	}
+	
 }
