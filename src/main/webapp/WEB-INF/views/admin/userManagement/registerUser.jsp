@@ -43,26 +43,36 @@
 }
 
 .okBtn {
-		width:70px;
-		height:30px;
-		border:none;
-		background:#1E2B44;
-		color:white;
-		font-weight:600;
-		border-radius: 5px;
-		font-size:14px;
-		margin-left: 180px;
+	width:70px;
+	height:30px;
+	border:none;
+	background:#1E2B44;
+	color:white;
+	font-weight:600;
+	border-radius: 5px;
+	font-size:14px;
+	margin-left: 180px;
 }
 
 .cancleBtn{
-		width:70px;
-		height:30px;
-		border:none;
-		background:#E5E5E5;
-		color:white;
-		font-weight:600;
-		border-radius: 5px;
-		font-size:14px;
+	width:70px;
+	height:30px;
+	border:none;
+	background:#F3565D;
+	color:white;
+	font-weight:600;
+	border-radius: 5px;
+	font-size:14px;
+}
+
+.checkbox {
+	align: left;
+	margin-left: 200px;
+	float: left;
+}
+
+.checkBoxArea {
+	margin-left: 230px;
 }
 
 </style>
@@ -83,31 +93,31 @@
 						<tr class="tableTr">
 							<td class="tableTd">아이디 *</td>
 							<td class="tableTd2">
-								<input type="text" class="register" name="userId">
+								<input type="text" class="register" name="userId" required>
 							</td>
 						</tr>
 						<tr class="tableTr">
 							<td>패스워드 *</td>
 							<td>
-								<input type="password" class="register" name="password">
+								<input type="password" class="register" name="password" required>
 							</td>
 						</tr>
 						<tr class="tableTr">
 							<td>패스워드 확인 *</td>
 							<td>
-								<input type="password" class="register" name="password">
+								<input type="password" class="register" name="password" required>
 							</td>
 						</tr>
 						<tr class="tableTr">
 							<td>이름 *</td>
 							<td>
-								<input type="text" class="register" name="userName">
+								<input type="text" class="register" name="userName" required>
 							</td>
 						</tr>
 						<tr class="tableTr">
 							<td>이메일 *</td>
 							<td>
-								<input type="email" class="register" name="email">
+								<input type="email" class="register" name="email" required>
 							</td>
 						</tr>
 						<tr class="tableTr">
@@ -125,18 +135,24 @@
 						<tr class="tableTr">
 							<td>직급 *</td>
 							<td>
-								<input type="text" class="register" name="email">
+								<input type="text" class="register" name="email" required>
 							</td>
 						</tr>
-						<tr class="tableTr">
-							<td>
-								<input type="checkbox" class="" name="checkbox">
+						<!-- <tr class="">
+							<td></td>
+							<td class="checkBox tr">
+								<input type="checkbox" class="checkbox" name="checkbox" style="">
+								<label>고객사</label>
 							</td>
-							<td>고객사</td>
-						</tr>
+						</tr> -->
 					</table>
-					<br>
+						<div class="checkBoxArea">
+							<input type="checkbox" class="checkbox" name="checkbox" style="">
+							&nbsp;&nbsp;<label>고객사</label>
+						</div>
 					<hr>
+					<hr>
+					<br>
 					<button type="submit" class="okBtn"><i class="fas fa-check"></i>&nbsp;저장</button>
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<button type="reset" class="cancleBtn"><i class="fas fa-ban"></i>&nbsp;취소</button>

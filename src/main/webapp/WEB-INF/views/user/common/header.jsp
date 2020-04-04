@@ -100,8 +100,7 @@
 							data-toggle="dropdown"><i class="fas fa-user-cog"
 								style="font-size: 24px; color: #1E2B44;"></i></a>
 							<ul class="dropdown-menu">
-								<li><a href="#"><i class="lnr lnr-user"></i> <span>My
-											Profile</span></a></li>
+								<li><a href="myProfile.me"><i class="lnr lnr-user"></i><span>My Profile</span></a></li>
 								<li><a href="#"><i class="lnr lnr-envelope"></i> <span>Message</span></a></li>
 								<li><a href="adminShowMain.me"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li>
 								<li><a href="#"><i class="lnr lnr-exit"></i> <span>Logout</span></a></li>

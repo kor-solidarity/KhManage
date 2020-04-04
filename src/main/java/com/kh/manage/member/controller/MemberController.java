@@ -30,5 +30,11 @@ public class MemberController {
 		return "admin/userManagement/registerUser";
 	}
 	
+	@RequestMapping("myProfile.me")
+	public String myProfile() {
+		
+		return "user/myProfile/myProfileMain";
+	}
+	
 		
 }
