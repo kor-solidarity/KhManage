@@ -10,69 +10,83 @@
 		margin-left:30px;
 		font-size:14px;
 	}
+	.side_div1{
+		width: 180px;
+		height: 50px;
+		border: 2px solid white;
+		border-radius: 10px; 	
+		margin: 0 auto;
+		margin-top: 35px;
+		background: #49557B;
+	}
 </style>
 </head>
 <body>
 <div id="sidebar-nav" class="sidebar">
 			<div class="sidebar-scroll" style="background: #1E2B44;">
 				<nav>
-					<div>
-						<p>편지쓰기</p>
+					<div class="side_div1">
+						<a href="mailSend.ma">
+						<p style="text-align: center; margin-top: 10px; font-size: 16px; color: white; font-weight: bold;">편지쓰기</p>
+						</a>
 					</div>
-					<!-- <ul class="nav"> -->
-						<!-- <li><a href="index.html" class="active"><i
-								class="lnr lnr-home"></i> <span>편지 쓰기</span></a></li>
-					
-						<li><a href="#subPages" data-toggle="collapse"
-							class="collapsed"><i class="lnr lnr-chart-bars"></i><span>받은 메일함</span>
-								<i class="icon-submenu lnr lnr-chevron-left"></i></a>
+					<ul class="nav" style="margin-top: 20px;">
+						<li><a href="mailReceived.ma"  class="collapsed">
+							<i class="lnr lnr-envelope"></i>
+							<span>받은 메일함</span></a>
 							<div id="subPages" class="collapse ">
 							</div>
 						</li>
 						
 						<li><a href="#subPages2" data-toggle="collapse"
-							class="collapsed"><i class="lnr lnr-screen"></i><span>보낸 메일함</span>
-								<i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							class="collapsed"><i class="lnr lnr-envelope"></i>
+							<span>보낸 메일함</span>
+								</a>
 							<div id="subPages2" class="collapse ">
 							</div>
 						</li>
 						
 						<li><a href="#subPages3" data-toggle="collapse"
-							class="collapsed"><i class="lnr lnr-file-add"></i><span>임시 보관함</span>
-								<i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							class="collapsed"><i class="lnr lnr-briefcase"></i>
+							<span>임시 보관함</span>
+								</a>
 							<div id="subPages3" class="collapse ">
 							</div>
 						</li>
 						
 						<li><a href="#subPages4" data-toggle="collapse"
-							class="collapsed"><i class="lnr lnr-file-empty"></i><span>안읽은 메일함</span>
-								<i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							class="collapsed"><i class="lnr lnr-file-empty"></i>
+							<span>안읽은 메일함</span>
+								</a>
 							<div id="subPages4" class="collapse ">
 							</div>
 						</li>
 						
 						<li><a href="#subPages5" data-toggle="collapse"
-							class="collapsed"><i class="lnr lnr-pencil"></i><span>중요 메일함</span>
-								<i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							class="collapsed"><i class="lnr lnr-star"></i>
+							<span>중요 메일함</span>
+							</a>
 							<div id="subPages5" class="collapse ">
 							</div>
 						</li>
 						
 						<li><a href="#subPages5" data-toggle="collapse"
-							class="collapsed"><i class="lnr lnr-pencil"></i><span>스팸 메일함</span>
-								<i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							class="collapsed"><i class="lnr lnr-warning"></i>
+							<span>스팸 메일함</span>
+								</a>
 							<div id="subPages5" class="collapse ">
 							</div>
 						</li>
 						
 						<li><a href="#subPages5" data-toggle="collapse"
-							class="collapsed"><i class="lnr lnr-pencil"></i><span>휴지통</span>
-								<i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							class="collapsed"><i class="lnr lnr-trash"></i>
+							<span>휴지통</span>
+								</a>
 							<div id="subPages5" class="collapse ">
 							</div>
-						</li> -->
+						</li> 
 						
-					<!-- </ul> -->
+				</ul>
 				</nav>
 			</div>
 		</div>
