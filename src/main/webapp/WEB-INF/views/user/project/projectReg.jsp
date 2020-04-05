@@ -1,14 +1,9 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: SOY
-  Date: 2020-04-03
-  Time: 오후 5:04
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <html>
 <head>
 	<title>Title</title>
+	<link rel="stylesheet"
+		  href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 	<style type="text/css">
 		.row {
 			/*margin-top: 5px;*/
@@ -27,10 +22,6 @@
 
 		.table-advance {
 			margin-bottom: 10px !important;
-		}
-
-		.btn-blue {
-
 		}
 	</style>
 </head>
@@ -69,7 +60,7 @@
 					<div class="col-md-12">
 						<div class="col-md-1 text-align-right">프로젝트 명</div>
 						<div class="col-md-11">
-							<input class="form-control">
+							<input class="form-control" type="text" name="project_name" id="project_name">
 						</div>
 					</div>
 				</div>
@@ -148,19 +139,81 @@
 									<td class="hidden-xs" style="text-align: center;">demouser@gmail.com</td>
 								</tr>
 							</table>
-							<div class="btn btn-primary">
+							<div class="btn btn-primary" style="background: #1E2B44;">
 								<i class="fas fa-plus"></i>
 								추가
 							</div>
-							<div class="btn btn-danger">
+							<div class="btn" style="background: #E5E5E5;">
 								<i class="fas fa-minus"></i>
 								제거
 							</div>
 						</div>
 					</div>
 				</div>
+				<%--project template and date--%>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="col-md-1 text-align-right">프로젝트 템플릿</div>
+						<div class="col-md-5">
+							<select class="form-control" name="project_template" id="project_template">
+								<option value="0">선택하세요</option>
+								<option value="0">선행개발</option>
+								<option value="0">이것저것</option>
+							</select>
+						</div>
+						<div class="col-md-1 text-align-right">프로젝트 시작일</div>
+						<div class="col-md-3 text-align-right">
+							<%--<input type="date" class="" name="" id="">--%>
+							<div class="form-group">
+								<div class='input-group date' id='datetimepicker1'>
+									<input type='text' class="form-control"/>
+									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<%--project excel--%>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="col-md-1 text-align-right">프로젝트 엑셀</div>
+						<div class="col-md-5">
+							<input type="file" name="project_excel" id="project_excel">
+							<span style="padding-top: 10px">Excel, Xml 파일 업로드 가능</span>
+						</div>
+						<div class="col-md-1 text-align-right">엑셀 템플릿</div>
+					</div>
+				</div>
+				<%--project details--%>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="col-md-1 text-align-right">프로젝트 설명</div>
+						<div class="col-md-11">
+							<textarea class="form-control" type="text" name="project_details" id="project_details"
+									  rows="5"></textarea>
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="btn btn-primary" style="background: #1E2B44;" onclick="alert('boo');">
+							<i class="fas fa-check"></i>
+							프로젝트 저장
+						</div>
+						<div class="btn" style="background: #E5E5E5;">
+							<i class="fas fa-undo"></i>
+							취소
+						</div>
+					</div>
+				</div>
+
 			</form>
 		</div>
 	</div>
+	<link rel="stylesheet"
+		  href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js">
 </body>
 </html>
