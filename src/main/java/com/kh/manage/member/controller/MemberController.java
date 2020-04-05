@@ -25,7 +25,6 @@ public class MemberController {
 	private MemberService ms;
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
-	 
 	
 	@RequestMapping("/adminShowMain.me")
 	public String showAdminPage() {
@@ -54,46 +53,6 @@ public class MemberController {
 		
 	//*************************************************
 
-	
-	//로그인
-//	@RequestMapping("login.me")
-//	public String loginCheck(Member m, Model model) {
-//		
-//		Member loginUser;
-//		
-//		try {
-//			loginUser = ms.loginMember(m);
-//			
-//			model.addAttribute("loginUser", loginUser);
-//			
-//			return "redirect:index.jsp";
-//		} catch (LoginException e) {
-//			model.addAttribute("msg", e.getMessage());
-//			
-//			return "common/errorPage";
-//		}
-//		
-//	}
-	
-	
-//	@RequestMapping("login.me")
-//	public String loginCheck(Member m, Model model) {
-//		
-//		try {
-//			Member loginUser = ms.loginMember(m);
-//			
-//			model.addAttribute("loginUser", loginUser);
-//			
-//			return "redirect:index.jsp";
-//		
-//		} catch (LoginException e) {
-//			model.addAttribute("msg", e.getMessage());
-//			
-//			return "common/errorPage";
-//		}
-//	}
-	
-	
 	@RequestMapping("/login.me")
 	public String loginCheck(Member m, Model model) {
 //		String memberId = request.getParameter("memberId");

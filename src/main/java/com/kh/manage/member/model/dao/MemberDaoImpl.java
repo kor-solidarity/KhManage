@@ -24,22 +24,23 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
+	public int insertMember(SqlSessionTemplate sqlSession, Member m) {
+		
+		return sqlSession.insert("Member.insertMember", m);
+	}
+	
+	@Override
 	public String selectEncPassword(SqlSessionTemplate sqlSession, Member m) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return sqlSession.selectOne("Member.selectPwd", m.getMemberId());
 	}
 
 	@Override
 	public Member selectMember(SqlSessionTemplate sqlSession, Member m) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return sqlSession.selectOne("Member.selectLoginUser", m);
 	}
 
-	@Override
-	public int insertMember(SqlSessionTemplate sqlSession, Member m) {
-
-		return sqlSession.insert("Member.insertMember", m);
-	}
 
 
 }
