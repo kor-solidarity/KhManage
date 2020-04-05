@@ -81,19 +81,19 @@ body {
 	            <table align="center">
 	            	<tr>
 	            		<td>
-	            			 <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="아이디를 입력하세요." name="userId" />
+	            			 <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="아이디를 입력하세요." name="memberId" />
 	            		</td>
 	            	</tr>
 	            	<tr>
 	            		<td>
-	            			<input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="패스워드" name="password" />
+	            			<input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="패스워드" name="memberPwd" />
 	            		</td>
 	            	</tr>
-	            	<tr>
+	            	<!-- <tr>
 	            		<td>
 	            			<input id="rememberMe" name="rememberMe" type="checkbox" value="true" /><input name="rememberMe" type="hidden" value="false" />로그인 상태 유지
 	            		</td>
-	            	</tr>
+	            	</tr> -->
 	            	<tr>
 	            		<td>
 	            			<button type="submit" class="btn btn-success uppercase">
