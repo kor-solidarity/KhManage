@@ -26,6 +26,20 @@
 		border-radius: 5px;
 	}
 	
+	#deptList{
+		width:250px;
+		height:30px;
+		border:1px solid #EBCCD1;
+		border-radius: 5px;
+	}
+	
+	#userList{
+		width:430px;
+		height:30px;
+		border:1px solid #EBCCD1;
+		border-radius: 5px;
+	}
+	
 	#taskTitle{
 		width:1450px;
 		height:30px;
@@ -92,8 +106,7 @@
 			<form>
 			<table id="issueTable">	
 				<tr>
-					<td class="thRange"></td>
-					<td class="thRange" align="center">변경요청 번호</td>
+					<td class="thRange" align="center" colspan="2">변경요청 번호</td>
 					<td class="thRange" colspan="16"><input type="text" id="taskTitle" value="수강-0002"></td>
 				</tr>
 				<tr>
@@ -174,26 +187,86 @@
 					<td class="thRange"></td>
 				</tr>
 				<tr>
-					<td class="thRange" colspan="18"><b>이슈 처리 정보</b>
-					<hr></td>
+					<td class="thRange"></td>
+					<td class="thRange">승인자 1</td>
+					<td class="thRange" colspan="3">
+						<select id="deptList">
+							<option>선택하세요</option>
+							<option>부서명</option>
+							<option>부서명</option>
+							<option>부서명</option>
+							<option>부서명</option>
+							<option>부서명</option>
+						</select>
+					</td>
+					<td class="thRange" colspan="6">
+						<select id="userList">
+							<option>선택하세요</option>
+							<option>부서명</option>
+							<option>부서명</option>
+							<option>부서명</option>
+							<option>부서명</option>
+							<option>부서명</option>
+						</select>
+					</td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
 				</tr>
 				<tr>
 					<td class="thRange"></td>
-					<td class="thRange">조치자</td>
-					<td class="thRange" colspan="9">
-						<select class="projectList">
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+				</tr>
+				<tr>
+					<td class="thRange"></td>
+					<td class="thRange">승인자 2</td>
+					<td class="thRange" colspan="3">
+						<select id="deptList">
 							<option>선택하세요</option>
-							<option>심재우</option>
-							<option>김성준</option>
-							<option>박은석</option>
-							<option>원준성</option>
-							<option>김태원</option>
+							<option>부서명</option>
+							<option>부서명</option>
+							<option>부서명</option>
+							<option>부서명</option>
+							<option>부서명</option>
 						</select>
 					</td>
-					<td class="thRange" align="left">조치희망일</td>
 					<td class="thRange" colspan="6">
-						<input type="date" name="workDate" id="workDate">
+						<select id="userList">
+							<option>선택하세요</option>
+							<option>부서명</option>
+							<option>부서명</option>
+							<option>부서명</option>
+							<option>부서명</option>
+							<option>부서명</option>
+						</select>
 					</td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
 				</tr>
 				<tr>
 					<td class="thRange" colspan="18"><hr></td>
