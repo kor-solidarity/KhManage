@@ -79,7 +79,7 @@
    
 </style>
 </head>
-<body onload="$('#route1').text('사용자관리')">
+<body onload="$('#route1').text('관리자'); $('#route2').text('사용자관리');">
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
 	<jsp:include page="/WEB-INF/views/admin/common/sidebar.jsp"/>
 	
