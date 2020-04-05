@@ -45,6 +45,8 @@
 <body>
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
 	<jsp:include page="/WEB-INF/views/user/common/mailSidebar.jsp"/>
+	<div class="panel panel-headline">
+		<div class="panel-heading">
 	<p style="font-weight: bold; font-size: 35px; margin-top: 10px; margin-left: 10px;">편지 쓰기</p>
 	
 	<div id= "btn"style="width: 1620px; height: 100px;" >
@@ -83,7 +85,8 @@
 		</table>			
 	
 	</form>
-	
+	</div>
+	</div>
 
 </body>
 </html>
