@@ -48,6 +48,8 @@
 <body>
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
 	<jsp:include page="/WEB-INF/views/user/common/mailSidebar.jsp"/>
+	<div class="panel panel-headline">
+		<div class="panel-heading">
 	<p style="font-weight: bold; font-size: 35px; margin-top: 10px; margin-left: 10px;">받은 메일함</p>
 	
 	<div style="width: 100%; height: 50px;">
@@ -82,7 +84,8 @@
 	</div>
 	
 	<hr align="left" style="border: solid 1px #C7C5C5; width:90%;  ">
-
+	</div>
+	</div>
 </body>
 
 

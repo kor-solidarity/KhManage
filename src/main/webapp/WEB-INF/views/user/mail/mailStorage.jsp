@@ -91,14 +91,13 @@
 	<jsp:include page="/WEB-INF/views/user/common/mailSidebar.jsp"/>
 	<div class="panel panel-headline">
 		<div class="panel-heading">
-	<p style="font-weight: bold; font-size: 35px; margin-top: 10px; margin-left: 10px;">받은 메일함</p>
+	<p style="font-weight: bold; font-size: 35px; margin-top: 10px; margin-left: 10px;">임시 보관함</p>
 	
 	<div id= "btn"style="width: 1620px;">
 		<button class="wjs_btn" style="width: 100px;">전체 선택</button>
-		<button class="wjs_btn" style="width: 50px;">답장</button>
-		<button class="wjs_btn" style="width: 50px;">삭제</button>
 		<button class="wjs_btn" style="width: 50px;">읽음</button>
-			
+		<button class="wjs_btn" style="width: 50px;">삭제</button>
+		<button class="wjs_btn" style="width: 50px;">전달</button>
 	</div>
 		<form class="navbar-form navbar-left" style="float: left; margin-left: 20px;">
 					<div class="input-group">
