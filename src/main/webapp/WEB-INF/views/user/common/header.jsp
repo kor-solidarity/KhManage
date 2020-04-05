@@ -113,7 +113,7 @@
 		<script>
 			$(function(){
 				$("#chat").click(function(){
-					window.open('showChatPage.ct', 'pop01', 'top=190, left=900, width=500, height=600, status=no, menubar=no, toolbar=no, resizable=no');
+					window.open('showChatPage.ct', 'pop01', 'top=190, left=900, width=800, height=600, status=no, menubar=no, toolbar=no, resizable=no');
 				});
 			});
 		</script>
