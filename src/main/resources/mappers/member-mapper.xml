@@ -30,6 +30,20 @@
 		INSERT INTO MEMBER
 		VALUES (SEQ_MID.NEXTVAL, #{memberId}, #{memberPwd}, #{memberName}, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 'Y')
 	</insert>
+	
+	<select id="selectPwd" resultType="java.lang.String" parameterType="java.lang.String">
+		SELECT MEMBER_PWD
+		FROM MEMBER
+		WHERE MEMBER_ID = #{memberId}
+		AND STATUS = 'Y'
+	</select>
+	
+	<select id="selectLoginUser" resultMap="memberResultSet" parameterType="Member">
+		SELECT *
+		FROM MEMBER
+		WHERE MEMBER_ID = #{memberId}
+		AND STATUS = 'Y'
+	</select>
 
 </mapper>
 

@@ -23,19 +23,19 @@
 	background: white;
 	width: 25%;
 	height: 700px;
-	border: 1px solid blue;
+	/* border: 1px solid blue; */
 }
 
 .col-md-4 col-sm-4 text-center {
 	height: 700px;
-	border: 1px solid green;
+	/* border: 1px solid green; */
 }
 
 .col-md-8 {
 	width: 65%;
 	background: white;
 	height: 700px;
-	border: 1px solid red;
+	/* border: 1px solid red; */
 }
 
 .profileBtn {
@@ -224,7 +224,6 @@
                                 <div class="form-group">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <button type="submit" class="passwordBtn"><i class="fas fa-check"></i>&nbsp;패스워드 수정</button>
                                 </div>
-
                             </form>
 
                         </div>
@@ -273,7 +272,8 @@
 	$(function () {
         $('#password_confirm').on('blur', function () {
             if ($("#password").val() != $('#password_confirm').val()) {
-                UIkit.modal.alert("패스워드와 패스워드 재확인 값이 일치하지 않습니다.");
+                /* UIkit.modal.alert("패스워드와 패스워드 재확인 값이 일치하지 않습니다."); */
+                alert("패스워드와 패스워드 재확인 값이 일치하지 않습니다.");
                 $("#password").val("");
                 $('#password_confirm').val("");
             }
