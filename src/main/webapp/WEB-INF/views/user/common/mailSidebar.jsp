@@ -31,22 +31,22 @@
 						</a>
 					</div>
 					<ul class="nav" style="margin-top: 20px;">
-						<li><a href="mailMain.ma"  class="collapsed">
+						<li><a href="mailReceived.ma"  class="collapsed">
 							<i class="lnr lnr-envelope"></i>
 							<span>받은 메일함</span></a>
 							<div id="subPages" class="collapse ">
 							</div>
 						</li>
 						
-						<li><a href="mailSent.ma" class="collapsed">
-						<i class="lnr lnr-envelope"></i>
+						<li><a href="mailSent.ma" 
+							class="collapsed"><i class="lnr lnr-envelope"></i>
 							<span>보낸 메일함</span>
 								</a>
 							<div id="subPages2" class="collapse ">
 							</div>
 						</li>
 						
-						<li><a href="mailStorage.ma" 
+						<li><a href="mailStorage.ma"
 							class="collapsed"><i class="lnr lnr-briefcase"></i>
 							<span>임시 보관함</span>
 								</a>
@@ -54,32 +54,32 @@
 							</div>
 						</li>
 						
-						<li><a href="mailNread.ma" class="collapsed">
-						<i class="lnr lnr-file-empty"></i>
+						<li><a href="mailNread.ma"
+							class="collapsed"><i class="lnr lnr-file-empty"></i>
 							<span>안읽은 메일함</span>
 								</a>
 							<div id="subPages4" class="collapse ">
 							</div>
 						</li>
 						
-						<li><a href="mailImportant.ma" class="collapsed">
-						<i class="lnr lnr-star"></i>
+						<li><a href="mailImportant.ma" 
+							class="collapsed"><i class="lnr lnr-star"></i>
 							<span>중요 메일함</span>
 							</a>
 							<div id="subPages5" class="collapse ">
 							</div>
 						</li>
 						
-						<li><a href="mailSpam.ma" class="collapsed">
-						<i class="lnr lnr-warning"></i>
+						<li><a href="mailSpam.ma"
+							class="collapsed"><i class="lnr lnr-warning"></i>
 							<span>스팸 메일함</span>
 								</a>
 							<div id="subPages5" class="collapse ">
 							</div>
 						</li>
 						
-						<li><a href="mailTrash.ma" class="collapsed">
-						<i class="lnr lnr-trash"></i>
+						<li><a href="mailTrash.ma" 
+							class="collapsed"><i class="lnr lnr-trash"></i>
 							<span>휴지통</span>
 								</a>
 							<div id="subPages5" class="collapse ">
@@ -90,6 +90,7 @@
 				</nav>
 			</div>
 		</div>
+		
 <div class="main">
 	<div class="container-fluid">
 	<label id="route1" style="margin-top:5px;"></label> > <label id="route2" style="margin-top:5px;"></label>

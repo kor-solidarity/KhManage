@@ -50,7 +50,12 @@
 	<jsp:include page="/WEB-INF/views/user/common/mailSidebar.jsp"/>
 	<div class="panel panel-headline">
 		<div class="panel-heading">
-	<p style="font-weight: bold; font-size: 35px; margin-top: 10px; margin-left: 10px;">받은 메일함</p>
+		
+	<div>
+	<img src="resources/img/mail.png" style="width: 30px; height: 30px; float: left; margin-top: 6px; margin-right: 15px; margin-left: 10px;">
+	<p style="font-weight: bold; font-size: 32px; margin-top: 10px; margin-left: 10px;">받은 메일함</p>
+	</div>	
+	
 	
 	<div style="width: 100%; height: 50px;">
 		<button class="wjs_btn" style="width: 50px;">답장</button>
@@ -79,6 +84,7 @@
 	<hr align="left" style="border: solid 1px #C7C5C5; width:90%;  ">	
 	
 	<div id="mailtext">
+	
 	
 	
 	</div>

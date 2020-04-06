@@ -91,8 +91,11 @@
 	<jsp:include page="/WEB-INF/views/user/common/mailSidebar.jsp"/>
 	<div class="panel panel-headline">
 		<div class="panel-heading">
-	<p style="font-weight: bold; font-size: 35px; margin-top: 10px; margin-left: 10px;">휴지통</p>
-	
+	<div>
+	<img src="resources/img/trash.png" style="width: 30px; height: 30px; float: left; margin-top: 6px; margin-right: 15px; margin-left: 10px;">
+	<p style="font-weight: bold; font-size: 32px; margin-top: 10px; margin-left: 10px;">휴지통</p>
+	</div>
+		
 	<div id= "btn"style="width: 1620px;">
 		<button class="wjs_btn" style="width: 100px;">전체 선택</button>
 		<button class="wjs_btn" style="width: 50px;">답장</button>
@@ -109,6 +112,7 @@
 							</button></span>
 					</div>
 		</form>
+	
 	
 	<table id="mailTable" align="center">
 		<tr style="border: 1px solid #D9D8D8;">
