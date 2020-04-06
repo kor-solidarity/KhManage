@@ -10,4 +10,14 @@ public class ChatController {
 	public String showChatPage() {
 		return "user/chat/chatMainPage";
 	}
+	
+	@RequestMapping("/showCreatChat.ct")
+	public String showCreateChatPage() {
+		return "user/chat/chatCreate";
+	}
+	
+	@RequestMapping("/chatRoom.ct")
+	public String showChatRoomPage() {
+		return "user/chat/chatRoom";
+	}
 }
