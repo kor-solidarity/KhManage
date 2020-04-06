@@ -49,7 +49,7 @@
 								<i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages3" class="collapse ">
 								<ul class="nav">
-									<li><a href="#" class="" style="background:#24415C; height:56px;"><label class="menuName">내 작업</label></a></li>
+									<li><a href="myWorkList.wk" class="" style="background:#24415C; height:56px;"><label class="menuName">내 작업</label></a></li>
 									<li><a href="#" class="" style="background:#24415C; height:56px;"><label class="menuName">상세대시보드</label></a></li>
 								</ul>
 							</div>

@@ -33,5 +33,19 @@ public class IssueController {
 	}
 	
 	
+	@RequestMapping("/changeRequestDetail.iu")
+	public String changeRequestDetail() {
+		return "user/issue/changeRequestDetail";
+	}
+	
+	
+	@RequestMapping("/reqeustApprovalDetail.iu")
+	public String reqeustApprovalDetail() {
+		return "user/issue/reqeustApprovalDetail";
+	}
+	
+	
+	
+	
 	
 }

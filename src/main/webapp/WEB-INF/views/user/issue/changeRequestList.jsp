@@ -197,7 +197,7 @@
 	<jsp:include page="/WEB-INF/views/user/common/sidebar.jsp"/>
 		<div class="changePanel">
 			<ul class="changeList">
-				<li id="requestLi"><a href="#">변경요청</a>
+				<li id="requestLi"><a href="changeRequestList.iu">변경요청</a>
 				</li>
 				<li id="approveLi"><a href="RequestApprovalList.iu">변경요청 승인</a>
 				</li>
@@ -260,7 +260,7 @@
 								<td class="td1">KH대학교 학사시스템 개발</td>
 								<td class="tdText">기능 개발</td>
 								<td class="tdText">수강-0001</td>
-								<td class="tdText">수강신청 오류 조치자 변경</td>
+								<td class="tdText"><a href="changeRequestDetail.iu">수강신청 오류 조치자 변경</a></td>
 								<td class="tdText">김태원</td>
 								<td class="tdText">심재우</td>
 								<td class="tdText"><label class="issueOpen">승인중</label></td>
