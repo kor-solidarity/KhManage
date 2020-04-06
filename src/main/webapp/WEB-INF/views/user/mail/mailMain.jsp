@@ -85,6 +85,7 @@
 		text-align: center;
 		width: 350px;
 	}
+	
 </style>
 <body>
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>

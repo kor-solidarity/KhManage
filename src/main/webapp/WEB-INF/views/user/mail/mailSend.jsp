@@ -30,6 +30,7 @@
       margin-top: 24px;
       float: left;
       
+      
    }
    #mailtable{
    	width: 100%;

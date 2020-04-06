@@ -113,6 +113,7 @@
 					</div>
 		</form>
 	
+	
 	<table id="mailTable" align="center">
 		<tr style="border: 1px solid #D9D8D8;">
 			<td class="chktd"><input type="checkbox"></td>
