@@ -12,9 +12,15 @@ public class ProjectController {
 	}
 	
 	@RequestMapping("/projectRegister.pr")
-	public String projectCreatePage(){
+	public String projectCreatePage() {
 		System.out.println("projectRegister");
 		return "user/project/projectReg";
+	}
+	
+	@RequestMapping("/viewProject.pr")
+	public String viewProject(String num) {
+		System.out.println("viewProject");
+		return "user/project/projectView";
 	}
 	
 }
