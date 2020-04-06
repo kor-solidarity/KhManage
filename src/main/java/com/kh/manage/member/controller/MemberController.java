@@ -36,5 +36,28 @@ public class MemberController {
 		return "user/myProfile/myProfileMain";
 	}
 	
+	@RequestMapping("/detailDashboard.me")
+	public String detailDashboard() {
+		
+		return "user/main/detailDashboard";
+	}
+	
+	@RequestMapping("synthesisDashboard.me")
+	public String synthesisDashboard() {
+		
+		return "user/main/synthesisDashboard";
+	}
 		
 }
+
+
+
+
+
+
+
+
+
+
+
+
