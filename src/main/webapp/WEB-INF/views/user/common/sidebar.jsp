@@ -17,7 +17,7 @@
 			<div class="sidebar-scroll" style="background: #1E2B44;">
 				<nav>
 					<ul class="nav">
-						<li><a href="index.html" class="active"><i
+						<li><a href="index.jsp" class="active"><i
 								class="lnr lnr-home"></i> <span>HOME</span></a></li>
 					
 						<li><a href="#subPages" data-toggle="collapse"
@@ -25,9 +25,9 @@
 								<i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages" class="collapse ">
 								<ul class="nav">
-									<li><a href="#" class="" style="background:#24415C; height:56px;"><label class="menuName">종합대시보드</label></a></li>
-									<li><a href="#" class="" style="background:#24415C; height:56px;"><label class="menuName">상세대시보드</label></a></li>
-									<li><a href="#" class="" style="background:#24415C; height:56px;"><label class="menuName">개인대시보드</label></a></li>
+									<li><a href="synthesisDashboard.me" class="" style="background:#24415C; height:56px;"><label class="menuName">종합대시보드</label></a></li>
+									<li><a href="detailDashboard.me" class="" style="background:#24415C; height:56px;"><label class="menuName">상세대시보드</label></a></li>
+									<li><a href="login.me" class="" style="background:#24415C; height:56px;"><label class="menuName">개인대시보드</label></a></li>
 								</ul>
 							</div>
 						</li>
