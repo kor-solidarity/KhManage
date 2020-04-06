@@ -30,7 +30,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public Member loginMember(Member m) throws LoginException {
 		
-		System.out.println("loginMember 호출됨..");
+//		System.out.println("loginMember 호출됨..");
 		
 		Member loginUser = null;
 				

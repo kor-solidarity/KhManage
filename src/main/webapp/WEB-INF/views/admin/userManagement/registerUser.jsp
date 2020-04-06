@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <title>Insert title here</title>
 <style>
 
@@ -71,12 +72,13 @@
 
 .checkbox {
 	align: left;
-	margin-left: 180px;
+	margin-left: 150px;
 	float: left;
 }
 
 .checkBoxArea {
-	margin-left: 230px;
+	margin-top: 10px;
+	margin-left: 210px;
 }
 
 </style>
@@ -134,7 +136,7 @@
 							<td>부서 *</td>
 							<td></td>
 							<td>
-								<select class="register form-control"  name="deptCode">
+								<select id="deptCode" class="register form-control"  name="deptCode">
 									<option value="#">선택하세요</option>
 									<option value="1">전략기획부</option>
 									<option value="2">전략기획부</option>
@@ -147,7 +149,7 @@
 							<td>직급 *</td>
 							<td></td>
 							<td>
-								<input type="text" class="register form-control" name="email">
+								<input type="text" id="rank" class="register form-control" name="rank">
 							</td>
 						</tr>
 						<!-- <tr class="">
@@ -159,8 +161,10 @@
 						</tr> -->
 					</table>
 						<div class="checkBoxArea">
-							<input type="checkbox" class="checkbox" name="" style="">
-							&nbsp;&nbsp;<label>고객사</label>
+							<label>
+							<input type="checkbox" class="checkbox" name="customer" style="">
+							&nbsp;&nbsp;고객사
+							</label>
 						</div>
 					<br>
 					<hr>
@@ -172,8 +176,84 @@
 			</div>
 		</div>
 	</div>
+	
+	
+	
+	
+	
+	
+	<script>
+	
+	//체크박스 체크 시 disabled
+	$(function() {
+	
+		$(".checkbox").change(function() {
+			
+			if($(".checkbox").prop("checked")) {
+				
+				$("#deptCode").attr("disabled", true);
+				$("#rank").attr("disabled", true);
+			} else {
+			
+				$("#deptCode").attr("disabled", false);
+				$("#rank").attr("disabled", false);
+			}
+			
+		});
+	});
+	
+	
+	//Alert
+	$(".okBtn").click(function(){
+		swal({	
+			  title: 'Are you sure?',
+			  text: "You won't be able to revert this!",
+			  icon: 'warning',
+			  showCancelButton: true,
+			  confirmButtonText: 'Yes, delete it!',
+			  cancelButtonText: 'No, cancel!',
+			  reverseButtons: true
+			}).then((result) => {
+			  if (result.value) {
+			    swalWithBootstrapButtons.fire(
+			      'Deleted!',
+			      'Your file has been deleted.',
+			      'success'
+			    )
+			  } else if (
+			    /* Read more about handling dismissals below */
+			    result.dismiss === Swal.DismissReason.cancel
+			  ) {
+			    swalWithBootstrapButtons.fire(
+			      'Cancelled',
+			      'Your imaginary file is safe :)',
+			      'error'
+			    )
+			  }
+			})
+	});
+	
+	
+	
+	
+	
+	
+	
+	
+	</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </body>
 </html>
+
 
 
 
