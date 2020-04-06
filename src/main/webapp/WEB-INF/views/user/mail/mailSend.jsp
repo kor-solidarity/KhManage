@@ -3,6 +3,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+<!-- include libraries(jQuery, bootstrap) -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- include summernote css/js -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote.min.js"></script>
+
+
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -47,7 +57,10 @@
 	<jsp:include page="/WEB-INF/views/user/common/mailSidebar.jsp"/>
 	<div class="panel panel-headline">
 		<div class="panel-heading">
-	<p style="font-weight: bold; font-size: 35px; margin-top: 10px; margin-left: 10px;">편지 쓰기</p>
+	<div>
+	<img src="resources/img/folder.png" style="width: 30px; height: 30px; float: left; margin-top: 6px; margin-right: 15px; margin-left: 10px;">
+	<p style="font-weight: bold; font-size: 32px; margin-top: 10px; margin-left: 10px;">편지 쓰기</p>
+	</div>	
 	
 	<div id= "btn"style="width: 1620px; height: 100px;" >
 		<button class="wjs_btn" style="width: 100px;">보내기</button>
@@ -85,10 +98,19 @@
 		</table>			
 	
 	</form>
-	</div>
-	</div>
+	
+	<div id="summernote">Hello Summernote</div>
+	
 
+
+	
 </body>
+<script>
+	$(document).ready(function() { 
+		$('#summernote').summernote();
+	});
+</script>
+
 </html>
 
 
