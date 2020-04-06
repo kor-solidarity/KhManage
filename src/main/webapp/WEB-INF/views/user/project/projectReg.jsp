@@ -162,53 +162,61 @@
 							</select>
 						</div>
 						<div class="col-md-1 text-align-right">프로젝트 시작일</div>
-						<div class="col-md-3 text-align-right">
+						<div class="col-md-2 text-align-right">
 							<%--<input type="date" class="" name="" id="">--%>
 							<div class="form-group">
-								<div class='input-group date' id='datetimepicker1'>
-									<input type='text' class="form-control"/>
-									<span class="input-group-addon">
-										<span class="glyphicon glyphicon-calendar"></span>
-									</span>
+								<%--								<div class='input-group date' id='datetimepicker1'>--%>
+								<%--									<input type='text' class="form-control"/>--%>
+								<%--									<span class="input-group-addon">--%>
+								<%--										<span class="glyphicon glyphicon-calendar"></span>--%>
+								<%--									</span>--%>
+								<%--								</div>--%>
+								<%--							</div>--%>
+								<input type="date" name="startDate" id="startDate">
+							</div>
+							<div class="col-md-1 text-align-right">프로젝트 종료일</div>
+							<div class="col-md-2 text-align-right">
+								<%--<input type="date" class="" name="" id="">--%>
+								<div class="form-group">
+									<input type="date" name="endDate" id="endDate">
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<%--project excel--%>
-				<div class="row">
-					<div class="col-md-12">
-						<div class="col-md-1 text-align-right">프로젝트 엑셀</div>
-						<div class="col-md-5">
-							<input type="file" name="project_excel" id="project_excel">
-							<span style="padding-top: 10px">Excel, Xml 파일 업로드 가능</span>
+					<%--project excel--%>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="col-md-1 text-align-right">프로젝트 엑셀</div>
+							<div class="col-md-5">
+								<input type="file" name="project_excel" id="project_excel">
+								<span style="padding-top: 10px">Excel, Xml 파일 업로드 가능</span>
+							</div>
+							<div class="col-md-1 text-align-right">엑셀 템플릿</div>
 						</div>
-						<div class="col-md-1 text-align-right">엑셀 템플릿</div>
 					</div>
-				</div>
-				<%--project details--%>
-				<div class="row">
-					<div class="col-md-12">
-						<div class="col-md-1 text-align-right">프로젝트 설명</div>
-						<div class="col-md-11">
+					<%--project details--%>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="col-md-1 text-align-right">프로젝트 설명</div>
+							<div class="col-md-11">
 							<textarea class="form-control" type="text" name="project_details" id="project_details"
 									  rows="5"></textarea>
+							</div>
 						</div>
 					</div>
-				</div>
-				<br>
-				<div class="row">
-					<div class="col-md-12">
-						<div class="btn btn-primary" style="background: #1E2B44;" onclick="alert('boo');">
-							<i class="fas fa-check"></i>
-							프로젝트 저장
-						</div>
-						<div class="btn" style="background: #E5E5E5;">
-							<i class="fas fa-undo"></i>
-							취소
+					<br>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="btn btn-primary" style="background: #1E2B44;" onclick="alert('boo');">
+								<i class="fas fa-check"></i>
+								프로젝트 저장
+							</div>
+							<div class="btn" style="background: #E5E5E5;">
+								<i class="fas fa-undo"></i>
+								취소
+							</div>
 						</div>
 					</div>
-				</div>
 
 			</form>
 		</div>
