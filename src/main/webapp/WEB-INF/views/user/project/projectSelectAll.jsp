@@ -122,7 +122,7 @@
 
 
 					<tr class="trRange">
-						<td class="td1">KH대학교 학사시스템 개발</td>
+						<td class="td1" onclick="viewProject(0)">KH대학교 학사시스템 개발</td>
 						<td class="tdText">SW개발</td>
 						<td class="tdText">김태원</td>
 						<td class="tdText">개발1부서</td>
@@ -144,6 +144,16 @@
         /* 프로젝트 생성창으로 보내버린다. */
         function gotoProjectCreate () {
             location.href = '${ pageContext.servletContext.contextPath }/projectRegister.pr';
+        }
+
+        /**
+         * 프로젝트 내용 조회
+         *
+         * @param num 프로젝트 번호
+         */
+        function viewProject (num) {
+            // num 은 지금은 안쓰고 실제 코드를 짜기 시작할때 넣는걸로
+            location.href = '${ pageContext.servletContext.contextPath }/viewProject.pr';
         }
 	</script>
 </body>

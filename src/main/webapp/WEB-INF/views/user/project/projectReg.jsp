@@ -155,10 +155,13 @@
 					<div class="col-md-12">
 						<div class="col-md-1 text-align-right">프로젝트 템플릿</div>
 						<div class="col-md-5">
-							<select class="form-control" name="project_template" id="project_template">
-								<option value="0">선택하세요</option>
-								<option value="0">선행개발</option>
-								<option value="0">이것저것</option>
+							<select class="form-control" nam"startDate" id="startDate">
+							</div>
+						</div>
+						<div class="col-md-1 text-align-right">e="project_template" id="project_template">
+							<option value="0">선택하세요</option>
+							<option value="0">선행개발</option>
+							<option value="0">이것저것</option>
 							</select>
 						</div>
 						<div class="col-md-1 text-align-right">프로젝트 시작일</div>
@@ -172,14 +175,11 @@
 								<%--									</span>--%>
 								<%--								</div>--%>
 								<%--							</div>--%>
-								<input type="date" name="startDate" id="startDate">
-							</div>
-							<div class="col-md-1 text-align-right">프로젝트 종료일</div>
-							<div class="col-md-2 text-align-right">
-								<%--<input type="date" class="" name="" id="">--%>
-								<div class="form-group">
-									<input type="date" name="endDate" id="endDate">
-								</div>
+								<input type="date" name=프로젝트 종료일</div>
+						<div class="col-md-2 text-align-right">
+							<%--<input type="date" class="" name="" id="">--%>
+							<div class="form-group">
+								<input type="date" name="endDate" id="endDate">
 							</div>
 						</div>
 					</div>
