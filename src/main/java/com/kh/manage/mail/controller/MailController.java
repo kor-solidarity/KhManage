@@ -1,7 +1,14 @@
 package com.kh.manage.mail.controller;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.kh.manage.mail.model.vo.Mail;
 
 @Controller 
 public class MailController {
@@ -57,6 +64,26 @@ public class MailController {
 		
 		return "user/mail//mailNread";
 	}
+	@RequestMapping("/mailComplete.ma")
+	public String mailComplete() {
+		
+		return "user/mail//mailComplete";
+	}
+	
+	
+	
+	
+	/* @PostMapping("/sendMail") */
+	@RequestMapping("/sendMail")
+	public String sendMail(Mail m) {
+		
+		System.out.println(m);
+		
+		
+		return "";
+	}
+	
+	
 	
 }
 
