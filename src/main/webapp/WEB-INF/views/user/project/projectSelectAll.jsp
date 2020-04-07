@@ -122,7 +122,7 @@
 
 
 					<tr class="trRange">
-						<td class="td1" onclick="viewProject(0)">KH대학교 학사시스템 개발</td>
+						<td class="td1"><a href="${ path }/viewProject.pr">KH대학교 학사시스템 개발</a></td>
 						<td class="tdText">SW개발</td>
 						<td class="tdText">김태원</td>
 						<td class="tdText">개발1부서</td>
@@ -155,6 +155,12 @@
             // num 은 지금은 안쓰고 실제 코드를 짜기 시작할때 넣는걸로
             location.href = '${ path }/viewProject.pr';
         }
+
+        // todo tasks that needs to be done:
+        // 1. 로딩 완료되면 navbar 부분 선택 적용.
+        // 2. 적용 후 onclick 무력화
+        // 3. 프로젝트 내내 해당
+
 	</script>
 </body>
 </html>
