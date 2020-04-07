@@ -11,6 +11,7 @@
 		font-size:14px;
 	}
 </style>
+
 </head>
 <body>
 <div id="sidebar-nav" class="sidebar">
@@ -40,9 +41,9 @@
 								<i class="icon-submenu lnr lnr-chevron-left"></i></a>
 						</li>
 						
-						<li><a href="#subPages5" data-toggle="collapse"
+						<li><a href="templateManage.am"
 							class="collapsed"><i class="lnr lnr-paperclip"></i><span>템플릿 관리</span>
-								<i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							</a>
 						</li>
 						
 						<li><a href="departmentManage.am"

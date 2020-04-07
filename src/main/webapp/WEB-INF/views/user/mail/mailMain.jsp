@@ -140,12 +140,14 @@
 	</div>	
 </body>
 <script>
-	$("#mainTable tr").click(function(){
-	 /* var num = $(this).parent().children("input").val(); */
+	$("tr").click(function(){
+	 var num = $(this).children("td").eq(3).text(); 
 	 
-/* 	 location.href="mailReceived.ma";
- */	 
-});
+	 console.log(num);
+	 
+	 location.href="mailReceived.ma";
+	 
+	});
 
 </script>
 </html>

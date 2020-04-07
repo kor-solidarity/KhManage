@@ -31,7 +31,7 @@
 						</a>
 					</div>
 					<ul class="nav" style="margin-top: 20px;">
-						<li><a href="mailReceived.ma"  class="collapsed">
+						<li><a href="mailMain.ma"  class="collapsed">
 							<i class="lnr lnr-envelope"></i>
 							<span>받은 메일함</span></a>
 							<div id="subPages" class="collapse ">

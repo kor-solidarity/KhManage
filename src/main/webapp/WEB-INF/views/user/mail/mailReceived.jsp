@@ -33,7 +33,7 @@
 	}
 	.mailtd2{
 		width: 500px;
-		height: 60px;
+		height: 40px;
 	}
 	.star{
 		width: 18px;
@@ -83,11 +83,18 @@
 		
 	<hr align="left" style="border: solid 1px #C7C5C5; width:90%;  ">	
 	
-	<div id="mailtext">
+	<table>
+	<tr>
+		<td>
+		<div id="mailtext">
+		</div>
+		
+		</td>
+	</tr>
+	</table>
 	
 	
 	
-	</div>
 	
 	<hr align="left" style="border: solid 1px #C7C5C5; width:90%;  ">
 	</div>
