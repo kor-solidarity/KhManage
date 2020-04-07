@@ -119,11 +119,6 @@ body {
 				<td id="creatChat"><i class="fas fa-comment-medical" onclick="location.href='showCreatChat.ct'"
 					style="color: white; font-size: 34px;"></i></td>
 			</tr>
-			<tr height="20px;"></tr>
-			<tr align="center">
-				<td><i class="fas fa-ellipsis-h"
-					style="color: white; font-size: 34px;"></i></td>
-			</tr>
 		</table>
 	</div>
 </body>
