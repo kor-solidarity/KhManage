@@ -11,5 +11,11 @@ public class TemplateController {
 		
 		return "admin/templateManage/templatePage";
 	}
+	
+	@RequestMapping("/insertTemplate.am")
+	public String InsertTemplate() {
+		
+		return "admin/templateManage/insertTemplate";
+	}
 
 }

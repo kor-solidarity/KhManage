@@ -76,7 +76,7 @@
 					<div style="width:100%; height:700px; margin:0 auto; overflow:auto;">
 						<table align="left" style="margin-bottom:10px;">	
 							<tr>
-								<td><a href="insertaccessPage.am"><button class="projectBtn"><i class="far fa-plus-square"></i> &nbsp;템플릿 등록</button></a>
+								<td><a href="insertTemplate.am"><button class="projectBtn"><i class="far fa-plus-square"></i> &nbsp;템플릿 등록</button></a>
 								<td><button class="projectBtn"><i class="fas fa-download"></i> &nbsp;액셀 다운로드</button>
 								<td colspan="6"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
@@ -92,10 +92,12 @@
 								<td class="tdText thRange"></td>
 							</tr>
 							<tr>
-								<td class="thRange th1"><input type="text" class="inputCss" style="width:280px;"></td>
-								<td class="tdText thRange" style="width:370px;"><input type="text" class="inputCss" style="width:360px"></td>
-								<td class="tdText thRange"><input type="date" class="inputCss" style="width:200px;"></td>
-								<td class="tdText thRange"><input type="date" class="inputCss" style="width:200px;"></td>
+								<td class="thRange th1"><input type="text" class="inputCss" style="width:390px;"></td>
+								<td class="tdText thRange" style="width:370px;"><input type="text" class="inputCss" style="width:400px"></td>
+								<td class="tdText thRange"><input type="date" class="inputCss" style="width:110px;"></td>
+								<td class="tdText thRange"><input type="date" class="inputCss" style="width:110px;"></td>
+								<td class="tdText thRange"><input type="date" class="inputCss" style="width:110px;"></td>
+								<td class="tdText thRange"><div style="width: 100px;"></div></td>
 							</tr>
 
 							<tr class="trRange"	id="accessList">
@@ -103,15 +105,19 @@
 								<td class="tdText">관리자접근가능한 인원들입니다.</td>
 								<td class="tdText">20-03-20</td>
 								<td class="tdText">20-03-02</td>
+								<td class="tdText">20-03-02</td>
+								<td class="tdText"><button>Delete</button></td>
 							</tr>
 							<tr class="trRange"	id="accessList">
 								<td class="td1">정보공유게시판접근인원</td>
 								<td class="tdText">관리자접근가능한 인원들입니다.</td>
 								<td class="tdText">20-03-20</td>
 								<td class="tdText">20-03-02</td>
+								<td class="tdText">20-03-02</td>
+								<td class="tdText"><button>Delete</button></td>
 							</tr>
 							<tr class="pagingArea">
-								<td colspan="4">
+								<td colspan="6">
 									<div class="paging"><< < 1 2 > >></div>
 								</td>
 							</tr>

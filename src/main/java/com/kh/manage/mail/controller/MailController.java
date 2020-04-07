@@ -72,12 +72,12 @@ public class MailController {
 	
 	
 	
-	
-	/* @PostMapping("/sendMail") */
 	@RequestMapping("/sendMail")
 	public String sendMail(Mail m) {
 		
 		System.out.println(m);
+		
+		
 		
 		
 		return "";
