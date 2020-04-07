@@ -5,7 +5,6 @@
 <html lang="en">
 
 <head>
-<head>
 <title>Dashboard | Klorofil - Free Bootstrap Dashboard Template</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -14,7 +13,7 @@
 	<!-- VENDOR CSS -->
 	<link rel="stylesheet" href="<c:url value="/resources/assets/vendor/bootstrap/css/bootstrap.css"/>">
 	<link rel="stylesheet" href="<c:url value="/resources/assets/vendor/font-awesome/css/font-awesome.min.css"/>">
-	
+
 	<link rel="stylesheet" href="<c:url value="/resources/assets/vendor/linearicons/style.css"/>">
 	<link rel="stylesheet" href="<c:url value="/resources/assets/vendor/chartist/css/chartist-custom.css"/>">
 	<!-- MAIN CSS -->
@@ -32,7 +31,7 @@
 	<script src="<c:url value="/resources/assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"/>"></script>
 	<script src="<c:url value="/resources/assets/vendor/chartist/js/chartist.min.js"/>"></script>
 	<script src="<c:url value="/resources/assets/scripts/klorofil-common.js"/>"></script>
-	
+
 <style>
 </style>
 </head>
@@ -91,7 +90,7 @@
 						<li class="dropdown"><a id="chat" class="dropdown-toggle"
 							data-toggle="dropdown"> <i class="fas fa-comment-dots" style="font-size: 25px; color: #1E2B44;"></i>
 							</a></li>
-						
+
 						<!-- 메일 -->
 						<li class="dropdown"><a href="mailMain.ma" class="dropdown-toggle"> <i class="fas fa-envelope"
 								style="font-size: 25px; color: #1E2B44;"></i></a></li>

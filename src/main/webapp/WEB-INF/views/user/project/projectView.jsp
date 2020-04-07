@@ -23,7 +23,7 @@
 		}
 	</style>
 </head>
-<body onload="$('#route1').text('프로젝트 등록')">
+<body onload="$('#route1').text('프로젝트 센터')">
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
 	<jsp:include page="/WEB-INF/views/user/common/sidebar.jsp"/>
 	<jsp:include page="/WEB-INF/views/user/common/projectNav.jsp"/>
