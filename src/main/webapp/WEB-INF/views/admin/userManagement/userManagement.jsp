@@ -77,6 +77,8 @@
       width:50%;
    }
    
+   .titleId{color:#5E738B; font-weight: bold;}
+   
 </style>
 </head>
 <body onload="$('#route1').text('관리자'); $('#route2').text('사용자관리');">
@@ -115,7 +117,7 @@
 						<td class="tdText thRange"><input type="text" class="inputCss" style="visibility:hidden; width:160px;"></td>
 					</tr>
 					<tr class="trRange">
-						<td class="td1"><a href="#">데모사용자</a></td>
+						<td class="td1"><a href="#" id="memberId">데모사용자</a></td>
 						<td class="tdText">연구소</td>
 						<td class="tdText">과장</td>
 						<td class="tdText">8건</td>
@@ -127,7 +129,7 @@
 						</td>
 					</tr>
 					<tr class="trRange">
-						<td class="td1"><a href="#">데모사용자</a></td>
+						<td class="td1"><a href="#" id="memberId">데모사용자</a></td>
 						<td class="tdText">연구소</td>
 						<td class="tdText">과장</td>
 						<td class="tdText">8건</td>
@@ -139,7 +141,7 @@
 						</td>
 					</tr>
 					<tr class="trRange">
-						<td class="td1"><a href="#">데모사용자</a></td>
+						<td class="td1"><a href="#" id="memberId">데모사용자</a></td>
 						<td class="tdText">연구소</td>
 						<td class="tdText">과장</td>
 						<td class="tdText">8건</td>
@@ -151,7 +153,7 @@
 						</td>
 					</tr>
 					<tr class="trRange">
-						<td class="td1"><a href="#">데모사용자</a></td>
+						<td class="td1"><a href="#" id="memberId">데모사용자</a></td>
 						<td class="tdText">연구소</td>
 						<td class="tdText">과장</td>
 						<td class="tdText">8건</td>
@@ -177,6 +179,67 @@
 		</div>
 		
 	
+		<div class="modal fade" id="myModal"role="dialog" aria-labelledby="gridSystemModalLabel" aria-hidden="true">
+		    <div class="modal-dialog">
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+		          <h4 class="modal-title" id="gridSystemModalLabel"><i class="fas fa-th-large"></i>&nbsp;사용자 정보 수정</h4>
+		        </div>
+		        <div class="modal-body">
+		          <div class="container-fluid">
+		            <div class="row" style="margin: 10px;  padding:10px; ">
+		              <table id="buseoInfoTable" style="border-spacing:0 10px; border-collapse: separate;">
+						<tr>
+							<td class="titleId" style="width: 130px;">이름</td>
+							<td><input type="text" class="inputMenu form-control" style="width: 280px;"></td>
+						</tr>
+						<tr>
+							<td class="titleId">이메일</td>
+							<td><input type="text" class="inputMenu form-control" style="width: 280px;"></td>
+						</tr>
+						<tr>
+							<td class="titleId">부서</td>
+							<td><input type="text" class="inputMenu form-control" style="width: 280px;"></td>
+						</tr>
+						<tr>
+							<td class="titleId">직급</td>
+							<td><input type="text" class="inputMenu form-control" style="width: 280px;"></td>
+						</tr>
+						<tr>
+							<td class="titleId">사용여부</td>
+							<td style="align:left"><input type="checkbox" class="inputMenu" style="width: 280px;"></td>
+						</tr>
+					 </table>
+		            </div>
+		            <div class="row">
+		              <div class="col-sm-9">
+		                <div class="row"></div>
+		              </div>
+		            </div>
+		          </div>
+		        </div>
+		        <div class="modal-footer">
+		          <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+		          <button type="button" class="btn btn-primary" style="background:#1E2B44; outline:none; border:none;">저장</button>
+		        </div>
+		      </div><!-- /.modal-content -->
+		    </div><!-- /.modal-dialog -->
+	  	</div><!-- /.modal -->
+	
+	
+	
+	
+	
+	<script>
+	
+	//모달
+	$("#memberId").click(function(){
+		$('#myModal').modal('show');
+	})
+	
+	
+	</script>
 	
 	
 	
