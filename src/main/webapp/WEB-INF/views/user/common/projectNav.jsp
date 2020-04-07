@@ -37,7 +37,7 @@
 		<li role="presentation" class="active"><a href="#">요약정보</a></li>
 		<li role="presentation"><a href="#">기본정보</a></li>
 		<li role="presentation"><a href="#">리소스</a></li>
-		<li role="presentation"><a href="${ pagecontext.servletcontext.contextpath }/aa">프로젝트작업</a></li>
+		<li role="presentation"><a href="${ path}/aa">프로젝트작업</a></li>
 		<li role="presentation"><a href="#">배정현황</a></li>
 		<li role="presentation"><a href="#">이슈</a></li>
 		<li role="presentation"><a href="#">산출물</a></li>
@@ -47,4 +47,8 @@
 	도는 방식:
 
 	--%>
+	<script>
+		console.log("{ path}: " + "${path}");
+
+	</script>
 </div>
