@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
 .menuArea {
 	width: 47%;
@@ -252,7 +253,7 @@ ul{
 						</tr>
 						<tr>
 							<td>
-								<button class="projectBtn"><i class="fas fa-check"></i>&nbsp;저장</button>
+								<button class="projectBtn" onclick="sweetTest();"><i class="fas fa-check"></i>&nbsp;저장</button>
 							</td>
 							<td>
 								 <button class="cancleBtn"><i class="fas fa-ban"></i>&nbsp;취소</button>
@@ -403,8 +404,31 @@ ul{
 		if ($('#tree_menu').is(':visible')) {
 		  tree_menu();
 		}
-		
-		
+	</script>
+	<script>
+	function sweetTest(){
+		swal({
+			  title: "해당 내용을 저장하시겠습니까?",
+			  icon: "warning",
+			  buttons: ["취소", "저장"],
+			  dangerMode: true,
+			})
+			.then((willDelete) => {
+			  if (willDelete) {
+			    swal({
+			    	title: "저장 완료!",
+			      	icon: "success"
+			    }).then((value) => {	// 애니메이션 V 나오는 부분!
+			    	location.href="#";
+			    });
+			  } else {
+				  swal({
+				  	title: "취소 하셨습니다.",
+				    icon: "error"
+				  });
+			  }
+		});
+	}
 	</script>
 </body>
 </html>

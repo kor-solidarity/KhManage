@@ -143,9 +143,9 @@ body {
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
-<script src="<c:url value="/resources/assets/vendor/bootstrap/js/bootstrap.min.js"/>"></script>
 <link rel="stylesheet" href="<c:url value="/resources/assets/vendor/bootstrap/css/bootstrap.css"/>">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
@@ -200,7 +200,18 @@ body {
 					</div>
 				</div>
 			</div>			
-
+	
+	  <div>
+        <input type="text" id="sender" value="${sessionScope.member.m_id }" style="display: none;">
+        <input type="text" id="messageinput">
+    </div>
+    <div>
+        <button type="button" onclick="openSocket();">Open</button>
+        <button type="button" onclick="send();">Send</button>
+        <button type="button" onclick="closeSocket();">Close</button>
+    </div>
+    <!-- Server responses get written here -->
+    <div id="messages"></div>
 
 
 		</div>
@@ -209,7 +220,7 @@ body {
 		<!-- 채팅영역 끝 -->
 		
 		<div style="width:90%; height:90px; background:white; border:2px solid #1E2B44; border-radius:5px; margin:0 auto; margin-top: 5px;">
-			<textarea style="resize:none; width:85%; height:73%; border:none; outline:none; overflow:hidden; border-bottom: 2px solid #EEEEEE;"></textarea>
+			<textarea id="chatContent" class="chatContent" style="resize:none; width:85%; height:73%; border:none; outline:none; overflow:hidden; border-bottom: 2px solid #EEEEEE;"></textarea>
 			
 			<input type="button" id="sendBtn" value="전송" style="background:#1E2B44; border:1px solid #1E2B44; color:white; width:15%; height:100%; float:right; outline:none;">
 			
@@ -218,6 +229,15 @@ body {
 		
 		
 	</div>	
+	<div id="message">sssss</div>
+	  <div>
+        <input type="text" id="sender" value="${sessionScope.member.m_id }" style="display: none;">
+    </div>
+	<button type="button" onclick="openSocket();">Open</button>
+	<button type="button" onclick="send();">Send</button>
+        <button type="button" onclick="closeSocket();">Close</button>
+
+
 		
 	<div class="modal fade" id="myModal" role="dialog"
 		aria-labelledby="gridSystemModalLabel" aria-hidden="true">
@@ -266,9 +286,48 @@ body {
 		<!-- /.modal-dialog -->
 	</div>
 	<!-- /.modal -->
+	<script type="text/javascript">
+        var ws;
+        var messages=document.getElementById("messages");
+        
+        function openSocket(){
+            if(ws!==undefined && ws.readyState!==WebSocket.CLOSED){
+                writeResponse("WebSocket is already opened.");
+                return;
+            }
+            //웹소켓 객체 만드는 코드
+            ws=new WebSocket("ws://localhost:8001/ma/chatRoom.ct");
+            
+            ws.onopen=function(event){
+                if(event.data===undefined) return;
+                
+                writeResponse(event.data);
+            };
+            ws.onmessage=function(event){
+                writeResponse(event.data);
+            };
+            ws.onclose=function(event){
+                writeResponse("Connection closed");
+            }
+        }
+        
+        function send(){
+            var text="sss";
+            ws.send(text);
+            text="";
+        }
+        
+        function closeSocket(){
+            ws.close();
+        }
+        function writeResponse(text){
+            messages.innerHTML+="<br/>"+text;
+        }
 
+</script>
 
 	<script>
+        var str ="";   
     $("#userList").click(function(){
 		$('#myModal').modal('show');
 	})
@@ -278,8 +337,19 @@ body {
 	})
 	
 	$("#sendBtn").click(function(){
-		$("#chatArea").append("<div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send'> 안녕하십니까! 신입사원 원준성입니다. <span class='msg_time_send'>8:55</span></div></div>");
+		str = $("#chatContent").val();
+		$("#chatArea").append("<div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send'>"+str+"<span class='msg_time_send'>8:55</span></div></div>");
+		str = $("#chatContent").val("");
 	});
+    $("#chatContent").keydown(function(event){
+    	if(event.keyCode == '13' && !event.shiftKey){
+				str = $("#chatContent").val();
+		    	$("#chatArea").append("<div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send'>"+ str + "<span class='msg_time_send'>8:55</span></div></div>");
+				str = $("#chatContent").val("");
+    	}else if(event.keyCode == '13' && event.shiftKey){
+    		str += '/n';
+    	}
+    });
 	
   </script>
 
