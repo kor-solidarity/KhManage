@@ -16,7 +16,7 @@
 		VALUES(SEQ_AG.NEXTVAL, #{accessName}, #{aContent}, 'Y')
 	</insert>
 	
-	<select id="selectAll" resultMap="accessResultSet">
+	<select id="selectAll" resultMap="accessResultSet" >
 		SELECT ACCESSGROUP_NO
 			  ,ACCESS_NAME
 			  ,A_CONTENT
@@ -24,6 +24,28 @@
 		FROM ACCESSGROUP	  
 	</select>
 	
+	<select id="getListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM ACCESSGROUP
+	</select>
+	
+	<select id="searchAccess" resultMap="accessResultSet">
+		SELECT ACCESSGROUP_NO
+			  ,ACCESS_NAME
+			  ,A_CONTENT
+			  ,STATUS
+		FROM ACCESSGROUP	
+		WHERE 1 = 1
+		<!-- <if test="title != null"> -->
+			AND ACCESS_NAME LIKE '%' || #{accessName} || '%'
+		<!-- </if> -->
+		<!-- <if test="writer != null">
+			AND USER_NAME = #{writer}
+		</if>
+		<if test="content != null">
+			AND BCONTENT LIKE '%' || #{content} || '%'
+		</if> -->
+	</select>
 
 </mapper>
 

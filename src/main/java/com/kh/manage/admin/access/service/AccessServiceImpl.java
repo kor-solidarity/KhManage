@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.manage.admin.access.dao.AccessDao;
 import com.kh.manage.admin.access.vo.Access;
+import com.kh.manage.common.PageInfo;
 
 @Service
 public class AccessServiceImpl implements AccessService{
@@ -23,9 +24,21 @@ public class AccessServiceImpl implements AccessService{
 	}
 
 	@Override
-	public List<Access> accessSelectAll() {
+	public List<Access> accessSelectAll(PageInfo pi) {
 		
-		return ad.accessSelectAll(sqlSession);
+		return ad.accessSelectAll(sqlSession, pi);
+	}
+
+	@Override
+	public int getListCount() {
+		
+		return ad.getListCount(sqlSession);
+	}
+
+	@Override
+	public List<Access> searchAccess(Access access) {
+
+		return ad.searchAccess(sqlSession, access);
 	}
 	
 }

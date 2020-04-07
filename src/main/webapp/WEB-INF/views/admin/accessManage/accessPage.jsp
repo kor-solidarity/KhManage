@@ -90,8 +90,8 @@
 								<td class="tdText thRange">수정일</td>
 								<td class="tdText thRange">생성일</td>
 							</tr>
-							<tr>
-								<td class="thRange th1"><input type="text" class="inputCss" style="width:280px;"></td>
+							<tr class="front">
+								<td class="thRange th1"><input type="search" id="nameSearch" class="inputCss" style="width:280px;"></td>
 								<td class="tdText thRange" style="width:370px;"><input type="text" class="inputCss" style="width:360px"></td>
 								<td class="tdText thRange"><input type="date" class="inputCss" style="width:200px;"></td>
 								<td class="tdText thRange"><input type="date" class="inputCss" style="width:200px;"></td>
@@ -106,7 +106,39 @@
 					 	</c:forEach>				
 							<tr class="pagingArea">
 								<td colspan="4">
-									<div class="paging"><< < 1 2 > >></div>
+									<div class="paging">
+										<c:if test="${pi.currentPage <= 1 }">
+												[이전] &nbsp;
+												</c:if>
+												<c:if test="${ pi.currentPage > 1 }">
+												<c:url var="alistBack" value="accessManage.am">
+													<c:param name="currentPage" value="${pi.currentPage - 1 }"/>
+												</c:url>
+													<a href="${ alistBack }">[이전]</a>&nbsp;
+												</c:if>
+												<c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage }">
+													<c:if test="${p eq pi.currentPage }">
+														<font color="red" size="4"><b>[${p }]</b></font>
+													</c:if>
+													<c:if test="${p ne pi.currentPage }">
+														<c:url var="alistCheck" value="accessManage.am">
+															<c:param name="currentPage" value="${p }"/>
+														</c:url>
+														
+														<a href="${alistCheck }"> ${p}</a>
+													</c:if>
+												</c:forEach>
+												
+												<c:if test="${pi.currentPage >= pi.endPage }">
+													[다음] &nbsp;
+												</c:if>
+												<c:if test="${pi.currentPage < pi.endPage }">
+												<c:url var="alistEnd" value="accessManage.am">
+													<c:param name="currentPage" value="${pi.currentPage + 1 }"/>
+												</c:url>
+													<a href="${alistEnd}">[다음]</a>
+												</c:if>									
+									</div>
 								</td>
 							</tr>
 						</table>
@@ -114,6 +146,27 @@
 							$(function(){
 								$("#projectTable").find('.td1').on('click', function(){
 									location.href='accessDetailPage.am?num='+$(this).text();
+								});
+							});
+						</script>
+						
+						<script>
+							$(function(){
+								$("#nameSearch").keyup(function(){
+									var name = $(this).val();
+									 $.ajax({
+										url:'searchAccess.am',
+										type: 'post',
+										data:{accessName:name},
+										
+									 success:function(data){
+											if(data != ""){
+												console.log(data[0]['accessName']);
+												$(".trRange").empty();
+												$(".front").after("<tr class='trRange'	id='accessList'> <td class='td1'>"+ data[0]['accessName']+"</td> <td class='tdText'>"+ data[0]['aContent']+"</td><td class='tdText'>20-03-20</td><td class='tdText'>20-03-02</td></tr>");
+											}
+									 }
+									}); 
 								});
 							});
 						</script>
