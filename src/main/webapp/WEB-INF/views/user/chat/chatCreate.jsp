@@ -149,7 +149,7 @@ body {
 	
 	
 	<div id="section2"
-		style="background: #EEEEEE; width: 437px; height: 615px; float: left;">
+		style="background: #EEEEEE; width: 430px; height: 615px; float: left;">
 		<table id="chatMainTable" style="width:100%;" align="center">
 			<tr>
 				<td colspan="3">

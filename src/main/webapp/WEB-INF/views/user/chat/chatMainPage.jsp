@@ -151,13 +151,13 @@ body {
 <body>
 	<jsp:include page="/WEB-INF/views/user/chat/chatHeader.jsp" />
 	<div id="section"
-		style="background: #EEEEEE; width: 437px; height: 175px; float: left;">
+		style="background: #EEEEEE; width: 430px; height: 175px; float: left;">
 		<table id="chatMainTable" align="center" style="width: 100%;">
 			<tr height="5px;"></tr>
 			<tr>
 				<td colspan="3">
 					<div
-						style="background: white; height: 90px; width: 100%; margin: 0 auto; border-bottom: 2px solid white; color: #1E2B44;">
+						style="background: #EEEEEE; height: 90px; width: 100%; margin: 0 auto; border-bottom: 2px solid white; color: #1E2B44;">
 						<label
 							style="font-size: 18px; color: #1E2B44; font-weight: 600; margin-bottom: 10px; margin-left: 10px; margin-top: 5px;">메신저</label><br>
 						<div class="input-group" style="width: 400px; height: 30px;"
@@ -176,93 +176,47 @@ body {
 			</tr>
 			<tr height="5px;"></tr>
 			<tr>
-				<td style="width: 110px; border-bottom: 4px solid white;">
-					<div class="box" style="background: white;">
+				<td style="width: 110px; border-bottom: 4px solid white; background:#24415C; color:white;">
+					<div class="box" style="background:#24415C;">
 						<img class="profile"
 							src="<c:url value="/resources/img/profile.png"/>">
 					</div>
 				</td>
 				<td align="center"
-					style="width: 120px; border-bottom: 4px solid white;">UI/UX개발
+					style="width: 120px; border-bottom: 4px solid white; background:#24415C; color:white;">UI/UX개발
 					1팀 / 팀장</td>
 				<td align="center"
-					style="width: 120px; border-bottom: 4px solid white;">김태원</td>
+					style="width: 120px; border-bottom: 4px solid white; background:#24415C; color:white;">김태원</td>
 			</tr>
 		</table>
 	</div>
 	<label style="margin-top: 8px; margin-left: 7px;">나의 채팅방</label>
 	<div
-		style="background: white; width: 437px; height: 400px; display: inline-block; overflow: auto;">
+		style="background: #EEEEEE; width: 430px; height: 400px; display: inline-block; overflow: auto;">
 		
 		<table id="chatMain" align="center" style="width: 100%;">
 			<tr class="chatRoom" style="margin-bottom: 5px;">
-				<td style="background: #EEEEEE; height: 60px; width: 90px;"> <input class="chatNo" type="hidden" value="2">
+				<td style="background: #24415C; height: 60px; width: 90px;"> <input class="chatNo" type="hidden" value="2">
 					<div class="count" align="center">3</div>
 				</td>
-				<td style="background: #EEEEEE; height: 60px; width: 150px;"><label>파이널
+				<td style="background: #24415C; height: 60px; width: 150px; color:white;"><label>파이널
 						프로젝트팀</label><br> 안녕하세요~</td>
 				<td
-					style="background: #EEEEEE; height: 60px; width: 90px; font-size: 12px;">20.04.01
+					style="background: #24415C; height: 60px; width: 90px; color:white; font-size: 12px;">20.04.01
 					20:11</td>
 			</tr>
-			<tr height="5px;" style="background: white;"></tr>
+			<tr height="3px;" style="background: white;"></tr>
 			<tr class="chatRoom" style="margin-bottom: 5px;">
-				<td style="background: #EEEEEE; height: 60px; width: 90px;"> <input class="chatNo" type="hidden" value="3">
+				<td style="background: #24415C; height: 60px; width: 90px; color:white;"> <input class="chatNo" type="hidden" value="3">
 					<div class="count" align="center">1</div>
 				</td>
-				<td style="background: #EEEEEE; height: 60px; width: 150px;"><label>개발부서
+				<td style="background: #24415C; height: 60px; width: 150px; color:white;"><label>개발부서
 						동기팀</label><br> 하..</td>
 				<td
-					style="background: #EEEEEE; height: 60px; width: 90px; font-size: 12px;">20.04.03
+					style="background: #24415C; height: 60px; width: 90px; font-size: 12px; color:white;">20.04.03
 					12:58</td>
 			</tr>
 
-			<tr height="5px;" style="background: white;"></tr>
-			<tr class="chatRoom" style="margin-bottom: 5px;">
-				<td style="background: #EEEEEE; height: 60px; width: 90px;"> <input class="chatNo" type="hidden" value="4">
-				
-				</td> 
-				<td style="background: #EEEEEE; height: 60px; width: 150px;">
-				<label>같은 팀</label><br> 이게 뭐지</td>
-				<td style="background: #EEEEEE; height: 60px; width: 90px; font-size: 12px;">20.04.06 10:35</td>
-			</tr>
-
-			<tr height="5px;" style="background: white;"></tr>
-			<tr class="chatRoom" style="margin-bottom: 5px;">
-				<td style="background: #EEEEEE; height: 60px; width: 90px;"> <input class="chatNo" type="hidden" value="5">
-					<div class="count" align="center">300+</div>
-				</td>
-				<td style="background: #EEEEEE; height: 60px; width: 150px;"><label>개발
-						프로젝트팀</label><br> 그럼 이렇게 진행하겠습니다~</td>
-				<td
-					style="background: #EEEEEE; height: 60px; width: 90px; font-size: 12px;">20.04.06
-					19:43</td>
-			</tr>
-
-			<tr height="5px;" style="background: white;"></tr>
-			<tr class="chatRoom" style="margin-bottom: 5px;">
-				<td style="background: #EEEEEE; height: 60px; width: 90px;"> <input class="chatNo" type="hidden" value="6">
-					<div class="count" align="center">3</div>
-				</td>
-				<td style="background: #EEEEEE; height: 60px; width: 150px;"><label>파이널
-						프로젝트팀</label><br> 안녕하세요~</td>
-				<td
-					style="background: #EEEEEE; height: 60px; width: 90px; font-size: 12px;">20.04.01
-					20:11</td>
-			</tr>
-
-			<tr height="5px;" style="background: white;"></tr>
-			<tr class="chatRoom" style="margin-bottom: 5px;">
-				<td style="background: #EEEEEE; height: 60px; width: 90px;"> <input class="chatNo" type="hidden" value="7">
-					<div class="count" align="center">3</div>
-				</td>
-				<td style="background: #EEEEEE; height: 60px; width: 150px;"><label>파이널
-						프로젝트팀</label><br> 안녕하세요~</td>
-				<td
-					style="background: #EEEEEE; height: 60px; width: 90px; font-size: 12px;">20.04.01
-					20:11</td>
-			</tr>
-			<tr height="5px;"></tr>
 		</table>
 	</div>
 
