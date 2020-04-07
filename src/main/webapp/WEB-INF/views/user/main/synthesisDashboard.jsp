@@ -64,7 +64,7 @@
 									<td class="tdmidTable td"><a href="#">0</a></td>
 									<td class="tdmidTable td"><a href="#">2</a></td>
 									<td class="tdmidTable td">
-										<a href="#"> <img src="<c:url value="/resources/assets/img/searchMark.png"/>" style="width: 12px; height: 12px;">
+										<%-- <a href="#"> <img src="<c:url value="/resources/assets/img/searchMark.png"/>" style="width: 12px; height: 12px;"> --%>
 									</td>
 								</tr>
 							</table>
