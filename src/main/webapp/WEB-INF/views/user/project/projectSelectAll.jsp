@@ -77,7 +77,7 @@
 					<tr>
 						<td>
 							<button class="projectBtn"
-									onclick="location.href = '${ pageContext.servletContext.contextPath }/projectRegister.pr'">
+									onclick="location.href = '${ path }/projectRegister.pr'">
 								<i class="fas fa-edit"></i> &nbsp;프로젝트 등록
 							</button>
 						<td>
@@ -143,7 +143,7 @@
 
         /* 프로젝트 생성창으로 보내버린다. */
         function gotoProjectCreate () {
-            location.href = '${ pageContext.servletContext.contextPath }/projectRegister.pr';
+            location.href = '${ path }/projectRegister.pr';
         }
 
         /**
@@ -153,7 +153,7 @@
          */
         function viewProject (num) {
             // num 은 지금은 안쓰고 실제 코드를 짜기 시작할때 넣는걸로
-            location.href = '${ pageContext.servletContext.contextPath }/viewProject.pr';
+            location.href = '${ path }/viewProject.pr';
         }
 	</script>
 </body>
