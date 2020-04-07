@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,8 +12,8 @@
 .midTable{width:100%;}
 .tdMid {width: 49%; height: 380px; padding: 20px; border: 1px solid lightgray; vertical-align:top; background: white;}
 .thmidTable{border: 1px solid lightgray; height: 38px; text-align: center; font-size:15px; center; border:none}
-.tdmidTable{height: 38px; text-align: center;}
-
+.tdmidTable{height: 38px; text-align: center; font-size: 14px;}
+.panel-heading
 
 </style>
 
@@ -24,7 +25,7 @@
 	<div id="wrap">
 	
 		<div class="">
-			<div class="panel-heading">
+			<div class="panel-heading" style="margin-top: -20px;">
 				<br>
 				<div class="middle">
 					<table class="midTable">
@@ -62,7 +63,9 @@
 									<td class="tdmidTable td">97%</td>
 									<td class="tdmidTable td"><a href="#">0</a></td>
 									<td class="tdmidTable td"><a href="#">2</a></td>
-									<td class="tdmidTable td"></td>
+									<td class="tdmidTable td">
+										<a href="#"> <img src="<c:url value="/resources/assets/img/searchMark.png"/>" style="width: 12px; height: 12px;">
+									</td>
 								</tr>
 							</table>
 							</td>
@@ -72,8 +75,115 @@
 			</div>
 		</div>
 
-
-
+		<div class="">
+			<div class="panel-heading">
+				<br>
+				<div class="middle">
+					<table class="midTable">
+						<tr>
+							<td class="tdMid"><b>프로젝트 진행현황</b>
+							<hr>
+								<div class="tableDiv">
+									<table border="1" class="projectInfoTable">
+										<tr>
+											<td class="pjtTd td">프로젝트 명</td>
+											<td class="pjtTd2 td">프로젝트X</td>
+											<td class="pjtTd3 td"></td>
+											<td class="pjtTd4 td"></td>
+										</tr>
+										<tr>
+											<td class="pjtTd td">프로젝트 번호</td>
+											<td class="pjtTd2 td"></td>
+											<td class="pjtTd3 td"></td>
+											<td class="pjtTd4 td"></td>
+										</tr>
+										<tr>
+											<td class="pjtTd td">개발 형태</td>
+											<td class="pjtTd2 td">양산개발</td>
+											<td class="pjtTd3 td">개발 등급</td>
+											<td class="pjtTd4 td">SS</td>
+										</tr>
+										<tr>
+											<td class="pjtTd td">PMO</td>
+											<td class="pjtTd2 td">데모사용자</td>
+											<td class="pjtTd3 td">제품유형</td>
+											<td class="pjtTd4 td">-</td>
+										</tr>
+										<tr>
+											<td colspan="4" class="pjtTd td">제품기능(설명)</td>
+										</tr>
+										<tr>
+									 		<td colspan="4" class="pjtTd td">설명입니다.</td>
+										</tr>
+									</table>
+								</div>
+							</td>
+							<td class="td2"></td>
+							<td class="tdMid"><b>프로젝트 현황</b>
+							<hr>
+								<div>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		
+		<div class="">
+			<div class="panel-heading">
+				<br>
+				<div class="middle">
+					<table class="midTable">
+						<tr>
+							<td class="tdMid"><b>이슈 현황</b>
+							<hr>
+								<div class="tableDiv">
+									<table border="1" class="projectInfoTable">
+										<tr>
+											<td class="pjtTd td">프로젝트 명</td>
+											<td class="pjtTd2 td">프로젝트X</td>
+											<td class="pjtTd3 td"></td>
+											<td class="pjtTd4 td"></td>
+										</tr>
+										<tr>
+											<td class="pjtTd td">프로젝트 번호</td>
+											<td class="pjtTd2 td"></td>
+											<td class="pjtTd3 td"></td>
+											<td class="pjtTd4 td"></td>
+										</tr>
+										<tr>
+											<td class="pjtTd td">개발 형태</td>
+											<td class="pjtTd2 td">양산개발</td>
+											<td class="pjtTd3 td">개발 등급</td>
+											<td class="pjtTd4 td">SS</td>
+										</tr>
+										<tr>
+											<td class="pjtTd td">PMO</td>
+											<td class="pjtTd2 td">데모사용자</td>
+											<td class="pjtTd3 td">제품유형</td>
+											<td class="pjtTd4 td">-</td>
+										</tr>
+										<tr>
+											<td colspan="4" class="pjtTd td">제품기능(설명)</td>
+										</tr>
+										<tr>
+									 		<td colspan="4" class="pjtTd td">설명입니다.</td>
+										</tr>
+									</table>
+								</div>
+							</td>
+							<td class="td2"></td>
+							<td class="tdMid"><b>월별 프로젝트</b>
+							<hr>
+								<div>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
 			
 	</div>
 </body>

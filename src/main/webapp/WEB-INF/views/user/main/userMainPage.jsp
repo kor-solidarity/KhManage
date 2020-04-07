@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,11 +22,22 @@
 		 
 .bottom1{background: white;}
 .thmidTable{border: 1px solid lightgray; height: 38px; text-align: center; font-size:15px; center; border:none}
-.tdmidTable{height: 38px;}
-.td{font-size: 15px;}
+.tdmidTable{font-size: 14px;}
 .midTable2{text-align: center;}
 .thmidTable2{border: 1px solid lightgray; height: 38px; text-align: center; border:none}
 /* .cellMenu1{font-family: open sands; margin: 2px; font-weight:normal; font-size: 35px; margin-right: 5px; color:#5c9bd1;} */
+.mywork{background-image: url("resources/assets/img/main_mywork.png"); background-repeat: no-repeat; 
+		background-position:-130% -5%; background-size: 80% 80%;}
+.requestModify{background-image: url("resources/assets/img/main_modifyRequest.png"); background-repeat: no-repeat; 
+		background-position:-130% -5%; background-size: 80% 80%;}
+.issue{background-image: url("resources/assets/img/main_issue.png"); background-repeat: no-repeat; 
+		background-position:-130% -5%; background-size: 80% 80%;}
+.requestApproval{background-image: url("resources/assets/img/main_approvalRequest.png"); background-repeat: no-repeat; 
+		background-position:-130% -5%; background-size: 80% 80%;}
+.object{background-image: url("resources/assets/img/main_object.png"); background-repeat: no-repeat; 
+		background-position:-130% -5%; background-size: 80% 80%;}
+.project{background-image: url("resources/assets/img/main_project.png"); background-repeat: no-repeat; 
+		background-position:-130% -5%; background-size: 80% 80%;}
 		 
 </style>
 
@@ -41,18 +53,18 @@
 				<div class="top">
 					<table class="topTable">
 						<tr>
-							<td class="tdTop">
+							<td class="tdTop mywork">
 								<div class="cellMenu1" style="font-weight:normal; font-size: 35px; margin-right: 10px; color:#5c9bd1">3</div>
 								<div style="margin-right: 10px; font-size: 13px; color:#AAB5BC">내 작업</div>
 								<div style="width: 100%">
-									<a href="#" style="background:#F1F1F1; width: 100%">view more
+									<a href="#" style="background:#F1F1F1; width: 100%">더 보기
 										<i class="m-icon-swapright m-icon-gray"></i>
 									</a>
 								</div>
 							</td>
 							
 							<td class="td"></td>
-							<td class="tdTop">
+							<td class="tdTop requestModify">
 								<div class="cellMenu1" style="font-weight:normal; font-size: 35px; margin-right: 10px; color:#4DB3A2">6</div>
 								<div style="margin-right: 10px; font-size: 13px; color:#AAB5BC">변경요청</div>
 								<div style="width: 100%">
@@ -62,7 +74,7 @@
 								</div>
 							</td>
 							<td class="td"></td>
-							<td class="tdTop">
+							<td class="tdTop issue">
 								<div class="cellMenu1" style="font-weight:normal; font-size: 35px; margin-right: 10px; color:#8877A9">7</div>
 								<div style="margin-right: 10px; font-size: 13px; color:#AAB5BC">이슈</div>
 								<div style="width: 100%">
@@ -72,7 +84,7 @@
 								</div>
 							</td>
 							<td class="td"></td>
-							<td class="tdTop">
+							<td class="tdTop requestApproval">
 								<div class="cellMenu1" style="font-weight:normal; font-size: 35px; margin-right: 10px; color:#F36A5A">16</div>
 								<div style="margin-right: 10px; font-size: 13px; color:#AAB5BC">승인요청</div>
 								<div style="width: 100%">
@@ -82,7 +94,7 @@
 								</div>
 							</td>
 							<td class="td"></td>
-							<td class="tdTop">
+							<td class="tdTop object">
 								<div class="cellMenu1" style="font-weight:normal; font-size: 35px; margin-right: 10px; color:#1BA39C">19</div>
 								<div style="margin-right: 10px; font-size: 13px; color:#AAB5BC">산출물</div>
 								<div style="width: 100%">
@@ -92,7 +104,7 @@
 								</div>
 							</td>
 							<td class="td"></td>
-							<td class="tdTop">
+							<td class="tdTop project">
 								<div class="cellMenu1" style="font-weight:normal; font-size: 35px; margin-right: 10px; color:#5E738B">19</div>
 								<div style="margin-right: 10px; font-size: 13px; color:#AAB5BC">프로젝트</div>
 								<div style="width: 100%">

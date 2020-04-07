@@ -29,7 +29,7 @@
 	<div id="wrap">
 	
 		<br>
-		<div class="panel-heading">
+		<div class="panel-heading pnselect" style="margin-top: -20px;">
 			<select class="select">
 				<option>111111111</option>			
 				<option>111111111</option>
@@ -39,7 +39,7 @@
 			</select>
 		</div>
 
-		<div class="">
+		<div class="" style="margin-top: -15px;">
 			<div class="panel-heading">
 				<br>
 				<div class="middle">
