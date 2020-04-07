@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -95,19 +96,14 @@
 								<td class="tdText thRange"><input type="date" class="inputCss" style="width:200px;"></td>
 								<td class="tdText thRange"><input type="date" class="inputCss" style="width:200px;"></td>
 							</tr>
-
+						<c:forEach var="a" items="${list}">
 							<tr class="trRange"	id="accessList">
-								<td class="td1">관리자 권한인원</td>
-								<td class="tdText">관리자접근가능한 인원들입니다.</td>
+								<td class="td1"><c:out value="${a.accessName}"/></td>
+								<td class="tdText"><c:out value="${a.aContent}"/></td>
 								<td class="tdText">20-03-20</td>
 								<td class="tdText">20-03-02</td>
 							</tr>
-							<tr class="trRange"	id="accessList">
-								<td class="td1">정보공유게시판접근인원</td>
-								<td class="tdText">관리자접근가능한 인원들입니다.</td>
-								<td class="tdText">20-03-20</td>
-								<td class="tdText">20-03-02</td>
-							</tr>
+					 	</c:forEach>				
 							<tr class="pagingArea">
 								<td colspan="4">
 									<div class="paging"><< < 1 2 > >></div>

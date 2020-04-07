@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Access">
+	<resultMap type="Access" id="accessResultSet">
+		<result property="accessGroupNo" column="ACCESSGROUP_NO"/>
+		<result property="accessName" column="ACCESS_NAME"/>
+		<result property="aContent" column="A_CONTENT"/>
+		<result property="Status" column="STATUS"/>
+	</resultMap>
+	
+	
+	<insert id="insertAccessGroup" parameterType="Access">
+		INSERT INTO ACCESSGROUP
+		VALUES(SEQ_AG.NEXTVAL, #{accessName}, #{aContent}, 'Y')
+	</insert>
+	
+	<select id="selectAll" resultMap="accessResultSet">
+		SELECT ACCESSGROUP_NO
+			  ,ACCESS_NAME
+			  ,A_CONTENT
+			  ,STATUS
+		FROM ACCESSGROUP	  
+	</select>
+	
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+  

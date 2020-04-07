@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
 .titleText {
 	padding-top: 13px;
@@ -63,6 +64,7 @@
 			<div
 				style="width: 100%; height: 300px; margin: 0 auto; overflow: auto;">
 				<div class="menuArea" style="margin-left: 12px;">
+				<form id="form1" action="insertAccessGroup.am">
 					<table class="menuTable" style="width: 100%;">
 						<tr>
 							<td class="titleText" colspan="2">권한그룹 등록 정보</td>
@@ -76,13 +78,13 @@
 						<table align="left" style="width:100%;">
 						<tr>
 							<td class="titleId" style="padding-left:100px;">권한그룹 명</td>
-							<td><input type="text" class="inputMenu" style="width:100%;"></td>
+							<td><input name="accessName" type="text" class="inputMenu" style="width:100%;"></td>
 						</tr>
 						<tr height="10px;"></tr>
 						<tr>
 							<td class="titleId" style="padding-left:90px;">권한그룹 설명</td>
 							<td>
-								<textarea class="inputMenu"rows="" cols="" style="width:100%; height:150px;"></textarea>
+								<textarea name="aContent" class="inputMenu"rows="" cols="10" style="width:100%; height:150px;"></textarea>
 							</td>
 						</tr>
 						<tr height="10px;"></tr>
@@ -92,7 +94,7 @@
 						</tr>
 						<tr>
 							<td colspan="2">
-								<button class="okBtn" id="save">
+								<button type="button" class="okBtn" id="save" onclick="sweetTest();">
 									<i class="fas fa-check"></i>&nbsp;저장
 								</button>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -104,36 +106,32 @@
 							</td>
 						</tr>
 						</table>
-						<script>
-							$("#save").click(function(){
-								swal({	
-									  title: 'Are you sure?',
-									  text: "You won't be able to revert this!",
-									  icon: 'warning',
-									  showCancelButton: true,
-									  confirmButtonText: 'Yes, delete it!',
-									  cancelButtonText: 'No, cancel!',
-									  reverseButtons: true
-									}).then((result) => {
-									  if (result.value) {
-									    swalWithBootstrapButtons.fire(
-									      'Deleted!',
-									      'Your file has been deleted.',
-									      'success'
-									    )
-									  } else if (
-									    /* Read more about handling dismissals below */
-									    result.dismiss === Swal.DismissReason.cancel
-									  ) {
-									    swalWithBootstrapButtons.fire(
-									      'Cancelled',
-									      'Your imaginary file is safe :)',
-									      'error'
-									    )
-									  }
-									})
+						</form>
+				 <script>
+						function sweetTest(){
+							swal({
+								  title: "해당 내용을 저장하시겠습니까?",
+								  icon: "warning",
+								  buttons: ["취소", "저장"],
+								  dangerMode: true,
+								})
+								.then((willDelete) => {
+								  if (willDelete) {
+								    swal({
+								    	title: "저장 완료!",
+								      	icon: "success"
+								    }).then((value) => {	// 애니메이션 V 나오는 부분!
+								    	$("#form1").submit();
+								    });
+								  } else {
+									  swal({
+									  	title: "취소 하셨습니다.",
+									    icon: "error"
+									  });
+								  }
 							});
-						</script>
+						}
+				</script>
 				</div>
 			</div>
 		</div>
