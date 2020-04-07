@@ -37,7 +37,7 @@
 </style>
 </head>
 <body>
-	<c:set var="path" value="${ pageContext.servletContext.contextPath }" scope="application"/>
+	<c:set var="path" value="${pagecontext.servletcontext.contextpath}"/>
 	<!-- WRAPPER -->
 	<div id="wrapper">
 		<!-- NAVBAR -->
