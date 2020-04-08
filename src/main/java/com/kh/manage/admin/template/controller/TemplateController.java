@@ -17,5 +17,15 @@ public class TemplateController {
 		
 		return "admin/templateManage/insertTemplate";
 	}
+	@RequestMapping("/templateManagePage.am")
+	public String templateManage() {
+		
+		return "admin/templateManage/templateManage";
+	}
+	@RequestMapping("/templateExcel.am")
+	public String templateExcel() {
+		
+		return "admin/templateManage/templateExcel";
+	}
 
 }
