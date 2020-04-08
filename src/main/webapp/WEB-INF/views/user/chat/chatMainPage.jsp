@@ -218,6 +218,7 @@ body {
 			</tr>
 
 		</table>
+		<button id="addchatRoom">버튼</button>
 	</div>
 
 	<script>
@@ -226,6 +227,34 @@ body {
 				location.href='chatRoom.ct';
 			});
 		});
+		
+		$("#addchatRoom").click(function(){
+			$("#chatMain").append("<tr class='chatRoom' style='margin-bottom: 5px;'> <td style='background: #24415C; height: 60px; width: 90px; color:white;'> <input class='chatNo' type='hidden' value='3'> <div class='count' align='center'>1</div> </td> <td style='background: #24415C; height: 60px; width: 150px; color:white;'><label>개발부서 동기팀</label><br> 하..</td> <td style='background: #24415C; height: 60px; width: 90px; font-size: 12px; color:white;'>20.04.03 12:58</td> </tr>")
+		});
+	</script>
+	<script>
+	 var ws;
+     
+     $(function(){
+     	 if(ws!==undefined && ws.readyState!==WebSocket.CLOSED){
+              writeResponse("WebSocket is already opened.");
+              return;
+          }
+          //웹소켓 객체 만드는 코드
+          ws=new WebSocket("ws://192.168.30.192:8001/manage/chatRoom.ct");
+          
+          ws.onopen=function(event){
+              if(event.data===undefined) return;
+              
+              writeResponse(event.data);
+          };
+          ws.onmessage=function(event){
+              writeResponse(event.data);
+          };
+          ws.onclose=function(event){
+              writeResponse("Connection closed");
+          }
+     });
 	</script>
 </body>
 </html>

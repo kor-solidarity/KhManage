@@ -1,19 +1,22 @@
-package com.kh.manage.admin.access.service;
+package com.kh.manage.admin.adminManage.service;
 
 import java.util.List;
+
+
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.manage.admin.access.dao.AccessDao;
-import com.kh.manage.admin.access.vo.Access;
+import com.kh.manage.admin.adminManage.dao.ManageDao;
+import com.kh.manage.admin.adminManage.vo.Access;
+import com.kh.manage.admin.adminManage.vo.DepartMent;
 import com.kh.manage.common.PageInfo;
 
 @Service
-public class AccessServiceImpl implements AccessService{
+public class ManageServiceImpl implements ManageService{
 	@Autowired
-	private AccessDao ad;
+	private ManageDao ad;
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
@@ -39,6 +42,12 @@ public class AccessServiceImpl implements AccessService{
 	public List<Access> searchAccess(Access access) {
 
 		return ad.searchAccess(sqlSession, access);
+	}
+
+	@Override
+	public List<DepartMent> departSelectAll() {
+		
+		return ad.departSelectAll(sqlSession);
 	}
 	
 }
