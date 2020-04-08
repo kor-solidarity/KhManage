@@ -49,5 +49,11 @@ public class ManageServiceImpl implements ManageService{
 		
 		return ad.departSelectAll(sqlSession);
 	}
+
+	@Override
+	public DepartMent deptSelectOne(DepartMent dept) {
+		
+		return ad.deptSelectOne(sqlSession, dept);
+	}
 	
 }

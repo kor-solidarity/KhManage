@@ -269,7 +269,7 @@ body {
                  return;
              }
              //웹소켓 객체 만드는 코드
-             ws=new WebSocket("ws://192.168.30.192:8001/manage/chatRoom.ct?room1/user01");
+             ws=new WebSocket("ws://192.168.100.55:8001/manage/chatRoom.ct?room1/user01");
              
              ws.onopen=function(event){
                  if(event.data===undefined) return;

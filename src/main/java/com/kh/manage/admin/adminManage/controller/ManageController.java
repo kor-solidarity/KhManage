@@ -93,14 +93,29 @@ public class ManageController {
 		
 		model.addAttribute("list", list);
 		
-		System.out.println(list);
 		return "admin/departmentManage/departmentPage";
 	}
 	
 	@RequestMapping("/deptSelectOne.am")
 	public void deptSelectOne(DepartMent dept, Model model, HttpServletRequest request,  HttpServletResponse response) {
 		
-		System.out.println(dept);
-	}
+		DepartMent dm = as.deptSelectOne(dept);
+		System.out.println("찾아오기 : " + dm);
+		request.setAttribute("dm", dm);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
 
+		String gson = new Gson().toJson(dm);
+
+		try {
+			response.getWriter().write(gson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	@RequestMapping("/insertHighDept.am")
+	public void insertHighDept(DepartMent dm) {
+		System.out.println(dm);
+	}
 }

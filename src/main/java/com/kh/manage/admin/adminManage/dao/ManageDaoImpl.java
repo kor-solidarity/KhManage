@@ -47,5 +47,11 @@ public class ManageDaoImpl implements ManageDao {
 		return sqlSession.selectList("Admin.departSelectAll");
 	}
 
+	@Override
+	public DepartMent deptSelectOne(SqlSessionTemplate sqlSession, DepartMent dept) {
+		
+		return sqlSession.selectOne("Admin.deptSelectOne", dept);
+	}
+
 
 }

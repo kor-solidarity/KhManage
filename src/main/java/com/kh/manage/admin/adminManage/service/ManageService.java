@@ -15,5 +15,7 @@ public interface ManageService {
 
 	List<Access> searchAccess(Access access);
 
-	List<DepartMent> departSelectAll(); 
+	List<DepartMent> departSelectAll();
+
+	DepartMent deptSelectOne(DepartMent dept); 
 }

@@ -284,8 +284,8 @@ ul {
 														style="color: #1E2B44; font-size: 16px;"> <img
 															id="folderImg"
 															src="<c:url value="/resources/assets/img/folder.png"/>"
-															style="width: 25px; height: 20px; margin-bottom: 10px;">
-															<c:out value="${d.deptName}" /></a>
+															style="width: 25px; height: 20px; margin-bottom: 10px;"><c:out value="${d.deptName}" /></a>
+															
 												</li>
 												</ul>
 											</c:if>
@@ -316,18 +316,18 @@ ul {
 					<table id="buseoInfoTable">
 						<tr>
 							<td class="titleId">부서명</td>
-							<td><input type="text" class="inputMenu"></td>
+							<td><input type="text" id="deptName" class="inputMenu"></td>
 						</tr>
 						<tr height="10px;"></tr>
 						<tr>
 							<td class="titleId">상위부서</td>
-							<td><input type="text" class="inputMenu"
+							<td><input type="text" id="highName" class="inputMenu"
 								style="width: 200px;"></td>
 						</tr>
 						<tr height="10px;"></tr>
 						<tr>
 							<td class="titleId">부서코드</td>
-							<td><input type="text" class="inputMenu"
+							<td><input type="text" id="deptCode" class="inputMenu"
 								style="width: 100px;"></td>
 						</tr>
 						<tr height="40px;"></tr>
@@ -373,12 +373,12 @@ ul {
 							<table id="buseoInfoTable">
 								<tr>
 									<td class="titleId">부서명</td>
-									<td><input type="text" class="inputMenu"></td>
+									<td><input type="text" id="highName"class="inputMenu"></td>
 								</tr>
 								<tr height="10px;"></tr>
 								<tr>
 									<td class="titleId">부서코드</td>
-									<td><input type="text" class="inputMenu"
+									<td><input type="text" id="highCode" class="inputMenu"
 										style="width: 100px;"></td>
 								</tr>
 							</table>
@@ -392,7 +392,7 @@ ul {
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-primary"
+					<button type="button" class="btn btn-primary" id="insertHighDept"
 						style="background: #1E2B44; outline: none; border: none;">저장</button>
 				</div>
 			</div>
@@ -403,8 +403,25 @@ ul {
 	<!-- /.modal -->
 
 	<script>
-		$(".a").children().click(function() {
-			$(this).children().css("color", "#F59E1C");
+		$(".a").children().on('click', function() {
+			$(this).children().siblings().css("color", "black");
+			$(this).children().css("color", "red");
+		});
+		
+		$("#insertHighDept").click(function(){
+				var deptName = $("#highName").val();
+				console.log(deptName);
+				var deptNo = $("#highCode").val();
+				 $.ajax({
+					url:'insertHighDept.am',
+					type: 'post',
+					data:{deptName:deptName,
+						  deptNo:deptNo	
+					},
+				 success:function(data){
+						
+						}
+			}); 
 		});
 	</script>
 
@@ -415,13 +432,13 @@ ul {
 	
 		function tree_menu() {
 			$(".menuTable").find(".title").on('click', function(e){
-								console.log($(this).parent().parent().nextUntil(".depth_2"));
 								var temp_el = $(this).parent().parent().nextUntil(".depth_2");
 								var depth_3 = $(this).parent().parent().nextUntil(".depth_2");
-
+								
+								
 								depth_3.slideUp(300);
 								depth_3.parent().find('em').removeClass('on');
-
+								
 								if (temp_el.is(':hidden')) {
 									temp_el.slideDown(300);
 									$(this).find('em').addClass('on').html(
@@ -431,7 +448,8 @@ ul {
 									$(this).find("#folderImg")
 											.attr("src",
 													"<c:url value="/resources/assets/img/folderOpen.png"/>");
-
+									
+									
 								} else {
 									temp_el.slideUp(300);
 									$(this).find('em').removeClass('on').html(
@@ -442,9 +460,7 @@ ul {
 											.attr("src",
 													"<c:url value="/resources/assets/img/folder.png"/>");
 								}
-
 								return false;
-
 							});
 
 		}
@@ -460,6 +476,7 @@ ul {
 		$(function(){
 			$(".menuTable").find(".deptSub").on('click', function(){
 				var name = $(this).text();
+				console.log(name.replace(/ /g, ''));
 				 $.ajax({
 					url:'deptSelectOne.am',
 					type: 'post',
@@ -467,6 +484,33 @@ ul {
 					
 				 success:function(data){
 						if(data){
+							$("#deptName").empty();
+							$("#highName").empty();
+							$("#deptCode").empty();
+							$("#deptName").val(data['deptName']);
+							$("#highName").val(data['highDept']);
+							$("#deptCode").val(data['deptNo']);
+						}
+				 }
+				}); 
+			});
+			
+			
+			$(".menuTable").find(".title").click(function(){
+				var name = $(this).text();
+				console.log(name);
+				 $.ajax({
+					url:'deptSelectOne.am',
+					type: 'post',
+					data:{deptName:name},
+				 success:function(data){
+						if(data){
+							$("#deptName").empty();
+							$("#highName").empty();
+							$("#deptCode").empty();
+							$("#deptName").val(data['deptName']);
+							$("#highName").val(data['highDept']);
+							$("#deptCode").val(data['deptNo']);
 						}
 				 }
 				}); 

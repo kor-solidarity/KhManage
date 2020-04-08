@@ -18,4 +18,6 @@ public interface ManageDao {
 	List<Access> searchAccess(SqlSessionTemplate sqlSession, Access access);
 
 	List<DepartMent> departSelectAll(SqlSessionTemplate sqlSession);
+
+	DepartMent deptSelectOne(SqlSessionTemplate sqlSession, DepartMent dept);
 }
