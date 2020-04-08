@@ -100,8 +100,8 @@
 							<tr class="trRange"	id="accessList">
 								<td class="td1"><c:out value="${a.accessName}"/></td>
 								<td class="tdText"><c:out value="${a.aContent}"/></td>
-								<td class="tdText">20-03-20</td>
-								<td class="tdText">20-03-02</td>
+								<td class="tdText"><c:out value="${a.modifyDate}"/></td>
+								<td class="tdText"><c:out value="${a.createDate}"/></td>
 							</tr>
 					 	</c:forEach>				
 							<tr class="pagingArea">
@@ -144,14 +144,6 @@
 						</table>
 						<script>
 							$(function(){
-								$("#projectTable").find('.td1').on('click', function(){
-									location.href='accessDetailPage.am?num='+$(this).text();
-								});
-							});
-						</script>
-						
-						<script>
-							$(function(){
 								$("#nameSearch").keyup(function(){
 									var name = $(this).val();
 									 $.ajax({
@@ -167,6 +159,13 @@
 											}
 									 }
 									}); 
+								});
+							});
+						</script>
+						<script>
+							$(function(){
+								$(document).on('click', '.td1', function(){
+									location.href='accessDetailPage.am?num='+ $(this).text();
 								});
 							});
 						</script>

@@ -93,7 +93,6 @@ public class ManageController {
 		
 		model.addAttribute("list", list);
 		
-		System.out.println(list);
 		return "admin/departmentManage/departmentPage";
 	}
 	
@@ -115,5 +114,8 @@ public class ManageController {
 		}
 		
 	}
-
+	@RequestMapping("/insertHighDept.am")
+	public void insertHighDept(DepartMent dm) {
+		System.out.println(dm);
+	}
 }
