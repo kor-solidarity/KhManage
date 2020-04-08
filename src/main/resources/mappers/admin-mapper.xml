@@ -61,6 +61,15 @@
 			  ,DEPT_LEVEL
 		FROM DEPT	  
 	</select>
+	
+	<select id="selectTeam" resultMap="departResultSet">
+		SELECT DEPT_NO
+			  ,DEPT_NAME
+			  ,HIGH_DEPT
+			  ,DEPT_LEVEL
+		FROM DEPT
+		WHERE HIGH_DEPT = #{deptNo}	  
+	</select>
 
 </mapper>
 

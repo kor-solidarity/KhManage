@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.kh.manage.admin.adminManage.vo.DepartMent;
 import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.rank.model.vo.Rank;
 import com.kh.manage.member.model.dao.MemberDao;
@@ -54,7 +55,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public List<Dept> selectDeptList() {
 
-		return md.selectList(sqlSession);
+		return md.selectDeptList(sqlSession);
 	}
 
 	@Override
@@ -62,6 +63,21 @@ public class MemberServiceImpl implements MemberService {
 
 		return md.selectRankList(sqlSession);
 	}
+
+
+	@Override
+	public List<Dept> selectDeptList2() {
+
+		return md.selectDeptList2(sqlSession);
+	}
+
+
+	@Override
+	public List<DepartMent> selectTeam(DepartMent dm) {
+		
+		return md.selectTeam(sqlSession, dm);
+	}
+
 
 
 

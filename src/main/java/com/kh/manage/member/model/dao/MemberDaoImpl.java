@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.manage.admin.adminManage.vo.DepartMent;
 import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.rank.model.vo.Rank;
 import com.kh.manage.member.model.exception.LoginException;
@@ -46,7 +47,7 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public List<Dept> selectList(SqlSessionTemplate sqlSession) {
+	public List<Dept> selectDeptList(SqlSessionTemplate sqlSession) {
 
 		return sqlSession.selectList("Dept.selectDeptList");
 	}
@@ -56,6 +57,20 @@ public class MemberDaoImpl implements MemberDao {
 
 		return sqlSession.selectList("Rank.selectRankList");
 	}
+
+	@Override
+	public List<Dept> selectDeptList2(SqlSessionTemplate sqlSession) {
+
+		return sqlSession.selectList("Dept.selectDeptList2");
+	}
+
+	@Override
+	public List<DepartMent> selectTeam(SqlSessionTemplate sqlSession, DepartMent dm) {
+		
+		return sqlSession.selectList("Admin.selectTeam", dm);
+	}
+
+	
 
 
 

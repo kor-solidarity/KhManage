@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-<%-- <%@ page import="com.kh.manage.department.model.vo.*" %> --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
 <html>
 <head>
@@ -158,11 +157,11 @@
 								<input type="email" class="register form-control" name="email">
 							</td>
 						</tr>
-						<tr class="tableTr">
-							<td>소속부서 *</td>
+						<tr id="hide1" class="tableTr">
+							<td>소속 부서 *</td>
 							<td></td>
 							<td>
-								<select id="deptNo" class="register form-control" name="deptNo" >
+								<select id="deptNo" class="register form-control" >
 									<option class="form-control" value="#">선택하세요</option>
 									<c:forEach var="a" items="${list}">
 										<option class="form-control" value="${a.deptNo}">
@@ -172,24 +171,23 @@
 								</select>
 							</td>
 						</tr>
-						<tr class="tableTr">
+						<tr id="hide2" class="tableTr">
 							<td>소속 팀 *</td>
 							<td></td>
 							<td>
 								<select id="deptTeam" class="register form-control"  name="deptNo">
-									<option class="form-control" value="#">선택하세요</option>
-									<option class="form-control" value="#">팀팀팀</option>
+									<option id="deptTeamOption" class="form-control" value="#">선택하세요</option>
 								</select>
 							</td>
 						</tr>
-						<tr class="tableTr">
+						<tr id="hide3" class="tableTr">
 							<td>직급 *</td>
 							<td></td>
 							<td>
 								<select id="rank" class="register form-control"  name="rankNo">
 									<option class="form-control" value="#">선택하세요</option>
 									<c:forEach var="r" items="${rlist}">
-										<option class="form-control" value="${r.rankNo}">
+										<option class="form-control" value="${r.rankNo}" class="form-control">
 											<c:out value="${r.rankName}"/>
 										</option>
 									</c:forEach>
@@ -203,21 +201,22 @@
 								<label>고객사</label>
 							</td>
 						</tr> -->
-						<tr class="tableTr">
+						<tr class="tableTr" id="hide4" hidden>
 							<td>소속 프로젝트 *</td>
 							<td></td>
 							<td>
 								<!-- <input type="text" id="rank" class="register form-control" name="rank"> -->
-								<select id="projectList" class="register form-control" name="projectName" hidden>
-									<option>불러온 프로젝트명 1</option>
+								<select id="projectList" class="register form-control" name="projectName">
+									<option>선택하세요</option>
 								</select>
 							</td>
 						</tr>
 					</table>
 						<div class="checkBoxArea">
 							<label>
-							<input type="checkbox" class="checkbox" name="customer" style="">
+							<input type="checkbox" id="customer" class="checkbox" name="customer" style="">
 							&nbsp;&nbsp;고객사
+							<input type="hidden" id="memberType" name="memberType" value="0">
 							</label>
 						</div>
 					<br>
@@ -225,7 +224,7 @@
 					<br>
 					<button type="submit" class="okBtn"><i class="fas fa-check"></i>&nbsp;저장</button>
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<button type="reset" class="cancleBtn"><i class="fas fa-ban"></i>&nbsp;취소</button>
+					<button type="reset" class="cancleBtn"><i class="fas fa-ban" onclick="goBack()"></i>&nbsp;취소</button>
 					<br><br>
 				</form>
 			</div>
@@ -245,54 +244,83 @@
 			
 			if($(".checkbox").prop("checked")) {
 				
-				$("#deptNo").attr("disabled", true);
-				$("#rank").attr("disabled", true);
-				$("#deptTeam").attr("disabled", true);
+				$("#hide1").hide();
+				$("#hide2").hide();
+				$("#hide3").hide();
+				$("#hide4").show();
 			} else {
 				
-				$("#deptNo").attr("disabled", false);
-				$("#rank").attr("disabled", false);
-				$("#deptTeam").attr("disabled", false);
+				$("#hide1").show();
+				$("#hide2").show();
+				$("#hide3").show();
+				$("#hide4").hide();
 			}
 			
 		});
 	});
 	
-	
+	$("#customer").on("change", function(){
+		if($("#customer").prop("checked")){
+			$("#memberType").val(1);
+			console.log($("#memberType").val());
+		}else{
+			$("#memberType").val(0);
+			console.log($("#memberType").val());
+		}
+		
+	});
 	
 	
 	//Alert
 	$(".okBtn").click(function(){
 		swal({	
-			  title: 'Are you sure?',
-			  text: "You won't be able to revert this!",
-			  icon: 'warning',
-			  showCancelButton: true,
-			  confirmButtonText: 'Yes, delete it!',
-			  cancelButtonText: 'No, cancel!',
-			  reverseButtons: true
-			}).then((result) => {
-			  if (result.value) {
-			    swalWithBootstrapButtons.fire(
-			      'Deleted!',
-			      'Your file has been deleted.',
-			      'success'
-			    )
-			  } else if (
-			    /* Read more about handling dismissals below */
-			    result.dismiss === Swal.DismissReason.cancel
-			  ) {
-			    swalWithBootstrapButtons.fire(
-			      'Cancelled',
-			      'Your imaginary file is safe :)',
-			      'error'
-			    )
-			  }
-			})
+		  title: 'Are you sure?',
+		  text: "You won't be able to revert this!",
+		  icon: 'warning',
+		  showCancelButton: true,
+		  confirmButtonText: 'Yes, delete it!',
+		  cancelButtonText: 'No, cancel!',
+		  reverseButtons: true
+		}).then((result) => {
+		  if (result.value) {
+		    swalWithBootstrapButtons.fire(
+		      'Deleted!',
+		      'Your file has been deleted.',
+		      'success'
+		    )
+		  } else if (
+		    /* Read more about handling dismissals below */
+		    result.dismiss === Swal.DismissReason.cancel
+		  ) {
+		    swalWithBootstrapButtons.fire(
+		      'Cancelled',
+		      'Your imaginary file is safe :)',
+		      'error'
+		    )
+		  }
+		})
 	});
 	
 	
-	
+	//하위부서 select Ajax
+	$(function(){
+		$("#deptNo").on('change', function(){
+			var name = $(this).val();
+			 $.ajax({
+				url:'selectTeam.me',
+				type: 'post',
+				data: {deptNo:name},
+				
+			 	success:function(data){
+					$("#deptTeam").empty();
+					
+						 for(key in data) {
+							$("#deptTeam").append("<option value='" + data[key]['deptNo']+ "'>"+ data[key]['deptName'] + "</option>");
+						 }
+				 }
+			}); 
+		});
+	});
 	
 	
 	

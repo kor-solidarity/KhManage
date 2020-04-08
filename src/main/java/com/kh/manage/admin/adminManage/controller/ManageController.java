@@ -100,7 +100,6 @@ public class ManageController {
 	@RequestMapping("/deptSelectOne.am")
 	public void deptSelectOne(DepartMent dept, Model model, HttpServletRequest request,  HttpServletResponse response) {
 		
-		System.out.println(dept);
 	}
 
 }
