@@ -7,12 +7,12 @@
 	<resultMap type="Member" id="memberResultSet">
 		<id property="memberNo" column="MEMBER_NO"/>
 		<result property="memberId" column="MEMBER_ID"/>
-		<result property="memberPwd" column="MEMBER_PWD"/>
+		<result property="memberPwd" column="PASSWORD"/>
 		<result property="memberName" column="MEMBER_NAME"/>
 		<result property="phone" column="PHONE"/>
 		<result property="email" column="EMAIL"/>
 		<result property="memberType" column="MEMBER_TYPE"/>
-		<result property="rankNO" column="RANK_NO"/>
+		<result property="rankNo" column="RANK_NO"/>
 		<result property="deptNo" column="DEFT_NO"/>
 		<result property="enrollDate" column="ENROLL_DATE"/>
 		<result property="status" column="STATUS"/>
@@ -22,17 +22,17 @@
 		SELECT *
 		FROM MEMBER
 		WHERE MEMBER_ID = #{memberId}
-		AND MEMBER_PWD = #{memberPwd}
+		AND PASSWORD = #{memberPwd}
 		AND STATUS = 'Y'
 	</select>
 	 
 	<insert id="insertMember" parameterType="Member">
 		INSERT INTO MEMBER
-		VALUES (SEQ_MID.NEXTVAL, #{memberId}, #{memberPwd}, #{memberName}, #{phone}, #{email}, #{memberType}, #{rankNo}, #{deptNo}, DEFAULT, 'Y')
+		VALUES (SEQ_MNO.NEXTVAL, #{memberId}, #{memberPwd}, #{memberName}, #{phone}, #{email}, #{memberType}, #{rankNo}, #{deptNo}, SYSDATE, SYSDATE, 'Y')
 	</insert>
 	
 	<select id="selectPwd" resultType="java.lang.String" parameterType="java.lang.String">
-		SELECT MEMBER_PWD
+		SELECT PASSWORD
 		FROM MEMBER
 		WHERE MEMBER_ID = #{memberId}
 		AND STATUS = 'Y'

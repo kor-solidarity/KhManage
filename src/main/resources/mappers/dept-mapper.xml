@@ -14,6 +14,13 @@
 	<select id="selectDeptList" resultMap="deptResultSet">
 		SELECT *
 		FROM DEPT
+		WHERE DEPT_LEVEL = '1'
+	</select>
+	
+	<select id="selectDeptList2" resultMap="deptResultSet">
+		SELECT *
+		FROM DEPT
+		WHERE DEPT_LEVEL = '2'
 	</select>
 
 </mapper>

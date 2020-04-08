@@ -81,12 +81,12 @@ body {
 	            <table align="center">
 	            	<tr>
 	            		<td>
-	            			 <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="아이디를 입력하세요." name="memberId" />
+	            			 <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="on" placeholder="아이디를 입력하세요." name="memberId" required/>
 	            		</td>
 	            	</tr>
 	            	<tr>
 	            		<td>
-	            			<input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="패스워드" name="memberPwd" />
+	            			<input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="패스워드" name="memberPwd" required/>
 	            		</td>
 	            	</tr>
 	            	<!-- <tr>
