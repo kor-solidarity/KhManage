@@ -22,7 +22,7 @@ public class ProjectController {
 	@RequestMapping("/projectTask.pr")
 	public String projectTask() {
 		System.out.println("projectTask");
-		return "user/project/projectTask";
+		return "user/project/projectTask2";
 	}
 	
 	
