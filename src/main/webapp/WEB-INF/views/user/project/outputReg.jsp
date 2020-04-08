@@ -149,7 +149,7 @@
 					<td class="thRange">이슈 내용</td>
 					<td class="thRange" rowspan="5" colspan="16">
 						<!-- <input type="text" id="taskContent"> -->
-						<textarea rows="" cols="" style="width:100%"></textarea>
+						<textarea rows="" cols="16" style="width:100%"></textarea>
 					</td>
 					
 				</tr>
@@ -172,7 +172,7 @@
 				<tr>
 					<td class="thRange"></td>
 					<td class="thRange">첨부파일</td>
-					<td class="thRange" colspan="16">
+					<td class="thRange" colspan="9">
 						<div id="fileUploadArea">
 							<input type="file" id="fileUpload" name="fileUpload">
 						</div>
