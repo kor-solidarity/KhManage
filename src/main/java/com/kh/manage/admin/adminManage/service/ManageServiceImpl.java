@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.kh.manage.admin.adminManage.dao.ManageDao;
 import com.kh.manage.admin.adminManage.vo.Access;
 import com.kh.manage.admin.adminManage.vo.DepartMent;
+import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.common.PageInfo;
 
 @Service
@@ -54,6 +55,18 @@ public class ManageServiceImpl implements ManageService{
 	public DepartMent deptSelectOne(DepartMent dept) {
 		
 		return ad.deptSelectOne(sqlSession, dept);
+	}
+
+	@Override
+	public Access selectOneAccess(Access ac) {
+		
+		return ad.accessSelectOne(sqlSession, ac);
+	}
+
+	@Override
+	public List<DeptMember> searchDeptMember(DepartMent dept) {
+		
+		return ad.searchDeptMember(sqlSession, dept);
 	}
 	
 }

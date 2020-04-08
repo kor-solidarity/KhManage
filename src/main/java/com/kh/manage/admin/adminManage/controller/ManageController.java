@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 import com.kh.manage.admin.adminManage.service.ManageService;
 import com.kh.manage.admin.adminManage.vo.Access;
 import com.kh.manage.admin.adminManage.vo.DepartMent;
+import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.common.Pagination;
 
@@ -54,7 +55,12 @@ public class ManageController {
 	}
 
 	@RequestMapping("/accessDetailPage.am")
-	public String showAccessDetailPage() {
+	public String showAccessDetailPage(Access ac, Model model) {
+		
+		Access selectAccess = as.selectOneAccess(ac);
+		
+		model.addAttribute("aDetail", selectAccess);
+		
 		return "admin/accessManage/accessDetail";
 	}
 
@@ -100,7 +106,7 @@ public class ManageController {
  	public void deptSelectOne(DepartMent dept, Model model, HttpServletRequest request,  HttpServletResponse response) {
  		
 		DepartMent dm = as.deptSelectOne(dept);
-		System.out.println("찾아오기 : " + dm);
+
 		request.setAttribute("dm", dm);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
@@ -116,6 +122,24 @@ public class ManageController {
 	}
 	@RequestMapping("/insertHighDept.am")
 	public void insertHighDept(DepartMent dm) {
-		System.out.println(dm);
+	}
+	
+	@RequestMapping("/searchDeptMember.am")
+	public void searchDeptMember(DepartMent dept, Model model, HttpServletRequest request,  HttpServletResponse response) {
+		System.out.println(dept);
+		
+		List<DeptMember> list = as.searchDeptMember(dept);
+		
+		request.setAttribute("list", list);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+
+		String gson = new Gson().toJson(list);
+ 
+		try {
+			response.getWriter().write(gson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
