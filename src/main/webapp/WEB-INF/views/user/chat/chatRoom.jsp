@@ -202,7 +202,7 @@ body {
 			</div>			
 	
 	  <div>
-        <input type="text" id="sender" value="${sessionScope.member.m_id }" style="display: none;">
+        <input type="text" id="sender" value="${ sessionScope.loginUser.memberId }" style="display: none;">
         <input type="text" id="messageinput">
     </div>
     <div>
@@ -229,14 +229,6 @@ body {
 		
 		
 	</div>	
-	<div id="message">sssss</div>
-	  <div>
-        <input type="text" id="sender" value="${sessionScope.member.m_id }" style="display: none;">
-    </div>
-	<button type="button" onclick="openSocket();">Open</button>
-	<button type="button" onclick="send();">Send</button>
-        <button type="button" onclick="closeSocket();">Close</button>
-
 
 		
 	<div class="modal fade" id="myModal" role="dialog"
@@ -296,7 +288,7 @@ body {
                 return;
             }
             //웹소켓 객체 만드는 코드
-            ws=new WebSocket("ws://localhost:8001/manage/chatRoom.ct");
+            ws=new WebSocket("ws://192.168.30.192:8001/manage/chatRoom.ct?userId=sss");
             
             ws.onopen=function(event){
                 if(event.data===undefined) return;
@@ -312,7 +304,7 @@ body {
         }
         
         function send(){
-            var text="sss";
+            var text=document.getElementById("messageinput").value;
             ws.send(text);
             text="";
         }
