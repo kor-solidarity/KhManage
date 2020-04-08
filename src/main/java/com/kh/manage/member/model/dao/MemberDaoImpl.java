@@ -1,8 +1,12 @@
 package com.kh.manage.member.model.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.manage.admin.department.model.vo.Dept;
+import com.kh.manage.admin.rank.model.vo.Rank;
 import com.kh.manage.member.model.exception.LoginException;
 import com.kh.manage.member.model.vo.Member;
 
@@ -39,6 +43,18 @@ public class MemberDaoImpl implements MemberDao {
 	public Member selectMember(SqlSessionTemplate sqlSession, Member m) {
 
 		return sqlSession.selectOne("Member.selectLoginUser", m);
+	}
+
+	@Override
+	public List<Dept> selectList(SqlSessionTemplate sqlSession) {
+
+		return sqlSession.selectList("Dept.selectDeptList");
+	}
+
+	@Override
+	public List<Rank> selectRankList(SqlSessionTemplate sqlSession) {
+
+		return sqlSession.selectList("Rank.selectRankList");
 	}
 
 

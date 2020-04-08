@@ -57,7 +57,7 @@
 								<div class="cellMenu1" style="font-weight:normal; font-size: 35px; margin-right: 10px; color:#5c9bd1">3</div>
 								<div style="margin-right: 10px; font-size: 13px; color:#AAB5BC">내 작업</div>
 								<div style="width: 100%">
-									<a href="#" style="background:#F1F1F1; width: 100%">더 보기
+									<a href="myWorkList.wk" style="background:#F1F1F1; width: 100%">더 보기
 										<i class="m-icon-swapright m-icon-gray"></i>
 									</a>
 								</div>
@@ -68,7 +68,7 @@
 								<div class="cellMenu1" style="font-weight:normal; font-size: 35px; margin-right: 10px; color:#4DB3A2">6</div>
 								<div style="margin-right: 10px; font-size: 13px; color:#AAB5BC">변경요청</div>
 								<div style="width: 100%">
-									<a href="#" style="background:#F1F1F1; width: 100%">view more
+									<a href="changeRequestList.iu" style="background:#F1F1F1; width: 100%">더 보기
 										<i class="m-icon-swapright m-icon-gray"></i>
 									</a>
 								</div>
@@ -78,7 +78,7 @@
 								<div class="cellMenu1" style="font-weight:normal; font-size: 35px; margin-right: 10px; color:#8877A9">7</div>
 								<div style="margin-right: 10px; font-size: 13px; color:#AAB5BC">이슈</div>
 								<div style="width: 100%">
-									<a href="#" style="background:#F1F1F1; width: 100%">view more
+									<a href="issueList.iu" style="background:#F1F1F1; width: 100%">view more
 										<i class="m-icon-swapright m-icon-gray"></i>
 									</a>
 								</div>

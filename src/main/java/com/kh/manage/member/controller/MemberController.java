@@ -1,5 +1,9 @@
 package com.kh.manage.member.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -9,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.kh.manage.admin.department.model.vo.Dept;
+import com.kh.manage.admin.rank.model.vo.Rank;
 import com.kh.manage.member.model.exception.LoginException;
 import com.kh.manage.member.model.service.MemberService;
 import com.kh.manage.member.model.vo.Member;
@@ -41,12 +47,6 @@ public class MemberController {
 		return "admin/userManagement/userManagement";
 	}
 	
-	@RequestMapping("/registerUser.me")
-	public String registerUser() {
-		
-		return "admin/userManagement/registerUser";
-	}
-	
 	@RequestMapping("myProfile.me")
 	public String myProfile() {
 		
@@ -66,8 +66,8 @@ public class MemberController {
 	}
 	
 	
-	//*************************************************
-
+//	//*************************************************
+//
 //	@RequestMapping("/login.me")
 //	public String loginCheck(Member m, Model model) {
 ////		String memberId = request.getParameter("memberId");
@@ -119,7 +119,25 @@ public class MemberController {
 //		
 //	}
 		
+	
+	//부서 + 직급리스트 조회
+	@RequestMapping("registerMember.me")
+	public String registerUser(Model model, HttpServletRequest request) {
 		
+		List<Dept> list = ms.selectDeptList();
+		
+		request.setAttribute("list", list);
+		
+		System.out.println(list);
+		
+		
+		List<Rank> rlist = ms.selectRankList();
+		
+		System.out.println(rlist);
+		
+		return "admin/userManagement/registerUser";
+	}
+	
 	
 	
 	

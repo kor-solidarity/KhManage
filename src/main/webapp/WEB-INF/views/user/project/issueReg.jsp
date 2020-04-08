@@ -19,6 +19,7 @@
 		height:30px;
 		border:1px solid #EBCCD1;
 		border-radius: 5px;
+		padding-left: 10px;
 	}
 	
 	#taskList{
@@ -26,6 +27,7 @@
 		height:30px;
 		border:1px solid #EBCCD1;
 		border-radius: 5px;
+		padding-left: 10px;
 	}
 	
 	#taskTitle{
@@ -33,6 +35,7 @@
 		height:30px;
 		border:1px solid #EBCCD1;
 		border-radius: 5px;
+		padding-left: 10px;
 	}
 	
 	#taskContent{
@@ -40,6 +43,7 @@
 		height:150px;
 		border:1px solid #EBCCD1;
 		border-radius: 5px;
+		padding-left: 10px;
 	}
 	
 	#fileUploadArea{
@@ -129,7 +133,7 @@
 				<tr>
 					<td class="thRange"></td>
 					<td class="thRange">제기자</td>
-					<td class="thRange">심재우</td>
+					<td class="thRange" style="padding-left: 10px;">심재우</td>
 					<td class="thRange"></td>
 					<td class="thRange"></td>
 					<td class="thRange"></td>
@@ -174,8 +178,10 @@
 				<tr>
 					<td class="thRange"></td>
 					<td class="thRange">이슈 내용</td>
-					<td class="thRange" rowspan="5" colspan="16"><input type="text" id="taskContent"></td>
-					
+					<td class="thRange" rowspan="5" colspan="16">
+						<!-- <input type="text" id="taskContent"> -->
+						<textarea rows="" cols="" id="taskContent"></textarea>
+					</td>
 				</tr>
 				<tr>
 					<td class="thRange"></td>

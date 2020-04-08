@@ -90,7 +90,7 @@
 			<div style="width:100%; height:700px; margin:0 auto; overflow:auto;">
 				<table align="left" style="margin-bottom:10px;">	
 					<tr>
-						<td><button class="projectBtn" onclick="location.href='registerUser.me'"><i class="fas fa-edit"></i> &nbsp;사용자 등록</button>
+						<td><button class="projectBtn" onclick="location.href='registerMember.me'"><i class="fas fa-edit"></i> &nbsp;사용자 등록</button>
 						<td><button class="projectBtn"><i class="fas fa-download"></i> &nbsp;액셀 다운로드</button>
 					</tr>
 				</table>
@@ -178,7 +178,7 @@
 			</div>
 		</div>
 		
-	
+		<!-- 모달_사용자정보수정 begin -->
 		<div class="modal fade" id="myModal"role="dialog" aria-labelledby="gridSystemModalLabel" aria-hidden="true">
 		    <div class="modal-dialog">
 		      <div class="modal-content">
@@ -192,23 +192,31 @@
 		              <table id="buseoInfoTable" style="border-spacing:0 10px; border-collapse: separate;">
 						<tr>
 							<td class="titleId" style="width: 130px;">이름</td>
-							<td><input type="text" class="inputMenu form-control" style="width: 280px;"></td>
+							<td><input type="text" class="inputMenu form-control" style="width: 280px;" required="required"></td>
 						</tr>
 						<tr>
 							<td class="titleId">이메일</td>
-							<td><input type="text" class="inputMenu form-control" style="width: 280px;"></td>
+							<td><input type="text" class="inputMenu form-control" style="width: 280px;" required="required"></td>
 						</tr>
 						<tr>
 							<td class="titleId">부서</td>
-							<td><input type="text" class="inputMenu form-control" style="width: 280px;"></td>
+							<td>
+								<select class="inputMenu form-control" style="width: 280px;" required="required">
+									<option value="" >선택하세요</option>
+									<option value="">1</option>
+									<option value="">2</option>
+									<option value="">3</option>
+									<option value="">4</option>
+								</select>
+							</td>
 						</tr>
 						<tr>
 							<td class="titleId">직급</td>
-							<td><input type="text" class="inputMenu form-control" style="width: 280px;"></td>
+							<td><input type="text" class="inputMenu form-control" style="width: 280px;" required></td>
 						</tr>
 						<tr>
 							<td class="titleId">사용여부</td>
-							<td style="align:left"><input type="checkbox" class="inputMenu" style="width: 280px;"></td>
+							<td style="margin-left: -120px;"><input type="checkbox" class="" style="width: 280px; margin-left: -130px; align:left" required="required"></td>
 						</tr>
 					 </table>
 		            </div>
@@ -231,12 +239,24 @@
 	
 	
 	
+	
+	
 	<script>
 	
 	//모달
 	$("#memberId").click(function(){
 		$('#myModal').modal('show');
 	})
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	</script>

@@ -84,6 +84,26 @@
     <load-on-startup>1</load-on-startup>
   </servlet>
   
+  <servlet>
+    <servlet-name>Dept</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>/WEB-INF/config/dept-servlet.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>Rank</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>/WEB-INF/config/rank-servlet.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  
   <servlet-mapping>
     <servlet-name>Member</servlet-name>
     <url-pattern>*.me</url-pattern>
@@ -119,6 +139,15 @@
     <url-pattern>*.ma</url-pattern>
   </servlet-mapping>
   
+  <servlet-mapping>
+    <servlet-name>Dept</servlet-name>
+    <url-pattern>*.de</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>Rank</servlet-name>
+    <url-pattern>*.ra</url-pattern>
+  </servlet-mapping>
   
   
   <!-- 인코딩필터 추가 -->
