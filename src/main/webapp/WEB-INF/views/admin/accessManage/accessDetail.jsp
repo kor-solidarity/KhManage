@@ -172,14 +172,14 @@
 					<table align="left" style="width: 100%;">
 						<tr>
 							<td class="titleId" style="padding-left: 100px;">권한그룹 명</td>
-							<td><input type="text" class="inputMenu"
+							<td><input type="text" class="inputMenu" value="${aDetail.accessName}"
 								style="width: 100%;"></td>
 						</tr>
 						<tr height="10px;"></tr>
 						<tr>
 							<td class="titleId" style="padding-left: 90px;">권한그룹 설명</td>
 							<td><textarea class="inputMenu" rows="" cols=""
-									style="width: 100%; height: 150px;"></textarea></td>
+									style="width: 100%; height: 150px;">${aDetail.aContent}</textarea></td>
 						</tr>
 						<tr height="10px;"></tr>
 						<tr>
@@ -285,10 +285,14 @@
 													<td class="tdText thRange">이메일</td>
 													
 												</tr>
-												<tr>
+												<tr class="front">
 													<td class="thRange th1" align="center"><input type="checkbox"></td>
-													<td class="thRange th1"><input type="text"
-														class="inputCss" style="width: 120px;"></td>
+													<td class="thRange th1">
+														<select id="searchDept" class="inputCss">
+															<option>선택</option>
+															<option value="재우팀">재우팀</option>
+														</select>
+													</td>
 													<td class="tdText thRange"><input type="text"
 														class="inputCss" style="width: 90px"></td>
 													<td class="tdText thRange"><input type="text"
@@ -297,16 +301,7 @@
 														class="inputCss" style="width: 170px;"></td>
 													
 												</tr>
-
-
-												<tr class="trRange">
-													<td class="td1"><input type="checkbox"
-														class="inputCss" style="width: 30px;"></td>
-													<td class="td1">UI/UX 1팀</td>
-													<td class="tdText">SW개발</td>
-													<td class="tdText">김태원</td>
-													<td class="tdText">개발1부서</td>
-												</tr>
+												
 												<tr class="pagingArea">
 													<td colspan="5">
 												<div class="paging"><< < 1 2 > >></div>
@@ -370,6 +365,30 @@
 									    )
 									  }
 									})
+							});
+						</script>
+						<script>
+							$("#searchDept").on("change",function(){
+								var name = $(this).val();
+								if(name == " "){
+									name = null;
+								}
+								console.log(name);
+								 $.ajax({
+									url:'searchDeptMember.am',
+									type: 'post',
+									data:{deptName:name},
+								 success:function(data){
+									 if(data != ""){
+									 $(".trRange").empty();	
+									 for(key in data) {
+											$(".front").after("<tr class='trRange'> <td class='td1'><input type='checkbox' class='inputCss' style='width: 30px;'></td> <td class='td1'>"+data[key]['deptName'] +"</td> <td class='tdText'>SW개발</td> <td class='tdText'>김태원</td> <td class='tdText'>개발1부서</td> </tr>");
+									 }
+									 }else{
+										 $(".trRange").empty();	
+									 }
+								 }
+								}); 
 							});
 						</script>
 				</div>

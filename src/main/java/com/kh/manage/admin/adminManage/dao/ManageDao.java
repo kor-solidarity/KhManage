@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.manage.admin.adminManage.vo.Access;
 import com.kh.manage.admin.adminManage.vo.DepartMent;
+import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.common.PageInfo;
 
 public interface ManageDao {
@@ -20,4 +21,8 @@ public interface ManageDao {
 	List<DepartMent> departSelectAll(SqlSessionTemplate sqlSession);
 
 	DepartMent deptSelectOne(SqlSessionTemplate sqlSession, DepartMent dept);
+
+	Access accessSelectOne(SqlSessionTemplate sqlSession, Access ac);
+
+	List<DeptMember> searchDeptMember(SqlSessionTemplate sqlSession, DepartMent dept);
 }

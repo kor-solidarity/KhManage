@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.manage.admin.adminManage.vo.Access;
 import com.kh.manage.admin.adminManage.vo.DepartMent;
+import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.common.PageInfo;
 
 @Repository
@@ -51,6 +52,18 @@ public class ManageDaoImpl implements ManageDao {
 	public DepartMent deptSelectOne(SqlSessionTemplate sqlSession, DepartMent dept) {
 		
 		return sqlSession.selectOne("Admin.deptSelectOne", dept);
+	}
+
+	@Override
+	public Access accessSelectOne(SqlSessionTemplate sqlSession, Access ac) {
+		
+		return sqlSession.selectOne("Admin.accessSelectOne", ac);
+	}
+
+	@Override
+	public List<DeptMember> searchDeptMember(SqlSessionTemplate sqlSession, DepartMent dept) {
+	
+		return sqlSession.selectList("Admin.searchDeptMember", dept);
 	}
 
 

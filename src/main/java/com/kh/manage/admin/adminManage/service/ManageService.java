@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kh.manage.admin.adminManage.vo.Access;
 import com.kh.manage.admin.adminManage.vo.DepartMent;
+import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.common.PageInfo;
 
 public interface ManageService {
@@ -17,5 +18,9 @@ public interface ManageService {
 
 	List<DepartMent> departSelectAll();
 
-	DepartMent deptSelectOne(DepartMent dept); 
+	DepartMent deptSelectOne(DepartMent dept);
+
+	Access selectOneAccess(Access ac);
+
+	List<DeptMember> searchDeptMember(DepartMent dept); 
 }

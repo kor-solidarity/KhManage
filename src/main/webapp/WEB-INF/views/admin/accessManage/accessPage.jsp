@@ -153,9 +153,10 @@
 										
 									 success:function(data){
 											if(data != ""){
-												console.log(data[0]['accessName']);
 												$(".trRange").empty();
-												$(".front").after("<tr class='trRange'	id='accessList'> <td class='td1'>"+ data[0]['accessName']+"</td> <td class='tdText'>"+ data[0]['aContent']+"</td><td class='tdText'>20-03-20</td><td class='tdText'>20-03-02</td></tr>");
+												 for(key in data) {
+												$(".front").after("<tr class='trRange'	id='accessList'> <td class='td1'>"+ data[key]['accessName']+"</td> <td class='tdText'>"+ data[key]['aContent']+"</td><td class='tdText'>"+data[key]['modifyDate'] +"</td><td class='tdText'>"+ data[key]['createDate'] +"</td></tr>");
+												 }
 											}
 									 }
 									}); 
@@ -165,7 +166,7 @@
 						<script>
 							$(function(){
 								$(document).on('click', '.td1', function(){
-									location.href='accessDetailPage.am?num='+ $(this).text();
+									location.href='accessDetailPage.am?accessName='+ $(this).text();
 								});
 							});
 						</script>
