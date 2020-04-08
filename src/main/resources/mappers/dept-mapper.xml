@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Dept">
+
+	<resultMap type="Dept" id="deptResultSet">
+		<id property="deptNo" column="DEPT_NO"/>
+		<result property="deptName" column="DEPT_NAME"/>
+		<result property="highDept" column="HIGH_DEPT"/>
+		<result property="deptLevel" column="DEPT_LEVEL"/>
+	</resultMap>
+	
+	<select id="selectDeptList" resultMap="deptResultSet">
+		SELECT *
+		FROM DEPT
+	</select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+  

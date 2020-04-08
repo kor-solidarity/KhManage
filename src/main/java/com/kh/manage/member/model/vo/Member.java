@@ -8,29 +8,36 @@ public class Member {
 	private String memberId;
 	private String memberPwd;
 	private String memberName;
-	private String memberType;
 	private String phone;
-	private String jobCode;
-	private String deptCode;
 	private String email;
+	private String jobCode;
+	private String memberType;
+	private String rankNo;
+	private String deptNo;
+	private String deapTeamNo;
 	private Date enrollDate;
+	private Date modifyDate;
 	private String status;
 	
 	public Member() {}
 
-	public Member(int memberNo, String memberId, String memberPwd, String memberName, String memberType, String phone,
-			String jobCode, String deptCode, String email, Date enrollDate, String status) {
+	public Member(int memberNo, String memberId, String memberPwd, String memberName, String phone, String email,
+			String jobCode, String memberType, String rankNo, String deptNo, String deapTeamNo, Date enrollDate,
+			Date modifyDate, String status) {
 		super();
 		this.memberNo = memberNo;
 		this.memberId = memberId;
 		this.memberPwd = memberPwd;
 		this.memberName = memberName;
-		this.memberType = memberType;
 		this.phone = phone;
-		this.jobCode = jobCode;
-		this.deptCode = deptCode;
 		this.email = email;
+		this.jobCode = jobCode;
+		this.memberType = memberType;
+		this.rankNo = rankNo;
+		this.deptNo = deptNo;
+		this.deapTeamNo = deapTeamNo;
 		this.enrollDate = enrollDate;
+		this.modifyDate = modifyDate;
 		this.status = status;
 	}
 
@@ -66,36 +73,12 @@ public class Member {
 		this.memberName = memberName;
 	}
 
-	public String getMemberType() {
-		return memberType;
-	}
-
-	public void setMemberType(String memberType) {
-		this.memberType = memberType;
-	}
-
 	public String getPhone() {
 		return phone;
 	}
 
 	public void setPhone(String phone) {
 		this.phone = phone;
-	}
-
-	public String getJobCode() {
-		return jobCode;
-	}
-
-	public void setJobCode(String jobCode) {
-		this.jobCode = jobCode;
-	}
-
-	public String getDeptCode() {
-		return deptCode;
-	}
-
-	public void setDeptCode(String deptCode) {
-		this.deptCode = deptCode;
 	}
 
 	public String getEmail() {
@@ -106,12 +89,60 @@ public class Member {
 		this.email = email;
 	}
 
+	public String getJobCode() {
+		return jobCode;
+	}
+
+	public void setJobCode(String jobCode) {
+		this.jobCode = jobCode;
+	}
+
+	public String getMemberType() {
+		return memberType;
+	}
+
+	public void setMemberType(String memberType) {
+		this.memberType = memberType;
+	}
+
+	public String getRankNo() {
+		return rankNo;
+	}
+
+	public void setRankNo(String rankNo) {
+		this.rankNo = rankNo;
+	}
+
+	public String getDeptNo() {
+		return deptNo;
+	}
+
+	public void setDeptNo(String deptNo) {
+		this.deptNo = deptNo;
+	}
+
+	public String getDeapTeamNo() {
+		return deapTeamNo;
+	}
+
+	public void setDeapTeamNo(String deapTeamNo) {
+		this.deapTeamNo = deapTeamNo;
+	}
+
 	public Date getEnrollDate() {
 		return enrollDate;
 	}
 
 	public void setEnrollDate(Date enrollDate) {
 		this.enrollDate = enrollDate;
+	}
+
+	public Date getModifyDate() {
+		return modifyDate;
+	}
+
+	public void setModifyDate(Date modifyDate) {
+		this.modifyDate = modifyDate;
 	}
 
 	public String getStatus() {
@@ -125,11 +156,11 @@ public class Member {
 	@Override
 	public String toString() {
 		return "Member [memberNo=" + memberNo + ", memberId=" + memberId + ", memberPwd=" + memberPwd + ", memberName="
-				+ memberName + ", memberType=" + memberType + ", phone=" + phone + ", jobCode=" + jobCode
-				+ ", deptCode=" + deptCode + ", email=" + email + ", enrollDate=" + enrollDate + ", status=" + status
-				+ "]";
+				+ memberName + ", phone=" + phone + ", email=" + email + ", jobCode=" + jobCode + ", memberType="
+				+ memberType + ", rankNo=" + rankNo + ", deptNo=" + deptNo + ", deapTeamNo=" + deapTeamNo
+				+ ", enrollDate=" + enrollDate + ", modifyDate=" + modifyDate + ", status=" + status + "]";
 	}
-	
+
 	
 
 	

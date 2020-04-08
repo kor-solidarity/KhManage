@@ -9,11 +9,11 @@
 		<result property="memberId" column="MEMBER_ID"/>
 		<result property="memberPwd" column="MEMBER_PWD"/>
 		<result property="memberName" column="MEMBER_NAME"/>
-		<result property="memberType" column="MEMBER_TYPE"/>
 		<result property="phone" column="PHONE"/>
-		<result property="jobCode" column="JOB_CODE"/>
-		<result property="deptCode" column="DEFT_CODE"/>
 		<result property="email" column="EMAIL"/>
+		<result property="memberType" column="MEMBER_TYPE"/>
+		<result property="rankNO" column="RANK_NO"/>
+		<result property="deptNo" column="DEFT_NO"/>
 		<result property="enrollDate" column="ENROLL_DATE"/>
 		<result property="status" column="STATUS"/>
 	</resultMap>
@@ -28,7 +28,7 @@
 	 
 	<insert id="insertMember" parameterType="Member">
 		INSERT INTO MEMBER
-		VALUES (SEQ_MID.NEXTVAL, #{memberId}, #{memberPwd}, #{memberName}, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 'Y')
+		VALUES (SEQ_MID.NEXTVAL, #{memberId}, #{memberPwd}, #{memberName}, #{phone}, #{email}, #{memberType}, #{rankNo}, #{deptNo}, DEFAULT, 'Y')
 	</insert>
 	
 	<select id="selectPwd" resultType="java.lang.String" parameterType="java.lang.String">
