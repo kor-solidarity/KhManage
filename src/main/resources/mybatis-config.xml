@@ -6,17 +6,14 @@
   <configuration>
   	<typeAliases>
   		<typeAlias type="com.kh.manage.member.model.vo.Member" alias="Member"/>
-  		<typeAlias type="com.kh.manage.admin.access.vo.Access" alias="Access"/>
-  		<typeAlias type="com.kh.manage.admin.department.model.vo.Dept" alias="Dept"/>
-  		<typeAlias type="com.kh.manage.admin.rank.model.vo.Rank" alias="Rank"/>
+  		<typeAlias type="com.kh.manage.admin.adminManage.vo.Access" alias="Access"/>
+  		<typeAlias type="com.kh.manage.admin.adminManage.vo.DepartMent" alias="DepartMent"/>
   	</typeAliases>
   
   
   	<mappers>
   		<mapper resource="mappers/member-mapper.xml"/>
-  		<mapper resource="mappers/access-mapper.xml"/>
-  		<mapper resource="mappers/dept-mapper.xml"/>
-  		<mapper resource="mappers/rank-mapper.xml"/>
+  		<mapper resource="mappers/admin-mapper.xml"/>
   	</mappers>
   		
   
