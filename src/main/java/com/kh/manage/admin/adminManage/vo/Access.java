@@ -1,4 +1,4 @@
-package com.kh.manage.admin.access.vo;
+package com.kh.manage.admin.adminManage.vo;
 
 public class Access {
 	private String accessGroupNo;

@@ -115,7 +115,7 @@ body {
 		position: relative;
 	}
 	.msg_cotainer_send{
-		margin-top: auto;
+		margin-top: 5px;
 		margin-bottom: auto;
 		margin-right: 10px;
 		border-radius: 25px;
@@ -182,34 +182,15 @@ body {
 		<label style="margin-left: 23px; margin-bottom: 10px; margin-top: 10px;">파이널 프로젝트 팀 (5명)</label>
 		
 		<!-- 채팅 영역 -->
-		<div id="chatArea" style="width:90%; height:420px; background:white; border:2px solid #1E2B44; border-radius:10px; margin:0 auto;">
+		<div id="chatArea" style="width:90%; height:420px; background:white; border:2px solid #1E2B44; border-radius:10px; margin:0 auto; overflow: auto;">
 			
-			<div class="card-body msg_card_body" style="height:60px;">
-				<div class="d-flex justify-content-start mb-4">
-					<div class="msg_cotainer">
-						안녕하세요~
-						<span class="msg_time">8:40</span>
-					</div>
-				</div>
-			</div>		
-			<div class="card-body msg_card_body">
-				<div class="d-flex justify-content-start mb-4">
-					<div class="msg_cotainer">
-						팀장 김태원입니다
-						<span class="msg_time">8:40</span>
-					</div>
-				</div>
-			</div>			
 	
 	  <div>
-        <input type="text" id="sender" value="${ sessionScope.loginUser.memberId }" style="display: none;">
-        <input type="text" id="messageinput">
+        <input type="text" id="sender" value="test" style="display: none;">
     </div>
-    <div>
-        <button type="button" onclick="openSocket();">Open</button>
-        <button type="button" onclick="send();">Send</button>
+    <!-- <div>
         <button type="button" onclick="closeSocket();">Close</button>
-    </div>
+    </div> -->
     <!-- Server responses get written here -->
     <div id="messages"></div>
 
@@ -222,7 +203,7 @@ body {
 		<div style="width:90%; height:90px; background:white; border:2px solid #1E2B44; border-radius:5px; margin:0 auto; margin-top: 5px;">
 			<textarea id="chatContent" class="chatContent" style="resize:none; width:85%; height:73%; border:none; outline:none; overflow:hidden; border-bottom: 2px solid #EEEEEE;"></textarea>
 			
-			<input type="button" id="sendBtn" value="전송" style="background:#1E2B44; border:1px solid #1E2B44; color:white; width:15%; height:100%; float:right; outline:none;">
+			<input type="button" id="sendBtn"  onclick="send();" value="전송" style="background:#1E2B44; border:1px solid #1E2B44; color:white; width:15%; height:100%; float:right; outline:none;">
 			
 			<i class="fas fa-paperclip" id="fileUpload" style="margin-left: 7px;"></i> <input type="file" id="file" style="display:none;">
 		</div>
@@ -282,30 +263,33 @@ body {
         var ws;
         var messages=document.getElementById("messages");
         
-        function openSocket(){
-            if(ws!==undefined && ws.readyState!==WebSocket.CLOSED){
-                writeResponse("WebSocket is already opened.");
-                return;
-            }
-            //웹소켓 객체 만드는 코드
-            ws=new WebSocket("ws://192.168.30.192:8001/manage/chatRoom.ct?userId=sss");
-            
-            ws.onopen=function(event){
-                if(event.data===undefined) return;
-                
-                writeResponse(event.data);
-            };
-            ws.onmessage=function(event){
-                writeResponse(event.data);
-            };
-            ws.onclose=function(event){
-                writeResponse("Connection closed");
-            }
-        }
+        $(function(){
+        	 if(ws!==undefined && ws.readyState!==WebSocket.CLOSED){
+                 writeResponse("WebSocket is already opened.");
+                 return;
+             }
+             //웹소켓 객체 만드는 코드
+             ws=new WebSocket("ws://192.168.30.192:8001/manage/chatRoom.ct?room1/user01");
+             
+             ws.onopen=function(event){
+                 if(event.data===undefined) return;
+                 
+                 writeResponse(event.data);
+             };
+             ws.onmessage=function(event){
+                 writeResponse(event.data);
+             };
+             ws.onclose=function(event){
+                 writeResponse("Connection closed");
+             }
+        });
         
         function send(){
-            var text=document.getElementById("messageinput").value;
+            var text=document.getElementById("chatContent").value + "," + 'user11';
+            $("#chatArea").append("<div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send'>"+ text + "<span class='msg_time_send'>8:55</span></div></div>");
+            $("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
             ws.send(text);
+            str = $("#chatContent").val("");
             text="";
         }
         
@@ -313,7 +297,8 @@ body {
             ws.close();
         }
         function writeResponse(text){
-            messages.innerHTML+="<br/>"+text;
+        	$("#chatArea").append("<div class='card-body msg_card_body'> <div class='d-flex justify-content-start mb-4'> <div class='msg_cotainer'>" + text + "<span class='msg_time'>8:40</span> </div> </div> </div>");
+        	 $("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
         }
 
 </script>
@@ -330,14 +315,12 @@ body {
 	
 	$("#sendBtn").click(function(){
 		str = $("#chatContent").val();
-		$("#chatArea").append("<div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send'>"+str+"<span class='msg_time_send'>8:55</span></div></div>");
-		str = $("#chatContent").val("");
 	});
     $("#chatContent").keydown(function(event){
     	if(event.keyCode == '13' && !event.shiftKey){
-				str = $("#chatContent").val();
-		    	$("#chatArea").append("<div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send'>"+ str + "<span class='msg_time_send'>8:55</span></div></div>");
-				str = $("#chatContent").val("");
+    		str = $("#chatContent").val();
+    		console.log("엔터키 : " + str)
+			$("#sendBtn").click();
     	}else if(event.keyCode == '13' && event.shiftKey){
     		str += '/n';
     	}

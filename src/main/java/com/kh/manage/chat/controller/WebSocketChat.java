@@ -1,7 +1,10 @@
 package com.kh.manage.chat.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.websocket.OnClose;
@@ -37,9 +40,10 @@ public class WebSocketChat {
     @OnOpen
     public void onOpen(Session session) {
         logger.info("Open session id:"+session.getId());
+        String chatUser = session.getQueryString();
+        System.out.println(chatUser.split("/")[0]);
         try {
             final Basic basic=session.getBasicRemote();
-            basic.sendText("Connection Established");
         }catch (Exception e) {
             // TODO: handle exception
             System.out.println(e.getMessage());
@@ -56,20 +60,24 @@ public class WebSocketChat {
         	System.out.println("메세지 :"  + message);
             for(Session session : WebSocketChat.sessionList) {
                 if(!self.getId().equals(session.getId())) {
-                    session.getBasicRemote().sendText(message.split(",")[1]+" : "+message);
                 }
             }
         }catch (Exception e) {
-            // TODO: handle exception
-            System.out.println(e.getMessage());
         }
     }
     @OnMessage
-    public void onMessage(String message,Session session) {
-        logger.info("Message From "+message.split(",")[1] + ": "+message.split(",")[0]);
+    public void onMessage(String message, Session session) {
         try {
-            final Basic basic=session.getBasicRemote();
-            basic.sendText("to : "+message);
+        	for(int i = 0; i < sessionList.size(); i++) {
+        		if(session.getId() == sessionList.get(i).getId()) {
+        			
+        		}else {
+        			final Basic basic=sessionList.get(i).getBasicRemote();
+                	
+                	basic.sendText(message);
+        		}
+        	}
+
         }catch (Exception e) {
             // TODO: handle exception
             System.out.println(e.getMessage());

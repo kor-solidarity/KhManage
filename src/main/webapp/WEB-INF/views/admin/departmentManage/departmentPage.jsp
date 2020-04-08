@@ -56,7 +56,7 @@ ul {
 .inputMenu {
 	border: 1px solid lightgray;
 	width: 300px;
-	outline:none;
+	outline: none;
 	border-radius: 5px;
 }
 
@@ -115,6 +115,7 @@ ul {
 	background-color: rgb(0, 0, 0); /* Fallback color */
 	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
+
 .search-modal-content {
 	background-color: #fefefe;
 	margin: 15% auto; /* 15% from the top and centered */
@@ -275,22 +276,25 @@ ul {
 							<td>
 								<div style="width: 80%; height: 500px;">
 									<ul id="tree_menu" class="tree_menu">
-										<ul class="depth_2">
-											<li><a href="#none" id="title"
-												style="color: #1E2B44; font-size: 16px;"> <img
-													id="folderImg"
-													src="<c:url value="/resources/assets/img/folder.png"/>"
-													style="width: 25px; height: 20px; margin-bottom: 10px;">
-													프로젝트 개발부
-											</a>
-												<ul class="depth_3 a" id="depth3" style="margin-left: 20px;">
-													<li><a href="#none">UI/UX 1팀</a></li>
-													<li><a href="#none">SW 개발1팀</a></li>
-													<li><a href="#none">DA 1팀</a></li>
-													<li><a href="#none">SW아키텍트 1팀</a></li>
-													<li><a href="#none">TA 1팀</a></li>
-												</ul></li>
-										</ul>
+										<c:forEach var="d" items="${list}">
+											<c:if test="${ d.deptLevle ==1 }">
+											<c:set var="dId" value="${d.deptNo}"/>
+												<ul class="depth_2">
+													<li><a href="#none" id="title" class="title"
+														style="color: #1E2B44; font-size: 16px;"> <img
+															id="folderImg"
+															src="<c:url value="/resources/assets/img/folder.png"/>"
+															style="width: 25px; height: 20px; margin-bottom: 10px;">
+															<c:out value="${d.deptName}" /></a>
+												</li>
+												</ul>
+											</c:if>
+												<c:if test="${ d.deptLevle==2 and dId eq d.highDept}">
+											<ul class="depth_3 a" id="depth3" style="margin-left: 20px;">
+													<li><a class="deptSub"><c:out value="${d.deptName}" /></a></li>
+											</ul>
+												</c:if>
+										</c:forEach>
 									</ul>
 								</div>
 							</td>
@@ -349,46 +353,55 @@ ul {
 			</div>
 		</div>
 	</div>
-	
-	<div class="modal fade" id="myModal"role="dialog" aria-labelledby="gridSystemModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="gridSystemModalLabel"><i class="fas fa-th-large"></i>&nbsp;최상위 부서 추가</h4>
-        </div>
-        <div class="modal-body">
-          <div class="container-fluid">
-            <div class="row">
-              <table id="buseoInfoTable">
-						<tr>
-							<td class="titleId">부서명</td>
-							<td><input type="text" class="inputMenu"></td>
-						</tr>
-						<tr height="10px;"></tr>
-						<tr>
-							<td class="titleId">부서코드</td>
-							<td><input type="text" class="inputMenu"
-								style="width: 100px;"></td>
-						</tr>
-					</table>
-            </div>
-            <div class="row">
-              <div class="col-sm-9">
-                <div class="row">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-          <button type="button" class="btn btn-primary" style="background:#1E2B44; outline:none; border:none;">저장</button>
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
-	
+
+	<div class="modal fade" id="myModal" role="dialog"
+		aria-labelledby="gridSystemModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="gridSystemModalLabel">
+						<i class="fas fa-th-large"></i>&nbsp;최상위 부서 추가
+					</h4>
+				</div>
+				<div class="modal-body">
+					<div class="container-fluid">
+						<div class="row">
+							<table id="buseoInfoTable">
+								<tr>
+									<td class="titleId">부서명</td>
+									<td><input type="text" class="inputMenu"></td>
+								</tr>
+								<tr height="10px;"></tr>
+								<tr>
+									<td class="titleId">부서코드</td>
+									<td><input type="text" class="inputMenu"
+										style="width: 100px;"></td>
+								</tr>
+							</table>
+						</div>
+						<div class="row">
+							<div class="col-sm-9">
+								<div class="row"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary"
+						style="background: #1E2B44; outline: none; border: none;">저장</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+
 	<script>
 		$(".a").children().click(function() {
 			$(this).children().css("color", "#F59E1C");
@@ -396,16 +409,17 @@ ul {
 	</script>
 
 	<script>
+		/* $(".menuTable").find(".title").on('click', function(e){
+			console.log('sss');
+		}); */
+	
 		function tree_menu() {
-			$('ul.depth_2 >li > a')
-					.click(
-							function(e) {
-								var temp_el = $(this).next('ul');
-								var depth_3 = $('.depth_3');
+			$(".menuTable").find(".title").on('click', function(e){
+								console.log($(this).parent().parent().nextUntil(".depth_2"));
+								var temp_el = $(this).parent().parent().nextUntil(".depth_2");
+								var depth_3 = $(this).parent().parent().nextUntil(".depth_2");
 
-								// 처음에 모두 슬라이드 업 시켜준다.
 								depth_3.slideUp(300);
-								// 클릭한 순간 모두 on(-)을 제거한다.// +가 나오도록
 								depth_3.parent().find('em').removeClass('on');
 
 								if (temp_el.is(':hidden')) {
@@ -414,7 +428,7 @@ ul {
 											'하위폴더 열림');
 									$(this).css('color', '#F59E1C').css(
 											"font-weight", "600");
-									$("#folderImg")
+									$(this).find("#folderImg")
 											.attr("src",
 													"<c:url value="/resources/assets/img/folderOpen.png"/>");
 
@@ -424,7 +438,7 @@ ul {
 											'하위폴더 닫힘');
 									$(this).css('color', '#1E2B44').css(
 											"font-weight", "400");
-									$("#folderImg")
+									$(this).find("#folderImg")
 											.attr("src",
 													"<c:url value="/resources/assets/img/folder.png"/>");
 								}
@@ -441,6 +455,23 @@ ul {
 		$("#plusDepart").click(function(){
 			$('#myModal').modal('show');
 		})
+	</script>
+	<script>
+		$(function(){
+			$(".menuTable").find(".deptSub").on('click', function(){
+				var name = $(this).text();
+				 $.ajax({
+					url:'deptSelectOne.am',
+					type: 'post',
+					data:{deptName:name},
+					
+				 success:function(data){
+						if(data){
+						}
+				 }
+				}); 
+			});
+			});
 	</script>
 </body>
 </html>

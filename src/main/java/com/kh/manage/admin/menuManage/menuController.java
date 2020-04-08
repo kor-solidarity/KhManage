@@ -8,6 +8,8 @@ public class menuController {
 	
 	@RequestMapping("/menuManege.am")
 	public String showMenuManagePage() {
+		
+		
 		return "admin/menuManage/menuManage";
 	}
 }
