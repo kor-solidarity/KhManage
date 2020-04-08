@@ -58,6 +58,9 @@
 	font-size: 14px;
 	margin-left: 100px;
 }
+.inputTd{
+	width: 500px;
+}
 </style>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
@@ -67,7 +70,7 @@
 	<div class="panel panel-headline">
 		<div class="panel-heading">
 			<div
-				style="width: 100%; height: 300px; margin: 0 auto; overflow: auto;">
+				style="width: 100%; height: 500px; margin: 0 auto; overflow: auto;">
 				<div class="menuArea" style="margin-left: 12px;">
 					<table class="menuTable" style="width: 100%;">
 						<tr>
@@ -78,37 +81,49 @@
 							<td colspan="2"><div
 									style="width: 100%; height: 2px; background: #EEEEEE; margin: 0 auto; margin-bottom: 10px;"></div></td>
 						</tr>
-						</table>
-						<table align="left" style="width:100%;">
 						<tr>
 							<td class="titleId" style="padding-left:100px;">템플릿 명</td>
-							<td><input type="text" class="inputMenu" style="width:100%;"></td>
+							<td class="inputTd">
+							<input type="text" class="inputMenu" style="width:100%;">
+							</td>
 							<td class="titleId" style="padding-left:100px;">템플릿 분류</td>
-							<td>
-							<select class="selectMenu">
-								<option>선택하세요</option>
-							</select>
+							<td class="inputTd">
+							<select style="width: 100%;"><option>선택하세요</option></select>
 							</td>
 						</tr>
 						<tr height="10px;"></tr>
 						<tr>
 							<td class="titleId" style="padding-left:90px;">템플릿 설명</td>
-							<td>
-								<textarea class="inputMenu"rows="" cols="" style="width:100%; height:150px;"></textarea>
+							<td colspan="3">
+								<textarea class="inputMenu"rows="" cols="" style="width:100%; height:150px; resize: none;"></textarea>
 							</td>
 						</tr>
-						<tr height="10px;"></tr>
+						<tr height="10pxdj;"></tr>
 						
 						
 						<tr>
 							<td class="titleText" colspan="2">템플릿 엑셀 등록 정보</td>
 						</tr>
 						
-						
 						<tr>
 							<td colspan="2"><div
 									style="width: 100%; height: 2px; background: #EEEEEE; margin: 0 auto; margin-bottom: 10px;"></div></td>
 						</tr>
+						<tr>
+							<td class="titleId" style="padding-left:90px;">템플릿 엑셀 등록</td>
+							<td style="height: 120px;">
+								<input type="file">	 <p >Excel, Xml 파일 업로드 가능</p>
+							</td>
+							<td class="titleId" style="padding-left:90px;">템플릿 등록 샘플</td>
+							<td class="titleId" style="padding-left:90px;">템플릿 등록 샘플</td>
+						</tr>
+						
+						
+						
+						
+						
+						
+						
 						<tr>
 							<td colspan="2">
 								<button class="okBtn" id="save">
@@ -123,36 +138,7 @@
 							</td>
 						</tr>
 						</table>
-						<script>
-							$("#save").click(function(){
-								swal({	
-									  title: 'Are you sure?',
-									  text: "You won't be able to revert this!",
-									  icon: 'warning',
-									  showCancelButton: true,
-									  confirmButtonText: 'Yes, delete it!',
-									  cancelButtonText: 'No, cancel!',
-									  reverseButtons: true
-									}).then((result) => {
-									  if (result.value) {
-									    swalWithBootstrapButtons.fire(
-									      'Deleted!',
-									      'Your file has been deleted.',
-									      'success'
-									    )
-									  } else if (
-									    /* Read more about handling dismissals below */
-									    result.dismiss === Swal.DismissReason.cancel
-									  ) {
-									    swalWithBootstrapButtons.fire(
-									      'Cancelled',
-									      'Your imaginary file is safe :)',
-									      'error'
-									    )
-									  }
-									})
-							});
-						</script>
+						
 				</div>
 			</div>
 		</div>

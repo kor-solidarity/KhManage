@@ -132,7 +132,23 @@
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
 </body>
+<script>
+	$("#projectTable tr").click(function(){
+		
+		location.href = "templateManagePage.am";
+	});
+	
+
+</script>
+
+
+
+
 </html>
+
+
+
+
+
+
