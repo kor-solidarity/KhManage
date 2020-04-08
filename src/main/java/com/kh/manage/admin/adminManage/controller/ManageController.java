@@ -97,8 +97,8 @@ public class ManageController {
 	}
 	
 	@RequestMapping("/deptSelectOne.am")
-	public void deptSelectOne(DepartMent dept, Model model, HttpServletRequest request,  HttpServletResponse response) {
-		
+ 	public void deptSelectOne(DepartMent dept, Model model, HttpServletRequest request,  HttpServletResponse response) {
+ 		
 		DepartMent dm = as.deptSelectOne(dept);
 		System.out.println("찾아오기 : " + dm);
 		request.setAttribute("dm", dm);
@@ -106,7 +106,7 @@ public class ManageController {
 		response.setCharacterEncoding("UTF-8");
 
 		String gson = new Gson().toJson(dm);
-
+ 
 		try {
 			response.getWriter().write(gson);
 		} catch (IOException e) {
