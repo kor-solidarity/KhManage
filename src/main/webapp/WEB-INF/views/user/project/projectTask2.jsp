@@ -349,7 +349,7 @@
 						<%--담당자--%>
 						<th style="width: 110px">담당자</th>
 						<%--돋보기(상세정보)--%>
-						<th style="width: 30px"><i class="fas fa-search" onclick=""></i></th>
+						<th style="width: 30px"><i class="fas fa-search" data-toggle="modal"></i></th>
 					</tr>
 					<tr>
 						<td>5</td>
@@ -578,6 +578,9 @@
 			</div>
 		</div>
 	</div>
+
+	<%--작업 상세보기 모달창--%>
+
 </body>
 </html>
 
