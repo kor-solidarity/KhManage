@@ -1,8 +1,7 @@
 package com.kh.manage.admin.adminManage.service;
 
 import java.util.List;
-
-
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.manage.admin.adminManage.dao.ManageDao;
 import com.kh.manage.admin.adminManage.vo.Access;
+import com.kh.manage.admin.adminManage.vo.AccessMember;
 import com.kh.manage.admin.adminManage.vo.DepartMent;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.common.PageInfo;
@@ -67,6 +67,19 @@ public class ManageServiceImpl implements ManageService{
 	public List<DeptMember> searchDeptMember(DepartMent dept) {
 		
 		return ad.searchDeptMember(sqlSession, dept);
+	}
+
+	@Override
+	public int insertAccessMember(AccessMember am, Map<String, Object> map) {
+		
+		return ad.insertAccessMember(sqlSession, map);
+		
+		
+	}
+
+	@Override
+	public List<String> selectAccessMember(AccessMember am) {
+		return ad.selectAccessMember(sqlSession, am);
 	}
 	
 }
