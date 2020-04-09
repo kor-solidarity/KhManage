@@ -1,9 +1,10 @@
 package com.kh.manage.admin.adminManage.controller;
 
 import java.io.IOException;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.kh.manage.admin.adminManage.service.ManageService;
 import com.kh.manage.admin.adminManage.vo.Access;
+import com.kh.manage.admin.adminManage.vo.AccessMember;
 import com.kh.manage.admin.adminManage.vo.DepartMent;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.common.PageInfo;
@@ -126,8 +128,6 @@ public class ManageController {
 	
 	@RequestMapping("/searchDeptMember.am")
 	public void searchDeptMember(DepartMent dept, Model model, HttpServletRequest request,  HttpServletResponse response) {
-		System.out.println(dept);
-		
 		List<DeptMember> list = as.searchDeptMember(dept);
 		
 		request.setAttribute("list", list);
@@ -141,5 +141,43 @@ public class ManageController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@RequestMapping("/insertAccessMember.am")
+	public String insertAccessMember(AccessMember am) {
+		List<String> num = as.selectAccessMember(am);
+		System.out.println("회원정보 : " + num);
+
+		List<AccessMember> userList = new ArrayList<AccessMember>();
+		String[] str = am.getMemberNo().split(",");
+		
+//		for(int i=0; i<str.length; i++) {
+//			int b = 0;
+//			for(int j=0; j<num.size(); j++) {
+//				if(num.get(j).equals(str[i])) {
+//					System.out.println("num : " + num.get(j));
+//					System.out.println("str[] : " + str[i]);
+//					j= str.length;
+//				}else {
+//					AccessMember aMember = new AccessMember();
+//					aMember.setAccessNo(am.getAccessNo());
+//					aMember.setMemberNo(str[i]);
+//					System.out.println("사용가능한 번호 : " + str[i]);
+//					userList.add(aMember);
+//					j= str.length;
+//				}
+//			}
+//			
+//		}
+//		System.out.println(userList);
+		
+		if(userList.size()>0) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("list", userList);
+			//as.insertAccessMember(am, map);
+		}
+		
+		return "redirect:accessManage.am";
+		
 	}
 }

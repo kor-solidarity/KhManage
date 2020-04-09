@@ -1,10 +1,12 @@
 package com.kh.manage.admin.adminManage.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.manage.admin.adminManage.vo.Access;
+import com.kh.manage.admin.adminManage.vo.AccessMember;
 import com.kh.manage.admin.adminManage.vo.DepartMent;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.common.PageInfo;
@@ -25,4 +27,8 @@ public interface ManageDao {
 	Access accessSelectOne(SqlSessionTemplate sqlSession, Access ac);
 
 	List<DeptMember> searchDeptMember(SqlSessionTemplate sqlSession, DepartMent dept);
+
+	int insertAccessMember(SqlSessionTemplate sqlSession, Map<String, Object> map);
+
+	List<String> selectAccessMember(SqlSessionTemplate sqlSession, AccessMember am);
 }

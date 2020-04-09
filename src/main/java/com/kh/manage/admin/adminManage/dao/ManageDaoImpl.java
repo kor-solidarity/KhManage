@@ -1,12 +1,14 @@
 package com.kh.manage.admin.adminManage.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.manage.admin.adminManage.vo.Access;
+import com.kh.manage.admin.adminManage.vo.AccessMember;
 import com.kh.manage.admin.adminManage.vo.DepartMent;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.common.PageInfo;
@@ -64,6 +66,20 @@ public class ManageDaoImpl implements ManageDao {
 	public List<DeptMember> searchDeptMember(SqlSessionTemplate sqlSession, DepartMent dept) {
 	
 		return sqlSession.selectList("Admin.searchDeptMember", dept);
+	}
+
+	@Override
+	public int insertAccessMember(SqlSessionTemplate sqlSession, Map<String, Object> map) {
+		
+		return sqlSession.insert("Admin.insertAccessMember", map);
+
+	}
+
+	@Override
+	public List<String> selectAccessMember(SqlSessionTemplate sqlSession, AccessMember am) {
+		 System.out.println("객체 : " + am);
+		return sqlSession.selectList("Admin.selectAccessMember", am);
+
 	}
 
 

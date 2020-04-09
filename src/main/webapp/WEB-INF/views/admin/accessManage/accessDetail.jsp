@@ -111,6 +111,7 @@
 	padding: 3px;
 }
 
+
 .th1 {
 	width: 30px;
 	text-indent: 5px;
@@ -122,6 +123,11 @@
 }
 
 .trRange {
+	border: 1px solid #B0B0B0;
+	width: 30px;
+}
+
+.trRange1 {
 	border: 1px solid #B0B0B0;
 	width: 30px;
 }
@@ -169,16 +175,20 @@
 									style="width: 100%; height: 2px; background: #EEEEEE; margin: 0 auto; margin-bottom: 10px;"></div></td>
 						</tr>
 					</table>
+					<form action="insertAccessMember.am">
 					<table align="left" style="width: 100%;">
 						<tr>
 							<td class="titleId" style="padding-left: 100px;">권한그룹 명</td>
-							<td><input type="text" class="inputMenu" value="${aDetail.accessName}"
-								style="width: 100%;"></td>
+							<td><input type="text" class="inputMenu" name="accessName" value="${aDetail.accessName}"
+								style="width: 100%;">
+								<input type="hidden" name="accessNo" value="${aDetail.accessGroupNo}">
+								</td>
+
 						</tr>
 						<tr height="10px;"></tr>
 						<tr>
 							<td class="titleId" style="padding-left: 90px;">권한그룹 설명</td>
-							<td><textarea class="inputMenu" rows="" cols=""
+							<td><textarea class="inputMenu" rows="" cols="" name="aContent"
 									style="width: 100%; height: 150px;">${aDetail.aContent}</textarea></td>
 						</tr>
 						<tr height="10px;"></tr>
@@ -217,7 +227,7 @@
 											<td class="tdText thRange">직급</td>
 											<td class="tdText thRange" style="width: 600px;">이메일</td>
 										</tr>
-										<tr>
+										<tr class="mainFront">
 											<td class="thRange th1"></td>
 											<td class="tdText thRange"><input type="text"
 												class="inputCss" style="width: 100px"></td>
@@ -228,14 +238,8 @@
 											<td class="tdText thRange"><input type="text"
 												class="inputCss" style="width: 570px;"></td>
 										</tr>
-										<tr class="trRange">
-											<td class="td1"><input type="checkbox" class="inputCss"
-												style="width: 30px;"></td>
-											<td class="tdText">SW개발</td>
-											<td class="tdText">김태원</td>
-											<td class="tdText">개발1부서</td>
-											<td class="tdText">시작전</td>
-										</tr>
+										
+										
 										<tr class="pagingArea">
 											<td colspan="5">
 												<div class="paging"><< < 1 2 > >></div>
@@ -244,10 +248,10 @@
 										<tr height="10px;"></tr>
 										<tr>
 											<td colspan="5">
-												<button class="plusMember" id="memberPlus">
+												<button type="button" class="plusMember" id="memberPlus">
 													<i class="fas fa-plus"></i>&nbsp;추가
 												</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="#">
-													<button class="deleteBtn">
+													<button type="button" class="deleteBtn">
 														<i class="fas fa-minus"></i>&nbsp;삭제
 													</button>
 											</a>
@@ -258,7 +262,7 @@
 							</td>
 						</tr>
 					</table>
-
+				</form>
 					<!-- 모달 창 -->
 					<div class="modal fade" id="myModal" role="dialog"
 						aria-labelledby="gridSystemModalLabel" aria-hidden="true">
@@ -291,6 +295,7 @@
 														<select id="searchDept" class="inputCss">
 															<option>선택</option>
 															<option value="재우팀">재우팀</option>
+															<option value="UI/UX 1팀">UI/UX 1팀</option>
 														</select>
 													</td>
 													<td class="tdText thRange"><input type="text"
@@ -299,7 +304,6 @@
 														class="inputCss" style="width: 90px;"></td>
 													<td class="tdText thRange"><input type="text"
 														class="inputCss" style="width: 170px;"></td>
-													
 												</tr>
 												
 												<tr class="pagingArea">
@@ -321,7 +325,7 @@
 								<div class="modal-footer">
 									<button type="button" class="btn btn-default"
 										data-dismiss="modal">취소</button>
-									<button type="button" class="btn btn-primary"
+									<button type="button" class="btn btn-primary" id="saveBtn"
 										style="background: #1E2B44; outline: none; border: none;">저장</button>
 								</div>
 							</div>
@@ -335,7 +339,37 @@
 						$('#myModal').modal('show');
 					})
 					</script>
-
+					<script>
+					var memberList = new Array();
+					$("#saveBtn").on('click', function(){
+						var bool = true;
+					    var b = $(".trRange").siblings().find(".memberNo").val();
+						$("input:checkbox[name=idCheck]:checked").filter(function(){
+								var a = $(this).parent().siblings().find(".memberNo").val();
+								$(".trRange1").siblings().find(".memberNo").each(function(){
+									 if($(this).val() == a){
+										 bool = false;
+									 }
+								});
+								
+								if(bool){
+								for(key in list){
+									if(list[key]['memberNo']== a){
+										$(".mainFront").after("<tr class='trRange1'> <td class='td1'><input type='checkbox' id='idCheckMain' name='idCheck' class='inputCss' style='width: 30px;'></td> <td class='td1'>"+list[key]['deptName'] +"</td> <td class='tdText'>"+list[key]['memberName']+"</td> <td class='tdText'>"+list[key]['rankNo']+"<input type='hidden' id='memberNo' name='memberNo' class='memberNo' value='"+ list[key]['memberNo']+"'></td> <td class='tdText'>"+list[key]['email']+"</td> </tr>");
+										memberList = list[key]['memberNo'];
+									}
+								}
+						       }
+						    
+							});
+							if(!bool){
+								alert("이미 들어간 회원입니다!")
+							}else{
+								$('#myModal').modal('hide');
+							}
+							
+						});
+					</script>
 
 					<script>
 							$("#save").click(function(){
@@ -368,21 +402,22 @@
 							});
 						</script>
 						<script>
+						var list;
 							$("#searchDept").on("change",function(){
 								var name = $(this).val();
 								if(name == " "){
 									name = null;
 								}
-								console.log(name);
 								 $.ajax({
 									url:'searchDeptMember.am',
 									type: 'post',
 									data:{deptName:name},
 								 success:function(data){
+									 list = data;
 									 if(data != ""){
 									 $(".trRange").empty();	
 									 for(key in data) {
-											$(".front").after("<tr class='trRange'> <td class='td1'><input type='checkbox' class='inputCss' style='width: 30px;'></td> <td class='td1'>"+data[key]['deptName'] +"</td> <td class='tdText'>SW개발</td> <td class='tdText'>김태원</td> <td class='tdText'>개발1부서</td> </tr>");
+											$(".front").after("<tr class='trRange'> <td class='td1'><input type='checkbox' id='idCheck' name='idCheck' class='inputCss' style='width: 30px;'></td> <td class='td1'>"+data[key]['deptName'] +"</td> <td class='tdText'>"+data[key]['memberName']+"</td> <td class='tdText'>"+data[key]['rankNo']+"<input type='hidden' id='memberNo' class='memberNo' value='"+ data[key]['memberNo']+"'></td> <td class='tdText'>"+data[key]['email']+"</td> </tr>");
 									 }
 									 }else{
 										 $(".trRange").empty();	

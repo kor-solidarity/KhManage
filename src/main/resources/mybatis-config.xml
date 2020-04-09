@@ -4,12 +4,16 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
   
   <configuration>
+  	<settings>
+  		<setting name="jdbcTypeForNull" value="NULL"/>
+  	</settings>
   	<typeAliases>
   		<typeAlias type="com.kh.manage.member.model.vo.Member" alias="Member"/>
   		<typeAlias type="com.kh.manage.admin.adminManage.vo.Access" alias="Access"/>
 		<typeAlias type="com.kh.manage.admin.adminManage.vo.DepartMent" alias="DepartMent"/>
   		<typeAlias type="com.kh.manage.admin.department.model.vo.Dept" alias="Dept"/>
   		<typeAlias type="com.kh.manage.admin.adminManage.vo.DeptMember" alias="DeptMember"/>
+  		<typeAlias type="com.kh.manage.admin.adminManage.vo.AccessMember" alias="AccessMember"/>
   		<typeAlias type="com.kh.manage.admin.rank.model.vo.Rank" alias="Rank"/>
   	</typeAliases>
   
