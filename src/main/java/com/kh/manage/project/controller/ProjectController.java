@@ -1,13 +1,18 @@
 package com.kh.manage.project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.kh.manage.project.model.service.ProjectService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class ProjectController {
+	@Autowired
+	private ProjectService ps;
 	
 	@RequestMapping("/projectCenter.pr")
 	public String projectSelectAll() {
@@ -20,6 +25,8 @@ public class ProjectController {
 		System.out.println("projectRegister");
 		// 등록 페이지 작성하기 전에 해야하는 사전작업:
 		// 개발형태목록 개발등급목록 플젝관리자 pmo 등 로딩시키기
+		
+		// load 
 		
 		return "user/project/projectReg";
 	}
