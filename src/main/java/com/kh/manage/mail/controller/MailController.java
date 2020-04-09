@@ -8,8 +8,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.GetObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
 import com.kh.manage.mail.model.vo.Mail;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -23,6 +31,32 @@ public class MailController {
 
 	@RequestMapping("/mailMain.ma")
 	public String mailMain() {
+		
+		 
+//	      String bucket_name = "manageee";
+//	      String key_name= "4hjljcbtgl9jbkqr2g2l2pt3s81ktt8p7cuqv481";
+//	      
+//	      final AmazonS3 s3 = AmazonS3ClientBuilder.standard().withRegion("us-east-1").build();
+//	      
+//	      
+//	      S3Object object = s3.getObject(new GetObjectRequest(bucket_name,key_name));
+//	      InputStream objectData = object.getObjectContent();
+//	      
+//	      try {
+//	      
+//	      BufferedReader reader = new BufferedReader(new InputStreamReader(object.getObjectContent()));
+//	      
+//	      String line;
+//	      
+//	      
+//	      while((line = reader.readLine()) != null) {
+//	         System.out.println(line);
+//	      }
+//	      objectData.close();
+//	      } catch (IOException e) {
+//	         e.printStackTrace();
+//	      }
+//		
 
 		return "user/mail/mailMain";
 	}
@@ -81,7 +115,7 @@ public class MailController {
 
 
 	@RequestMapping("/sendMail")
-	public String sendMail(Mail m) throws Exception{
+	public void sendMail(Mail m) throws Exception{
 
 		System.out.println(m);
 
@@ -158,6 +192,9 @@ public class MailController {
 			// Send the email.
 			transport.sendMessage(msg, msg.getAllRecipients());
 			System.out.println("Email sent!");
+			
+			
+			
 		}
 		catch (Exception ex) {
 			System.out.println("The email was not sent.");
@@ -169,7 +206,6 @@ public class MailController {
 			transport.close();
 		}
 
-		return "";
 	}
 
 
