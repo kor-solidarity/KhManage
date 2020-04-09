@@ -1,5 +1,6 @@
 package com.kh.manage.project.controller;
 
+import com.kh.manage.project.model.vo.ProjectType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,6 +9,8 @@ import com.kh.manage.project.model.service.ProjectService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class ProjectController {
@@ -24,9 +27,10 @@ public class ProjectController {
 	public String projectCreatePage() {
 		System.out.println("projectRegister");
 		// 등록 페이지 작성하기 전에 해야하는 사전작업:
-		// 개발형태목록 개발등급목록 플젝관리자 pmo 등 로딩시키기
+		// 개발형태목록 개발등급목록 플젝관리자 pmo 플젝템플릿 
 		
-		// load 
+		// 개발형태 목록
+		List<ProjectType> projectTypes = ps.selectProjectTypeList();
 		
 		return "user/project/projectReg";
 	}
