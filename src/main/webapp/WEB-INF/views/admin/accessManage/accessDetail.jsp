@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 	
 <!DOCTYPE html>
 <html>
 <head>
@@ -238,7 +239,20 @@
 											<td class="tdText thRange"><input type="text"
 												class="inputCss" style="width: 570px;"></td>
 										</tr>
-										
+										<c:if test="${list.size()>0}">
+										<c:forEach var="a" items="${list}">
+										<tr class='trRange1'> 
+											<td class='td1'>
+												<input type='checkbox' id='idCheckMain' name='idCheck' class='inputCss' style='width: 30px;'>
+											</td> 
+											<td class='td1'><c:out value="${a.deptName}"/></td> 
+											<td class='tdText'><c:out value="${a.memberName}"/></td> 
+											<td class='tdText'><c:out value="${a.rankName}"/>
+											<input type='hidden' id='memberNo' name='memberNo' class='memberNo' value='${a.memberNo}'>
+											</td> <td class='tdText'><c:out value="${a.email}"/></td> 
+										</tr>
+										</c:forEach>
+										</c:if>
 										
 										<tr class="pagingArea">
 											<td colspan="5">

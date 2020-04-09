@@ -9,6 +9,7 @@ import com.kh.manage.admin.adminManage.vo.Access;
 import com.kh.manage.admin.adminManage.vo.AccessMember;
 import com.kh.manage.admin.adminManage.vo.DepartMent;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
+import com.kh.manage.admin.adminManage.vo.SelectAccessMember;
 import com.kh.manage.common.PageInfo;
 
 public interface ManageDao {
@@ -31,4 +32,6 @@ public interface ManageDao {
 	int insertAccessMember(SqlSessionTemplate sqlSession, Map<String, Object> map);
 
 	List<String> selectAccessMember(SqlSessionTemplate sqlSession, AccessMember am);
+
+	List<SelectAccessMember> selectAccessMemberList(SqlSessionTemplate sqlSession, Access ac);
 }

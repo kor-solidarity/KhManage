@@ -11,6 +11,7 @@ import com.kh.manage.admin.adminManage.vo.Access;
 import com.kh.manage.admin.adminManage.vo.AccessMember;
 import com.kh.manage.admin.adminManage.vo.DepartMent;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
+import com.kh.manage.admin.adminManage.vo.SelectAccessMember;
 import com.kh.manage.common.PageInfo;
 
 @Repository
@@ -77,9 +78,15 @@ public class ManageDaoImpl implements ManageDao {
 
 	@Override
 	public List<String> selectAccessMember(SqlSessionTemplate sqlSession, AccessMember am) {
-		 System.out.println("객체 : " + am);
+		
 		return sqlSession.selectList("Admin.selectAccessMember", am);
 
+	}
+
+	@Override
+	public List<SelectAccessMember> selectAccessMemberList(SqlSessionTemplate sqlSession, Access ac) {
+		
+		return sqlSession.selectList("Admin.selectAccessMemberList", ac);
 	}
 
 

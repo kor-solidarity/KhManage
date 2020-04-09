@@ -22,6 +22,7 @@ import com.kh.manage.admin.adminManage.vo.Access;
 import com.kh.manage.admin.adminManage.vo.AccessMember;
 import com.kh.manage.admin.adminManage.vo.DepartMent;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
+import com.kh.manage.admin.adminManage.vo.SelectAccessMember;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.common.Pagination;
 
@@ -60,9 +61,11 @@ public class ManageController {
 	public String showAccessDetailPage(Access ac, Model model) {
 		
 		Access selectAccess = as.selectOneAccess(ac);
-		
+		List<SelectAccessMember> list = as.selectAccessMemberList(ac);
+		model.addAttribute("list", list);
 		model.addAttribute("aDetail", selectAccess);
 		
+		System.out.println(list);
 		return "admin/accessManage/accessDetail";
 	}
 
@@ -146,35 +149,32 @@ public class ManageController {
 	@RequestMapping("/insertAccessMember.am")
 	public String insertAccessMember(AccessMember am) {
 		List<String> num = as.selectAccessMember(am);
-		System.out.println("회원정보 : " + num);
+		List<String> dnum = new ArrayList<String>();
 
-		List<AccessMember> userList = new ArrayList<AccessMember>();
 		String[] str = am.getMemberNo().split(",");
 		
-//		for(int i=0; i<str.length; i++) {
-//			int b = 0;
-//			for(int j=0; j<num.size(); j++) {
-//				if(num.get(j).equals(str[i])) {
-//					System.out.println("num : " + num.get(j));
-//					System.out.println("str[] : " + str[i]);
-//					j= str.length;
-//				}else {
-//					AccessMember aMember = new AccessMember();
-//					aMember.setAccessNo(am.getAccessNo());
-//					aMember.setMemberNo(str[i]);
-//					System.out.println("사용가능한 번호 : " + str[i]);
-//					userList.add(aMember);
-//					j= str.length;
-//				}
-//			}
-//			
-//		}
-//		System.out.println(userList);
 		
-		if(userList.size()>0) {
+		for(int i=0; i<str.length; i++) {
+			dnum.add(str[i]);
+		}
+		
+		for(int i=0; i< num.size(); i++) {
+			dnum.remove(num.get(i));
+		}
+		
+		if(dnum.size()>0) {
+			List<AccessMember> userList = new ArrayList<AccessMember>();
+			for(int i = 0; i < dnum.size(); i++) {
+				AccessMember as = new AccessMember();
+				as.setAccessNo(am.getAccessNo());
+				as.setMemberNo(dnum.get(i));
+				
+				userList.add(as);
+			}
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("list", userList);
-			//as.insertAccessMember(am, map);
+			as.insertAccessMember(am, map);
+			
 		}
 		
 		return "redirect:accessManage.am";
