@@ -32,6 +32,21 @@
 		<result property="status" column="STATUS"/>
 	</resultMap>
 	
+	<resultMap type="SelectAccessMember" id="selectAccessResultSet">
+		<id property="accessNo" column="ACCESSGROUP_NO"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="memberId" column="MEMBER_ID"/>
+		<result property="memberName" column="MEMBER_NAME"/>
+		<result property="phone" column="PHONE"/>
+		<result property="email" column="EMAIL"/>
+		<result property="memberType" column="MEMBER_TYPE"/>
+		<result property="rankName" column="RANK_NAME"/>
+		<result property="deptName" column="DEPT_NAME"/>
+		<result property="enrollDate" column="ENROLL_DATE"/>
+		<result property="modifyDate" column="MODIFY_DATE"/>
+		<result property="status" column="STATUS"/>
+	</resultMap>
+	
 	<insert id="insertAccessGroup" parameterType="Access">
 		INSERT INTO ACCESSGROUP
 		VALUES(SEQ_ACG_NO.NEXTVAL, #{accessName}, #{aContent},SYSDATE, SYSDATE, 'Y')
@@ -140,6 +155,27 @@
 		SELECT MEMBER_NO
 		FROM ACCESS_MEMBER
 		WHERE ACCESSGROUP_NO = #{accessNo}
+	</select>
+	
+	<select id="selectAccessMemberList" parameterType="Access" resultMap="selectAccessResultSet">
+		SELECT A.ACCESSGROUP_NO
+	       	  ,M.MEMBER_NO
+	      	  ,M.MEMBER_ID
+	      	  ,M.MEMBER_NAME
+	      	  ,M.PHONE
+	      	  ,M.EMAIL
+	      	  ,M.MEMBER_TYPE
+	      	  ,R.RANK_NAME
+	      	  ,D.DEPT_NAME
+	      	  ,M.ENROLL_DATE
+	      	  ,M.MODIFY_DATE
+	      	  ,M.STATUS    
+	   FROM ACCESSGROUP A
+	   JOIN ACCESS_MEMBER C ON(A.ACCESSGROUP_NO = C.ACCESSGROUP_NO)
+	   JOIN MEMBER M ON(M.MEMBER_NO = C.MEMBER_NO)
+	   JOIN DEPT D ON(M.DEPT_NO = D.DEPT_NO)
+	   JOIN RANK R ON(R.RANK_NO = M.RANK_NO)
+	   WHERE A.ACCESS_NAME = #{accessName}		  		
 	</select>
 	
 </mapper>
