@@ -108,7 +108,7 @@
 								<div class="cellMenu1" style="font-weight:normal; font-size: 35px; margin-right: 10px; color:#5E738B">19</div>
 								<div style="margin-right: 10px; font-size: 13px; color:#AAB5BC">프로젝트</div>
 								<div style="width: 100%">
-									<a href="#" style="background:#F1F1F1; width: 100%">view more
+									<a href="projectCenter.pr" style="background:#F1F1F1; width: 100%">view more
 										<i class="m-icon-swapright m-icon-gray"></i>
 									</a>
 								</div>

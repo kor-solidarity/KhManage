@@ -164,6 +164,37 @@ public class MemberController {
 	}
 	
 	
+//	//아이디 중복체크
+//	@RequestMapping("checkMemberId.me")
+//	public void checkMemberId(Member m, HttpServletRequest request, HttpServletResponse response) {
+//		
+//		
+//		Member me = ms.checkMemberId(m);
+//		
+//		//true false
+//		if(m == null) {
+//			
+//			
+//		}
+//		
+//		
+//		
+//		request.setAttribute("memberId", m);
+//		response.setContentType("application/json");
+//		response.setCharacterEncoding("UTF-8");
+//
+//		String gson = new Gson().toJson(true);
+//
+//		try {
+//			response.getWriter().write(gson);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		
+//	}
+	
+	
+	
 	
 	
 		

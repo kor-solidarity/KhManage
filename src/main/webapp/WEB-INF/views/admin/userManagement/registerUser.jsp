@@ -115,23 +115,44 @@
 							<td class="tableTd">아이디 *</td>
 							<td class="tableTd3"></td>
 							<td class="tableTd2">
-								<input type="text" class="register form-control" name="memberId"focus>
+								<input type="text" class="register form-control" name="memberId" focus>
+							</td>
+						</tr>
+						<!-- 아이디 유효성 검사 -->
+						<tr class="hiddenTr">
+							<td class=""></td>
+							<td class=""></td>
+							<td class="msg-td-memberId">&nbsp;
+								<div id="" class="ajax-msg-idOk" style="color:#048000; font-size: 12px; display:inline-block">사용가능한 아이디 입니다.</div>
+								<div id="" class="ajax-msg-notOk" style="color:orangered; font-size: 12px;">&nbsp;&nbsp;&nbsp;아이디가 중복됩니다.</div>
 							</td>
 						</tr>
 						<tr class="tableTr">
 							<td>패스워드 *</td>
 							<td></td>
 							<td>
-								<input type="password" class="register form-control" name="memberPwd">
+								<input type="password" id="password1" class="register form-control" name="memberPwd">
 							</td>
 						</tr>
 						<tr class="tableTr">
 							<td>패스워드 확인 *</td>
 							<td></td>
 							<td>
-								<input type="password" class="register form-control" name="memberPwd2">
+								<input type="password" id="password2" class="register form-control" name="memberPwd2">
 							</td>
 						</tr>
+						
+						<!-- 패스워드 유효성 검사 -->
+						<tr class="hiddenTr">
+							<td class=""></td>
+							<td class=""></td>
+							<td class="msg-td-password">&nbsp;
+								<div id="correctPwd" class="ajax-msg-pwdOk" style="color:#048000"></div>
+								<div id="incorrectPwd" class="ajax-msg-pwdNotOk" style="color:orangered; font-size: 12px; display:none">패스워드가 일치하지 않습니다.</div>
+							</td>
+						</tr>
+						
+						
 						<tr class="tableTr">
 							<td>이름 *</td>
 							<td></td>
@@ -143,7 +164,7 @@
 							<td>휴대폰번호 *</td>
 							<td></td>
 							<td>
-								<input type="text" class="register form-control" name="phone">
+								<input type="text" id="" class="register form-control" name="phone" style="color:#676A6D">
 							</td>
 							<!-- 회원가입 시 인증번호 전송 -->
 							<td hidden>
@@ -321,6 +342,58 @@
 			}); 
 		});
 	});
+	
+	
+	//-------------- 회원가입 유효성 검사-----------------
+
+	// 아이디 중복검사
+	var memberId
+	$("input").change(function(){
+		
+		$.ajax({
+			url: 'checkMemberId.me',
+			type: "post",
+			data: {memberId:name},
+			success:  function(data) {
+				if(data){
+					wndq
+				}
+			},
+			error: function() {
+				console.log(error);
+			}
+			
+		});
+	});
+	
+	
+	
+	
+	// 비밀번호 유효성 검사
+	$("#correctPwd").hide();
+	$("#incorrectPwd").hide();
+	
+	$("input").change(function() {
+		
+		var password1 = $("#password1").val();
+		var password2 = $("#password2").val();
+		
+		if(password1 != "" && password2 != "") {
+			
+			if(password1 == password2) {
+				/* $("#msg-pwdOk").show(); */
+				$("#incorrectPwd").hide();
+			} else {
+				$("#incorrectPwd").show();
+			}
+		} else {
+			$("#incorrectPwd").hide();		
+		}
+		
+	});
+	
+	
+	
 	
 	
 	
