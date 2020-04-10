@@ -22,6 +22,8 @@ public interface MemberService {
 
 	List<DepartMent> selectTeam(DepartMent dm);
 
+	int checkMemberId(Member m);
+
 
 
 	

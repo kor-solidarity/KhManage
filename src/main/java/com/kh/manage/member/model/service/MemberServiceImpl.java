@@ -79,6 +79,13 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
+	@Override
+	public int checkMemberId(Member m) {
+
+		return md.checkMemberId(sqlSession, m);
+	}
+
+
 
 
 

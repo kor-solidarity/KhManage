@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class Member {
 
-	private int memberNo;
+	private String memberNo;
 	private String memberId;
 	private String memberPwd;
 	private String memberName;
@@ -21,7 +21,7 @@ public class Member {
 	
 	public Member() {}
 
-	public Member(int memberNo, String memberId, String memberPwd, String memberName, String phone, String email,
+	public Member(String memberNo, String memberId, String memberPwd, String memberName, String phone, String email,
 			String jobCode, String memberType, String rankNo, String deptNo, String deapTeamNo, Date enrollDate,
 			Date modifyDate, String status) {
 		super();
@@ -41,11 +41,11 @@ public class Member {
 		this.status = status;
 	}
 
-	public int getMemberNo() {
+	public String getMemberNo() {
 		return memberNo;
 	}
 
-	public void setMemberNo(int memberNo) {
+	public void setMemberNo(String memberNo) {
 		this.memberNo = memberNo;
 	}
 
@@ -160,9 +160,6 @@ public class Member {
 				+ memberType + ", rankNo=" + rankNo + ", deptNo=" + deptNo + ", deapTeamNo=" + deapTeamNo
 				+ ", enrollDate=" + enrollDate + ", modifyDate=" + modifyDate + ", status=" + status + "]";
 	}
-
-	
-
 	
 	
 }
