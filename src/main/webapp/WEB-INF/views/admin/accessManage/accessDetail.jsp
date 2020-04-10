@@ -199,7 +199,7 @@
 						</tr>
 						<tr>
 							<td colspan="2">
-								<button class="okBtn" id="save">
+								<button class="okBtn" id="save"  onclick="sweetTest();">
 									<i class="fas fa-check"></i>&nbsp;저장
 								</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="accessManage.am">
 									<button class="cancleBtn">
@@ -265,7 +265,7 @@
 												<button type="button" class="plusMember" id="memberPlus">
 													<i class="fas fa-plus"></i>&nbsp;추가
 												</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="#">
-													<button type="button" class="deleteBtn">
+													<button type="button" class="deleteBtn" id="memberDelete">
 														<i class="fas fa-minus"></i>&nbsp;삭제
 													</button>
 											</a>
@@ -351,7 +351,15 @@
 					<script>
 					$("#memberPlus").click(function(){
 						$('#myModal').modal('show');
-					})
+					});
+					
+					$("#memberDelete").click(function(){
+						$("input:checkbox[name=idCheck]:checked").filter(function(){
+							
+						});
+					});
+					
+					
 					</script>
 					<script>
 					var memberList = new Array();
@@ -384,37 +392,31 @@
 							
 						});
 					</script>
-
-					<script>
-							$("#save").click(function(){
-								swal({	
-									  title: 'Are you sure?',
-									  text: "You won't be able to revert this!",
-									  icon: 'warning',
-									  showCancelButton: true,
-									  confirmButtonText: 'Yes, delete it!',
-									  cancelButtonText: 'No, cancel!',
-									  reverseButtons: true
-									}).then((result) => {
-									  if (result.value) {
-									    swalWithBootstrapButtons.fire(
-									      'Deleted!',
-									      'Your file has been deleted.',
-									      'success'
-									    )
-									  } else if (
-									    /* Read more about handling dismissals below */
-									    result.dismiss === Swal.DismissReason.cancel
-									  ) {
-									    swalWithBootstrapButtons.fire(
-									      'Cancelled',
-									      'Your imaginary file is safe :)',
-									      'error'
-									    )
-									  }
-									})
+					 <script>
+						function sweetTest(){
+							swal({
+								  title: "해당 내용을 저장하시겠습니까?",
+								  icon: "warning",
+								  buttons: ["취소", "저장"],
+								  dangerMode: true,
+								})
+								.then((willDelete) => {
+								  if (willDelete) {
+								    swal({
+								    	title: "저장 완료!",
+								      	icon: "success"
+								    }).then((value) => {	// 애니메이션 V 나오는 부분!
+								    	$("#form1").submit();
+								    });
+								  } else {
+									  swal({
+									  	title: "취소 하셨습니다.",
+									    icon: "error"
+									  });
+								  }
 							});
-						</script>
+						}
+				</script>
 						<script>
 						var list;
 							$("#searchDept").on("change",function(){
