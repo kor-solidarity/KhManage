@@ -31,5 +31,11 @@ public interface ManageService {
 
 	List<String> selectAccessMember(AccessMember am);
 
-	List<SelectAccessMember> selectAccessMemberList(Access ac); 
+	List<SelectAccessMember> selectAccessMemberList(Access ac);
+
+	int deleteAccessMember(AccessMember am);
+
+	List<DepartMent> selectDeptList();
+
+	int updateAccess(AccessMember am); 
 }

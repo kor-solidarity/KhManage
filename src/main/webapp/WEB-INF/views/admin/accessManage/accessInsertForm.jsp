@@ -99,7 +99,7 @@
 								</button>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<a href="accessManage.am">
-								<button class="cancleBtn">
+								<button type="button" class="cancleBtn" onclick="history.go(-1)">
 									<i class="fas fa-ban"></i>&nbsp;취소
 								</button>
 								</a>

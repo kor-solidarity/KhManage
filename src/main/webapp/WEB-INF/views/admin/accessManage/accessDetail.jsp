@@ -176,7 +176,7 @@
 									style="width: 100%; height: 2px; background: #EEEEEE; margin: 0 auto; margin-bottom: 10px;"></div></td>
 						</tr>
 					</table>
-					<form action="insertAccessMember.am">
+					<form action="insertAccessMember.am" id="form1">
 					<table align="left" style="width: 100%;">
 						<tr>
 							<td class="titleId" style="padding-left: 100px;">권한그룹 명</td>
@@ -199,13 +199,20 @@
 						</tr>
 						<tr>
 							<td colspan="2">
-								<button class="okBtn" id="save"  onclick="sweetTest();">
+								<button type="button"class="okBtn" id="save"  onclick="sweetTest();">
 									<i class="fas fa-check"></i>&nbsp;저장
 								</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="accessManage.am">
-									<button class="cancleBtn">
+									<button type="button" class="cancleBtn" onclick="history.go(-1)">
 										<i class="fas fa-ban"></i>&nbsp;취소
 									</button>
 							</a>
+							<c:if test="${loginUser.memberId eq 'admin'}">
+							<a href="accessManage.am">
+								<button type="button" class="cancleBtn" style="background:lightgray; margin-left: 20px;" onclick="history.go(-1)">
+									<i class="fas fa-ban"></i>&nbsp;삭제
+								</button>
+								</a>
+								</c:if>
 							</td>
 						</tr>
 						<tr height="30px;"></tr>
@@ -308,8 +315,9 @@
 													<td class="thRange th1">
 														<select id="searchDept" class="inputCss">
 															<option>선택</option>
-															<option value="재우팀">재우팀</option>
-															<option value="UI/UX 1팀">UI/UX 1팀</option>
+															<c:forEach var="d" items="${dList}">
+																<option value="${d.deptName}"><c:out value="${d.deptName}"/></option>
+															</c:forEach>
 														</select>
 													</td>
 													<td class="tdText thRange"><input type="text"
@@ -355,6 +363,7 @@
 					
 					$("#memberDelete").click(function(){
 						$("input:checkbox[name=idCheck]:checked").filter(function(){
+							$(this).parent().siblings().parent().remove();
 							
 						});
 					});

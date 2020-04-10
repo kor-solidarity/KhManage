@@ -89,5 +89,22 @@ public class ManageDaoImpl implements ManageDao {
 		return sqlSession.selectList("Admin.selectAccessMemberList", ac);
 	}
 
+	@Override
+	public int deleteAccessMember(SqlSessionTemplate sqlSession, AccessMember am) {
+		
+		return sqlSession.delete("Admin.deleteAccessMember", am);
+	}
+
+	@Override
+	public List<DepartMent> selectDeptList(SqlSessionTemplate sqlSession) {
+
+		return sqlSession.selectList("Admin.selectDeptList");
+	}
+
+	@Override
+	public int updateAccess(SqlSessionTemplate sqlSession, AccessMember am) {
+
+		return sqlSession.update("Admin.updateAccess", am);
+	}
 
 }

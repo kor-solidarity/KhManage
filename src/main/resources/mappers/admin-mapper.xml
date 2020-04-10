@@ -59,7 +59,8 @@
 			  ,STATUS
 			  ,CREATE_DATE
 			  ,MODIFY_DATE
-		FROM ACCESSGROUP	  
+		FROM ACCESSGROUP	
+		WHERE STATUS = 'Y'  
 	</select>
 	
 	<select id="getListCount" resultType="_int">
@@ -177,6 +178,27 @@
 	   JOIN RANK R ON(R.RANK_NO = M.RANK_NO)
 	   WHERE A.ACCESS_NAME = #{accessName}		  		
 	</select>
+	
+	<delete id="deleteAccessMember" parameterType="AccessMember">
+		DELETE FROM ACCESS_MEMBER
+		WHERE ACCESSGROUP_NO = #{accessNo} 
+	</delete>
+	
+	<select id="selectDeptList" resultMap="departResultSet">
+		SELECT DEPT_NO
+			  ,DEPT_NAME
+			  ,HIGH_DEPT
+			  ,DEPT_LEVEL
+		FROM DEPT
+		WHERE DEPT_LEVEL = 2	  
+	</select>
+	
+	<update id="updateAccess" parameterType="AccessMember">
+		UPDATE ACCESSGROUP SET ACCESS_NAME = #{accessName}
+			  ,A_CONTENT = #{aContent}
+			  ,MODIFY_DATE = SYSDATE
+		WHERE ACCESSGROUP_NO = #{accessNo}	  
+	</update>
 	
 </mapper>
 

@@ -147,12 +147,14 @@ body {
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+<script src="${path }/resources/js/chatsocket.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
 
 </head>
 <body>
+<c:set var="path" value="${ pageContext.servletContext.contextPath }" scope="application"/>
 	<div id="header" style="width: 100%; height: 0px; background: white;">
 	</div>
 	<div id="nav"
@@ -260,32 +262,8 @@ body {
 	</div>
 	<!-- /.modal -->
 	<script type="text/javascript">
-        var ws;
-        var messages=document.getElementById("messages");
-        
-        $(function(){
-        	 if(ws!==undefined && ws.readyState!==WebSocket.CLOSED){
-                 writeResponse("WebSocket is already opened.");
-                 return;
-             }
-             //웹소켓 객체 만드는 코드
-             ws=new WebSocket("ws://192.168.100.55:8001/manage/chatRoom.ct?room1/user01");
-             
-             ws.onopen=function(event){
-                 if(event.data===undefined) return;
-                 
-                 writeResponse(event.data);
-             };
-             ws.onmessage=function(event){
-                 writeResponse(event.data);
-             };
-             ws.onclose=function(event){
-                 writeResponse("Connection closed");
-             }
-        });
-        
         function send(){
-            var text=document.getElementById("chatContent").value + "," + 'user11';
+            var text=document.getElementById("chatContent").value + "," + "${loginUser.memberId}";
             $("#chatArea").append("<div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send'>"+ text + "<span class='msg_time_send'>8:55</span></div></div>");
             $("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
             ws.send(text);
