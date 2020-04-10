@@ -102,6 +102,8 @@
 							<ul class="dropdown-menu">
 								<li><a href="myProfile.me"><i class="lnr lnr-user"></i><span>My Profile</span></a></li>
 								<li><a href="#"><i class="lnr lnr-envelope"></i> <span>Message</span></a></li>
+								<!-- 접근권한설정 -->
+								
 								<li><a href="adminShowMain.me"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li>
 								<li><a href="logout.me"><i class="lnr lnr-exit"></i> <span>Logout</span></a></li>
 							</ul></li>
