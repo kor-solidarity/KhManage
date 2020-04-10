@@ -49,7 +49,7 @@
 	
 	<insert id="insertAccessGroup" parameterType="Access">
 		INSERT INTO ACCESSGROUP
-		VALUES(SEQ_ACG_NO.NEXTVAL, #{accessName}, #{aContent},SYSDATE, SYSDATE, 'Y')
+		VALUES('A'|| TO_CHAR(SEQ_ACG_NO.NEXTVAL, 'FM000'), #{accessName}, #{aContent},SYSDATE, SYSDATE, 'Y')
 	</insert>
 	
 	<select id="selectAll" resultMap="accessResultSet" >
