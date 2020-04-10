@@ -72,10 +72,8 @@ public class ManageServiceImpl implements ManageService{
 
 	@Override
 	public int insertAccessMember(AccessMember am, Map<String, Object> map) {
-		
-		return ad.insertAccessMember(sqlSession, map);
-		
-		
+		 
+		 return ad.insertAccessMember(sqlSession, map);
 	}
 
 	@Override
@@ -87,6 +85,26 @@ public class ManageServiceImpl implements ManageService{
 	public List<SelectAccessMember> selectAccessMemberList(Access ac) {
 		
 		return ad.selectAccessMemberList(sqlSession, ac);
+	}
+
+	@Override
+	public int deleteAccessMember(AccessMember am) {
+		int result = ad.deleteAccessMember(sqlSession, am);
+		
+		return result;
+	}
+
+	@Override
+	public List<DepartMent> selectDeptList() {
+
+		return ad.selectDeptList(sqlSession);
+	}
+
+	@Override
+	public int updateAccess(AccessMember am) {
+		
+		return ad.updateAccess(sqlSession, am);
+		
 	}
 	
 }

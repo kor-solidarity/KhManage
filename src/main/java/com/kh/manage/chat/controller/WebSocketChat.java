@@ -1,5 +1,6 @@
 package com.kh.manage.chat.controller;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -35,13 +36,12 @@ public class WebSocketChat {
     @RequestMapping(value="/chat.do")
     public ModelAndView getChatViewPage(ModelAndView mav) {
         mav.setViewName("chatRoom");
+       
         return mav;
     }
     @OnOpen
     public void onOpen(Session session) {
         logger.info("Open session id:"+session.getId());
-        String chatUser = session.getQueryString();
-        System.out.println(chatUser.split("/")[0]);
         try {
             final Basic basic=session.getBasicRemote();
         }catch (Exception e) {
@@ -57,16 +57,19 @@ public class WebSocketChat {
      */
     private void sendAllSessionToMessage(Session self,String message) {
         try {
-        	System.out.println("메세지 :"  + message);
-            for(Session session : WebSocketChat.sessionList) {
-                if(!self.getId().equals(session.getId())) {
-                }
-            }
+                                                                       
+			/*
+			 * for(Session session : WebSocketChat.sessionList) {
+			 * if(!self.getId().equals(session.getId())) { } }
+			 */
         }catch (Exception e) {
+       
         }
     }
     @OnMessage
     public void onMessage(String message, Session session) {
+    	System.out.println("2번");
+    	System.out.println(message);
         try {
         	for(int i = 0; i < sessionList.size(); i++) {
         		if(session.getId() == sessionList.get(i).getId()) {
@@ -82,7 +85,7 @@ public class WebSocketChat {
             // TODO: handle exception
             System.out.println(e.getMessage());
         }
-        sendAllSessionToMessage(session, message);
+        //sendAllSessionToMessage(session, message);
     }
     @OnError
     public void onError(Throwable e,Session session) {

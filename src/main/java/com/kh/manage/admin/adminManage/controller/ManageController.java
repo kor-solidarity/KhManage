@@ -59,13 +59,15 @@ public class ManageController {
 
 	@RequestMapping("/accessDetailPage.am")
 	public String showAccessDetailPage(Access ac, Model model) {
-		
+
 		Access selectAccess = as.selectOneAccess(ac);
+		List<DepartMent> dList = as.selectDeptList(); 
 		List<SelectAccessMember> list = as.selectAccessMemberList(ac);
+		
 		model.addAttribute("list", list);
 		model.addAttribute("aDetail", selectAccess);
+		model.addAttribute("dList", dList);
 		
-		System.out.println(list);
 		return "admin/accessManage/accessDetail";
 	}
 
@@ -99,17 +101,17 @@ public class ManageController {
 
 	@RequestMapping("/departmentManage.am")
 	public String showDepartmentManage(Model model) {
-		
+
 		List<DepartMent> list = as.departSelectAll();
-		
+
 		model.addAttribute("list", list);
-		
+
 		return "admin/departmentManage/departmentPage";
 	}
-	
+
 	@RequestMapping("/deptSelectOne.am")
- 	public void deptSelectOne(DepartMent dept, Model model, HttpServletRequest request,  HttpServletResponse response) {
- 		
+	public void deptSelectOne(DepartMent dept, Model model, HttpServletRequest request,  HttpServletResponse response) {
+
 		DepartMent dm = as.deptSelectOne(dept);
 
 		request.setAttribute("dm", dm);
@@ -117,52 +119,47 @@ public class ManageController {
 		response.setCharacterEncoding("UTF-8");
 
 		String gson = new Gson().toJson(dm);
- 
+
 		try {
 			response.getWriter().write(gson);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 	@RequestMapping("/insertHighDept.am")
 	public void insertHighDept(DepartMent dm) {
 	}
-	
+
 	@RequestMapping("/searchDeptMember.am")
 	public void searchDeptMember(DepartMent dept, Model model, HttpServletRequest request,  HttpServletResponse response) {
 		List<DeptMember> list = as.searchDeptMember(dept);
-		
+
 		request.setAttribute("list", list);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 
 		String gson = new Gson().toJson(list);
- 
+
 		try {
 			response.getWriter().write(gson);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@RequestMapping("/insertAccessMember.am")
 	public String insertAccessMember(AccessMember am) {
-		List<String> num = as.selectAccessMember(am);
-		List<String> dnum = new ArrayList<String>();
+		if(am.getMemberNo() != null) {
+			int result2 = as.deleteAccessMember(am);
 
-		String[] str = am.getMemberNo().split(",");
-		
-		
-		for(int i=0; i<str.length; i++) {
-			dnum.add(str[i]);
-		}
-		
-		for(int i=0; i< num.size(); i++) {
-			dnum.remove(num.get(i));
-		}
-		
-		if(dnum.size()>0) {
+			List<String> dnum = new ArrayList<String>();
+			String[] str = am.getMemberNo().split(",");
+				
+
+			for(int i=0; i<str.length; i++) {
+				dnum.add(str[i]);
+			}
 			List<AccessMember> userList = new ArrayList<AccessMember>();
 			for(int i = 0; i < dnum.size(); i++) {
 				AccessMember as = new AccessMember();
@@ -173,11 +170,16 @@ public class ManageController {
 			}
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("list", userList);
-			as.insertAccessMember(am, map);
-			
+
+			int result = as.insertAccessMember(am, map);
+
+		}else {
+			int result2 = as.deleteAccessMember(am);
 		}
 		
-		return "redirect:accessManage.am";
+		int result3 =  as.updateAccess(am);
 		
+		return "redirect:accessManage.am";
+
 	}
 }

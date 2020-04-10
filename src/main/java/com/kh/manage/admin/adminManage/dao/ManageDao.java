@@ -34,4 +34,10 @@ public interface ManageDao {
 	List<String> selectAccessMember(SqlSessionTemplate sqlSession, AccessMember am);
 
 	List<SelectAccessMember> selectAccessMemberList(SqlSessionTemplate sqlSession, Access ac);
+
+	int deleteAccessMember(SqlSessionTemplate sqlSession, AccessMember am);
+
+	List<DepartMent> selectDeptList(SqlSessionTemplate sqlSession);
+
+	int updateAccess(SqlSessionTemplate sqlSession, AccessMember am);
 }
