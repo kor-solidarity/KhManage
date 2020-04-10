@@ -2,10 +2,13 @@ package com.kh.manage.member.model.service;
 
 import java.util.List;
 
+import org.apache.ibatis.transaction.Transaction;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionManager;
 
 import com.kh.manage.admin.adminManage.vo.DepartMent;
 import com.kh.manage.admin.department.model.vo.Dept;
@@ -23,10 +26,18 @@ public class MemberServiceImpl implements MemberService {
 	private MemberDao md;
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+	/*
+	 * @Autowired private DataSourceTransactionManager TransactionManager;
+	 */
 	
 	
 	@Override
 	public int insertMember(Member m) {
+		
+		int result = 0;
+		
+		int result1 = md.insertMember(sqlSession, m);
+		
 		
 		return md.insertMember(sqlSession, m);
 	}
