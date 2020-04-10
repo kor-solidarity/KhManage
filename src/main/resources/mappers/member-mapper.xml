@@ -28,7 +28,8 @@
 	 
 	<insert id="insertMember" parameterType="Member">
 		INSERT INTO MEMBER
-		VALUES (SEQ_MNO.NEXTVAL, #{memberId}, #{memberPwd}, #{memberName}, #{phone}, #{email}, #{memberType}, #{rankNo}, #{deptNo}, SYSDATE, SYSDATE, 'Y')
+		<!-- VALUES (SEQ_MNO.NEXTVAL, #{memberId}, #{memberPwd}, #{memberName}, #{phone}, #{email}, #{memberType}, #{rankNo}, #{deptNo}, SYSDATE, SYSDATE, 'Y') -->
+		VALUES ('M' || TO_CHAR(SEQ_MNO.NEXTVAL, 'FM000'), #{memberId}, #{memberPwd}, #{memberName}, #{phone}, #{email}, #{memberType}, #{rankNo}, #{deptNo}, SYSDATE, SYSDATE, 'Y')
 	</insert>
 	
 	<select id="selectPwd" resultType="java.lang.String" parameterType="java.lang.String">
@@ -43,6 +44,14 @@
 		FROM MEMBER
 		WHERE MEMBER_ID = #{memberId}
 		AND STATUS = 'Y'
+	</select>
+	
+	
+	<!-- 아이디 중복확인 -->
+	<select id="checkMemberId" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE MEMBER_ID = #{memberId}
 	</select>
 
 </mapper>

@@ -29,6 +29,8 @@ public interface MemberDao {
 
 	List<DepartMent> selectTeam(SqlSessionTemplate sqlSession, DepartMent dm);
 
+	int checkMemberId(SqlSessionTemplate sqlSession, Member m);
+
 	
 
 }

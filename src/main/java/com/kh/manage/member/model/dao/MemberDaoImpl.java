@@ -70,6 +70,12 @@ public class MemberDaoImpl implements MemberDao {
 		return sqlSession.selectList("Admin.selectTeam", dm);
 	}
 
+	@Override
+	public int checkMemberId(SqlSessionTemplate sqlSession, Member m) {
+
+		return sqlSession.selectOne("Member.checkMemberId", m);
+	}
+
 	
 
 
