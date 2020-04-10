@@ -72,6 +72,9 @@
 			<div
 				style="width: 100%; height: 500px; margin: 0 auto; overflow: auto;">
 				<div class="menuArea" style="margin-left: 12px;">
+					
+					
+					<form  method="post" action="tempInsert.am" id="tempForm">
 					<table class="menuTable" style="width: 100%;">
 						<tr>
 							<td class="titleText" colspan="2">템플릿 등록 정보</td>
@@ -84,18 +87,22 @@
 						<tr>
 							<td class="titleId" style="padding-left:100px;">템플릿 명</td>
 							<td class="inputTd">
-							<input type="text" class="inputMenu" style="width:100%;">
+								<input type="text" class="inputMenu" name="templateName" style="width:100%;">
 							</td>
 							<td class="titleId" style="padding-left:100px;">템플릿 분류</td>
 							<td class="inputTd">
-							<select style="width: 100%;"><option>선택하세요</option></select>
+							<select style="width: 100%;">
+								<option>선택하세요</option>
+								<option>선택하세요</option>
+								<option>선택하세요</option>
+							</select>
 							</td>
 						</tr>
 						<tr height="10px;"></tr>
 						<tr>
 							<td class="titleId" style="padding-left:90px;">템플릿 설명</td>
 							<td colspan="3">
-								<textarea class="inputMenu"rows="" cols="" style="width:100%; height:150px; resize: none;"></textarea>
+								<textarea name="detail" class="inputMenu"rows="" cols="" style="width:100%; height:150px; resize: none;"></textarea>
 							</td>
 						</tr>
 						<tr height="10pxdj;"></tr>
@@ -119,11 +126,6 @@
 						</tr>
 						
 						
-						
-						
-						
-						
-						
 						<tr>
 							<td colspan="2">
 								<button class="okBtn" id="save">
@@ -138,7 +140,7 @@
 							</td>
 						</tr>
 						</table>
-						
+						</form>
 				</div>
 			</div>
 		</div>
