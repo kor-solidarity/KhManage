@@ -177,14 +177,14 @@
                                 <div class="form-group">
                                     <label class="col-md-12 required">이메일</label>
                                     <div class="col-md-12">
-                                        <input id="RES_EMAIL" name="email" value="${loginUser.email}" type="text" class="form-control form-control-line" placeholder="이름을 입력하세요" data-error="이름을 입력하세요" required="">
+                                        <input id="RES_EMAIL" name="email" value="${loginUser.email}" type="email" class="form-control form-control-line" placeholder="이름을 입력하세요" data-error="이름을 입력하세요" required="">
                                         <span class="help-block with-errors"></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12 required">전화번호</label>
                                     <div class="col-md-12">
-                                        <input id="RES_OFFICE_PHONE" name="phone" value="${loginUser.phone}" type="text" class="form-control form-control-line" placeholder="이름을 입력하세요" data-error="이름을 입력하세요" required="">
+                                        <input id="RES_OFFICE_PHONE" name="phone" value="${loginUser.phone}" type="text" class="form-control form-control-line" placeholder="이름을 입력하세요" data-error="이름을 입력하세요" maxlength="11" required="">
                                         <span class="help-block with-errors"></span>
                                     </div>
                                 </div>

@@ -110,22 +110,13 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int updateMemberInfo(Member member) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+
+		return md.updateMemberInfo(sqlSession, member);
 	}
 
-
-//	@Override
-//	public int updateMemberInfo(Member member) {
-//		
-//		
-//		
-//		return md.updateMemberInfo();
-//	}
-
-
-
-
+	
+	
 	
 }
 

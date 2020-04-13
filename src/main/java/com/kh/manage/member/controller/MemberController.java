@@ -154,17 +154,22 @@ public class MemberController {
 	
 	//회원기본정보 변경 : 이메일, 전화번호
 	@RequestMapping("updateMemberInfo.me")
-	public String updateMemberInfo(Member m, Model model, HttpSession session) {
+	public String updateMemberInfo(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		
 		Member member = (Member) session.getAttribute("loginUser");
+		String email = request.getParameter("email");
+		String phone = request.getParameter("phone");
 		
-		System.out.println(member);
+		System.out.println("email : " + email);
+		System.out.println("phone : " + phone);
 		
-		member.setEmail("email");
-		member.setPhone("phone");
+		member.setEmail(email);
+		member.setPhone(phone);
 		
 		
 		int result = ms.updateMemberInfo(member);
+		
+		System.out.println("updateMemberInfo result : " + result);
 		
 		
 		if(result > 0) {
