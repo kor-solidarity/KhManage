@@ -16,6 +16,10 @@
   		<typeAlias type="com.kh.manage.admin.adminManage.vo.AccessMember" alias="AccessMember"/>
   		<typeAlias type="com.kh.manage.admin.adminManage.vo.SelectAccessMember" alias="SelectAccessMember"/>
   		<typeAlias type="com.kh.manage.admin.rank.model.vo.Rank" alias="Rank"/>
+  		<typeAlias type="com.kh.manage.project.model.vo.Project" alias="Project"/>
+        <typeAlias type="com.kh.manage.project.model.vo.ProjectType" alias="ProjectType"/>
+        <typeAlias type="com.kh.manage.admin.template.model.vo.Template" alias="Template"/>
+        <typeAlias type="com.kh.manage.common.Attachment" alias="Attachment"/>
   	</typeAliases>
   
   
@@ -24,6 +28,9 @@
   		<mapper resource="mappers/admin-mapper.xml"/>
   		<mapper resource="mappers/dept-mapper.xml"/>
   		<mapper resource="mappers/rank-mapper.xml"/>
+  		<mapper resource="mappers/project-mapper.xml"/>
+  		<mapper resource="mappers/template-mapper.xml"/>
+        <mapper resource="mappers/attachment-mapper.xml"/>
   	</mappers>
   		
   
