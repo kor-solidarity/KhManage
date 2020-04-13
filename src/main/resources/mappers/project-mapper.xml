@@ -3,5 +3,65 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Project">
+    <!--프로젝트 객체에 들어갈 sql 결과값들-->
+    <resultMap id="projectResultSet" type="Project">
+        <id property="projectPk" column="project_pk"/>
+        <result property="projectName" column="project_name"/>
+        <result property="isImportant" column="is_important"/>
+        <result property="projectTypePk" column="project_type_pk"/>
+        <result property="projectRank" column="project_rank"/>
+        <result property="projectManager" column="project_manager"/>
+        <result property="deptNo" column="dept_no"/>
+        <result property="startDate" column="start_date"/>
+        <result property="endDate" column="end_date"/>
+        <result property="detail" column="detail"/>
+        <result property="remarks" column="remarks"/>
+        <result property="status" column="status"/>
+        <result property="templatePk" column="template_pk"/>
+    </resultMap>
+    <resultMap id="projectTypeResultSet" type="ProjectType">
+        <id property="typePk" column="type_pk"/>
+        <result property="typeName" column="type_name"/>
+    </resultMap>
 
+    <resultMap type="Dept" id="deptResultSet">
+        <id property="deptNo" column="DEPT_NO"/>
+        <result property="deptName" column="DEPT_NAME"/>
+        <result property="highDept" column="HIGH_DEPT"/>
+        <result property="deptLevel" column="DEPT_LEVEL"/>
+    </resultMap>
+
+    <resultMap type="DeptMember" id="deptMemberResultSet">
+        <id property="memberNo" column="MEMBER_NO"/>
+        <result property="memberId" column="MEMBER_ID"/>
+        <result property="memberName" column="MEMBER_NAME"/>
+        <result property="phone" column="PHONE"/>
+        <result property="email" column="EMAIL"/>
+        <result property="memberType" column="MEMBER_TYPE"/>
+        <result property="rankNo" column="RANK_NAME"/>
+        <result property="deptName" column="DEPT_NAME"/>
+        <result property="enrollDate" column="ENROLL_DATE"/>
+        <result property="modifyDate" column="MODIFY_DATE"/>
+        <result property="status" column="STATUS"/>
+    </resultMap>
+    
+    <!--부서목록-->
+    <select id="selectDeptList" resultMap="deptResultSet">
+        SELECT *
+        FROM DEPT
+    </select>
+    
+    <!--현역 사원목록-->
+    <select id="selectActiveMember" parameterType="String" resultMap="deptMemberResultSet">
+        SELECT *
+        FROM MEMBER
+        WHERE MEMBER_TYPE = '0'
+          AND STATUS = 'Y'
+            and DEPT_NO = #{deptNo}
+    </select>
+
+    <select id="selectProjectTypeList" resultMap="projectTypeResultSet">
+        select *
+        from project_type
+    </select>
 </mapper>
