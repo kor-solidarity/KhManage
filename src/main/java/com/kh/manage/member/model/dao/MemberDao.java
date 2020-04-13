@@ -33,6 +33,9 @@ public interface MemberDao {
 
 	int updatePassword(SqlSessionTemplate sqlSession, Member m);
 
+	int updateMemberInfo(SqlSessionTemplate sqlSession, Member member);
+
+
 
 
 	
