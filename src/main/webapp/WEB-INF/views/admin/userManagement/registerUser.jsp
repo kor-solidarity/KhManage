@@ -119,15 +119,15 @@
 										oninvalid="this.setCustomValidity('아이디를 입력해주세요.')" oninput="('ㄴㄴㄴㄴㄴ')">
 							</td>
 						</tr>
-						<!-- 아이디 유효성 검사 -->
-						<tr class="hiddenTr" height="0">
+						<!-- 아이디 유효성 검사 Begin -->
+						<tr class="availableId" height="0">
 							<td class=""></td>
 							<td class=""></td>
-							<td class="msg-td-memberId">&nbsp;
-								<!-- <div id="availableId" class="ajax-msg-idOk" style="color:#048000; font-size: 12px; display:inline-block">사용가능한 아이디 입니다.</div>
-								<div id="unavailableId" class="ajax-msg-notOk" style="color:orangered; font-size: 12px;">&nbsp;&nbsp;&nbsp;아이디가 중복됩니다.</div> -->
+							<td class="msg-td-memberId">
+								<div id="unavailableId" class="ajax-msg-notOk" style="color:orangered; font-size: 12px;">중복되는 아이디입니다.</div>
+								<div id="availableId" class="ajax-msg-idOk" style="color:#048000; font-size: 12px; display:inline-block">사용가능한 아이디 입니다.</div>
 							</td>
-						</tr>
+						</tr><!-- 아이디 유효성 검사 End -->
 						<tr class="tableTr">
 							<td>패스워드 *</td>
 							<td></td>
@@ -143,16 +143,14 @@
 							</td>
 						</tr>
 						
-						<!-- 패스워드 유효성 검사 -->
+						<!-- 패스워드 유효성 검사 Begin -->
 						<tr class="hiddenTr">
 							<td class=""></td>
 							<td class=""></td>
-							<td class="msg-td-password">&nbsp;<div id="incorrectPwd" class="ajax-msg-pwdNotOk" style="color:orangered; font-size: 12px; display:none">패스워드가 일치하지 않습니다.</div>
+							<td class="msg-td-password"><div id="incorrectPwd" class="ajax-msg-pwdNotOk" style="color:orangered; font-size: 12px; display:none">패스워드가 일치하지 않습니다.</div>
 								<!-- <div id="correctPwd" class="ajax-msg-pwdOk" style="color:#048000"></div> -->
-							
 							</td>
-						</tr>
-						
+						</tr><!-- 패스워드 유효성 검사 Begin -->
 						
 						<tr class="tableTr">
 							<td>이름 *</td>
@@ -167,10 +165,6 @@
 							<td>
 								<input type="text" id="" class="register form-control" name="phone" style="color:#676A6D">
 							</td>
-							<!-- 회원가입 시 인증번호 전송 -->
-							<td hidden>
-								<button class="verifyBtn" style="margin-left: 10px; width: 120px;">인증번호 전송</button>
-							</td>
 						</tr>
 						<tr class="tableTr">
 							<td>이메일 *</td>
@@ -183,8 +177,8 @@
 							<td>소속 부서 *</td>
 							<td></td>
 							<td>
-								<select id="deptNo" class="register form-control" >
-									<option class="form-control" value="#">선택하세요</option>
+								<select id="deptNo" class="register form-control" name="deptNo">
+									<option id="deptSelect" class="form-control" value="0">선택하세요</option>
 									<c:forEach var="a" items="${list}">
 										<option class="form-control" value="${a.deptNo}">
 											<c:out value="${a.deptName}"/>
@@ -197,8 +191,9 @@
 							<td>소속 팀 *</td>
 							<td></td>
 							<td>
-								<select id="deptTeam" class="register form-control"  name="deptNo">
-									<option id="deptTeamOption" class="form-control" value="#">선택하세요</option>
+								<select id="deptTeam" class="register form-control" name="deptNo">
+									<option class="form-control" value="0">선택하세요</option>
+									<!-- <option id="deptTeamOption" class="form-control" value="#">선택하세요</option> -->
 								</select>
 							</td>
 						</tr>
@@ -207,9 +202,9 @@
 							<td></td>
 							<td>
 								<select id="rank" class="register form-control"  name="rankNo">
-									<option class="form-control" value="#">선택하세요</option>
+									<option id="rank" class="form-control" value="0">선택하세요</option>
 									<c:forEach var="r" items="${rlist}">
-										<option class="form-control" value="${r.rankNo}" class="form-control">
+										<option class="form-control" value="${r.rankNo}">
 											<c:out value="${r.rankName}"/>
 										</option>
 									</c:forEach>
@@ -244,7 +239,7 @@
 					<br>
 					<hr>
 					<br>
-					<button type="submit" class="okBtn"><i class="fas fa-check"></i>&nbsp;저장</button>
+					<button type="submit" class="okBtn" onclick="submitSweet()"><i class="fas fa-check"></i>&nbsp;저장</button>
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<button type="reset" class="cancleBtn"><i class="fas fa-ban" onclick="goBack()"></i>&nbsp;취소</button>
 					<br><br>
@@ -294,7 +289,7 @@
 	
 	
 	//Alert
-	$(".okBtn").click(function(){
+/* 	$(".okBtn").click(function(){
 		swal({	
 		  title: 'Are you sure?',
 		  text: "You won't be able to revert this!",
@@ -311,7 +306,7 @@
 		      'success'
 		    )
 		  } else if (
-		    /* Read more about handling dismissals below */
+		    
 		    result.dismiss === Swal.DismissReason.cancel
 		  ) {
 		    swalWithBootstrapButtons.fire(
@@ -321,7 +316,7 @@
 		    )
 		  }
 		})
-	});
+	}); */
 	
 	
 	//하위부서 select Ajax
@@ -337,6 +332,7 @@
 					$("#deptTeam").empty();
 					
 						 for(key in data) {
+							$("#deptTeam").append("<option value='" + data[key]['0']+ "'>"+ "선택하세요" + "</option>");
 							$("#deptTeam").append("<option value='" + data[key]['deptNo']+ "'>"+ data[key]['deptName'] + "</option>");
 						 }
 				 }
@@ -348,12 +344,17 @@
 	//-------------- 회원가입 유효성 검사-----------------
 
 	// 아이디 중복검사
+	
+	$("#availableId").hide();
 	$("#unavailableId").hide();
 	
-	var idResult = false; //아이디 초기화
+	
+	/* var idResult = false; //아이디 초기화 */
 	
 	$("#memberId").keyup(function(){
+		
 		var name = $('#memberId').val();	
+		
 		$.ajax({
 			url: 'checkMemberId.me',
 			type: "post",
@@ -362,14 +363,13 @@
 				if(data == 1){
 					console.log('중복');
 					
-					/* var unavailableId= $("<div>"); */
-					
-					$("#msg-td-memberId").append("<div>" + "아이디가 중복됩니다." + "</div>").show();
-					
-					/* $("#msg-td-memberId").append("<div id="unavailableId" class="ajax-msg-notOk" style="color:orangered; font-size: 12px;">&nbsp;&nbsp;&nbsp;아이디가 중복됩니다.</div>"); */
-					
+					$("#unavailableId").show();
+					$("#availableId").hide();
 				}else{
 					console.log('사용가능');
+
+					$("#availableId").show();
+					$("#unavailableId").hide();
 				}
 			},
 			error: function(error) {
@@ -378,13 +378,8 @@
 		});
 	});
 	
-	/* <div id="availableId" class="ajax-msg-idOk" style="color:#048000; font-size: 12px; display:inline-block">사용가능한 아이디 입니다.</div>
-	<div id="unavailableId" class="ajax-msg-notOk" style="color:orangered; font-size: 12px;">&nbsp;&nbsp;&nbsp;아이디가 중복됩니다.</div> */
-	
-	
 	
 	// 비밀번호 유효성 검사
-	$(".hiddenTr").hide()
 	$("#correctPwd").hide();
 	$("#incorrectPwd").hide();
 	
@@ -411,6 +406,35 @@
 	});
 	
 	
+	
+	
+	//최종 폼전송 시 모든 input 부분 작성되었는 지 유효성 검사
+	function submitSweet() {
+		
+		var msg = "";
+		var regId = /^[a-z][a-z,0-9]{5,11}$/
+		var password = $("#password1").val();
+		var mamberNname = $("#memberName").val();
+		var phone = $("#phone").val();
+		var email = $("#email").val();
+		var dept = $("#deptSelect" ).val();	
+		var team = $("#deptTeam").val();
+		var rank = $("#rank").val();
+		
+		if(!regId.test($("#memberId").val())){
+            swal({
+               title: "아이디를 입력해주세요.",  /* "아이디를 6~12자 영문 소문자, 숫자를 입력해주세요", */
+               text: "",
+              icon: "error"
+            }).then((value) => {
+              $("#memberId").focus();
+              $("#memberId").select();
+           	});
+        
+		}
+		
+	}
+		
 	
 	
 	
