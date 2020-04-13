@@ -9,6 +9,7 @@ import com.kh.manage.admin.adminManage.vo.DepartMent;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.admin.adminManage.vo.SelectAccessMember;
 import com.kh.manage.common.PageInfo;
+import com.kh.manage.member.model.vo.Member;
 
 public interface ManageService {
 	 int insertAccessGroup(Access ac);
@@ -45,5 +46,7 @@ public interface ManageService {
 
 	DepartMent newDeptNo(DepartMent dept);
 
-	int inserChildrenDept(DepartMent dept); 
+	int inserChildrenDept(DepartMent dept);
+
+	List<Member> selectMemberList(DepartMent dept); 
 }
