@@ -80,28 +80,34 @@
 
 </head>
 <body onload="$('#route1').text('프로필')">
+	
+	<c:set var="contextPath" value="${ pageContext.servletContext.contextPath }" scope="application"/>
+
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
 	<jsp:include page="/WEB-INF/views/user/common/sidebar.jsp"/>
 	<br><br>
 	<div id="wrap">
 		
+		<c:if test="${ !empty sessionScope.loginUser }">
+		
 		<div class="row fadeInUp animated">
 
+		<!-- 페이지 좌측 작업현황 Begin -->
         <div class="col-md-4" style="float: left">
             <div class="portlet light bordered min-height-600">
                 <div class="portlet-body">
                     <div class="user-bg">
                         <div class="overlay-box">
                             <div class="user-content">
-                                    <a href=" "><img src="" class="thumb-lg" alt="img"></a>
+                                    <a href=""><img src="" class="thumb-lg" alt="image"></a>
 
                                 <div style="height:40px;"></div>
 
-                                <h4 class="text-white">pmo01</h4>
-                                <h5 class="text-white">uandme1206@naver.com</h5>
+                                <h4 class="text-white" style="margin-left: 60px;">${loginUser.memberName}</h4>
+                                <h5 class="text-white" style="margin-left: 60px;">${loginUser.email}</h5>
                             </div>
                         </div>
-                    </div>
+                    </div><br><br>
 
                     <div class="user-btm-box" style="height: 300px">
                         <div class="col-md-4 col-sm-4 text-center" style="height: 300px">
@@ -126,12 +132,10 @@
 
                 </div>
             </div>
-        </div>
-		
-		<!-- <div style="float: left;">ssssssssdasd</div> -->
+        </div><!-- 페이지 좌측 작업현황 End -->
 		
 		
-		
+		<!-- 페이지 우측측 개인정보 변경 Begin -->
         <div class="col-md-8">
             <div class="portlet light bordered min-height-600">
                 <div class="portlet-body">
@@ -158,12 +162,14 @@
 
                         <div class="tab-pane active" id="profile" aria-expanded="true">
 
-                            <form class="form-horizontal form-material" id="formProfile" action="/Resource/EditUser" method="post" data-toggle="validator" novalidate="true">
+                            <form class="form-horizontal form-material" id="formProfile" action="updateMemberInfo.me" method="post" data-toggle="validator" novalidate="true">
 								<br>
+
+
                                 <div class="form-group">
                                     <label class="col-md-12 required">이름</label>
                                     <div class="col-md-12">
-                                        <input id="RES_NAME" name="RES_NAME" value="pmo01" type="text" class="form-control form-control-line" placeholder="이름을 입력하세요" data-error="이름을 입력하세요" required="">
+                                        <input id="RES_NAME" name="RES_NAME" value="${loginUser.memberName}" type="text" class="form-control form-control-line" placeholder="이름을 입력하세요" data-error="이름을 입력하세요" required="" readonly>
                                         <span class="help-block with-errors"></span>
                                     </div>
                                 </div>
@@ -171,18 +177,28 @@
                                 <div class="form-group">
                                     <label class="col-md-12 required">이메일</label>
                                     <div class="col-md-12">
-                                        <input id="RES_EMAIL" name="RES_EMAIL" value="uandme1206@naver.com" type="text" class="form-control form-control-line" placeholder="이름을 입력하세요" data-error="이름을 입력하세요" required="">
+                                        <input id="RES_EMAIL" name="email" value="${loginUser.email}" type="text" class="form-control form-control-line" placeholder="이름을 입력하세요" data-error="이름을 입력하세요" required="">
                                         <span class="help-block with-errors"></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12 required">전화번호</label>
                                     <div class="col-md-12">
-                                        <input id="RES_OFFICE_PHONE" name="RES_OFFICE_PHONE" value="010-2912-8197" type="text" class="form-control form-control-line" placeholder="이름을 입력하세요" data-error="이름을 입력하세요" required="">
+                                        <input id="RES_OFFICE_PHONE" name="phone" value="${loginUser.phone}" type="text" class="form-control form-control-line" placeholder="이름을 입력하세요" data-error="이름을 입력하세요" required="">
                                         <span class="help-block with-errors"></span>
                                     </div>
                                 </div>
+
+
+                                <!-- jquery 같은 게 있을 때 select -->
                                 <div class="form-group">
+                                    <label class="col-md-12 required">소속부서</label>
+                                    <div class="col-md-12">
+                                        <input id="" name="RES_OFFICE_PHONE" value="<%-- ${loginUser.deptName} --%>부서" type="text" class="form-control form-control-line" placeholder="이름을 입력하세요" data-error="이름을 입력하세요" required="" readonly>
+                                        <span class="help-block with-errors"></span>
+                                    </div>
+                                </div>
+                                <%-- <div class="form-group">
                                     <label class="col-md-12 required">부서</label>
                                     <div class="col-md-12">
                                         <select class="select2me form-control select2-offscreen" id="DEPT_CODE" name="DEPT_CODE" style="width:250px; float:left;" tabindex="-1" title="">
@@ -195,7 +211,7 @@
 										</select>
                                         <span class="help-block with-errors"></span>
                                     </div>
-                                </div>
+                                </div> --%>
 								
 								<br>
                                 <div class="form-group">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -207,12 +223,12 @@
 
                         <div class="tab-pane" id="changePassword">
 
-                            <form class="form-horizontal form-material" id="formChangePassword" action="/Resource/UpdatePassword" method="post" data-toggle="validator" novalidate="true">
+                            <form class="form-horizontal form-material" id="formChangePassword" action="updatePassword.me" method="post" data-toggle="validator" novalidate="true">
                                 <div class="form-group">
                                 	<br>
                                     <label class="col-md-12 required">패스워드</label>
                                     <div class="col-md-12">
-                                        <input id="password" name="password" type="password" class="form-control" style="background-color:#fff;" placeholder="새로운 패스워드를 입력하세요" data-error="새로운 패스워드를 입력하세요" required="">
+                                        <input id="password" name="memberPwd" type="password" class="form-control" style="background-color:#fff;" placeholder="새로운 패스워드를 입력하세요" data-error="새로운 패스워드를 입력하세요" required="">
                                         <span class="help-block with-errors"></span>
                                     </div>
                                 </div>
@@ -220,16 +236,19 @@
                                 <div class="form-group">
                                     <label class="col-md-12 required">패스워드 재확인</label>
                                     <div class="col-md-12">
-                                        <input id="password_confirm" name="password_confirm" type="password" class="form-control" style="background-color:#fff;" placeholder="패스워드 재확인을 입력하세요" data-error="패스워드 재확인을 입력하세요" required="">
+                                        <input id="password_confirm" name="memberPwd2" type="password" class="form-control" style="background-color:#fff;" placeholder="패스워드 재확인을 입력하세요" data-error="패스워드 재확인을 입력하세요" required="">
                                         <span class="help-block with-errors"></span>
                                     </div>
                                 </div>
 								<!-- 비밀번호 유효성 검사 -->
-								<div id="correctPassword" class="form-group col-md-12" style="maring-top:-50px;">패스워드가 일치합니다.</div>
-								<div id="incorrectPassword" class="form-group col-md-12" style="maring-top:-50px;">패스워드가 일치하지 않습니다.</div>
+								<div class="form-group" style="margin-left: 5px; margin-top: -30px;">
+									<div id="correctPassword" class="form-group col-md-12" style="maring-top:-50px; color:green;">패스워드가 일치합니다.</div>
+									<div id="incorrectPassword" class="form-group col-md-12" style="maring-top:-50px; color:orangered;">패스워드가 일치하지 않습니다.</div>
+									<br>
+									<div id="" class="form-group col-md-12" style="maring-top:-50px; color:#676A6D; font-weight: bold">※ 패스워드 분실 시 전산실로 연락바랍니다.</div>
+								</div>
                                 
-								<br><br>								
-                                <div class="form-group">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <div class="form-group" style="margin-left: 5px;">
                                     <button type="submit" class="passwordBtn"><i class="fas fa-check"></i>&nbsp;패스워드 수정</button>
                                 </div>
                             </form>
@@ -263,32 +282,34 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div><!-- 페이지 우측측 개인정보 변경 End -->
 
     </div>
 		
 		
 	
-	
+	</c:if>
 	</div>
 	
 	
 	
 	<script>
-	
+	/* 
 	//비밀번호
-	/* $(function () {
+	$(function () {
         $('#password_confirm').on('blur', function () {
             if ($("#password").val() != $('#password_confirm').val()) {
-                /* UIkit.modal.alert("패스워드와 패스워드 재확인 값이 일치하지 않습니다."); */
+                /* UIkit.modal.alert("패스워드와 패스워드 재확인 값이 일치하지 않습니다.");
                 sweetalert.alert("패스워드와 패스워드 재확인 값이 일치하지 않습니다.");
                 $("#password").val("");
                 $('#password_confirm').val("");
             }
         });
-    }); */
+    });
 	
+	 */
 	
+	 
  	// 비밀번호 유효성 검사
 	$("#correctPassword").hide();
 	$("#incorrectPassword").hide();
@@ -298,25 +319,28 @@
 		var password = $("#password").val();
 		var passwordConfirm = $("#password_confirm").val();
 		
+		/* console.log("password : " + password);
+		console.log("passwordConfirm : " + passwordConfirm); */
+		
 		if(password != "" && passwordConfirm != "") {
 			
 			if(password == passwordConfirm) {
-				/* $("#msg-pwdOk").show(); */
-				$("#incorrectPwd").hide();
-				$(".hiddenTr").hide()
+				
+				$("#correctPassword").show();
+				$("#incorrectPassword").hide();
 			} else {
-				$("#incorrectPwd").show();
-				$(".hiddenTr").show()
+				
+				$("#correctPassword").hide();
+				$("#incorrectPassword").show();
 			}
 		} else {
-			$(".hiddenTr").hide()
-			$("#incorrectPwd").hide();		
+			$("#incorrectPassword").hide();
 		}
 		
 	});
     
 	
-	 //최종 폼전송 시 모든 input 부분 작성되었는 지 유효성 검사진행 !!@@
+	//최종 폼전송 시 모든 input 부분 작성되었는 지 유효성 검사진행 !!@@
     
 	
 	

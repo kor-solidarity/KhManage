@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -51,11 +52,11 @@ public class MemberController {
 		return "admin/userManagement/userManagement";
 	}
 	
-	@RequestMapping("myProfile.me")
-	public String myProfile() {
-		
-		return "user/myProfile/myProfileMain";
-	}
+//	@RequestMapping("myProfile.me")
+//	public String myProfile() {
+//		
+//		return "user/myProfile/myProfileMain";
+//	}
 	
 	@RequestMapping("/detailDashboard.me")
 	public String detailDashboard() {
@@ -106,7 +107,7 @@ public class MemberController {
 	@RequestMapping("insert.me")
 	public String inertMember(Model model, Member m) {
 		
-		System.out.println("controller member : " + m);
+//		System.out.println("controller member : " + m);
 		
 		m.setMemberPwd(passwordEncoder.encode(m.getMemberPwd()));
 		
@@ -122,6 +123,61 @@ public class MemberController {
 		}
 		
 	}
+	
+	
+	//회원비밀번호 변경
+	@RequestMapping("updatePassword.me")
+	public String updatePassword(Member m, Model model, HttpSession session) {
+		
+		//loginUser
+		Member member = (Member) session.getAttribute("loginUser");
+		System.out.println(member);
+		
+		member.setMemberPwd(passwordEncoder.encode(m.getMemberPwd()));
+		
+		int result = ms.updatePassword(member);
+		
+		System.out.println("비번변경 result : " + result);
+		
+		if(result > 0) {
+			
+			return "redirect:index.jsp";
+			
+		} else { 
+			
+			model.addAttribute("msg", "비번 변경 실패!");
+			
+			return "redirect:index.jsp";
+		}
+		
+	}
+	
+	//회원기본정보 변경 : 이메일, 전화번호
+	@RequestMapping("updateMemberInfo.me")
+	public String updateMemberInfo(Member m, Model model, HttpSession session) {
+		
+		Member member = (Member) session.getAttribute("loginUser");
+		
+		System.out.println(member);
+		
+		member.setEmail("email");
+		member.setPhone("phone");
+		
+		
+		int result = ms.updateMemberInfo(member);
+		
+		
+		if(result > 0) {
+			
+			return "user/myProfile/myProfileMain";
+		} else {
+		
+			return "user/myProfile/myProfileMain";
+		}
+		
+		
+	}
+	
 		
 	
 	//부서 + 직급리스트 조회
@@ -143,7 +199,25 @@ public class MemberController {
 		return "admin/userManagement/registerUser";
 	}
 	
-	//부서 + 직급리스트 조회
+	
+	
+	//회원정보 수정 : loginUser 정보조회
+	@RequestMapping("myProfile.me")
+	public String modifyUserInfo(Member m, Model model, HttpServletRequest request) {
+		
+		
+		//부서조회 레벨1
+		List<Dept> list = ms.selectDeptList();
+		
+		request.setAttribute("list", list);
+		
+		return "user/myProfile/myProfileMain";
+	}
+	
+	
+	
+	
+	//부서 + 직급리스트 조회 : Ajax
 	@RequestMapping("selectTeam.me")
 	public void selectTeam(DepartMent dm, HttpServletRequest request,  HttpServletResponse response) {
 		
@@ -164,7 +238,7 @@ public class MemberController {
 	}
 	
 	
-	//아이디 중복체크
+	//아이디 중복체크 : Ajax
 	@RequestMapping("checkMemberId.me")
 	public void checkMemberId(Member m, HttpServletRequest request, HttpServletResponse response) {
 		

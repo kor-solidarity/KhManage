@@ -2,6 +2,7 @@ package com.kh.manage.member.model.service;
 
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.transaction.Transaction;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,7 @@ public class MemberServiceImpl implements MemberService {
 		return loginUser;
 	}
 
+	
 	@Override
 	public List<Dept> selectDeptList() {
 
@@ -97,8 +99,29 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
+	@Override
+	public int updatePassword(Member m) {
+
+		int result = md.updatePassword(sqlSession, m); 
+		
+		return md.updatePassword(sqlSession, m);
+	}
 
 
+	@Override
+	public int updateMemberInfo(Member member) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+//	@Override
+//	public int updateMemberInfo(Member member) {
+//		
+//		
+//		
+//		return md.updateMemberInfo();
+//	}
 
 
 

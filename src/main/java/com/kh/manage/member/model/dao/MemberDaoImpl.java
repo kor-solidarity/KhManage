@@ -76,6 +76,15 @@ public class MemberDaoImpl implements MemberDao {
 		return sqlSession.selectOne("Member.checkMemberId", m);
 	}
 
+	@Override
+	public int updatePassword(SqlSessionTemplate sqlSession, Member m) {
+
+		return sqlSession.update("Member.updatePassword", m);
+	}
+
+
+
+
 	
 
 

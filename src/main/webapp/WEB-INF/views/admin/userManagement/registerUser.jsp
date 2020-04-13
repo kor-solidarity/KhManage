@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -106,13 +106,13 @@
 		<div class="panel-heading">
 			<div class="border">
 				
-				<p>사용자 등록정보 *<p>
+				<p>사용자 등록정보<span style="color:red;"> *</span><p>
 				<hr>
 				<form action="insert.me" method="post">
 					<table id="aa" border="0">
 					<br>
 						<tr class="tableTr">
-							<td class="tableTd">아이디 *</td>
+							<td class="tableTd">아이디<span style="color:red;"> *</span></td>
 							<td class="tableTd3"></td>
 							<td class="tableTd2">
 								<input type="text" id="memberId" class="register form-control" name="memberId" focus required
@@ -129,14 +129,14 @@
 							</td>
 						</tr><!-- 아이디 유효성 검사 End -->
 						<tr class="tableTr">
-							<td>패스워드 *</td>
+							<td>패스워드<span style="color:red;"> *</span></td>
 							<td></td>
 							<td>
 								<input type="password" id="password1" class="register form-control" name="memberPwd" required >
 							</td>
 						</tr>
 						<tr class="tableTr">
-							<td>패스워드 확인 *</td>
+							<td>패스워드 확인<span style="color:red;"> *</span></td>
 							<td></td>
 							<td>
 								<input type="password" id="password2" class="register form-control" name="memberPwd2" required >
@@ -153,28 +153,28 @@
 						</tr><!-- 패스워드 유효성 검사 Begin -->
 						
 						<tr class="tableTr">
-							<td>이름 *</td>
+							<td>이름<span style="color:red;"> *</span></td>
 							<td></td>
 							<td>
 								<input type="text" class="register form-control" name="memberName">
 							</td>
 						</tr>
 						<tr class="tableTr">
-							<td>휴대폰번호 *</td>
+							<td>휴대폰번호<span style="color:red;"> *</span></td>
 							<td></td>
 							<td>
 								<input type="text" id="" class="register form-control" name="phone" style="color:#676A6D">
 							</td>
 						</tr>
 						<tr class="tableTr">
-							<td>이메일 *</td>
+							<td>이메일<span style="color:red;"> *</span></td>
 							<td></td>
 							<td>
 								<input type="email" class="register form-control" name="email">
 							</td>
 						</tr>
 						<tr id="hide1" class="tableTr">
-							<td>소속 부서 *</td>
+							<td>소속 부서<span style="color:red;"> *</span></td>
 							<td></td>
 							<td>
 								<select id="deptNo" class="register form-control" name="deptNo">
@@ -188,7 +188,7 @@
 							</td>
 						</tr>
 						<tr id="hide2" class="tableTr">
-							<td>소속 팀 *</td>
+							<td>소속 팀<span style="color:red;"> *</span></td>
 							<td></td>
 							<td>
 								<select id="deptTeam" class="register form-control" name="deptNo">
@@ -198,7 +198,7 @@
 							</td>
 						</tr>
 						<tr id="hide3" class="tableTr">
-							<td>직급 *</td>
+							<td>직급<span style="color:red;"> *</span></td>
 							<td></td>
 							<td>
 								<select id="rank" class="register form-control"  name="rankNo">
@@ -219,7 +219,7 @@
 							</td>
 						</tr> -->
 						<tr class="tableTr" id="hide4" hidden>
-							<td>소속 프로젝트 *</td>
+							<td>소속 프로젝트<span style="color:red;"> *</span></td>
 							<td></td>
 							<td>
 								<!-- <input type="text" id="rank" class="register form-control" name="rank"> -->

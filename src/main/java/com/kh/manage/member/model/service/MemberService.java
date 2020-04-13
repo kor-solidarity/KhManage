@@ -24,6 +24,10 @@ public interface MemberService {
 
 	int checkMemberId(Member m);
 
+	int updatePassword(Member m);
+
+	int updateMemberInfo(Member member);
+
 
 
 	
