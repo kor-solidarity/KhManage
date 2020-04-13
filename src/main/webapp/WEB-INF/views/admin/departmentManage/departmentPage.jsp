@@ -19,10 +19,9 @@
 .menuArea2 {
 	width: 47%;
 	background: white;
-	height: 300px;
+	height: 650px;
 	display: inline-block;
 	margin: 0 auto;
-	margin-bottom: 350px;
 }
 
 .menuTable {
@@ -238,7 +237,71 @@ ul {
 	display: inline-block;
 	overflow: hidden;
 }
+#projectTable {
+	width: 100%;
+	text-align: left;
+}
+
+.tdText {
+	text-align: center;
+	height: 30px;
+	font-size: 14px;
+}
+
+.thRange {
+	background: #F3F3F3;
+	color: #626262;
+	font-size: 15px;
+	border: #B0B0B0 1px solid;
+	height: 35px;
+	padding: 3px;
+}
+
+
+.th1 {
+	width: 30px;
+	text-indent: 5px;
+}
+
+.td1 {
+	text-indent: 5px;
+	color: #71A8D7;
+}
+
+.trRange {
+	border: 1px solid #B0B0B0;
+	width: 30px;
+}
+
+.trRange1 {
+	border: 1px solid #B0B0B0;
+	width: 30px;
+}
+
+.inputCss {
+	border-radius: 5px;
+	border: none;
+}
+
+.buseoSelect {
+	width: 180px;
+	border: 1px solid #626262;
+	height: 25px;
+	border-radius: 5px;
+}
+
+.pagingArea {
+	background: #F3F3F3;
+	height: 50px;
+	border: 1px solid #B0B0B0;
+}
+
+.paging {
+	margin-left: 200px;
+	width: 50%;
+}
 </style>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body onload="$('#route1').text('관리자'); $('#route2').text('부서관리');">
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp" />
@@ -246,8 +309,7 @@ ul {
 	<div class="panel panel-headline"
 		style="width: 100%; background: #F5F5FA;">
 		<div class="panel-heading">
-			<div
-				style="width: 100%; height: 700px; margin: 0 auto; overflow: auto;">
+			<div style="width: 100%; height: 700px; margin: 0 auto; overflow: auto;">
 				<div class="menuArea" style="margin-left: 12px;">
 					<table class="menuTable">
 						<tr>
@@ -267,7 +329,7 @@ ul {
 								<button class="okBtn" id="plustChildernDepart" style="width: 120px;">
 									<i class="fas fa-align-right"></i>&nbsp;자식부서추가
 								</button>&nbsp;&nbsp;
-								<button class="okBtn" style="width: 100px;">
+								<button type="button" class="okBtn" style="width: 100px; background:#F3565D;" onclick="sweetTest();">
 									<i class="fas fa-ban"></i>&nbsp;부서삭제
 								</button>
 							</td>
@@ -285,14 +347,14 @@ ul {
 														style="color: #1E2B44; font-size: 16px;"> <img
 															id="folderImg"
 															src="<c:url value="/resources/assets/img/folder.png"/>"
-															style="width: 25px; height: 20px; margin-bottom: 10px;"><c:out value="${d.deptName}" /></a>
+															style="width: 25px; height: 20px; margin-bottom:10px; margin-right:5px;"><c:out value="${d.deptName}" /></a>
 															
 												</li>
 												</ul>
 											</c:if>
 												<c:if test="${ d.deptLevle==2 and dId eq d.highDept}">
 											<ul class="depth_3 a" id="depth3" style="margin-left: 20px;">
-													<li><a class="deptSub"><c:out value="${d.deptName}" /></a></li>
+													<li><a class="deptSub" style="margin-left: 27px;"><c:out value="${d.deptName}" /></a></li>
 											</ul>
 												</c:if>
 										</c:forEach>
@@ -349,7 +411,27 @@ ul {
 							</td>
 						</tr>
 					</table>
-
+					<table class="menuTable" style="margin-top:70px;">
+						<tr>
+							<td class="titleText" style="padding-left:15px;">부서인원</td>
+						</tr>
+						<tr style="height: 5px;"></tr>
+						<tr>
+							<td><div style="width: 90%; height: 2px; background: #EEEEEE; margin: 0 auto;"></div></td>
+						</tr>
+					</table>
+					<div style="overflow: auto; height: 300px;">
+						<table id="projectTable" align="center" style="width:90%; height:200px; margin-top: 20px;">
+						<tr id="frontMember">
+							<td class="tdText thRange" style="width: 90px">이름</td>
+							<td class="tdText thRange" style="width: 90px;">직급</td>
+							<td class="tdText thRange" style="width: 170px;">이메일</td>
+						</tr>
+						<tr class=".trRange">
+						</tr>
+						
+					</table>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -523,12 +605,45 @@ ul {
 			}); 
 		});
 	</script>
+	
+	<script>
+			function sweetTest(){
+				if($("#deptName").val() != "" ){
+				swal({
+					  title: "해당 부서를 삭제하시겠습니까?",
+					  icon: "error",
+					  buttons: ["취소", "삭제"],
+					  dangerMode: true,
+					})
+					.then((willDelete) => {
+					  if (willDelete) {
+					    swal({
+					    	title: "삭제 완료!",
+					      	icon: "success"
+					    }).then((value) => {	// 애니메이션 V 나오는 부분!
+					    	var no = $("#deptCode").val();
+					    	console.log(no);
+					    	$.ajax({
+								url:'deleteDept.am',
+								type: 'post',
+								data:{deptNo:no},
+							 success:function(data){
+									
+									}
+							}); 
+					    });
+					  } else {
+						  swal({
+						  	title: "취소 하셨습니다.",
+						    icon: "error"
+						  });
+					  }
+				});
+				}
+			}
+				</script>
 
 	<script>
-		/* $(".menuTable").find(".title").on('click', function(e){
-			console.log('sss');
-		}); */
-	
 		function tree_menu() {
 			$(".menuTable").find(".title").on('click', function(e){
 								var temp_el = $(this).parent().parent().nextUntil(".depth_2");
@@ -585,9 +700,14 @@ ul {
 							$("#deptName").empty();
 							$("#highName").empty();
 							$("#deptCode").empty();
-							$("#deptName").val(data['deptName']);
-							$("#highName").val(data['highDept']);
-							$("#deptCode").val(data['deptNo']);
+							$("#deptName").val(data['dm']['deptName']);
+							$("#highName").val(data['dm']['highDept']);
+							$("#deptCode").val(data['dm']['deptNo']);
+							$(".trRange").empty();
+							
+							for(var i = 0; i<data['list'].length; i++ ){
+							$("#frontMember").after("<tr class='trRange' id='accessList'><td class='tdText'>"+data['list'][i]['memberName']+"</td> <td class='tdText'>"+data['list'][i]['rankNo']+"</td><td class='tdText'>"+data['list'][i]['email']+"</td></tr>");
+							}
 						}
 				 }
 				}); 
@@ -604,9 +724,11 @@ ul {
 							$("#deptName").empty();
 							$("#highName").empty();
 							$("#deptCode").empty();
-							$("#deptName").val(data['deptName']);
-							$("#highName").val(data['highDept']);
-							$("#deptCode").val(data['deptNo']);
+							$("#deptName").val(data['dm']['deptName']);
+							$("#highName").val(data['dm']['highDept']);
+							$("#deptCode").val(data['dm']['deptNo']);
+							
+							console.log(data['list']);
 						}
 				}); 
 			});

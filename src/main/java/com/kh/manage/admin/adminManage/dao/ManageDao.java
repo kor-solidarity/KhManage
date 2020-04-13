@@ -11,6 +11,7 @@ import com.kh.manage.admin.adminManage.vo.DepartMent;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.admin.adminManage.vo.SelectAccessMember;
 import com.kh.manage.common.PageInfo;
+import com.kh.manage.member.model.vo.Member;
 
 public interface ManageDao {
 	int insertAccessGroup(SqlSessionTemplate sqlSession, Access ac);
@@ -48,4 +49,6 @@ public interface ManageDao {
 	DepartMent newDeptNo(SqlSessionTemplate sqlSession, DepartMent dept);
 
 	int insertChildrenDept(SqlSessionTemplate sqlSession, DepartMent dept);
+
+	List<Member> selectMemberList(SqlSessionTemplate sqlSession, DepartMent dept);
 }

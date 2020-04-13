@@ -25,6 +25,7 @@ import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.admin.adminManage.vo.SelectAccessMember;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.common.Pagination;
+import com.kh.manage.member.model.vo.Member;
 
 
 @Controller
@@ -112,12 +113,17 @@ public class ManageController {
 	@RequestMapping("/deptSelectOne.am")
 	public void deptSelectOne(DepartMent dept, Model model, HttpServletRequest request,  HttpServletResponse response) {
 		DepartMent dm = as.deptSelectOne(dept);
-
+		List<Member> list = as.selectMemberList(dept);
+		
 		request.setAttribute("dm", dm);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-
-		String gson = new Gson().toJson(dm);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("dm", dm);
+		map.put("list", list);
+		
+		String gson = new Gson().toJson(map);
 
 		try {
 			response.getWriter().write(gson);
@@ -130,11 +136,15 @@ public class ManageController {
 	@RequestMapping("/highDeptSelectOne.am")
 	public void highSelectOne(DepartMent dept, HttpServletRequest request, HttpServletResponse response) {
 		DepartMent dm = as.highSelectOne(dept);
+		List<Member> list = as.selectMemberList(dept);
+
 		request.setAttribute("dm", dm);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-
-		String gson = new Gson().toJson(dm);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("dm", dm);
+		map.put("list", list);
+		String gson = new Gson().toJson(map);
 
 		try {
 			response.getWriter().write(gson);
@@ -155,7 +165,6 @@ public class ManageController {
 	@RequestMapping("/newDeptNo.am")
 	public void newDeptNo(DepartMent dept, HttpServletRequest request, HttpServletResponse response) {
 		DepartMent dm = as.newDeptNo(dept);
-		System.out.println(dm);
 		request.setAttribute("dm", dm);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
@@ -228,5 +237,11 @@ public class ManageController {
 
 		return "redirect:accessManage.am";
 
+	}
+	
+	@RequestMapping("deleteDept.am")
+	public String deleteDept(DepartMent dept) {
+		System.out.println(dept);
+		return null;
 	}
 }

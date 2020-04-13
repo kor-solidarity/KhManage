@@ -13,6 +13,7 @@ import com.kh.manage.admin.adminManage.vo.DepartMent;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.admin.adminManage.vo.SelectAccessMember;
 import com.kh.manage.common.PageInfo;
+import com.kh.manage.member.model.vo.Member;
 
 @Repository
 public class ManageDaoImpl implements ManageDao {
@@ -129,6 +130,12 @@ public class ManageDaoImpl implements ManageDao {
 	public int insertChildrenDept(SqlSessionTemplate sqlSession, DepartMent dept) {
 	
 		return sqlSession.insert("Admin.insertChildrenDept", dept);
+	}
+
+	@Override
+	public List<Member> selectMemberList(SqlSessionTemplate sqlSession, DepartMent dept) {
+		
+		return sqlSession.selectList("Admin.selectMemberList", dept);
 	}
 
 }
