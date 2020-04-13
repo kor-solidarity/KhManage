@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Attachment">
+
+	<resultMap type="Attachment" id="attachmentResultSet">
+		<id property="AT_NO" column="atNo"/>
+		<result property="DIVISION" column="division"/>
+		<result property="ORIGIN_NAME" column="originName"/>
+		<result property="CHANGE_NAME" column="changeName"/>
+		<result property="FILEPATH" column="filePath"/>
+	</resultMap>
+	
+	
+	<insert id="insertAttach" parameterType="Attachment">
+		INSERT INTO ATTACHMENT 
+		VALUES('AT'|| TO_CHAR(SEQ_AT_NO.NEXTVAL, 'FM000'), #{division}, #{originName}, #{changeName} , #{filePath})
+	</insert>
+	
+	<select id="selectCurrval"  resultType="java.lang.String" parameterType="java.lang.String">
+		SELECT SEQ_AT_NO.CURRVAL FROM DUAL
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  

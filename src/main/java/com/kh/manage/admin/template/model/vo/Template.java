@@ -2,7 +2,7 @@ package com.kh.manage.admin.template.model.vo;
 
 import java.sql.Date;
 
-public class Template implements java.io.Serializable{
+public class Template {
 	private String templatePk;		
 	private String projectTypePk;
 	private String memberPk;
@@ -87,6 +87,7 @@ public class Template implements java.io.Serializable{
 				+ ", templateName=" + templateName + ", detail=" + detail + ", createDate=" + createDate + ", editDate="
 				+ editDate + "]";
 	}
+
 	
 	
 	
