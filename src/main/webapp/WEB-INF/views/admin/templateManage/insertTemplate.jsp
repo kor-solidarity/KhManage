@@ -74,7 +74,7 @@
 				<div class="menuArea" style="margin-left: 12px;">
 					
 					
-					<form  method="post" action="tempInsert.am" id="tempForm">
+					<form  method="post" action="tempInsert.am" id="tempForm" enctype="multipart/form-data">
 					<table class="menuTable" style="width: 100%;">
 						<tr>
 							<td class="titleText" colspan="2">템플릿 등록 정보</td>
@@ -91,10 +91,13 @@
 							</td>
 							<td class="titleId" style="padding-left:100px;">템플릿 분류</td>
 							<td class="inputTd">
-							<select style="width: 100%;">
+							<select style="width: 100%;" name="projectTypePk">
 								<option>선택하세요</option>
-								<option>선택하세요</option>
-								<option>선택하세요</option>
+								<option value="PTY001">개발형태1</option>
+								<option value="PTY002">개발형태2</option>
+								<option value="PTY003">개발형태3</option>
+								<option value="PTY004">개발형태4</option>
+								<option value="PTY005">개발형태5</option>
 							</select>
 							</td>
 						</tr>
@@ -119,7 +122,7 @@
 						<tr>
 							<td class="titleId" style="padding-left:90px;">템플릿 엑셀 등록</td>
 							<td style="height: 120px;">
-								<input type="file">	 <p >Excel, Xml 파일 업로드 가능</p>
+								<input type="file" name="upfile"> <p >Excel, Xml 파일 업로드 가능</p>
 							</td>
 							<td class="titleId" style="padding-left:90px;">템플릿 등록 샘플</td>
 							<td class="titleId" style="padding-left:90px;">템플릿 등록 샘플</td>
@@ -146,4 +149,15 @@
 		</div>
 	</div>
 </body>
+<script>
+	$("#save").click(function(){
+		$("#tempForm").submit();
+	})
+</script>
+
 </html>
+
+
+
+
+

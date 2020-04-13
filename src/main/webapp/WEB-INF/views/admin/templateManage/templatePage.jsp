@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -94,31 +95,57 @@
 							<tr>
 								<td class="thRange th1"><input type="text" class="inputCss" style="width:390px;"></td>
 								<td class="tdText thRange" style="width:370px;"><input type="text" class="inputCss" style="width:400px"></td>
-								<td class="tdText thRange"><input type="date" class="inputCss" style="width:110px;"></td>
+								<td class="tdText thRange"><input type="text" class="inputCss" style="width:110px;"></td>
 								<td class="tdText thRange"><input type="date" class="inputCss" style="width:110px;"></td>
 								<td class="tdText thRange"><input type="date" class="inputCss" style="width:110px;"></td>
 								<td class="tdText thRange"><div style="width: 100px;"></div></td>
 							</tr>
 
+						<c:forEach var="t" items="${list}">
 							<tr class="trRange"	id="accessList">
-								<td class="td1">관리자 권한인원</td>
-								<td class="tdText">관리자접근가능한 인원들입니다.</td>
-								<td class="tdText">20-03-20</td>
-								<td class="tdText">20-03-02</td>
-								<td class="tdText">20-03-02</td>
-								<td class="tdText"><button>Delete</button></td>
+								<td class="td1"><c:out value="${t.templateName}"/></td>
+								<td class="tdText"><c:out value="${t.detail}"/></td>
+								<td class="tdText"><c:out value="${t.projectTypePk}"/></td>
+								<td class="tdText"><c:out value="${t.createDate}"/></td>
+								<td class="tdText"><c:out value="${t.createDate}"/></td>
+								<td class="tdText"><button>delete</button></td>
 							</tr>
-							<tr class="trRange"	id="accessList">
-								<td class="td1">정보공유게시판접근인원</td>
-								<td class="tdText">관리자접근가능한 인원들입니다.</td>
-								<td class="tdText">20-03-20</td>
-								<td class="tdText">20-03-02</td>
-								<td class="tdText">20-03-02</td>
-								<td class="tdText"><button>Delete</button></td>
-							</tr>
+					 	</c:forEach>				
 							<tr class="pagingArea">
 								<td colspan="6">
-									<div class="paging"><< < 1 2 > >></div>
+									<div class="paging">
+										<c:if test="${pi.currentPage <= 1 }">
+												[이전] &nbsp;
+												</c:if>
+												<c:if test="${ pi.currentPage > 1 }">
+												<c:url var="alistBack" value="accessManage.am">
+													<c:param name="currentPage" value="${pi.currentPage - 1 }"/>
+												</c:url>
+													<a href="${ alistBack }">[이전]</a>&nbsp;
+												</c:if>
+												<c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage }">
+													<c:if test="${p eq pi.currentPage }">
+														<font color="red" size="4"><b>[${p }]</b></font>
+													</c:if>
+													<c:if test="${p ne pi.currentPage }">
+														<c:url var="alistCheck" value="accessManage.am">
+															<c:param name="currentPage" value="${p }"/>
+														</c:url>
+														
+														<a href="${alistCheck }"> ${p}</a>
+													</c:if>
+												</c:forEach>
+												
+												<c:if test="${pi.currentPage >= pi.endPage }">
+													[다음] &nbsp;
+												</c:if>
+												<c:if test="${pi.currentPage < pi.endPage }">
+												<c:url var="alistEnd" value="accessManage.am">
+													<c:param name="currentPage" value="${pi.currentPage + 1 }"/>
+												</c:url>
+													<a href="${alistEnd}">[다음]</a>
+												</c:if>									
+									</div>
 								</td>
 							</tr>
 						</table>
@@ -134,10 +161,10 @@
 			</div>
 </body>
 <script>
-	$("#projectTable tr").click(function(){
+	/* $("#projectTable tr").click(function(){
 		
 		location.href = "templateManagePage.am";
-	});
+	}); */
 	
 
 </script>
