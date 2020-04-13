@@ -37,5 +37,13 @@ public interface ManageService {
 
 	List<DepartMent> selectDeptList();
 
-	int updateAccess(AccessMember am); 
+	int updateAccess(AccessMember am);
+
+	DepartMent highSelectOne(DepartMent dept);
+
+	int insertHighDept(DepartMent dm);
+
+	DepartMent newDeptNo(DepartMent dept);
+
+	int inserChildrenDept(DepartMent dept); 
 }

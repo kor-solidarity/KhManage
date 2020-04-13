@@ -63,11 +63,11 @@ public class ManageController {
 		Access selectAccess = as.selectOneAccess(ac);
 		List<DepartMent> dList = as.selectDeptList(); 
 		List<SelectAccessMember> list = as.selectAccessMemberList(ac);
-		
+
 		model.addAttribute("list", list);
 		model.addAttribute("aDetail", selectAccess);
 		model.addAttribute("dList", dList);
-		
+
 		return "admin/accessManage/accessDetail";
 	}
 
@@ -111,7 +111,6 @@ public class ManageController {
 
 	@RequestMapping("/deptSelectOne.am")
 	public void deptSelectOne(DepartMent dept, Model model, HttpServletRequest request,  HttpServletResponse response) {
-
 		DepartMent dm = as.deptSelectOne(dept);
 
 		request.setAttribute("dm", dm);
@@ -127,8 +126,56 @@ public class ManageController {
 		}
 
 	}
+
+	@RequestMapping("/highDeptSelectOne.am")
+	public void highSelectOne(DepartMent dept, HttpServletRequest request, HttpServletResponse response) {
+		DepartMent dm = as.highSelectOne(dept);
+		request.setAttribute("dm", dm);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+
+		String gson = new Gson().toJson(dm);
+
+		try {
+			response.getWriter().write(gson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 	@RequestMapping("/insertHighDept.am")
-	public void insertHighDept(DepartMent dm) {
+	public String insertHighDept(DepartMent dm) {
+		int result = as.insertHighDept(dm);
+
+
+		return "redirect:departmentManage.am";
+	}
+	
+	@RequestMapping("/newDeptNo.am")
+	public void newDeptNo(DepartMent dept, HttpServletRequest request, HttpServletResponse response) {
+		DepartMent dm = as.newDeptNo(dept);
+		System.out.println(dm);
+		request.setAttribute("dm", dm);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+
+		String gson = new Gson().toJson(dm);
+
+		try {
+			response.getWriter().write(gson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@RequestMapping("/childrenDeptInsert.am")
+	public String childrenDeptInsert(DepartMent dept) {
+		
+		int result = as.inserChildrenDept(dept);
+		
+		return "redirect:departmentManage.am";
 	}
 
 	@RequestMapping("/searchDeptMember.am")
@@ -155,7 +202,7 @@ public class ManageController {
 
 			List<String> dnum = new ArrayList<String>();
 			String[] str = am.getMemberNo().split(",");
-				
+
 
 			for(int i=0; i<str.length; i++) {
 				dnum.add(str[i]);
@@ -165,7 +212,7 @@ public class ManageController {
 				AccessMember as = new AccessMember();
 				as.setAccessNo(am.getAccessNo());
 				as.setMemberNo(dnum.get(i));
-				
+
 				userList.add(as);
 			}
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -176,9 +223,9 @@ public class ManageController {
 		}else {
 			int result2 = as.deleteAccessMember(am);
 		}
-		
+
 		int result3 =  as.updateAccess(am);
-		
+
 		return "redirect:accessManage.am";
 
 	}

@@ -40,4 +40,12 @@ public interface ManageDao {
 	List<DepartMent> selectDeptList(SqlSessionTemplate sqlSession);
 
 	int updateAccess(SqlSessionTemplate sqlSession, AccessMember am);
+
+	DepartMent highSelectOne(SqlSessionTemplate sqlSession, DepartMent dept);
+
+	int insertHighDept(SqlSessionTemplate sqlSession, DepartMent dm);
+
+	DepartMent newDeptNo(SqlSessionTemplate sqlSession, DepartMent dept);
+
+	int insertChildrenDept(SqlSessionTemplate sqlSession, DepartMent dept);
 }

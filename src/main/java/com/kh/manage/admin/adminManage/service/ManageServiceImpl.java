@@ -106,5 +106,29 @@ public class ManageServiceImpl implements ManageService{
 		return ad.updateAccess(sqlSession, am);
 		
 	}
+
+	@Override
+	public DepartMent highSelectOne(DepartMent dept) {
+		
+		return ad.highSelectOne(sqlSession, dept);
+	}
+
+	@Override
+	public int insertHighDept(DepartMent dm) {
+		
+		return ad.insertHighDept(sqlSession, dm);
+	}
+
+	@Override
+	public DepartMent newDeptNo(DepartMent dept) {
+		
+		return ad.newDeptNo(sqlSession, dept);
+	}
+
+	@Override
+	public int inserChildrenDept(DepartMent dept) {
+		
+		return ad.insertChildrenDept(sqlSession, dept);
+	}
 	
 }

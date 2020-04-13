@@ -107,4 +107,28 @@ public class ManageDaoImpl implements ManageDao {
 		return sqlSession.update("Admin.updateAccess", am);
 	}
 
+	@Override
+	public DepartMent highSelectOne(SqlSessionTemplate sqlSession, DepartMent dept) {
+		
+		return sqlSession.selectOne("Admin.highSelectOne", dept);
+	}
+
+	@Override
+	public int insertHighDept(SqlSessionTemplate sqlSession, DepartMent dm) {
+	
+		return sqlSession.insert("Admin.insertHighDept", dm);
+	}
+
+	@Override
+	public DepartMent newDeptNo(SqlSessionTemplate sqlSession, DepartMent dept) {
+		
+		return sqlSession.selectOne("Admin.newDeptNo", dept);
+	}
+
+	@Override
+	public int insertChildrenDept(SqlSessionTemplate sqlSession, DepartMent dept) {
+	
+		return sqlSession.insert("Admin.insertChildrenDept", dept);
+	}
+
 }
