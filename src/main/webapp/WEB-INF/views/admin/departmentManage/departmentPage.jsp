@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -263,7 +264,7 @@ ul {
 								<button class="okBtn" id="plusDepart">
 									<i class="fas fa-th-large"></i>&nbsp;최상위부서추가
 								</button> &nbsp;
-								<button class="okBtn" style="width: 120px;">
+								<button class="okBtn" id="plustChildernDepart" style="width: 120px;">
 									<i class="fas fa-align-right"></i>&nbsp;자식부서추가
 								</button>&nbsp;&nbsp;
 								<button class="okBtn" style="width: 100px;">
@@ -370,18 +371,20 @@ ul {
 				<div class="modal-body">
 					<div class="container-fluid">
 						<div class="row">
+						  <form id="highDeptForm" action="insertHighDept.am" method="post">
 							<table id="buseoInfoTable">
 								<tr>
 									<td class="titleId">부서명</td>
-									<td><input type="text" id="highName"class="inputMenu"></td>
+									<td><input type="text" id="insertDeptName" name="deptName" class="inputMenu"></td>
 								</tr>
 								<tr height="10px;"></tr>
 								<tr>
 									<td class="titleId">부서코드</td>
-									<td><input type="text" id="highCode" class="inputMenu"
+									<td><input type="text" id="highCode" name="deptNo" class="inputMenu" placeholder="ex) A "
 										style="width: 100px;"></td>
 								</tr>
 							</table>
+							</form>
 						</div>
 						<div class="row">
 							<div class="col-sm-9">
@@ -401,26 +404,122 @@ ul {
 		<!-- /.modal-dialog -->
 	</div>
 	<!-- /.modal -->
+	
+	<div class="modal fade" id="myModal2" role="dialog"
+		aria-labelledby="gridSystemModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="gridSystemModalLabel">
+						<i class="fas fa-th-large"></i>&nbsp;자식 부서 추가
+					</h4>
+				</div>
+				<div class="modal-body">
+					<div class="container-fluid">
+						<div class="row">
+						  <form id="childrenDeptInsert" action="childrenDeptInsert.am" method="post">
+							<table id="buseoInfoTable">
+								<tr>
+									<td class="titleId">최상위 부서</td>
+									<td>
+									<select id="deptSelect" name="highDept">
+										<option>==선택==</option>
+										<c:forEach var="d" items="${list}">
+											<c:if test="${d.deptLevle eq 1}">
+											<option value="${d.deptNo}">${d.deptName}</option>
+											</c:if>
+										</c:forEach>
+								</select></td>
+								</tr>
+								<tr height="10px;"></tr>
+								<tr>
+									<td class="titleId">부서명</td>
+									<td><input type="text" id="insertDeptName" name="deptName" class="inputMenu"></td>
+								</tr>
+								<tr height="10px;"></tr>
+								<tr>
+									<td class="titleId">부서코드</td>
+									<td><input type="text" id="highCode2" name="deptNo" class="inputMenu" readonly 
+										style="width: 100px;"></td>
+								</tr>
+							</table>
+							</form>
+						</div>
+						<div class="row">
+							<div class="col-sm-9">
+								<div class="row"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary" id="insertChildrenDept"
+						style="background: #1E2B44; outline: none; border: none;">저장</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
 
 	<script>
-		$(".a").children().on('click', function() {
-			$(this).children().siblings().css("color", "black");
-			$(this).children().css("color", "red");
+		$(".menuTable").find(".deptSub").on('click', function() {
+			$(".menuTable").find(".deptSub").css("color", "#3287B2");
+			$(this).css("color", "orange");
+		});
+		
+		$("#plustChildernDepart").click(function(){
+			$('#myModal2').modal('show');
+		});
+		
+		$("#insertChildrenDept").click(function(){
+			$("#childrenDeptInsert").submit();
 		});
 		
 		$("#insertHighDept").click(function(){
-				var deptName = $("#highName").val();
-				console.log(deptName);
-				var deptNo = $("#highCode").val();
-				 $.ajax({
-					url:'insertHighDept.am',
-					type: 'post',
-					data:{deptName:deptName,
-						  deptNo:deptNo	
-					},
-				 success:function(data){
-						
-						}
+			var a = $("#highCode").val();
+			$("#highCode").val(a +"01");
+			$("#highDeptForm").submit();
+		});
+		
+		$("#deptSelect").on("change", function(){
+			var name = $(this).val();
+			console.log(name);
+			$.ajax({
+				url:'newDeptNo.am',
+				type: 'post',
+				data:{deptNo:name},
+			 success:function(data){
+				 if(data){
+				     var a = data['deptNo']
+				     var b = Number(a.substr(a.length-2))+Number(1);
+				     if(b>=10){
+				     	var c = a.replace(a.substr(a.length-2), b);
+				     }else{
+				        var c = a.replace(a.substr(a.length-2), "0" + b);
+				     }
+				     $("#highCode2").val(c);
+				     
+				 }else{
+					 $.ajax({
+						url:'highDeptSelectOne.am',
+						type: 'post',
+						data:{deptNo:name},
+					 success:function(data){
+							  var a = data['deptNo']
+							  var c = a.replace(a.substr(a.length-2), "02");
+							  
+							  $("#highCode2").val(c);
+							}
+					}); 
+				 }
+			 }
 			}); 
 		});
 	</script>
@@ -475,8 +574,7 @@ ul {
 	<script>
 		$(function(){
 			$(".menuTable").find(".deptSub").on('click', function(){
-				var name = $(this).text();
-				console.log(name.replace(/ /g, ''));
+				var name =  $.trim($(this).text());
 				 $.ajax({
 					url:'deptSelectOne.am',
 					type: 'post',
@@ -497,14 +595,12 @@ ul {
 			
 			
 			$(".menuTable").find(".title").click(function(){
-				var name = $(this).text();
-				console.log(name);
+				var name = $.trim($(this).text());
 				 $.ajax({
-					url:'deptSelectOne.am',
+					url:'highDeptSelectOne.am',
 					type: 'post',
 					data:{deptName:name},
 				 success:function(data){
-						if(data){
 							$("#deptName").empty();
 							$("#highName").empty();
 							$("#deptCode").empty();
@@ -512,7 +608,6 @@ ul {
 							$("#highName").val(data['highDept']);
 							$("#deptCode").val(data['deptNo']);
 						}
-				 }
 				}); 
 			});
 			});
