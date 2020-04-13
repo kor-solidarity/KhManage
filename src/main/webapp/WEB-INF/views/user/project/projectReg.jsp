@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--프로젝트 등록 페이지--%>
 <html>
 <head>
 	<title>Title</title>
@@ -70,17 +72,20 @@
 						<div class="col-md-1 text-align-right">개발 형태</div>
 						<div class="col-md-5">
 							<select class="form-control" name="dev_form" id="dev_form">
-								<option value="0">선택하세요</option>
-								<option value="0">선택하세요</option>
-								<option value="0">선택하세요</option>
+								<c:forEach var="t" items="${projectTypes}">
+									<option value="${t.typePk}">${t.typeName}</option>
+								</c:forEach>
 							</select>
 						</div>
 						<div class="col-md-1 text-align-right">개발 등급</div>
 						<div class="col-md-5">
 							<select class="form-control" name="dev_class" id="dev_class">
 								<option value="0">선택하세요</option>
-								<option value="0">선택하세요</option>
-								<option value="0">선택하세요</option>
+								<option value="SS">SS</option>
+								<option value="S">S</option>
+								<option value="A">A</option>
+								<option value="B">B</option>
+								<option value="C">C</option>
 							</select>
 						</div>
 					</div>
@@ -92,17 +97,28 @@
 						<div class="col-md-1 text-align-right">프로젝트 관리자</div>
 						<div class="col-md-5">
 							<div class="col-md-6 short-padding">
-								<select class="form-control" name="project_manager" id="project_manager">
+								<%--부서 --%>
+								<select onchange="changeDeptMemberList()" class="form-control" name="project_dept"
+										id="project_dept">
 									<option value="0">선택하세요</option>
-									<option value="0">부서1</option>
-									<option value="0">부서2</option>
+									<c:forEach var="d" items="${deptList}">
+										<c:choose>
+											<c:when test="${d.highDept==nul}">
+												<option value="0">${d.deptName}</option>
+											</c:when>
+											<c:otherwise>
+												<option value="${d.deptNo}">
+													&nbsp;&nbsp;&nbsp;&nbsp;${d.deptName}</option>
+											</c:otherwise>
+										</c:choose>
+									</c:forEach>
 								</select>
 							</div>
 							<div class="col-md-6 short-padding">
-								<select class="form-control" name="project_dept" id="project_dept">
+								<select class="form-control" name="project_manager" id="project_manager">
 									<option value="0">선택하세요</option>
-									<option value="0">누구1</option>
-									<option value="0">누구2</option>
+									<option value="1">누구1</option>
+									<option value="2">누구2</option>
 								</select>
 							</div>
 						</div>
@@ -221,6 +237,37 @@
 			</form>
 		</div>
 	</div>
+	<script>
+
+        function changeDeptMemberList () {
+            // 우선 다 초기화
+            $("#project_manager option:not([value='0'])").remove();
+            // 부서의 값이 몇인지 확인한다.
+            // 0이면 아무것도 선택된게 아님
+            if ($("#project_dept option:selected").val() !== '0') {
+                console.log('$("#project_dept option:selected").val(): '
+                    + $("#project_dept option:selected").val());
+                $.ajax({
+                    url: '${path}/getMemberFromDept.pr',
+                    type: 'post',
+                    data: { deptNo: $("#project_dept option:selected").val() },
+                    success: function (data) {
+                        list = data;
+
+                        for (m in data) {
+                            $("#project_manager").
+                                append("<option value=" + data[m]['memberNo'] + ">" +
+                                    data[m]['memberName'] + "</option>");
+                        }
+                    }
+                });
+
+            }
+        }
+
+        $
+
+	</script>
 	<link rel="stylesheet"
 		  href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js">
 </body>
