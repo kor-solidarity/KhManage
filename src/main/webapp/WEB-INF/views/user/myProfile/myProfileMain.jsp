@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <title>Insert title here</title>
     
     <script>
@@ -184,10 +186,12 @@
                                     <label class="col-md-12 required">부서</label>
                                     <div class="col-md-12">
                                         <select class="select2me form-control select2-offscreen" id="DEPT_CODE" name="DEPT_CODE" style="width:250px; float:left;" tabindex="-1" title="">
-                                        	<option value="">선택하세요</option>
-                                        	<option value="">부서1</option>
-                                        	<option value="">부서1</option>
-                                        	<option value="">부서1</option>
+                                        	<option class="form-control" value="#">선택하세요</option>
+												<c:forEach var="a" items="${list}">
+													<option class="form-control" value="${a.deptNo}">
+														<c:out value="${a.deptName}"/>
+													</option>
+												</c:forEach>
 										</select>
                                         <span class="help-block with-errors"></span>
                                     </div>
@@ -220,7 +224,11 @@
                                         <span class="help-block with-errors"></span>
                                     </div>
                                 </div>
-
+								<!-- 비밀번호 유효성 검사 -->
+								<div id="correctPassword" class="form-group col-md-12" style="maring-top:-50px;">패스워드가 일치합니다.</div>
+								<div id="incorrectPassword" class="form-group col-md-12" style="maring-top:-50px;">패스워드가 일치하지 않습니다.</div>
+                                
+								<br><br>								
                                 <div class="form-group">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <button type="submit" class="passwordBtn"><i class="fas fa-check"></i>&nbsp;패스워드 수정</button>
                                 </div>
@@ -269,17 +277,47 @@
 	<script>
 	
 	//비밀번호
-	$(function () {
+	/* $(function () {
         $('#password_confirm').on('blur', function () {
             if ($("#password").val() != $('#password_confirm').val()) {
                 /* UIkit.modal.alert("패스워드와 패스워드 재확인 값이 일치하지 않습니다."); */
-                alert("패스워드와 패스워드 재확인 값이 일치하지 않습니다.");
+                sweetalert.alert("패스워드와 패스워드 재확인 값이 일치하지 않습니다.");
                 $("#password").val("");
                 $('#password_confirm').val("");
             }
         });
-    });
+    }); */
 	
+	
+ 	// 비밀번호 유효성 검사
+	$("#correctPassword").hide();
+	$("#incorrectPassword").hide();
+	
+	$("input").keyup(function() {
+		
+		var password = $("#password").val();
+		var passwordConfirm = $("#password_confirm").val();
+		
+		if(password != "" && passwordConfirm != "") {
+			
+			if(password == passwordConfirm) {
+				/* $("#msg-pwdOk").show(); */
+				$("#incorrectPwd").hide();
+				$(".hiddenTr").hide()
+			} else {
+				$("#incorrectPwd").show();
+				$(".hiddenTr").show()
+			}
+		} else {
+			$(".hiddenTr").hide()
+			$("#incorrectPwd").hide();		
+		}
+		
+	});
+    
+	
+	 //최종 폼전송 시 모든 input 부분 작성되었는 지 유효성 검사진행 !!@@
+    
 	
 	
 	
