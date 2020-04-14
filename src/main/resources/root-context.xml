@@ -18,6 +18,7 @@
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
 	
+	<!-- 기존 데이터소스 설정 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
 		<property name="url" value="jdbc:oracle:thin:@programmer7771.iptime.org:1521:xe"/>
@@ -25,6 +26,17 @@
 		<property name="password" value="manage"/>
 		<property name="defaultAutoCommit" value="false"/>
 	</bean>
+
+	<!-- 변경된 데이터소스 -->
+	<!-- <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+		<property name="url" value="jdbc:log4jdbc:oracle:thin:@programmer7771.iptime.org:1521:xe"></property>
+		<property name="username" value="manage"></property>
+		<property name="password" value="manage"></property>
+		<property name="defaultAutoCommit" value="false"/>
+	</bean> -->
+
+
 
 	<!-- 트랜젝션 매니저 bean 등록 -->
 	<!-- <bean id="transactionManager" 

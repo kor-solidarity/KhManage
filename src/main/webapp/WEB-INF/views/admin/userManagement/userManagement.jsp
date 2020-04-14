@@ -246,7 +246,7 @@
 	//모달
 	$("#memberId").click(function(){
 		$('#myModal').modal('show');
-	})
+	});
 	
 	
 	

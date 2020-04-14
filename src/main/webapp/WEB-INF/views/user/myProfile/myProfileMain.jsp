@@ -26,6 +26,7 @@
 	width: 25%;
 	height: 700px;
 	/* border: 1px solid blue; */
+	
 }
 
 .col-md-4 col-sm-4 text-center {
@@ -51,7 +52,7 @@
 	font-size:14px;
 }
 
-.passwordBtn {
+.updatePassword {
 	width:120px;
 	height:30px;
 	border:none;
@@ -73,6 +74,34 @@
 	font-size:14px;
 }
 
+.portlet-body {
+	/* width: 100%; */
+	border: 1px solid lightgray;
+	padding : 20px;
+	height: 600px;
+	
+}
+
+.left {
+	width: 50%;
+}
+
+.pImamage {
+	width: 120px;
+	heigh: 120px;
+	border: 1px solid lightgray;
+	border-radius: 200px;
+	/* margin-left: 40px; */
+	margin-left: 100px;
+	align: center;
+	/* vertical-align: middle; */
+	/* object-fit: cover; */
+	/* overflow: hidden; */
+	/* position: absolute; top:50%; left:50%; transform: translate(-50%, -50%); */
+}
+
+
+
 
 
 </style>
@@ -93,18 +122,24 @@
 		<div class="row fadeInUp animated">
 
 		<!-- 페이지 좌측 작업현황 Begin -->
-        <div class="col-md-4" style="float: left">
+        <div class="col-md-4 left" style="float: left">
             <div class="portlet light bordered min-height-600">
                 <div class="portlet-body">
                     <div class="user-bg">
                         <div class="overlay-box">
-                            <div class="user-content">
-                                    <a href=""><img src="" class="thumb-lg" alt="image"></a>
+                            <div class="user-content"><br>
+                                    <!-- <a href=""><img src="" class="thumb-lg" alt="image"></a> -->
 
-                                <div style="height:40px;"></div>
-
-                                <h4 class="text-white" style="margin-left: 60px;">${loginUser.memberName}</h4>
-                                <h5 class="text-white" style="margin-left: 60px;">${loginUser.email}</h5>
+                                <div class="" style="width: 100px; height: 100px; ">
+                                	<img src="<c:url value="/resources/img/profile.png"/>" class="thumb-lg pImamage">
+                                	<%-- <img class="profile" src="<c:url value="/resources/img/profile.png"/>"> --%>
+                                </div>
+                                
+                                <br><br><br><br>
+                                <div class="" style="align: center;">
+	                                <h4 class="text-white" style="margin-left: 25%">${loginUser.memberName}</h4>
+	                                <h5 class="text-white" style="margin-left: 25%">${loginUser.email}</h5>
+                                </div>
                             </div>
                         </div>
                     </div><br><br>
@@ -112,7 +147,7 @@
                     <div class="user-btm-box" style="height: 300px">
                         <div class="col-md-4 col-sm-4 text-center" style="height: 300px">
                             <p class="text-purple">
-                                <i class="linea-icon linea-basic fa-fw" data-icon=""></i> 내작업
+                                <i class="linea-icon linea-basic fa-fw" data-icon=""></i> 내작업
                             </p>
                             <h1>3</h1>
                         </div>
@@ -174,6 +209,15 @@
                                     </div>
                                 </div>
 
+                                <!-- jquery 같은 게 있을 때 select -->
+                                <div class="form-group">
+                                    <label class="col-md-12 required">소속부서</label>
+                                    <div class="col-md-12">
+                                        <input id="" name="RES_OFFICE_PHONE" value="<%-- ${loginUser.deptName} --%>부서" type="text" class="form-control form-control-line" placeholder="이름을 입력하세요" data-error="이름을 입력하세요" required="" readonly>
+                                        <span class="help-block with-errors"></span>
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <label class="col-md-12 required">이메일</label>
                                     <div class="col-md-12">
@@ -190,14 +234,6 @@
                                 </div>
 
 
-                                <!-- jquery 같은 게 있을 때 select -->
-                                <div class="form-group">
-                                    <label class="col-md-12 required">소속부서</label>
-                                    <div class="col-md-12">
-                                        <input id="" name="RES_OFFICE_PHONE" value="<%-- ${loginUser.deptName} --%>부서" type="text" class="form-control form-control-line" placeholder="이름을 입력하세요" data-error="이름을 입력하세요" required="" readonly>
-                                        <span class="help-block with-errors"></span>
-                                    </div>
-                                </div>
                                 <%-- <div class="form-group">
                                     <label class="col-md-12 required">부서</label>
                                     <div class="col-md-12">
@@ -249,21 +285,33 @@
 								</div>
                                 
                                 <div class="form-group" style="margin-left: 5px;">
-                                    <button type="submit" class="passwordBtn"><i class="fas fa-check"></i>&nbsp;패스워드 수정</button>
+                                    <button type="submit" id="updatePassword" class="updatePassword"><i class="fas fa-check"></i>&nbsp;패스워드 수정</button>
                                 </div>
                             </form>
+                            
+                            <script>
+                            	$(function() {
+                            		
+                            	});
+                            
+                            </script>
+                            
 
                         </div>
 
                         <div class="tab-pane" id="changeProfileImage">
 
-                            <form class="form-horizontal form-material" id="formChangePassword" action="/Resource/UpdateProfileImage" method="post" data-toggle="validator" enctype="multipart/form-data" encoding="multipart/form-data" novalidate="true">
+                            <form class="form-horizontal form-material" id="formChangePassword" action="insertProfileImage.me" method="post" data-toggle="validator" enctype="multipart/form-data" encoding="multipart/form-data" novalidate="true">
                                 <div class="form-group">
                                 	<br>
                                     <label class="col-md-12 required">프로필 이미지</label>
                                     <div class="col-md-12">
-                                        <div class="k-widget k-upload k-header k-upload-sync k-upload-empty"><div class="k-button k-upload-button" aria-label="Select files..."><input id="profileImage" name="profileImage" type="file" data-role="upload" multiple="multiple" autocomplete="off">
-                                        <span>Select files...</span></div></div>
+                                        <div class="k-widget k-upload k-header k-upload-sync k-upload-empty">
+	                                        <div class="k-button k-upload-button" aria-label="Select files...">
+	                                        	<input id="profileImage" name="profileImage" type="file" data-role="upload" multiple="multiple" autocomplete="off">
+	                                        	<span>Select files...</span>
+	                                        </div>
+                                        </div>
                                         <script>
 											kendo.syncReady(function(){
 												jQuery("#profileImage").kendoUpload({"validation":{"allowedExtensions":[".gif",".jpg",".png",".bmp"]}});
@@ -274,7 +322,7 @@
 
                                 <div class="form-group">
                                     <div class="col-sm-12">
-                                    	<button type="submit" class="profileImg"><i class="fas fa-check"></i>&nbsp;프로필이미지 수정</button>
+                                    	<button type="submit" class="profileImg"><i class="fas fa-check" onclick=""></i>&nbsp;프로필이미지 수정</button>
                                     </div>
                                 </div>
                             </form>
@@ -313,6 +361,7 @@
  	// 비밀번호 유효성 검사
 	$("#correctPassword").hide();
 	$("#incorrectPassword").hide();
+	$("#updatePassword").hide();
 	
 	$("input").keyup(function() {
 		
@@ -328,6 +377,7 @@
 				
 				$("#correctPassword").show();
 				$("#incorrectPassword").hide();
+				$("#updatePassword").show();
 			} else {
 				
 				$("#correctPassword").hide();
@@ -339,6 +389,7 @@
 		
 	});
     
+	
 	
 	//최종 폼전송 시 모든 input 부분 작성되었는 지 유효성 검사진행 !!@@
     

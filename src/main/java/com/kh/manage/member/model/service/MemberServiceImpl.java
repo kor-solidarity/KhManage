@@ -14,6 +14,7 @@ import org.springframework.transaction.TransactionManager;
 import com.kh.manage.admin.adminManage.vo.DepartMent;
 import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.rank.model.vo.Rank;
+import com.kh.manage.common.Attachment;
 import com.kh.manage.member.model.dao.MemberDao;
 import com.kh.manage.member.model.exception.LoginException;
 import com.kh.manage.member.model.vo.Member;
@@ -115,6 +116,21 @@ public class MemberServiceImpl implements MemberService {
 		return md.updateMemberInfo(sqlSession, member);
 	}
 
+
+	@Override
+	public int insertProfileImage(Attachment at) {
+
+		int result = 0;
+		
+		int result1 = md.insertProfileImage(sqlSession, at);
+
+		
+		return result1;
+	}
+
+	
+	
+	
 	
 	
 	

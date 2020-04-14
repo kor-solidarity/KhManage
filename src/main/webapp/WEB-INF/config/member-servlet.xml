@@ -25,5 +25,12 @@
 	
 	<!-- <aop:aspectj-autoproxy proxy-target-class="true"/> -->
 	
+	<!-- Multipart 객체 Bean 생성 -->
+	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="1000000"/>
+	</beans:bean>
+	
+	
 	
 </beans:beans>

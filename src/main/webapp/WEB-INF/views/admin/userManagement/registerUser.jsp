@@ -332,7 +332,7 @@
 					$("#deptTeam").empty();
 					
 						 for(key in data) {
-							$("#deptTeam").append("<option value='" + data[key]['0']+ "'>"+ "선택하세요" + "</option>");
+							/* $("#deptTeam").append("<option value='" + data[key]['0']+ "'>"+ "선택하세요" + "</option>"); */
 							$("#deptTeam").append("<option value='" + data[key]['deptNo']+ "'>"+ data[key]['deptName'] + "</option>");
 						 }
 				 }
