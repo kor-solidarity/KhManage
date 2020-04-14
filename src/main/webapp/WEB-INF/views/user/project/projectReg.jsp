@@ -89,7 +89,7 @@
 				</div>
 			</div>
 			<hr>
-			<form>
+			<form enctype="multipart/form-data" id="aktivate" method="post" action="registerProject.pr">
 				<!-- 주요여부 -->
 				<div class="row">
 					<div class="col-md-12">
@@ -117,6 +117,7 @@
 						<div class="col-md-1 text-align-right">개발 형태</div>
 						<div class="col-md-5">
 							<select class="form-control" name="dev_form" id="dev_form">
+								<option value="0">선택하세요</option>
 								<c:forEach var="t" items="${projectTypes}">
 									<option value="${t.typePk}">${t.typeName}</option>
 								</c:forEach>
@@ -161,14 +162,12 @@
 							<div class="col-md-6 short-padding">
 								<select class="form-control" name="project_manager" id="project_manager">
 									<option value="0">선택하세요</option>
-									<option value="1">누구1</option>
-									<option value="2">누구2</option>
 								</select>
 							</div>
 						</div>
 						<div class="col-md-1 text-align-right">PMO</div>
 						<div class="col-md-5">
-							<select class="form-control" name="dev-class" id="dev-class">
+							<select class="form-control" name="pmo" id="pmo">
 								<option value="0">선택하세요</option>
 								<c:forEach var="d" items="${deptList}">
 									<option value="${d.deptNo}">
@@ -229,8 +228,9 @@
 						<div class="col-md-5">
 							<select class="form-control" name="project_template" id="project_template">
 								<option value="0">선택하세요</option>
-								<option value="0">선행개발</option>
-								<option value="0">이것저것</option>
+								<c:forEach var="t" items="${templateList}">
+									<option value="${t.templatePk}">${t.templateName}</option>
+								</c:forEach>
 							</select>
 						</div>
 						<div class="col-md-1 text-align-right">프로젝트 시작일</div>
@@ -280,7 +280,7 @@
 				<br>
 				<div class="row">
 					<div class="col-md-12">
-						<div class="btn btn-primary" style="background: #1E2B44;" onclick="alert('boo');">
+						<div class="btn btn-primary" style="background: #1E2B44;" onclick="submit()">
 							<i class="fas fa-check"></i>
 							프로젝트 저장
 						</div>
@@ -378,19 +378,65 @@
 	<!-- /.modal -->
 
 	<script>
+        function submit () {
+            // 하나하나 값들이 있는지 확인해보는거임.
+            let regSpace = /\S/g;
+
+            // 날짜확인용도
+            let dateBool = false;
+            var startDate = Date.parse($("#startDate").val());
+            var endDate = Date.parse($("#endDate").val());
+            var proExcel = $("#project_excel");
+            // 우선 제목. 공백 말고 뭐가 있는지 확인
+            if ($("#project_name").val().match(regSpace) == null) {
+                alert("프로젝트 명을 쓰세요");
+            } else if ($("#dev_form").val() == 0) {
+                // 개발 형태가 0인 경우 - 선택 안했다는 소리
+                alert('프로젝트 형태를 선택해주세요');
+            } else if ($("#dev_class").val() == 0) {
+                // 개발등급도 매한가지.
+                alert('개발등급을 선택해주세요');
+            } else if ($("#project_manager").val() == 0) {
+                // 프로젝트 관리자
+                alert('프로젝트 관리자를 정해주세요');
+            } else if ($("#pmo").val() == 0) {
+                // PMO
+                alert('PMO를 정해주세요');
+            }
+                // 템플릿은 필수가 아닌듯 함.
+            /*else if ($("#project_template").val() == 0) {
+                // 프로젝트 템플릿
+                alert('프로젝트 템플릿을 정해주세요');
+            }*/
+            else if (($("#startDate").val() === "" || $("#endDate").val() === "") ||
+                (endDate < startDate)) {
+                /*날짜값이 없거나 종료일이 시작일보다 빠르면 에러*/
+                alert("시작·종료일자를 제대로 써주세요. 종료일자는 시작일자와 같거나 이후여야 합니다.");
+            } else if ($("#project_excel").val() !== "" && !($("#project_excel").val().split('.').pop() == 'xml' ||
+                $("#project_excel").val().split('.').pop() == 'xlsx')) {
+                // 첨부된 파일이 있고 확장자가 엑셀 또는 xml이 아닌 경우
+                alert('올바른 엑셀 파일이 아닙니다. xml 또는 xlsx 파일만 넣어주세요.');
+                $("#project_excel").val("");
+            } else if ($("#project_details").val().match(regSpace) == null){
+                alert("프로젝트 설명이 비었습니다.");
+                $("#project_details").focus();
+			}else {
+                // 확인 후 삭제
+                alert('문제 없음.');
+                $("#aktivate").submit();
+			}
+
+
+        }
+
         // 서브매니저 모달창 목록
         var memberList = new Array();
 
         // 서브매니저 선택한거 제거
         $("#memberDelete").click(function () {
-            console.log("list: " + JSON.stringify(list));
             $("input:checkbox[name=idCheck]:checked").filter(function () {
                 $(this).parent().siblings().parent().remove();
-
-                // 이걸로 리스트 제외해야하는 대상 찾아야함.
-                $(this).parent().siblings().parent().find()
             });
-            console.log("list after: " + JSON.stringify(list));
         });
 
         // 서브매니저 모달창 저장버튼

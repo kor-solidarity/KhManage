@@ -2,6 +2,7 @@ package com.kh.manage.project.model.service;
 
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.admin.department.model.vo.Dept;
+import com.kh.manage.admin.template.model.vo.Template;
 import com.kh.manage.project.model.vo.ProjectType;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,10 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public List<DeptMember> selectMemberList(String deptNo) {
 		return pd.selectMemberList(sqlSession, deptNo);
+	}
+	
+	@Override
+	public List<Template> selectTemplateList() {
+		return pd.selectMemberList(sqlSession);
 	}
 }

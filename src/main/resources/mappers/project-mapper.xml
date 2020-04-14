@@ -31,6 +31,16 @@
         <result property="deptLevel" column="DEPT_LEVEL"/>
     </resultMap>
 
+    <resultMap type="Template" id="templateResultSet">
+        <id property="templatePk" column="TEMPLATE_PK"/>
+        <result property="projectTypePk" column="PROJECT_TYPE_PK"/>
+        <result property="memberPk" column="MEMBER_PK"/>
+        <result property="templateName" column="TEMPLATE_NAME"/>
+        <result property="detail" column="DETAIL"/>
+        <result property="createDate" column="CREATE_DATE"/>
+        <result property="editDate" column="EDIT_DATE"/>
+    </resultMap>
+
     <resultMap type="DeptMember" id="deptMemberResultSet">
         <id property="memberNo" column="MEMBER_NO"/>
         <result property="memberId" column="MEMBER_ID"/>
@@ -64,4 +74,13 @@
         select *
         from project_type
     </select>
+
+    <select id="selectTemplateList" resultMap="templateResultSet">
+        select *
+        from PROJECT_TEMPLATE
+    </select>
+    
+    <insert id="insertProject" parameterType="Project">
+-- insert into PROJECT values ('PJ'||to_char(SEQ_PROJ.nextval, 'FM000'), );
+    </insert>
 </mapper>
