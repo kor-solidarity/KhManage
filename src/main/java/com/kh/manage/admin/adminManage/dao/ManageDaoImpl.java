@@ -138,4 +138,10 @@ public class ManageDaoImpl implements ManageDao {
 		return sqlSession.selectList("Admin.selectMemberList", dept);
 	}
 
+	@Override
+	public List<Member> selectHighMemberList(SqlSessionTemplate sqlSession, DepartMent dept) {
+		
+		return sqlSession.selectList("Admin.selectHighListMember", dept);
+	}
+
 }

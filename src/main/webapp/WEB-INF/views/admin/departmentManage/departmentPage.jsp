@@ -256,6 +256,15 @@ ul {
 	height: 35px;
 	padding: 3px;
 }
+.thRange1 {
+	background: #F3F3F3;
+	color: #626262;
+	font-size: 15px;
+	border: #B0B0B0 1px solid;
+	height: 35px;
+	padding: 3px;
+}
+
 
 
 .th1 {
@@ -310,7 +319,7 @@ ul {
 		style="width: 100%; background: #F5F5FA;">
 		<div class="panel-heading">
 			<div style="width: 100%; height: 700px; margin: 0 auto; overflow: auto;">
-				<div class="menuArea" style="margin-left: 12px;">
+				<div class="menuArea" style="margin-left: 12px; overflow: auto;">
 					<table class="menuTable">
 						<tr>
 							<td class="titleText">부서 리스트</td>
@@ -384,13 +393,13 @@ ul {
 						<tr height="10px;"></tr>
 						<tr>
 							<td class="titleId">상위부서</td>
-							<td><input type="text" id="highName" class="inputMenu"
+							<td><input type="text" id="highName" class="inputMenu" readonly="readonly"
 								style="width: 200px;"></td>
 						</tr>
 						<tr height="10px;"></tr>
 						<tr>
 							<td class="titleId">부서코드</td>
-							<td><input type="text" id="deptCode" class="inputMenu"
+							<td><input type="text" id="deptCode" class="inputMenu" readonly="readonly"
 								style="width: 100px;"></td>
 						</tr>
 						<tr height="40px;"></tr>
@@ -421,15 +430,13 @@ ul {
 						</tr>
 					</table>
 					<div style="overflow: auto; height: 300px;">
-						<table id="projectTable" align="center" style="width:90%; height:200px; margin-top: 20px;">
+						<table id="projectTable" align="center" style="width:90%; height:30px; margin-top: 20px;">
 						<tr id="frontMember">
 							<td class="tdText thRange" style="width: 90px">이름</td>
+							<td class="tdText thRange" style="width: 120px">부서</td>
 							<td class="tdText thRange" style="width: 90px;">직급</td>
-							<td class="tdText thRange" style="width: 170px;">이메일</td>
+							<td class="tdText thRange" style="width: 140px;">이메일</td>
 						</tr>
-						<tr class=".trRange">
-						</tr>
-						
 					</table>
 					</div>
 				</div>
@@ -508,7 +515,7 @@ ul {
 								<tr>
 									<td class="titleId">최상위 부서</td>
 									<td>
-									<select id="deptSelect" name="highDept">
+									<select id="deptSelect" name="highDept" class="inputMenu">
 										<option>==선택==</option>
 										<c:forEach var="d" items="${list}">
 											<c:if test="${d.deptLevle eq 1}">
@@ -549,8 +556,123 @@ ul {
 		<!-- /.modal-dialog -->
 	</div>
 	<!-- /.modal -->
+	
+	<!-- 모달_사용자정보수정 begin -->
+		<div class="modal fade" id="myModal4" role="dialog" aria-labelledby="gridSystemModalLabel" aria-hidden="true">
+		    <div class="modal-dialog">
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+		          <h4 class="modal-title" id="gridSystemModalLabel"><i class="fas fa-th-large"></i>&nbsp;부서 이동</h4>
+		        </div>
+		        <div class="modal-body">
+		          <div class="container-fluid">
+		            <div class="row" style="margin: 10px;  padding:10px; ">
+		            <form action="insertDeptHistory.am" id="insertForm" method="post">
+		              <table id="buseoInfoTable" style="border-spacing:0 10px; border-collapse: separate;">
+						<tr>
+							<td class="titleId" style="width: 130px;">이름</td>
+							<td><input type="text" id="memberName" class="inputMenu form-control" style="width: 280px;" readonly="readonly" required="required"></td>
+						</tr>
+						<tr>
+							<td class="titleId">직급</td>
+							<td><input type="text" id="memberRank" class="inputMenu form-control" style="width: 280px;" readonly="readonly" required="required"></td>
+						</tr>
+						<tr>
+							<td class="titleId">이메일</td>
+							<td><input type="text" id="memberEmail" class="inputMenu form-control" style="width: 280px;" readonly="readonly" required="required"></td>
+						</tr>
+						<tr >
+							<td class="titleId">소속 부서</td>
+							<td>
+							 <select id="deptNo" class="register form-control" name="deptNo">
+									<option id="deptSelect" class="form-control" value="0">선택하세요</option>
+									<c:forEach var="a" items="${list}">
+									<c:if test="${a.deptLevle eq 1}">
+										<option class="form-control" value="${a.deptNo}">${a.deptName}</option>
+									</c:if>
+									</c:forEach>
+								</select>
+							</td>
+						</tr>
+						<tr >
+							<td class="titleId">소속 팀</td>
+							<td>
+								<select id="deptTeam" class="register form-control" name="deptNo">
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td class="titleId">이동 사유</td>
+							<td>
+								<textarea id="deptReason" name="cContent" class="inputMenu form-control" style="width:280px; height:60px;"></textarea>
+								<input type="hidden" name="originDept">
+								<input type="hidden" name="changeMember">
+								<input type="hidden" name="changeDept">
+							</td>
+						</tr>
+					 </table>
+					 </form>
+		            </div>
+		            <div class="row">
+		              <div class="col-sm-9">
+		                <div class="row"></div>
+		              </div>
+		            </div>
+		          </div>
+		        </div>
+		        <div class="modal-footer">
+		          <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+		          <button type="button" id="insertDeptHistoryBtn" class="btn btn-primary" style="background:#1E2B44; outline:none; border:none;">저장</button>
+		        </div>
+		      </div><!-- /.modal-content -->
+		    </div><!-- /.modal-dialog -->
+	  	</div><!-- /.modal -->
+	
 
 	<script>
+		$("#insertDeptHistoryBtn").on('click', function(){
+			var highDeptNo = $("#deptNo").val()
+			var deptNo = $("#deptTeam").val()
+			
+			console.log(highDeptNo);
+			console.log(highDeptName);
+			
+			console.log(deptNo);
+			console.log(deptName);
+			
+			if(deptNo == deptName ||highDeptNo == highDeptName){
+				swal({
+	                 title: "변경 내용이 없습니다",
+	                 text: "부서 이동 후 요청해주세요",
+	                icon: "error"
+	              });
+			}else if($("#deptReason").val() == ""){
+				swal({
+	                 title: "변경 사유를 입력해주세요",
+	                 text: "",
+	                icon: "error"
+	              });
+			}else{
+				swal({
+					  title: "부서이동을 진행하시겠습니까?",
+					  icon: "warning",
+					  buttons: ["취소", "저장"],
+					  dangerMode: true,
+					})
+					.then((willDelete) => {
+					  if (willDelete) {
+					    swal({
+					    	title: "이동 완료!",
+					      	icon: "success"
+					    }).then((value) => {	
+							$("#insertForm").submit();					    	
+					    })
+					  }
+					   });
+			 }
+		});
+	
 		$(".menuTable").find(".deptSub").on('click', function() {
 			$(".menuTable").find(".deptSub").css("color", "#3287B2");
 			$(this).css("color", "orange");
@@ -568,6 +690,58 @@ ul {
 			var a = $("#highCode").val();
 			$("#highCode").val(a +"01");
 			$("#highDeptForm").submit();
+		});
+		
+		var deptName;
+		var highDeptName;
+		
+		$(document).on('click', '.trRange1', function(){
+			$('#myModal4').modal('show');
+			var name = $(this).find(".tdText").eq(0).text();
+			var rank = $(this).find(".tdText").eq(2).text();
+			var email = $(this).find(".tdText").eq(3).text();
+			var dept = $(this).find(".tdText").eq(1).text();
+			var highDept = $(this).find(".hiddenText").val();
+			deptName = $(this).find(".hiddenDept").val();
+			
+			highDeptName = highDept;
+			
+			
+			$("#memberName").val(name);
+			$("#memberRank").val(rank);
+			$("#memberEmail").val(email);
+			
+			$('#deptNo option').filter(function(){
+				if($(this).val() == highDept && highDept !='미지정'){
+					$(this).prop('selected', 'selected').change();
+				}else if($(this).text() == dept){
+					$(this).prop('selected', 'selected').change();
+				}
+			});
+			
+		});
+		
+		$(function(){
+			$("#deptNo").on('change', function(){
+				var name = $(this).val();
+				 $.ajax({
+					url:'selectTeam.me',
+					type: 'post',
+					data: {deptNo:name},
+				 	success:function(data){
+						$("#deptTeam").empty();
+							 for(key in data) {
+								$("#deptTeam").append("<option value='" + data[key]['deptNo']+ "'>"+ data[key]['deptName'] + "</option>");
+							 }
+							 var dept = $(".trRange1").find(".tdText").eq(1).text();
+							 $('#deptTeam option').filter(function(){
+										if($(this).val() == dept){
+											$(this).prop('selected', 'selected').change();
+										}
+								});
+					 }
+				}); 
+			});
 		});
 		
 		$("#deptSelect").on("change", function(){
@@ -594,7 +768,8 @@ ul {
 						type: 'post',
 						data:{deptNo:name},
 					 success:function(data){
-							  var a = data['deptNo']
+							  var a = data['dm']['deptNo']
+							  console.log(a);
 							  var c = a.replace(a.substr(a.length-2), "02");
 							  
 							  $("#highCode2").val(c);
@@ -694,8 +869,7 @@ ul {
 					url:'deptSelectOne.am',
 					type: 'post',
 					data:{deptName:name},
-					
-				 success:function(data){
+			  	 success:function(data){
 						if(data){
 							$("#deptName").empty();
 							$("#highName").empty();
@@ -703,13 +877,13 @@ ul {
 							$("#deptName").val(data['dm']['deptName']);
 							$("#highName").val(data['dm']['highDept']);
 							$("#deptCode").val(data['dm']['deptNo']);
-							$(".trRange").empty();
+							$(".trRange1").remove();
 							
 							for(var i = 0; i<data['list'].length; i++ ){
-							$("#frontMember").after("<tr class='trRange' id='accessList'><td class='tdText'>"+data['list'][i]['memberName']+"</td> <td class='tdText'>"+data['list'][i]['rankNo']+"</td><td class='tdText'>"+data['list'][i]['email']+"</td></tr>");
+								$("#frontMember").after("<tr class='trRange1' id='accessList'><td class='tdText'>"+data['list'][i]['memberName']+"</td><td class='tdText'>"+data['list'][i]['deapTeamNo']+"</td> <td class='tdText'>"+data['list'][i]['rankNo']+"</td><td class='tdText'>"+data['list'][i]['email']+"</td><input type='hidden' class='hiddenText' value='"+data['list'][i]['deptNo']+"'><input type='hidden' class='hiddenDept' value='"+data['list'][i]['memberType']+"'></tr>");
 							}
 						}
-				 }
+				    }
 				}); 
 			});
 			
@@ -727,12 +901,14 @@ ul {
 							$("#deptName").val(data['dm']['deptName']);
 							$("#highName").val(data['dm']['highDept']);
 							$("#deptCode").val(data['dm']['deptNo']);
-							
-							console.log(data['list']);
+							$(".trRange1").remove();
+							for(var i = 0; i<data['list'].length; i++ ){
+								$("#frontMember").after("<tr class='trRange1' id='accessList'><td class='tdText'>"+data['list'][i]['memberName']+"</td><td class='tdText'>"+data['list'][i]['deapTeamNo']+"</td> <td class='tdText'>"+data['list'][i]['rankNo']+"</td><td class='tdText'>"+data['list'][i]['email']+"</td><input type='hidden' class='hiddenText' value='"+data['list'][i]['deptNo']+"'><input type='hidden' class='hiddenDept' value='"+data['list'][i]['memberType']+"'></tr>");
+							}
 						}
 				}); 
 			});
-			});
+		});
 	</script>
 </body>
 </html>
