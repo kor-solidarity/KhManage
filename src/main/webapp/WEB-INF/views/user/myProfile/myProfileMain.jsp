@@ -86,20 +86,20 @@
 	width: 50%;
 }
 
-.pImamage {
-	width: 120px;
-	heigh: 120px;
-	border: 1px solid lightgray;
-	border-radius: 200px;
-	/* margin-left: 40px; */
-	margin-left: 100px;
-	align: center;
-	/* vertical-align: middle; */
-	/* object-fit: cover; */
-	/* overflow: hidden; */
-	/* position: absolute; top:50%; left:50%; transform: translate(-50%, -50%); */
+.pImamageDiv {
+	width: 140px;
+	height: 140px;
+	border-radius: 70%;
+	overflow: hidden;
+	margin-bottom: 50px;
 }
 
+.pImamage {
+	width: 100%;
+	heigh: 100%;
+	object-fit: cover;
+	margin-left: 25%;
+}
 
 
 
@@ -130,12 +130,11 @@
                             <div class="user-content"><br>
                                     <!-- <a href=""><img src="" class="thumb-lg" alt="image"></a> -->
 
-                                <div class="" style="width: 100px; height: 100px; ">
-                                	<img src="<c:url value="/resources/img/profile.png"/>" class="thumb-lg pImamage">
-                                	<%-- <img class="profile" src="<c:url value="/resources/img/profile.png"/>"> --%>
+                                <div class="pImamageDiv">
+                                	<%-- <img src="<c:url value="/resources/img/profile.png"/>" class="thumb-lg pImamage"> --%>
+                                	<img src="<c:url value="resources/uploadFiles/${at.changeName}.png"/>" class="thumb-lg pImamage">
                                 </div>
                                 
-                                <br><br><br><br>
                                 <div class="" style="align: center;">
 	                                <h4 class="text-white" style="margin-left: 25%">${loginUser.memberName}</h4>
 	                                <h5 class="text-white" style="margin-left: 25%">${loginUser.email}</h5>

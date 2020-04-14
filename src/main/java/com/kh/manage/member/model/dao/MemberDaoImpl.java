@@ -95,6 +95,12 @@ public class MemberDaoImpl implements MemberDao {
 		return sqlSession.insert("Member.insertProfileImage", at);
 	}
 
+	@Override
+	public Attachment selectProfileImg(SqlSessionTemplate sqlSession, Member m) {
+		
+		return sqlSession.selectOne("Member.selectProfileImg", m);
+	}
+
 
 
 

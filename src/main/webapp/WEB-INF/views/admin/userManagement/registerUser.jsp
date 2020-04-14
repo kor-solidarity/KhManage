@@ -115,7 +115,7 @@
 							<td class="tableTd">아이디<span style="color:red;"> *</span></td>
 							<td class="tableTd3"></td>
 							<td class="tableTd2">
-								<input type="text" id="memberId" class="register form-control" name="memberId" focus required
+								<input type="text" id="memberId" class="register form-control" name="memberId" focus
 										oninvalid="this.setCustomValidity('아이디를 입력해주세요.')" oninput="('ㄴㄴㄴㄴㄴ')">
 							</td>
 						</tr>
@@ -132,14 +132,14 @@
 							<td>패스워드<span style="color:red;"> *</span></td>
 							<td></td>
 							<td>
-								<input type="password" id="password1" class="register form-control" name="memberPwd" required >
+								<input type="password" id="password1" class="register form-control" name="memberPwd">
 							</td>
 						</tr>
 						<tr class="tableTr">
 							<td>패스워드 확인<span style="color:red;"> *</span></td>
 							<td></td>
 							<td>
-								<input type="password" id="password2" class="register form-control" name="memberPwd2" required >
+								<input type="password" id="password2" class="register form-control" name="memberPwd2">
 							</td>
 						</tr>
 						
@@ -156,21 +156,21 @@
 							<td>이름<span style="color:red;"> *</span></td>
 							<td></td>
 							<td>
-								<input type="text" class="register form-control" name="memberName">
+								<input type="text" id="memberName" class="register form-control" name="memberName">
 							</td>
 						</tr>
 						<tr class="tableTr">
 							<td>휴대폰번호<span style="color:red;"> *</span></td>
 							<td></td>
 							<td>
-								<input type="text" id="" class="register form-control" name="phone" style="color:#676A6D">
+								<input type="text" id="phone" class="register form-control" name="phone" style="color:#676A6D">
 							</td>
 						</tr>
 						<tr class="tableTr">
 							<td>이메일<span style="color:red;"> *</span></td>
 							<td></td>
 							<td>
-								<input type="email" class="register form-control" name="email">
+								<input type="email" id="email" class="register form-control" name="email">
 							</td>
 						</tr>
 						<tr id="hide1" class="tableTr">
@@ -242,6 +242,13 @@
 					<button type="submit" class="okBtn" onclick="submitSweet()"><i class="fas fa-check"></i>&nbsp;저장</button>
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<button type="reset" class="cancleBtn"><i class="fas fa-ban" onclick="goBack()"></i>&nbsp;취소</button>
+					
+					<script>
+						
+							
+					
+					</script>
+					
 					<br><br>
 				</form>
 			</div>
@@ -414,12 +421,13 @@
 		var msg = "";
 		var regId = /^[a-z][a-z,0-9]{5,11}$/
 		var password = $("#password1").val();
-		var mamberNname = $("#memberName").val();
+		var mamberName = $("#memberName").val();
 		var phone = $("#phone").val();
 		var email = $("#email").val();
 		var dept = $("#deptSelect" ).val();	
 		var team = $("#deptTeam").val();
 		var rank = $("#rank").val();
+		
 		
 		if(!regId.test($("#memberId").val())){
             swal({
@@ -431,7 +439,49 @@
               $("#memberId").select();
            	});
         
-		}
+		} else if(password.length < 6 || password.length > 16) {
+			swal({
+                title: "비밀번호를 6자리 ~ 16자리 이내로 입력해주세요.",
+                text: "",
+               icon: "error"
+             }).then((value) => {
+                  $("#password1").focus();
+                  $("#password1").select();
+               });
+		} else if(password.search(/\s/) != -1){
+            swal({
+                title: "비밀번호는 공백 없이 입력해주세요.",
+                text: "",
+               icon: "error"
+             }).then((value) => {
+                  $("#userPwd").focus();
+                  $("#userPwd").select();
+               });
+        } else if(!memberName) {
+        	swal({
+                title: "이름을 입력해야 합니다.",
+                text: "",
+               icon: "error"
+             }).then((value) => {
+                  $("#memberName").focus();
+               });
+        } else if(!phone) {
+        	swal({
+               title: "전화번호를 입력해주세요.",
+               text: "",
+               icon: "error"
+             }).then((value) => {
+                  $("#phone").focus();
+               });
+        } else if(!email) {
+        	swal({
+                title: "이메일을 입력해주세요.",
+                text: "",
+                icon: "error"
+              }).then((value) => {
+                   $("#phone").focus();
+                });
+         }
 		
 	}
 		

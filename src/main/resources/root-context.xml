@@ -27,6 +27,13 @@
 		<property name="defaultAutoCommit" value="false"/>
 	</bean>
 
+	<!-- 첨부파일 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="10000000"/>
+	</bean>
+
+
 	<!-- 변경된 데이터소스 -->
 	<!-- <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
@@ -45,9 +52,9 @@
 	</bean> -->
 	
 	<!-- 어노테이션으로 트랜젝션 매니저를 설정하기 위해 추가해야 하는 설정 -->
-	<tx:annotation-driven transaction-manager="transactionManager"/>
+<!-- 	<tx:annotation-driven transaction-manager="transactionManager"/>
 	
-	<!-- <tx:advice id="txAdvice" transaction-manager="transactionManager">
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
 			<tx:method name="select*" read-only="true" rollback-for="Exception"/>
 			<tx:method name="insert*" rollback-for="Exception" propagation="REQUIRED" isolation="SERIALIZABLE"/>

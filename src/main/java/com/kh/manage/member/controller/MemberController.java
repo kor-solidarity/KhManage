@@ -214,15 +214,23 @@ public class MemberController {
 	
 	//회원정보 수정 : loginUser 정보조회
 	@RequestMapping("myProfile.me")
-	public String modifyUserInfo(Member m, Model model, HttpServletRequest request) {
+	public String modifyUserInfo(Member m, HttpSession session, HttpServletRequest request) {
 		
+		Member member = (Member) session.getAttribute("loginUser");
 		
+		//프로필 사진 조회
+		Attachment at = ms.selectProfileImg(member);
+
 		//부서조회 레벨1
 		List<Dept> list = ms.selectDeptList();
 		
+		System.out.println("Attacgment at : " + at);
+		
 		request.setAttribute("list", list);
+		request.setAttribute("at", at);
 		
 		return "user/myProfile/myProfileMain";
+//		return "redirect:myProfileMain.jsp";
 	}
 	
 	
@@ -230,12 +238,14 @@ public class MemberController {
 	@RequestMapping("insertProfileImage.me")
 	public String insertProfileImage(Model model, Member m, HttpServletRequest request, 
 			@RequestParam MultipartFile profileImage) {
+		
 		System.out.println("이미지 변경요청");
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		
 		System.out.println("root : " + root);
 		
 		String filePath = root + "\\uploadfiles";
+//		String filePath = root + "/uploadfiles/"; //Mac
 		//root : C:\dev\6_Framework\Spring\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\testSpringProject\resources
 
 		//---------파일명 변경---------------------------------------
@@ -251,7 +261,6 @@ public class MemberController {
 		at.setOriginName(originFileName);
 		at.setFilePath(filePath);
 		
-		
 		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
 		at.setDivision(loginUser.getMemberNo());
 			
@@ -260,7 +269,8 @@ public class MemberController {
 			int result = ms.insertProfileImage(at);
 			System.out.println("프로필이미지 result : " + result);
 			profileImage.transferTo(new File(filePath + "\\" + changeName + ext));
-			
+//			profileImage.transferTo(new File(filePath + changeName + ext)); // Mac용
+//			profileImage.transferTo(new File(filePath + changeName + ".png")); // Mac용
 			
 		} catch (Exception e) {
 			
