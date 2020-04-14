@@ -51,4 +51,6 @@ public interface ManageDao {
 	int insertChildrenDept(SqlSessionTemplate sqlSession, DepartMent dept);
 
 	List<Member> selectMemberList(SqlSessionTemplate sqlSession, DepartMent dept);
+
+	List<Member> selectHighMemberList(SqlSessionTemplate sqlSession, DepartMent dept);
 }

@@ -55,9 +55,10 @@
 		<result property="memberName" column="MEMBER_NAME"/>
 		<result property="phone" column="PHONE"/>
 		<result property="email" column="EMAIL"/>
-		<result property="memberType" column="MEMBER_TYPE"/>
+		<result property="memberType" column="DEPT_NO"/>
 		<result property="rankNo" column="RANK_NAME"/>
-		<result property="deptNo" column="DEFT_NO"/>
+		<result property="deptNo" column="HIGH_DEPT"/>
+		<result property="deapTeamNo" column="DEPT_NAME"/>
 		<result property="enrollDate" column="ENROLL_DATE"/>
 		<result property="status" column="STATUS"/>
 	</resultMap>
@@ -291,7 +292,34 @@
 		      ,M.MEMBER_TYPE
 		      ,R.RANK_NAME
 		      ,D.DEPT_NAME
+		      ,E.DEPT_NO AS HIGH_DEPT
 		      ,M.DEPT_NO
+		      ,M.ENROLL_DATE
+		      ,M.STATUS
+		FROM MEMBER M
+		JOIN DEPT D ON(D.DEPT_NO = M.DEPT_NO) 
+		JOIN RANK R ON(M.RANK_NO = R.RANK_NO)
+		JOIN DEPT E ON(D.HIGH_DEPT = E.DEPT_NO)
+		WHERE M.STATUS = 'Y'
+		<if test="deptName != null">
+		AND D.DEPT_NAME = #{deptName}
+		</if>
+		<if test="deptNo != null">
+		AND M.DEPT_NO = #{deptNo}
+		</if>
+	</select>
+	
+	<select id="selectHighListMember" parameterType="DepartMent" resultMap="memberResultSet">
+		SELECT M.MEMBER_NO
+		      ,M.MEMBER_ID
+		      ,M.MEMBER_NAME
+		      ,M.PHONE
+		      ,M.EMAIL
+		      ,M.MEMBER_TYPE
+		      ,M.DEPT_NO
+		      ,R.RANK_NAME
+		      ,D.DEPT_NAME
+		      ,M.DEPT_NO AS HIGH_DEPT
 		      ,M.ENROLL_DATE
 		      ,M.STATUS
 		FROM MEMBER M

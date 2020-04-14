@@ -48,5 +48,7 @@ public interface ManageService {
 
 	int inserChildrenDept(DepartMent dept);
 
-	List<Member> selectMemberList(DepartMent dept); 
+	List<Member> selectMemberList(DepartMent dept);
+
+	List<Member> selectHighMemberList(DepartMent dept); 
 }

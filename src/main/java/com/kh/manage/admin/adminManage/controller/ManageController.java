@@ -21,6 +21,7 @@ import com.kh.manage.admin.adminManage.service.ManageService;
 import com.kh.manage.admin.adminManage.vo.Access;
 import com.kh.manage.admin.adminManage.vo.AccessMember;
 import com.kh.manage.admin.adminManage.vo.DepartMent;
+import com.kh.manage.admin.adminManage.vo.DeptHistory;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.admin.adminManage.vo.SelectAccessMember;
 import com.kh.manage.common.PageInfo;
@@ -136,7 +137,7 @@ public class ManageController {
 	@RequestMapping("/highDeptSelectOne.am")
 	public void highSelectOne(DepartMent dept, HttpServletRequest request, HttpServletResponse response) {
 		DepartMent dm = as.highSelectOne(dept);
-		List<Member> list = as.selectMemberList(dept);
+		List<Member> list = as.selectHighMemberList(dept);
 
 		request.setAttribute("dm", dm);
 		response.setContentType("application/json");
@@ -242,6 +243,13 @@ public class ManageController {
 	@RequestMapping("deleteDept.am")
 	public String deleteDept(DepartMent dept) {
 		System.out.println(dept);
+		return null;
+	}
+	
+	@RequestMapping("insertDeptHistory.am")
+	public String insertDeptHistory(DeptHistory dh) {
+		
+		
 		return null;
 	}
 }

@@ -137,5 +137,11 @@ public class ManageServiceImpl implements ManageService{
 		
 		return ad.selectMemberList(sqlSession, dept);
 	}
+
+	@Override
+	public List<Member> selectHighMemberList(DepartMent dept) {
+		
+		return ad.selectHighMemberList(sqlSession, dept);
+	}
 	
 }

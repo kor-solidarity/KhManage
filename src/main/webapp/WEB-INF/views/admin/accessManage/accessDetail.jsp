@@ -363,8 +363,7 @@
 					
 					$("#memberDelete").click(function(){
 						$("input:checkbox[name=idCheck]:checked").filter(function(){
-							$(this).parent().siblings().parent().remove();
-							
+							$(this).parent().siblings().parent().empty();
 						});
 					});
 					
@@ -377,6 +376,7 @@
 					    var b = $(".trRange").siblings().find(".memberNo").val();
 						$("input:checkbox[name=idCheck]:checked").filter(function(){
 								var a = $(this).parent().siblings().find(".memberNo").val();
+								console.log(a);
 								$(".trRange1").siblings().find(".memberNo").each(function(){
 									 if($(this).val() == a){
 										 bool = false;

@@ -78,13 +78,13 @@
 						<table align="left" style="width:100%;">
 						<tr>
 							<td class="titleId" style="padding-left:100px;">권한그룹 명</td>
-							<td><input name="accessName" type="text" class="inputMenu" style="width:100%;"></td>
+							<td><input name="accessName" type="text" required class="inputMenu" style="width:100%;"></td>
 						</tr>
 						<tr height="10px;"></tr>
 						<tr>
 							<td class="titleId" style="padding-left:90px;">권한그룹 설명</td>
 							<td>
-								<textarea name="aContent" class="inputMenu"rows="" cols="10" style="width:100%; height:150px;"></textarea>
+								<textarea name="aContent" required="required" class="inputMenu"rows="" cols="10" style="width:100%; height:150px;"></textarea>
 							</td>
 						</tr>
 						<tr height="10px;"></tr>
