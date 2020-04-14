@@ -33,6 +33,7 @@ public class MemberServiceImpl implements MemberService {
 	 */
 	
 	
+	//트랜젝션 적용 X
 	@Override
 	public int insertMember(Member m) {
 		
@@ -43,6 +44,27 @@ public class MemberServiceImpl implements MemberService {
 		
 		return md.insertMember(sqlSession, m);
 	}
+	
+	//AOP 설정 후 트랜젝션 적용
+//	@Override
+//	public int insertMember(Member m) {
+//		
+//		int result = 0;
+//		
+//		int result1 = md.insertMember(sqlSession, m);
+//		int result2 = md.insertBoard(sqlSession);
+//		
+//		if(result1 > 0 && result2 > 0) {
+//			result = 1;
+//		}
+//		
+//		return result;
+//		
+//		//System.out.println("insertMember 호출됨...");
+//		
+//		//return md.insertMember(sqlSession, m); 
+//	}
+	
 	
 	
 	@Override
@@ -126,6 +148,12 @@ public class MemberServiceImpl implements MemberService {
 
 		
 		return result1;
+	}
+
+	@Override
+	public Attachment selectProfileImg(Member m) {
+		
+		return md.selectProfileImg(sqlSession, m);
 	}
 
 	

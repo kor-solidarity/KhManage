@@ -38,6 +38,8 @@ public interface MemberDao {
 
 	int insertProfileImage(SqlSessionTemplate sqlSession, Attachment at);
 
+	Attachment selectProfileImg(SqlSessionTemplate sqlSession, Member m);
+
 
 
 

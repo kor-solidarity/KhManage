@@ -171,8 +171,6 @@
                         </td>
                     </tr>
 					
-					
-					
 				</table>
 				</div>
 			</div>
@@ -180,6 +178,7 @@
 		
 		<!-- 모달_사용자정보수정 begin -->
 		<div class="modal fade" id="myModal"role="dialog" aria-labelledby="gridSystemModalLabel" aria-hidden="true">
+		<form action="modalUpdateMember.me" method="post">
 		    <div class="modal-dialog">
 		      <div class="modal-content">
 		        <div class="modal-header">
@@ -191,15 +190,15 @@
 		            <div class="row" style="margin: 10px;  padding:10px; ">
 		              <table id="buseoInfoTable" style="border-spacing:0 10px; border-collapse: separate;">
 						<tr>
-							<td class="titleId" style="width: 130px;">이름</td>
-							<td><input type="text" class="inputMenu form-control" style="width: 280px;" required="required"></td>
+							<td class="titleId" style="width: 130px;">이름<span style="color:red;"> *</span></td>
+							<td><input type="text" class="inputMenu form-control" style="width: 280px;" name="memberName" required="required"></td>
 						</tr>
 						<tr>
-							<td class="titleId">이메일</td>
-							<td><input type="text" class="inputMenu form-control" style="width: 280px;" required="required"></td>
+							<td class="titleId">이메일<span style="color:red;"> *</span></td>
+							<td><input type="email" class="inputMenu form-control" style="width: 280px;" required="required"></td>
 						</tr>
 						<tr>
-							<td class="titleId">부서</td>
+							<td class="titleId">부서<span style="color:red;"> *</span></td>
 							<td>
 								<select class="inputMenu form-control" style="width: 280px;" required="required">
 									<option value="" >선택하세요</option>
@@ -211,7 +210,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td class="titleId">직급</td>
+							<td class="titleId">직급<span style="color:red;"> *</span></td>
 							<td><input type="text" class="inputMenu form-control" style="width: 280px;" required></td>
 						</tr>
 						<tr>
@@ -233,6 +232,7 @@
 		        </div>
 		      </div><!-- /.modal-content -->
 		    </div><!-- /.modal-dialog -->
+		    </form>
 	  	</div><!-- /.modal -->
 	
 	

@@ -31,5 +31,7 @@ public interface MemberService {
 
 	int insertProfileImage(Attachment at);
 
+	Attachment selectProfileImg(Member m);
+
 	
 }
