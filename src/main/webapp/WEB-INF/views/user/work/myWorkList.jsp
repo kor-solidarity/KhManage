@@ -166,7 +166,7 @@
 		        <div class="modal-body">
 		          <div class="container-fluid">
 		            <div class="row" style="margin: 10px;  padding:10px; ">
-		            <form action="">
+		            <form id="workRegForm" action="myWorkReg.wk" method="post">
 		              <table id="buseoInfoTable" style="border-spacing:0 10px; border-collapse: separate;">
 						<tr>
 							<td class="titleId" style="width: 130px;">작업명</td>
@@ -245,7 +245,7 @@
 		        </div>
 		        <div class="modal-footer">
 		          <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-		          <button type="button" class="btn btn-primary" style="background:#1E2B44; outline:none; border:none;">저장</button>
+		          <button type="button" class="btn btn-primary" id="workRegSubmit" style="background:#1E2B44; outline:none; border:none;">저장</button>
 		        </div>
 		      </div><!-- /.modal-content -->
 		    </div><!-- /.modal-dialog -->
@@ -255,6 +255,11 @@
 		$("#newWork1").click(function(){
 			$('#myModal').modal('show');
 		});  
+	
+		$("#workRegSubmit").click(function(){
+			$('#workRegForm').submit();
+		}); 
+	
 		
 	
 	</script>

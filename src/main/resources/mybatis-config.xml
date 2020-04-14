@@ -20,6 +20,9 @@
         <typeAlias type="com.kh.manage.project.model.vo.ProjectType" alias="ProjectType"/>
         <typeAlias type="com.kh.manage.admin.template.model.vo.Template" alias="Template"/>
         <typeAlias type="com.kh.manage.common.Attachment" alias="Attachment"/>
+        <typeAlias type="com.kh.manage.admin.adminManage.vo.DeptHistory" alias="DeptHistory"/>
+        <typeAlias type="com.kh.manage.admin.adminManage.vo.Menu" alias="Menu"/>
+        <typeAlias type="com.kh.manage.forum.model.vo.Notice" alias="Notice"/>
   	</typeAliases>
   
   
@@ -31,6 +34,7 @@
   		<mapper resource="mappers/project-mapper.xml"/>
   		<mapper resource="mappers/template-mapper.xml"/>
         <mapper resource="mappers/attachment-mapper.xml"/>
+        <mapper resource="mappers/notice-mapper.xml"/>
   	</mappers>
   		
   
