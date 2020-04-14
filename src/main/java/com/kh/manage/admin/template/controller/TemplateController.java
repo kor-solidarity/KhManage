@@ -27,10 +27,13 @@ public class TemplateController {
 	@Autowired
 	private TemplateService ts; 
 	
+	@Autowired
+	private Template tmp;
+	
 //	@Autowired
 //	private Attachment at;
 	
-	
+	//템플릿 메인화면 리스트 메소드
 	@RequestMapping("/templateManage.am")
 	public String templateMain(Model m , HttpServletRequest request) {
 		
@@ -53,6 +56,26 @@ public class TemplateController {
 		return "admin/templateManage/templatePage";
 	}
 	
+	//템플릿 상세보기 메소드
+	@RequestMapping("selectOneTemplate.am")
+	public String selectOneTemplate(Model m, HttpServletRequest request) {
+		
+		String tm = request.getParameter("tm");
+		
+		System.out.println(tm);
+		
+		tmp.setTemplatePk(tm);
+		
+		Template tem = ts.selectOneTemplate(tmp);
+		
+		System.out.println(tem);
+		
+		m.addAttribute("tem",tem);
+		
+		return "admin/templateManage/templateManage";
+	}
+	
+	
 	@RequestMapping("/insertTemplate.am")
 	public String InsertTemplate() {
 		
@@ -69,20 +92,16 @@ public class TemplateController {
 		return "admin/templateManage/templateExcel";
 	}
 	
-	
+	//템플릿 등록 메소드
 	@RequestMapping(value="/tempInsert.am", method=RequestMethod.POST)
 	public String templateInsert(Template tmp,HttpServletRequest request,@RequestParam MultipartFile upfile , Model m) {
 		
 		String root = request.getSession().getServletContext().getRealPath("resources");//web밑에있는 resources이다.
 
 		System.out.println("root : " + root);
-		//root : C:\dev\6_Framework\Spring\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\testSpringProject\resources
-		
 		
 		String filePath = root + "\\uploadFiles"; 
 		
-		//-----------------------------------------------------------------------
-		//파일명 변경
 		String originFileName = upfile.getOriginalFilename();//원본 파일 이름
 		String ext = originFileName.substring(originFileName.lastIndexOf("."));//.png , .jpg 
 		String changeName = CommonsUtils.getRandomString();
@@ -117,5 +136,31 @@ public class TemplateController {
 		
 		return "admin/templateManage/templatePage";
 	}
+	
+	
+	@RequestMapping(value="/tempUpdate.am", method=RequestMethod.POST)
+	public String templateUpdate(Template tmp) {
+		
+		System.out.println(tmp);
+		
+		int result = ts.tempUpdate(tmp);
+		
+		System.out.println("result : " + result);
+			
+		return "redirect:/templateManage.am";
+	}
+	
+	
 
 }
+
+
+
+
+
+
+
+
+
+
+

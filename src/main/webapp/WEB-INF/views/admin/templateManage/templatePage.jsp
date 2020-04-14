@@ -103,12 +103,13 @@
 
 						<c:forEach var="t" items="${list}">
 							<tr class="trRange"	id="accessList">
+								<td class="td1" style="display: none;"><c:out value="${t.templatePk}"/></td>
 								<td class="td1"><c:out value="${t.templateName}"/></td>
 								<td class="tdText"><c:out value="${t.detail}"/></td>
 								<td class="tdText"><c:out value="${t.projectTypePk}"/></td>
 								<td class="tdText"><c:out value="${t.createDate}"/></td>
-								<td class="tdText"><c:out value="${t.createDate}"/></td>
-								<td class="tdText"><button>delete</button></td>
+								<td class="tdText"><c:out value="${t.editDate}"/></td>
+								<td class="tdText"><button class="delete">delete</button></td>
 							</tr>
 					 	</c:forEach>				
 							<tr class="pagingArea">
@@ -161,12 +162,18 @@
 			</div>
 </body>
 <script>
-	/* $("#projectTable tr").click(function(){
+	$("#projectTable tr").click(function(){
 		
-		location.href = "templateManagePage.am";
-	}); */
+		var tm = $(this).children().eq(0).text();
+		
+		location.href = "selectOneTemplate.am?tm=" + tm;
+	}); 
 	
-
+	
+	$(".delete").click(function(){
+		var delList = $(this).parent().parent().remove();
+    	console.log(delList);
+	});
 </script>
 
 

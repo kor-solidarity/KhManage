@@ -1,6 +1,5 @@
 package com.kh.manage.admin.template.model.dao;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
@@ -60,6 +59,18 @@ public class TemplateDaoImpl implements TemplateDao{
 		
 		return sqlSession.selectList("Template.selectAll", null, rowBounds);
 		
+	}
+
+	@Override
+	public Template selectOneTemplate(SqlSessionTemplate sqlSession, Template tmp) {
+		
+		return sqlSession.selectOne("Template.selectOne", tmp);
+	}
+
+	@Override
+	public int updateTemplate(SqlSessionTemplate sqlSession, Template tmp) {
+		
+		return sqlSession.update("Template.updateTemp", tmp);
 	}
 
 
