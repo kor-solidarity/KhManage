@@ -10,8 +10,10 @@ import org.springframework.stereotype.Repository;
 import com.kh.manage.admin.adminManage.vo.Access;
 import com.kh.manage.admin.adminManage.vo.AccessMember;
 import com.kh.manage.admin.adminManage.vo.DepartMent;
+import com.kh.manage.admin.adminManage.vo.DeptHistory;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.admin.adminManage.vo.SelectAccessMember;
+import com.kh.manage.admin.rank.model.vo.Rank;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.member.model.vo.Member;
 
@@ -142,6 +144,35 @@ public class ManageDaoImpl implements ManageDao {
 	public List<Member> selectHighMemberList(SqlSessionTemplate sqlSession, DepartMent dept) {
 		
 		return sqlSession.selectList("Admin.selectHighListMember", dept);
+	}
+
+	@Override
+	public int insertDeptHistory(SqlSessionTemplate sqlSession, DeptHistory dh) {
+		
+		return sqlSession.insert("Admin.insertDeptHistory", dh);
+	}
+
+	@Override
+	public int updateDeptMember(SqlSessionTemplate sqlSession, DeptHistory dh) {
+		
+		return sqlSession.update("Admin.updateDeptMember", dh);
+	}
+
+	@Override
+	public List<Rank> selectRankList(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectList("Admin.selectRankList");
+	}
+
+	@Override
+	public int updateDeleteDeptMember(SqlSessionTemplate sqlSession, DepartMent dept) {
+		
+		return sqlSession.update("Admin.updateDeleteDeptMember", dept);
+	}
+
+	@Override
+	public int deleteDept(SqlSessionTemplate sqlSession, DepartMent dept) {
+		return 1;
 	}
 
 }

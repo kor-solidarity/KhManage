@@ -576,7 +576,16 @@ ul {
 						</tr>
 						<tr>
 							<td class="titleId">직급</td>
-							<td><input type="text" id="memberRank" class="inputMenu form-control" style="width: 280px;" readonly="readonly" required="required"></td>
+							<td>
+								<select id="rank" class="register form-control"  name="rankNo">
+									<option id="rank" class="form-control" value="0">선택하세요</option>
+									<c:forEach var="r" items="${rlist}">
+										<option class="form-control" value="${r.rankNo}">
+											<c:out value="${r.rankName}"/>
+										</option>
+									</c:forEach>
+								</select>
+							</td>
 						</tr>
 						<tr>
 							<td class="titleId">이메일</td>
@@ -606,9 +615,9 @@ ul {
 							<td class="titleId">이동 사유</td>
 							<td>
 								<textarea id="deptReason" name="cContent" class="inputMenu form-control" style="width:280px; height:60px;"></textarea>
-								<input type="hidden" name="originDept">
-								<input type="hidden" name="changeMember">
-								<input type="hidden" name="changeDept">
+								<input type="hidden" id="originDept" name="originDept">
+								<input type="hidden" id="changeMember" name="changeMember">
+								<input type="hidden" id="changeDept" name="changeDept">
 							</td>
 						</tr>
 					 </table>
@@ -635,13 +644,20 @@ ul {
 			var highDeptNo = $("#deptNo").val()
 			var deptNo = $("#deptTeam").val()
 			
-			console.log(highDeptNo);
-			console.log(highDeptName);
+			$("#changeMember").val(memberNo);
+			$("#originDept").val(memberNo);
 			
-			console.log(deptNo);
-			console.log(deptName);
-			
-			if(deptNo == deptName ||highDeptNo == highDeptName){
+			if(deptNo == null){
+				$("#changeMember").val(memberNo);
+				$("#originDept").val(highDeptName);
+				$("#changeDept").val(highDeptNo);
+			}else{
+				$("#changeMember").val(memberNo);
+				$("#originDept").val(deptName);
+				$("#changeDept").val(deptNo);
+			}
+		
+			if(deptNo == deptName ||highDeptNo == highDeptName && deptNo==null){
 				swal({
 	                 title: "변경 내용이 없습니다",
 	                 text: "부서 이동 후 요청해주세요",
@@ -694,6 +710,8 @@ ul {
 		
 		var deptName;
 		var highDeptName;
+		var memberNo;
+		var rankNo;
 		
 		$(document).on('click', '.trRange1', function(){
 			$('#myModal4').modal('show');
@@ -702,8 +720,9 @@ ul {
 			var email = $(this).find(".tdText").eq(3).text();
 			var dept = $(this).find(".tdText").eq(1).text();
 			var highDept = $(this).find(".hiddenText").val();
+			rankNo = $(this).find(".rankName").val();
+			memberNo = $(this).find(".hiddenMember").val();
 			deptName = $(this).find(".hiddenDept").val();
-			
 			highDeptName = highDept;
 			
 			
@@ -711,13 +730,24 @@ ul {
 			$("#memberRank").val(rank);
 			$("#memberEmail").val(email);
 			
+				
 			$('#deptNo option').filter(function(){
-				if($(this).val() == highDept && highDept !='미지정'){
+				if($(this).val() == highDept && deptNo !=null){
+					console.log("출력값 : " + $(this).val());
+					console.log(deptName);
 					$(this).prop('selected', 'selected').change();
-				}else if($(this).text() == dept){
+				}else if($(this).val() == deptName){
+					console.log("출력값 : " + $(this).val());
 					$(this).prop('selected', 'selected').change();
 				}
 			});
+			
+			$("#rank option").filter(function(){
+				if($(this).val() == rankNo){
+					$(this).prop('selected', 'selected').change();	
+				}
+			});
+			
 			
 		});
 		
@@ -735,7 +765,7 @@ ul {
 							 }
 							 var dept = $(".trRange1").find(".tdText").eq(1).text();
 							 $('#deptTeam option').filter(function(){
-										if($(this).val() == dept){
+										if($(this).val() == deptName){
 											$(this).prop('selected', 'selected').change();
 										}
 								});
@@ -746,7 +776,6 @@ ul {
 		
 		$("#deptSelect").on("change", function(){
 			var name = $(this).val();
-			console.log(name);
 			$.ajax({
 				url:'newDeptNo.am',
 				type: 'post',
@@ -783,7 +812,9 @@ ul {
 	
 	<script>
 			function sweetTest(){
-				if($("#deptName").val() != "" ){
+				var no = $("#deptCode").val();
+				if(no != "CA01"){
+				if($("#deptName").val() != ""){
 				swal({
 					  title: "해당 부서를 삭제하시겠습니까?",
 					  icon: "error",
@@ -797,7 +828,6 @@ ul {
 					      	icon: "success"
 					    }).then((value) => {	// 애니메이션 V 나오는 부분!
 					    	var no = $("#deptCode").val();
-					    	console.log(no);
 					    	$.ajax({
 								url:'deleteDept.am',
 								type: 'post',
@@ -805,7 +835,8 @@ ul {
 							 success:function(data){
 									
 									}
-							}); 
+							});
+					    
 					    });
 					  } else {
 						  swal({
@@ -814,6 +845,12 @@ ul {
 						  });
 					  }
 				});
+				}
+				}else{
+					swal({
+		                 title: "미지정 부서는 삭제 할 수 없습니다.",
+		                icon: "warning"
+		              });
 				}
 			}
 				</script>
@@ -880,7 +917,7 @@ ul {
 							$(".trRange1").remove();
 							
 							for(var i = 0; i<data['list'].length; i++ ){
-								$("#frontMember").after("<tr class='trRange1' id='accessList'><td class='tdText'>"+data['list'][i]['memberName']+"</td><td class='tdText'>"+data['list'][i]['deapTeamNo']+"</td> <td class='tdText'>"+data['list'][i]['rankNo']+"</td><td class='tdText'>"+data['list'][i]['email']+"</td><input type='hidden' class='hiddenText' value='"+data['list'][i]['deptNo']+"'><input type='hidden' class='hiddenDept' value='"+data['list'][i]['memberType']+"'></tr>");
+								$("#frontMember").after("<tr class='trRange1' id='accessList'><td class='tdText'>"+data['list'][i]['memberName']+"</td><td class='tdText'>"+data['list'][i]['deapTeamNo']+"</td> <td class='tdText'>"+data['list'][i]['rankNo']+"</td><td class='tdText'>"+data['list'][i]['email']+"</td><input type='hidden' class='hiddenText' value='"+data['list'][i]['deptNo']+"'><input type='hidden' class='hiddenDept' value='"+data['list'][i]['memberType']+"'><input type='hidden' class='hiddenMember' value='"+data['list'][i]['memberNo']+"'><input type='hidden' class='rankName' value='"+data['list'][i]['memberPwd']+"'></tr>");
 							}
 						}
 				    }
@@ -903,7 +940,7 @@ ul {
 							$("#deptCode").val(data['dm']['deptNo']);
 							$(".trRange1").remove();
 							for(var i = 0; i<data['list'].length; i++ ){
-								$("#frontMember").after("<tr class='trRange1' id='accessList'><td class='tdText'>"+data['list'][i]['memberName']+"</td><td class='tdText'>"+data['list'][i]['deapTeamNo']+"</td> <td class='tdText'>"+data['list'][i]['rankNo']+"</td><td class='tdText'>"+data['list'][i]['email']+"</td><input type='hidden' class='hiddenText' value='"+data['list'][i]['deptNo']+"'><input type='hidden' class='hiddenDept' value='"+data['list'][i]['memberType']+"'></tr>");
+								$("#frontMember").after("<tr class='trRange1' id='accessList'><td class='tdText'>"+data['list'][i]['memberName']+"</td><td class='tdText'>"+data['list'][i]['deapTeamNo']+"</td> <td class='tdText'>"+data['list'][i]['rankNo']+"</td><td class='tdText'>"+data['list'][i]['email']+"</td><input type='hidden' class='hiddenText' value='"+data['list'][i]['deptNo']+"'><input type='hidden' class='hiddenDept' value='"+data['list'][i]['memberType']+"'><input type='hidden' class='hiddenMember' value='"+data['list'][i]['memberNo']+"'><input type='hidden' class='rankName' value='"+data['list'][i]['memberPwd']+"'></tr>");
 							}
 						}
 				}); 
