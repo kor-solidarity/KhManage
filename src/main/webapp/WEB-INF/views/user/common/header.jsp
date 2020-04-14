@@ -32,6 +32,8 @@
 	<script src="<c:url value="/resources/assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"/>"></script>
 	<script src="<c:url value="/resources/assets/vendor/chartist/js/chartist.min.js"/>"></script>
 	<script src="<c:url value="/resources/assets/scripts/klorofil-common.js"/>"></script>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 <style>
 </style>
