@@ -1,5 +1,8 @@
 package com.kh.manage.common;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Attachment implements java.io.Serializable{
 	
 	private String atNo;
