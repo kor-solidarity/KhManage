@@ -31,7 +31,12 @@
 		<result property="modifyDate" column="MODIFY_DATE" />
 		<result property="status" column="STATUS" />
 	</resultMap>
-
+	
+	<resultMap type="Rank" id="rankResultSet">
+		<id property="rankNo" column="RANK_NO"/>
+		<result property="rankName" column="RANK_NAME"/>
+	</resultMap>
+	
 	<resultMap type="SelectAccessMember"
 		id="selectAccessResultSet">
 		<id property="accessNo" column="ACCESSGROUP_NO" />
@@ -51,7 +56,7 @@
 	<resultMap type="Member" id="memberResultSet">
 		<id property="memberNo" column="MEMBER_NO"/>
 		<result property="memberId" column="MEMBER_ID"/>
-		<result property="memberPwd" column="PASSWORD"/>
+		<result property="memberPwd" column="RANK_NO"/>
 		<result property="memberName" column="MEMBER_NAME"/>
 		<result property="phone" column="PHONE"/>
 		<result property="email" column="EMAIL"/>
@@ -107,6 +112,7 @@
 	<select id="departSelectAll" resultMap="departResultSet">
 		SELECT LPAD(' ', 2*(LEVEL-1)) || DEPT_NAME AS DEPT_NAME, DEPT_NO, HIGH_DEPT, DEPT_LEVEL
 		FROM DEPT
+		WHERE STATUS = 'Y'
 		START WITH HIGH_DEPT IS NULL
 		CONNECT BY PRIOR DEPT_NO = HIGH_DEPT
 	</select>
@@ -289,6 +295,7 @@
 		      ,M.MEMBER_NAME
 		      ,M.PHONE
 		      ,M.EMAIL
+		      ,M.RANK_NO
 		      ,M.MEMBER_TYPE
 		      ,R.RANK_NAME
 		      ,D.DEPT_NAME
@@ -314,6 +321,7 @@
 		      ,M.MEMBER_ID
 		      ,M.MEMBER_NAME
 		      ,M.PHONE
+		      ,M.RANK_NO
 		      ,M.EMAIL
 		      ,M.MEMBER_TYPE
 		      ,M.DEPT_NO
@@ -333,6 +341,26 @@
 		AND M.DEPT_NO = #{deptNo}
 		</if>
 	</select>
+	
+	<insert id="insertDeptHistory" parameterType="DeptHistory">
+		INSERT INTO DEPT_HISTORY 
+		VALUES('DH'|| TO_CHAR(SEQ_DH_NO.NEXTVAL, 'FM000'), #{changeMember}, SYSDATE, #{cContent}, #{originDept}, #{changeDept})
+	</insert>
+	
+	<update id="updateDeptMember" parameterType="DeptHistory">
+		UPDATE MEMBER SET DEPT_NO = #{changeDept}, RANK_NO = #{rankNo}
+		WHERE MEMBER_NO = #{changeMember}
+	</update>
+	
+	<select id="selectRankList" resultMap="rankResultSet">
+		SELECT *
+		FROM RANK
+	</select>
+	
+	<update id="updateDeleteDeptMember" parameterType="DepartMent">
+		UPDATE MEMBER SET DEPT_NO = 'CA01'
+		WHERE DEPT_NO = #{deptNo}
+	</update>
 </mapper>
 
 

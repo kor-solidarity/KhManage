@@ -24,8 +24,10 @@ import com.kh.manage.admin.adminManage.vo.DepartMent;
 import com.kh.manage.admin.adminManage.vo.DeptHistory;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.admin.adminManage.vo.SelectAccessMember;
+import com.kh.manage.admin.rank.model.vo.Rank;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.common.Pagination;
+import com.kh.manage.member.model.service.MemberService;
 import com.kh.manage.member.model.vo.Member;
 
 
@@ -34,6 +36,7 @@ public class ManageController {
 
 	@Autowired
 	private ManageService as;
+	
 
 	@RequestMapping("/accessManage.am")
 	public String showAccessPage(Model model, HttpServletRequest request) {
@@ -105,8 +108,10 @@ public class ManageController {
 	public String showDepartmentManage(Model model) {
 
 		List<DepartMent> list = as.departSelectAll();
+		List<Rank> rlist = as.selectRankList();
 
 		model.addAttribute("list", list);
+		model.addAttribute("rlist", rlist);
 
 		return "admin/departmentManage/departmentPage";
 	}
@@ -242,14 +247,23 @@ public class ManageController {
 	
 	@RequestMapping("deleteDept.am")
 	public String deleteDept(DepartMent dept) {
-		System.out.println(dept);
-		return null;
+		
+		int result = as.deleteDept(dept);
+		
+		
+		return "redirect:accessManage.am";
 	}
 	
 	@RequestMapping("insertDeptHistory.am")
 	public String insertDeptHistory(DeptHistory dh) {
+		int result = as.insertDeptHistory(dh);
 		
+		return "redirect:departmentManage.am";
+	}
+	
+	@RequestMapping("/menuManege.am")
+	public String showMenuManagePage() {
 		
-		return null;
+		return "admin/menuManage/menuManage";
 	}
 }

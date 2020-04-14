@@ -8,8 +8,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import com.kh.manage.admin.adminManage.vo.Access;
 import com.kh.manage.admin.adminManage.vo.AccessMember;
 import com.kh.manage.admin.adminManage.vo.DepartMent;
+import com.kh.manage.admin.adminManage.vo.DeptHistory;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.admin.adminManage.vo.SelectAccessMember;
+import com.kh.manage.admin.rank.model.vo.Rank;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.member.model.vo.Member;
 
@@ -53,4 +55,14 @@ public interface ManageDao {
 	List<Member> selectMemberList(SqlSessionTemplate sqlSession, DepartMent dept);
 
 	List<Member> selectHighMemberList(SqlSessionTemplate sqlSession, DepartMent dept);
+
+	int insertDeptHistory(SqlSessionTemplate sqlSession, DeptHistory dh);
+
+	int updateDeptMember(SqlSessionTemplate sqlSession, DeptHistory dh);
+
+	List<Rank> selectRankList(SqlSessionTemplate sqlSession);
+
+	int updateDeleteDeptMember(SqlSessionTemplate sqlSession, DepartMent dept);
+
+	int deleteDept(SqlSessionTemplate sqlSession, DepartMent dept);
 }

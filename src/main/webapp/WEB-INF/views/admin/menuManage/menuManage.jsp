@@ -136,62 +136,29 @@ ul{
 						<tr style="height: 10px;"></tr>
 						<tr>
 							<td>
-								<div
-									style="width: 80%; height: 500px;">
-											<ul id="tree_menu" class="tree_menu">
-													<ul class="depth_2">
-														<li><a href="#none" id="title" style="color:#1E2B44; font-size:16px;"> 
-														<img id="folderImg"src="<c:url value="/resources/assets/img/folder.png"/>" style="width:25px; height:20px; margin-bottom:10px; mar">
-														대시보드</a>
-															<ul class="depth_3 a" id="depth3"style="margin-left:20px;">
-																<li><a href="#none">종합 대시보드</a></li>
-																
-																<li><a href="#none">상세 대시보드</a></li>
-																<li><a href="#none">개인 대시보드</a></li>
-															</ul></li>
-													</ul>
-													<ul class="depth_4">
-														<li><a href="#none" id="title" style="color:#1E2B44; font-size:16px;"> 
-														<img id="folderImg2"src="<c:url value="/resources/assets/img/folder.png"/>" style="width:25px; height:20px; margin-bottom:10px;">
-														프로젝트</a>
-															<ul class="depth_5 a" id="depth_5" style="margin-left:20px;">
-																<li><a href="#none">프로젝트 센터</a></li>
-																<li><a href="#none">프로젝트 산출물</a></li>
-																<li><a href="#none">프로젝트 작업승인</a></li>
-															</ul></li>
-													</ul>
-													
-													<ul class="depth_6">
-														<li><a href="#none" id="title" style="color:#1E2B44; font-size:16px;"> 
-														<img id="folderImg3"src="<c:url value="/resources/assets/img/folder.png"/>" style="width:25px; height:20px; margin-bottom:10px;">
-														내작업</a>
-															<ul class="depth_7 a" id="depth_5" style="margin-left:20px;">
-																<li><a href="#none">나의작업</a></li>
-																<li><a href="#none">프로젝트 산출물</a></li>
-															</ul></li>
-													</ul>
-													
-													<ul class="depth_8">
-														<li><a href="#none" id="title" style="color:#1E2B44; font-size:16px;"> 
-														<img id="folderImg4"src="<c:url value="/resources/assets/img/folder.png"/>" style="width:25px; height:20px; margin-bottom:10px;">
-														일반업무</a>
-															<ul class="depth_9 a" id="depth_5" style="margin-left:20px;">
-																<li><a href="#none">이슈관리</a></li>
-																<li><a href="#none">변경요청</a></li>
-															</ul></li>
-													</ul>
-													
-													<ul class="depth_10">
-														<li><a href="#none" id="title" style="color:#1E2B44; font-size:16px;"> 
-														<img id="folderImg5"src="<c:url value="/resources/assets/img/folder.png"/>" style="width:25px; height:20px; margin-bottom:10px;">
-														포럼</a>
-															<ul class="depth_12 a" id="depth_5" style="margin-left:20px;">
-																<li><a href="#none">공지사항</a></li>
-																<li><a href="#none">정보공유게시판</a></li>
-															</ul></li>
-													</ul>
+								<div style="width: 80%; height: 500px;">
+									<ul id="tree_menu" class="tree_menu">
+										<c:forEach var="d" items="${list}">
+											<c:if test="${ d.deptLevle ==1 }">
+											<c:set var="dId" value="${d.deptNo}"/>
+												<ul class="depth_2">
+													<li><a href="#none" id="title" class="title"
+														style="color: #1E2B44; font-size: 16px;"> <img
+															id="folderImg"
+															src="<c:url value="/resources/assets/img/folder.png"/>"
+															style="width: 25px; height: 20px; margin-bottom:10px; margin-right:5px;"><c:out value="${d.deptName}" /></a>
+															
+												</li>
+												</ul>
+											</c:if>
+												<c:if test="${ d.deptLevle==2 and dId eq d.highDept}">
+											<ul class="depth_3 a" id="depth3" style="margin-left: 20px;">
+													<li><a class="deptSub" style="margin-left: 27px;"><c:out value="${d.deptName}" /></a></li>
 											</ul>
-										</div>
+												</c:if>
+										</c:forEach>
+									</ul>
+								</div>
 							</td>
 						</tr>
 					</table>
@@ -270,141 +237,50 @@ ul{
 				$(this).children().css("color", "#F59E1C");
 			});
 	</script>
-	
 	<script>
-	
-	function tree_menu() {
-		  $('ul.depth_2 >li > a').click(function(e) {
-		    var temp_el = $(this).next('ul');
-		    var depth_3 = $('.depth_3');
+		function tree_menu() {
+			$(".menuTable").find(".title").on('click', function(e){
+								var temp_el = $(this).parent().parent().nextUntil(".depth_2");
+								var depth_3 = $(this).parent().parent().nextUntil(".depth_2");
+								
+								
+								depth_3.slideUp(300);
+								depth_3.parent().find('em').removeClass('on');
+								
+								if (temp_el.is(':hidden')) {
+									temp_el.slideDown(300);
+									$(this).find('em').addClass('on').html(
+											'하위폴더 열림');
+									$(this).css('color', '#F59E1C').css(
+											"font-weight", "600");
+									$(this).find("#folderImg")
+											.attr("src",
+													"<c:url value="/resources/assets/img/folderOpen.png"/>");
+									
+									
+								} else {
+									temp_el.slideUp(300);
+									$(this).find('em').removeClass('on').html(
+											'하위폴더 닫힘');
+									$(this).css('color', '#1E2B44').css(
+											"font-weight", "400");
+									$(this).find("#folderImg")
+											.attr("src",
+													"<c:url value="/resources/assets/img/folder.png"/>");
+								}
+								return false;
+							});
 
-		    // 처음에 모두 슬라이드 업 시켜준다.
-		    depth_3.slideUp(300);
-		    // 클릭한 순간 모두 on(-)을 제거한다.// +가 나오도록
-		    depth_3.parent().find('em').removeClass('on');
-
-		    if (temp_el.is(':hidden')) {
-		      temp_el.slideDown(300);
-		      $(this).find('em').addClass('on').html('하위폴더 열림');
-		      $(this).css('color', '#F59E1C').css("font-weight", "600");
-		      $("#folderImg").attr("src", "<c:url value="/resources/assets/img/folderOpen.png"/>");
-		     
-		    } else {
-		      temp_el.slideUp(300);
-		      $(this).find('em').removeClass('on').html('하위폴더 닫힘');
-		      $(this).css('color', '#1E2B44').css("font-weight", "400");
-		      $("#folderImg").attr("src", "<c:url value="/resources/assets/img/folder.png"/>");
-		    }
-
-		    return false;
-
-		  });
-		  
-		      $('ul.depth_4 >li > a').click(function(e) {
-				    var temp_el = $(this).next('ul');
-				    var depth_3 = $('#depth_5');
-
-				    // 처음에 모두 슬라이드 업 시켜준다.
-				    depth_3.slideUp(300);
-				    // 클릭한 순간 모두 on(-)을 제거한다.// +가 나오도록
-				    depth_3.parent().find('em').removeClass('on');
-
-				    if (temp_el.is(':hidden')) {
-				      temp_el.slideDown(300);
-				      $(this).find('em').addClass('on').html('하위폴더 열림');
-				      $(this).css('color', '#F59E1C').css("font-weight", "600");
-				      $("#folderImg2").attr("src", "<c:url value="/resources/assets/img/folderOpen.png"/>");
-				    } else {
-				      temp_el.slideUp(300);
-				      $(this).find('em').removeClass('on').html('하위폴더 닫힘');
-				      $(this).css('color', '#1E2B44').css("font-weight", "400");
-				      $("#folderImg2").attr("src", "<c:url value="/resources/assets/img/folder.png"/>");
-				    }
-
-				    return false;
-
-				  });
-		      
-				      $('ul.depth_6 >li > a').click(function(e) {
-						    var temp_el = $(this).next('ul');
-						    var depth_3 = $('#depth_7');
-
-						    // 처음에 모두 슬라이드 업 시켜준다.
-						    depth_3.slideUp(300);
-						    // 클릭한 순간 모두 on(-)을 제거한다.// +가 나오도록
-						    depth_3.parent().find('em').removeClass('on');
-
-						    if (temp_el.is(':hidden')) {
-						      temp_el.slideDown(300);
-						      $(this).find('em').addClass('on').html('하위폴더 열림');
-						      $(this).css('color', '#F59E1C').css("font-weight", "600");
-						      $("#folderImg3").attr("src", "<c:url value="/resources/assets/img/folderOpen.png"/>");
-						    } else {
-						      temp_el.slideUp(300);
-						      $(this).find('em').removeClass('on').html('하위폴더 닫힘');
-						      $(this).css('color', '#1E2B44').css("font-weight", "400");
-						      $("#folderImg3").attr("src", "<c:url value="/resources/assets/img/folder.png"/>");
-						    }
-
-						    return false;
-
-						  });
-				      
-						      $('ul.depth_8 >li > a').click(function(e) {
-								    var temp_el = $(this).next('ul');
-								    var depth_3 = $('#depth_9');
-
-								    // 처음에 모두 슬라이드 업 시켜준다.
-								    depth_3.slideUp(300);
-								    // 클릭한 순간 모두 on(-)을 제거한다.// +가 나오도록
-								    depth_3.parent().find('em').removeClass('on');
-
-								    if (temp_el.is(':hidden')) {
-								      temp_el.slideDown(300);
-								      $(this).find('em').addClass('on').html('하위폴더 열림');
-								      $(this).css('color', '#F59E1C').css("font-weight", "600");
-								      $("#folderImg4").attr("src", "<c:url value="/resources/assets/img/folderOpen.png"/>");
-								    } else {
-								      temp_el.slideUp(300);
-								      $(this).find('em').removeClass('on').html('하위폴더 닫힘');
-								      $(this).css('color', '#1E2B44').css("font-weight", "400");
-								      $("#folderImg4").attr("src", "<c:url value="/resources/assets/img/folder.png"/>");
-								    }
-
-								    return false;
-
-								  });
-						      
-								      $('ul.depth_10 >li > a').click(function(e) {
-										    var temp_el = $(this).next('ul');
-										    var depth_3 = $('#depth_12');
-
-										    // 처음에 모두 슬라이드 업 시켜준다.
-										    depth_3.slideUp(300);
-										    // 클릭한 순간 모두 on(-)을 제거한다.// +가 나오도록
-										    depth_3.parent().find('em').removeClass('on');
-
-										    if (temp_el.is(':hidden')) {
-										      temp_el.slideDown(300);
-										      $(this).find('em').addClass('on').html('하위폴더 열림');
-										      $(this).css('color', '#F59E1C').css("font-weight", "600");
-										      $("#folderImg5").attr("src", "<c:url value="/resources/assets/img/folderOpen.png"/>");
-										    } else {
-										      temp_el.slideUp(300);
-										      $(this).find('em').removeClass('on').html('하위폴더 닫힘');
-										      $(this).css('color', '#1E2B44').css("font-weight", "400");
-										      $("#folderImg5").attr("src", "<c:url value="/resources/assets/img/folder.png"/>");
-										    }
-
-										    return false;
-
-										  });
-		      
 		}
 		if ($('#tree_menu').is(':visible')) {
-		  tree_menu();
+			tree_menu();
 		}
+		
+		$("#plusDepart").click(function(){
+			$('#myModal').modal('show');
+		})
 	</script>
+	
 	<script>
 	function sweetTest(){
 		swal({

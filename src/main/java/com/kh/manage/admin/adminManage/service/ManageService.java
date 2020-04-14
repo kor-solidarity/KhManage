@@ -6,8 +6,10 @@ import java.util.Map;
 import com.kh.manage.admin.adminManage.vo.Access;
 import com.kh.manage.admin.adminManage.vo.AccessMember;
 import com.kh.manage.admin.adminManage.vo.DepartMent;
+import com.kh.manage.admin.adminManage.vo.DeptHistory;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.admin.adminManage.vo.SelectAccessMember;
+import com.kh.manage.admin.rank.model.vo.Rank;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.member.model.vo.Member;
 
@@ -50,5 +52,11 @@ public interface ManageService {
 
 	List<Member> selectMemberList(DepartMent dept);
 
-	List<Member> selectHighMemberList(DepartMent dept); 
+	List<Member> selectHighMemberList(DepartMent dept);
+
+	int insertDeptHistory(DeptHistory dh);
+
+	List<Rank> selectRankList();
+
+	int deleteDept(DepartMent dept); 
 }

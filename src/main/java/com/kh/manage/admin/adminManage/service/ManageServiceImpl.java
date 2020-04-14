@@ -11,8 +11,10 @@ import com.kh.manage.admin.adminManage.dao.ManageDao;
 import com.kh.manage.admin.adminManage.vo.Access;
 import com.kh.manage.admin.adminManage.vo.AccessMember;
 import com.kh.manage.admin.adminManage.vo.DepartMent;
+import com.kh.manage.admin.adminManage.vo.DeptHistory;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.admin.adminManage.vo.SelectAccessMember;
+import com.kh.manage.admin.rank.model.vo.Rank;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.member.model.vo.Member;
 
@@ -142,6 +144,40 @@ public class ManageServiceImpl implements ManageService{
 	public List<Member> selectHighMemberList(DepartMent dept) {
 		
 		return ad.selectHighMemberList(sqlSession, dept);
+	}
+
+	@Override
+	public int insertDeptHistory(DeptHistory dh) {
+		
+		int result2 = 0;
+		
+		int result =  ad.insertDeptHistory(sqlSession, dh);
+		
+		if(result > 0) {
+			result2 = ad.updateDeptMember(sqlSession, dh);
+		}
+		
+		return result2;
+		
+	}
+
+	@Override
+	public List<Rank> selectRankList() {
+		
+		return ad.selectRankList(sqlSession);
+	}
+
+	@Override
+	public int deleteDept(DepartMent dept) {
+		int result2 = 0;
+		
+		int result =  ad.updateDeleteDeptMember(sqlSession, dept);
+		
+		if(result > 0) {
+			result2 = ad.deleteDept(sqlSession, dept);
+		}
+		
+		return result2;
 	}
 	
 }
