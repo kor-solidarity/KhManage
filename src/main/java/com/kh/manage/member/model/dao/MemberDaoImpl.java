@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.manage.admin.adminManage.vo.DepartMent;
 import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.rank.model.vo.Rank;
+import com.kh.manage.common.Attachment;
 import com.kh.manage.member.model.exception.LoginException;
 import com.kh.manage.member.model.vo.Member;
 
@@ -86,6 +87,12 @@ public class MemberDaoImpl implements MemberDao {
 	public int updateMemberInfo(SqlSessionTemplate sqlSession, Member member) {
 
 		return sqlSession.update("Member.updateMemberInfo", member);
+	}
+
+	@Override
+	public int insertProfileImage(SqlSessionTemplate sqlSession, Attachment at) {
+
+		return sqlSession.insert("Member.insertProfileImage", at);
 	}
 
 

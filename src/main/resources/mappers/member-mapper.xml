@@ -55,14 +55,7 @@
 	</select>
 	
 	
-	<!-- 회원정보 수정 페이지 -->
-	<!-- <select id="selectMemberInfo" resultMap="memberResultSet">
-		SELECT MEMBER_NAME, EMAIL, PHONE
-		FROM MEMBER
-		WHERE MEMBER_ID = #{memberId}
-	</select> -->
-	
-	<!-- 회원정보 수정 : 비밀번호 수정 -->
+	<!-- 회원정보수정 : 비밀번호 수정 -->
 	<update id="updatePassword" parameterType="Member">
 		UPDATE MEMBER
 		SET(PASSWORD, MODIFY_DATE) = (SELECT #{memberPwd}, SYSDATE
@@ -71,6 +64,7 @@
 		WHERE MEMBER_ID = #{memberId}
 	</update>
 	
+	<!-- 회원정보수정 : 이메일, 전화번호 수정 -->
 	<update id="updateMemberInfo" parameterType="Member">
 		UPDATE MEMBER
 		SET(EMAIL, PHONE, MODIFY_DATE) = (SELECT #{email}, #{phone}, SYSDATE
@@ -78,6 +72,17 @@
 										  WHERE MEMBER_ID = #{memberId})
 		WHERE MEMBER_ID = #{memberId}
 	</update>
+	
+	<!-- 회원정보수정 : 프로필 이미지 등록 -->
+	<insert id="insertProfileImage" parameterType="Attachment">
+		INSERT INTO ATTACHMENT
+		VALUES('AT'|| TO_CHAR(SEQ_AT_NO.NEXTVAL, 'FM000'), #{division}, #{originName}, #{changeName} , #{filePath})
+	</insert>
+	
+	<!-- <insert id="insertTemplate" parameterType="Template">
+		INSERT INTO PROJECT_TEMPLATE 
+		VALUES('TEM'|| TO_CHAR(SEQ_TEMPLATE.NEXTVAL, 'FM000'), #{projectTypePk}, #{memberPk}, #{templateName} , #{detail}, SYSDATE , SYSDATE)
+	</insert> -->
 	
 	
 
