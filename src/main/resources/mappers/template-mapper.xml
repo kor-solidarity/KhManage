@@ -42,5 +42,22 @@
 		FROM PROJECT_TEMPLATE	  
 	</select>
 	
+	<select id="selectOne" resultMap="templateResultSet" parameterType="Template">
+		SELECT TEMPLATE_PK
+			  ,PROJECT_TYPE_PK
+			  ,MEMBER_PK
+			  ,TEMPLATE_NAME
+			  ,DETAIL
+			  ,CREATE_DATE
+			  ,EDIT_DATE
+		FROM PROJECT_TEMPLATE
+		WHERE TEMPLATE_PK = #{templatePk}
+	</select>
+	
+	<update id="updateTemp" parameterType="Template">
+		UPDATE PROJECT_TEMPLATE SET TEMPLATE_NAME = #{templateName} , PROJECT_TYPE_PK = #{projectTypePk}  , DETAIL = #{detail}
+		WHERE TEMPLATE_PK = #{templatePk}
+	</update>
+	
 
 </mapper>

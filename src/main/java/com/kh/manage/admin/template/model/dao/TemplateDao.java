@@ -1,6 +1,5 @@
 package com.kh.manage.admin.template.model.dao;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -19,6 +18,10 @@ public interface TemplateDao {
 	int getListCount(SqlSessionTemplate sqlSession);
 
 	List<Template> templateSelectAll(SqlSessionTemplate sqlSession, PageInfo pi);
+
+	Template selectOneTemplate(SqlSessionTemplate sqlSession, Template tmp);
+
+	int updateTemplate(SqlSessionTemplate sqlSession, Template tmp);
 
 
 

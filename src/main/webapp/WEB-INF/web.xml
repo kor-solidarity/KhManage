@@ -104,6 +104,16 @@
     <load-on-startup>1</load-on-startup>
   </servlet>
   
+  <servlet>
+    <servlet-name>Forum</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>/WEB-INF/config/forum-servlet.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  
   <servlet-mapping>
     <servlet-name>Member</servlet-name>
     <url-pattern>*.me</url-pattern>
@@ -147,6 +157,11 @@
   <servlet-mapping>
     <servlet-name>Rank</servlet-name>
     <url-pattern>*.ra</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>Forum</servlet-name>
+    <url-pattern>*.fo</url-pattern>
   </servlet-mapping>
   
   

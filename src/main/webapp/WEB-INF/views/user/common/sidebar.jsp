@@ -71,7 +71,7 @@
 								<i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages5" class="collapse ">
 								<ul class="nav">
-									<li><a href="#" class="" style="background:#24415C; height:56px;"><label class="menuName">공지사항</label></a></li>
+									<li><a href="noticeMain.fo" class="" style="background:#24415C; height:56px;"><label class="menuName">공지사항</label></a></li>
 									<li><a href="#" class="" style="background:#24415C; height:56px;"><label class="menuName">정보공유게시판</label></a></li>
 								</ul>
 							</div>

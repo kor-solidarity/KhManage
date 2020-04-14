@@ -2,6 +2,8 @@ package com.kh.manage.admin.template.model.vo;
 
 import java.sql.Date;
 
+import org.springframework.stereotype.Component;
+@Component
 public class Template {
 	private String templatePk;		
 	private String projectTypePk;

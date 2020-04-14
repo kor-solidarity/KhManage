@@ -62,5 +62,17 @@ public class TemplateServiceImpl implements TemplateService{
 		return td.templateSelectAll(sqlSession, pi);
 	}
 
+	@Override
+	public Template selectOneTemplate(Template tmp) {
+		
+		return td.selectOneTemplate(sqlSession, tmp);
+	}
+
+	@Override
+	public int tempUpdate(Template tmp) {
+		
+		return td.updateTemplate(sqlSession, tmp);
+	}
+
 	
 }

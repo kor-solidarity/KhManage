@@ -15,6 +15,10 @@ public interface TemplateService {
 
 	List<Template> templateSelectAll(PageInfo pi);
 
+	Template selectOneTemplate(Template tmp);
+
+	int tempUpdate(Template tmp);
+
 
 
 }

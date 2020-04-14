@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -285,6 +286,7 @@
 			<div class="panel panel-headline">
 				<div class="panel-heading">
 					<div style="width:100%; height:670px; margin:0 auto; overflow:auto;">
+					<form method="post" action="tempUpdate.am" id="tempForm">
 						<table class="menuTable" style="width: 100%;">
 						<tr>
 							<td class="titleText" colspan="2">템플릿 등록 정보</td>
@@ -297,23 +299,31 @@
 						<tr>
 							<td class="titleId" style="padding-left:100px;">템플릿 명</td>
 							<td class="inputTd">
-							<input type="text" class="inputMenu" style="width:100%;">
+							<input type="text" class="inputMenu" style="width:100%;" name="templateName" value="<c:out value='${tem.templateName}'/>">
 							</td>
 							<td class="titleId" style="padding-left:100px;">템플릿 분류</td>
 							<td class="inputTd">
-							<select style="width: 100%;"><option>선택하세요</option></select>
+							<select style="width: 100%;" id="select" name="projectTypePk">
+								<option>선택하세요</option>
+								<option value="PTY001">개발유형1</option>
+								<option value="PTY002">개발유형2</option>
+								<option value="PTY003">개발유형3</option>
+								<option value="PTY004">개발유형4</option>
+							</select>
 							</td>
 						</tr>
 						<tr>
 							<td class="titleId" style="padding-left:90px;">템플릿 설명</td>
 							<td colspan="3">
-								<textarea class="inputMenu"rows="" cols="" style="width:100%; height:150px; margin-top:15px; resize: none;"></textarea>
+								<textarea name="detail" class="inputMenu"rows="" cols="" style="width:100%; height:150px; margin-top:15px; resize: none; text-align: left;">
+									<c:out value="${tem.detail}"/>
+								</textarea>
+								<input type="hidden" name="templatePk" value="${tem.templatePk}">
 							</td>
 						</tr>
 						<tr height="10pxdj;"></tr>
 						
 						<tr height="10px;"></tr>
-						
 						
 						
 						<tr>
@@ -340,13 +350,35 @@
 							
 						</tr>
 						</table>
-					
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 </body>
+<script>
+	$(function(){
+		
+		/* $("#select").childenren().val() == ${tem.projectTypePk} */
+		 $("select option").each(function(){
 
+			    if($(this).val()=="${tem.projectTypePk}"){
+
+			      $(this).attr("selected","selected");
+
+			    }
+
+		 });
+	});
+	
+	$("#okBtn").click(function(){
+		
+		$("#tempForm").submit();
+	});
+	
+	
+	
+</script>
 
 
 </html>
