@@ -2,6 +2,9 @@ package com.kh.manage.forum.model.vo;
 
 import java.sql.Date;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Notice {
 	
 	private String noticeNo;

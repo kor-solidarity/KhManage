@@ -62,7 +62,7 @@
 		font-size: 18px;
 		color: #5e738b;
 	}
-	#nTitle{
+	#noticeTitle{
 		width: 1500px;
 		height: 40px;
 	}
@@ -104,13 +104,13 @@
 				<p class="p">공지사항 작성</p>
 				
 				<hr>
-				<form>
+				<form method="post" action="insertNotice.fo" id="noticeForm" enctype="multipart/form-data">
 				<table id="noticeTable" align="center">
 					<tr>
 						<td class="title"><div class="div"><p style="color:  #5e738b;">공지사항 제목</p></div></td>
 					</tr>
 					<tr>
-						<td><input type="text" placeholder="공지사항 제목 입력" id="nTitle"></td>
+						<td><input type="text" placeholder="공지사항 제목 입력" name="noticeTitle" id="noticeTitle"></td>
 					</tr>
 					<tr>
 						<td class="title"><div class="div"><p style="color:  #5e738b;">공지사항 첨부파일</p></div></td>
@@ -123,7 +123,7 @@
 					</tr>
 					<tr>
 						<td>
-							<textarea cols="80" rows="14" id="summernote" name="nContent"></textarea>
+							<textarea cols="80" rows="14" id="summernote" name="noticeContent"></textarea>
 						</td>
 					</tr>
 					<tr>
@@ -165,6 +165,10 @@
 		   });
 	});
 	
+	$("#save").click(function(){
+		
+		$("#noticeForm").submit();
+	});
 
 </script>
 </html>

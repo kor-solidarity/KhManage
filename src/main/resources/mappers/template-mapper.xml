@@ -28,7 +28,7 @@
 	
 	<select id="getListCount" resultType="_int">
 		SELECT COUNT(*)
-		FROM ACCESSGROUP
+		FROM PROJECT_TEMPLATE
 	</select>
 	
 	<select id="selectAll" resultMap="templateResultSet" >
