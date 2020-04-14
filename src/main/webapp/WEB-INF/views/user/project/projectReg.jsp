@@ -25,6 +25,50 @@
 		.table-advance {
 			margin-bottom: 10px !important;
 		}
+
+		.modal-dialog {
+			top: 20%;
+			width: 650px !important;
+		}
+
+		/*서브관리자 모달창 내 테이블*/
+		.sub-manager-table {
+
+		}
+
+		.sub-manager-table tr:first-of-type {
+			width: 20px;
+			min-height: 20px;
+		}
+
+		.thRange {
+			background: #F3F3F3;
+			color: #626262;
+			font-size: 15px;
+			border: #B0B0B0 1px solid;
+			height: 35px;
+			padding: 3px;
+		}
+
+		.th1 {
+			width: 30px;
+			text-indent: 5px;
+		}
+
+		.td1 {
+			text-indent: 5px;
+			color: #71A8D7;
+		}
+
+		.trRange {
+			border: 1px solid #B0B0B0;
+			width: 30px;
+		}
+
+		.trRange1 {
+			border: 1px solid #B0B0B0;
+			width: 30px;
+		}
 	</style>
 </head>
 <body onload="$('#route1').text('프로젝트 등록')">
@@ -32,7 +76,8 @@
 	<jsp:include page="/WEB-INF/views/user/common/sidebar.jsp"/>
 	<div class="panel col-md-12 panel-headline">
 		<%--본문 내용을 여기 안에다가 쓰기 시작해야 테두리 간격 등이 맞음.--%>
-		<div class="panel-heading col-md-12"><!--
+		<div class="panel-heading col-md-12">
+			<!--
 			<table style="width: 100%; border-bottom: 1px solid gray">
 				<tr>
 					<td style="padding-bottom: 10px;">프로젝트 등록 정보</td>
@@ -90,21 +135,20 @@
 						</div>
 					</div>
 				</div>
-				<%--프로젝트 관리자 / PMO--%>
-				<%--PMO는 부서만.--%>
+				<%--프로젝트 관리자 / PMO - PMO는 부서만--%>
 				<div class="row">
 					<div class="col-md-12">
 						<div class="col-md-1 text-align-right">프로젝트 관리자</div>
 						<div class="col-md-5">
 							<div class="col-md-6 short-padding">
 								<%--부서 --%>
-								<select onchange="changeDeptMemberList()" class="form-control" name="project_dept"
+								<select onchange="changeDeptMemberList(this)" class="form-control" name="project_dept"
 										id="project_dept">
 									<option value="0">선택하세요</option>
 									<c:forEach var="d" items="${deptList}">
 										<c:choose>
-											<c:when test="${d.highDept==nul}">
-												<option value="0">${d.deptName}</option>
+											<c:when test="${d.highDept==null}">
+												<option value="${d.deptNo}">${d.deptName}</option>
 											</c:when>
 											<c:otherwise>
 												<option value="${d.deptNo}">
@@ -126,8 +170,19 @@
 						<div class="col-md-5">
 							<select class="form-control" name="dev-class" id="dev-class">
 								<option value="0">선택하세요</option>
-								<option value="0">부서1</option>
-								<option value="0">부서2</option>
+								<c:forEach var="d" items="${deptList}">
+									<option value="${d.deptNo}">
+										&nbsp;&nbsp;&nbsp;&nbsp;${d.deptName}</option>
+									<c:choose>
+										<c:when test="${d.highDept==null}">
+											<option value="${d.deptNo}">${d.deptName}</option>
+										</c:when>
+										<c:otherwise>
+											<option value="${d.deptNo}">
+												&nbsp;&nbsp;&nbsp;&nbsp;${d.deptName}</option>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
 							</select>
 						</div>
 					</div>
@@ -138,7 +193,7 @@
 						<div class="col-md-1 text-align-right">서브 프로젝트 관리자</div>
 						<div class="col-md-11">
 							<table class="table table-striped table-bordered ">
-								<tr style="text-align: center;">
+								<tr style="text-align: center;" class="mainFront">
 									<th class="col-md-1"></th>
 									<th class="col-md-3" style="text-align: center;">부서</th>
 									<th class="col-md-2" style="text-align: center;">이름</th>
@@ -146,20 +201,21 @@
 									<th class="col-md-3" style="text-align: center;">이메일</th>
 								</tr>
 								<tr id="0a6e9b5d-4201-4fef-b382-5cfefe22d92e">
-									<td class="highlight" style="text-align: center;">
+									<%--<td class="highlight" style="text-align: center;">
 										<input type="checkbox">
 									</td>
 									<td class="hidden-xs" style="text-align: center;">인프라건설팀</td>
 									<td class="hidden-xs" style="text-align: center;">에코 멤버 01</td>
 									<td class="hidden-xs" style="text-align: center;">에코 멤버 01</td>
-									<td class="hidden-xs" style="text-align: center;">demouser@gmail.com</td>
+									<td class="hidden-xs" style="text-align: center;">demouser@gmail.com</td>--%>
 								</tr>
 							</table>
-							<div class="btn btn-primary" style="background: #1E2B44;">
+							<div class="btn btn-primary" style="background: #1E2B44;" data-toggle="modal"
+								 data-target="#myModal">
 								<i class="fas fa-plus"></i>
 								추가
 							</div>
-							<div class="btn" style="background: #E5E5E5;">
+							<div class="btn" style="background: #E5E5E5;" id="memberDelete">
 								<i class="fas fa-minus"></i>
 								제거
 							</div>
@@ -237,9 +293,178 @@
 			</form>
 		</div>
 	</div>
-	<script>
 
-        function changeDeptMemberList () {
+	<%----%>
+	<div class="modal fade" id="myModal" role="dialog"
+		 aria-labelledby="gridSystemModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="gridSystemModalLabel">
+						<i class="fas fa-th-large"></i>&nbsp;서브 프로젝트 관리자
+					</h4>
+				</div>
+				<div class="modal-body">
+					<div class="container-fluid">
+						<div class="row" style="overflow: auto;">
+							<table id="projectTable" align="center" style="width:200px;">
+								<tr>
+									<td class="thRange th1"></td>
+									<td class="thRange th1">부서</td>
+									<td class="tdText thRange">이름</td>
+									<td class="tdText thRange">직급</td>
+									<td class="tdText thRange">이메일</td>
+
+								</tr>
+								<tr class="front">
+									<td class="thRange th1" align="center"><input type="checkbox"></td>
+									<td class="thRange th1">
+										<select id="searchDept" class="inputCss">
+											<option>선택</option>
+											<c:forEach var="d" items="${deptList}">
+												<c:choose>
+													<c:when test="${d.highDept==null}">
+														<option value="${d.deptName}">${d.deptName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${d.deptName}">
+															&nbsp;&nbsp;&nbsp;&nbsp;${d.deptName}</option>
+													</c:otherwise>
+												</c:choose>
+											</c:forEach>
+										</select>
+									</td>
+									<td class="tdText thRange"><input type="text" id="search-name"
+																	  class="inputCss" style="width: 90px"></td>
+									<td class="tdText thRange"><input type="text" id="search-rank"
+																	  class="inputCss" style="width: 90px;"></td>
+									<td class="tdText thRange"><input type="text" id="search-email"
+																	  class="inputCss" style="width: 170px;"></td>
+								</tr>
+
+								<tr class="pagingArea">
+									<td colspan="5">
+										<div class="paging"><< < 1 2 > >></div>
+									</td>
+								</tr>
+
+							</table>
+
+						</div>
+						<div class="row">
+							<div class="col-sm-9">
+								<div class="row"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default"
+							data-dismiss="modal">취소
+					</button>
+					<button type="button" class="btn btn-primary" id="saveBtn"
+							style="background: #1E2B44; outline: none; border: none;">저장
+					</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+
+	<script>
+        // 서브매니저 모달창 목록
+        var memberList = new Array();
+
+        // 서브매니저 선택한거 제거
+        $("#memberDelete").click(function () {
+            console.log("list: " + JSON.stringify(list));
+            $("input:checkbox[name=idCheck]:checked").filter(function () {
+                $(this).parent().siblings().parent().remove();
+
+                // 이걸로 리스트 제외해야하는 대상 찾아야함.
+                $(this).parent().siblings().parent().find()
+            });
+            console.log("list after: " + JSON.stringify(list));
+        });
+
+        // 서브매니저 모달창 저장버튼
+        $("#saveBtn").on('click', function () {
+            var bool = true;
+            var b = $(".trRange").siblings().find(".memberNo").val();
+            $("input:checkbox[name=idCheck]:checked").filter(function () {
+                var a = $(this).parent().siblings().find(".memberNo").val();
+                $(".trRange1").siblings().find(".memberNo").each(function () {
+                    if ($(this).val() == a) {
+                        bool = false;
+                    }
+                });
+
+                if (bool) {
+                    for (key in list) {
+                        if (list[key]['memberNo'] == a) {
+                            $(".mainFront").
+                                after(
+                                    "<tr class='trRange1'> <td class='td1'><input type='checkbox' id='idCheckMain' name='idCheck' class='inputCss' style='width: 30px;'></td> <td class='td1'>" +
+                                    list[key]['deptName'] + "</td> <td class='tdText'>" + list[key]['memberName'] +
+                                    "</td> <td class='tdText'>" + list[key]['rankNo'] +
+                                    "<input type='hidden' id='memberNo' name='memberNo' class='memberNo' value='" +
+                                    list[key]['memberNo'] + "'></td> <td class='tdText'>" + list[key]['email'] +
+                                    "</td> </tr>");
+                            memberList = list[key]['memberNo'];
+                        }
+                    }
+                }
+
+            });
+            if (!bool) {
+                alert("이미 들어간 회원입니다!")
+            } else {
+                $('#myModal').modal('hide');
+            }
+
+        });
+
+        // \admin\accessManage\accessDetail.jsp 에서 그대로 긁어왔음. 똑같이 써도됨.
+        // 부서에 따라 인원을 뽑아온다.
+        var list;
+        $("#searchDept").on("change", function () {
+            var name = $(this).val();
+            if (name == " ") {
+                name = null;
+            }
+            $.ajax({
+                url: 'searchDeptMember.am',
+                type: 'post',
+                data: { deptName: name },
+                success: function (data) {
+                    list = data;
+                    if (data != "") {
+                        $(".trRange").empty();
+                        for (key in data) {
+                            $(".front").
+                                after(
+                                    "<tr class='trRange'> <td class='td1'><input type='checkbox' id='idCheck' name='idCheck' class='inputCss' style='width: 30px;'></td> <td class='td1'>" +
+                                    data[key]['deptName'] + "</td> <td class='tdText'>" + data[key]['memberName'] +
+                                    "</td> <td class='tdText'>" + data[key]['rankNo'] +
+                                    "<input type='hidden' id='memberNo' class='memberNo' value='" +
+                                    data[key]['memberNo'] + "'></td> <td class='tdText'>" + data[key]['email'] +
+                                    "</td> </tr>");
+                        }
+                    } else {
+                        $(".trRange").empty();
+                    }
+                }
+            });
+        });
+
+        function changeDeptMemberList (val) {
+            console.log(val);
             // 우선 다 초기화
             $("#project_manager option:not([value='0'])").remove();
             // 부서의 값이 몇인지 확인한다.
