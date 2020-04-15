@@ -32,11 +32,11 @@
 		}
 
 		/*서브관리자 모달창 내 테이블*/
-		.sub-manager-table {
+		.subManager-table {
 
 		}
 
-		.sub-manager-table tr:first-of-type {
+		.subManager-table tr:first-of-type {
 			width: 20px;
 			min-height: 20px;
 		}
@@ -95,10 +95,10 @@
 					<div class="col-md-12">
 						<div class="col-md-1 text-align-right">주요 여부</div>
 						<div class="col-md-10">
-							<input id="true" name="IS_IMPORTANT" type="radio" value="True">
-							<label for="true">주요함</label> <span>&nbsp;</span> <input
-								checked="checked" id="false" name="IS_IMPORTANT" type="radio"
-								value="False"> <label for="false">주요하지 않음</label> <span>&nbsp;</span>
+							<input id="true" name="IS_IMPORTANT" type="radio" value="Y">
+							<label for="true">주요함</label> <span>&nbsp;</span>
+							<input checked="checked" id="false" name="IS_IMPORTANT" type="radio"
+								   value="N"> <label for="false">주요하지 않음</label> <span>&nbsp;</span>
 						</div>
 					</div>
 				</div>
@@ -116,7 +116,7 @@
 					<div class="col-md-12">
 						<div class="col-md-1 text-align-right">개발 형태</div>
 						<div class="col-md-5">
-							<select class="form-control" name="dev_form" id="dev_form">
+							<select class="form-control" name="projectType" id="projectType">
 								<option value="0">선택하세요</option>
 								<c:forEach var="t" items="${projectTypes}">
 									<option value="${t.typePk}">${t.typeName}</option>
@@ -125,7 +125,7 @@
 						</div>
 						<div class="col-md-1 text-align-right">개발 등급</div>
 						<div class="col-md-5">
-							<select class="form-control" name="dev_class" id="dev_class">
+							<select class="form-control" name="projectRank" id="projectRank">
 								<option value="0">선택하세요</option>
 								<option value="SS">SS</option>
 								<option value="S">S</option>
@@ -191,23 +191,24 @@
 					<div class="col-md-12">
 						<div class="col-md-1 text-align-right">서브 프로젝트 관리자</div>
 						<div class="col-md-11">
-							<table class="table table-striped table-bordered ">
+							<table class="table table-striped table-bordered " id="subManager-table">
 								<tr style="text-align: center;" class="mainFront">
-									<th class="col-md-1"></th>
+									<th class="col-md-1"><input type="text" name="subManager" id="subManager"
+																style="display: none;"></th>
 									<th class="col-md-3" style="text-align: center;">부서</th>
 									<th class="col-md-2" style="text-align: center;">이름</th>
 									<th class="col-md-3" style="text-align: center;">직급</th>
 									<th class="col-md-3" style="text-align: center;">이메일</th>
 								</tr>
-								<tr id="0a6e9b5d-4201-4fef-b382-5cfefe22d92e">
-									<%--<td class="highlight" style="text-align: center;">
+								<%--<tr id="0a6e9b5d-4201-4fef-b382-5cfefe22d92e">
+									<td class="highlight" style="text-align: center;">
 										<input type="checkbox">
 									</td>
 									<td class="hidden-xs" style="text-align: center;">인프라건설팀</td>
 									<td class="hidden-xs" style="text-align: center;">에코 멤버 01</td>
 									<td class="hidden-xs" style="text-align: center;">에코 멤버 01</td>
-									<td class="hidden-xs" style="text-align: center;">demouser@gmail.com</td>--%>
-								</tr>
+									<td class="hidden-xs" style="text-align: center;">demouser@gmail.com</td>
+								</tr>--%>
 							</table>
 							<div class="btn btn-primary" style="background: #1E2B44;" data-toggle="modal"
 								 data-target="#myModal">
@@ -381,19 +382,27 @@
         function submit () {
             // 하나하나 값들이 있는지 확인해보는거임.
             let regSpace = /\S/g;
-
             // 날짜확인용도
             let dateBool = false;
             var startDate = Date.parse($("#startDate").val());
             var endDate = Date.parse($("#endDate").val());
+            // 첨부파일 관련
             var proExcel = $("#project_excel");
+            // 서브프로젝트 관리자 명단
+            var subList = [];
+            for (let i = 0; i < $('.memberTd input').length; i++) {
+                console.log($('.memberTd input')[i].value);
+                subList.push($('.memberTd input')[i].value);
+            }
+            JSON.stringify(subList);
+            $("#subManager").val(subList);
             // 우선 제목. 공백 말고 뭐가 있는지 확인
             if ($("#project_name").val().match(regSpace) == null) {
                 alert("프로젝트 명을 쓰세요");
-            } else if ($("#dev_form").val() == 0) {
+            } else if ($("#projectType").val() == 0) {
                 // 개발 형태가 0인 경우 - 선택 안했다는 소리
                 alert('프로젝트 형태를 선택해주세요');
-            } else if ($("#dev_class").val() == 0) {
+            } else if ($("#projectRank").val() == 0) {
                 // 개발등급도 매한가지.
                 alert('개발등급을 선택해주세요');
             } else if ($("#project_manager").val() == 0) {
@@ -417,15 +426,14 @@
                 // 첨부된 파일이 있고 확장자가 엑셀 또는 xml이 아닌 경우
                 alert('올바른 엑셀 파일이 아닙니다. xml 또는 xlsx 파일만 넣어주세요.');
                 $("#project_excel").val("");
-            } else if ($("#project_details").val().match(regSpace) == null){
+            } else if ($("#project_details").val().match(regSpace) == null) {
+                // 프로젝트 설명이 없을 시.
                 alert("프로젝트 설명이 비었습니다.");
                 $("#project_details").focus();
-			}else {
-                // 확인 후 삭제
-                alert('문제 없음.');
+            } else {
+                // 여기까지 왔으면 문제 없는거.
                 $("#aktivate").submit();
-			}
-
+            }
 
         }
 
@@ -453,12 +461,17 @@
 
                 if (bool) {
                     for (key in list) {
+                        // 추가할 인원중에 이미 관리자로 되있는 사람은 배제.
+                        if ($("#project_manager").val() == list[key]['memberNo']) {
+                            continue;
+                        }
+
                         if (list[key]['memberNo'] == a) {
                             $(".mainFront").
                                 after(
                                     "<tr class='trRange1'> <td class='td1'><input type='checkbox' id='idCheckMain' name='idCheck' class='inputCss' style='width: 30px;'></td> <td class='td1'>" +
                                     list[key]['deptName'] + "</td> <td class='tdText'>" + list[key]['memberName'] +
-                                    "</td> <td class='tdText'>" + list[key]['rankNo'] +
+                                    "</td> <td class='tdText memberTd'>" + list[key]['rankNo'] +
                                     "<input type='hidden' id='memberNo' name='memberNo' class='memberNo' value='" +
                                     list[key]['memberNo'] + "'></td> <td class='tdText'>" + list[key]['email'] +
                                     "</td> </tr>");

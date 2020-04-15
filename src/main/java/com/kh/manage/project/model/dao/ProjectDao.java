@@ -3,6 +3,8 @@ package com.kh.manage.project.model.dao;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.template.model.vo.Template;
+import com.kh.manage.project.model.vo.Project;
+import com.kh.manage.project.model.vo.ProjectTeam;
 import com.kh.manage.project.model.vo.ProjectType;
 import org.mybatis.spring.SqlSessionTemplate;
 
@@ -17,4 +19,10 @@ public interface ProjectDao {
 	List<DeptMember> selectMemberList(SqlSessionTemplate sqlSession, String deptNo);
 	
 	List<Template> selectMemberList(SqlSessionTemplate sqlSession);
+	
+	int insertProject(SqlSessionTemplate sqlSession, Project project);
+	
+	int insertProjectTeam(SqlSessionTemplate sqlSession, ProjectTeam team);
+	
+	String getSeq(SqlSessionTemplate sqlSession);
 }

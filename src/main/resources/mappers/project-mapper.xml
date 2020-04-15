@@ -54,20 +54,20 @@
         <result property="modifyDate" column="MODIFY_DATE"/>
         <result property="status" column="STATUS"/>
     </resultMap>
-    
+
     <!--부서목록-->
     <select id="selectDeptList" resultMap="deptResultSet">
         SELECT *
         FROM DEPT
     </select>
-    
+
     <!--현역 사원목록-->
     <select id="selectActiveMember" parameterType="String" resultMap="deptMemberResultSet">
         SELECT *
         FROM MEMBER
         WHERE MEMBER_TYPE = '0'
           AND STATUS = 'Y'
-            and DEPT_NO = #{deptNo}
+          and DEPT_NO = #{deptNo}
     </select>
 
     <select id="selectProjectTypeList" resultMap="projectTypeResultSet">
@@ -75,12 +75,27 @@
         from project_type
     </select>
 
+    <select id="getSeq" resultType="String">
+        select to_char(SEQ_PROJ.currval, 'FM000')
+        from dual
+    </select>
+    <select id="selectAllProjects" resultMap="Project">
+
+    </select>
     <select id="selectTemplateList" resultMap="templateResultSet">
         select *
         from PROJECT_TEMPLATE
     </select>
-    
+
     <insert id="insertProject" parameterType="Project">
--- insert into PROJECT values ('PJ'||to_char(SEQ_PROJ.nextval, 'FM000'), );
+        insert into PROJECT
+        values ('P' || to_char(SEQ_PROJ.nextval, 'FM000'), #{projectName},
+                #{isImportant}, #{projectTypePk}, #{projectRank}, #{projectManager}, #{deptNo},
+                #{startDate}, #{endDate}, #{detail}, #{remarks}, #{status}, #{templatePk})
+    </insert>
+    <insert id="insertProjectTeam" parameterType="ProjectTeam">
+        insert into PROJECT_TEAM
+        values ('PT' || to_char(SEQ_TEAM.nextval, 'FM000'), #{projectPk},
+                #{memberPk}, #{role})
     </insert>
 </mapper>
