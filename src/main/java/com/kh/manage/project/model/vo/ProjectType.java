@@ -1,6 +1,7 @@
 package com.kh.manage.project.model.vo;
 
 public class ProjectType {
+	// 프로젝트 유형(개발형태)
 	private String typePk;
 	private String typeName;
 	

@@ -10,7 +10,7 @@ public class Project {
 	private String projectTypePk;
 	private String projectRank;
 	private String projectManager;
-	private String deptNo;
+	private String deptNo; // PMO
 	private Date startDate;
 	private Date endDate;
 	private String detail;

@@ -4,22 +4,25 @@ import com.google.gson.Gson;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.template.model.vo.Template;
+import com.kh.manage.project.model.vo.Project;
+import com.kh.manage.project.model.vo.ProjectTeam;
 import com.kh.manage.project.model.vo.ProjectType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.manage.project.model.service.ProjectService;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Controller
@@ -27,8 +30,17 @@ public class ProjectController {
 	@Autowired
 	private ProjectService ps;
 	
+	// 프로젝트 목록페이지 (프로젝트 센터)
 	@RequestMapping("/projectCenter.pr")
 	public String projectSelectAll() {
+		
+		// 프로젝트 목록에서 집어와야 하는 것들:
+		// 프로젝트명 개발형태 담당자 담당부서 시작일 완료일 실적 산출물 과 이슈 수
+		// TODO: 2020-04-15  산출물과 이슈는 아직 안만들었으니 0 처리한다
+		// 우선 프로젝트명 뽑는다...
+		
+		
+		
 		return "user/project/projectSelectAll";
 	}
 	
@@ -92,28 +104,81 @@ public class ProjectController {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
+		
 		// 주요여부
 		String isImportant = request.getParameter("IS_IMPORTANT");
 		// 프로젝트명
 		String project_name = request.getParameter("project_name");
 		// 개발형태
-		String dev_form = request.getParameter("dev_form");
+		String projectType = request.getParameter("projectType");
 		// 개발등급
-		String dev_class = request.getParameter("dev_class");
+		String projectRank = request.getParameter("projectRank");
 		// 프로젝트 관리자
 		String project_manager = request.getParameter("project_manager");
+		String project_template = request.getParameter("project_template");
 		// pmo
 		String pmo = request.getParameter("pmo");
-		// String dev_form = request.getParameter("dev_form");
-		// String dev_form = request.getParameter("dev_form");
-		// String dev_form = request.getParameter("dev_form");
+		// 서브관리자 목록
+		// 폼에 똑같은 네임의 인풋이 여럿이면 전부 알아서 통합돼 어레이로 가져온다.
+		String[] memberNo = request.getParameterValues("memberNo");
+		
+		System.out.println("memberNo: " + memberNo);
+		for (String m : memberNo) {
+			System.out.println(m);
+		}
+		// List<String> subManagerList = Arrays.asList(sub_manager.split(","));
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Date startDate = null;
+		Date endDate = null;
+		try {
+			java.util.Date startUtilDate = format.parse(request.getParameter("startDate"));
+			java.util.Date endUtilDate = format.parse(request.getParameter("endDate"));
+			startDate = new Date(startUtilDate.getTime());
+			endDate = new Date(endUtilDate.getTime());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		System.out.println("startDate : " + startDate);
+		// TODO: 2020-04-15 엑셀파일 추가가 없음!!!
+		
+		// 프로젝트 설명
+		String project_details = request.getParameter("project_details");
 		
 		
-		System.out.println(isImportant);
-		System.out.println(project_name);
-		System.out.println(dev_form);
-		// 임의로 넣었음. 추후 변경요망
-		return "user/project/projectReg";
+		System.out.println("project_name: " + project_name);
+		System.out.println("isImportant: " + isImportant);
+		System.out.println("projectType: " + projectType);
+		System.out.println("projectRank: " + projectRank);
+		System.out.println("project_manager: " + project_manager);
+		System.out.println("pmo " + pmo);
+		System.out.println("startDate: " + startDate);
+		System.out.println("endDate: " + endDate);
+		System.out.println("project_details: " + project_details);
+		System.out.println("project_template: " + project_template);
+		// 이제 넣어봅시다
+		Project project = new Project(null, project_name, isImportant,
+				projectType, projectRank, project_manager, pmo,
+				startDate, endDate, project_details, null, "1",
+				project_template);
+		String projectInsertResult = ps.insertProject(project);
+		System.out.println("projectInsertResult: " + projectInsertResult);
+		
+		
+		int memberInsertResult = 0;
+		if (projectInsertResult != null) {
+			// 책임자 넣기
+			ProjectTeam projectManager = new ProjectTeam(null, projectInsertResult, project_manager, "PM");
+			ps.insertProjectTeam( projectManager);
+			// 위에 써져있던 부책임자들 다 건든다.
+			for (String m : memberNo) {
+				ProjectTeam team = new ProjectTeam(null, projectInsertResult, m, "PSM");
+				ps.insertProjectTeam( team);
+			}
+			
+			return "redirect:/projectCenter.pr";
+		} else {
+			return "user/project/projectSelectAll";
+		}
 	}
 	
 	// 프로젝트 작업 페이지
