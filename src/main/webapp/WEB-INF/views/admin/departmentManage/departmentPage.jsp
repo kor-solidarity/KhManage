@@ -640,6 +640,7 @@ ul {
 	
 
 	<script>
+	//부서간 부서원 이동 시 변경이 없을 경우 막아주고 없을 경우만 호출
 		$("#insertDeptHistoryBtn").on('click', function(){
 			var highDeptNo = $("#deptNo").val()
 			var deptNo = $("#deptTeam").val()
@@ -702,19 +703,23 @@ ul {
 			$("#childrenDeptInsert").submit();
 		});
 		
+		//상위 부서 생성시 뒤에 01 을 붙여서 생성
 		$("#insertHighDept").click(function(){
 			var a = $("#highCode").val();
 			$("#highCode").val(a +"01");
 			$("#highDeptForm").submit();
 		});
 		
+		//다른 스크립트에서 알기 위해서 전역 변수 선언
 		var deptName;
 		var highDeptName;
 		var memberNo;
 		var rankNo;
 		
+		//ajax 사용 후 이벤트 연결이 끊겨서 해당 방법으로 이벤트 생성
 		$(document).on('click', '.trRange1', function(){
 			$('#myModal4').modal('show');
+			//사원 클릭 시 디테일 모달에서 해당 내용을 출력 
 			var name = $(this).find(".tdText").eq(0).text();
 			var rank = $(this).find(".tdText").eq(2).text();
 			var email = $(this).find(".tdText").eq(3).text();
@@ -730,7 +735,7 @@ ul {
 			$("#memberRank").val(rank);
 			$("#memberEmail").val(email);
 			
-				
+			// 부서 / 직급 을 동일하게 option에서 selected해줌	
 			$('#deptNo option').filter(function(){
 				if($(this).val() == highDept && deptNo !=null){
 					console.log("출력값 : " + $(this).val());
@@ -750,7 +755,8 @@ ul {
 			
 			
 		});
-		
+	
+		// 팀 리스트를 조회 하여 같은 것이 있는경우 selected해줌
 		$(function(){
 			$("#deptNo").on('change', function(){
 				var name = $(this).val();
@@ -774,6 +780,7 @@ ul {
 			});
 		});
 		
+	//상위/ 하위 부서 생성시 시퀀스 번호를 생성	
 		$("#deptSelect").on("change", function(){
 			var name = $(this).val();
 			$.ajax({
@@ -810,6 +817,7 @@ ul {
 		});
 	</script>
 	
+	<!-- 부서 삭제  -->
 	<script>
 			function sweetTest(){
 				var no = $("#deptCode").val();
@@ -833,7 +841,7 @@ ul {
 								type: 'post',
 								data:{deptNo:no},
 							 success:function(data){
-									
+									location.href='departmentManage.am';
 									}
 							});
 					    
@@ -856,11 +864,12 @@ ul {
 				</script>
 
 	<script>
+	//트리 구조 구현
+		var open = 1;
 		function tree_menu() {
 			$(".menuTable").find(".title").on('click', function(e){
 								var temp_el = $(this).parent().parent().nextUntil(".depth_2");
-								var depth_3 = $(this).parent().parent().nextUntil(".depth_2");
-								
+								var depth_3 = $(this).parent().parent().nextUntil(".depth_3");
 								
 								depth_3.slideUp(300);
 								depth_3.parent().find('em').removeClass('on');
@@ -886,6 +895,16 @@ ul {
 											.attr("src",
 													"<c:url value="/resources/assets/img/folder.png"/>");
 								}
+								if(temp_el.size() == 0 && open ==1){
+									$(this).find('em').addClass('on').html('하위폴더 열림');
+									$(this).css('color', '#F59E1C').css("font-weight", "600");
+									$(this).find("#folderImg").attr("src","<c:url value="/resources/assets/img/folderOpen.png"/>");
+									open = 0;
+								}else if(open == 0){
+									$(this).css('color', '#1E2B44').css("font-weight", "400");
+									open = 1;
+								}
+								
 								return false;
 							});
 
@@ -898,7 +917,9 @@ ul {
 			$('#myModal').modal('show');
 		})
 	</script>
+	
 	<script>
+	//부서 클릭 시 부서원 출력 
 		$(function(){
 			$(".menuTable").find(".deptSub").on('click', function(){
 				var name =  $.trim($(this).text());

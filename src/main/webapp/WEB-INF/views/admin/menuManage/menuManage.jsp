@@ -113,6 +113,26 @@ ul{
 	display:inline-block;
 	overflow:hidden; 
 }
+#accessTr, #useAccessTr{
+	width:100%;
+	border-bottom: 1px solid #EEEEEE;
+}
+#accessListTable #accessTr:hover{
+	background : #dcdcdc;
+	color:black;
+	font-weight:600;
+	cursor: pointer;
+}
+#accessTd{
+	padding-left: 5px;
+}
+#useAccessTable #useAccessTr:hover{
+	background : #dcdcdc;
+	color:black;
+	font-weight:600;
+	cursor: pointer;
+}
+
 </style>
 </head>
 <body onload="$('#route1').text('관리자'); $('#route2').text('메뉴관리');">
@@ -138,22 +158,24 @@ ul{
 							<td>
 								<div style="width: 80%; height: 500px;">
 									<ul id="tree_menu" class="tree_menu">
-										<c:forEach var="d" items="${list}">
-											<c:if test="${ d.deptLevle ==1 }">
-											<c:set var="dId" value="${d.deptNo}"/>
+										<c:forEach var="m" items="${list}">
+											<c:if test="${ m.menuLevel ==1 }">
+											<c:set var="dId" value="${m.menuNo}"/>
 												<ul class="depth_2">
 													<li><a href="#none" id="title" class="title"
 														style="color: #1E2B44; font-size: 16px;"> <img
 															id="folderImg"
 															src="<c:url value="/resources/assets/img/folder.png"/>"
-															style="width: 25px; height: 20px; margin-bottom:10px; margin-right:5px;"><c:out value="${d.deptName}" /></a>
-															
+															style="width: 25px; height: 20px; margin-bottom:10px; margin-right:5px;"><c:out value="${m.menuName}" /></a>
+													<input type="hidden" id="highMenuNo" value="${m.menuNo}">		
 												</li>
 												</ul>
 											</c:if>
-												<c:if test="${ d.deptLevle==2 and dId eq d.highDept}">
+												<c:if test="${ m.menuLevel==2 and dId eq m.highMenu}">
 											<ul class="depth_3 a" id="depth3" style="margin-left: 20px;">
-													<li><a class="deptSub" style="margin-left: 27px;"><c:out value="${d.deptName}" /></a></li>
+													<li><a class="deptSub" style="margin-left: 27px;"><c:out value="${m.menuName}" /></a>
+													<input type="hidden" id="menuNo" value="${m.menuNo}">	
+													</li>
 											</ul>
 												</c:if>
 										</c:forEach>
@@ -175,28 +197,32 @@ ul{
 									style="width: 90%; height: 2px; background: #EEEEEE; margin: 0 auto;"></div></td>
 						</tr>
 					</table>
+				 <form id="menuAccessInsertForm" action="insertMenuAccess.am" method="post">
 					<table id="buseoInfoTable">
 						<tr>
 							<td class="titleId">메뉴명</td> 
-							<td><input type="text" class="inputMenu"></td>
+							<td><input type="text" id="menuName" name="menuName" class="inputMenu"></td>
 						</tr>
 						<tr height="10px;"></tr>
 						<tr>
+							<td class="titleId">메뉴코드</td> 
+							<td><input type="text" id="menuCode" name="menuNo" class="inputMenu" readonly="readonly" style="width:130px;"></td>
+						</tr>
+						<tr height="20px;"></tr>
+						<tr>
 							<td class="titleId">사용여부</td> 
-							<td><input type="radio" id="use" style="margin-left:20px;"><label for="use" style="font-size:14px;">사용</label>
-								<input type="radio" id="noUse" style="margin-left:40px;"><label for="noUse" style="font-size:14px;">사용안함</label>
+							<td>
+								<input type="radio" name="status" value="Y" id="use">&nbsp;&nbsp;<label for="use" style="font-size:14px;">활성화</label>
+								<input type="radio" name="status" value="N" id="noUse" style="margin-left:40px;">&nbsp;&nbsp;<label for="noUse" style="font-size:14px;">비활성화</label>
 							</td>
 						</tr>
-						<tr height="40px;"></tr>
+						<tr height="30px;"></tr>
 						<tr>
 							<td class="titleId">메뉴권한 그룹</td> 
 							<td>
 								<div id="groupList">
 									<div align="center" style="width:100%; height:30px; border:1px solid #EEEEEE; border-bottom:3px solid #EEEEEE; padding-top:3px; font-size:14px;">권한그룹리스트</div>
-									<table>
-										<tr>
-											<td>ss</td>
-										</tr>
+									<table id="accessListTable" align="left" style="width:100%;">
 									</table>
 								</div>
 								<div id="div1">
@@ -205,10 +231,8 @@ ul{
 								</div>
 								<div id="groupList">
 									<div align="center" style="width:100%; height:30px; border:1px solid #EEEEEE; border-bottom:3px solid #EEEEEE; padding-top:3px; font-size:14px;">메뉴사용권한그룹</div>
-									<table>
-										<tr>
-											<td>PL담당그룹</td>
-										</tr>
+									<table id="useAccessTable" align="left" style="width:100%;">
+									
 									</table>
 								</div>
 							</td>
@@ -220,32 +244,123 @@ ul{
 						</tr>
 						<tr>
 							<td>
-								<button class="projectBtn" onclick="sweetTest();"><i class="fas fa-check"></i>&nbsp;저장</button>
+								<button type="button" class="projectBtn"><i class="fas fa-check"></i>&nbsp;저장</button>
 							</td>
 							<td>
 								 <button class="cancleBtn"><i class="fas fa-ban"></i>&nbsp;취소</button>
 							</td>
 						</tr>
 					</table>
+					</form>
 				</div>
 			</div>
 		</div>
 	</div>
 	
 	<script>
+			$(".projectBtn").on("click", function(){
+				swal({
+					  title: "해당 내용을 저장하시겠습니까?",
+					  icon: "warning",
+					  buttons: ["취소", "저장"],
+					  dangerMode: true,
+					})
+					.then((willDelete) => {
+					  if (willDelete) {
+					    swal({
+					    	title: "저장 완료!",
+					      	icon: "success"
+					    }).then((value) => {	// 애니메이션 V 나오는 부분!
+					    	$("#menuAccessInsertForm").submit();
+					    });
+					  } else {
+						  swal({
+						  	title: "취소 하셨습니다.",
+						    icon: "error"
+						  });
+					  }
+				});
+			});
+			
+			var accessNoList;
+	        //권한 그룹 리스트에서 사용 리스트로 넘기기
+			$(document).on('click', '.accessTr', function(){
+				var access = $(this).html();
+				var no = $(this).find("#hiddenAccessNo").val();
+				
+				$(this).remove();
+				$("#useAccessTable").append("<tr id='useAccessTr' class='useAccessTr'>"+ access +"</tr>");
+				$("#useAccessTable").append("<tr id='hiNo' class='hiNo' style='display:none'><td><input type='hidden' class='accessGroup' name='accessGroupNo' value='"+no+"'></td></tr>");
+			});
+			//사용 권한 리스트에서 권한 그룹 리스트로 넘기기
+			$(document).on('click', '.useAccessTr', function(){
+				var access = $(this).html();
+				var no = $(this).find("#hiddenAccessNo").val();
+				$("#useAccessTable").find(".hiNo").filter(function(){
+					console.log($(this).find('.accessGroup').val());
+					if($(this).find('.accessGroup').val() == no){
+						$(this).remove();
+					}
+				});
+				
+				$(this).remove();
+				$("#accessListTable").append("<tr id='accessTr' class='accessTr'>"+ access +"</tr>");
+			});
+	
+	
 			$(".a").children().click(function(){
 				$(this).children().css("color", "#F59E1C");
 			});
+			//하위 메뉴 클릭 시 색상 변경 및 서블릿 을 호출하여 권한 정보와 메뉴 정보 갖고오기
+			$(".menuTable").find(".deptSub").on('click', function() {
+				var menuNo = $(this).next().val();
+				
+				$(".menuTable").find(".deptSub").css("color", "#3287B2");
+				$(this).css("color", "orange");
+				
+				 $.ajax({
+						url:'selectOneMenu.am',
+						type: 'post',
+						data:{menuNo:menuNo},
+				  	 success:function(data){
+							if(data){
+								$("#menuName").val(data['me']['menuName']);
+								$("#menuCode").val(data['me']['menuNo']);
+								if(data['me']['status'] == 'Y'){
+									$("#use").prop("checked", true);
+								}else{
+									$("#noUse").prop("checked", true);
+								}
+								$("#accessListTable").empty();
+								$("#useAccessTable").empty();
+								for(var i = 0; i<data['aList'].length; i++ ){
+								 $("#accessListTable").append("<tr id='accessTr' class='accessTr'><td id='accessTd'>"+data['aList'][i]['accessName']+"<input type='hidden' id='hiddenAccessNo' name='accessNo' value='"+data['aList'][i]['accessGroupNo'] +"'></td></tr>")
+								}
+								
+								for(var i = 0; i<data['useList'].length; i++ ){
+									 $("#useAccessTable").append("<tr id='accessTr' class='accessTr'><td id='accessTd'>"+data['useList'][i]['accessName']+"<input type='hidden' id='hiddenAccessNo' name='accessNo' value='"+data['useList'][i]['accessGroupNo'] +"'></td></tr>")
+								}
+								for(var i = 0; i<data['useList'].length; i++ ){
+									$("#useAccessTable").append("<tr id='hiNo' class='hiNo' style='display:none'><td><input type='hidden' class='accessGroup' name='accessGroupNo' value='"+data['useList'][i]['accessGroupNo'] +"'></td></tr>");
+								}
+					    }
+				  	 }
+					}); 
+			});
 	</script>
 	<script>
+	//트리 구조 생성 
+	var open = 1;
 		function tree_menu() {
 			$(".menuTable").find(".title").on('click', function(e){
 								var temp_el = $(this).parent().parent().nextUntil(".depth_2");
-								var depth_3 = $(this).parent().parent().nextUntil(".depth_2");
-								
+								var depth_3 = $(this).parent().parent().nextUntil(".depth_3");
+								console.log(temp_el.size());
+								console.log(depth_3);
 								
 								depth_3.slideUp(300);
 								depth_3.parent().find('em').removeClass('on');
+								
 								
 								if (temp_el.is(':hidden')) {
 									temp_el.slideDown(300);
@@ -256,7 +371,23 @@ ul{
 									$(this).find("#folderImg")
 											.attr("src",
 													"<c:url value="/resources/assets/img/folderOpen.png"/>");
-									
+								   var menuNo = $(this).next().val();
+								   $.ajax({
+										url:'selectOneMenu.am',
+										type: 'post',
+										data:{menuNo:menuNo},
+								  	 success:function(data){
+											if(data){
+												$("#menuName").val(data['me']['menuName']);
+												$("#menuCode").val(data['me']['menuNo']);
+												if(data['me']['status'] == 'Y'){
+													$("#use").prop("checked", true);
+												}else{
+													$("#noUse").prop("checked", true);
+												}
+											}
+									    }
+									}); 
 									
 								} else {
 									temp_el.slideUp(300);
@@ -267,6 +398,39 @@ ul{
 									$(this).find("#folderImg")
 											.attr("src",
 													"<c:url value="/resources/assets/img/folder.png"/>");
+									$("#menuName").val("");
+									$("#menuCode").val("");
+									$("#accessListTable").empty();
+									$("#useAccessTable").empty();
+									$("#use").prop("checked", false);
+									$("#noUse").prop("checked", false);
+								}
+								
+								if(temp_el.size() == 0 && open ==1){
+									$(this).find('em').addClass('on').html('하위폴더 열림');
+									$(this).css('color', '#F59E1C').css("font-weight", "600");
+									$(this).find("#folderImg").attr("src","<c:url value="/resources/assets/img/folderOpen.png"/>");
+									open = 0;
+									  var menuNo = $(this).next().val();
+									   $.ajax({
+											url:'selectOneMenu.am',
+											type: 'post',
+											data:{menuNo:menuNo},
+									  	 success:function(data){
+												if(data){
+													$("#menuName").val(data['me']['menuName']);
+													$("#menuCode").val(data['me']['menuNo']);
+													if(data['me']['status'] == 'Y'){
+														$("#use").prop("checked", true);
+													}else{
+														$("#noUse").prop("checked", true);
+													}
+												}
+										    }
+										}); 
+								}else if(open == 0){
+									$(this).css('color', '#1E2B44').css("font-weight", "400");
+									open = 1;
 								}
 								return false;
 							});
@@ -281,30 +445,5 @@ ul{
 		})
 	</script>
 	
-	<script>
-	function sweetTest(){
-		swal({
-			  title: "해당 내용을 저장하시겠습니까?",
-			  icon: "warning",
-			  buttons: ["취소", "저장"],
-			  dangerMode: true,
-			})
-			.then((willDelete) => {
-			  if (willDelete) {
-			    swal({
-			    	title: "저장 완료!",
-			      	icon: "success"
-			    }).then((value) => {	// 애니메이션 V 나오는 부분!
-			    	location.href="#";
-			    });
-			  } else {
-				  swal({
-				  	title: "취소 하셨습니다.",
-				    icon: "error"
-				  });
-			  }
-		});
-	}
-	</script>
 </body>
 </html>

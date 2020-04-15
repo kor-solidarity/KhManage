@@ -67,6 +67,16 @@
 		<result property="enrollDate" column="ENROLL_DATE"/>
 		<result property="status" column="STATUS"/>
 	</resultMap>
+	
+	<resultMap type="Menu" id="menuResultSet">
+		<id property="menuNo" column="MENU_NO"/>
+		<result property="menuName" column="MENU_NAME"/>
+		<result property="menuLevel" column="MENU_LEVEL"/>
+		<result property="highMenu" column="HIGH_MENU"/>
+		<result property="icon" column="ICON"/>
+		<result property="iAddress" column="I_ADDRESS"/>
+		<result property="status" column="STATUS"/>
+	</resultMap>
 
 	<insert id="insertAccessGroup" parameterType="Access">
 		INSERT INTO
@@ -76,13 +86,12 @@
 	</insert>
 
 	<select id="selectAll" resultMap="accessResultSet">
-		SELECT
-		ACCESSGROUP_NO
-		,ACCESS_NAME
-		,A_CONTENT
-		,STATUS
-		,CREATE_DATE
-		,MODIFY_DATE
+		SELECT ACCESSGROUP_NO
+			  ,ACCESS_NAME
+		      ,A_CONTENT
+	       	  ,STATUS
+		      ,CREATE_DATE
+		      ,MODIFY_DATE
 		FROM ACCESSGROUP
 		WHERE STATUS = 'Y'
 	</select>
@@ -159,8 +168,7 @@
 		WHERE HIGH_DEPT = #{deptNo}
 	</select>
 
-	<select id="accessSelectOne" parameterType="Access"
-		resultMap="accessResultSet">
+	<select id="accessSelectOne" parameterType="Access" resultMap="accessResultSet">
 		SELECT ACCESSGROUP_NO
 		,ACCESS_NAME
 		,A_CONTENT
@@ -171,8 +179,7 @@
 		WHERE ACCESS_NAME = #{accessName}
 	</select>
 
-	<select id="searchDeptMember" parameterType="DepartMent"
-		resultMap="deptMemberResultSet">
+	<select id="searchDeptMember" parameterType="DepartMent" resultMap="deptMemberResultSet">
 		SELECT M.MEMBER_NO
 		,M.MEMBER_ID
 		,M.MEMBER_NAME
@@ -199,8 +206,7 @@
 		</foreach>
 	</insert>
 
-	<select id="selectAccessMember" parameterType="AccessMember"
-		resultType="java.lang.String">
+	<select id="selectAccessMember" parameterType="AccessMember" resultType="java.lang.String">
 		SELECT MEMBER_NO
 		FROM ACCESS_MEMBER
 		WHERE ACCESSGROUP_NO =
@@ -361,6 +367,61 @@
 		UPDATE MEMBER SET DEPT_NO = 'CA01'
 		WHERE DEPT_NO = #{deptNo}
 	</update>
+	
+	<update id="deleteDept" parameterType="DepartMent">
+		UPDATE DEPT SET STATUS = 'N'
+		WHERE DEPT_NO = #{deptNo}
+	</update>
+	
+	<select id="selectAllMenu" resultMap="menuResultSet">
+		SELECT LPAD(' ', 2*(LEVEL-1)) || MENU_NAME AS MENU_NAME, MENU_NO, HIGH_MENU, MENU_LEVEL, ICON, I_ADDRESS, STATUS
+		FROM MENU
+		START WITH HIGH_MENU IS NULL
+		CONNECT BY PRIOR MENU_NO = HIGH_MENU
+	</select>
+	
+	<select id="selectAllAccess" resultMap="accessResultSet">
+		SELECT ACCESSGROUP_NO
+			  ,ACCESS_NAME
+		      ,A_CONTENT
+	       	  ,STATUS
+		      ,CREATE_DATE
+		      ,MODIFY_DATE
+		FROM ACCESSGROUP
+		WHERE STATUS = 'Y'
+	</select>
+	
+	<select id="selectOneMenu" resultMap="menuResultSet">
+		SELECT MENU_NAME, MENU_NO, HIGH_MENU, MENU_LEVEL, ICON, I_ADDRESS, STATUS
+		FROM MENU
+		WHERE MENU_NO = #{menuNo}
+	</select>
+	
+	<insert id="insertMenuAccess" parameterType="java.util.Map">
+		<foreach item="item" collection="list" open="INSERT ALL"
+			close="SELECT * FROM DUAL">
+			INTO MENU_ACCESS
+			VALUES (#{item.menuNo}, #{item.accessGroupNo})
+		</foreach>
+	</insert>
+	
+	<select id="selectUseAccessList" parameterType="Menu" resultMap="accessResultSet">
+		SELECT M.ACCESSGROUP_NO
+    		  ,A.ACCESS_NAME
+      		  ,A.A_CONTENT
+      		  ,A.STATUS
+      	      ,A.CREATE_DATE
+      		  ,A.MODIFY_DATE    
+		FROM MENU_ACCESS M
+		JOIN ACCESSGROUP A ON(A.ACCESSGROUP_NO = M.ACCESSGROUP_NO)
+		WHERE A.STATUS = 'Y'
+		AND M.MENU_NO = #{menuNo}
+	</select>
+	
+	<delete id="cleanMenuAccess" parameterType="MenuAccess">
+		DELETE FROM MENU_ACCESS 
+		WHERE MENU_NO = #{menuNo}
+	</delete>
 </mapper>
 
 
