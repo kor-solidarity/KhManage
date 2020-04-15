@@ -23,6 +23,9 @@
         <typeAlias type="com.kh.manage.admin.adminManage.vo.DeptHistory" alias="DeptHistory"/>
         <typeAlias type="com.kh.manage.admin.adminManage.vo.Menu" alias="Menu"/>
         <typeAlias type="com.kh.manage.forum.model.vo.Notice" alias="Notice"/>
+        <typeAlias type="com.kh.manage.work.model.vo.Work" alias="Work"/>
+        <typeAlias type="com.kh.manage.project.model.vo.ProjectTeam" alias="ProjectTeam"/>
+        <typeAlias type="com.kh.manage.admin.adminManage.vo.MenuAccess" alias="MenuAccess"/>
   	</typeAliases>
   
   
@@ -35,6 +38,7 @@
   		<mapper resource="mappers/template-mapper.xml"/>
         <mapper resource="mappers/attachment-mapper.xml"/>
         <mapper resource="mappers/notice-mapper.xml"/>
+        <mapper resource="mappers/work-mapper.xml"/>
   	</mappers>
   		
   

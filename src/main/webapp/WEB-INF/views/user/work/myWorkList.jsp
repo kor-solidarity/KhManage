@@ -174,7 +174,7 @@
 						</tr>
 						<tr>
 							<td class="titleId">프로젝트 번호</td>
-							<td><p>P001</p></td>
+							<td><input type="text" name="projectNo" class="inputMenu form-control" style="width: 280px;" required="required" value="P008"></td>
 						</tr>
 						<tr>
 							<td class="titleId">작업유형</td>
@@ -208,9 +208,9 @@
 							<td>
 							<select name="grantorNo" class="inputMenu form-control" style="width: 280px;" required="required">
 									<option value="#" >선택하세요</option>
-									<option value="개인">개인</option>
-									<option value="일반">일반</option>
-									<option value="프로젝트">프로젝트</option>
+									<option value="test01">개인</option>
+									<option value="test02">일반</option>
+									<option value="test03">프로젝트</option>
 							</select>
 							</td>
 						</tr>
@@ -219,15 +219,26 @@
 							<td>
 							<select name="workLevel" class="inputMenu form-control" style="width: 280px;" required="required">
 									<option value="#" >선택하세요</option>
-									<option value="개인">개인</option>
-									<option value="일반">일반</option>
-									<option value="프로젝트">프로젝트</option>
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+							</select>
+							</td>
+						</tr>
+						<tr>
+							<td class="titleId">작업상태</td>
+							<td>
+							<select name="status" class="inputMenu form-control" style="width: 280px;" required="required">
+									<option value="#" >선택하세요</option>
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
 							</select>
 							</td>
 						</tr>
 						<tr>
 							<td class="titleId">상위작업 번호</td>
-							<td><p>P001</p></td>
+							<td><input type="text" name="highWorkNo" class="inputMenu form-control" style="width: 280px;" required="required"></td>
 						</tr>
 						<tr>
 							<td class="titleId">사용여부</td>

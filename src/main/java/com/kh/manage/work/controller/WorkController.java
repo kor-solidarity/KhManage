@@ -2,15 +2,21 @@ package com.kh.manage.work.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.kh.manage.work.model.service.WorkService;
 import com.kh.manage.work.model.vo.Work;
 
 @Controller
 public class WorkController {
 
+	@Autowired
+	private WorkService ws;
+	
+	
 	@RequestMapping("/myWorkList.wk")
 	public String myWorkList() {
 		
@@ -23,6 +29,14 @@ public class WorkController {
 		
 		System.out.println(work);
 		
-		return "user/work/myWorkList";
+		int result = ws.insertWork(work);
+		
+		
+		if(result > 0) {
+			
+			return "redirect:myWorkList.wk";
+		}else {
+			return "redirect:index.jsp";
+		}
 	}
 }
