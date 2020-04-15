@@ -10,6 +10,8 @@ import com.kh.manage.admin.adminManage.vo.AccessMember;
 import com.kh.manage.admin.adminManage.vo.DepartMent;
 import com.kh.manage.admin.adminManage.vo.DeptHistory;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
+import com.kh.manage.admin.adminManage.vo.Menu;
+import com.kh.manage.admin.adminManage.vo.MenuAccess;
 import com.kh.manage.admin.adminManage.vo.SelectAccessMember;
 import com.kh.manage.admin.rank.model.vo.Rank;
 import com.kh.manage.common.PageInfo;
@@ -65,4 +67,16 @@ public interface ManageDao {
 	int updateDeleteDeptMember(SqlSessionTemplate sqlSession, DepartMent dept);
 
 	int deleteDept(SqlSessionTemplate sqlSession, DepartMent dept);
+
+	List<Menu> selectAllMenu(SqlSessionTemplate sqlSession);
+
+	List<Access> selectAllAccess(SqlSessionTemplate sqlSession);
+
+	Menu selectOneMenu(SqlSessionTemplate sqlSession, Menu menu);
+
+	int insertMenuAccess(SqlSessionTemplate sqlSession, Map<String, Object> map);
+
+	List<Access> selectUseAccessList(SqlSessionTemplate sqlSession, Menu menu);
+
+	int cleanMenuAccess(SqlSessionTemplate sqlSession, MenuAccess ma);
 }

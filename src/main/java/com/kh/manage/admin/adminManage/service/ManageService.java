@@ -8,6 +8,8 @@ import com.kh.manage.admin.adminManage.vo.AccessMember;
 import com.kh.manage.admin.adminManage.vo.DepartMent;
 import com.kh.manage.admin.adminManage.vo.DeptHistory;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
+import com.kh.manage.admin.adminManage.vo.Menu;
+import com.kh.manage.admin.adminManage.vo.MenuAccess;
 import com.kh.manage.admin.adminManage.vo.SelectAccessMember;
 import com.kh.manage.admin.rank.model.vo.Rank;
 import com.kh.manage.common.PageInfo;
@@ -58,5 +60,17 @@ public interface ManageService {
 
 	List<Rank> selectRankList();
 
-	int deleteDept(DepartMent dept); 
+	int deleteDept(DepartMent dept);
+
+	List<Menu> selectAllMenu();
+
+	List<Access> selectAllAccess();
+
+	Menu selectOneMenu(Menu menu);
+
+	int insertMenuAccess(Map<String, Object> map);
+
+	List<Access> selectUseAccessList(Menu menu);
+
+	int cleanMenuAccess(MenuAccess ma); 
 }

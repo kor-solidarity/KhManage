@@ -12,6 +12,8 @@ import com.kh.manage.admin.adminManage.vo.AccessMember;
 import com.kh.manage.admin.adminManage.vo.DepartMent;
 import com.kh.manage.admin.adminManage.vo.DeptHistory;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
+import com.kh.manage.admin.adminManage.vo.Menu;
+import com.kh.manage.admin.adminManage.vo.MenuAccess;
 import com.kh.manage.admin.adminManage.vo.SelectAccessMember;
 import com.kh.manage.admin.rank.model.vo.Rank;
 import com.kh.manage.common.PageInfo;
@@ -172,7 +174,43 @@ public class ManageDaoImpl implements ManageDao {
 
 	@Override
 	public int deleteDept(SqlSessionTemplate sqlSession, DepartMent dept) {
-		return 1;
+		return sqlSession.update("Admin.deleteDept", dept);
+	}
+
+	@Override
+	public List<Menu> selectAllMenu(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectList("Admin.selectAllMenu");
+	}
+
+	@Override
+	public List<Access> selectAllAccess(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectList("Admin.selectAllAccess");
+	}
+
+	@Override
+	public Menu selectOneMenu(SqlSessionTemplate sqlSession, Menu menu) {
+	
+		return sqlSession.selectOne("Admin.selectOneMenu", menu);
+	}
+
+	@Override
+	public int insertMenuAccess(SqlSessionTemplate sqlSession, Map<String, Object> map) {
+		
+		return sqlSession.insert("Admin.insertMenuAccess", map);
+	}
+
+	@Override
+	public List<Access> selectUseAccessList(SqlSessionTemplate sqlSession, Menu menu) {
+		
+		return sqlSession.selectList("Admin.selectUseAccessList", menu);
+	}
+
+	@Override
+	public int cleanMenuAccess(SqlSessionTemplate sqlSession, MenuAccess ma) {
+		
+		return sqlSession.delete("Admin.cleanMenuAccess", ma);
 	}
 
 }

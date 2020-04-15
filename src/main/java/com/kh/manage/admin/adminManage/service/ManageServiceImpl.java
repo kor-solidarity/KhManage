@@ -13,6 +13,8 @@ import com.kh.manage.admin.adminManage.vo.AccessMember;
 import com.kh.manage.admin.adminManage.vo.DepartMent;
 import com.kh.manage.admin.adminManage.vo.DeptHistory;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
+import com.kh.manage.admin.adminManage.vo.Menu;
+import com.kh.manage.admin.adminManage.vo.MenuAccess;
 import com.kh.manage.admin.adminManage.vo.SelectAccessMember;
 import com.kh.manage.admin.rank.model.vo.Rank;
 import com.kh.manage.common.PageInfo;
@@ -173,11 +175,45 @@ public class ManageServiceImpl implements ManageService{
 		
 		int result =  ad.updateDeleteDeptMember(sqlSession, dept);
 		
-		if(result > 0) {
 			result2 = ad.deleteDept(sqlSession, dept);
-		}
 		
 		return result2;
+	}
+
+	@Override
+	public List<Menu> selectAllMenu() {
+		
+		return ad.selectAllMenu(sqlSession);
+	}
+
+	@Override
+	public List<Access> selectAllAccess() {
+		
+		return ad.selectAllAccess(sqlSession);
+	}
+
+	@Override
+	public Menu selectOneMenu(Menu menu) {
+		
+		return ad.selectOneMenu(sqlSession, menu);
+	}
+
+	@Override
+	public int insertMenuAccess(Map<String, Object> map) {
+		
+		return ad.insertMenuAccess(sqlSession, map);
+	}
+
+	@Override
+	public List<Access> selectUseAccessList(Menu menu) {
+		
+		return ad.selectUseAccessList(sqlSession, menu);
+	}
+
+	@Override
+	public int cleanMenuAccess(MenuAccess ma) {
+		
+		return ad.cleanMenuAccess(sqlSession, ma);
 	}
 	
 }
