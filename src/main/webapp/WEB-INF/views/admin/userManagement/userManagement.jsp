@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <title>Insert title here</title>
 <style>
@@ -126,7 +127,7 @@
 						<td class="td1"><a href="#" id="memberName">${m.memberName}</a></td>
 						<td class="tdText">${m.deptName}</td>
 						<td class="tdText">${m.rankName}</td>
-						<td class="tdText">88 건수 추가</td>
+						<td class="tdText">${m.countProject}</td>
 						<td class="tdText" style="text-align:left; padding-left: 25px;">${m.email}</td>
 						<td class="tdText">${m.status}</td>
 						<td class="tdText">2020-04-03 추가할 것</td>
@@ -213,7 +214,7 @@
 	
 	
 	<script>
-	
+	/* 
 	//모달
 	$("#memberName").click(function(){
 		$('#myModal').modal('show');
@@ -221,15 +222,25 @@
 		
 		//모달창 회원정보 조회
 		$.ajax({
-			url: 'selecMemberModal.me?memberNo=${m.memberNo}',
+			/* url: 'selecMemberModal.me?memberNo=${m.memberNo}',
+			url: 'selecMemberModal.me',
 			type: "post",
-			data: {memberNo:name}
+			data: {
+				memberNo: memberNo
+			},
+			success: function(data){
+				
+				console.log(data);
+				
+				
+			}			
+			
 		});
 		
 		
 	});
 	
-	
+	 */
 	
 	
 	

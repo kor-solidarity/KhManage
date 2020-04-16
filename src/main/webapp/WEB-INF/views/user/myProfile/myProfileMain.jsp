@@ -113,7 +113,8 @@
 	<c:set var="contextPath" value="${ pageContext.servletContext.contextPath }" scope="application"/>
 
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
-	<jsp:include page="/WEB-INF/views/user/common/sidebar.jsp"/>
+	<jsp:include page="/WEB-INF/views/user/common/sidebar2.jsp"/>
+	
 	<br><br>
 	<div id="wrap">
 		

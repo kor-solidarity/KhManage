@@ -58,6 +58,8 @@ public class MemberController {
 		
 		List<Member> mlist = ms.selectMemberList();
 		
+		System.out.println("mlist : " + mlist);
+		
 		request.setAttribute("mlist", mlist);
 
 		return "admin/userManagement/userManagement";
@@ -140,6 +142,7 @@ public class MemberController {
 		if(result > 0) {
 			
 			return "redirect:index.jsp";
+			
 		} else {
 			model.addAttribute("msg", "회원 가입실패!");
 			

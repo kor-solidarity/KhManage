@@ -159,7 +159,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public List<Member> selectMemberList() {
-
+		
 		return md.selectMemberList(sqlSession);
 	}
 
