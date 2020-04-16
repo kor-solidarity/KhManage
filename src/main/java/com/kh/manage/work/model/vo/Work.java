@@ -16,12 +16,13 @@ public class Work implements java.io.Serializable{
 	private String highWorkNo;
 	private String memo;
 	private String workType;
+	private String memberNo;
 	
 	public Work() {}
 
 	public Work(String workNo, String workName, String status, String projectNo, Date beginDate, Date completeDate,
 			String precedeNo, String completeRate, String grantorNo, String workLevel, String highWorkNo, String memo,
-			String workType) {
+			String workType, String memberNo) {
 		super();
 		this.workNo = workNo;
 		this.workName = workName;
@@ -36,6 +37,7 @@ public class Work implements java.io.Serializable{
 		this.highWorkNo = highWorkNo;
 		this.memo = memo;
 		this.workType = workType;
+		this.memberNo = memberNo;
 	}
 
 	public String getWorkNo() {
@@ -142,14 +144,23 @@ public class Work implements java.io.Serializable{
 		this.workType = workType;
 	}
 
+	public String getMemberNo() {
+		return memberNo;
+	}
+
+	public void setMemberNo(String memberNo) {
+		this.memberNo = memberNo;
+	}
+
 	@Override
 	public String toString() {
 		return "Work [workNo=" + workNo + ", workName=" + workName + ", status=" + status + ", projectNo=" + projectNo
 				+ ", beginDate=" + beginDate + ", completeDate=" + completeDate + ", precedeNo=" + precedeNo
 				+ ", completeRate=" + completeRate + ", grantorNo=" + grantorNo + ", workLevel=" + workLevel
-				+ ", highWorkNo=" + highWorkNo + ", memo=" + memo + ", workType=" + workType + "]";
+				+ ", highWorkNo=" + highWorkNo + ", memo=" + memo + ", workType=" + workType + ", memberNo=" + memberNo
+				+ "]";
 	}
-	
+
 	
 
 }

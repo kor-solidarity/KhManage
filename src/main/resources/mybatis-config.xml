@@ -26,6 +26,9 @@
         <typeAlias type="com.kh.manage.work.model.vo.Work" alias="Work"/>
         <typeAlias type="com.kh.manage.project.model.vo.ProjectTeam" alias="ProjectTeam"/>
         <typeAlias type="com.kh.manage.admin.adminManage.vo.MenuAccess" alias="MenuAccess"/>
+        <typeAlias type="com.kh.manage.forum.model.vo.Notice" alias="Notice"/>
+        <typeAlias type="com.kh.manage.forum.model.vo.Reply" alias="Reply"/>
+        <typeAlias type="com.kh.manage.project.model.vo.ProjectList" alias="ProjectList"/>
   	</typeAliases>
   
   
@@ -39,6 +42,8 @@
         <mapper resource="mappers/attachment-mapper.xml"/>
         <mapper resource="mappers/notice-mapper.xml"/>
         <mapper resource="mappers/work-mapper.xml"/>
+        <mapper resource="mappers/notice-mapper.xml"/>
+        <mapper resource="mappers/reply-mapper.xml"/>
   	</mappers>
   		
   
