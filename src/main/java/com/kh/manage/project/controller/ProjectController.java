@@ -132,16 +132,19 @@ public class ProjectController {
 		// 프로젝트 관리자
 		String project_manager = request.getParameter("project_manager");
 		String project_template = request.getParameter("project_template");
+		if (project_template.equals("0")){
+			project_template = null;
+		}
 		// pmo
 		String pmo = request.getParameter("pmo");
 		// 서브관리자 목록
 		// 폼에 똑같은 네임의 인풋이 여럿이면 전부 알아서 통합돼 어레이로 가져온다.
 		String[] memberNo = request.getParameterValues("memberNo");
 		
-		System.out.println("memberNo: " + memberNo);
-		for (String m : memberNo) {
-			System.out.println(m);
-		}
+		// System.out.println("memberNo: " + memberNo);
+		// for (String m : memberNo) {
+		// 	System.out.println(m);
+		// }
 		// List<String> subManagerList = Arrays.asList(sub_manager.split(","));
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Date startDate = null;
@@ -186,10 +189,13 @@ public class ProjectController {
 			ProjectTeam projectManager = new ProjectTeam(null, projectInsertResult, project_manager, "PM");
 			ps.insertProjectTeam(projectManager);
 			// 위에 써져있던 부책임자들 다 건든다.
-			for (String m : memberNo) {
-				ProjectTeam team = new ProjectTeam(null, projectInsertResult, m, "PSM");
-				ps.insertProjectTeam(team);
+			if (memberNo != null) {
+				for (String m : memberNo) {
+					ProjectTeam team = new ProjectTeam(null, projectInsertResult, m, "PSM");
+					ps.insertProjectTeam(team);
+				}
 			}
+			
 			
 			return "redirect:/projectCenter.pr";
 		} else {

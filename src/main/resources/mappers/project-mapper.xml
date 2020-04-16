@@ -76,6 +76,7 @@
     <select id="selectDeptList" resultMap="deptResultSet">
         SELECT *
         FROM DEPT
+        where status = 'Y'
     </select>
 
     <!--현역 사원목록-->
