@@ -3,450 +3,463 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Admin">
-   <resultMap type="Access" id="accessResultSet">
-      <result property="accessGroupNo" column="ACCESSGROUP_NO" />
-      <result property="accessName" column="ACCESS_NAME" />
-      <result property="aContent" column="A_CONTENT" />
-      <result property="Status" column="STATUS" />
-      <result property="createDate" column="CREATE_DATE" />
-      <result property="modifyDate" column="MODIFY_DATE" />
-   </resultMap>
+	<resultMap type="Access" id="accessResultSet">
+		<result property="accessGroupNo" column="ACCESSGROUP_NO" />
+		<result property="accessName" column="ACCESS_NAME" />
+		<result property="aContent" column="A_CONTENT" />
+		<result property="Status" column="STATUS" />
+		<result property="createDate" column="CREATE_DATE" />
+		<result property="modifyDate" column="MODIFY_DATE" />
+	</resultMap>
 
-   <resultMap type="DepartMent" id="departResultSet">
-      <id property="deptNo" column="DEPT_NO" />
-      <result property="deptName" column="DEPT_NAME" />
-      <result property="highDept" column="HIGH_DEPT" />
-      <result property="deptLevle" column="DEPT_LEVEL" />
-   </resultMap>
-   <resultMap type="DeptMember" id="deptMemberResultSet">
-      <id property="memberNo" column="MEMBER_NO" />
-      <result property="memberId" column="MEMBER_ID" />
-      <result property="memberName" column="MEMBER_NAME" />
-      <result property="phone" column="PHONE" />
-      <result property="email" column="EMAIL" />
-      <result property="memberType" column="MEMBER_TYPE" />
-      <result property="rankNo" column="RANK_NAME" />
-      <result property="deptName" column="DEPT_NAME" />
-      <result property="enrollDate" column="ENROLL_DATE" />
-      <result property="modifyDate" column="MODIFY_DATE" />
-      <result property="status" column="STATUS" />
-   </resultMap>
-   
-   <resultMap type="Rank" id="rankResultSet">
-      <id property="rankNo" column="RANK_NO"/>
-      <result property="rankName" column="RANK_NAME"/>
-   </resultMap>
-   
-   <resultMap type="SelectAccessMember"
-      id="selectAccessResultSet">
-      <id property="accessNo" column="ACCESSGROUP_NO" />
-      <result property="memberNo" column="MEMBER_NO" />
-      <result property="memberId" column="MEMBER_ID" />
-      <result property="memberName" column="MEMBER_NAME" />
-      <result property="phone" column="PHONE" />
-      <result property="email" column="EMAIL" />
-      <result property="memberType" column="MEMBER_TYPE" />
-      <result property="rankName" column="RANK_NAME" />
-      <result property="deptName" column="DEPT_NAME" />
-      <result property="enrollDate" column="ENROLL_DATE" />
-      <result property="modifyDate" column="MODIFY_DATE" />
-      <result property="status" column="STATUS" />
-   </resultMap>
-   
-   <resultMap type="Member" id="memberResultSet">
-      <id property="memberNo" column="MEMBER_NO"/>
-      <result property="memberId" column="MEMBER_ID"/>
-      <result property="memberPwd" column="RANK_NO"/>
-      <result property="memberName" column="MEMBER_NAME"/>
-      <result property="phone" column="PHONE"/>
-      <result property="email" column="EMAIL"/>
-      <result property="memberType" column="DEPT_NO"/>
-      <result property="rankNo" column="RANK_NAME"/>
-      <result property="deptNo" column="HIGH_DEPT"/>
-      <result property="deapTeamNo" column="DEPT_NAME"/>
-      <result property="enrollDate" column="ENROLL_DATE"/>
-      <result property="status" column="STATUS"/>
-   </resultMap>
-   
-   <resultMap type="Menu" id="menuResultSet">
-      <id property="menuNo" column="MENU_NO"/>
-      <result property="menuName" column="MENU_NAME"/>
-      <result property="menuLevel" column="MENU_LEVEL"/>
-      <result property="highMenu" column="HIGH_MENU"/>
-      <result property="icon" column="ICON"/>
-      <result property="iAddress" column="I_ADDRESS"/>
-      <result property="status" column="STATUS"/>
-   </resultMap>
+	<resultMap type="DepartMent" id="departResultSet">
+		<id property="deptNo" column="DEPT_NO" />
+		<result property="deptName" column="DEPT_NAME" />
+		<result property="highDept" column="HIGH_DEPT" />
+		<result property="deptLevle" column="DEPT_LEVEL" />
+	</resultMap>
+	<resultMap type="DeptMember" id="deptMemberResultSet">
+		<id property="memberNo" column="MEMBER_NO" />
+		<result property="memberId" column="MEMBER_ID" />
+		<result property="memberName" column="MEMBER_NAME" />
+		<result property="phone" column="PHONE" />
+		<result property="email" column="EMAIL" />
+		<result property="memberType" column="MEMBER_TYPE" />
+		<result property="rankNo" column="RANK_NAME" />
+		<result property="deptName" column="DEPT_NAME" />
+		<result property="enrollDate" column="ENROLL_DATE" />
+		<result property="modifyDate" column="MODIFY_DATE" />
+		<result property="status" column="STATUS" />
+	</resultMap>
+	
+	<resultMap type="Rank" id="rankResultSet">
+		<id property="rankNo" column="RANK_NO"/>
+		<result property="rankName" column="RANK_NAME"/>
+	</resultMap>
+	
+	<resultMap type="SelectAccessMember"
+		id="selectAccessResultSet">
+		<id property="accessNo" column="ACCESSGROUP_NO" />
+		<result property="memberNo" column="MEMBER_NO" />
+		<result property="memberId" column="MEMBER_ID" />
+		<result property="memberName" column="MEMBER_NAME" />
+		<result property="phone" column="PHONE" />
+		<result property="email" column="EMAIL" />
+		<result property="memberType" column="MEMBER_TYPE" />
+		<result property="rankName" column="RANK_NAME" />
+		<result property="deptName" column="DEPT_NAME" />
+		<result property="enrollDate" column="ENROLL_DATE" />
+		<result property="modifyDate" column="MODIFY_DATE" />
+		<result property="status" column="STATUS" />
+	</resultMap>
+	
+	<resultMap type="Member" id="memberResultSet">
+		<id property="memberNo" column="MEMBER_NO"/>
+		<result property="memberId" column="MEMBER_ID"/>
+		<result property="memberPwd" column="RANK_NO"/>
+		<result property="memberName" column="MEMBER_NAME"/>
+		<result property="phone" column="PHONE"/>
+		<result property="email" column="EMAIL"/>
+		<result property="memberType" column="DEPT_NO"/>
+		<result property="rankNo" column="RANK_NAME"/>
+		<result property="deptNo" column="HIGH_DEPT"/>
+		<result property="deapTeamNo" column="DEPT_NAME"/>
+		<result property="enrollDate" column="ENROLL_DATE"/>
+		<result property="status" column="STATUS"/>
+	</resultMap>
+	
+	<resultMap type="Menu" id="menuResultSet">
+		<id property="menuNo" column="MENU_NO"/>
+		<result property="menuName" column="MENU_NAME"/>
+		<result property="menuLevel" column="MENU_LEVEL"/>
+		<result property="highMenu" column="HIGH_MENU"/>
+		<result property="icon" column="ICON"/>
+		<result property="iAddress" column="I_ADDRESS"/>
+		<result property="status" column="STATUS"/>
+	</resultMap>
 
-   <insert id="insertAccessGroup" parameterType="Access">
-      INSERT INTO
-      ACCESSGROUP
-      VALUES('A'|| TO_CHAR(SEQ_ACG_NO.NEXTVAL, 'FM000'),
-      #{accessName}, #{aContent},SYSDATE, SYSDATE, 'Y')
-   </insert>
+	<insert id="insertAccessGroup" parameterType="Access">
+		INSERT INTO
+		ACCESSGROUP
+		VALUES('A'|| TO_CHAR(SEQ_ACG_NO.NEXTVAL, 'FM000'),
+		#{accessName}, #{aContent},SYSDATE, SYSDATE, 'Y')
+	</insert>
 
-   <select id="selectAll" resultMap="accessResultSet">
-      SELECT ACCESSGROUP_NO
-           ,ACCESS_NAME
-            ,A_CONTENT
-               ,STATUS
-            ,CREATE_DATE
-            ,MODIFY_DATE
-      FROM ACCESSGROUP
-      WHERE STATUS = 'Y'
-   </select>
+	<select id="selectAll" resultMap="accessResultSet">
+		SELECT ACCESSGROUP_NO
+			  ,ACCESS_NAME
+		      ,A_CONTENT
+	       	  ,STATUS
+		      ,CREATE_DATE
+		      ,MODIFY_DATE
+		FROM ACCESSGROUP
+		WHERE STATUS = 'Y'
+		ORDER BY 5 DESC
+	</select>
 
-   <select id="getListCount" resultType="_int">
-      SELECT COUNT(*)
-      FROM
-      ACCESSGROUP
-   </select>
+	<select id="getListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM
+		ACCESSGROUP
+	</select>
 
-   <select id="searchAccess" resultMap="accessResultSet">
-      SELECT ACCESSGROUP_NO
-      ,ACCESS_NAME
-      ,A_CONTENT
-      ,STATUS
-      ,CREATE_DATE
-      ,MODIFY_DATE
-      FROM ACCESSGROUP
-      WHERE 1 = 1
-      <!-- <if test="title != null"> -->
-      AND ACCESS_NAME LIKE '%' || #{accessName} || '%'
-      <!-- </if> -->
-      <!-- <if test="writer != null"> AND USER_NAME = #{writer} </if> <if test="content 
-         != null"> AND BCONTENT LIKE '%' || #{content} || '%' </if> -->
-   </select>
+	<select id="searchAccess" resultMap="accessResultSet">
+		SELECT ACCESSGROUP_NO
+		,ACCESS_NAME
+		,A_CONTENT
+		,STATUS
+		,CREATE_DATE
+		,MODIFY_DATE
+		FROM ACCESSGROUP
+		WHERE 1 = 1
+		<!-- <if test="title != null"> -->
+		AND ACCESS_NAME LIKE '%' || #{accessName} || '%'
+		<!-- </if> -->
+		<!-- <if test="writer != null"> AND USER_NAME = #{writer} </if> <if test="content 
+			!= null"> AND BCONTENT LIKE '%' || #{content} || '%' </if> -->
+	</select>
 
-   <select id="departSelectAll" resultMap="departResultSet">
-      SELECT LPAD(' ', 2*(LEVEL-1)) || DEPT_NAME AS DEPT_NAME, DEPT_NO, HIGH_DEPT, DEPT_LEVEL
-      FROM DEPT
-      WHERE STATUS = 'Y'
-      START WITH HIGH_DEPT IS NULL
-      CONNECT BY PRIOR DEPT_NO = HIGH_DEPT
-   </select>
+	<select id="departSelectAll" resultMap="departResultSet">
+		SELECT LPAD(' ', 2*(LEVEL-1)) || DEPT_NAME AS DEPT_NAME, DEPT_NO, HIGH_DEPT, DEPT_LEVEL
+		FROM DEPT
+		WHERE STATUS = 'Y'
+		START WITH HIGH_DEPT IS NULL
+		CONNECT BY PRIOR DEPT_NO = HIGH_DEPT
+	</select>
 
-   <select id="deptSelectOne" parameterType="DepartMent"
-      resultMap="departResultSet">
-      SELECT D.DEPT_NO
-      ,D.DEPT_NAME
-      ,E.DEPT_NAME AS HIGH_DEPT
-      ,D.DEPT_LEVEL
-      FROM DEPT D
-      JOIN DEPT E ON(D.HIGH_DEPT = E.DEPT_NO)
-      WHERE 1 = 1
-      <if test="deptName != null">
-      AND D.DEPT_NAME = #{deptName}
-      </if>
-      <if test="deptNo != null">
-      AND D.DEPT_NO = #{deptNo}
-      </if>
-   </select>
+	<select id="deptSelectOne" parameterType="DepartMent"
+		resultMap="departResultSet">
+		SELECT D.DEPT_NO
+		,D.DEPT_NAME
+		,E.DEPT_NAME AS HIGH_DEPT
+		,D.DEPT_LEVEL
+		FROM DEPT D
+		JOIN DEPT E ON(D.HIGH_DEPT = E.DEPT_NO)
+		WHERE 1 = 1
+		<if test="deptName != null">
+		AND D.DEPT_NAME = #{deptName}
+		</if>
+		<if test="deptNo != null">
+		AND D.DEPT_NO = #{deptNo}
+		</if>
+	</select>
 
-   <select id="highSelectOne" parameterType="DepartMent"
-      resultMap="departResultSet">
-      SELECT D.DEPT_NO
-      ,D.DEPT_NAME
-      ,D.DEPT_LEVEL
-      ,NVL(D.HIGH_DEPT,'-') AS HIGH_DEPT
-      FROM DEPT D
-      WHERE 1 = 1
-      <if test="deptName != null">
-      AND D.DEPT_NAME = #{deptName}
-      </if>
-      <if test="deptNo != null">
-      AND D.DEPT_NO = #{deptNo}
-      </if>
-   </select>
+	<select id="highSelectOne" parameterType="DepartMent"
+		resultMap="departResultSet">
+		SELECT D.DEPT_NO
+		,D.DEPT_NAME
+		,D.DEPT_LEVEL
+		,NVL(D.HIGH_DEPT,'-') AS HIGH_DEPT
+		FROM DEPT D
+		WHERE 1 = 1
+		<if test="deptName != null">
+		AND D.DEPT_NAME = #{deptName}
+		</if>
+		<if test="deptNo != null">
+		AND D.DEPT_NO = #{deptNo}
+		</if>
+	</select>
 
-   <select id="selectTeam" resultMap="departResultSet">
-      SELECT DEPT_NO
-      ,DEPT_NAME
-      ,HIGH_DEPT
-      ,DEPT_LEVEL
-      FROM DEPT
-      WHERE HIGH_DEPT = #{deptNo}
-   </select>
+	<select id="selectTeam" resultMap="departResultSet">
+		SELECT DEPT_NO
+		,DEPT_NAME
+		,HIGH_DEPT
+		,DEPT_LEVEL
+		FROM DEPT
+		WHERE HIGH_DEPT = #{deptNo}
+	</select>
 
-   <select id="accessSelectOne" parameterType="Access" resultMap="accessResultSet">
-      SELECT ACCESSGROUP_NO
-      ,ACCESS_NAME
-      ,A_CONTENT
-      ,STATUS
-      ,CREATE_DATE
-      ,MODIFY_DATE
-      FROM ACCESSGROUP
-      WHERE ACCESS_NAME = #{accessName}
-   </select>
+	<select id="accessSelectOne" parameterType="Access" resultMap="accessResultSet">
+		SELECT ACCESSGROUP_NO
+		,ACCESS_NAME
+		,A_CONTENT
+		,STATUS
+		,CREATE_DATE
+		,MODIFY_DATE
+		FROM ACCESSGROUP
+		WHERE ACCESS_NAME = #{accessName}
+	</select>
 
-   <select id="searchDeptMember" parameterType="DepartMent" resultMap="deptMemberResultSet">
-      SELECT M.MEMBER_NO
-      ,M.MEMBER_ID
-      ,M.MEMBER_NAME
-      ,M.PHONE
-      ,M.EMAIL
-      ,M.MEMBER_TYPE
-      ,R.RANK_NAME
-      ,D.DEPT_NAME
-      ,M.ENROLL_DATE
-      ,M.MODIFY_DATE
-      ,M.STATUS
-      FROM MEMBER M
-      JOIN DEPT D ON(M.DEPT_NO = D.DEPT_NO)
-      JOIN RANK R
-      ON(M.RANK_NO = R.RANK_NO)
-      WHERE D.DEPT_NAME LIKE #{deptName}
-   </select>
+	<select id="searchDeptMember" parameterType="DepartMent" resultMap="deptMemberResultSet">
+		SELECT M.MEMBER_NO
+		,M.MEMBER_ID
+		,M.MEMBER_NAME
+		,M.PHONE
+		,M.EMAIL
+		,M.MEMBER_TYPE
+		,R.RANK_NAME
+		,D.DEPT_NAME
+		,M.ENROLL_DATE
+		,M.MODIFY_DATE
+		,M.STATUS
+		FROM MEMBER M
+		JOIN DEPT D ON(M.DEPT_NO = D.DEPT_NO)
+		JOIN RANK R
+		ON(M.RANK_NO = R.RANK_NO)
+		WHERE D.DEPT_NAME LIKE #{deptName}
+	</select>
 
-   <insert id="insertAccessMember" parameterType="java.util.Map">
-      <foreach item="item" collection="list" open="INSERT ALL"
-         close="SELECT * FROM DUAL">
-         INTO ACCESS_MEMBER(ACCESSGROUP_NO, MEMBER_NO)
-         VALUES (#{item.accessNo}, #{item.memberNo})
-      </foreach>
-   </insert>
+	<insert id="insertAccessMember" parameterType="java.util.Map">
+		<foreach item="item" collection="list" open="INSERT ALL"
+			close="SELECT * FROM DUAL">
+			INTO ACCESS_MEMBER(ACCESSGROUP_NO, MEMBER_NO)
+			VALUES (#{item.accessNo}, #{item.memberNo})
+		</foreach>
+	</insert>
 
-   <select id="selectAccessMember" parameterType="AccessMember" resultType="java.lang.String">
-      SELECT MEMBER_NO
-      FROM ACCESS_MEMBER
-      WHERE ACCESSGROUP_NO =
-      #{accessNo}
-   </select>
+	<select id="selectAccessMember" parameterType="AccessMember" resultType="java.lang.String">
+		SELECT MEMBER_NO
+		FROM ACCESS_MEMBER
+		WHERE ACCESSGROUP_NO =
+		#{accessNo}
+	</select>
 
-   <select id="selectAccessMemberList" parameterType="Access"
-      resultMap="selectAccessResultSet">
-      SELECT A.ACCESSGROUP_NO
-      ,M.MEMBER_NO
-      ,M.MEMBER_ID
-      ,M.MEMBER_NAME
-      ,M.PHONE
-      ,M.EMAIL
-      ,M.MEMBER_TYPE
-      ,R.RANK_NAME
-      ,D.DEPT_NAME
-      ,M.ENROLL_DATE
-      ,M.MODIFY_DATE
-      ,M.STATUS
-      FROM ACCESSGROUP A
-      JOIN ACCESS_MEMBER C ON(A.ACCESSGROUP_NO = C.ACCESSGROUP_NO)
-      JOIN MEMBER M ON(M.MEMBER_NO = C.MEMBER_NO)
-      JOIN DEPT D ON(M.DEPT_NO = D.DEPT_NO)
-      JOIN RANK R ON(R.RANK_NO = M.RANK_NO)
-      WHERE A.ACCESS_NAME = #{accessName}
-   </select>
-   
-   <select id="newDeptNo" parameterType="DepartMent" resultMap="departResultSet">
-      SELECT RNUM,DEPT_NO
-               ,DEPT_NAME
-             ,HIGH_DEPT
-             ,DEPT_LEVEL
-       FROM(SELECT ROWNUM RNUM
-                  ,DEPT_NO
-                  ,DEPT_NAME
-                  ,HIGH_DEPT
-                  ,DEPT_LEVEL
-              FROM(SELECT D.DEPT_NO
-                         ,D.DEPT_NAME
-                         ,H.DEPT_NAME AS HIGH_DEPT
-                         ,D.DEPT_LEVEL
-                    FROM DEPT D
-                    JOIN DEPT H ON(D.HIGH_DEPT = H.DEPT_NO)
-                   WHERE 1=1
-               <if test="deptName != null">
-               AND H.DEPT_NAME = #{deptName}
-               </if>
-               <if test="deptNo != null">
-               AND H.DEPT_NO = #{deptNo}
-               </if>
-                ORDER BY 1 DESC))
-      WHERE RNUM =1   
-   </select>
+	<select id="selectAccessMemberList" parameterType="Access"
+		resultMap="selectAccessResultSet">
+		SELECT A.ACCESSGROUP_NO
+		,M.MEMBER_NO
+		,M.MEMBER_ID
+		,M.MEMBER_NAME
+		,M.PHONE
+		,M.EMAIL
+		,M.MEMBER_TYPE
+		,R.RANK_NAME
+		,D.DEPT_NAME
+		,M.ENROLL_DATE
+		,M.MODIFY_DATE
+		,M.STATUS
+		FROM ACCESSGROUP A
+		JOIN ACCESS_MEMBER C ON(A.ACCESSGROUP_NO = C.ACCESSGROUP_NO)
+		JOIN MEMBER M ON(M.MEMBER_NO = C.MEMBER_NO)
+		JOIN DEPT D ON(M.DEPT_NO = D.DEPT_NO)
+		JOIN RANK R ON(R.RANK_NO = M.RANK_NO)
+		WHERE A.ACCESS_NAME = #{accessName}
+	</select>
+	
+	<select id="newDeptNo" parameterType="DepartMent" resultMap="departResultSet">
+		SELECT RNUM,DEPT_NO
+	   	      ,DEPT_NAME
+	          ,HIGH_DEPT
+	          ,DEPT_LEVEL
+	    FROM(SELECT ROWNUM RNUM
+	               ,DEPT_NO
+	               ,DEPT_NAME
+	               ,HIGH_DEPT
+	               ,DEPT_LEVEL
+	           FROM(SELECT D.DEPT_NO
+	                      ,D.DEPT_NAME
+	                      ,H.DEPT_NAME AS HIGH_DEPT
+	                      ,D.DEPT_LEVEL
+	                 FROM DEPT D
+	                 JOIN DEPT H ON(D.HIGH_DEPT = H.DEPT_NO)
+	                WHERE 1=1
+					<if test="deptName != null">
+					AND H.DEPT_NAME = #{deptName}
+					</if>
+					<if test="deptNo != null">
+					AND H.DEPT_NO = #{deptNo}
+					</if>
+	             ORDER BY 1 DESC))
+	   WHERE RNUM =1	
+	</select>
 
-   <delete id="deleteAccessMember" parameterType="AccessMember">
-      DELETE FROM
-      ACCESS_MEMBER
-      WHERE ACCESSGROUP_NO = #{accessNo}
-   </delete>
+	<delete id="deleteAccessMember" parameterType="AccessMember">
+		DELETE FROM
+		ACCESS_MEMBER
+		WHERE ACCESSGROUP_NO = #{accessNo}
+	</delete>
 
-   <select id="selectDeptList" resultMap="departResultSet">
-      SELECT DEPT_NO
-      ,DEPT_NAME
-      ,HIGH_DEPT
-      ,DEPT_LEVEL
-      FROM DEPT
-      WHERE DEPT_LEVEL = 2
-   </select>
+	<select id="selectDeptList" resultMap="departResultSet">
+		SELECT DEPT_NO
+		,DEPT_NAME
+		,HIGH_DEPT
+		,DEPT_LEVEL
+		FROM DEPT
+		WHERE DEPT_LEVEL = 2
+	</select>
 
-   <update id="updateAccess" parameterType="AccessMember">
-      UPDATE ACCESSGROUP SET
-      ACCESS_NAME = #{accessName}
-      ,A_CONTENT = #{aContent}
-      ,MODIFY_DATE = SYSDATE
-      WHERE ACCESSGROUP_NO = #{accessNo}
-   </update>
+	<update id="updateAccess" parameterType="AccessMember">
+		UPDATE ACCESSGROUP SET
+		ACCESS_NAME = #{accessName}
+		,A_CONTENT = #{aContent}
+		,MODIFY_DATE = SYSDATE
+		WHERE ACCESSGROUP_NO = #{accessNo}
+	</update>
 
-   <insert id="insertHighDept" parameterType="DepartMent">
-      INSERT
-      INTO DEPT VALUES(#{deptNo}, #{deptName}, null, '1', 'Y')
-   </insert>
-   
-   <insert id="insertChildrenDept" parameterType="DepartMent">
-      INSERT
-      INTO DEPT VALUES(#{deptNo}, #{deptName}, #{highDept}, '2', 'Y')
-   </insert>
-   
-   <select id="selectMemberList" parameterType="DepartMent" resultMap="memberResultSet">
-      SELECT M.MEMBER_NO
-            ,M.MEMBER_ID
-            ,M.MEMBER_NAME
-            ,M.PHONE
-            ,M.EMAIL
-            ,M.RANK_NO
-            ,M.MEMBER_TYPE
-            ,R.RANK_NAME
-            ,D.DEPT_NAME
-            ,E.DEPT_NO AS HIGH_DEPT
-            ,M.DEPT_NO
-            ,M.ENROLL_DATE
-            ,M.STATUS
-      FROM MEMBER M
-      JOIN DEPT D ON(D.DEPT_NO = M.DEPT_NO) 
-      JOIN RANK R ON(M.RANK_NO = R.RANK_NO)
-      JOIN DEPT E ON(D.HIGH_DEPT = E.DEPT_NO)
-      WHERE M.STATUS = 'Y'
-      <if test="deptName != null">
-      AND D.DEPT_NAME = #{deptName}
-      </if>
-      <if test="deptNo != null">
-      AND M.DEPT_NO = #{deptNo}
-      </if>
-   </select>
-   
-   <select id="selectHighListMember" parameterType="DepartMent" resultMap="memberResultSet">
-      SELECT M.MEMBER_NO
-            ,M.MEMBER_ID
-            ,M.MEMBER_NAME
-            ,M.PHONE
-            ,M.RANK_NO
-            ,M.EMAIL
-            ,M.MEMBER_TYPE
-            ,M.DEPT_NO
-            ,R.RANK_NAME
-            ,D.DEPT_NAME
-            ,M.DEPT_NO AS HIGH_DEPT
-            ,M.ENROLL_DATE
-            ,M.STATUS
-      FROM MEMBER M
-      JOIN DEPT D ON(D.DEPT_NO = M.DEPT_NO) 
-      JOIN RANK R ON(M.RANK_NO = R.RANK_NO)
-      WHERE M.STATUS = 'Y'
-      <if test="deptName != null">
-      AND D.DEPT_NAME = #{deptName}
-      </if>
-      <if test="deptNo != null">
-      AND M.DEPT_NO = #{deptNo}
-      </if>
-   </select>
-   
-   <insert id="insertDeptHistory" parameterType="DeptHistory">
-      INSERT INTO DEPT_HISTORY 
-      VALUES('DH'|| TO_CHAR(SEQ_DH_NO.NEXTVAL, 'FM000'), #{changeMember}, SYSDATE, #{cContent}, #{originDept}, #{changeDept})
-   </insert>
-   
-   <update id="updateDeptMember" parameterType="DeptHistory">
-      UPDATE MEMBER SET DEPT_NO = #{changeDept}, RANK_NO = #{rankNo}
-      WHERE MEMBER_NO = #{changeMember}
-   </update>
-   
-   <select id="selectRankList" resultMap="rankResultSet">
-      SELECT *
-      FROM RANK
-   </select>
-   
-   <update id="updateDeleteDeptMember" parameterType="DepartMent">
-      UPDATE MEMBER SET DEPT_NO = 'CA01'
-      WHERE DEPT_NO = #{deptNo}
-   </update>
-   
-   <update id="deleteDept" parameterType="DepartMent">
-      UPDATE DEPT SET STATUS = 'N'
-      WHERE DEPT_NO = #{deptNo}
-   </update>
-   
-   <select id="selectAllMenu" resultMap="menuResultSet">
-      SELECT LPAD(' ', 2*(LEVEL-1)) || MENU_NAME AS MENU_NAME, MENU_NO, HIGH_MENU, MENU_LEVEL, ICON, I_ADDRESS, STATUS
-      FROM MENU
-      START WITH HIGH_MENU IS NULL
-      CONNECT BY PRIOR MENU_NO = HIGH_MENU
-   </select>
-   
-   <select id="selectAllAccess" resultMap="accessResultSet">
-      SELECT ACCESSGROUP_NO
-           ,ACCESS_NAME
-            ,A_CONTENT
-               ,STATUS
-            ,CREATE_DATE
-            ,MODIFY_DATE
-      FROM ACCESSGROUP
-      WHERE STATUS = 'Y'
-   </select>
-   
-   <select id="selectOneMenu" resultMap="menuResultSet">
-      SELECT MENU_NAME, MENU_NO, HIGH_MENU, MENU_LEVEL, ICON, I_ADDRESS, STATUS
-      FROM MENU
-      WHERE MENU_NO = #{menuNo}
-   </select>
-   
-   <insert id="insertMenuAccess" parameterType="java.util.Map">
-      <foreach item="item" collection="list" open="INSERT ALL"
-         close="SELECT * FROM DUAL">
-         INTO MENU_ACCESS
-         VALUES (#{item.menuNo}, #{item.accessGroupNo})
-      </foreach>
-   </insert>
-   
-   <select id="selectUseAccessList" parameterType="Menu" resultMap="accessResultSet">
-      SELECT M.ACCESSGROUP_NO
-            ,A.ACCESS_NAME
-              ,A.A_CONTENT
-              ,A.STATUS
-               ,A.CREATE_DATE
-              ,A.MODIFY_DATE    
-      FROM MENU_ACCESS M
-      JOIN ACCESSGROUP A ON(A.ACCESSGROUP_NO = M.ACCESSGROUP_NO)
-      WHERE A.STATUS = 'Y'
-      AND M.MENU_NO = #{menuNo}
-   </select>
-   
-   <delete id="cleanMenuAccess" parameterType="MenuAccess">
-      DELETE FROM MENU_ACCESS 
-      WHERE MENU_NO = #{menuNo}
-   </delete>
-   
-   <select id="checkMenuAccessMember" parameterType="MenuAccess" resultMap="menuResultSet">
-      SELECT M.MENU_NO, M.MENU_NAME, M.I_ADDRESS
-        FROM MENU M
-        JOIN MENU_ACCESS A ON(M.MENU_NO = A.MENU_NO)
-        JOIN ACCESSGROUP AG ON(A.ACCESSGROUP_NO = AG.ACCESSGROUP_NO)
-        JOIN ACCESS_MEMBER G ON(A.ACCESSGROUP_NO = G.ACCESSGROUP_NO)
-       WHERE M.MENU_NO = #{menuNo}
+	<insert id="insertHighDept" parameterType="DepartMent">
+		INSERT
+		INTO DEPT VALUES(#{deptNo}, #{deptName}, null, '1', 'Y')
+	</insert>
+	
+	<insert id="insertChildrenDept" parameterType="DepartMent">
+		INSERT
+		INTO DEPT VALUES(#{deptNo}, #{deptName}, #{highDept}, '2', 'Y')
+	</insert>
+	
+	<select id="selectMemberList" parameterType="DepartMent" resultMap="memberResultSet">
+		SELECT M.MEMBER_NO
+		      ,M.MEMBER_ID
+		      ,M.MEMBER_NAME
+		      ,M.PHONE
+		      ,M.EMAIL
+		      ,M.RANK_NO
+		      ,M.MEMBER_TYPE
+		      ,R.RANK_NAME
+		      ,D.DEPT_NAME
+		      ,E.DEPT_NO AS HIGH_DEPT
+		      ,M.DEPT_NO
+		      ,M.ENROLL_DATE
+		      ,M.STATUS
+		FROM MEMBER M
+		JOIN DEPT D ON(D.DEPT_NO = M.DEPT_NO) 
+		JOIN RANK R ON(M.RANK_NO = R.RANK_NO)
+		JOIN DEPT E ON(D.HIGH_DEPT = E.DEPT_NO)
+		WHERE M.STATUS = 'Y'
+		<if test="deptName != null">
+		AND D.DEPT_NAME = #{deptName}
+		</if>
+		<if test="deptNo != null">
+		AND M.DEPT_NO = #{deptNo}
+		</if>
+	</select>
+	
+	<select id="selectHighListMember" parameterType="DepartMent" resultMap="memberResultSet">
+		SELECT M.MEMBER_NO
+		      ,M.MEMBER_ID
+		      ,M.MEMBER_NAME
+		      ,M.PHONE
+		      ,M.RANK_NO
+		      ,M.EMAIL
+		      ,M.MEMBER_TYPE
+		      ,M.DEPT_NO
+		      ,R.RANK_NAME
+		      ,D.DEPT_NAME
+		      ,M.DEPT_NO AS HIGH_DEPT
+		      ,M.ENROLL_DATE
+		      ,M.STATUS
+		FROM MEMBER M
+		JOIN DEPT D ON(D.DEPT_NO = M.DEPT_NO) 
+		JOIN RANK R ON(M.RANK_NO = R.RANK_NO)
+		WHERE M.STATUS = 'Y'
+		<if test="deptName != null">
+		AND D.DEPT_NAME = #{deptName}
+		</if>
+		<if test="deptNo != null">
+		AND M.DEPT_NO = #{deptNo}
+		</if>
+	</select>
+	
+	<insert id="insertDeptHistory" parameterType="DeptHistory">
+		INSERT INTO DEPT_HISTORY 
+		VALUES('DH'|| TO_CHAR(SEQ_DH_NO.NEXTVAL, 'FM000'), #{changeMember}, SYSDATE, #{cContent}, #{originDept}, #{changeDept})
+	</insert>
+	
+	<update id="updateDeptMember" parameterType="DeptHistory">
+		UPDATE MEMBER SET DEPT_NO = #{changeDept}, RANK_NO = #{rankNo}
+		WHERE MEMBER_NO = #{changeMember}
+	</update>
+	
+	<select id="selectRankList" resultMap="rankResultSet">
+		SELECT *
+		FROM RANK
+	</select>
+	
+	<update id="updateDeleteDeptMember" parameterType="DepartMent">
+		UPDATE MEMBER SET DEPT_NO = 'CA01'
+		WHERE DEPT_NO = #{deptNo}
+	</update>
+	
+	<update id="deleteDept" parameterType="DepartMent">
+		UPDATE DEPT SET STATUS = 'N'
+		WHERE DEPT_NO = #{deptNo}
+	</update>
+	
+	<select id="selectAllMenu" resultMap="menuResultSet">
+		SELECT LPAD(' ', 2*(LEVEL-1)) || MENU_NAME AS MENU_NAME, MENU_NO, HIGH_MENU, MENU_LEVEL, ICON, I_ADDRESS, STATUS
+		FROM MENU
+		WHERE STATUS = 'Y'
+		START WITH HIGH_MENU IS NULL
+		CONNECT BY PRIOR MENU_NO = HIGH_MENU
+	</select>
+	<select id="selectAllMenuMage" resultMap="menuResultSet">
+		SELECT LPAD(' ', 2*(LEVEL-1)) || MENU_NAME AS MENU_NAME, MENU_NO, HIGH_MENU, MENU_LEVEL, ICON, I_ADDRESS, STATUS
+		FROM MENU
+		START WITH HIGH_MENU IS NULL
+		CONNECT BY PRIOR MENU_NO = HIGH_MENU
+	</select>
+	
+	<select id="selectAllAccess" resultMap="accessResultSet">
+		SELECT ACCESSGROUP_NO
+			  ,ACCESS_NAME
+		      ,A_CONTENT
+	       	  ,STATUS
+		      ,CREATE_DATE
+		      ,MODIFY_DATE
+		FROM ACCESSGROUP
+		WHERE STATUS = 'Y'
+	</select>
+	
+	<select id="selectOneMenu" resultMap="menuResultSet">
+		SELECT MENU_NAME, MENU_NO, HIGH_MENU, MENU_LEVEL, ICON, I_ADDRESS, STATUS
+		FROM MENU
+		WHERE MENU_NO = #{menuNo}
+	</select>
+	
+	<insert id="insertMenuAccess" parameterType="java.util.Map">
+		<foreach item="item" collection="list" open="INSERT ALL"
+			close="SELECT * FROM DUAL">
+			INTO MENU_ACCESS
+			VALUES (#{item.menuNo}, #{item.accessGroupNo})
+		</foreach>
+	</insert>
+	
+	<select id="selectUseAccessList" parameterType="Menu" resultMap="accessResultSet">
+		SELECT M.ACCESSGROUP_NO
+    		  ,A.ACCESS_NAME
+      		  ,A.A_CONTENT
+      		  ,A.STATUS
+      	      ,A.CREATE_DATE
+      		  ,A.MODIFY_DATE    
+		FROM MENU_ACCESS M
+		JOIN ACCESSGROUP A ON(A.ACCESSGROUP_NO = M.ACCESSGROUP_NO)
+		WHERE A.STATUS = 'Y'
+		AND M.MENU_NO = #{menuNo}
+	</select>
+	
+	<delete id="cleanMenuAccess" parameterType="MenuAccess">
+		DELETE FROM MENU_ACCESS 
+		WHERE MENU_NO = #{menuNo}
+	</delete>
+	
+	<select id="checkMenuAccessMember" parameterType="MenuAccess" resultMap="menuResultSet">
+		SELECT M.MENU_NO, M.MENU_NAME, M.I_ADDRESS
+		  FROM MENU M
+		  JOIN MENU_ACCESS A ON(M.MENU_NO = A.MENU_NO)
+		  JOIN ACCESSGROUP AG ON(A.ACCESSGROUP_NO = AG.ACCESSGROUP_NO)
+		  JOIN ACCESS_MEMBER G ON(A.ACCESSGROUP_NO = G.ACCESSGROUP_NO)
+		 WHERE M.MENU_NO = #{menuNo}
            AND G.MEMBER_NO = #{memberNo}
-   </select>
-   
-   <select id="noAccessMenu" parameterType="Member" resultMap="menuResultSet">
-      SELECT M.MENU_NO, M.MENU_NAME, M.I_ADDRESS
-      FROM MENU M
-      JOIN MENU_ACCESS A ON(M.MENU_NO = A.MENU_NO)
-      JOIN ACCESSGROUP AG ON(A.ACCESSGROUP_NO = AG.ACCESSGROUP_NO)
-      JOIN ACCESS_MEMBER G ON(A.ACCESSGROUP_NO = G.ACCESSGROUP_NO)
-      MINUS
-      SELECT M.MENU_NO, M.MENU_NAME, M.I_ADDRESS
-      FROM MENU M
-      JOIN MENU_ACCESS A ON(M.MENU_NO = A.MENU_NO)
-      JOIN ACCESSGROUP AG ON(A.ACCESSGROUP_NO = AG.ACCESSGROUP_NO)
-      JOIN ACCESS_MEMBER G ON(A.ACCESSGROUP_NO = G.ACCESSGROUP_NO)
-      WHERE G.MEMBER_NO = #{memberNo}
-   </select>
+	</select>
+	
+	<select id="noAccessMenu" parameterType="Member" resultMap="menuResultSet">
+		SELECT M.MENU_NO, M.MENU_NAME, M.I_ADDRESS
+		FROM MENU M
+		JOIN MENU_ACCESS A ON(M.MENU_NO = A.MENU_NO)
+		JOIN ACCESSGROUP AG ON(A.ACCESSGROUP_NO = AG.ACCESSGROUP_NO)
+		JOIN ACCESS_MEMBER G ON(A.ACCESSGROUP_NO = G.ACCESSGROUP_NO)
+		MINUS
+		SELECT M.MENU_NO, M.MENU_NAME, M.I_ADDRESS
+		FROM MENU M
+		JOIN MENU_ACCESS A ON(M.MENU_NO = A.MENU_NO)
+		JOIN ACCESSGROUP AG ON(A.ACCESSGROUP_NO = AG.ACCESSGROUP_NO)
+		JOIN ACCESS_MEMBER G ON(A.ACCESSGROUP_NO = G.ACCESSGROUP_NO)
+		WHERE G.MEMBER_NO = #{memberNo}
+	</select>
+	
+	<update id="updateMenuInfo" parameterType="MenuAccess">
+		UPDATE MENU SET MENU_NAME = #{menuName}, STATUS = #{status}
+		WHERE MENU_NO = #{menuNo}
+	</update>
 </mapper>
 
 
