@@ -117,7 +117,10 @@
 						<td class="title"><div class="div"><p style="color:  #5e738b;">공지사항 첨부파일</p></div></td>
 					</tr>
 					<tr>
-						<td><input type="file" name="upfile"></td>
+						<td style="width: 300px;"><input type="file" name="upfile"></td>
+					</tr>
+					<tr>
+						<td><div id="down">${at.originName}</div></td>
 					</tr>
 					<tr>
 						<td class="title"><div class="div"><p style="color:  #5e738b;">공지사항 내용</p></div></td>
