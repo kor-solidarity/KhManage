@@ -120,7 +120,6 @@
 														  style="visibility:hidden; width:50px;"></td>
 					</tr>
 
-
 					<tr class="trRange">
 						<td class="td1"><a href="${ path }/viewProject.pr">KH대학교 학사시스템 개발</a></td>
 						<td class="tdText">SW개발</td>
@@ -133,6 +132,23 @@
 						<td class="tdText">0</td>
 						<td class="tdText">0</td>
 					</tr>
+
+					<c:forEach var="pl" items="${list}">
+						<tr class="trRange">
+							<td class="td1"><a href="${path}/viewProject.pr?pid=${pl.projectPk}">${pl.projectName}</a></td>
+							<td class="tdText">${pl.projectTypeName}</td>
+							<td class="tdText">${pl.projectManagerName}</td>
+							<td class="tdText">${pl.deptName}</td>
+							<td class="tdText">${pl.status}</td>
+							<td class="tdText">${pl.startDate}</td>
+							<td class="tdText">${pl.endDate}</td>
+							<td class="tdText">10%</td>
+							<%--산출물--%>
+							<td class="tdText">0</td>
+							<%--이슈--%>
+							<td class="tdText">0</td>
+						</tr>
+					</c:forEach>
 
 				</table>
 
