@@ -20,7 +20,8 @@
 		margin-left: 5px; 
 		margin-right: 5px; 
 		background: #1E2B44; 
-		width: 270px; 
+		width: 250px; 
+		max-height: 150px;
 		min-height: 25px; 
 		border-radius: 4px; 
 	}
@@ -108,17 +109,23 @@
 	.header{
 		color: white;
 	}
+	
+	::-webkit-scrollbar {
+
+		display:none;
+
+	} 
 </style>
 </head>
 <body id="bodyAll" onload="$('#route1').text('내 작업'), $('#route2').text('작업 관리')">
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
-	<jsp:include page="/WEB-INF/views/user/common/sidebar.jsp"/>
+	<jsp:include page="/WEB-INF/views/user/common/sidebar2.jsp"/>
 	<script src="${path }/resources/js/websocketopen.js"></script>
 	<div class="panel panel-headline">
 		<div class="panel-heading">
 			<div style="width:100%; height:700px; margin:0 auto; overflow:auto;">
 			<div class="oversort ui-sortable">
-				<div class="sortable ui-sortable" id="workArea" style="overflow:auto;">
+				<div class="sortable ui-sortable" id="workArea"  style="overflow-y:auto; overflow-x:hidden; -ms-overflow-style: none;">
 					<h5 class="nodrag header">내 할일</h5>
 					<div>개발작업</div>
 					<div>테스트 - 진행중</div>

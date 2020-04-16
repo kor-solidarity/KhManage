@@ -96,7 +96,7 @@
 </head>
 <body onload="$('#route1').text('일반업무'), $('#route2').text('이슈 관리')">
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
-	<jsp:include page="/WEB-INF/views/user/common/sidebar.jsp"/>
+	<jsp:include page="/WEB-INF/views/user/common/sidebar2.jsp"/>
 	
 	<div class="panel panel-headline">
 		<div class="panel-heading">

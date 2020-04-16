@@ -193,7 +193,7 @@
 </head>
 <body onload="$('#route1').text('일반업무'), $('#route2').text('변경요청 승인')">
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
-	<jsp:include page="/WEB-INF/views/user/common/sidebar.jsp"/>
+	<jsp:include page="/WEB-INF/views/user/common/sidebar2.jsp"/>
 		<div class="changePanel">
 			<ul class="changeList">
 				<li id="requestLi"><a href="changeRequestList.iu">변경요청</a>
