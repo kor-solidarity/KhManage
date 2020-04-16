@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 import com.kh.manage.admin.adminManage.vo.DepartMent;
+import com.kh.manage.admin.adminManage.vo.Menu;
 import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.rank.model.vo.Rank;
 import com.kh.manage.common.Attachment;
@@ -51,18 +52,20 @@ public class MemberController {
 		return "admin/main/adminMainPage";
 	}
 	
+	//member리스트 조회	
 	@RequestMapping("/userManagement.me")
-	public String userManagementMain() {
+	public String userManagementMain(Model model, HttpServletRequest request) {
+		
+		List<Member> mlist = ms.selectMemberList();
+		
+		request.setAttribute("mlist", mlist);
 
 		return "admin/userManagement/userManagement";
 	}
+
 	
-//	@RequestMapping("myProfile.me")
-//	public String myProfile() {
-//		
-//		return "user/myProfile/myProfileMain";
-//	}
 	
+	//디테일 대시보드 이동
 	@RequestMapping("/detailDashboard.me")
 	public String detailDashboard() {
 		
@@ -79,7 +82,7 @@ public class MemberController {
 	//*************************************************
 
 	@RequestMapping("/login.me")
-	public String loginCheck(Member m, Model model) {
+	public String loginCheck(Member m, Model model, HttpSession session) {
 //		String memberId = request.getParameter("memberId");
 //		String memberPwd = request.getParameter("memberPwd");
 		
@@ -88,13 +91,29 @@ public class MemberController {
 		try {
 			loginUser = ms.loginMember(m);
 			
+			List<Menu> list = ms.selectAllMenu();
+			
+			List<Menu> removeList = ms.noAccessMenu(loginUser);
+	         
+	         for(int i = 0; i < list.size(); i++) {
+	            for(int j = 0; j < removeList.size(); j ++) {
+	               if(list.get(i).getMenuNo().equals(removeList.get(j).getMenuNo())) {
+	                  list.remove(i);
+	                  i--;
+	                  j = removeList.size();
+	               }
+	            }
+	         }
+			
+			session.setAttribute("menuAllList", list);
+			
 			model.addAttribute("loginUser", loginUser);
 			
 			return "user/main/userMainPage";
 		} catch (LoginException e) {
 			model.addAttribute("msg", e.getMessage());
 			
-			return "common/errorPage";
+			return "user/common/errorPage";
 		}
 		
 	}
@@ -234,7 +253,8 @@ public class MemberController {
 	}
 	
 	
-	//회원정보 수정
+	
+	//회원정보 수정 프로필사진 
 	@RequestMapping("insertProfileImage.me")
 	public String insertProfileImage(Model model, Member m, HttpServletRequest request, 
 			@RequestParam MultipartFile profileImage) {
@@ -264,26 +284,44 @@ public class MemberController {
 		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
 		at.setDivision(loginUser.getMemberNo());
 			
-		try {
+		
+		Attachment originFile = ms.selectAttachment(loginUser);
+
+		if(originFile != null) {
 			
-			int result = ms.insertProfileImage(at);
-			System.out.println("프로필이미지 result : " + result);
-			profileImage.transferTo(new File(filePath + "\\" + changeName + ext));
-//			profileImage.transferTo(new File(filePath + changeName + ext)); // Mac용
-//			profileImage.transferTo(new File(filePath + changeName + ".png")); // Mac용
-			
-		} catch (Exception e) {
-			
-			//실패 시 파일 삭제
+			//기존 파일을 제거
 			new File(filePath + "\\" + changeName + ext).delete();
+						
+			//DB 업데이트
+			int result = ms.updateProfileImage(at);
+			System.out.println("이미지 업데이트 result : " + result); 
+			
+			try {
+				profileImage.transferTo(new File(filePath + "\\" + changeName + ext));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			
+		} else {
+			
+			//등록
+			try {
+				int result = ms.insertProfileImage(at);
+				System.out.println("프로필이미지 result : " + result);
+				profileImage.transferTo(new File(filePath + "\\" + changeName + ext));
+//				profileImage.transferTo(new File(filePath + changeName + ext)); // Mac
+				
+			} catch (Exception e) {
+				//실패 시 파일 삭제
+				new File(filePath + "\\" + changeName + ext).delete();
+			}
 			
 		}
 		
-		
-		return "user/myProfile/myProfileMain";
+//		return "user/myProfile/myProfileMain";
+		return "redirect:myProfile.me";
 	}
-	
-	
 	
 	
 	
@@ -336,6 +374,17 @@ public class MemberController {
 		
 	}
 	
+	
+	
+//	//멤버 select Modal
+//	@RequestMapping("selecMemberModal.me")
+//	public void selecMemberModal(Member m, Model model, HttpServletRequest request) {
+//	
+//		Member member = new Member();
+//		
+//		
+//		
+//	}
 	
 	
 	

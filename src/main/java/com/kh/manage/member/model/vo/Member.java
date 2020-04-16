@@ -1,8 +1,9 @@
 package com.kh.manage.member.model.vo;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Member {
+public class Member implements Serializable {
 
 	private String memberNo;
 	private String memberId;
@@ -13,8 +14,11 @@ public class Member {
 	private String jobCode;
 	private String memberType;
 	private String rankNo;
+	private String rankName;
 	private String deptNo;
+	private String deptName;
 	private String deapTeamNo;
+	private String deptTeamName;
 	private Date enrollDate;
 	private Date modifyDate;
 	private String status;
@@ -22,8 +26,8 @@ public class Member {
 	public Member() {}
 
 	public Member(String memberNo, String memberId, String memberPwd, String memberName, String phone, String email,
-			String jobCode, String memberType, String rankNo, String deptNo, String deapTeamNo, Date enrollDate,
-			Date modifyDate, String status) {
+			String jobCode, String memberType, String rankNo, String rankName, String deptNo, String deptName,
+			String deapTeamNo, String deptTeamName, Date enrollDate, Date modifyDate, String status) {
 		super();
 		this.memberNo = memberNo;
 		this.memberId = memberId;
@@ -34,8 +38,11 @@ public class Member {
 		this.jobCode = jobCode;
 		this.memberType = memberType;
 		this.rankNo = rankNo;
+		this.rankName = rankName;
 		this.deptNo = deptNo;
+		this.deptName = deptName;
 		this.deapTeamNo = deapTeamNo;
+		this.deptTeamName = deptTeamName;
 		this.enrollDate = enrollDate;
 		this.modifyDate = modifyDate;
 		this.status = status;
@@ -113,6 +120,14 @@ public class Member {
 		this.rankNo = rankNo;
 	}
 
+	public String getRankName() {
+		return rankName;
+	}
+
+	public void setRankName(String rankName) {
+		this.rankName = rankName;
+	}
+
 	public String getDeptNo() {
 		return deptNo;
 	}
@@ -121,12 +136,28 @@ public class Member {
 		this.deptNo = deptNo;
 	}
 
+	public String getDeptName() {
+		return deptName;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
+
 	public String getDeapTeamNo() {
 		return deapTeamNo;
 	}
 
 	public void setDeapTeamNo(String deapTeamNo) {
 		this.deapTeamNo = deapTeamNo;
+	}
+
+	public String getDeptTeamName() {
+		return deptTeamName;
+	}
+
+	public void setDeptTeamName(String deptTeamName) {
+		this.deptTeamName = deptTeamName;
 	}
 
 	public Date getEnrollDate() {
@@ -157,9 +188,11 @@ public class Member {
 	public String toString() {
 		return "Member [memberNo=" + memberNo + ", memberId=" + memberId + ", memberPwd=" + memberPwd + ", memberName="
 				+ memberName + ", phone=" + phone + ", email=" + email + ", jobCode=" + jobCode + ", memberType="
-				+ memberType + ", rankNo=" + rankNo + ", deptNo=" + deptNo + ", deapTeamNo=" + deapTeamNo
-				+ ", enrollDate=" + enrollDate + ", modifyDate=" + modifyDate + ", status=" + status + "]";
+				+ memberType + ", rankNo=" + rankNo + ", rankName=" + rankName + ", deptNo=" + deptNo + ", deptName="
+				+ deptName + ", deapTeamNo=" + deapTeamNo + ", deptTeamName=" + deptTeamName + ", enrollDate="
+				+ enrollDate + ", modifyDate=" + modifyDate + ", status=" + status + "]";
 	}
+
 	
 	
 	

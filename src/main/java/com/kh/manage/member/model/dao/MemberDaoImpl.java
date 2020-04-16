@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.manage.admin.adminManage.vo.DepartMent;
+import com.kh.manage.admin.adminManage.vo.Menu;
 import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.rank.model.vo.Rank;
 import com.kh.manage.common.Attachment;
@@ -99,6 +100,36 @@ public class MemberDaoImpl implements MemberDao {
 	public Attachment selectProfileImg(SqlSessionTemplate sqlSession, Member m) {
 		
 		return sqlSession.selectOne("Member.selectProfileImg", m);
+	}
+
+	@Override
+	public List<Member> selectMemberList(SqlSessionTemplate sqlSession) {
+
+		return sqlSession.selectList("Member.selectMemberList");
+	}
+
+	@Override
+	public Attachment selectAttachment(SqlSessionTemplate sqlSession, Member loginUser) {
+
+		return sqlSession.selectOne("Member.selectProfileImg", loginUser);
+	}
+
+	@Override
+	public int updateProfileImage(SqlSessionTemplate sqlSession, Attachment at) {
+
+		return sqlSession.update("Member.updateProfileImage", at);
+	}
+
+	@Override
+	public List<Menu> selectAllMenu(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectList("Admin.selectAllMenu");
+	}
+
+	@Override
+	public List<Menu> noAccessMenu(SqlSessionTemplate sqlSession, Member loginUser) {
+		
+		return sqlSession.selectList("Admin.noAccessMenu", loginUser);
 	}
 
 

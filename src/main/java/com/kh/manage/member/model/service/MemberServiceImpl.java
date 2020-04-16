@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionManager;
 
 import com.kh.manage.admin.adminManage.vo.DepartMent;
+import com.kh.manage.admin.adminManage.vo.Menu;
 import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.rank.model.vo.Rank;
 import com.kh.manage.common.Attachment;
@@ -154,6 +155,38 @@ public class MemberServiceImpl implements MemberService {
 	public Attachment selectProfileImg(Member m) {
 		
 		return md.selectProfileImg(sqlSession, m);
+	}
+
+	@Override
+	public List<Member> selectMemberList() {
+
+		return md.selectMemberList(sqlSession);
+	}
+
+	@Override
+	public Attachment selectAttachment(Member loginUser) {
+		// TODO Auto-generated method stub
+		return md.selectAttachment(sqlSession, loginUser);
+	}
+
+	@Override
+	public int updateProfileImage(Attachment at) {
+
+		int result = md.updateProfileImage(sqlSession, at);
+		
+		return result;
+	}
+
+	@Override
+	public List<Menu> selectAllMenu() {
+		
+		return md.selectAllMenu(sqlSession);
+	}
+
+	@Override
+	public List<Menu> noAccessMenu(Member loginUser) {
+
+		return md.noAccessMenu(sqlSession, loginUser);
 	}
 
 	

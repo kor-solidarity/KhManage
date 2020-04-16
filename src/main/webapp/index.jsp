@@ -17,10 +17,18 @@ body {
 	margin: 0 auto;
 }
 
+button {
+	cursor: pointer;
+}
+
+button:hover {
+	background: #0C65E8;
+}
+
 .LogoArea {
-	align: center;
-	margin: 0 auto;
-		
+	margin-top: 100px;
+	margin-bottom: -180px;
+	margin-left: 43%;
 }
 
 .content {
@@ -41,7 +49,7 @@ body {
 }
 
 .btn {
-	background: #45B6AF;
+	background: #00AAFF;
 	border: none;
 	color: white;
 	font-weight: bold;
@@ -49,6 +57,7 @@ body {
 	width: 100px;
 	height: 40px;
 	margin-top: 30px;
+	
 }
 
 #rememberMe{
@@ -63,13 +72,13 @@ body {
 	<div id="wrap">
 		 
 		 <!-- Begin Logo -->
-			<div class="LogoArea" style="align:center">
-				<%-- <img src="<c:url value="/resources/assets/img/newlogowhite.png"/>"style="width: 20%; height: 20%;"> --%> 
+			<div class="LogoArea">
+				<img src="<c:url value="/resources/assets/img/newlogowhite.png"/>"style="width: 180px; height: 60px;"> 
 			</div> <!-- End Logo -->
 		
 		<!-- Begin Login Form -->
 		<div class="content"> 
-			<h3 align="center" class="form-title" style="font-size: 35px; padding-top: 30px; color:#45B6AF;">로그인</h3>
+			<h3 align="center" class="form-title" style="font-size: 35px; padding-top: 30px; color:#00AAFF;">로그인</h3>
 			<form action="login.me" method="post">
 			
 				<!-- <div class="alert alert-danger display-hide">
@@ -81,12 +90,18 @@ body {
 	            <table align="center">
 	            	<tr>
 	            		<td>
-	            			 <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="on" placeholder="아이디를 입력하세요." name="memberId" required/>
+	            			 <input class="form-control form-control-solid placeholder-no-fix" 
+	            			 type="text" autocomplete="on" placeholder="아이디를 입력하세요." name="memberId">
 	            		</td>
 	            	</tr>
 	            	<tr>
 	            		<td>
-	            			<input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="패스워드" name="memberPwd" required/>
+	            			<input class="form-control form-control-solid placeholder-no-fix" 
+	            			type="password" autocomplete="off" placeholder="패스워드" name="memberPwd">
+	            			
+	            			<!-- <input class="form-control form-control-solid placeholder-no-fix" 
+	            			type="password" autocomplete="off" placeholder="패스워드" name="memberPwd" 
+	            			required required oninvalid="this.setCustomValidity('패스워드를 입력해주세요.')"/> -->
 	            		</td>
 	            	</tr>
 	            	<!-- <tr>
