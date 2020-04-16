@@ -79,9 +79,9 @@
         select to_char(SEQ_PROJ.currval, 'FM000')
         from dual
     </select>
-    <select id="selectAllProjects" resultMap="Project">
+   <!--  select id="selectAllProjects" resultMap="Project">
 
-    </select>
+    </select>-->
     <select id="selectTemplateList" resultMap="templateResultSet">
         select *
         from PROJECT_TEMPLATE
