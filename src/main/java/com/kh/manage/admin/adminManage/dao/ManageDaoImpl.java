@@ -180,7 +180,7 @@ public class ManageDaoImpl implements ManageDao {
 	@Override
 	public List<Menu> selectAllMenu(SqlSessionTemplate sqlSession) {
 		
-		return sqlSession.selectList("Admin.selectAllMenu");
+		return sqlSession.selectList("Admin.selectAllMenuMage");
 	}
 
 	@Override
@@ -211,6 +211,18 @@ public class ManageDaoImpl implements ManageDao {
 	public int cleanMenuAccess(SqlSessionTemplate sqlSession, MenuAccess ma) {
 		
 		return sqlSession.delete("Admin.cleanMenuAccess", ma);
+	}
+
+	@Override
+	public List<Menu> checkMenuAccessMember(SqlSessionTemplate sqlSession, MenuAccess menu) {
+	
+		return sqlSession.selectList("Admin.checkMenuAccessMember", menu);
+	}
+
+	@Override
+	public int updateMenuInfo(SqlSessionTemplate sqlSession, MenuAccess ma) {
+		
+		return sqlSession.update("Admin.updateMenuInfo", ma);
 	}
 
 }

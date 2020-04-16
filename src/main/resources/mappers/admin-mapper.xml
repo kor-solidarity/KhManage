@@ -94,6 +94,7 @@
 		      ,MODIFY_DATE
 		FROM ACCESSGROUP
 		WHERE STATUS = 'Y'
+		ORDER BY 5 DESC
 	</select>
 
 	<select id="getListCount" resultType="_int">
@@ -287,12 +288,12 @@
 
 	<insert id="insertHighDept" parameterType="DepartMent">
 		INSERT
-		INTO DEPT VALUES(#{deptNo}, #{deptName}, null, '1')
+		INTO DEPT VALUES(#{deptNo}, #{deptName}, null, '1', 'Y')
 	</insert>
 	
 	<insert id="insertChildrenDept" parameterType="DepartMent">
 		INSERT
-		INTO DEPT VALUES(#{deptNo}, #{deptName}, #{highDept}, '2')
+		INTO DEPT VALUES(#{deptNo}, #{deptName}, #{highDept}, '2', 'Y')
 	</insert>
 	
 	<select id="selectMemberList" parameterType="DepartMent" resultMap="memberResultSet">
@@ -376,6 +377,13 @@
 	<select id="selectAllMenu" resultMap="menuResultSet">
 		SELECT LPAD(' ', 2*(LEVEL-1)) || MENU_NAME AS MENU_NAME, MENU_NO, HIGH_MENU, MENU_LEVEL, ICON, I_ADDRESS, STATUS
 		FROM MENU
+		WHERE STATUS = 'Y'
+		START WITH HIGH_MENU IS NULL
+		CONNECT BY PRIOR MENU_NO = HIGH_MENU
+	</select>
+	<select id="selectAllMenuMage" resultMap="menuResultSet">
+		SELECT LPAD(' ', 2*(LEVEL-1)) || MENU_NAME AS MENU_NAME, MENU_NO, HIGH_MENU, MENU_LEVEL, ICON, I_ADDRESS, STATUS
+		FROM MENU
 		START WITH HIGH_MENU IS NULL
 		CONNECT BY PRIOR MENU_NO = HIGH_MENU
 	</select>
@@ -422,6 +430,36 @@
 		DELETE FROM MENU_ACCESS 
 		WHERE MENU_NO = #{menuNo}
 	</delete>
+	
+	<select id="checkMenuAccessMember" parameterType="MenuAccess" resultMap="menuResultSet">
+		SELECT M.MENU_NO, M.MENU_NAME, M.I_ADDRESS
+		  FROM MENU M
+		  JOIN MENU_ACCESS A ON(M.MENU_NO = A.MENU_NO)
+		  JOIN ACCESSGROUP AG ON(A.ACCESSGROUP_NO = AG.ACCESSGROUP_NO)
+		  JOIN ACCESS_MEMBER G ON(A.ACCESSGROUP_NO = G.ACCESSGROUP_NO)
+		 WHERE M.MENU_NO = #{menuNo}
+           AND G.MEMBER_NO = #{memberNo}
+	</select>
+	
+	<select id="noAccessMenu" parameterType="Member" resultMap="menuResultSet">
+		SELECT M.MENU_NO, M.MENU_NAME, M.I_ADDRESS
+		FROM MENU M
+		JOIN MENU_ACCESS A ON(M.MENU_NO = A.MENU_NO)
+		JOIN ACCESSGROUP AG ON(A.ACCESSGROUP_NO = AG.ACCESSGROUP_NO)
+		JOIN ACCESS_MEMBER G ON(A.ACCESSGROUP_NO = G.ACCESSGROUP_NO)
+		MINUS
+		SELECT M.MENU_NO, M.MENU_NAME, M.I_ADDRESS
+		FROM MENU M
+		JOIN MENU_ACCESS A ON(M.MENU_NO = A.MENU_NO)
+		JOIN ACCESSGROUP AG ON(A.ACCESSGROUP_NO = AG.ACCESSGROUP_NO)
+		JOIN ACCESS_MEMBER G ON(A.ACCESSGROUP_NO = G.ACCESSGROUP_NO)
+		WHERE G.MEMBER_NO = #{memberNo}
+	</select>
+	
+	<update id="updateMenuInfo" parameterType="MenuAccess">
+		UPDATE MENU SET MENU_NAME = #{menuName}, STATUS = #{status}
+		WHERE MENU_NO = #{menuNo}
+	</update>
 </mapper>
 
 

@@ -72,5 +72,9 @@ public interface ManageService {
 
 	List<Access> selectUseAccessList(Menu menu);
 
-	int cleanMenuAccess(MenuAccess ma); 
+	int cleanMenuAccess(MenuAccess ma);
+
+	List<Menu> checkMenuAccessMember(MenuAccess menu);
+
+	int updateMenuInfo(MenuAccess ma); 
 }

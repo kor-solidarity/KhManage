@@ -79,4 +79,8 @@ public interface ManageDao {
 	List<Access> selectUseAccessList(SqlSessionTemplate sqlSession, Menu menu);
 
 	int cleanMenuAccess(SqlSessionTemplate sqlSession, MenuAccess ma);
+
+	List<Menu> checkMenuAccessMember(SqlSessionTemplate sqlSession, MenuAccess menu);
+
+	int updateMenuInfo(SqlSessionTemplate sqlSession, MenuAccess ma);
 }

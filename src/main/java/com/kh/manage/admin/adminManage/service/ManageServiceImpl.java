@@ -215,5 +215,17 @@ public class ManageServiceImpl implements ManageService{
 		
 		return ad.cleanMenuAccess(sqlSession, ma);
 	}
+
+	@Override
+	public List<Menu> checkMenuAccessMember(MenuAccess menu) {
+		
+		return ad.checkMenuAccessMember(sqlSession, menu);
+	}
+
+	@Override
+	public int updateMenuInfo(MenuAccess ma) {
+		
+		return ad.updateMenuInfo(sqlSession, ma);
+	}
 	
 }
