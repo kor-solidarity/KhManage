@@ -18,16 +18,28 @@
 		<result property="highWorkNo" column="HIGH_WORK_NO"/>
 		<result property="memo" column="MEMO"/>
 		<result property="workType" column="WORK_TYPE"/>
+		<result property="memberNo" column="MEMBER_NO"/>
 	</resultMap>
 
 	<insert id="insertWork" parameterType="Work">
 		INSERT INTO WORK
 		VALUES('W' || TO_CHAR(SEQ_WNO.NEXTVAL, 'FM000'), #{workName}, #{status}, #{projectNo}, 
 			   #{beginDate}, #{completeDate}, #{precedeNo}, #{completeRate}, #{grantorNo}, #{workLevel}, 
-			   #{highWorkNo}, #{memo}, #{workType}) 
+			   #{highWorkNo}, #{memo}, #{workType}, #{memberNo}) 
 	</insert>
 	
 
+	<select id="selectWorkList" parameterType="Member" resultMap="workResultSet">
+	SELECT *
+	FROM WORK
+	WHERE MEMBER_NO = #{memberNo}
+	</select>
+	
+	<select id="selectWork" parameterType="java.lang.String" resultMap="workResultSet">
+	SELECT *
+	FROM WORK
+	WHERE WORK_NO = #{workNo}
+	</select>
 
 </mapper>
 
