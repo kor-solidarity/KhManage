@@ -390,13 +390,16 @@
 									if(list[key]['memberNo']== a){
 										$(".mainFront").after("<tr class='trRange1'> <td class='td1'><input type='checkbox' id='idCheckMain' name='idCheck' class='inputCss' style='width: 30px;'></td> <td class='td1'>"+list[key]['deptName'] +"</td> <td class='tdText'>"+list[key]['memberName']+"</td> <td class='tdText'>"+list[key]['rankNo']+"<input type='hidden' id='memberNo' name='memberNo' class='memberNo' value='"+ list[key]['memberNo']+"'></td> <td class='tdText'>"+list[key]['email']+"</td> </tr>");
 										memberList = list[key]['memberNo'];
-									}
+									}         
 								}
 						       }
 						    
 							});
 							if(!bool){
-								alert("이미 들어간 회원입니다!")
+								swal({
+					                 title: "이미 포함된 회원입니다.",
+					                icon: "error"
+					              });
 							}else{
 								$('#myModal').modal('hide');
 							}

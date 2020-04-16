@@ -206,7 +206,7 @@ ul{
 						<tr height="10px;"></tr>
 						<tr>
 							<td class="titleId">메뉴주소</td> 
-							<td><input type="text" id="iAddress" name="menuNo" class="inputMenu" readonly="readonly"></td>
+							<td><input type="text" id="iAddress" name="iAddress" class="inputMenu" readonly="readonly"></td>
 						</tr>
 						<tr height="10px;"></tr>
 						<tr>

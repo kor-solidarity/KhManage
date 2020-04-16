@@ -104,6 +104,16 @@
     <load-on-startup>1</load-on-startup>
   </servlet>
   
+   <servlet>
+    <servlet-name>GeneralWork</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>/WEB-INF/config/generalWork-servlet.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet> 
+  
   <servlet>
     <servlet-name>Forum</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -137,6 +147,11 @@
   <servlet-mapping>
     <servlet-name>Work</servlet-name>
     <url-pattern>*.wk</url-pattern>
+  </servlet-mapping>
+  
+   <servlet-mapping>
+    <servlet-name>GeneralWork</servlet-name>
+    <url-pattern>*.gw</url-pattern>
   </servlet-mapping>
   
    <servlet-mapping>
