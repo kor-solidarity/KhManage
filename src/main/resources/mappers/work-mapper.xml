@@ -33,6 +33,7 @@
 	SELECT *
 	FROM WORK
 	WHERE MEMBER_NO = #{memberNo}
+	ORDER BY WORK_NO ASC
 	</select>
 	
 	<select id="selectWork" parameterType="java.lang.String" resultMap="workResultSet">
