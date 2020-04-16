@@ -116,7 +116,7 @@
 		width: 250px;
 	}
 	#noticeTable #tr:hover{
-		background : #dcdcdc;
+		background : #F3F3F3;
 	}
 	.td{
 		width: 10px;
@@ -125,7 +125,7 @@
 </head>
 <body onload="$('#route1').text('공지사항')">
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp" />
-	<jsp:include page="/WEB-INF/views/user/common/sidebar.jsp" />
+	<jsp:include page="/WEB-INF/views/user/common/sidebar2.jsp" />
 	<div class="panel panel-headline">
 		<div class="panel-heading">
 			<div
@@ -166,10 +166,10 @@
 					<c:forEach var="n" items="${list}">
 						<tr id="tr" style="border-bottom: 1px solid #d2d2d2; border-top: 1px solid #d2d2d2;">
 							<td class="titletd2">${n.noticeTitle}</td>
-							<td class="sendtd2">${n.noticeTitle}</td>
+							<td class="sendtd2">${n.viewCount}</td>
 							<td class="sendtd2">${n.noticeTitle}</td>
 							<td class="datetd2">${n.memberNo}</td>
-							<td class="td"><input   value="${n.noticeNo}"></td>
+							<td class="td"><input type="hidden"  value="${n.noticeNo}"></td>
 						</tr>
 					</c:forEach>
 					<tr class="pagingArea">

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -101,7 +102,7 @@
 			<div
 				style="width: 100%; height: 900px; margin: 0 auto; overflow: auto;">
 				
-				<p class="p">공지사항 작성</p>
+				<p class="p">공지사항 수정</p>
 				
 				<hr>
 				<form method="post" action="insertNotice.fo" id="noticeForm" enctype="multipart/form-data">
@@ -110,7 +111,7 @@
 						<td class="title"><div class="div"><p style="color:  #5e738b;">공지사항 제목</p></div></td>
 					</tr>
 					<tr>
-						<td><input type="text" placeholder="공지사항 제목 입력" name="noticeTitle" id="noticeTitle"></td>
+						<td><input type="text" placeholder="${n.noticeTitle}" name="noticeTitle" id="noticeTitle"></td>
 					</tr>
 					<tr>
 						<td class="title"><div class="div"><p style="color:  #5e738b;">공지사항 첨부파일</p></div></td>
@@ -123,14 +124,16 @@
 					</tr>
 					<tr>
 						<td>
-							<textarea cols="80" rows="14" id="summernote" name="noticeContent"></textarea>
+							<textarea cols="80" rows="14" id="summernote" name="noticeContent">
+								${n.noticeContent }
+							</textarea>
 						</td>
 					</tr>
 					<tr>
 						<td colspan="4">
 							<div class="div">
 							<button class="okBtn" onclick="goWrite();" id="save">
-								<i class="fas fa-check"></i>&nbsp;저장
+								<i class="fas fa-check"></i>&nbsp;수정
 							</button>
 								<a href="accessManage.am">
 								&nbsp;
@@ -162,8 +165,15 @@
 	        focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
 	        lang: "ko-KR",               // 한글 설정
 	        placeholder: '최대 2048자까지 쓸 수 있습니다'   //placeholder 설정
+	        
 		   });
+	   
+	   
+	   		console.log("sdadsd");
+	   		
 	});
+	
+	
 	
 /* 	$("#save").click(function(){
 		
