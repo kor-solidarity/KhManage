@@ -40,6 +40,12 @@ public class ManageController {
 	@Autowired
 	private ManageService as;
 	
+	@RequestMapping("/showUserManiPage.am")
+	public String showUserMainPage() {
+		
+		return "user/main/userMainPage";
+	}
+	
 	//권한 그룹 전체 페이지 + 페이징
 	@RequestMapping("/accessManage.am")
 	public String showAccessPage(Model model, HttpServletRequest request) {
