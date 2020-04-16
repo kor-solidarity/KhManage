@@ -869,7 +869,7 @@ ul {
 		function tree_menu() {
 			$(".menuTable").find(".title").on('click', function(e){
 								var temp_el = $(this).parent().parent().nextUntil(".depth_2");
-								var depth_3 = $(this).parent().parent().nextUntil(".depth_3");
+								var depth_3 = $(this).parent().parent().nextUntil(".depth_2");
 								
 								depth_3.slideUp(300);
 								depth_3.parent().find('em').removeClass('on');
@@ -883,6 +883,21 @@ ul {
 									$(this).find("#folderImg")
 											.attr("src",
 													"<c:url value="/resources/assets/img/folderOpen.png"/>");
+											var name = $.trim($(this).text());
+											 $.ajax({
+												url:'highDeptSelectOne.am',
+												type: 'post',
+												data:{deptName:name},
+											 success:function(data){
+														$("#deptName").val(data['dm']['deptName']);
+														$("#highName").val(data['dm']['highDept']);
+														$("#deptCode").val(data['dm']['deptNo']);
+														for(var i = 0; i<data['list'].length; i++ ){
+															$("#frontMember").after("<tr class='trRange1' id='accessList'><td class='tdText'>"+data['list'][i]['memberName']+"</td><td class='tdText'>"+data['list'][i]['deapTeamNo']+"</td> <td class='tdText'>"+data['list'][i]['rankNo']+"</td><td class='tdText'>"+data['list'][i]['email']+"</td><input type='hidden' class='hiddenText' value='"+data['list'][i]['deptNo']+"'><input type='hidden' class='hiddenDept' value='"+data['list'][i]['memberType']+"'><input type='hidden' class='hiddenMember' value='"+data['list'][i]['memberNo']+"'><input type='hidden' class='rankName' value='"+data['list'][i]['memberPwd']+"'></tr>");
+														}
+													}
+											}); 
+									
 									
 									
 								} else {
@@ -891,18 +906,47 @@ ul {
 											'하위폴더 닫힘');
 									$(this).css('color', '#1E2B44').css(
 											"font-weight", "400");
+									$("#deptName").val("");
+									$("#highName").val("");
+									$("#deptCode").val("");
+									$(".trRange1").remove();
+									$(".menuTable").find(".deptSub").css("color", "#3287B2");
 									$(this).find("#folderImg")
 											.attr("src",
 													"<c:url value="/resources/assets/img/folder.png"/>");
+									
+									
 								}
 								if(temp_el.size() == 0 && open ==1){
 									$(this).find('em').addClass('on').html('하위폴더 열림');
 									$(this).css('color', '#F59E1C').css("font-weight", "600");
 									$(this).find("#folderImg").attr("src","<c:url value="/resources/assets/img/folderOpen.png"/>");
 									open = 0;
+									var name = $.trim($(this).text());
+									 $.ajax({
+										url:'highDeptSelectOne.am',
+										type: 'post',
+										data:{deptName:name},
+									 success:function(data){
+												$("#deptName").empty();
+												$("#highName").empty();
+												$("#deptCode").empty();
+												$("#deptName").val(data['dm']['deptName']);
+												$("#highName").val(data['dm']['highDept']);
+												$("#deptCode").val(data['dm']['deptNo']);
+												$(".trRange1").remove();
+												for(var i = 0; i<data['list'].length; i++ ){
+													$("#frontMember").after("<tr class='trRange1' id='accessList'><td class='tdText'>"+data['list'][i]['memberName']+"</td><td class='tdText'>"+data['list'][i]['deapTeamNo']+"</td> <td class='tdText'>"+data['list'][i]['rankNo']+"</td><td class='tdText'>"+data['list'][i]['email']+"</td><input type='hidden' class='hiddenText' value='"+data['list'][i]['deptNo']+"'><input type='hidden' class='hiddenDept' value='"+data['list'][i]['memberType']+"'><input type='hidden' class='hiddenMember' value='"+data['list'][i]['memberNo']+"'><input type='hidden' class='rankName' value='"+data['list'][i]['memberPwd']+"'></tr>");
+												}
+											}
+									}); 
 								}else if(open == 0){
 									$(this).css('color', '#1E2B44').css("font-weight", "400");
 									open = 1;
+									$("#deptName").empty();
+									$("#highName").empty();
+									$("#deptCode").empty();
+									$(".trRange1").remove();
 								}
 								
 								return false;
@@ -945,27 +989,7 @@ ul {
 				}); 
 			});
 			
-			
-			$(".menuTable").find(".title").click(function(){
-				var name = $.trim($(this).text());
-				 $.ajax({
-					url:'highDeptSelectOne.am',
-					type: 'post',
-					data:{deptName:name},
-				 success:function(data){
-							$("#deptName").empty();
-							$("#highName").empty();
-							$("#deptCode").empty();
-							$("#deptName").val(data['dm']['deptName']);
-							$("#highName").val(data['dm']['highDept']);
-							$("#deptCode").val(data['dm']['deptNo']);
-							$(".trRange1").remove();
-							for(var i = 0; i<data['list'].length; i++ ){
-								$("#frontMember").after("<tr class='trRange1' id='accessList'><td class='tdText'>"+data['list'][i]['memberName']+"</td><td class='tdText'>"+data['list'][i]['deapTeamNo']+"</td> <td class='tdText'>"+data['list'][i]['rankNo']+"</td><td class='tdText'>"+data['list'][i]['email']+"</td><input type='hidden' class='hiddenText' value='"+data['list'][i]['deptNo']+"'><input type='hidden' class='hiddenDept' value='"+data['list'][i]['memberType']+"'><input type='hidden' class='hiddenMember' value='"+data['list'][i]['memberNo']+"'><input type='hidden' class='rankName' value='"+data['list'][i]['memberPwd']+"'></tr>");
-							}
-						}
-				}); 
-			});
+		
 		});
 	</script>
 </body>

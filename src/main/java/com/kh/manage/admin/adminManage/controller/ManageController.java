@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -313,7 +314,10 @@ public class ManageController {
 	//메뉴 권한 그룹 등록
 	@RequestMapping("/insertMenuAccess.am")
 	public String insertMenuAccess(MenuAccess ma) {
-
+		System.out.println(ma);
+		
+		int result = as.updateMenuInfo(ma);
+		
 		List<MenuAccess> list = new ArrayList<MenuAccess>();
 
 		if(ma.getAccessGroupNo() != null) {
@@ -337,5 +341,63 @@ public class ManageController {
 		}
 		
 		return "redirect:menuManege.am";
+	}
+	//메뉴 클릭 시 접근 권한 체크
+	@RequestMapping("/checkAccessMember.am")
+	public void checkAccessMember(MenuAccess menu, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		menu.setMemberNo(m.getMemberNo());
+		
+		Menu me = new Menu();
+		me.setMenuNo(menu.getMenuNo());
+		
+		List<Access> useList = as.selectUseAccessList(me);
+		
+		if(useList.size() >0) {
+			System.out.println("접근 제한");
+			System.out.println(menu);
+			
+			List<Menu> checkMenuList = as.checkMenuAccessMember(menu);
+			
+			if(checkMenuList.size() >0) {
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				
+				String gson = new Gson().toJson(checkMenuList.get(0));
+				
+				try {
+					response.getWriter().write(gson);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}else {
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				
+				String gson = new Gson().toJson("2");
+				
+				try {
+					response.getWriter().write(gson);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			
+		}else {
+			Menu userMenu = as.selectOneMenu(me);
+			
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			
+			String gson = new Gson().toJson(userMenu);
+			
+			try {
+				response.getWriter().write(gson);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 	}
 }

@@ -44,7 +44,7 @@
 </head>
 <body onload="$('#route1').text('HOME')">
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
-	<jsp:include page="/WEB-INF/views/user/common/sidebar.jsp"/>
+	<jsp:include page="/WEB-INF/views/user/common/sidebar2.jsp"/>
 	<div id="wrap">
 	
 		<div class="">

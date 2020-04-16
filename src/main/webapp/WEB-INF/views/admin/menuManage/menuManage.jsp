@@ -67,7 +67,7 @@ ul{
 		width:70px;
 		height:30px;
 		border:none;
-		background:#E5E5E5;
+		background:#F3565D;
 		color:white;
 		font-weight:600;
 		border-radius: 5px;
@@ -118,8 +118,8 @@ ul{
 	border-bottom: 1px solid #EEEEEE;
 }
 #accessListTable #accessTr:hover{
-	background : #dcdcdc;
-	color:black;
+	background : #3287B2;
+	color:orange;
 	font-weight:600;
 	cursor: pointer;
 }
@@ -127,8 +127,8 @@ ul{
 	padding-left: 5px;
 }
 #useAccessTable #useAccessTr:hover{
-	background : #dcdcdc;
-	color:black;
+	background : #3287B2;
+	color:orange;
 	font-weight:600;
 	cursor: pointer;
 }
@@ -205,6 +205,11 @@ ul{
 						</tr>
 						<tr height="10px;"></tr>
 						<tr>
+							<td class="titleId">메뉴주소</td> 
+							<td><input type="text" id="iAddress" name="menuNo" class="inputMenu" readonly="readonly"></td>
+						</tr>
+						<tr height="10px;"></tr>
+						<tr>
 							<td class="titleId">메뉴코드</td> 
 							<td><input type="text" id="menuCode" name="menuNo" class="inputMenu" readonly="readonly" style="width:130px;"></td>
 						</tr>
@@ -259,6 +264,7 @@ ul{
 	
 	<script>
 			$(".projectBtn").on("click", function(){
+				if($("#menuName").val() != ""){
 				swal({
 					  title: "해당 내용을 저장하시겠습니까?",
 					  icon: "warning",
@@ -280,6 +286,13 @@ ul{
 						  });
 					  }
 				});
+				}else{
+					swal({
+		                 title: "메뉴를 선택하여 주세요.",
+		                icon: "error"
+		              });
+					
+				}
 			});
 			
 			var accessNoList;
@@ -326,6 +339,7 @@ ul{
 							if(data){
 								$("#menuName").val(data['me']['menuName']);
 								$("#menuCode").val(data['me']['menuNo']);
+								$("#iAddress").val(data['me']['iAddress'])
 								if(data['me']['status'] == 'Y'){
 									$("#use").prop("checked", true);
 								}else{
@@ -380,6 +394,7 @@ ul{
 											if(data){
 												$("#menuName").val(data['me']['menuName']);
 												$("#menuCode").val(data['me']['menuNo']);
+												$("#iAddress").val(data['me']['iAddress'])
 												if(data['me']['status'] == 'Y'){
 													$("#use").prop("checked", true);
 												}else{
@@ -400,8 +415,10 @@ ul{
 													"<c:url value="/resources/assets/img/folder.png"/>");
 									$("#menuName").val("");
 									$("#menuCode").val("");
+									$("#iAddress").val("");
 									$("#accessListTable").empty();
 									$("#useAccessTable").empty();
+									$(".menuTable").find(".deptSub").css("color", "#3287B2");
 									$("#use").prop("checked", false);
 									$("#noUse").prop("checked", false);
 								}

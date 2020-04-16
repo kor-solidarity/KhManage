@@ -4,15 +4,17 @@ public class MenuAccess {
 	private String menuName;
 	private String menuNo;
 	private String status;
+	private String memberNo;
 	private String accessGroupNo;
 	
 	public MenuAccess() {}
 
-	public MenuAccess(String menuName, String menuNo, String status, String accessGroupNo) {
+	public MenuAccess(String menuName, String menuNo, String status, String memberNo, String accessGroupNo) {
 		super();
 		this.menuName = menuName;
 		this.menuNo = menuNo;
 		this.status = status;
+		this.memberNo = memberNo;
 		this.accessGroupNo = accessGroupNo;
 	}
 
@@ -40,6 +42,14 @@ public class MenuAccess {
 		this.status = status;
 	}
 
+	public String getMemberNo() {
+		return memberNo;
+	}
+
+	public void setMemberNo(String memberNo) {
+		this.memberNo = memberNo;
+	}
+
 	public String getAccessGroupNo() {
 		return accessGroupNo;
 	}
@@ -50,9 +60,10 @@ public class MenuAccess {
 
 	@Override
 	public String toString() {
-		return "MenuAccess [menuName=" + menuName + ", menuNo=" + menuNo + ", status=" + status + ", accessNo="
-				+ accessGroupNo + "]";
+		return "MenuAccess [menuName=" + menuName + ", menuNo=" + menuNo + ", status=" + status + ", memberNo="
+				+ memberNo + ", accessGroupNo=" + accessGroupNo + "]";
 	}
+
 	
-	
+		
 }
