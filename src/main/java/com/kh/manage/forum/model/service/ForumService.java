@@ -29,4 +29,6 @@ public interface ForumService {
 
 	Notice updateNoticeSelect(String nNo);
 
+	int deleteReply(String no);
+
 }

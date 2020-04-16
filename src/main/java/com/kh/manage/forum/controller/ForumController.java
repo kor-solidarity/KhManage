@@ -226,9 +226,11 @@ public class ForumController {
 	@RequestMapping("replyDelete.fo")
 	public void replyDelete(HttpServletRequest request, HttpServletResponse response) {
 		
-		String no = request.getParameter("rNo");
+		String no = request.getParameter("nNo");
 		
 		System.out.println(no);
+		
+		int result = fs.deleteReply(no);
 		
 		
 	}
@@ -266,6 +268,21 @@ public class ForumController {
 		
 		return "user/forum/updateNotice";
 	}
+	
+	
+	@RequestMapping("replyUpdate.fo")
+	public void replyUpdate(HttpServletRequest request) {
+		
+		String nNo = request.getParameter("nNo");
+		String comment = request.getParameter("comment");
+		
+		System.out.println(nNo);
+		System.out.println(comment);
+		
+	}
+	
+	
+	
 	
 }
 

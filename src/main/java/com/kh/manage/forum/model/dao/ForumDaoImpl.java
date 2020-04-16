@@ -100,5 +100,11 @@ public class ForumDaoImpl implements ForumDao{
 		return sqlSession.selectOne("Notice.updateNoticeSelect",nNo);
 	}
 
+	@Override
+	public int deleteReply(SqlSessionTemplate sqlSession, String no) {
+		
+		return sqlSession.update("Reply.deleteReply",no);
+	}
+
 	
 }

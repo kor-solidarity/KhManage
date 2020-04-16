@@ -24,7 +24,13 @@
 		SELECT * 
 		FROM REPLY
 		WHERE FORUM_NO = #{no}
+		AND STATUS = 'Y'
 	</select>
+	
+	<update id="deleteReply"  parameterType="java.lang.String">
+		UPDATE REPLY SET STATUS = 'N'
+		WHERE REPLY_NO = #{no}
+	</update>
 			
 	
 		

@@ -37,5 +37,7 @@ public interface ForumDao {
 
 	Notice updateNoticeSelect(SqlSessionTemplate sqlSession, String nNo);
 
+	int deleteReply(SqlSessionTemplate sqlSession, String no);
+
 
 }

@@ -160,14 +160,14 @@
 					<tr>
 						<td class="titletd">제목</td>
 						<td class="sendtd">조회수</td>
-						<td class="sendtd">답글수</td>
-						<td class="datetd">마지막 등록자</td>
+						<td class="sendtd">등록날짜</td>
+						<td class="datetd">등록자</td>
 					</tr>
 					<c:forEach var="n" items="${list}">
 						<tr id="tr" style="border-bottom: 1px solid #d2d2d2; border-top: 1px solid #d2d2d2;">
 							<td class="titletd2">${n.noticeTitle}</td>
 							<td class="sendtd2">${n.viewCount}</td>
-							<td class="sendtd2">${n.noticeTitle}</td>
+							<td class="sendtd2">${n.createDate}</td>
 							<td class="datetd2">${n.memberNo}</td>
 							<td class="td"><input type="hidden"  value="${n.noticeNo}"></td>
 						</tr>

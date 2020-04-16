@@ -118,4 +118,10 @@ public class ForumServiceImpl implements ForumService{
 		return fd.updateNoticeSelect(sqlSession,nNo);
 	}
 
+	@Override
+	public int deleteReply(String no) {
+		
+		return fd.deleteReply(sqlSession, no);
+	}
+
 }

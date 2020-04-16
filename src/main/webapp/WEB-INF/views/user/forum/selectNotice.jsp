@@ -315,9 +315,9 @@
 	                for(i=0; i<data.length; i++){
 	                	console.log(data[i].replyNo);
 	                    html += "<div>";
-	                    html += "<div><table class='table'><h6><strong>"+data[i].memberNo+"</strong></h6>";
+	                    html += "<div><table class='table'><h6><strong>"+data[i].memberNo+"</strong></h6></div><div class='updiv'>";
 	                    	if(data[i].memberNo == memberNo){
-	                    		 html += data[i].replyContent + "<button class='update' id=u"+data[i].replyNo+">수정 <input type='hidden' value=" +data[i].replyNo + "></button> <button onclick='redelete("+ data[i].replyNo +");' id=d"+data[i].replyNo+" class='redelete'>삭제 <input type='hidden' value= "+data[i].replyNo + "></button> <tr><td></td></tr>";
+	                    		 html += data[i].replyContent + "<button class='update' id="+data[i].replyNo+">수정 <input type='hidden' value=" +data[i].replyNo + "></button> <button id="+data[i].replyNo+" class='redelete'>삭제 <input type='hidden' value= "+data[i].replyNo + "></button> <tr><td></td></tr>";
 	                    	}else{	
 	                    		 html += data[i].replyContent + "<tr><td></td></tr>"
 	                    	}
@@ -325,33 +325,6 @@
 	                    html += "</table></div>";
 	                    html += "</div>";
 	                    
-	                    
-	                    /* $("#u"+data[i].replyNo+").click(function(){
-	                		
-	                	    console.log("Dsadsad");
-	                	    
-	                	   $.ajax({
-	                	        type: "post", 
-	                	        url: "replyDelete.fo", 
-	                	        data:  {
-	                	        			nNo : nNo
-	                					},
-	                	        
-	                	        success: function(data){
-	                	            alert("댓글이 등록되었습니다.");
-	                	            console.log(data);
-	                	            
-	                	            getCommentList();
-	                	                }
-	                	       });
-	                	   });	  */
-	                	   
-	                    function redelete(no){
-	                		
-	                		console.log(no);
-	                		
-	                	}
-	                	
 							                	
 	                }
 	                
@@ -377,12 +350,6 @@
 	}	
 	
 	
-	/* function redelete(no){
-		
-		console.log(no);
-		
-	}
-	 */
 	$("#nDelete").click(function(){
 		
 		location.href = "deleteNotice.fo?nNo="+nNo;
@@ -399,7 +366,122 @@
 	});
 	
 	
+	$(document).on('click', '.redelete', function(){
+		console.log($(this).children().val());
+		
+		var nNo = $(this).children().val();
+		
+		 $.ajax({
+ 	        type: "post", 
+ 	        url: "replyDelete.fo", 
+ 	        data:  {
+ 	        			nNo : nNo
+ 					},
+ 	        
+ 	        success: function(data){
+ 	            alert("댓글이 삭제되었습니다.");
+ 	            console.log(data);
+ 	            
+ 	            getCommentList();
+ 	           }
+ 	   });
+	}); 
+			 
+		 $(document).on('click', '.update', function(){
+				console.log($(this).children().val());
+				
+				var nNo = $(this).children().val();
+				
+				$(this).parent().html("<div style='width:100%'><textarea style='width: 1200px' rows='3' cols='30' id='comment' name='comment' placeholder='댓글을 입력하세요'></textarea></div><button class='rupdate'>수정</button>&nbsp;&nbsp;<button>취소</button>");
+				
+				
+			/*  $(".rupdate").click(function(){
+				
+				 console.log("sdadsad")
+				 
+				 $.ajax({
+			 	        type: "post", 
+			 	        url: "replyUpdate.fo", 
+			 	        data:  {
+			 	        			nNo : nNo,
+			 	        			comment : comment
+			 					},
+			 	        
+			 	        success: function(data){
+			 	            alert("댓글이 수정되었습니다.");
+			 	            console.log(data);
+			 	            
+			 	            getCommentList();
+			 	           }
+			 	   });
+				
+			 }); */
+			 
+				
+				
+		 });
+		 
 	
+	
+		 function getCommentList(){
+			    
+				var nNo = "${notice.noticeNo}";
+				var memberNo =  "${loginUser.memberNo}";
+			    $.ajax({
+			        type:'GET',
+			        url : "replySelectAll.fo",
+			        dataType : "json",
+			        //data:$("#commentForm").serialize(),
+			        data:{
+			        	nNo : nNo
+			        },
+			        //contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
+			        success : function(data){
+			            
+			        	console.log(data);
+			        	
+			            var html = "";
+			            var cCnt = data.length;
+			            
+			            if(data.length > 0){
+			                
+			                for(i=0; i<data.length; i++){
+			                	console.log(data[i].replyNo);
+			                    html += "<div>";
+			                    html += "<div><table class='table'><h6><strong>"+data[i].memberNo+"</strong></h6>";
+			                    	if(data[i].memberNo == memberNo){
+			                    		 html += data[i].replyContent + "<button class='update' id=u"+data[i].replyNo+">수정 <input type='hidden' value=" +data[i].replyNo + "></button> <button id="+data[i].replyNo+" class='redelete'>삭제 <input type='hidden' value= "+data[i].replyNo + "></button> <tr><td></td></tr>";
+			                    	}else{	
+			                    		 html += data[i].replyContent + "<tr><td></td></tr>"
+			                    	}
+			                    	
+			                    html += "</table></div>";
+			                    html += "</div>";
+			                    
+									                	
+			                }
+			                
+			            } else {
+			                
+			                html += "<div>";
+			                html += "<div><table class='table'><h6><strong>등록된 댓글이 없습니다.</strong></h6>";
+			                html += "</table></div>";
+			                html += "</div>";
+			                
+			            }
+			            
+			            $("#cCnt").html(cCnt);
+			            $("#commentList").html(html);
+			            
+			        },
+			        error:function(request,status,error){
+			            
+			       }
+			    });
+			    
+			    
+			}	
+			
 	
 	
 	
