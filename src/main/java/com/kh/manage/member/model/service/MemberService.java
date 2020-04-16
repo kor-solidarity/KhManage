@@ -3,6 +3,7 @@ package com.kh.manage.member.model.service;
 import java.util.List;
 
 import com.kh.manage.admin.adminManage.vo.DepartMent;
+import com.kh.manage.admin.adminManage.vo.Menu;
 import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.rank.model.vo.Rank;
 import com.kh.manage.common.Attachment;
@@ -32,6 +33,17 @@ public interface MemberService {
 	int insertProfileImage(Attachment at);
 
 	Attachment selectProfileImg(Member m);
+
+	List<Member> selectMemberList();
+
+	Attachment selectAttachment(Member loginUser);
+
+	int updateProfileImage(Attachment at);
+
+	List<Menu> selectAllMenu();
+
+	List<Menu> noAccessMenu(Member loginUser);
+
 
 	
 }

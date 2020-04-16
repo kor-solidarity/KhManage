@@ -10,16 +10,18 @@ public class Attachment implements java.io.Serializable{
 	private String originName;
 	private String changeName;
 	private String filePath;
+	private String ext;
 	
 	public Attachment() {}
 
-	public Attachment(String atNo, String division, String originName, String changeName, String filePath) {
+	public Attachment(String atNo, String division, String originName, String changeName, String filePath, String ext) {
 		super();
 		this.atNo = atNo;
 		this.division = division;
 		this.originName = originName;
 		this.changeName = changeName;
 		this.filePath = filePath;
+		this.ext = ext;
 	}
 
 	public String getAtNo() {
@@ -62,12 +64,21 @@ public class Attachment implements java.io.Serializable{
 		this.filePath = filePath;
 	}
 
+	public String getExt() {
+		return ext;
+	}
+
+	public void setExt(String ext) {
+		this.ext = ext;
+	}
+
 	@Override
 	public String toString() {
 		return "Attachment [atNo=" + atNo + ", division=" + division + ", originName=" + originName + ", changeName="
-				+ changeName + ", filePath=" + filePath + "]";
+				+ changeName + ", filePath=" + filePath + ", ext=" + ext + "]";
 	}
 
+	
 	
 
 }

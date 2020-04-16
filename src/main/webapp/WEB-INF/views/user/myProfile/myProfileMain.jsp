@@ -280,7 +280,7 @@
 									<div id="correctPassword" class="form-group col-md-12" style="maring-top:-50px; color:green;">패스워드가 일치합니다.</div>
 									<div id="incorrectPassword" class="form-group col-md-12" style="maring-top:-50px; color:orangered;">패스워드가 일치하지 않습니다.</div>
 									<br>
-									<div id="" class="form-group col-md-12" style="maring-top:-50px; color:#676A6D; font-weight: bold">※ 패스워드 분실 시 전산실로 연락바랍니다.</div>
+									<div id="" class="form-group col-md-12" style="maring-top:-50px; color:#676A6D; font-weight: bold">※ 패스워드 분실 시 전산팀으로 연락바랍니다.</div>
 								</div>
                                 
                                 <div class="form-group" style="margin-left: 5px;">

@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <title>Insert title here</title>
 <style>
 	#projectTable{
@@ -116,54 +119,22 @@
 						<td class="tdText thRange"><input type="text" class="inputCss" style="width:100px;"></td>
 						<td class="tdText thRange"><input type="text" class="inputCss" style="visibility:hidden; width:160px;"></td>
 					</tr>
+					
+					<c:forEach var="m" items="${mlist}">
 					<tr class="trRange">
-						<td class="td1"><a href="#" id="memberId">데모사용자</a></td>
-						<td class="tdText">연구소</td>
-						<td class="tdText">과장</td>
-						<td class="tdText">8건</td>
-						<td class="tdText">uandme1206@naver.com</td>
-						<td class="tdText">Y</td>
-						<td class="tdText">2020-04-03</td>
+						<%-- <td class="td1"><a href="selecMemberModal.me?memberNo=${m.memberNo}" id="memberName">${m.memberName}</a></td> --%>
+						<td class="td1"><a href="#" id="memberName">${m.memberName}</a></td>
+						<td class="tdText">${m.deptName}</td>
+						<td class="tdText">${m.rankName}</td>
+						<td class="tdText">88 건수 추가</td>
+						<td class="tdText" style="text-align:left; padding-left: 25px;">${m.email}</td>
+						<td class="tdText">${m.status}</td>
+						<td class="tdText">2020-04-03 추가할 것</td>
 						<td class="tdText">
 							<button class="pwdResetBtn">패스워드 초기화</button>
 						</td>
 					</tr>
-					<tr class="trRange">
-						<td class="td1"><a href="#" id="memberId">데모사용자</a></td>
-						<td class="tdText">연구소</td>
-						<td class="tdText">과장</td>
-						<td class="tdText">8건</td>
-						<td class="tdText">uandme1206@naver.com</td>
-						<td class="tdText">Y</td>
-						<td class="tdText">2020-04-03</td>
-						<td class="tdText">
-							<button class="pwdResetBtn">패스워드 초기화</button>
-						</td>
-					</tr>
-					<tr class="trRange">
-						<td class="td1"><a href="#" id="memberId">데모사용자</a></td>
-						<td class="tdText">연구소</td>
-						<td class="tdText">과장</td>
-						<td class="tdText">8건</td>
-						<td class="tdText">uandme1206@naver.com</td>
-						<td class="tdText">Y</td>
-						<td class="tdText">2020-04-03</td>
-						<td class="tdText">
-							<button class="pwdResetBtn">패스워드 초기화</button>
-						</td>
-					</tr>
-					<tr class="trRange">
-						<td class="td1"><a href="#" id="memberId">데모사용자</a></td>
-						<td class="tdText">연구소</td>
-						<td class="tdText">과장</td>
-						<td class="tdText">8건</td>
-						<td class="tdText">uandme1206@naver.com</td>
-						<td class="tdText">Y</td>
-						<td class="tdText">2020-04-03</td>
-						<td class="tdText">
-							<button class="pwdResetBtn">패스워드 초기화</button>
-						</td>
-					</tr>
+					</c:forEach>
 					
 					<tr class="pagingArea">
                         <td colspan="8">
@@ -244,9 +215,20 @@
 	<script>
 	
 	//모달
-	$("#memberId").click(function(){
+	$("#memberName").click(function(){
 		$('#myModal').modal('show');
+		
+		
+		//모달창 회원정보 조회
+		$.ajax({
+			url: 'selecMemberModal.me?memberNo=${m.memberNo}',
+			type: "post",
+			data: {memberNo:name}
+		});
+		
+		
 	});
+	
 	
 	
 	

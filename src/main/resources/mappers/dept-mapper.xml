@@ -15,12 +15,14 @@
 		SELECT *
 		FROM DEPT
 		WHERE DEPT_LEVEL = '1'
+		AND STATUS = 'Y'
 	</select>
 	
 	<select id="selectDeptList2" resultMap="deptResultSet">
 		SELECT *
 		FROM DEPT
 		WHERE DEPT_LEVEL = '2'
+		AND STATUS = 'Y'
 	</select>
 
 </mapper>

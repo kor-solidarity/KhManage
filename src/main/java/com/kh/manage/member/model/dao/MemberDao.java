@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.manage.admin.adminManage.vo.DepartMent;
+import com.kh.manage.admin.adminManage.vo.Menu;
 import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.rank.model.vo.Rank;
 import com.kh.manage.common.Attachment;
@@ -40,9 +41,15 @@ public interface MemberDao {
 
 	Attachment selectProfileImg(SqlSessionTemplate sqlSession, Member m);
 
+	List<Member> selectMemberList(SqlSessionTemplate sqlSession);
 
+	Attachment selectAttachment(SqlSessionTemplate sqlSession, Member loginUser);
 
+	int updateProfileImage(SqlSessionTemplate sqlSession, Attachment at);
 
-	
+	List<Menu> selectAllMenu(SqlSessionTemplate sqlSession);
+
+	List<Menu> noAccessMenu(SqlSessionTemplate sqlSession, Member loginUser);
+
 
 }

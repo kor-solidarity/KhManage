@@ -13,7 +13,9 @@
 		<result property="email" column="EMAIL"/>
 		<result property="memberType" column="MEMBER_TYPE"/>
 		<result property="rankNo" column="RANK_NO"/>
-		<result property="deptNo" column="DEFT_NO"/>
+		<result property="rankName" column="RANK_NAME"/>
+		<result property="deptNo" column="DEPT_NO"/>
+		<result property="deptName" column="DEPT_NAME"/>
 		<result property="enrollDate" column="ENROLL_DATE"/>
 		<result property="status" column="STATUS"/>
 	</resultMap>
@@ -24,6 +26,7 @@
 		<result property="originName" column="ORIGIN_NAME"/>
 		<result property="changeName" column="CHANGE_NAME"/>
 		<result property="filePath" column="FILEPATH"/>
+		<result property="ext" column="EXT"/>
 	</resultMap>
 	
 	
@@ -85,13 +88,16 @@
 	<!-- 회원정보수정 : 프로필 이미지 등록 -->
 	<insert id="insertProfileImage" parameterType="Attachment">
 		INSERT INTO ATTACHMENT
-		VALUES('AT'|| TO_CHAR(SEQ_AT_NO.NEXTVAL, 'FM000'), #{division}, #{originName}, #{changeName} , #{filePath})
+		VALUES('AT'|| TO_CHAR(SEQ_AT_NO.NEXTVAL, 'FM000'), #{division}, #{originName}, #{changeName} , #{filePath}, #{ext})
 	</insert>
 	
-	<!-- <insert id="insertTemplate" parameterType="Template">
-		INSERT INTO PROJECT_TEMPLATE 
-		VALUES('TEM'|| TO_CHAR(SEQ_TEMPLATE.NEXTVAL, 'FM000'), #{projectTypePk}, #{memberPk}, #{templateName} , #{detail}, SYSDATE , SYSDATE)
-	</insert> -->
+	<!-- 회원정보 수정 : 프로필 이미지 수정 -->
+	<update id="updateProfileImage" parameterType="Attachment">
+		UPDATE ATTACHMENT 
+		SET ORIGIN_NAME = #{originName}, CHANGE_NAME = #{changeName}, FILEPATH = #{filePath}, EXT = #{ext}
+		WHERE DIVISION = #{division}
+	</update>
+
 	
 	<select id="selectProfileImg" parameterType="Member" resultMap="attachmentResultSet">
 		SELECT *
@@ -99,6 +105,31 @@
 		WHERE DIVISION = #{memberNo}
 	</select>
 	
+	
+	<!-- 멤버 리스트 조회 + 부서 + 프로젝트 같이 불러와야 함 -->
+	<!-- join -->
+	<select id="selectMemberList" resultMap="memberResultSet">
+		SELECT M.MEMBER_NO 
+			  ,M.MEMBER_NAME
+		      ,D.DEPT_NAME
+		      ,R.RANK_NAME
+		      ,M.EMAIL
+		      ,M.STATUS
+		FROM MEMBER M
+		JOIN DEPT D ON(M.DEPT_NO = D.DEPT_NO)
+		JOIN RANK R ON(M.RANK_NO = R.RANK_NO)
+		WHERE M.MEMBER_NAME != '관리자'
+	</select>
+	
+	
+	<!-- <select id="selectMemberList" resultMap="memberResultSet">
+		SELECT MEMBER_NAME
+			 , EMAIL
+			 , STATUS
+		FROM MEMBER
+		WHERE MEMBER_NO != 'M001'
+	</select> -->
+	 
 
 </mapper>
 
