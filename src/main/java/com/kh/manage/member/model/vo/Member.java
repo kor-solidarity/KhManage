@@ -19,34 +19,13 @@ public class Member implements Serializable {
 	private String deptName;
 	private String deapTeamNo;
 	private String deptTeamName;
+	private String projectPk;
+	private int countProject;
 	private Date enrollDate;
 	private Date modifyDate;
 	private String status;
 	
 	public Member() {}
-
-	public Member(String memberNo, String memberId, String memberPwd, String memberName, String phone, String email,
-			String jobCode, String memberType, String rankNo, String rankName, String deptNo, String deptName,
-			String deapTeamNo, String deptTeamName, Date enrollDate, Date modifyDate, String status) {
-		super();
-		this.memberNo = memberNo;
-		this.memberId = memberId;
-		this.memberPwd = memberPwd;
-		this.memberName = memberName;
-		this.phone = phone;
-		this.email = email;
-		this.jobCode = jobCode;
-		this.memberType = memberType;
-		this.rankNo = rankNo;
-		this.rankName = rankName;
-		this.deptNo = deptNo;
-		this.deptName = deptName;
-		this.deapTeamNo = deapTeamNo;
-		this.deptTeamName = deptTeamName;
-		this.enrollDate = enrollDate;
-		this.modifyDate = modifyDate;
-		this.status = status;
-	}
 
 	public String getMemberNo() {
 		return memberNo;
@@ -160,6 +139,22 @@ public class Member implements Serializable {
 		this.deptTeamName = deptTeamName;
 	}
 
+	public String getProjectPk() {
+		return projectPk;
+	}
+
+	public void setProjectPk(String projectPk) {
+		this.projectPk = projectPk;
+	}
+
+	public int getCountProject() {
+		return countProject;
+	}
+
+	public void setCountProject(int countProject) {
+		this.countProject = countProject;
+	}
+
 	public Date getEnrollDate() {
 		return enrollDate;
 	}
@@ -189,9 +184,11 @@ public class Member implements Serializable {
 		return "Member [memberNo=" + memberNo + ", memberId=" + memberId + ", memberPwd=" + memberPwd + ", memberName="
 				+ memberName + ", phone=" + phone + ", email=" + email + ", jobCode=" + jobCode + ", memberType="
 				+ memberType + ", rankNo=" + rankNo + ", rankName=" + rankName + ", deptNo=" + deptNo + ", deptName="
-				+ deptName + ", deapTeamNo=" + deapTeamNo + ", deptTeamName=" + deptTeamName + ", enrollDate="
-				+ enrollDate + ", modifyDate=" + modifyDate + ", status=" + status + "]";
+				+ deptName + ", deapTeamNo=" + deapTeamNo + ", deptTeamName=" + deptTeamName + ", projectPk="
+				+ projectPk + ", countProject=" + countProject + ", enrollDate=" + enrollDate + ", modifyDate="
+				+ modifyDate + ", status=" + status + "]";
 	}
+
 
 	
 	
