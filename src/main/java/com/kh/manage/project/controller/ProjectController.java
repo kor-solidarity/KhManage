@@ -4,11 +4,15 @@ import com.google.gson.Gson;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.template.model.vo.Template;
+import com.kh.manage.common.PageInfo;
+import com.kh.manage.common.Pagination;
 import com.kh.manage.project.model.vo.Project;
+import com.kh.manage.project.model.vo.ProjectList;
 import com.kh.manage.project.model.vo.ProjectTeam;
 import com.kh.manage.project.model.vo.ProjectType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.manage.project.model.service.ProjectService;
@@ -32,15 +36,27 @@ public class ProjectController {
 	
 	// 프로젝트 목록페이지 (프로젝트 센터)
 	@RequestMapping("/projectCenter.pr")
-	public String projectSelectAll() {
+	public String projectSelectAll(Model model, HttpServletRequest request) {
+		int currentPage = 1;
 		
+		if (request.getParameter("currentPage") != null) {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+		
+		int listCount = ps.getProjectListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 		// 프로젝트 목록에서 집어와야 하는 것들:
-		// 프로젝트명 개발형태 담당자 담당부서 시작일 완료일 실적 산출물 과 이슈 수
+		// 프로젝트명 개발형태 담당자 담당부서 시작일 완료일
+		// 	실적 산출물 과 이슈 수
 		// TODO: 2020-04-15  산출물과 이슈는 아직 안만들었으니 0 처리한다
 		// 우선 프로젝트명 뽑는다...
 		
+		List<ProjectList> teamList = ps.selectProjectList(pi);
 		
+		System.out.println("teamList: " + teamList);
 		
+		model.addAttribute("list", teamList);
 		return "user/project/projectSelectAll";
 	}
 	
@@ -168,11 +184,11 @@ public class ProjectController {
 		if (projectInsertResult != null) {
 			// 책임자 넣기
 			ProjectTeam projectManager = new ProjectTeam(null, projectInsertResult, project_manager, "PM");
-			ps.insertProjectTeam( projectManager);
+			ps.insertProjectTeam(projectManager);
 			// 위에 써져있던 부책임자들 다 건든다.
 			for (String m : memberNo) {
 				ProjectTeam team = new ProjectTeam(null, projectInsertResult, m, "PSM");
-				ps.insertProjectTeam( team);
+				ps.insertProjectTeam(team);
 			}
 			
 			return "redirect:/projectCenter.pr";
@@ -189,10 +205,14 @@ public class ProjectController {
 	}
 	
 	
-	// 프로젝트 센터 기본페이지(요약정보)
+	// 프로젝트 요약정보 페이지
 	@RequestMapping("/viewProject.pr")
-	public String viewProject(String num) {
+	public String viewProject(HttpServletRequest request) {
 		System.out.println("viewProject");
+		
+		String projectPk = (String) request.getAttribute("pid");
+		
+		
 		return "user/project/projectView";
 	}
 	

@@ -3,7 +3,9 @@ package com.kh.manage.project.model.service;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.template.model.vo.Template;
+import com.kh.manage.common.PageInfo;
 import com.kh.manage.project.model.vo.Project;
+import com.kh.manage.project.model.vo.ProjectList;
 import com.kh.manage.project.model.vo.ProjectTeam;
 import com.kh.manage.project.model.vo.ProjectType;
 
@@ -23,4 +25,8 @@ public interface ProjectService {
 	String  insertProject(Project project);
 	
 	int insertProjectTeam(ProjectTeam team);
+	
+	List<ProjectList> selectProjectList(PageInfo pi);
+	
+	int getProjectListCount();
 }

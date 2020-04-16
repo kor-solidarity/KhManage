@@ -19,6 +19,23 @@
         <result property="status" column="status"/>
         <result property="templatePk" column="template_pk"/>
     </resultMap>
+
+    <resultMap id="projectListResultSet" type="ProjectList">
+        <id property="projectPk" column="project_pk"/>
+        <result property="projectName" column="project_name"/>
+        <result property="isImportant" column="is_important"/>
+        <result property="projectTypePk" column="project_type_pk"/>
+        <result property="projectTypeName" column="TYPE_NAME"/>
+        <result property="projectRank" column="project_rank"/>
+        <result property="projectManager" column="project_manager"/>
+        <result property="projectManagerName" column="MEMBER_NAME"/>
+        <result property="deptNo" column="dept_no"/>
+        <result property="deptName" column="dept_name"/>
+        <result property="startDate" column="start_date"/>
+        <result property="endDate" column="end_date"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
     <resultMap id="projectTypeResultSet" type="ProjectType">
         <id property="typePk" column="type_pk"/>
         <result property="typeName" column="type_name"/>
@@ -79,9 +96,40 @@
         select to_char(SEQ_PROJ.currval, 'FM000')
         from dual
     </select>
-   <!--  select id="selectAllProjects" resultMap="Project">
-
-    </select>-->
+    <!--모든 프로젝트 목록조회-->
+    <select id="selectProjectList" resultMap="projectListResultSet">
+        SELECT P.PROJECT_PK      AS PROJECT_PK,
+               P.PROJECT_NAME    AS PROJECT_NAME,
+               P.IS_IMPORTANT    AS IS_IMPORTANT,
+               P.PROJECT_TYPE_PK AS PROJECT_TYPE_PK,
+               PT.TYPE_NAME      AS TYPE_NAME,
+               P.PROJECT_RANK    AS PROJECT_RANK,
+               P.PROJECT_MANAGER AS PROJECT_MANAGER,
+               T.MEMBER_NAME     AS MEMBER_NAME,
+               P.PROJECT_TYPE_PK AS PROJECT_TYPE_PK,
+               P.DEPT_NO         AS DEPT_NO,
+               D.DEPT_NAME       AS DEPT_NAME,
+               P.START_DATE      AS START_DATE,
+               P.END_DATE        AS END_DATE,
+               P.STATUS          AS STATUS
+        FROM PROJECT P
+                 JOIN DEPT D ON P.DEPT_NO = D.DEPT_NO
+                 JOIN PROJECT_TYPE PT ON P.PROJECT_TYPE_PK = PT.TYPE_PK
+                 JOIN (SELECT *
+                       FROM PROJECT_TEAM
+                                JOIN MEMBER M ON PROJECT_TEAM.MEMBER_PK = M.MEMBER_NO) T
+                      ON P.PROJECT_PK = T.PROJECT_PK
+        WHERE T.MEMBER_PK = P.PROJECT_MANAGER
+    </select>
+    <!--모든 프로젝트 목록조회를 위한 총 목록 수-->
+    <select id="getProjectListCount" resultType="_int">
+        SELECT count(*)
+        FROM PROJECT P
+                 JOIN DEPT D ON P.DEPT_NO = D.DEPT_NO
+                 JOIN PROJECT_TYPE PT ON P.PROJECT_TYPE_PK = PT.TYPE_PK
+                 JOIN PROJECT_TEAM T ON P.PROJECT_PK = T.PROJECT_PK
+        WHERE T.MEMBER_PK = P.PROJECT_MANAGER
+    </select>
     <select id="selectTemplateList" resultMap="templateResultSet">
         select *
         from PROJECT_TEMPLATE
