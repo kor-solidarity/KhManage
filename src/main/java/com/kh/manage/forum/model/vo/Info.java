@@ -10,10 +10,12 @@ public class Info {
 	private Date createDate;
 	private Date editDate;
 	private String memberPk;
+	private String status;
 	
 	public Info() {}
 
-	public Info(String infoPk, String title, String content, Date createDate, Date editDate, String memberPk) {
+	public Info(String infoPk, String title, String content, Date createDate, Date editDate, String memberPk,
+			String status) {
 		super();
 		this.infoPk = infoPk;
 		this.title = title;
@@ -21,6 +23,7 @@ public class Info {
 		this.createDate = createDate;
 		this.editDate = editDate;
 		this.memberPk = memberPk;
+		this.status = status;
 	}
 
 	public String getInfoPk() {
@@ -71,10 +74,20 @@ public class Info {
 		this.memberPk = memberPk;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
-		return "Info [infoPk=" + infoPk + ", title=" + title + ", content=" + content + ", memberPk=" + memberPk + "]";
+		return "Info [infoPk=" + infoPk + ", title=" + title + ", content=" + content + ", createDate=" + createDate
+				+ ", editDate=" + editDate + ", memberPk=" + memberPk + ", status=" + status + "]";
 	}
+
 	
 	
 	

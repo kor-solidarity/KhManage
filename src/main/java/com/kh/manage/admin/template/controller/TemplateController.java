@@ -110,6 +110,7 @@ public class TemplateController {
 		at.setChangeName(changeName);
 		at.setOriginName(originFileName);
 		at.setFilePath(filePath);
+		at.setExt(ext);
 		
 		System.out.println(tmp.getDetail());
 		System.out.println(tmp.getProjectTypePk());

@@ -14,11 +14,12 @@ public class Notice {
 	private Date modifyDate;
 	private int viewCount;
 	private String memberNo;
+	private String status;
 	
 	public Notice() {}
 
 	public Notice(String noticeNo, String noticeTitle, String noticeContent, Date createDate, Date modifyDate,
-			int viewCount, String memberNo) {
+			int viewCount, String memberNo, String status) {
 		super();
 		this.noticeNo = noticeNo;
 		this.noticeTitle = noticeTitle;
@@ -27,6 +28,7 @@ public class Notice {
 		this.modifyDate = modifyDate;
 		this.viewCount = viewCount;
 		this.memberNo = memberNo;
+		this.status = status;
 	}
 
 	public String getNoticeNo() {
@@ -85,12 +87,21 @@ public class Notice {
 		this.memberNo = memberNo;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
 		return "Notice [noticeNo=" + noticeNo + ", noticeTitle=" + noticeTitle + ", noticeContent=" + noticeContent
 				+ ", createDate=" + createDate + ", modifyDate=" + modifyDate + ", viewCount=" + viewCount
-				+ ", memberNo=" + memberNo + "]";
+				+ ", memberNo=" + memberNo + ", status=" + status + "]";
 	}
+
 	
 	
 	

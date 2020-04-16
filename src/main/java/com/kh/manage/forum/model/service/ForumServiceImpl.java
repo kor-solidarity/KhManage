@@ -10,6 +10,7 @@ import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.forum.model.dao.ForumDao;
 import com.kh.manage.forum.model.vo.Notice;
+import com.kh.manage.forum.model.vo.Reply;
 
 @Service
 public class ForumServiceImpl implements ForumService{
@@ -69,11 +70,52 @@ public class ForumServiceImpl implements ForumService{
 		
 		return fd.noticeSelectAll(sqlSession, pi);
 	}
-
+	
+	
 	@Override
 	public Notice selectNotice(Notice n) {
 		
-		return fd.selectNotice(sqlSession, n);
+		Notice notice =fd.selectNotice(sqlSession, n);
+		fd.countPlus(sqlSession, notice);
+		
+		return notice;
+	}
+
+	@Override
+	public Attachment selectAttachment(Attachment at) {
+		
+		
+		return fd.selectAttachment(sqlSession, at);
+	}
+
+	@Override
+	public Attachment downAttachment(String no) {
+		
+		return fd.downAttachment(sqlSession, no);
+	}
+
+	@Override
+	public int replyInsert(Reply rp) {
+		
+		return fd.replyInsert(sqlSession, rp);
+	}
+
+	@Override
+	public List<Reply> selectAllReply(String no) {
+		
+		return fd.selectAllReply(sqlSession, no);
+	}
+
+	@Override
+	public int deleteNotice(String nNo) {
+		
+		return fd.deleteNotice(sqlSession, nNo);
+	}
+
+	@Override
+	public Notice updateNoticeSelect(String nNo) {
+
+		return fd.updateNoticeSelect(sqlSession,nNo);
 	}
 
 }

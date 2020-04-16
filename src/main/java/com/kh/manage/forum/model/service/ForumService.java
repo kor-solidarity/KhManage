@@ -5,6 +5,7 @@ import java.util.List;
 import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.forum.model.vo.Notice;
+import com.kh.manage.forum.model.vo.Reply;
 
 public interface ForumService {
 
@@ -15,5 +16,17 @@ public interface ForumService {
 	List<Notice> noticeSelectAll(PageInfo pi);
 
 	Notice selectNotice(Notice n);
+
+	Attachment selectAttachment(Attachment at);
+
+	Attachment downAttachment(String no);
+
+	int replyInsert(Reply rp);
+
+	List<Reply> selectAllReply(String no);
+
+	int deleteNotice(String nNo);
+
+	Notice updateNoticeSelect(String nNo);
 
 }
