@@ -31,4 +31,8 @@ public interface ForumService {
 
 	int deleteReply(String no);
 
+	int replyUpdate(Reply rp);
+
+	int noticeUpdate(Notice n, Attachment at);
+
 }

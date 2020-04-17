@@ -106,5 +106,23 @@ public class ForumDaoImpl implements ForumDao{
 		return sqlSession.update("Reply.deleteReply",no);
 	}
 
+	@Override
+	public int replyUpdate(SqlSessionTemplate sqlSession, Reply rp) {
+		
+		return sqlSession.update("Reply.updateReply" ,rp);
+	}
+
+	@Override
+	public int noticeUpdate(SqlSessionTemplate sqlSession, Notice n) {
+
+		return sqlSession.update("Notice.noticeUpdate",n);
+	}
+
+	@Override
+	public int attachUpdate(SqlSessionTemplate sqlSession, Attachment at) {
+		
+		return sqlSession.update("Attachment.attachUpdate",at);
+	}
+
 	
 }

@@ -105,13 +105,13 @@
 				<p class="p">공지사항 수정</p>
 				
 				<hr>
-				<form method="post" action="insertNotice.fo" id="noticeForm" enctype="multipart/form-data">
+				<form method="post" action="updateNotice.fo" id="noticeForm" enctype="multipart/form-data">
 				<table id="noticeTable" align="center">
 					<tr>
 						<td class="title"><div class="div"><p style="color:  #5e738b;">공지사항 제목</p></div></td>
 					</tr>
 					<tr>
-						<td><input type="text" placeholder="${n.noticeTitle}" name="noticeTitle" id="noticeTitle"></td>
+						<td><input type="text"  value="${n.noticeTitle}" name="noticeTitle" id="noticeTitle"></td>
 					</tr>
 					<tr>
 						<td class="title"><div class="div"><p style="color:  #5e738b;">공지사항 첨부파일</p></div></td>
@@ -130,6 +130,7 @@
 							<textarea cols="80" rows="14" id="summernote" name="noticeContent">
 								${n.noticeContent }
 							</textarea>
+							<input type="hidden" name="noticeNo" value="${n.noticeNo}">
 						</td>
 					</tr>
 					<tr>

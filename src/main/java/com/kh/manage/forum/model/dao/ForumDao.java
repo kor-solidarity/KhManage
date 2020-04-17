@@ -39,5 +39,11 @@ public interface ForumDao {
 
 	int deleteReply(SqlSessionTemplate sqlSession, String no);
 
+	int replyUpdate(SqlSessionTemplate sqlSession, Reply rp);
+
+	int noticeUpdate(SqlSessionTemplate sqlSession, Notice n);
+
+	int attachUpdate(SqlSessionTemplate sqlSession, Attachment at);
+
 
 }

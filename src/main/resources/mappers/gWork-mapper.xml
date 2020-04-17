@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="GWork">
+
+	<resultMap type="GWork" id="gWorkResultSet">
+		<id property="gwNo" column="GW_NO"/>
+		<result property="gwName" column="GW_NAME"/>
+		<result property="beginDate" column="BEGIN_DATE"/>
+		<result property="endDate" column="END_DATE"/>
+		<result property="enrollDate" column="ENROLL_DATE"/>
+		<result property="gwMemo" column="GW_MEMO"/>
+		<result property="gwType" column="GW_TYPE"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="status" column="STATUS"/>
+	</resultMap>
+	
+	<select id="selectAllList" resultMap="gWorkResultSet">
+		SELECT * 
+		FROM GENERAL_WORK
+		WHERE STATUS = 'Y'
+	</select>
+	
+		
+</mapper>

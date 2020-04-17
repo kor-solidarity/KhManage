@@ -35,6 +35,11 @@
 		WHERE AT_NO = #{no}
 	</select>
 	
+	<update id="attachUpdate" parameterType="Attachment">
+		UPDATE NOTICE SET ORIGIN_NAME = #{originName} , CHANGE_NAME = #{changeName} , FILEPATH = #{filePath} , EXT = #{ext}
+		WHERE DIVISION = #{division}
+	</update>
+	
 </mapper>
 
 
