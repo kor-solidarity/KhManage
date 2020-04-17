@@ -35,6 +35,10 @@
 		height:35px;
 		padding:3px;
 	}
+	.trRange:hover{
+		background:#EEEEEE;
+		font-weight:800;
+	}
 	.th1{
 		width:400px;
 		text-indent: 5px;
@@ -74,7 +78,7 @@
 	<jsp:include page="/WEB-INF/views/user/common/sidebar2.jsp" />
 		<div class="panel panel-headline">
 				<div class="panel-heading">
-					<div style="width:100%; height:700px; margin:0 auto; overflow:auto;">
+					<div style="width:100%; height:400px; margin:0 auto; overflow:auto;">
 						<table align="left" style="margin-bottom:10px;">	
 							<tr>
 								<td><a href="showInsertGeneralWorkPage.gw"><button class="projectBtn"><i class="far fa-plus-square"></i> &nbsp;일반작업 등록</button></a>
@@ -100,14 +104,22 @@
 								<td class="tdText thRange"><input type="date" class="inputCss" style="width:200px;"></td>
 								<td class="tdText thRange"><input type="date" class="inputCss" style="width:200px;"></td>
 							</tr>
+							<c:forEach var="a" items="${list}">
 							<tr class="trRange"	id="accessList">
-								<td class="td1">출장</td>
-								<td class="tdText">부산 출장</td>
-								<td class="tdText"><div style="width:70px; height:25px; background:skyblue; margin:0 auto; color:white; font-weight:600; text-align:center; border-radius: 10px;">출장</div></td>
-								<td class="tdText">20-04-01</td>
-								<td class="tdText">20-04-03</td>
-								<td class="tdText">20-03-30</td>
+								<td class="td1"><c:out value="${a.gwName}"/><input type="hidden" id="gwNo" class="gwNo" value="${a.gwNo}"></td>
+								<td class="tdText"><c:out value="${a.gwMemo}"/></td>
+								<c:if test="${a.gwType eq '출장' }">
+								<td class="tdText"><div style="width:80px; height:20px; background:#428BCA; line-height:20px; font-size:12px;  margin:0 auto; color:white; font-weight:600; text-align:center; border-radius: 5px;">${a.gwType}</div></td>
+								</c:if>
+								<c:if test="${a.gwType eq '일반작업'}">
+								<td class="tdText"><div style="width:80px; height:20px; background:#44B6AE; line-height:20px; font-size:12px;  margin:0 auto; color:white; font-weight:600; text-align:center; border-radius: 5px;">${a.gwType}</div></td>
+								</c:if>
+								<td class="tdText"><c:out value="${a.beginDate}"/></td>
+								<td class="tdText"><c:out value="${a.endDate}"/></td>
+								<td class="tdText"><c:out value="${a.enrollDate}"/></td>
 							</tr>
+								
+							</c:forEach>
 							<tr class="pagingArea">
 								<td colspan="6">
 									<div class="paging">
@@ -146,10 +158,16 @@
 								</td>
 							</tr>
 						</table>
-						</div>
-						</div>
-						</div>
-					
+					</div>
+				</div>
+			</div>
+		<script>
+			$(function(){
+				$(document).on('click', '.td1', function(){
+					location.href='generalWorkDetailPage.gw?gwNo='+ $(this).find(".gwNo").val();
+				});
+			});
+		</script>
 	
 </body>
 </html>

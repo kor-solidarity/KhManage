@@ -2,7 +2,7 @@ package com.kh.manage.admin.adminManage.vo;
 
 import java.sql.Date;
 
-public class DeptHistory {
+public class DeptHistory implements java.io.Serializable{
 	private String deptHistoryNo;
 	private String changeMember;
 	private Date changeDate;

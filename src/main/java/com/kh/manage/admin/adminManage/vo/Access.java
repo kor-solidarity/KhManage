@@ -2,7 +2,7 @@ package com.kh.manage.admin.adminManage.vo;
 
 import java.sql.Date;
 
-public class Access {
+public class Access implements java.io.Serializable {
 	private String accessGroupNo;
 	private String accessName;
 	private String aContent;
