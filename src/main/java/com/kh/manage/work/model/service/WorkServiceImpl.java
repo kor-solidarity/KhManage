@@ -1,5 +1,7 @@
 package com.kh.manage.work.model.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.work.model.dao.WorkDao;
 import com.kh.manage.work.model.vo.Work;
+import com.kh.manage.work.model.vo.WorkProjectTeam;
 
 @Service
 public class WorkServiceImpl implements WorkService{
@@ -34,6 +37,16 @@ public class WorkServiceImpl implements WorkService{
 	@Override
 	public Work selectWork(String workNo) {
 		return wd.selectWork(sqlSession, workNo);
+	}
+
+	@Override
+	public HashMap<String, List> selectWorkMap(Member member) {
+		return wd.selectWorkMap(sqlSession, member);
+	}
+
+	@Override
+	public List<WorkProjectTeam> selectTeamWork(Member member) {
+		return wd.selectTeamWork(sqlSession, member);
 	}
 
 	

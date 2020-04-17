@@ -2,7 +2,7 @@ package com.kh.manage.work.model.vo;
 
 import java.sql.Date;
 
-public class Work implements java.io.Serializable{
+public class WorkProjectName implements java.io.Serializable{
 	private String workNo;
 	private String workName;
 	private String status;
@@ -18,12 +18,13 @@ public class Work implements java.io.Serializable{
 	private String workType;
 	private String memberNo;
 	private String workStatus;
+	private String projectName;
 	
-	public Work() {}
+	public WorkProjectName() {}
 
-	public Work(String workNo, String workName, String status, String projectNo, Date beginDate, Date completeDate,
-			String precedeNo, String completeRate, String grantorNo, String workLevel, String highWorkNo, String memo,
-			String workType, String memberNo, String workStatus) {
+	public WorkProjectName(String workNo, String workName, String status, String projectNo, Date beginDate,
+			Date completeDate, String precedeNo, String completeRate, String grantorNo, String workLevel,
+			String highWorkNo, String memo, String workType, String memberNo, String workStatus, String projectName) {
 		super();
 		this.workNo = workNo;
 		this.workName = workName;
@@ -40,6 +41,7 @@ public class Work implements java.io.Serializable{
 		this.workType = workType;
 		this.memberNo = memberNo;
 		this.workStatus = workStatus;
+		this.projectName = projectName;
 	}
 
 	public String getWorkNo() {
@@ -162,16 +164,22 @@ public class Work implements java.io.Serializable{
 		this.workStatus = workStatus;
 	}
 
-	@Override
-	public String toString() {
-		return "Work [workNo=" + workNo + ", workName=" + workName + ", status=" + status + ", projectNo=" + projectNo
-				+ ", beginDate=" + beginDate + ", completeDate=" + completeDate + ", precedeNo=" + precedeNo
-				+ ", completeRate=" + completeRate + ", grantorNo=" + grantorNo + ", workLevel=" + workLevel
-				+ ", highWorkNo=" + highWorkNo + ", memo=" + memo + ", workType=" + workType + ", memberNo=" + memberNo
-				+ ", workStatus=" + workStatus + "]";
+	public String getProjectName() {
+		return projectName;
 	}
 
-	
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+
+	@Override
+	public String toString() {
+		return "WorkProjectName [workNo=" + workNo + ", workName=" + workName + ", status=" + status + ", projectNo="
+				+ projectNo + ", beginDate=" + beginDate + ", completeDate=" + completeDate + ", precedeNo=" + precedeNo
+				+ ", completeRate=" + completeRate + ", grantorNo=" + grantorNo + ", workLevel=" + workLevel
+				+ ", highWorkNo=" + highWorkNo + ", memo=" + memo + ", workType=" + workType + ", memberNo=" + memberNo
+				+ ", workStatus=" + workStatus + ", projectName=" + projectName + "]";
+	}
 
 	
 
