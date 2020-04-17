@@ -419,7 +419,8 @@
 	function submitSweet() {
 		
 		var msg = "";
-		var regId = /^[a-z][a-z,0-9]{5,11}$/
+		/* var regId = /^[a-z][a-z,0-9]{5,11}$/ */
+		var regId = "";
 		var password = $("#password1").val();
 		var mamberName = $("#memberName").val();
 		var phone = $("#phone").val();
