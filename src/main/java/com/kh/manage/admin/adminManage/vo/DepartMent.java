@@ -1,6 +1,6 @@
 package com.kh.manage.admin.adminManage.vo;
 
-public class DepartMent {
+public class DepartMent implements java.io.Serializable {
 	private String deptNo;
 	private String deptName;
 	private String highDept;

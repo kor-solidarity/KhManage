@@ -1,6 +1,6 @@
 package com.kh.manage.admin.adminManage.vo;
 
-public class MenuAccess {
+public class MenuAccess implements java.io.Serializable {
 	private String menuName;
 	private String menuNo;
 	private String status;

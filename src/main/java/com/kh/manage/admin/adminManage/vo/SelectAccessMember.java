@@ -2,7 +2,7 @@ package com.kh.manage.admin.adminManage.vo;
 
 import java.sql.Date;
 
-public class SelectAccessMember {
+public class SelectAccessMember implements java.io.Serializable {
 	private String accessNo;
 	private String memberNo;
 	private String memberId;

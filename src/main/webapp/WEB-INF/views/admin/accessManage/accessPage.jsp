@@ -11,6 +11,10 @@
 		width:100%;
 		text-align:left;
 	}
+	.trRange:hover{
+		background:#EEEEEE;
+		font-weight:800;
+	}
 	.projectBtn{
 		width:130px;
 		height:27px;

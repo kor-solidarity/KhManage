@@ -1,6 +1,6 @@
 package com.kh.manage.admin.adminManage.vo;
 
-public class AccessMember {
+public class AccessMember implements java.io.Serializable {
 	private String accessNo;
 	private String accessName;
 	private String aContent;

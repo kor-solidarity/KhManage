@@ -2,7 +2,7 @@ package com.kh.manage.admin.adminManage.vo;
 
 import java.sql.Date;
 
-public class DeptMember {
+public class DeptMember implements java.io.Serializable{
 	private String memberNo;
 	private String memberId;
 	private String memberName;
