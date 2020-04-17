@@ -73,7 +73,7 @@
 </head>
 <body onload="$('#route1').text('프로젝트 등록')">
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
-	<jsp:include page="/WEB-INF/views/user/common/sidebar.jsp"/>
+	<jsp:include page="/WEB-INF/views/user/common/sidebar2.jsp"/>
 	<div class="panel col-md-12 panel-headline">
 		<%--본문 내용을 여기 안에다가 쓰기 시작해야 테두리 간격 등이 맞음.--%>
 		<div class="panel-heading col-md-12">
@@ -413,10 +413,10 @@
                 alert('PMO를 정해주세요');
             }
                 // 템플릿은 필수가 아닌듯 함.
-            /*else if ($("#project_template").val() == 0) {
+            else if ($("#project_template").val() == 0) {
                 // 프로젝트 템플릿
                 alert('프로젝트 템플릿을 정해주세요');
-            }*/
+            }
             else if (($("#startDate").val() === "" || $("#endDate").val() === "") ||
                 (endDate < startDate)) {
                 /*날짜값이 없거나 종료일이 시작일보다 빠르면 에러*/

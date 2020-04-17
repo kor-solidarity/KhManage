@@ -125,7 +125,7 @@
 </head>
 <body onload="$('#route1').text('프로젝트 센터')">
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
-	<jsp:include page="/WEB-INF/views/user/common/sidebar.jsp"/>
+	<jsp:include page="/WEB-INF/views/user/common/sidebar2.jsp"/>
 	<jsp:include page="/WEB-INF/views/user/common/projectNav.jsp"/>
 
 	<%--프로젝트 작업 페이지--%>
@@ -230,7 +230,7 @@
 						</li>
 
 						<li>
-							<div class="toolbar-split"><img src="/Images/1pixel.png"></div>
+							<div class="toolbar-split"></div>
 						</li>
 
 
@@ -260,7 +260,7 @@
 						</li>
 
 						<li>
-							<div class="toolbar-split"><img src="/Images/1pixel.png"></div>
+							<div class="toolbar-split"></div>
 						</li>
 						<li>
 							<div id="toolbar_baseline_view">
@@ -268,7 +268,6 @@
 								계획비교
 							</div>
 						</li>
-
 						<li>
 							<div class="dropdown">
 								<div data-toggle="dropdown" style="padding:0px">

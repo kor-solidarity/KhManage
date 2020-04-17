@@ -6,10 +6,7 @@ import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.template.model.vo.Template;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.common.Pagination;
-import com.kh.manage.project.model.vo.Project;
-import com.kh.manage.project.model.vo.ProjectList;
-import com.kh.manage.project.model.vo.ProjectTeam;
-import com.kh.manage.project.model.vo.ProjectType;
+import com.kh.manage.project.model.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,6 +54,7 @@ public class ProjectController {
 		System.out.println("teamList: " + teamList);
 		
 		model.addAttribute("list", teamList);
+		model.addAttribute("pi", pi);
 		return "user/project/projectSelectAll";
 	}
 	
@@ -205,20 +203,38 @@ public class ProjectController {
 	
 	// 프로젝트 작업 페이지
 	@RequestMapping("/projectTask.pr")
-	public String projectTask() {
+	public String projectTask(HttpServletRequest request) {
+		// 프로젝트 작업을 실시할때 이게 필요할거임:
+		// 우선 해당 프로젝트의 모든 작업을 불러온다.
+		
+		String pid = request.getParameter("pid");
+		
+		// 표면상 보일 목록: 아이디, 작업명 상태 기간 시작일 완료일 선행작업 완료율 담당자
+		List<ProjectWork> projectWorkList = ps.selectProjectWorkList(pid);
+		
 		System.out.println("projectTask");
+		
+		
+		
 		return "user/project/projectTask2";
 	}
+	
+	// 프로젝트 작업 추가에 쓰일 AJAX
+	@RequestMapping("/projectWorkInsert.pr")
+	public void projectWorkInsert(){
+	
+	}
+	
 	
 	
 	// 프로젝트 요약정보 페이지
 	@RequestMapping("/viewProject.pr")
-	public String viewProject(HttpServletRequest request) {
+	public String viewProject(Model model, HttpServletRequest request) {
 		System.out.println("viewProject");
 		
-		String projectPk = (String) request.getAttribute("pid");
+		String pid = (String) request.getParameter("pid");
 		
-		
+		model.addAttribute("pid", pid);
 		return "user/project/projectView";
 	}
 	
