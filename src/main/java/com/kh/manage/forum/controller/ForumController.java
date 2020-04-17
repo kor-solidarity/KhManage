@@ -279,9 +279,53 @@ public class ForumController {
 		System.out.println(nNo);
 		System.out.println(comment);
 		
+		rp.setReplyNo(nNo);
+		rp.setReplyContent(comment);
+		
+		int result = fs.replyUpdate(rp);
+		
+		
 	}
 	
 	
+	@RequestMapping("updateNotice.fo")
+	public String updateNotice
+	(Notice n, Model m, @RequestParam MultipartFile upfile , HttpServletRequest request) {
+			
+		String root = request.getSession().getServletContext().getRealPath("resources");//web밑에있는 resources이다.
+
+		System.out.println("root : " + root);
+			
+		String filePath = root + "\\uploadFiles"; 
+			
+		String originFileName = upfile.getOriginalFilename();//원본 파일 이름
+		String ext = originFileName.substring(originFileName.lastIndexOf("."));//.png , .jpg 
+		String changeName = CommonsUtils.getRandomString();
+			
+		Attachment at = new Attachment();
+		at.setChangeName(changeName);
+		at.setOriginName(originFileName);
+		at.setFilePath(filePath);
+		at.setExt(ext);
+			
+		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
+			
+		System.out.println(loginUser);
+			
+		n.setMemberNo(loginUser.getMemberNo());
+		
+		try {
+			int result = fs.noticeUpdate(n,at);
+			System.out.println("controller : " + result);
+			upfile.transferTo(new File(filePath + "\\" +  changeName + ext));
+				
+		} catch (Exception e) {
+				
+			new File(filePath + "\\" + changeName + ext).delete();
+		}
+			
+			return "redirect:noticeMain.fo";
+		}
 	
 	
 }

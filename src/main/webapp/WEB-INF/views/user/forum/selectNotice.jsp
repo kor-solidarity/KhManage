@@ -172,7 +172,7 @@
 					</tr>
 					<tr  class="tr2">
 						<td colspan="3">
-							<div id="content"> <%-- <c:out value="${notice.noticeContent}"/> --%></div>
+							<div id="content">${notice.noticeContent} <%-- <c:out value="${notice.noticeContent}"/> --%></div>
 						</td>
 					</tr>
 					<tr>
@@ -228,9 +228,8 @@
 	$(function(){
 		
 	getCommentList();
-	var dd = '${notice.noticeContent}';
 	
-	$("#content").html(dd);
+	//$("#content").html(dd);
 	
 	var downNo = '${at.atNo}';
 	var nNo = '${notice.noticeNo}';
@@ -392,36 +391,42 @@
 				
 				var nNo = $(this).children().val();
 				
-				$(this).parent().html("<div style='width:100%'><textarea style='width: 1200px' rows='3' cols='30' id='comment' name='comment' placeholder='댓글을 입력하세요'></textarea></div><button class='rupdate'>수정</button>&nbsp;&nbsp;<button>취소</button>");
-				
-				
-			/*  $(".rupdate").click(function(){
-				
-				 console.log("sdadsad")
-				 
-				 $.ajax({
-			 	        type: "post", 
-			 	        url: "replyUpdate.fo", 
-			 	        data:  {
-			 	        			nNo : nNo,
-			 	        			comment : comment
-			 					},
-			 	        
-			 	        success: function(data){
-			 	            alert("댓글이 수정되었습니다.");
-			 	            console.log(data);
-			 	            
-			 	            getCommentList();
-			 	           }
-			 	   });
-				
-			 }); */
-			 
-				
+				$(this).parent().html("<div style='width:100%'><textarea style='width: 1200px' rows='3' cols='30' id='comment' name='comment' placeholder='댓글을 입력하세요'></textarea></div><button class='rupdate'>수정<input type='hidden' value='"+nNo+"'></button>&nbsp;&nbsp;<button>취소</button>");
 				
 		 });
 		 
-	
+		 
+		 
+		 
+		 $(document).on('click', '.rupdate', function(){
+				
+			 console.log($(this).children().val());
+			 console.log($(this).parent().children("div").children().val())
+			 
+			 
+			 var comment = $(this).parent().children("div").children().val();
+			 var nNo = $(this).children().val();
+
+			 $.ajax({
+		 	        type: "post", 
+		 	        url: "replyUpdate.fo", 
+		 	        data:  {
+		 	        			nNo : nNo,
+		 	        			comment : comment
+		 					},
+		 	        
+		 	        success: function(data){
+		 	            alert("댓글이 수정되었습니다.");
+		 	            console.log(data);
+		 	            
+		 	            getCommentList();
+		 	           }
+		 	   });
+		 	   
+			
+		 }); 
+		 
+			 
 	
 		 function getCommentList(){
 			    
@@ -431,11 +436,9 @@
 			        type:'GET',
 			        url : "replySelectAll.fo",
 			        dataType : "json",
-			        //data:$("#commentForm").serialize(),
 			        data:{
 			        	nNo : nNo
 			        },
-			        //contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
 			        success : function(data){
 			            
 			        	console.log(data);
@@ -482,7 +485,7 @@
 			    
 			}	
 			
-	
+			
 	
 	
 	

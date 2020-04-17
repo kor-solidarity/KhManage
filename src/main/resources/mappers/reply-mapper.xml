@@ -31,7 +31,11 @@
 		UPDATE REPLY SET STATUS = 'N'
 		WHERE REPLY_NO = #{no}
 	</update>
-			
+		
+	<update id="updateReply" parameterType="Reply">
+		UPDATE REPLY SET REPLY_CONTENT = #{replyContent} ,MODIFY_DATE = SYSDATE
+		WHERE REPLY_NO = #{replyNo}
+	</update>		
 	
 		
 </mapper>

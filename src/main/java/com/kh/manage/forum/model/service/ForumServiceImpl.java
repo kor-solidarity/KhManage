@@ -124,4 +124,33 @@ public class ForumServiceImpl implements ForumService{
 		return fd.deleteReply(sqlSession, no);
 	}
 
+	@Override
+	public int replyUpdate(Reply rp) {
+		
+		return fd.replyUpdate(sqlSession, rp);
+	}
+
+	@Override
+	public int noticeUpdate(Notice n, Attachment at) {
+		System.out.println("service");
+		int result = 0;
+		
+		int result1 = fd.noticeUpdate(sqlSession,n);
+		
+		System.out.println("result1 : " + result1);
+		
+		at.setDivision(n.getNoticeNo());
+		
+		int result2 = fd.attachUpdate(sqlSession,at);
+		
+		System.out.println("result2 : " + result2);
+		
+		if(result1 > 0 && result2 > 0) {
+			
+			result = 1;
+		}
+		
+		return result;
+	}
+
 }
