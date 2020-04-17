@@ -65,11 +65,22 @@
 			height: 25px;
 			border-radius: 5px;
 		}
+
+		.pagingArea {
+			background: #F3F3F3;
+			height: 50px;
+			border: 1px solid #B0B0B0;
+		}
+
+		.paging {
+			margin-left: 200px;
+			width: 50%;
+		}
 	</style>
 </head>
 <body onload="$('#route1').text('프로젝트')">
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
-	<jsp:include page="/WEB-INF/views/user/common/sidebar.jsp"/>
+	<jsp:include page="/WEB-INF/views/user/common/sidebar2.jsp"/>
 	<div class="panel panel-headline">
 		<div class="panel-heading">
 			<div style="width:100%; height:700px; margin:0 auto; overflow:auto;">
@@ -120,36 +131,69 @@
 														  style="visibility:hidden; width:50px;"></td>
 					</tr>
 
-					<tr class="trRange">
-						<td class="td1"><a href="${ path }/viewProject.pr">KH대학교 학사시스템 개발</a></td>
-						<td class="tdText">SW개발</td>
-						<td class="tdText">김태원</td>
-						<td class="tdText">개발1부서</td>
-						<td class="tdText">시작전</td>
-						<td class="tdText">20.04.02</td>
-						<td class="tdText">20.05.12</td>
-						<td class="tdText">10%</td>
-						<td class="tdText">0</td>
-						<td class="tdText">0</td>
-					</tr>
-
 					<c:forEach var="pl" items="${list}">
 						<tr class="trRange">
-							<td class="td1"><a href="${path}/viewProject.pr?pid=${pl.projectPk}">${pl.projectName}</a></td>
+							<td class="td1">
+								<a href="${path}/viewProject.pr?pid=${pl.projectPk}&type=0">${pl.projectName}</a>
+							</td>
 							<td class="tdText">${pl.projectTypeName}</td>
 							<td class="tdText">${pl.projectManagerName}</td>
 							<td class="tdText">${pl.deptName}</td>
 							<td class="tdText">${pl.status}</td>
 							<td class="tdText">${pl.startDate}</td>
 							<td class="tdText">${pl.endDate}</td>
+								<%--실적--%>
 							<td class="tdText">10%</td>
-							<%--산출물--%>
+								<%--산출물--%>
 							<td class="tdText">0</td>
-							<%--이슈--%>
+								<%--이슈--%>
 							<td class="tdText">0</td>
 						</tr>
 					</c:forEach>
 
+					<tr class="pagingArea">
+						<td colspan="12">
+							<div class="paging">
+								<a href="${path}/projectCenter.pr?currentPage=<c:out value='${pi.startPage}'/>" ><<</a>
+								<%--1페이지에서 그 이전으로 돌아가려고 하면 첫페이지로 보냄.--%>
+								<c:choose>
+									<c:when test="${pi.currentPage-1 > 1}">
+										<a href="${path}/projectCenter.pr.de?currentPage=<c:out value='${pi.currentPage-1}'/>"><</a>
+									</c:when>
+									<c:otherwise>
+										<a href="${path}/projectCenter.pr.de?currentPage=1"><</a>
+									</c:otherwise>
+								</c:choose>
+
+								<%--todo 페이징 처리 10단위좀...--%>
+								<c:forEach var="i" begin="1" end="${pi.maxPage}">
+									<c:if test="${i == pi.currentPage}">
+										<span style="color: red ; font-weight: bold">${i}</span>
+									</c:if>
+									<c:if test="${i != pi.currentPage}">
+										<a href="${path}/projectCenter.pr.de?currentPage=${i}">
+												${i}
+										</a>
+									</c:if>
+								</c:forEach>
+<%--								<< < 1 2 > >>--%>
+
+
+								<c:choose>
+									<%--마지막 페이지에서 앞으로 가려고 하면 그냥 마지막으로 보낸다.--%>
+									<%--현 페이지 + 1이 마지막 페이지보다 크다 == 지금이 마지막 페이지다.--%>
+									<c:when test="${pi.currentPage+1 > pi.maxPage}">
+										<a href="${path}/projectCenter.pr.de?currentPage=<c:out value='${pi.maxPage}'/>">> </a>
+									</c:when>
+									<c:otherwise>
+										<a href="${path}/projectCenter.pr.de?currentPage=<c:out value='${pi.currentPage + 1}'/>">> </a>
+									</c:otherwise>
+								</c:choose>
+								<a href="${path}/projectCenter.pr?currentPage=<c:out value='${pi.maxPage}'/>" >>> </a>
+
+							</div>
+						</td>
+					</tr>
 				</table>
 
 			</div>
