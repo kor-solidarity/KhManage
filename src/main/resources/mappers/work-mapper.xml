@@ -19,13 +19,45 @@
 		<result property="memo" column="MEMO"/>
 		<result property="workType" column="WORK_TYPE"/>
 		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="workStatus" column="WORK_STATUS"/>
 	</resultMap>
+	
+	<resultMap type="WorkProjectName" id="workResultSet2">
+		<id property="workNo" column="WORK_NO"/>
+		<result property="workName" column="WORK_NAME"/>
+		<result property="status" column="STATUS"/>
+		<result property="projectNo" column="PROJECT_NO"/>
+		<result property="beginDate" column="BEGIN_DATE"/>
+		<result property="completeDate" column="COMPLETE_DATE"/>
+		<result property="precedeNo" column="PRECEDE_NO"/>
+		<result property="completeRate" column="COMPLETE_RATE"/>
+		<result property="grantorNo" column="GRANTOR_NO"/>
+		<result property="workLevel" column="WORK_LEVEL"/>
+		<result property="highWorkNo" column="HIGH_WORK_NO"/>
+		<result property="memo" column="MEMO"/>
+		<result property="workType" column="WORK_TYPE"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="workStatus" column="WORK_STATUS"/>
+		<result property="projectName" column="PROJECT_NAME"/>
+	</resultMap>
+	
+	
+	<resultMap type="WorkProjectTeam" id="selectTeamWorkResult">
+		<id property="teamPk" column="TEAM_PK"/>
+		<result property="projectPk" column="PROJECT_PK"/>
+		<result property="memberPk" column="MEMBER_PK"/>
+		<result property="role" column="ROLE"/>
+		<result property="projectName" column="PROJECT_NAME"/>
+	</resultMap>
+	
+	
+	
 
 	<insert id="insertWork" parameterType="Work">
 		INSERT INTO WORK
 		VALUES('W' || TO_CHAR(SEQ_WNO.NEXTVAL, 'FM000'), #{workName}, #{status}, #{projectNo}, 
 			   #{beginDate}, #{completeDate}, #{precedeNo}, #{completeRate}, #{grantorNo}, #{workLevel}, 
-			   #{highWorkNo}, #{memo}, #{workType}, #{memberNo}) 
+			   #{highWorkNo}, #{memo}, #{workType}, #{memberNo}, DEFAULT) 
 	</insert>
 	
 
@@ -40,6 +72,72 @@
 	SELECT *
 	FROM WORK
 	WHERE WORK_NO = #{workNo}
+	</select>
+	
+	<select id="selectWorkList1" parameterType="Member" resultMap="workResultSet2">
+	SELECT W.WORK_NO, W.WORK_NAME, W.STATUS, W.PROJECT_NO, W.BEGIN_DATE, W.COMPLETE_DATE, W.PRECEDE_NO, W.COMPLETE_RATE,
+		   W.GRANTOR_NO, W.WORK_LEVEL, W.HIGH_WORK_NO, W.MEMO, W.WORK_TYPE, W.MEMBER_NO, W.WORK_STATUS, P.PROJECT_NAME
+	FROM WORK W
+	JOIN PROJECT P ON (W.PROJECT_NO = P.PROJECT_PK)
+	WHERE W.MEMBER_NO = #{memberNo}
+	ORDER BY W.WORK_NO ASC
+	</select>
+	
+	<select id="selectWorkList2" parameterType="Member" resultMap="workResultSet2">
+	SELECT W.WORK_NO, W.WORK_NAME, W.STATUS, W.PROJECT_NO, W.BEGIN_DATE, W.COMPLETE_DATE, W.PRECEDE_NO, W.COMPLETE_RATE,
+		   W.GRANTOR_NO, W.WORK_LEVEL, W.HIGH_WORK_NO, W.MEMO, W.WORK_TYPE, W.MEMBER_NO, W.WORK_STATUS, P.PROJECT_NAME
+	FROM WORK W
+	JOIN PROJECT P ON (W.PROJECT_NO = P.PROJECT_PK)
+	WHERE W.MEMBER_NO = #{memberNo}
+	AND W.STATUS = '개발중'
+	ORDER BY W.WORK_NO ASC
+	</select>
+	
+	<select id="selectWorkList3" parameterType="Member" resultMap="workResultSet2">
+	SELECT W.WORK_NO, W.WORK_NAME, W.STATUS, W.PROJECT_NO, W.BEGIN_DATE, W.COMPLETE_DATE, W.PRECEDE_NO, W.COMPLETE_RATE,
+		   W.GRANTOR_NO, W.WORK_LEVEL, W.HIGH_WORK_NO, W.MEMO, W.WORK_TYPE, W.MEMBER_NO, W.WORK_STATUS, P.PROJECT_NAME
+	FROM WORK W
+	JOIN PROJECT P ON (W.PROJECT_NO = P.PROJECT_PK)
+	WHERE W.MEMBER_NO = #{memberNo}
+	AND W.STATUS = '개발완료'
+	ORDER BY W.WORK_NO ASC
+	</select>
+	
+	<select id="selectWorkList4" parameterType="Member" resultMap="workResultSet2">
+	SELECT W.WORK_NO, W.WORK_NAME, W.STATUS, W.PROJECT_NO, W.BEGIN_DATE, W.COMPLETE_DATE, W.PRECEDE_NO, W.COMPLETE_RATE,
+		   W.GRANTOR_NO, W.WORK_LEVEL, W.HIGH_WORK_NO, W.MEMO, W.WORK_TYPE, W.MEMBER_NO, W.WORK_STATUS, P.PROJECT_NAME
+	FROM WORK W
+	JOIN PROJECT P ON (W.PROJECT_NO = P.PROJECT_PK)
+	WHERE W.MEMBER_NO = #{memberNo}
+	AND W.STATUS = '테스트완료'
+	ORDER BY W.WORK_NO ASC
+	</select>
+	
+	<select id="selectWorkList5" parameterType="Member" resultMap="workResultSet2">
+	SELECT W.WORK_NO, W.WORK_NAME, W.STATUS, W.PROJECT_NO, W.BEGIN_DATE, W.COMPLETE_DATE, W.PRECEDE_NO, W.COMPLETE_RATE,
+		   W.GRANTOR_NO, W.WORK_LEVEL, W.HIGH_WORK_NO, W.MEMO, W.WORK_TYPE, W.MEMBER_NO, W.WORK_STATUS, P.PROJECT_NAME
+	FROM WORK W
+	JOIN PROJECT P ON (W.PROJECT_NO = P.PROJECT_PK)
+	WHERE W.MEMBER_NO = #{memberNo}
+	AND W.STATUS = 'PL검토중'
+	ORDER BY W.WORK_NO ASC
+	</select>
+	
+	<select id="selectWorkList6" parameterType="Member" resultMap="workResultSet2">
+	SELECT W.WORK_NO, W.WORK_NAME, W.STATUS, W.PROJECT_NO, W.BEGIN_DATE, W.COMPLETE_DATE, W.PRECEDE_NO, W.COMPLETE_RATE,
+		   W.GRANTOR_NO, W.WORK_LEVEL, W.HIGH_WORK_NO, W.MEMO, W.WORK_TYPE, W.MEMBER_NO, W.WORK_STATUS, P.PROJECT_NAME
+	FROM WORK W
+	JOIN PROJECT P ON (W.PROJECT_NO = P.PROJECT_PK)
+	WHERE W.MEMBER_NO = #{memberNo}
+	AND W.STATUS = 'PL검토완료'
+	ORDER BY W.WORK_NO ASC
+	</select>
+	
+	<select id="selectTeamWork" parameterType="Member" resultMap="selectTeamWorkResult">
+	SELECT PT.TEAM_PK, PT.PROJECT_PK, PT.MEMBER_PK, PT.ROLE, P.PROJECT_NAME
+	FROM PROJECT_TEAM PT
+	JOIN PROJECT P ON (P.PROJECT_PK = PT.PROJECT_PK)
+	WHERE PT.MEMBER_PK = #{memberNo}
 	</select>
 
 </mapper>

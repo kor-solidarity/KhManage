@@ -1,6 +1,8 @@
 package com.kh.manage.work.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,13 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.work.model.service.WorkService;
 import com.kh.manage.work.model.vo.Work;
+import com.kh.manage.work.model.vo.WorkProjectTeam;
 
 @Controller
 public class WorkController {
@@ -29,10 +30,15 @@ public class WorkController {
 	public String myWorkList(Model m, HttpServletRequest request) {
 		
 		Member member = (Member) request.getSession().getAttribute("loginUser");
-		List<Work> list = ws.selectWorkList(member);
+		/* List<Work> list = ws.selectWorkList(member); */
 		
-		if(list != null) {
-			request.setAttribute("list", list);
+		HashMap<String, List> map = ws.selectWorkMap(member);
+		
+		List<WorkProjectTeam> wp = ws.selectTeamWork(member);
+		
+		if(map != null || wp != null) {
+			request.setAttribute("map", map);
+			request.setAttribute("wp", wp);
 			return "user/work/myWorkList";
 		}else {
 			request.setAttribute("msg", "작업 리스트 출력 오류");
@@ -75,6 +81,12 @@ public class WorkController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+	}
+	
+	
+	@RequestMapping("/myWorkChange.wk")
+	public void myWorkChange(Model model, Work work, HttpServletRequest request) {
 		
 	}
 }

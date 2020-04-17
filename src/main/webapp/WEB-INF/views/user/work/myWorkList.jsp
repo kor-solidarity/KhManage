@@ -21,7 +21,7 @@
 		margin-right: 5px; 
 		background: #1E2B44; 
 		width: 250px; 
-		max-height: 150px;
+		max-height: 700px;
 		min-height: 25px; 
 		border-radius: 4px; 
 	}
@@ -35,7 +35,8 @@
 		margin: 5px; 
 		padding: 5px; 
 		font-size: 16px; 
-		width: 120px; 
+		width: 120px;
+		height: 100px; 
 		background: #fefefe; 
 		border-radius: 4px; 
 	}
@@ -115,6 +116,44 @@
 		display:none;
 
 	} 
+	
+	.workLabel1{
+		min-width:10px;
+		background:#FFB848;
+		color:white;
+		float:right;
+	}
+	.workLabel2{
+		min-width:10px;
+		background:#45B6AF;
+		color:white;
+		float:right;
+	}
+	
+	.workLabel3{
+		min-width:10px;
+		background:#798EF6;
+		color:white;
+		float:right;
+	}
+	
+	.workLabel4{
+		min-width:10px;
+		background:#FD3A0F;
+		color:white;
+		float:right;
+	}
+	
+	.workLabel5{
+		min-width:10px;
+		background:#009900;
+		color:white;
+		float:right;
+	}
+	
+	.rate{
+		float:right;
+	}
 </style>
 </head>
 <body id="bodyAll" onload="$('#route1').text('내 작업'), $('#route2').text('작업 관리')">
@@ -127,35 +166,99 @@
 			<div class="oversort ui-sortable">
 				<div class="sortable ui-sortable" id="workArea"  style="overflow-y:auto; overflow-x:hidden; -ms-overflow-style: none;">
 					<h5 class="nodrag header">내 할일</h5>
-					<div>개발작업</div>
-					<div>테스트 - 진행중</div>
-					<c:forEach var="b" items="${list }">
-					<div><input type="hidden" value="${b.workNo }"><c:out value="${b.workName }"/> - <c:out value="${b.status }"/></div>
+					<c:forEach var="l1" items="${map.list1 }">
+					<div><input type="hidden" value="${l1.workNo }">
+					<c:if test="${l1.status == '개발중' }">
+					<label class="workLabel1"><c:out value="${l1.status }"/></label>
+					</c:if>
+					<c:if test="${l1.status == '개발완료' }">
+					<label class="workLabel2"><c:out value="${l1.status }"/></label>
+					</c:if>
+					<c:if test="${l1.status == '테스트완료' }">
+					<label class="workLabel3"><c:out value="${l1.status }"/></label>
+					</c:if>
+					<c:if test="${l1.status == 'PL검토중' }">
+					<label class="workLabel4"><c:out value="${l1.status }"/></label>
+					</c:if>
+					<c:if test="${l1.status == 'PL검토완료' }">
+					<label class="workLabel5"><c:out value="${l1.status }"/></label>
+					</c:if>
+					<br>
+					<label style="font-size:17px; line-height:280%;"><c:out value="${l1.workName }"/></label>
+					<br>
+					<c:out value="${l1.projectName }"/>
+					<label class="rate"><c:out value="${l1.completeRate }"/>%</label>
+					</div>
 					</c:forEach>
 					<button id="newWork1">+ 내 작업 추가</button>
 				</div>
 				
-				<div class="sortable ui-sortable">
+				<div class="sortable ui-sortable" style="overflow-y:auto; overflow-x:hidden; -ms-overflow-style: none;">
 					<h5 class="nodrag header">개발중</h5>
-					<button id="newWork2">+ 새 작업 추가</button>
+					<c:forEach var="l2" items="${map.list2 }">
+					<div><input type="hidden" value="${l2.workNo }">
+					<label class="workLabel1"><c:out value="${l2.status }"/></label>
+					<br>
+					<label style="font-size:17px; line-height:280%;"><c:out value="${l2.workName }"/></label>
+					<br>
+					<c:out value="${l2.projectName }"/>
+					<label class="rate"><c:out value="${l2.completeRate }"/>%</label>
+					</div>
+					</c:forEach>
 				</div>
 				
-				<div class="sortable ui-sortable">
+				<div class="sortable ui-sortable" style="overflow-y:auto; overflow-x:hidden; -ms-overflow-style: none;">
 					<h5 class="nodrag header">개발완료</h5>
-					<button id="newWork3">+ 새 작업 추가</button>
+					<c:forEach var="l3" items="${map.list3 }">
+					<div><input type="hidden" value="${l3.workNo }">
+					<label class="workLabel2"><c:out value="${l3.status }"/></label>
+					<br>
+					<label style="font-size:17px; line-height:280%;"><c:out value="${l3.workName }"/></label>
+					<br>
+					<c:out value="${l3.projectName }"/>
+					<label class="rate"><c:out value="${l3.completeRate }"/>%</label>
+					</div>
+					</c:forEach>
 				</div>
 				
-				<div class="sortable ui-sortable">
+				<div class="sortable ui-sortable" style="overflow-y:auto; overflow-x:hidden; -ms-overflow-style: none;">
 					<h5 class="nodrag header">개발자 테스트 완료</h5>
-					<input type="text" class="nodrag anchorBottom newlistitem" name="newlistitem" placeholder="New List Item...">
+					<c:forEach var="l4" items="${map.list4 }">
+					<div><input type="hidden" value="${l4.workNo }">
+					<label class="workLabel3"><c:out value="${l4.status }"/></label>
+					<br>
+					<label style="font-size:17px; line-height:280%;"><c:out value="${l4.workName }"/></label>
+					<br>
+					<c:out value="${l4.projectName }"/>
+					<label class="rate"><c:out value="${l4.completeRate }"/>%</label>
+					</div>
+					</c:forEach>
 				</div>
-				<div class="sortable ui-sortable">
+				<div class="sortable ui-sortable" style="overflow-y:auto; overflow-x:hidden; -ms-overflow-style: none;">
 					<h5 class="nodrag header">PL검토중</h5>
-					<input type="text" class="nodrag anchorBottom newlistitem" name="newlistitem" placeholder="New List Item...">
+					<c:forEach var="l5" items="${map.list5 }">
+					<div><input type="hidden" value="${l5.workNo }">
+					<label class="workLabel4"><c:out value="${l5.status }"/></label>
+					<br>
+					<label style="font-size:17px; line-height:280%;"><c:out value="${l5.workName }"/></label>
+					<br>
+					<c:out value="${l5.projectName }"/>
+					<label class="rate"><c:out value="${l5.completeRate }"/>%</label>
+					</div>
+					</c:forEach>
 				</div>
-				<div class="sortable ui-sortable">
+				<div class="sortable ui-sortable" style="overflow-y:auto; overflow-x:hidden; -ms-overflow-style: none;">
 					<h5 class="nodrag header ">PL검토완료</h5>
-					<input type="text" class="nodrag anchorBottom newlistitem" name="newlistitem" placeholder="New List Item...">
+					<c:forEach var="l6" items="${map.list6 }">
+					<div><input type="hidden" value="${l6.workNo }">
+					<label class="workLabel5"><c:out value="${l6.status }"/></label>
+					<br>
+					<label style="font-size:17px; line-height:280%;"><c:out value="${l6.workName }"/></label>
+					<br>
+					<c:out value="${l6.projectName }"/>
+					<label class="rate"><c:out value="${l6.completeRate }"/>%</label>
+					</div>
+					</c:forEach>
 				</div>
 			
     			<!-- <div class="oversort">
@@ -173,7 +276,7 @@
 		      <div class="modal-content">
 		        <div class="modal-header">
 		          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
-		          <h4 class="modal-title" id="gridSystemModalLabel"><i class="fas fa-th-large"></i>&nbsp;신규 작업 등록 정보</h4>
+		          <h4 class="modal-title" id="gridSystemModalLabel"><i class="fas fa-th-large"></i>&nbsp;신규 작업 등록</h4>
 		        </div>
 		        <div class="modal-body">
 		          <div class="container-fluid">
@@ -188,7 +291,15 @@
 							<td class="titleId">프로젝트 번호
 							<input type="hidden" name="memberNo" value="${sessionScope.loginUser.memberNo }">
 							</td>
-							<td><input type="text" name="projectNo" class="inputMenu form-control" style="width: 280px;" required="required" value="P008"></td>
+							<td>
+							<select name="projectNo" class="inputMenu form-control" style="width: 280px;" required="required">
+									<option value="#" >선택하세요</option>
+									
+									<c:forEach var="wp" items="${wp }">
+									<option value="${wp.projectPk }"><c:out value="${wp.projectName }"/></option> 
+									</c:forEach>
+								</select>
+							</td>
 						</tr>
 						<tr>
 							<td class="titleId">작업유형</td>
@@ -286,11 +397,12 @@
 		        <div class="modal-body">
 		          <div class="container-fluid">
 		            <div class="row" style="margin: 10px;  padding:10px; ">
-		            <form id="workRegForm" action="myWorkReg.wk" method="post">
+		            <form id="workRegChange" action="myWorkChange.wk" method="post">
 		              <table id="buseoInfoTable" style="border-spacing:0 10px; border-collapse: separate;">
 						<tr>
 							<td class="titleId" style="width: 130px;">작업명</td>
-							<td><input type="text" id="workName" name="workName" class="inputMenu form-control" style="width: 280px;" readOnly required="required"></td>
+							<td>
+							<input type="text" id="workName" name="workName" class="inputMenu form-control" style="width: 280px;" readOnly required="required"></td>
 						</tr>
 						<tr>
 							<td class="titleId">프로젝트 번호
@@ -334,7 +446,18 @@
 						<tr>
 							<td class="titleId">작업상태</td>
 							<td>
-							<input type="text" id="status" name="status" class="inputMenu form-control" style="width: 280px;" readOnly required="required">
+							<select name="status" id="status" class="inputMenu form-control" style="width: 280px;" required="required">
+									<option value="개발중" 
+									<c:if test="${data.status == '개발중' }"> selected </c:if>>개발중</option>
+									<option value="개발완료" 
+									<c:if test="${data.status == '개발완료' }">selected</c:if>>개발완료</option>
+									<option value="테스트완료" 
+									<c:if test="${data.status == '테스트완료' }">selected</c:if>>테스트완료</option>
+									<option value="PL검토중" 
+									<c:if test="${data.status == 'PL검토중' }">selected</c:if>>PL검토중</option>
+									<option value="PL검토완료" 
+									<c:if test="${data.status == 'PL검토완료' }">selected</c:if>>PL검토완료</option>
+							</select>
 							</td>
 						</tr>
 						<tr>
@@ -353,7 +476,7 @@
 		        </div>
 		        <div class="modal-footer">
 		          <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-		          <button type="button" class="btn btn-primary" id="workRegSubmit" style="background:#1E2B44; outline:none; border:none;">저장</button>
+		          <button type="button" class="btn btn-primary" id="workChangeSubmit" style="background:#1E2B44; outline:none; border:none;">저장</button>
 		        </div>
 		      </div><!-- /.modal-content -->
 		    </div><!-- /.modal-dialog -->
@@ -366,6 +489,10 @@
 	
 		$("#workRegSubmit").click(function(){
 			$('#workRegForm').submit();
+		}); 
+		
+		$("#workChangeSubmit").click(function(){
+			$('#workRegChange').submit();
 		}); 
 	
 		$("#workArea").find("div").click(function(){
