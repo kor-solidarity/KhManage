@@ -124,6 +124,27 @@
     <load-on-startup>1</load-on-startup>
   </servlet>
   
+  <servlet>
+    <servlet-name>InfoBoard</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>/WEB-INF/config/board-servlet.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>GwManage</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>/WEB-INF/config/gwManage-servlet.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet> 
+  
+  
   <servlet-mapping>
     <servlet-name>Member</servlet-name>
     <url-pattern>*.me</url-pattern>
@@ -177,6 +198,16 @@
   <servlet-mapping>
     <servlet-name>Forum</servlet-name>
     <url-pattern>*.fo</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>InfoBoard</servlet-name>
+    <url-pattern>*.ib</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>GwManage</servlet-name>
+    <url-pattern>*.gwm</url-pattern>
   </servlet-mapping>
   
   
