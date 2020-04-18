@@ -203,18 +203,22 @@ public class ProjectController {
 	
 	// 프로젝트 작업 페이지
 	@RequestMapping("/projectTask.pr")
-	public String projectTask(HttpServletRequest request) {
+	public String projectTask(Model model, HttpServletRequest request) {
 		// 프로젝트 작업을 실시할때 이게 필요할거임:
 		// 우선 해당 프로젝트의 모든 작업을 불러온다.
 		
 		String pid = request.getParameter("pid");
 		
-		// 표면상 보일 목록: 아이디, 작업명 상태 기간 시작일 완료일 선행작업 완료율 담당자
+		// 표면상 보일 목록: 작업 아이디, 작업명 상태 기간 시작일 완료일 선행작업 완료율 담당자이름
+		
+		// TODO: 2020-04-18 정렬은?? 우선은 시작일자 순으로 하되 추후 수정을 해야할 거.
 		List<ProjectWork> projectWorkList = ps.selectProjectWorkList(pid);
 		
-		System.out.println("projectTask");
+		// 작업 담당자는 별도에서 뽑아와야 한다.
 		
-		
+		System.out.println("projectWorkList: " + projectWorkList);
+		// 작업 담당자 목록
+		// List<ProjectCharger> projectChargerList = ps.getProj
 		
 		return "user/project/projectTask2";
 	}

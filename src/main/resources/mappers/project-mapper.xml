@@ -36,7 +36,23 @@
         <result property="status" column="status"/>
     </resultMap>
 
-    <resultMap id="projectTypeResultSet" type="ProjectType">
+    <resultMap id="projectWorkListResultSet" type="ProjectWork">
+        <id property="workNo" column="work_No"/>
+        <result property="workName" column="work_name"/>
+        <result property="status" column="status"/>
+        <result property="projectNo" column="project_no"/>
+        <result property="beginDate" column="begin_date"/>
+        <result property="completeDate" column="complete_date"/>
+        <result property="completeRate" column="complete_rate"/>
+        <result property="grantorNo" column="grantor_no"/>
+        <result property="workLevel" column="work_level"/>
+        <result property="highWorkNo" column="high_work_no"/>
+        <result property="memo" column="memo"/>
+        <result property="workType" column="work_type"/>
+        <result property="workStatus" column="work_status"/>
+    </resultMap>
+
+   <resultMap id="projectTypeResultSet" type="ProjectType">
         <id property="typePk" column="type_pk"/>
         <result property="typeName" column="type_name"/>
     </resultMap>
@@ -91,6 +107,11 @@
     <select id="selectProjectTypeList" resultMap="projectTypeResultSet">
         select *
         from project_type
+    </select>
+
+    <select id="selectProjectWorkList" resultMap="projectWorkListResultSet">
+        select *
+        from WORK
     </select>
 
     <select id="getSeq" resultType="String">

@@ -18,6 +18,7 @@ public class ProjectWork {
 	private String memo;
 	private String workType;
 	private String workStatus;
+	// private String[]
 	
 	public ProjectWork() {
 	}

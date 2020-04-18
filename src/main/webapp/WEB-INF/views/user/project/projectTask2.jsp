@@ -117,7 +117,7 @@
 			float: left;
 		}
 
-		.fa-search{
+		.fa-search {
 			cursor: pointer;
 		}
 
@@ -144,7 +144,8 @@
 
 						<li>
 							<div class="gantt-edit-control gantt-none-edit-mode dropdown">
-								<div id="toolbar_add" class="gantt-edit-control gantt-none-edit-mode" data-toggle=""
+								<div id="toolbar_add" class="gantt-edit-control gantt-none-edit-mode"
+									 data-toggle="dropdown"
 									 style="padding:0px">
 									<i class="glyphicon glyphicon-plus"></i><br>
 									추가
@@ -152,8 +153,9 @@
 
 								<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
 									<li>
-										<div id="add_below" role="menuitem" tabindex="-1"><i
-												class="glyphicon glyphicon-save"></i> 아래에 추가
+										<div id="add_below" role="menuitem" tabindex="-1" onclick="add_project_work()">
+											<i
+													class="glyphicon glyphicon-save"></i> 아래에 추가
 										</div>
 									</li>
 									<li>
@@ -327,7 +329,7 @@
 		<div style="width: 100%; height: 900px; /*padding: 0;*/float: left; /*border: 1px red solid;*/">
 			<%--차트 좌측 목록--%>
 			<div style="margin-right: 0px; width: 862px; height: 898px; padding: 0px; border-left: 1px  gray solid; display: inline-block">
-				<table border="1" style="height: 50px" class="chart-left-table">
+				<table border="1" style="height: 50px" class="chart-left-table" id="chart-left-table">
 					<tr class=" chart-left-top" style="height: 60px">
 						<%--ID--%>
 						<th style="width: 30px">ID</th>
@@ -353,7 +355,7 @@
 					<tr>
 						<td>5</td>
 						<td>무슨작업</td>
-						<td><span class="fa fa-circle" data-toggle="tooltip" title="대기중"></span></td>
+						<td><span style="" class="fa fa-circle" data-toggle="tooltip" title="대기중"></span></td>
 						<td>10</td>
 						<td>2020.03.10</td>
 						<td>2020.03.19</td>
@@ -573,11 +575,69 @@
 						</table>
 					</div>
 				</div>
+				<script>
+                    // 작업 추가를 누르면 어떤거든간에 우선 테이블 맨위에 띄우게끔.
+                    function add_project_work (location) {
+                        // todo 위치 어디로 보낼지 생각좀.
+                        // 우선은 그냥 맨위
+                        $("#chart-left-table tr:first-of-type").after(
+                            // todo 고도화, 그니까 각종 유효성. 우선은 통과.
+                            "<tr class='work_input'>" +
+                            "<td></td>" +
+                            // 작업 제목
+                            "<td><input type='text' style='width: 100%' class='' name='workName'></td>" +
+                            // 상태
+                            "<td></td>" +
+                            // 기간
+                            "<td></td>" +
+                            // 시작일
+                            "<td><input class='' type='date' name='beginDate' id=''></td>" +
+                            // 완료일
+                            "<td><input class='' type='date' name='beginDate' id=''></td>" +
+                            // 선행작업
+                            "<td><input class='' style='width: 60px' type='text' name='highWorkNo' id='' ></td>" +
+                            // 완료율
+                            "<td></td>" +
+                            // 담당자
+                            "<td  data-toggle=\"modal\" data-target=\"#myModal5\"></td>" +
+                            // 돋보기마크
+                            "<td></td>" +
+                            "</tr>"
+                        )
 
+                    }
+
+                    // 좌측 테이블칸을 누르면
+				</script>
 			</div>
 		</div>
 	</div>
 
+	<!-- Modal -->
+	<%--
+	이 모달창에선 모달창을 누른 테이블 칸, 그니까 해당 테이블의 담당자 목록을 찾아와야 한다.
+	여기서 정확히 필요한 목록은:
+		해당 프로젝트의 담당자 목록,
+		그리고 작업으로 이미 배정(체크)된 인원 목록
+	--%>
+	<div class="modal fade" id="myModal5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+				</div>
+				<div class="modal-body">
+					...
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<%--작업 상세보기 모달창--%>
 
 </body>
