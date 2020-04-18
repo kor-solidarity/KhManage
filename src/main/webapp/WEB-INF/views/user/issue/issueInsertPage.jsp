@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -95,11 +96,11 @@
 					<td class="thRange"></td>
 					<td class="thRange">프로젝트</td>
 					<td class="thRange" colspan="9">
-						<select class="projectList">
+						<select name="projectNo" class="projectList">
 							<option>선택하세요</option>
-							<option>KH대학교 학사시스템 개발</option>
-							<option>KH대학교 학사시스템 유지보수</option>
-							<option>KH대학교 학사시스템 고도화</option>
+							<c:forEach var="iwpt" items="${iwpt }">
+								<option value="${iwpt.projectPk }"><c:out value="${iwpt.projectName }"/></option> 
+							</c:forEach>
 						</select>
 					</td>
 					<td class="thRange" align="left">작업</td>

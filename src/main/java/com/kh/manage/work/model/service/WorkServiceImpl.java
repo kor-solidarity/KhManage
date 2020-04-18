@@ -49,6 +49,11 @@ public class WorkServiceImpl implements WorkService{
 		return wd.selectTeamWork(sqlSession, member);
 	}
 
+	@Override
+	public int updateMyWork(Work work) {
+		return wd.updateMyWork(sqlSession, work);
+	}
+
 	
 
 }
