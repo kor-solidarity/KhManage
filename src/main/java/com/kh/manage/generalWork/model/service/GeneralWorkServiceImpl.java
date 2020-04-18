@@ -59,5 +59,29 @@ public class GeneralWorkServiceImpl implements GeneralWorkService {
 		return gd.attachmentList(sqlSession, work);
 	}
 
+	@Override
+	public int deleteGeneralWork(GeneralWork work) {
+
+		return gd.deleteGeneralWork(sqlSession, work);
+	}
+
+	@Override
+	public int deleteAttachment(GeneralWork work) {
+		
+		return gd.deleteAttachment(sqlSession, work);
+	}
+
+	@Override
+	public Attachment selectOneAttachment(Attachment atNo) {
+		
+		return gd.selectOneAttachment(sqlSession, atNo);
+	}
+
+	@Override
+	public List<Attachment> selectAllAttachment(GeneralWork work) {
+		
+		return gd.selectAllAttachment(sqlSession, work);
+	}
+
 	
 }

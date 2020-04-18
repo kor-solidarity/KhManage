@@ -22,5 +22,13 @@ public interface GeneralWorkService {
 
 	List<Attachment> attachmentList(GeneralWork work);
 
+	int deleteGeneralWork(GeneralWork work);
+
+	int deleteAttachment(GeneralWork work);
+
+	Attachment selectOneAttachment(Attachment atNo);
+
+	List<Attachment> selectAllAttachment(GeneralWork work);
+
 
 }

@@ -28,7 +28,7 @@
 						<c:set var="dId" value="${m.menuNo}"/>
 						<c:if test="${m.menuNo ne 'MU21'}">
 						<a href="#${m.menuNo }" data-toggle="collapse"
-							class="collapsed"><i class="${m.icon}"></i><span>${m.menuName }</span>
+							class="collapsed"><i class="${m.icon}"></i><span class="${m.menuNo}">${m.menuName }</span>
 								<i class="icon-submenu lnr lnr-chevron-left"></i></a>
 						</c:if>
 						<c:if test="${m.menuNo eq  'MU21' and loginUser.deptNo eq 'S05'}">
