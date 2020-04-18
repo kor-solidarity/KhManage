@@ -20,6 +20,8 @@ public interface WorkService {
 
 	List<WorkProjectTeam> selectTeamWork(Member member);
 
+	int updateMyWork(Work work);
+
 	
 
 }

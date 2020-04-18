@@ -22,4 +22,6 @@ public interface WorkDao {
 
 	List<WorkProjectTeam> selectTeamWork(SqlSessionTemplate sqlSession, Member member);
 
+	int updateMyWork(SqlSessionTemplate sqlSession, Work work);
+
 }

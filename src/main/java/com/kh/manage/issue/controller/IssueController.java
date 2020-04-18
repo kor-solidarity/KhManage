@@ -1,10 +1,23 @@
 package com.kh.manage.issue.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.kh.manage.issue.model.service.IssueService;
+import com.kh.manage.issue.model.vo.IssueWPT;
+import com.kh.manage.member.model.vo.Member;
 
 @Controller
 public class IssueController {
+	
+	@Autowired
+	private IssueService is;
 
 	@RequestMapping("/issueList.iu")
 	public String issueList() {
@@ -13,8 +26,20 @@ public class IssueController {
 	}
 	
 	@RequestMapping("/issueInsertPage.iu")
-	public String issueInsertPage() {
-		return "user/issue/issueInsertPage";
+	public String issueInsertPage(Model m, HttpServletRequest request) {
+		
+		Member member = (Member) request.getSession().getAttribute("loginUser");
+		
+		List<IssueWPT> iwpt = is.selectProjectName(member);
+		
+		if(iwpt != null) {
+			request.setAttribute("iwpt", iwpt);
+			return "user/issue/issueInsertPage";
+		}else {
+			request.setAttribute("msg", "이슈 입력 페이지 출력 오류");
+			return "common/errorPage";
+		}
+		
 	}
 	
 	@RequestMapping("/changeRequestList.iu")

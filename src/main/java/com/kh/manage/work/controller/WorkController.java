@@ -1,6 +1,9 @@
 package com.kh.manage.work.controller;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,11 +12,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.work.model.service.WorkService;
 import com.kh.manage.work.model.vo.Work;
@@ -68,7 +74,9 @@ public class WorkController {
 		
 		Work w = ws.selectWork(workNo);
 		
+		
 		System.out.println(w);
+		
 		request.setAttribute("work", w);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
@@ -86,7 +94,20 @@ public class WorkController {
 	
 	
 	@RequestMapping("/myWorkChange.wk")
-	public void myWorkChange(Model model, Work work, HttpServletRequest request) {
+	public String myWorkChange(Model model, Work work, HttpServletRequest request) {
+		System.out.println("변경 " + work);
+		
+		int result = ws.updateMyWork(work);
+		
+		
+		if(result > 0) {
+			
+			return "redirect:myWorkList.wk";
+		}else {
+			
+			request.setAttribute("msg", "작업 업데이트 오류");
+			return "common/errorPage";
+		}
 		
 	}
 }

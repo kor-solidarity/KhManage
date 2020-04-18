@@ -80,7 +80,14 @@
 	FROM WORK W
 	JOIN PROJECT P ON (W.PROJECT_NO = P.PROJECT_PK)
 	WHERE W.MEMBER_NO = #{memberNo}
-	ORDER BY W.WORK_NO ASC
+	ORDER BY (CASE STATUS
+                   WHEN '개발중' THEN 1
+                   WHEN '개발완료' THEN 2
+                   WHEN '테스트완료' THEN 3
+                   WHEN 'PL검토중' THEN 4
+                   ELSE 5
+              END),
+              W.WORK_NO ASC
 	</select>
 	
 	<select id="selectWorkList2" parameterType="Member" resultMap="workResultSet2">
@@ -140,6 +147,24 @@
 	WHERE PT.MEMBER_PK = #{memberNo}
 	</select>
 
+	<update id="updateMyWork" parameterType="Work">
+	UPDATE WORK
+	SET WORK_NAME = #{workName},
+		STATUS = #{status},
+		PROJECT_NO = #{projectNo},
+		BEGIN_DATE = #{beginDate},
+		COMPLETE_DATE = #{completeDate},
+		PRECEDE_NO = #{precedeNo},
+		COMPLETE_RATE = #{completeRate},
+		GRANTOR_NO = #{grantorNo},
+		WORK_LEVEL = #{workLevel},
+		HIGH_WORK_NO = #{highWorkNo},
+		MEMO = #{memo},
+		WORK_TYPE = #{workType},
+		MEMBER_NO = #{memberNo},
+		WORK_STATUS = #{workStatus}
+	WHERE WORK_NO = #{workNo}
+	</update>
 </mapper>
 
 

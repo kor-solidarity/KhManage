@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Issue">
+	<resultMap type="IssueWPT" id="selectIssueTeamProject">
+		<id property="teamPk" column="TEAM_PK"/>
+		<result property="projectPk" column="PROJECT_PK"/>
+		<result property="memberPk" column="MEMBER_PK"/>
+		<result property="role" column="ROLE"/>
+		<result property="projectName" column="PROJECT_NAME"/>
+	</resultMap>
+
+
+	<select id="selectProjectName" parameterType="Member" resultMap="selectIssueTeamProject">
+		SELECT PT.TEAM_PK, PT.PROJECT_PK, PT.MEMBER_PK, PT.ROLE, P.PROJECT_NAME
+		FROM PROJECT_TEAM PT
+		JOIN PROJECT P ON (P.PROJECT_PK = PT.PROJECT_PK)
+		WHERE PT.MEMBER_PK = #{memberNo}
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+  

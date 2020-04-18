@@ -59,4 +59,9 @@ public class WorkDaoImpl implements WorkDao{
 		return sqlSession.selectList("Work.selectTeamWork", member);
 	}
 
+	@Override
+	public int updateMyWork(SqlSessionTemplate sqlSession, Work work) {
+		return sqlSession.update("Work.updateMyWork", work);
+	}
+
 }

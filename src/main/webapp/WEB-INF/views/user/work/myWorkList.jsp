@@ -24,19 +24,20 @@
 		max-height: 700px;
 		min-height: 25px; 
 		border-radius: 4px; 
+		float:none;
 	}
 	.sortable .header { 
 		min-width: 240px; 
 		margin: 5px; 
 		padding: 5px; 
 	}
-	.sortable  div { 
+	.workDiv { 
 		min-width: 240px; 
 		margin: 5px; 
 		padding: 5px; 
 		font-size: 16px; 
 		width: 120px;
-		height: 100px; 
+		height: 110px; 
 		background: #fefefe; 
 		border-radius: 4px; 
 	}
@@ -151,9 +152,26 @@
 		float:right;
 	}
 	
+	.typeLabel1{
+		min-width:10px;
+		float:left;
+	}
+	
+	.typeLabel2{
+		min-width:10px;
+		float:left;
+	}
+	
+	.typeLabel3{
+		min-width:10px;
+		float:left;
+	}
+	.clear {clear:both; height:0; overflow:hidden;}
+	
 	.rate{
 		float:right;
 	}
+	
 </style>
 </head>
 <body id="bodyAll" onload="$('#route1').text('내 작업'), $('#route2').text('작업 관리')">
@@ -166,8 +184,19 @@
 			<div class="oversort ui-sortable">
 				<div class="sortable ui-sortable" id="workArea"  style="overflow-y:auto; overflow-x:hidden; -ms-overflow-style: none;">
 					<h5 class="nodrag header">내 할일</h5>
+					<button id="newWork1">+ 내 작업 추가</button>
 					<c:forEach var="l1" items="${map.list1 }">
-					<div><input type="hidden" value="${l1.workNo }">
+					<div class="workDiv"><input type="hidden" value="${l1.workNo }">
+					
+					<c:if test="${l1.workType == '프로젝트' }">
+					<label class="typeLabel1"><c:out value="${l1.workType }"/></label>
+					</c:if>
+					<c:if test="${l1.workType == '개인' }">
+					<label class="typeLabel2"><c:out value="${l1.workType }"/></label>
+					</c:if>
+					<c:if test="${l1.workType == '일반' }">
+					<label class="typeLabel3"><c:out value="${l1.workType }"/></label>
+					</c:if>
 					<c:if test="${l1.status == '개발중' }">
 					<label class="workLabel1"><c:out value="${l1.status }"/></label>
 					</c:if>
@@ -184,21 +213,32 @@
 					<label class="workLabel5"><c:out value="${l1.status }"/></label>
 					</c:if>
 					<br>
+					<div class="clear"></div>
 					<label style="font-size:17px; line-height:280%;"><c:out value="${l1.workName }"/></label>
 					<br>
 					<c:out value="${l1.projectName }"/>
 					<label class="rate"><c:out value="${l1.completeRate }"/>%</label>
 					</div>
 					</c:forEach>
-					<button id="newWork1">+ 내 작업 추가</button>
+					
 				</div>
 				
 				<div class="sortable ui-sortable" style="overflow-y:auto; overflow-x:hidden; -ms-overflow-style: none;">
 					<h5 class="nodrag header">개발중</h5>
 					<c:forEach var="l2" items="${map.list2 }">
-					<div><input type="hidden" value="${l2.workNo }">
+					<div class="workDiv"><input type="hidden" value="${l2.workNo }">
+					<c:if test="${l2.workType == '프로젝트' }">
+					<label class="typeLabel1"><c:out value="${l2.workType }"/></label>
+					</c:if>
+					<c:if test="${l2.workType == '개인' }">
+					<label class="typeLabel2"><c:out value="${l2.workType }"/></label>
+					</c:if>
+					<c:if test="${l2.workType == '일반' }">
+					<label class="typeLabel3"><c:out value="${l2.workType }"/></label>
+					</c:if>
 					<label class="workLabel1"><c:out value="${l2.status }"/></label>
 					<br>
+					<div class="clear"></div>
 					<label style="font-size:17px; line-height:280%;"><c:out value="${l2.workName }"/></label>
 					<br>
 					<c:out value="${l2.projectName }"/>
@@ -210,9 +250,19 @@
 				<div class="sortable ui-sortable" style="overflow-y:auto; overflow-x:hidden; -ms-overflow-style: none;">
 					<h5 class="nodrag header">개발완료</h5>
 					<c:forEach var="l3" items="${map.list3 }">
-					<div><input type="hidden" value="${l3.workNo }">
+					<div class="workDiv"><input type="hidden" value="${l3.workNo }">
+					<c:if test="${l3.workType == '프로젝트' }">
+					<label class="typeLabel1"><c:out value="${l3.workType }"/></label>
+					</c:if>
+					<c:if test="${l3.workType == '개인' }">
+					<label class="typeLabel2"><c:out value="${l3.workType }"/></label>
+					</c:if>
+					<c:if test="${l3.workType == '일반' }">
+					<label class="typeLabel3"><c:out value="${l3.workType }"/></label>
+					</c:if>
 					<label class="workLabel2"><c:out value="${l3.status }"/></label>
 					<br>
+					<div class="clear"></div>
 					<label style="font-size:17px; line-height:280%;"><c:out value="${l3.workName }"/></label>
 					<br>
 					<c:out value="${l3.projectName }"/>
@@ -224,9 +274,19 @@
 				<div class="sortable ui-sortable" style="overflow-y:auto; overflow-x:hidden; -ms-overflow-style: none;">
 					<h5 class="nodrag header">개발자 테스트 완료</h5>
 					<c:forEach var="l4" items="${map.list4 }">
-					<div><input type="hidden" value="${l4.workNo }">
+					<div class="workDiv"><input type="hidden" value="${l4.workNo }">
+					<c:if test="${l4.workType == '프로젝트' }">
+					<label class="typeLabel1"><c:out value="${l4.workType }"/></label>
+					</c:if>
+					<c:if test="${l4.workType == '개인' }">
+					<label class="typeLabel2"><c:out value="${l4.workType }"/></label>
+					</c:if>
+					<c:if test="${l4.workType == '일반' }">
+					<label class="typeLabel3"><c:out value="${l4.workType }"/></label>
+					</c:if>
 					<label class="workLabel3"><c:out value="${l4.status }"/></label>
 					<br>
+					<div class="clear"></div>
 					<label style="font-size:17px; line-height:280%;"><c:out value="${l4.workName }"/></label>
 					<br>
 					<c:out value="${l4.projectName }"/>
@@ -237,9 +297,19 @@
 				<div class="sortable ui-sortable" style="overflow-y:auto; overflow-x:hidden; -ms-overflow-style: none;">
 					<h5 class="nodrag header">PL검토중</h5>
 					<c:forEach var="l5" items="${map.list5 }">
-					<div><input type="hidden" value="${l5.workNo }">
+					<div class="workDiv"><input type="hidden" value="${l5.workNo }">
+					<c:if test="${l5.workType == '프로젝트' }">
+					<label class="typeLabel1"><c:out value="${l5.workType }"/></label>
+					</c:if>
+					<c:if test="${l5.workType == '개인' }">
+					<label class="typeLabel2"><c:out value="${l5.workType }"/></label>
+					</c:if>
+					<c:if test="${l5.workType == '일반' }">
+					<label class="typeLabel3"><c:out value="${l5.workType }"/></label>
+					</c:if>
 					<label class="workLabel4"><c:out value="${l5.status }"/></label>
 					<br>
+					<div class="clear"></div>
 					<label style="font-size:17px; line-height:280%;"><c:out value="${l5.workName }"/></label>
 					<br>
 					<c:out value="${l5.projectName }"/>
@@ -250,9 +320,19 @@
 				<div class="sortable ui-sortable" style="overflow-y:auto; overflow-x:hidden; -ms-overflow-style: none;">
 					<h5 class="nodrag header ">PL검토완료</h5>
 					<c:forEach var="l6" items="${map.list6 }">
-					<div><input type="hidden" value="${l6.workNo }">
+					<div class="workDiv"><input type="hidden" value="${l6.workNo }">
+					<c:if test="${l6.workType == '프로젝트' }">
+					<label class="typeLabel1"><c:out value="${l6.workType }"/></label>
+					</c:if>
+					<c:if test="${l6.workType == '개인' }">
+					<label class="typeLabel2"><c:out value="${l6.workType }"/></label>
+					</c:if>
+					<c:if test="${l6.workType == '일반' }">
+					<label class="typeLabel3"><c:out value="${l6.workType }"/></label>
+					</c:if>
 					<label class="workLabel5"><c:out value="${l6.status }"/></label>
 					<br>
+					<div class="clear"></div>
 					<label style="font-size:17px; line-height:280%;"><c:out value="${l6.workName }"/></label>
 					<br>
 					<c:out value="${l6.projectName }"/>
@@ -400,12 +480,16 @@
 		            <form id="workRegChange" action="myWorkChange.wk" method="post">
 		              <table id="buseoInfoTable" style="border-spacing:0 10px; border-collapse: separate;">
 						<tr>
-							<td class="titleId" style="width: 130px;">작업명</td>
+							<td class="titleId" style="width: 130px;">작업명
+							<input type="hidden" name="workNo" id="workNo">
+							<input type="hidden" name="workStatus" id="workStatus">
+							</td>
 							<td>
 							<input type="text" id="workName" name="workName" class="inputMenu form-control" style="width: 280px;" readOnly required="required"></td>
 						</tr>
 						<tr>
 							<td class="titleId">프로젝트 번호
+							<input type="hidden" name="memberNo" value="${sessionScope.loginUser.memberNo }">
 							</td>
 							<td><input type="text" name="projectNo" id="projectNo" class="inputMenu form-control" style="width: 280px;" required="required" readOnly></td>
 						</tr>
@@ -417,11 +501,11 @@
 						</tr>
 						<tr>
 							<td class="titleId">시작일</td>
-							<td><input name="beginDate" id="beginDate" type="text" class="inputMenu form-control" style="width: 280px;" readOnly required="required"></td>
+							<td><input name="beginDate" id="beginDate" type="date" class="inputMenu form-control" style="width: 280px;" required="required"></td>
 						</tr>
 						<tr>
 							<td class="titleId">완료일</td>
-							<td><input name="completeDate" id="completeDate" type="text" class="inputMenu form-control" style="width: 280px;" readOnly required="required"></td>
+							<td><input name="completeDate" id="completeDate" type="date" class="inputMenu form-control" style="width: 280px;" required="required"></td>
 						</tr>
 						<tr>
 							<td class="titleId" style="width: 130px;">선행작업번호</td>
@@ -503,18 +587,93 @@
 				data:{workNo:workNo},
 				dataType:"JSON",
 				success:function(data){
-					console.log(data);
+ 					console.log(data);
+ 					
+					console.log(data.beginDate);
+					
+					//시작일
+					//4월 17, 2020
+					var test = data.beginDate;
+					var beginDateTest = test.split(/월 |, /)
+					console.log(beginDateTest);
+					// 4
+					var month = beginDateTest[0];
+					// 17
+					var day = beginDateTest[1];
+					// 2020
+					var year = beginDateTest[2];
+					
+					var beginDate = 0;
+					var rDay = 0;
+					
+					if(month < 10){
+						var rMonth = "0" + month;
+						if(day < 10){
+							rDay = "0" + day;
+							beginDate = year +"-"+ rMonth + "-" + rDay;
+						}else{
+							beginDate = year +"-"+ rMonth + "-" + day;
+						}
+					}else{
+						if(day < 10){
+							rDay = "0" + day;
+							beginDate = year +"-"+ month + "-" + rDay;
+						}else{
+							beginDate = year +"-"+ month + "-" + day;
+						}
+					}
+					//2020-04-17 출력
+					console.log(beginDate);
+					
+					
+					var ctest = data.completeDate;
+					var completeDateTest = ctest.split(/월 |, /)
+					console.log(completeDateTest);
+					
+					// 4
+					var cMonth = completeDateTest[0];
+					// 17
+					var cDay = completeDateTest[1];
+					// 2020
+					var cYear = completeDateTest[2];
+					
+					var completeDate = 0;
+					var crDay = 0;
+					
+					if(cMonth < 10){
+						var crMonth = "0" + cMonth;
+						if(cDay < 10){
+							crDay = "0" + cDay;
+							completeDate = cYear +"-"+ crMonth + "-" + crDay;
+						}else{
+							completeDate = cYear +"-"+ crMonth + "-" + cDay;
+						}
+					}else{
+						if(cDay < 10){
+							crDay = "0" + cDay;
+							completeDate = cYear +"-"+ cMonth + "-" + crDay;
+						}else{
+							completeDate = cYear +"-"+ cMonth + "-" + cDay;
+						}
+					}
+					
+					//2020-04-17 출력
+					console.log(beginDate);
+					console.log(completeDate);
+					
+					$("#workNo").val(workNo);
 					$("#workName").val(data.workName);
 					$("#workType").val(data.workType);
 					$("#projectNo").val(data.projectNo);
-					$("#beginDate").val(data.beginDate);
-					$("#completeDate").val(data.completeDate);
+					$("#beginDate").val(beginDate);
+					$("#completeDate").val(completeDate);
 					$("#precedeNo").val(data.precedeNo);
 					$("#completeRate").val(data.completeRate);
 					$("#grantorNo").val(data.grantorNo);
 					$("#workLevel").val(data.workLevel);
 					$("#status").val(data.status);
 					$("#highWorkNo").val(data.highWorkNo);
+					$("#workStatus").val(data.workStatus);
 					
 					$("#selectModal").modal('show');
 				},
