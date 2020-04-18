@@ -58,5 +58,29 @@ public class GeneralWorkDaoImpl implements GeneralWorkDao{
 
 		return sqlSession.selectList("GeneralWork.attachmentList", work);
 	}
+
+	@Override
+	public int deleteGeneralWork(SqlSessionTemplate sqlSession, GeneralWork work) {
+
+		return sqlSession.update("GeneralWork.deleteGeneralWork", work);
+	}
+
+	@Override
+	public int deleteAttachment(SqlSessionTemplate sqlSession, GeneralWork work) {
+
+		return sqlSession.delete("GeneralWork.deleteAttachment", work);
+	}
+
+	@Override
+	public Attachment selectOneAttachment(SqlSessionTemplate sqlSession, Attachment atNo) {
+		
+		return sqlSession.selectOne("GeneralWork.selectOneAttachment", atNo);
+	}
+
+	@Override
+	public List<Attachment> selectAllAttachment(SqlSessionTemplate sqlSession, GeneralWork work) {
+		
+		return sqlSession.selectList("GeneralWork.selectAllAttachment", work);
+	}
 	
 }

@@ -25,4 +25,12 @@ public interface GeneralWorkDao {
 
 	List<Attachment> attachmentList(SqlSessionTemplate sqlSession, GeneralWork work);
 
+	int deleteGeneralWork(SqlSessionTemplate sqlSession, GeneralWork work);
+
+	int deleteAttachment(SqlSessionTemplate sqlSession, GeneralWork work);
+
+	Attachment selectOneAttachment(SqlSessionTemplate sqlSession, Attachment atNo);
+
+	List<Attachment> selectAllAttachment(SqlSessionTemplate sqlSession, GeneralWork work);
+
 }

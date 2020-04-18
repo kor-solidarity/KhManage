@@ -163,6 +163,10 @@
 			</div>
 		<script>
 			$(function(){
+				$(".MU03").css("color", "white");
+			});
+			
+			$(function(){
 				$(document).on('click', '.td1', function(){
 					location.href='generalWorkDetailPage.gw?gwNo='+ $(this).find(".gwNo").val();
 				});

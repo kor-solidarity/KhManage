@@ -52,6 +52,13 @@
 	font-size: 14px;
 	margin-left: 100px;
 }
+.fileCss{
+	display: inline;
+	
+}
+.btn{
+	display: inline;
+}
 </style>
 </head>
 <body onload="$('#route1').text('일반 작업'); $('#route2').text('일반 작업등록');">
@@ -110,8 +117,9 @@
 						<tr>
 							<td class="titleId" style="padding-left:100px;">첨부 파일</td>
 							<td>
-								<div class="inputMenu" style="width:70%; height:60px; border:1px solid lightgray;">
-									<input type="file" name="file" style="margin-top: 15px; margin-left: 10px;">
+								<div id="fileArea" class="inputMenu" style="width:70%; height:auto;  border:1px solid lightgray;">
+									 <a href="#this" id="add" class="btn">파일 추가하기</a> 
+									 
 								</div>
 							</td>
 						</tr>
@@ -122,7 +130,7 @@
 						</tr>
 						<tr>
 							<td colspan="2">
-								<button  class="okBtn" id="save" onclick="sweetTest();">
+								<button type="button"  class="okBtn" id="save" onclick="sweetTest();">
 									<i class="fas fa-check"></i>&nbsp;저장
 								</button>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -140,6 +148,10 @@
 			</div>
 		</div>
 		 <script>
+			 $(function(){
+					$(".MU03").css("color", "white");
+				});
+			 
 				function sweetTest(){
 					swal({
 						  title: "해당 내용을 저장하시겠습니까?",
@@ -164,6 +176,52 @@
 					});
 				}
 		</script>
+		<script type="text/javascript">
+        var g_count =1;
+        $(document).ready(function(){
+            $("#list").on("click",function(e){
+                e.preventDefault();
+                fn_openBoardList();
+            })
+            $("#write").on("click",function(e){
+                e.preventDefault();
+                fn_writeBoard();
+            })
+            $("a[name='delete']").on("click",function(e){
+                e.preventDefault();
+                fn_fileDelete($(this));
+            })
+            $("#add").on("click",function(e){
+                e.preventDefault();
+                fn_fileAdd();
+            })
+        });
+         
+         
+        function fn_openBoardList(){
+            var comSubmit = new ComSubmit();
+            comSubmit.setUrl("<c:url value='/sample/openBoardList.do'/>");
+            comSubmit.submit();
+        }
+         
+        function fn_writeBoard(){
+            var comSubmit = new ComSubmit("frm");
+            comSubmit.setUrl("<c:url value='/sample/writeBoard.do'/>");
+            comSubmit.submit();
+        }
+        function fn_fileDelete(obj){
+            obj.parent().parent().remove();
+        }
+        function fn_fileAdd(){
+            var str = "<div style='filePlus'><div style='display: inline-flex;'><input type='file' class='fileCss' name='file'></div><div style='display: inline-flex;'><a href='#this' name='delete' class='btn'><i class='fas fa-minus-square'></i></a></div></div>";
+            $("#fileArea").append(str);
+             
+            $("a[name='delete']").on("click",function(e){
+                e.preventDefault();
+                fn_fileDelete($(this));         
+            })
+        }
+    </script>
 		
 </body>
 </html>

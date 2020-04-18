@@ -87,6 +87,27 @@
 		WHERE DIVISION = #{gwNo}
 	</select>
 	
+	<update id="deleteGeneralWork" parameterType="GeneralWork">
+		UPDATE GENERAL_WORK SET STATUS='N'
+		WHERE GW_NO = #{gwNo}
+	</update>
+	
+	<delete id="deleteAttachment" parameterType="GeneralWork">
+		DELETE FROM ATTACHMENT
+		WHERE DIVISION = #{gwNo}
+	</delete>
+	
+	<select id="selectOneAttachment" parameterType="Attachment" resultMap="attachmentResultSet">
+		SELECT *
+		FROM ATTACHMENT
+		WHERE AT_NO = #{atNo}
+	</select>
+	
+	<select id="selectAllAttachment" parameterType="GeneralWork" resultMap="attachmentResultSet">
+		SELECT *
+		FROM ATTACHMENT
+		WHERE DIVISION = #{gwNo}
+	</select>
 </mapper>
 
 
