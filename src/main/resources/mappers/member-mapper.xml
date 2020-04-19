@@ -51,6 +51,7 @@
 	<select id="loginCheck" resultMap="memberResultSet" parameterType="Member">
 		SELECT *
 		FROM MEMBER
+		<!-- JOIN RANK R ON(M.RANK_NO = R.RANK_NO) -->
 		WHERE MEMBER_ID = #{memberId}
 		AND PASSWORD = #{memberPwd}
 		AND STATUS = 'Y'
@@ -58,7 +59,6 @@
 	 
 	<insert id="insertMember" parameterType="Member">
 		INSERT INTO MEMBER
-		<!-- VALUES (SEQ_MNO.NEXTVAL, #{memberId}, #{memberPwd}, #{memberName}, #{phone}, #{email}, #{memberType}, #{rankNo}, #{deptNo}, SYSDATE, SYSDATE, 'Y') -->
 		VALUES ('M' || TO_CHAR(SEQ_MNO.NEXTVAL, 'FM000'), #{memberId}, #{memberPwd}, #{memberName}, #{phone}, #{email}, #{memberType}, #{rankNo}, #{deptNo}, SYSDATE, SYSDATE, 'Y')
 	</insert>
 	

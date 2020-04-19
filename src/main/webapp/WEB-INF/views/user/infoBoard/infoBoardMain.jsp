@@ -22,8 +22,9 @@
 
 
 .pagingArea {
-	background: ;
+	/* background: ; */
 	height: 50px;
+	margin: 0 auto;
 	/* border: 1px solid #B0B0B0; */
 }
 
@@ -57,11 +58,11 @@
       border-radius: 5px;
       font-size:14px;
 	}    */
-	#noticeTable{
+	/* #boardTable{
 		width:95%;
 		text-align:left;
 		margin-top: 100px;
-	}
+	} */
 	.star{
 		width: 18px;
 		height: 18px;
@@ -107,7 +108,7 @@
 		width: 130px;
 	}
 	.titletd2{
-		height: 20px;
+		height: 45px;
 		text-align: left;
 		width: 800px;
 		padding-left: 30px;
@@ -117,8 +118,10 @@
 		text-align: center;
 		width: 250px;
 	}
-	#noticeTable #tr:hover{
+	#boardTable #tr:hover{
 		background : #F3F3F3;
+		cursor: pointer;
+		color: black;
 	}
 	.td{
 		width: 10px;
@@ -127,19 +130,27 @@
 	#tr {
 		height: 30px;
 	}
+	
+	.tr {
+		background: #F3F3F3;
+		border-top: 1px solid gray;
+	}
+	
 </style>
 </head>
-<body onload="$('#route1').text('커뮤니'); $('#route2').text('정보게시판')">
+<body onload="$('#route1').text('커뮤니티'); $('#route2').text('정보공유게시판')">
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp" />
 	<jsp:include page="/WEB-INF/views/user/common/sidebar2.jsp" />
+	
 	<div class="panel panel-headline">
 		<div class="panel-heading">
 			<div
 				style="width: 100%; height: 700px; margin: 0 auto; overflow: auto;">
-				<table align="left" style="margin-bottom: 10px;">
-					<tr>
-						<td><button class="projectBtn"
-								onclick="location.href='insertBoard.ib'">
+				<table align="left" id="" style="margin-bottom: 10px;">
+					<tr id="tr">
+						<td>
+							<button class="projectBtn"
+								onclick="location.href='insertBoardPage.ib'">
 								<i class="fas fa-edit"></i> &nbsp;게시글 등록
 							</button>
 						<td colspan="6">
@@ -150,8 +161,8 @@
 							<form class="navbar-form navbar-left"
 								style="float: right; margin-left: 20px;">
 								<div class="input-group">
-									<input type="text" value="" class="form-control"
-										> <span class="input-group-btn"><button
+									<input type="text" value="" class="form-control"> 
+										<span class="input-group-btn"><button
 											type="button" style="background: #1E2B44;"
 											class="btn btn-primary">
 											<i class="fas fa-search"></i>
@@ -162,70 +173,35 @@
 					</tr>
 				</table>
 
-				<table id="noticeTable" align="center">
-					<tr class="">
+				<table id="boardTable" align="center">
+					<tr class="tr">
 						<th class="titletd">제목</th>
 						<th class="sendtd">조회수</th>
 						<th class="sendtd">등록날짜</th>
 						<th class="datetd">등록자</th>
+						<th></th>
 					</tr>
-					<%-- <c:forEach var="" items=""> --%>
+					<c:forEach var="ib" items="${blist}">
 					<tr id="tr" style="border-bottom: 1px solid #d2d2d2; border-top: 1px solid #d2d2d2; height:30px;">
-						<td class="titletd2">제목입니다.</td>
-						<td class="sendtd2">12</td>
-						<td class="sendtd2">2020-04-16</td>
-						<td class="datetd2">작성자</td>
+						<td class="titletd2">${ib.boardTitle}</td>
+						<td class="sendtd2">${ib.viewCount}</td>
+						<td class="sendtd2">${ib.createDate}</td>
+						<td class="datetd2">${ib.memberName}</td>
 						<td class="td">
-							<input type="hidden" value="">
+							<input type="hidden" value="${ib.boardNo}">
 						</td>
 					</tr>
-					<tr id="tr" style="border-bottom: 1px solid #d2d2d2; border-top: 1px solid #d2d2d2; height:30px;">
-						<td class="titletd2">제목입니다.</td>
-						<td class="sendtd2">12</td>
-						<td class="sendtd2">2020-04-16</td>
-						<td class="datetd2">작성자</td>
-						<td class="td">
-							<input type="hidden" value="">
-						</td>
-					</tr>
-					<tr id="tr" style="border-bottom: 1px solid #d2d2d2; border-top: 1px solid #d2d2d2; height:30px;">
-						<td class="titletd2">제목입니다.</td>
-						<td class="sendtd2">12</td>
-						<td class="sendtd2">2020-04-16</td>
-						<td class="datetd2">작성자</td>
-						<td class="td">
-							<input type="hidden" value="">
-						</td>
-					</tr>
-					<tr id="tr" style="border-bottom: 1px solid #d2d2d2; border-top: 1px solid #d2d2d2; height:30px;">
-						<td class="titletd2">제목입니다.</td>
-						<td class="sendtd2">12</td>
-						<td class="sendtd2">2020-04-16</td>
-						<td class="datetd2">작성자</td>
-						<td class="td">
-							<input type="hidden" value="">
-						</td>
-					</tr>
-					<tr id="tr" style="border-bottom: 1px solid #d2d2d2; border-top: 1px solid #d2d2d2; height:30px;">
-						<td class="titletd2">제목입니다.</td>
-						<td class="sendtd2">12</td>
-						<td class="sendtd2">2020-04-16</td>
-						<td class="datetd2">작성자</td>
-						<td class="td">
-							<input type="hidden" value="">
-						</td>
-					</tr>
-					<%-- </c:forEach> --%>
+					</c:forEach>
 					
 					
 					<tr class="pagingArea">
-						<td colspan="6">
+						<td colspan="0">
 							<div class="paging">
 								<c:if test="${pi.currentPage <= 1 }">
 									[이전] &nbsp;
 									</c:if>
 									<c:if test="${ pi.currentPage > 1 }">
-									<c:url var="alistBack" value="accessManage.am">
+									<c:url var="alistBack" value="infoBoard.ib">
 										<c:param name="currentPage" value="${pi.currentPage - 1 }"/>
 									</c:url>
 										<a href="${ alistBack }">[이전]</a>&nbsp;
@@ -235,7 +211,7 @@
 											<font color="red" size="4"><b>[${p }]</b></font>
 										</c:if>
 										<c:if test="${p ne pi.currentPage }">
-											<c:url var="alistCheck" value="accessManage.am">
+											<c:url var="alistCheck" value="infoBoard.ib">
 												<c:param name="currentPage" value="${p }"/>
 											</c:url>
 											
@@ -247,7 +223,7 @@
 										[다음] &nbsp;
 									</c:if>
 								<c:if test="${pi.currentPage < pi.endPage }">
-								<c:url var="alistEnd" value="accessManage.am">
+								<c:url var="alistEnd" value="infoBoard.ib">
 									<c:param name="currentPage" value="${pi.currentPage + 1 }"/>
 								</c:url>
 									<a href="${alistEnd}">[다음]</a>
@@ -261,12 +237,18 @@
 	</div>
 </body>
 <script>
-	/* $("#noticeTable #tr").click(function(){
+	
+	//게시글 상세보기 이동
+	$("#boardTable #tr").click(function() {
 		
-		var num = $(this).children().children().val();
+		var boardNo = $(this).children().children().val();
 		
-		location.href = "selectNotice.fo?num="+num;
-	}); */
+		console.log(boardNo);
+		
+		location.href = "selectOneBoard.ib?boardNo=" + boardNo;
+	});
+	
+	
 </script>
 
 
