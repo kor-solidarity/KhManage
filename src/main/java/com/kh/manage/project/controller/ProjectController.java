@@ -6,6 +6,7 @@ import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.template.model.vo.Template;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.common.Pagination;
+import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.project.model.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -130,7 +131,7 @@ public class ProjectController {
 		// 프로젝트 관리자
 		String project_manager = request.getParameter("project_manager");
 		String project_template = request.getParameter("project_template");
-		if (project_template.equals("0")){
+		if (project_template.equals("0")) {
 			project_template = null;
 		}
 		// pmo
@@ -206,7 +207,6 @@ public class ProjectController {
 	public String projectTask(Model model, HttpServletRequest request) {
 		// 프로젝트 작업을 실시할때 이게 필요할거임:
 		// 우선 해당 프로젝트의 모든 작업을 불러온다.
-		
 		String pid = request.getParameter("pid");
 		
 		// 표면상 보일 목록: 작업 아이디, 작업명 상태 기간 시작일 완료일 선행작업 완료율 담당자이름
@@ -219,16 +219,47 @@ public class ProjectController {
 		System.out.println("projectWorkList: " + projectWorkList);
 		// 작업 담당자 목록
 		// List<ProjectCharger> projectChargerList = ps.getProj
-		
+		model.addAttribute("pid", pid);
 		return "user/project/projectTask2";
 	}
 	
 	// 프로젝트 작업 추가에 쓰일 AJAX
-	@RequestMapping("/projectWorkInsert.pr")
-	public void projectWorkInsert(){
-	
+	@RequestMapping(value = "/projectWorkInsert.pr")
+	public void projectWorkInsert(HttpServletRequest request) {
+		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
+		// 이거 이걸로 하면 안됨
+		String memberNo = loginUser.getMemberNo();
+		System.out.println("projectWorkInsert");
+		String workName = request.getParameter("workName");
+		String pid = request.getParameter("pid");
+		// String  beginDate = request.getParameter("beginDate");
+		// String  endDate = request.getParameter("endDate");
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Date beginDate = null;
+		Date endDate = null;
+		try {
+			java.util.Date startUtilDate = format.parse(request.getParameter("beginDate"));
+			java.util.Date endUtilDate = format.parse(request.getParameter("endDate"));
+			beginDate = new Date(startUtilDate.getTime());
+			endDate = new Date(endUtilDate.getTime());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		System.out.println("workName: " + workName);
+		System.out.println("memberNo: " + memberNo);
+		System.out.println("pid: " + pid);
+		System.out.println("beginDate: " + beginDate);
+		System.out.println("endDate: " + endDate);
+		ProjectWork projectWork =
+				new ProjectWork(null, workName, "개발중", pid,
+						beginDate, endDate, null, "0",
+						null, "1", null, null,
+						"프로젝트", memberNo, "Y");
+		int result = ps.insertProjectWork(projectWork);
+		
+		System.out.println(result);
 	}
-	
 	
 	
 	// 프로젝트 요약정보 페이지

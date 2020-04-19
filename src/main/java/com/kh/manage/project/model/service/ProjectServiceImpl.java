@@ -84,4 +84,9 @@ public class ProjectServiceImpl implements ProjectService {
 	public List<ProjectWork> selectProjectWorkList(String pid) {
 		return pd.selectProjectWorkList(sqlSession, pid);
 	}
+	
+	@Override
+	public int insertProjectWork(ProjectWork projectWork) {
+		return pd.insertProjectWork(sqlSession, projectWork);
+	}
 }

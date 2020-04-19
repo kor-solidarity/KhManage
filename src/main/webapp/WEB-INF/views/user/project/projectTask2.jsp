@@ -578,37 +578,66 @@
 				<script>
                     // 작업 추가를 누르면 어떤거든간에 우선 테이블 맨위에 띄우게끔.
                     function add_project_work (location) {
+                        if (document.getElementById('projectWork') != null) {
+                            alert("우선 추가된 작업부터 처리해주세요.");
+                            return;
+                        }
                         // todo 위치 어디로 보낼지 생각좀.
                         // 우선은 그냥 맨위
                         $("#chart-left-table tr:first-of-type").after(
                             // todo 고도화, 그니까 각종 유효성. 우선은 통과.
-                            "<tr class='work_input'>" +
+                            "<tr class='work_input' id='projectWork'>" +
                             "<td></td>" +
                             // 작업 제목
-                            "<td><input type='text' style='width: 100%' class='' name='workName'></td>" +
+                            "<td><input type='text' style='width: 100%' class='' id='workName' name='workName'></td>" +
                             // 상태
                             "<td></td>" +
                             // 기간
                             "<td></td>" +
                             // 시작일
-                            "<td><input class='' type='date' name='beginDate' id=''></td>" +
+                            "<td><input class='' type='date' name='beginDate' id='beginDate'></td>" +
                             // 완료일
-                            "<td><input class='' type='date' name='beginDate' id=''></td>" +
+                            "<td><input class='' type='date' name='endDate' id='endDate'></td>" +
                             // 선행작업
-                            "<td><input class='' style='width: 60px' type='text' name='highWorkNo' id='' ></td>" +
+                            "<td><input class='' style='width: 60px' type='text' name='highWorkNo' id='highWorkNo' ></td>" +
                             // 완료율
                             "<td></td>" +
                             // 담당자
-                            "<td  data-toggle=\"modal\" data-target=\"#myModal5\"></td>" +
-                            // 돋보기마크
-                            "<td></td>" +
+                            "<td  data-toggle=\"modal\" data-target=\"#myModal5\">" +
+                            "<span></span><input type='text' name='' id=''></td>" +
+                            // 돋보기마크. 이 경우는 그냥 submit. 자세한건 등록 다 하고 하던가.
+                            "<td><button onclick='sendProjectWork()'></button></td>" +
                             "</tr>"
                         )
 
                     }
 
-                    // 좌측 테이블칸을 누르면
+                    // 띄워져있는 새 작업 등록한다.
+                    function sendProjectWork () {
+                        if (document.getElementById('projectWork') == null) {
+                            return;
+                        }
+                        alert("wtf");
+                        // 유효성검사 하나도 안됬음. 전부 뜯어고쳐야함
+                        $.ajax({
+                            url: 'projectWorkInsert.pr',
+                            type: 'post',
+                            data: {
+                                workName: $("#workName").val(),
+                                beginDate: $("#beginDate").val(),
+                                endDate: $("#endDate").val(),
+                                // 담당자도 있어야 하는데 우선은 통과. 넣는거 자체에 집중
+                                pid: "${pid}",
+
+                            },
+                            success: function (data) {
+                                alert("done!");
+
+                            }
+                        })
+                    }
 				</script>
+
 			</div>
 		</div>
 	</div>
@@ -626,7 +655,7 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
 							aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+					<h4 class="modal-title" id="myModalLabel">담당자 목록</h4>
 				</div>
 				<div class="modal-body">
 					...

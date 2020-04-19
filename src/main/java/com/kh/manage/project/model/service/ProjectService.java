@@ -28,4 +28,6 @@ public interface ProjectService {
 	int getProjectListCount();
 	
 	List<ProjectWork> selectProjectWorkList(String pid);
+	
+	int insertProjectWork(ProjectWork projectWork);
 }
