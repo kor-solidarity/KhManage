@@ -66,4 +66,9 @@ public class ProjectDaoImpl implements ProjectDao {
 	public List<ProjectWork> selectProjectWorkList(SqlSessionTemplate sqlSession, String pid) {
 		return sqlSession.selectList("Project.selectProjectWorkList");
 	}
+	
+	@Override
+	public int insertProjectWork(SqlSessionTemplate sqlSession, ProjectWork projectWork) {
+		return sqlSession.insert("Project.insertProjectWork", projectWork);
+	}
 }

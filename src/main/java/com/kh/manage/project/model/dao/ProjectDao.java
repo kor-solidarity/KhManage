@@ -30,4 +30,6 @@ public interface ProjectDao {
 	List<ProjectList> selectProjectList(SqlSessionTemplate sqlSession, PageInfo pi);
 	
 	List<ProjectWork> selectProjectWorkList(SqlSessionTemplate sqlSession, String pid);
+	
+	int insertProjectWork(SqlSessionTemplate sqlSession, ProjectWork projectWork);
 }

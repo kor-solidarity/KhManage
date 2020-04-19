@@ -52,7 +52,7 @@
         <result property="workStatus" column="work_status"/>
     </resultMap>
 
-   <resultMap id="projectTypeResultSet" type="ProjectType">
+    <resultMap id="projectTypeResultSet" type="ProjectType">
         <id property="typePk" column="type_pk"/>
         <result property="typeName" column="type_name"/>
     </resultMap>
@@ -109,7 +109,7 @@
         from project_type
     </select>
 
-    <select id="selectProjectWorkList" resultMap="projectWorkListResultSet">
+    <select id="selectProjectWorkList" resultMap="projectWorkListResultSet" parameterType="String">
         select *
         from WORK
     </select>
@@ -156,6 +156,13 @@
         select *
         from PROJECT_TEMPLATE
     </select>
+    <insert id="insertProjectWork" parameterType="ProjectWork">
+        INSERT INTO WORK
+        VALUES ('W' || to_char(SEQ_WNO.NEXTVAL, 'FM000'),
+                #{workName}, #{status}, #{projectNo}, #{beginDate}, #{completeDate},
+                #{precedeNo}, #{completeRate}, #{grantorNo}, #{workLevel}, #{highWorkNo},
+                #{memo}, #{workType}, #{memberNo}, #{workStatus})
+    </insert>
 
     <insert id="insertProject" parameterType="Project">
         insert into PROJECT

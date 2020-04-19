@@ -12,11 +12,14 @@ public class ProjectWork {
 	// 선행작업 번호
 	private String precedeNo;
 	private String completeRate;
+	// 작업 승인 대상자
 	private String grantorNo;
 	private String workLevel;
 	private String highWorkNo;
 	private String memo;
 	private String workType;
+	// 이 작업을 담당해야 하는 회원.
+	private String memberNo;
 	private String workStatus;
 	// private String[]
 	
@@ -24,9 +27,10 @@ public class ProjectWork {
 	}
 	
 	public ProjectWork(String workNo, String workName, String status, String projectNo,
-					   Date beginDate, Date completeDate, String precedeNo, String completeRate,
-					   String grantorNo, String workLevel, String highWorkNo, String memo,
-					   String workType, String workStatus) {
+					   Date beginDate, Date completeDate, String precedeNo,
+					   String completeRate, String grantorNo, String workLevel,
+					   String highWorkNo, String memo, String workType, String memberNo,
+					   String workStatus) {
 		this.workNo = workNo;
 		this.workName = workName;
 		this.status = status;
@@ -40,6 +44,7 @@ public class ProjectWork {
 		this.highWorkNo = highWorkNo;
 		this.memo = memo;
 		this.workType = workType;
+		this.memberNo = memberNo;
 		this.workStatus = workStatus;
 	}
 	
@@ -59,6 +64,7 @@ public class ProjectWork {
 				", highWorkNo='" + highWorkNo + '\'' +
 				", memo='" + memo + '\'' +
 				", workType='" + workType + '\'' +
+				", memberNo='" + memberNo + '\'' +
 				", workStatus='" + workStatus + '\'' +
 				'}';
 	}
@@ -165,6 +171,14 @@ public class ProjectWork {
 	
 	public void setWorkType(String workType) {
 		this.workType = workType;
+	}
+	
+	public String getMemberNo() {
+		return memberNo;
+	}
+	
+	public void setMemberNo(String memberNo) {
+		this.memberNo = memberNo;
 	}
 	
 	public String getWorkStatus() {
