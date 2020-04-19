@@ -36,6 +36,9 @@
         <typeAlias type="com.kh.manage.project.model.vo.ProjectWork" alias="ProjectWork"/>
         <typeAlias type="com.kh.manage.gwManage.model.vo.GWork" alias="GWork"/>
         <typeAlias type="com.kh.manage.issue.model.vo.IssueWPT" alias="IssueWPT"/>
+        <typeAlias type="com.kh.manage.chat.model.vo.ChatRoom" alias="ChatRoom"/>
+        <typeAlias type="com.kh.manage.chat.model.vo.Message" alias="Message"/>
+        <typeAlias type="com.kh.manage.chat.model.vo.ChatMessageList" alias="ChatMessageList"/>
   	</typeAliases>
   
   
@@ -55,6 +58,7 @@
         <mapper resource="mappers/board-mapper.xml"/>
         <mapper resource="mappers/gWork-mapper.xml"/>
         <mapper resource="mappers/Issue-mapper.xml"/>
+        <mapper resource="mappers/chat-mapper.xml"/>
   	</mappers>
   		
   
