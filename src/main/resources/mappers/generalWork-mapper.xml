@@ -108,6 +108,18 @@
 		FROM ATTACHMENT
 		WHERE DIVISION = #{gwNo}
 	</select>
+	
+	<delete id="deleteGeneralWorkDelete" parameterType="Attachment">
+		DELETE FROM ATTACHMENT
+		WHERE AT_NO = #{atNo}
+	</delete>
+	
+	<update id="updateGeneralWork" parameterType="GeneralWork">
+		UPDATE GENERAL_WORK SET
+		GW_NAME = #{gwName}, BEGIN_DATE = #{beginDate}, END_DATE = #{endDate},
+		GW_MEMO = #{gwMemo}, GW_TYPE = #{gwType}
+		WHERE GW_NO = #{gwNo}
+	</update>
 </mapper>
 
 

@@ -33,4 +33,8 @@ public interface GeneralWorkDao {
 
 	List<Attachment> selectAllAttachment(SqlSessionTemplate sqlSession, GeneralWork work);
 
+	int deleteGeneralWorkDelete(SqlSessionTemplate sqlSession, Attachment attachment);
+
+	int updateGeneralWork(SqlSessionTemplate sqlSession, GeneralWork work);
+
 }

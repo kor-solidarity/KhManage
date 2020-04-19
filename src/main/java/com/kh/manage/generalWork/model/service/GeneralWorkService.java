@@ -30,5 +30,10 @@ public interface GeneralWorkService {
 
 	List<Attachment> selectAllAttachment(GeneralWork work);
 
+	int deleteGeneralWorkDelete(Attachment attachment);
+
+	int updateGeneralWork(GeneralWork work);
+
+
 
 }

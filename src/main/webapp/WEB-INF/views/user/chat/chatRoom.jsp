@@ -110,8 +110,9 @@ body {
 		margin-bottom: auto;
 		margin-left: 10px;
 		border-radius: 25px;
-		background-color: #82ccdd;
+		background-color: #24415C;
 		padding: 10px;
+		color:white;
 		position: relative;
 	}
 	.msg_cotainer_send{
@@ -119,7 +120,8 @@ body {
 		margin-bottom: auto;
 		margin-right: 10px;
 		border-radius: 25px;
-		background-color: #78e08f;
+		background-color: orange;
+		color:white;
 		padding: 10px;
 		position: relative;
 	}
@@ -128,7 +130,8 @@ body {
 		left: 0;
 		bottom: -15px;
 		color: black;
-		font-size: 10px;
+		font-size: 5px;
+		width:80px;
 	}
 	.msg_time_send{
 		position: absolute;
@@ -136,6 +139,7 @@ body {
 		bottom: -15px;
 		color: black;
 		font-size: 10px;
+		width:70px;
 	}
 
 
@@ -185,7 +189,14 @@ body {
 		
 		<!-- 채팅 영역 -->
 		<div id="chatArea" style="width:90%; height:420px; background:white; border:2px solid #1E2B44; border-radius:10px; margin:0 auto; overflow: auto;">
-			
+			<c:forEach var="a" items="${list}">
+				<c:if test="${a.memberNo eq loginUser.memberNo}">
+						<div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send'>${a.content}<span class='msg_time_send'>${a.sendDate}</span></div></div>	
+					</c:if>
+					<c:if test="${a.memberNo != loginUser.memberNo}">
+						<div class='card-body msg_card_body' style='padding-left: 10px; padding-bottom: 0px;'>${a.memberName} <div class='d-flex justify-content-start mb-4'><div class='msg_cotainer'>${a.content}<br><span class='msg_time'>${a.sendDate}</span> </div> </div> </div>
+					</c:if>
+			</c:forEach>
 	
 	  <div>
         <input type="text" id="sender" value="test" style="display: none;">
@@ -262,21 +273,64 @@ body {
 	</div>
 	<!-- /.modal -->
 	<script type="text/javascript">
+       var date;
         function send(){
-            var text=document.getElementById("chatContent").value + "," + "${loginUser.memberId}";
-            $("#chatArea").append("<div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send'>"+ text + "<span class='msg_time_send'>8:55</span></div></div>");
-            $("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
-            ws.send(text);
-            str = $("#chatContent").val("");
-            text="";
+        	 $.ajax({
+					url:'selectDate.ct',
+					type: 'post',
+					async: false,
+					data:{},
+				 success:function(data){
+					date = data;
+				 }
+				}); 
+            var text=document.getElementById("chatContent").value + "," + "${cr.chatRoomNo}"+ "," + "${loginUser.memberNo}" + "," + "텍스트" + "," + "${loginUser.memberName}" + "," + date;
+        	var text1 = text.split(",");
+        	//내용
+        	var content = text1[0];
+        	//메세지 보낸 거에 해당하는 방 번호
+        	var chatNo = text1[1];
+        	//보낸 사람
+        	var memberNo = text1[2];
+        	var memberName = text1[4];
+        	 $.ajax({
+					url:'insertMessage.ct',
+					type: 'post',
+					data:{message:text},
+				 success:function(data){
+				 }
+				});
+		            $("#chatArea").append("<div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send'>"+ content +"<span class='msg_time_send'>"+date+"</span></div></div>");
+		            $("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
+		            ws.send(text);
+		            str = $("#chatContent").val("");
+		            text="";
+        	
         }
-        
+        $(function(){
+        	 $("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
+        });
         function closeSocket(){
             ws.close();
         }
         function writeResponse(text){
-        	$("#chatArea").append("<div class='card-body msg_card_body'> <div class='d-flex justify-content-start mb-4'> <div class='msg_cotainer'>" + text + "<span class='msg_time'>8:40</span> </div> </div> </div>");
+        	var text1 = text.split(",");
+        	//내용
+        	var content = text1[0];
+        	//메세지 보낸 거에 해당하는 방 번호
+        	var chatNo = text1[1];
+        	//보낸 사람
+        	var memberNo = text1[2];
+        	var memberName = text1[4];
+        	var date = text1[5];
+			
+        	//지금 내가 들어와 있는 방 번호
+        	var chatNo2 = "${cr.chatRoomNo}";
+        	console.log(chatNo2);
+        	if(chatNo2 == chatNo){
+        	$("#chatArea").append("<div class='card-body msg_card_body' style='padding-left: 10px;  padding-bottom: 0px;'>" + memberName + " <div class='d-flex justify-content-start mb-4'> <div class='msg_cotainer'>"+ content +  "<span class='msg_time'>" + date+ "</span> </div> </div> </div>");
         	 $("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
+        	}
         }
 
 </script>

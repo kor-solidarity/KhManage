@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -147,6 +148,7 @@ body {
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="${path }/resources/js/chatsocket.js"></script>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/user/chat/chatHeader.jsp" />
@@ -183,10 +185,9 @@ body {
 					</div>
 				</td>
 				<td align="center"
-					style="width: 120px; border-bottom: 4px solid white; background:#24415C; color:white;">UI/UX개발
-					1팀 / 팀장</td>
+					style="width: 120px; border-bottom: 4px solid white; background:#24415C; color:white;"> ${loginUser.deapTeamNo}/ ${loginUser.rankName}</td>
 				<td align="center"
-					style="width: 120px; border-bottom: 4px solid white; background:#24415C; color:white;">김태원</td>
+					style="width: 120px; border-bottom: 4px solid white; background:#24415C; color:white;">${loginUser.memberName }</td>
 			</tr>
 		</table>
 	</div>
@@ -195,66 +196,43 @@ body {
 		style="background: #EEEEEE; width: 430px; height: 400px; display: inline-block; overflow: auto;">
 		
 		<table id="chatMain" align="center" style="width: 100%;">
+			<c:forEach var="a" items="${list}">
 			<tr class="chatRoom" style="margin-bottom: 5px;">
-				<td style="background: #24415C; height: 60px; width: 90px;"> <input class="chatNo" type="hidden" value="2">
+				<td style="background: #24415C; height: 60px; width: 90px;"> <input class="chatNo" type="hidden" value="${a.chatRoomNo}">
 					<div class="count" align="center">3</div>
 				</td>
-				<td style="background: #24415C; height: 60px; width: 150px; color:white;"><label>파이널
-						프로젝트팀</label><br> 안녕하세요~</td>
+				<td style="background: #24415C; height: 60px; width: 150px; color:white;"><label>${a.chatRoomName}</label><br>${fn:substring(a.recentMessage,0,10)}</td>
 				<td
-					style="background: #24415C; height: 60px; width: 90px; color:white; font-size: 12px;">20.04.01
-					20:11</td>
+					style="background: #24415C; height: 60px; width: 90px; color:white; font-size: 12px;">${a.modifyDate}</td>
 			</tr>
 			<tr height="3px;" style="background: white;"></tr>
-			<tr class="chatRoom" style="margin-bottom: 5px;">
-				<td style="background: #24415C; height: 60px; width: 90px; color:white;"> <input class="chatNo" type="hidden" value="3">
-					<div class="count" align="center">1</div>
-				</td>
-				<td style="background: #24415C; height: 60px; width: 150px; color:white;"><label>개발부서
-						동기팀</label><br> 하..</td>
-				<td
-					style="background: #24415C; height: 60px; width: 90px; font-size: 12px; color:white;">20.04.03
-					12:58</td>
-			</tr>
-
+			</c:forEach>
 		</table>
-		<button id="addchatRoom">버튼</button>
 	</div>
 
 	<script>
 		$(function() {
 			$(".chatRoom").on('click', function() {
-				location.href='chatRoom.ct';
+				console.log($(this).find('.chatNo').val())
+				var cr = $(this).find('.chatNo').val();
+				location.href='chatRoom.ct?chatRoomNo='+cr;
 			});
 		});
 		
 		$("#addchatRoom").click(function(){
 			$("#chatMain").append("<tr class='chatRoom' style='margin-bottom: 5px;'> <td style='background: #24415C; height: 60px; width: 90px; color:white;'> <input class='chatNo' type='hidden' value='3'> <div class='count' align='center'>1</div> </td> <td style='background: #24415C; height: 60px; width: 150px; color:white;'><label>개발부서 동기팀</label><br> 하..</td> <td style='background: #24415C; height: 60px; width: 90px; font-size: 12px; color:white;'>20.04.03 12:58</td> </tr>")
 		});
+		
+		 function writeResponse(text){
+			 $.ajax({
+					url:'insertMessage.ct',
+					type: 'post',
+					data:{message:text},
+				 success:function(data){
+				 }
+				});
+		 }
 	</script>
-	<script>
-	 var ws;
-     
-     $(function(){
-     	 if(ws!==undefined && ws.readyState!==WebSocket.CLOSED){
-              writeResponse("WebSocket is already opened.");
-              return;
-          }
-          //웹소켓 객체 만드는 코드
-          ws=new WebSocket("ws://192.168.30.192:8001/manage/chatRoom.ct");
-          
-          ws.onopen=function(event){
-              if(event.data===undefined) return;
-              
-              writeResponse(event.data);
-          };
-          ws.onmessage=function(event){
-              writeResponse(event.data);
-          };
-          ws.onclose=function(event){
-              writeResponse("Connection closed");
-          }
-     });
-	</script>
+	
 </body>
 </html>

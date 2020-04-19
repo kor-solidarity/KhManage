@@ -18,20 +18,24 @@ import javax.websocket.server.ServerEndpoint;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.kh.manage.chat.model.service.ChatService;
+import com.kh.manage.chat.model.vo.Message;
 
 
 @Controller
 @ServerEndpoint(value="/chatRoom.ct")
 public class WebSocketChat {
-    
+    @Autowired
+    private ChatService cs;
+	
     private static final List<Session> sessionList=new ArrayList<Session>();;
     private static final Logger logger = LoggerFactory.getLogger(WebSocketChat.class);
     public WebSocketChat() {
-        // TODO Auto-generated constructor stub
-        System.out.println("웹소켓(서버) 객체생성");
     }
     @RequestMapping(value="/chat.do")
     public ModelAndView getChatViewPage(ModelAndView mav) {
@@ -46,7 +50,6 @@ public class WebSocketChat {
             final Basic basic=session.getBasicRemote();
         }catch (Exception e) {
             // TODO: handle exception
-            System.out.println(e.getMessage());
         }
         sessionList.add(session);
     }
@@ -55,9 +58,9 @@ public class WebSocketChat {
      * @param self
      * @param message
      */
-    private void sendAllSessionToMessage(Session self,String message) {
+    private void sendAllSessionToMessage(Session self,Message me) {
         try {
-                                                                       
+        	
 			/*
 			 * for(Session session : WebSocketChat.sessionList) {
 			 * if(!self.getId().equals(session.getId())) { } }
@@ -68,8 +71,7 @@ public class WebSocketChat {
     }
     @OnMessage
     public void onMessage(String message, Session session) {
-    	System.out.println("2번");
-    	System.out.println(message);
+    	
         try {
         	for(int i = 0; i < sessionList.size(); i++) {
         		if(session.getId() == sessionList.get(i).getId()) {
@@ -83,9 +85,8 @@ public class WebSocketChat {
 
         }catch (Exception e) {
             // TODO: handle exception
-            System.out.println(e.getMessage());
         }
-        //sendAllSessionToMessage(session, message);
+		/* sendAllSessionToMessage(session, me); */
     }
     @OnError
     public void onError(Throwable e,Session session) {
@@ -93,7 +94,6 @@ public class WebSocketChat {
     }
     @OnClose
     public void onClose(Session session) {
-        logger.info("Session "+session.getId()+" has ended");
         sessionList.remove(session);
     }
 }

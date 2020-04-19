@@ -11,6 +11,8 @@ import com.kh.manage.common.PageInfo;
 import com.kh.manage.generalWork.model.vo.GeneralWork;
 import com.kh.manage.member.model.vo.Member;
 
+import oracle.net.aso.a;
+
 @Repository
 public class GeneralWorkDaoImpl implements GeneralWorkDao{
 
@@ -81,6 +83,18 @@ public class GeneralWorkDaoImpl implements GeneralWorkDao{
 	public List<Attachment> selectAllAttachment(SqlSessionTemplate sqlSession, GeneralWork work) {
 		
 		return sqlSession.selectList("GeneralWork.selectAllAttachment", work);
+	}
+
+	@Override
+	public int deleteGeneralWorkDelete(SqlSessionTemplate sqlSession, Attachment attachment) {
+		
+		return sqlSession.delete("GeneralWork.deleteGeneralWorkDelete", attachment);
+	}
+
+	@Override
+	public int updateGeneralWork(SqlSessionTemplate sqlSession, GeneralWork work) {
+		
+		return sqlSession.update("GeneralWork.updateGeneralWork", work);
 	}
 	
 }

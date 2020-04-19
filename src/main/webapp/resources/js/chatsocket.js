@@ -1,7 +1,7 @@
   var ws;
         var messages=document.getElementById("messages");
 
-$(function(){
+        $(function(){
         	 if(ws!==undefined && ws.readyState!==WebSocket.CLOSED){
                  writeResponse("WebSocket is already opened.");
                  return;
@@ -10,7 +10,6 @@ $(function(){
              ws=new WebSocket("ws://localhost:8001/manage/chatRoom.ct?");
              
              ws.onopen=function(event){
-            	 alert("연결")
                  if(event.data===undefined) return;
                  
                  writeResponse(event.data);
