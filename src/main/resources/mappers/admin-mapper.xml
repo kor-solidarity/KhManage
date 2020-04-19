@@ -18,6 +18,7 @@
 		<result property="highDept" column="HIGH_DEPT" />
 		<result property="deptLevle" column="DEPT_LEVEL" />
 	</resultMap>
+	
 	<resultMap type="DeptMember" id="deptMemberResultSet">
 		<id property="memberNo" column="MEMBER_NO" />
 		<result property="memberId" column="MEMBER_ID" />

@@ -150,6 +150,7 @@ body {
 	
 	<div id="section2"
 		style="background: #EEEEEE; width: 430px; height: 615px; float: left;">
+	<form id="chatCreateForm" action="chatCereate.ct" method="post">	
 		<table id="chatMainTable" style="width:100%;" align="center">
 			<tr>
 				<td colspan="3">
@@ -171,7 +172,7 @@ body {
 			<tr height="10px;"></tr>
 			<tr>
 				<td class="titleId" style="width:120px;">방이름</td>
-				<td><input type="text" class="inputMenu" style="width:250px;"></td>
+				<td><input type="text" name="chatRoomName" class="inputMenu" style="width:250px;"></td>
 			</tr>
 			<tr height="20px;"></tr>
 			<tr>
@@ -179,17 +180,22 @@ body {
 			</tr>
 			<tr height="10px;"></tr>
 			<tr>
-				<td colspan="2" class="titleId"><select class="selectDepart"
-					style="margin-left: 40px; width: 100px; height:25px; font-size:12px;">
-						<option>부서</option>
+				<td colspan="2" class="titleId">
+				<select class="selectDepart" style="margin-left: 40px; width: 100px; height:25px; font-size:12px;">
+						<c:forEach var="d" items="${dList}">
+							<option value="${d.deptNo }">${d.deptName}</option>
+						</c:forEach>
 				</select> <label style="margin-left: 70px; font-size: 12px;">참여 맴버</label></td>
 			</tr>
 			<tr>
 				<td colspan="3" align="center">
 					<div
 						style="width: 90%; height: 280px; margint: 0 auto; margin-left: 30px;">
-						<div
-							style="width: 35%; height: 280px; border: 1px solid lightgray; background: white; margint: 0 auto; display: inline-block; overflow: auto;"></div>
+						<div style="width: 35%; height: 280px; border: 1px solid lightgray; background: white; margint: 0 auto; display: inline-block; overflow: auto;">
+							<table id="deptMember" style="width:100%;"></table>
+						</div>
+						
+						
 						<div align="center"
 							style="width: 5%; height: 280px; margint: 0 auto; display: inline-block">
 							<table>
@@ -206,13 +212,13 @@ body {
 										class="fas fa-angle-right"></i></td>
 								</tr>
 								<tr>
-									<td><i class="fas fa-angle-double-right"></i></td>
+									<td><i id="allCheckBtn" class="fas fa-angle-double-right"></i></td>
 								</tr>
 							</table>
 						</div>
-						<div
-							style="width: 35%; height: 280px; border: 1px solid lightgray; background: white; margint: 0 auto; display: inline-block; overflow: auto;"></div>
-
+						<div style="width: 35%; height: 280px; border: 1px solid lightgray; background: white; margint: 0 auto; display: inline-block; overflow: auto;">
+						    <table id="joinMember" style="width:100%;"></table>
+						</div>
 					</div>
 				</td>
 			</tr>
@@ -223,13 +229,37 @@ body {
 						style="margin-left: 80px;">
 						<i class="fas fa-plus"></i>&nbsp;생성
 					</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="#">
-						<button class="deleteBtn">
+						<button type="button" class="deleteBtn">
 							<i class="fas fa-ban"></i>&nbsp;취소
 						</button>
 				</a>
 				</td>
 			</tr>
 		</table>
+		</form>
 	</div>
+	<script>
+		$(".selectDepart").on("change", function(){
+			var deptNo = $(this).val();
+			
+			 $.ajax({
+					url:'selectDeptMember.ct',
+					type: 'post',
+					data:{deptNo:deptNo},
+				 success:function(data){
+						$("#deptMember").empty()
+					 for(key in data) {
+						$("#deptMember").append("<tr><td>"+ data[key]['memberName']+ " /"+ data[key]['rankNo']+ "<input type='hidden' name='memberNo' value='"+data[key]['memberNo'] +"'></td></tr>")						 
+					 }
+				 }
+				});
+		});
+		
+		$("#allCheckBtn").click(function(){
+			console.log($("#deptMember").html());
+			$("#joinMember").append($("#deptMember").html());
+			$("#deptMember").empty()
+		});
+	</script>
 </body>
 </html>

@@ -376,9 +376,7 @@
 					    var b = $(".trRange").siblings().find(".memberNo").val();
 						$("input:checkbox[name=idCheck]:checked").filter(function(){
 								var a = $(this).parent().siblings().find(".memberNo").val();
-								console.log(a);
 								$(".trRange1").siblings().find(".memberNo").each(function(){
-									console.log($(this).val());
 									 if($(this).val() == a){
 										 console.log("중복확인");
 										 bool = false;

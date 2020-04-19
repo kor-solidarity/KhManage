@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.manage.admin.adminManage.vo.Access;
 import com.kh.manage.common.Attachment;
@@ -166,26 +167,47 @@ public class GeneralWorkController {
 	}
 	
 	@RequestMapping("updateGeneralWork.gw")
-	public String updateGeneralWork(GeneralWork work, Attachment originAt, HttpServletRequest request, HttpSession session, @RequestParam MultipartFile[] file) {
+	public String updateGeneralWork(GeneralWork work, Attachment originAt, HttpServletRequest request, 
+										HttpSession session, Model model, @RequestParam MultipartFile[] file) {
 		//넣어야 할 첨부파일 처리
 		List<Attachment> aList = new ArrayList<Attachment>();
+		//해당 일정에 대한 첨부파일 전부다 조회
+		List<Attachment> atList = gs.selectAllAttachment(work);
 
-		//기존 첨부파일 중 유지할 파일 정보 조회 후 리스트에 담기
+		//기존 첨부파일을 확인 하여 제거된거를 체크하고 있으면 해당 파일을 DB STS에서 삭제
+		System.out.println(originAt);
 		if(originAt.getAtNo() != null) {
 			String[] str = originAt.getAtNo().split(",");
+			
 			for(int i=0; i< str.length; i++) {
-				Attachment atNo = new Attachment();
-				atNo.setAtNo(str[i]);
-				Attachment oldFile = gs.selectOneAttachment(atNo);
-				aList.add(oldFile);
+				for(int j=0; j < atList.size(); j++) {
+						if(atList.get(j).getAtNo().equals(str[i])) {
+							System.out.println(atList.get(j).getAtNo());
+							atList.remove(j);
+						}
+				}
+			}
+			if(atList.size() >0) {
+				for(int i=0; i < atList.size(); i++) {
+					System.out.println("삭제중");
+					int result = gs.deleteGeneralWorkDelete(atList.get(i));
+					
+					if(result > 0) {
+						new File(atList.get(i).getFilePath() + "\\" + atList.get(i).getChangeName() + atList.get(i).getExt()).delete();
+					}
+				}
+			}
+			
+		}else {
+			//기존 파일이 전부 다 제거 된 경우
+			//DB에서 전부 제거
+			int result = gs.deleteAttachment(work);
+			//STS파일을 제거
+			for(int i=0; i < atList.size(); i++) {
+				new File(atList.get(i).getFilePath() + "\\" + atList.get(i).getChangeName() + atList.get(i).getExt()).delete();
 			}
 		}
 		
-		//해당 일정에 대한 첨부파일 전부다 삭제
-		List<Attachment> atList = gs.selectAllAttachment(work);
-		for(int i = 0; i < atList.size(); i++) {
-			new File(aList.get(i).getFilePath() + "\\" + aList.get(i).getChangeName() + aList.get(i).getExt()).delete();
-		}
 		
 		//새로 추가 되는 파일이 있는 지 확인 후 처리
 		if(file.length >  0) {
@@ -196,35 +218,57 @@ public class GeneralWorkController {
 					String originFileName = file[i].getOriginalFilename();
 					String ext = originFileName.substring(originFileName.lastIndexOf("."));
 					String changeName = CommonsUtils.getRandomString();
-
-		try {
-			file[i].transferTo(new File(filePath + "\\" + changeName + ext));
-			
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+				
+					try {
+						file[i].transferTo(new File(filePath + "\\" + changeName + ext));
+						
+					} catch (IllegalStateException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
+					Attachment at = new Attachment();
+					at.setChangeName(changeName);
+					at.setOriginName(originFileName);
+					at.setFilePath(filePath);
+					at.setExt(ext);
+					
+					aList.add(at);
+						}
+					  }
+					System.out.println(work);
+					//수정 내용 업데이트	
+					int updateResult = gs.updateGeneralWork(work);	
+					
+					if(updateResult > 0) {
+					//업데이트 여부에 따라 첨부파일 추가로 추가	
+						for(int i = 0; i < aList.size(); i++) {
+							aList.get(i).setDivision(work.getGwNo());
+							int result = gs.insertGeneralWorkAttachment(aList.get(i));
+						}
+						
+						
+					}
+				}else {
+					//추가 파일 첨부가 없는 경우 업무 수정만 업데이트 
+					int updateResult = gs.updateGeneralWork(work);
+					System.out.println(work);
+				}
 		
-		Attachment at = new Attachment();
-		at.setChangeName(changeName);
-		at.setOriginName(originFileName);
-		at.setFilePath(filePath);
-		at.setExt(ext);
-		
-		aList.add(at);
-			}
-		  }
-		//일반 업무 정보 업데이트	
-			
-		//업데이트 여부에 따라 첨부파일 추가로 추가	
-			
-			System.out.println(aList);
-	}else {
-		
-	}
-		
-	return null;
+					GeneralWork generalWork = gs.selectOneGeneralWork(work);
+					
+					List<Attachment> list = gs.attachmentList(work);
+					
+					if(list.size() >0) {
+						model.addAttribute("list", list);
+					}else {
+						model.addAttribute("list", null);
+					}
+					
+					model.addAttribute("work", generalWork);
+					
+					return "user/generalWork/generalWorkDetail";
 	}
 	
 }

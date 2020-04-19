@@ -109,7 +109,7 @@
 									 	<div id="fileArea" style="width:80%; height:auto;">
 									 		<c:if test="${list != null }">
 								  				<c:forEach var="a" items="${list }">
-													<div style="margin-top: 10px; margin-left: 10px; margin-bottom: 10px;"><i class="fas fa-file-upload"></i>&nbsp;&nbsp;<c:out value="${a.originName}"/><input id="hiddenAtNo" class="hiddenAtNo" type="hidden" value="${a.atNo}"></div>
+													<div class="td1" style="margin-top: 10px; margin-left: 10px; margin-bottom: 10px;"><i class="fas fa-file-upload"></i>&nbsp;&nbsp;<c:out value="${a.originName}"/><input id="hiddenAtNo" class="hiddenAtNo" type="hidden" value="${a.atNo}"></div>
 								  				</c:forEach>
 										 </c:if>
 										 <c:if test="${list == null }">
@@ -132,7 +132,7 @@
 								<button type="button"class="okBtn" id="save">
 									<i class="fas fa-pencil-alt"></i>&nbsp;수정
 								</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a>
-									<button type="button" class="cancleBtn" onclick="history.go(-1)">
+									<button type="button" class="cancleBtn" onclick="location.href='showGeneralWorkMain.gw'">
 										<i class="fas fa-ban"></i>&nbsp;취소
 									</button>
 							</a>
@@ -183,7 +183,6 @@
 						});
 						
 						$(".okBtn").on("click", function(){
-							
 							location.href='showGeneralWorkUpdateForm.gw?gwNo=${work.gwNo}';
 						});
 					</script>

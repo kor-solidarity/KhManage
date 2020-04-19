@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Chat">
+
+	<resultMap type="DepartMent" id="departResultSet">
+		<id property="deptNo" column="DEPT_NO" />
+		<result property="deptName" column="DEPT_NAME" />
+		<result property="highDept" column="HIGH_DEPT" />
+		<result property="deptLevle" column="DEPT_LEVEL" />
+	</resultMap>
+	
+	<resultMap type="DeptMember" id="deptMemberResultSet">
+		<id property="memberNo" column="MEMBER_NO" />
+		<result property="memberId" column="MEMBER_ID" />
+		<result property="memberName" column="MEMBER_NAME" />
+		<result property="phone" column="PHONE" />
+		<result property="email" column="EMAIL" />
+		<result property="memberType" column="MEMBER_TYPE" />
+		<result property="rankNo" column="RANK_NAME" />
+		<result property="deptName" column="DEPT_NAME" />
+		<result property="enrollDate" column="ENROLL_DATE" />
+		<result property="modifyDate" column="MODIFY_DATE" />
+		<result property="status" column="STATUS" />
+	</resultMap>
+	
+	<resultMap type="ChatRoom" id="ChatRoomResultSet">
+		<id property="chatRoomNo" column="CHATROOM_NO"/>
+		<result property="createMemberNo" column="MEMBER_NO"/>
+		<result property="chatRoomName" column="ROOM_NAME"/>
+		<result property="recentMessage" column="M_CONTENT"/>
+		<result property="status" column="STATUS"/>
+		<result property="modifyDate" column="ENROLL_DATE"/>
+	</resultMap>
+	
+	<resultMap type="ChatMessageList" id="messageResultSet">
+		<id property="messageNo" column="MESSAGE_NO"/>
+		<result property="memberName" column="MEMBER_NAME"/>
+		<result property="memberNo" column="SENDER"/>
+		<result property="chatRoomNo" column="CHATROOM_NO"/>
+		<result property="status" column="STATUS"/>
+		<result property="sendDate" column="SEND_DATE"/>
+		<result property="content" column="CONTENT"/>
+	</resultMap>
+	<select id="selectAllDeptList" resultMap="departResultSet">
+		SELECT DEPT_NO
+			  ,DEPT_NAME
+			  ,HIGH_DEPT
+		      ,DEPT_LEVEL
+		FROM DEPT
+		WHERE STATUS = 'Y'
+	</select>
+	
+	<select id="selectDeptMember" parameterType="DepartMent" resultMap="deptMemberResultSet">
+		SELECT M.MEMBER_NO
+			  ,M.MEMBER_ID
+			  ,M.MEMBER_NAME
+			  ,M.PHONE
+			  ,M.EMAIL
+			  ,M.MEMBER_TYPE
+			  ,R.RANK_NAME
+			  ,D.DEPT_NAME
+			  ,M.ENROLL_DATE
+			  ,M.MODIFY_DATE
+			  ,M.STATUS
+		FROM MEMBER M
+		JOIN DEPT D ON(M.DEPT_NO = D.DEPT_NO)
+		JOIN RANK R
+		ON(M.RANK_NO = R.RANK_NO)
+		WHERE D.DEPT_NO = #{deptNo}
+	</select>
+	
+	<insert id="insertChatRoom" parameterType="ChatRoom">
+		INSERT INTO CHATROOM VALUES('CT'|| TO_CHAR(SEQ_CHART_NO.NEXTVAL, 'FM000'), #{createMemberNo}, #{chatRoomName}, NULL, DEFAULT, SYSDATE)
+	</insert>
+	
+	<insert id="insertChatMember" parameterType="java.util.Map">
+		<foreach item="item" collection="list" open="INSERT ALL"
+			close="SELECT * FROM DUAL">
+			INTO CHAT_MEMBER(CHATROOM_NO, MEMBER_NO, JOIN_DATE, ACCESS_DATE, STATUS)
+			VALUES ('CT'|| TO_CHAR(SEQ_CHART_NO.CURRVAL, 'FM000'), #{item.memberNo}, SYSDATE, NULL, DEFAULT)
+		</foreach>
+	</insert>
+	
+	<select id="selectAllChatRoom" parameterType="Member" resultMap="ChatRoomResultSet">
+		SELECT CHATROOM_NO
+		       ,MEMBER_NO
+		       ,ROOM_NAME
+		       ,M_CONTENT
+		       ,STATUS
+		       ,ENROLL_DATE
+		FROM (SELECT C.CHATROOM_NO
+		      ,C.MEMBER_NO
+		      ,C.ROOM_NAME
+		      ,MC.M_CONTENT
+		      ,C.STATUS
+		      ,C.ENROLL_DATE
+		FROM CHATROOM C
+		JOIN CHAT_MEMBER CM ON(C.CHATROOM_NO = CM.CHATROOM_NO)
+		LEFT JOIN MESSAGE M ON(C.RECENT_MESSAGE = M.MESSAGE_NO)
+		LEFT JOIN MESSAGE_CONTENT MC ON(MC.MESSAGE_NO = M.MESSAGE_NO)
+		WHERE C.RECENT_MESSAGE IS NOT NULL
+		AND CM.MEMBER_NO = #{memberNo}
+		UNION
+		SELECT C.CHATROOM_NO
+		      ,C.MEMBER_NO
+		      ,C.ROOM_NAME
+		      ,MC.M_CONTENT
+		      ,C.STATUS
+		      ,C.ENROLL_DATE
+		FROM CHATROOM C
+		LEFT JOIN MESSAGE M ON(C.RECENT_MESSAGE = M.MESSAGE_NO)
+		LEFT JOIN MESSAGE_CONTENT MC ON(MC.MESSAGE_NO = M.MESSAGE_NO)
+		WHERE C.MEMBER_NO = #{memberNo})
+		ORDER BY ENROLL_DATE DESC
+	</select>
+	
+	<select id="selectJoinChatRoom" parameterType="Member" resultMap="ChatRoomResultSet">
+		SELECT C.CHATROOM_NO
+		      ,C.MEMBER_NO
+		      ,C.ROOM_NAME
+		      ,C.RECENT_MESSAGE
+		      ,C.STATUS
+		      ,CM.MEMBER_NO
+		FROM CHATROOM C
+		JOIN CHAT_MEMBER CM ON(C.CHATROOM_NO = CM.CHATROOM_NO)
+		WHERE C.RECENT_MESSAGE IS NOT NULL
+		AND CM.MEMBER_NO = #{memberNo}
+	</select>
+	
+	<insert id="insertMainMessage" parameterType="Message">
+		INSERT INTO MESSAGE VALUES('ME'|| TO_CHAR(SEQ_MSG_NO.NEXTVAL, 'FM000'), #{chatRoomNo}, #{sender}, 'Y', #{contentType}, SYSDATE)
+	</insert>
+	
+	<insert id="insertMessageContent" parameterType="Message">
+		INSERT INTO MESSAGE_CONTENT VALUES('ME'|| TO_CHAR(SEQ_MSG_NO.CURRVAL, 'FM000'), #{content})
+	</insert>
+	
+	<update id="updateRecentMessage" parameterType="Message">
+		UPDATE CHATROOM SET RECENT_MESSAGE = 'ME'|| TO_CHAR(SEQ_MSG_NO.CURRVAL, 'FM000')
+		WHERE CHATROOM_NO = #{chatRoomNo}
+	</update>
+	
+	<select id="selectAllMessage" parameterType="ChatRoom" resultMap="messageResultSet">
+		SELECT M.MESSAGE_NO
+		      ,MB.MEMBER_NAME
+		      ,M.SENDER
+		      ,M.CHATROOM_NO
+		      ,M.STATUS
+		      ,TO_CHAR(M.SEND_DATE,'YY-MM-DD HH24:MI') AS SEND_DATE
+		      ,CASE WHEN M.CONTENT = '텍스트' THEN MC.M_CONTENT
+		      WHEN M.CONTENT = '첨부파일' THEN MA.MESSAGE_ATTACHMENT
+		END AS CONTENT   
+		FROM MESSAGE M    
+		JOIN MEMBER MB ON (M.SENDER = MB.MEMBER_NO)
+		LEFT JOIN MESSAGE_CONTENT MC ON(M.MESSAGE_NO = MC.MESSAGE_NO)
+		LEFT JOIN MESSAGE_ATTACHMENT MA ON(M.MESSAGE_NO = MA.MESSAGE_NO)
+		WHERE M.STATUS = 'Y'
+		AND M.CHATROOM_NO = #{chatRoomNo}
+		ORDER BY SEND_DATE 
+	</select>
+	
+	<select id="selectDate" resultType="java.lang.String">
+		SELECT TO_CHAR(SYSDATE,'YY-MM-DD HH24:MI') FROM DUAL
+	</select>
+	
+	<select id="selectOneChatRoom" resultMap="ChatRoomResultSet">
+		
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+  
