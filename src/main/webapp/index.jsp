@@ -26,7 +26,7 @@ button:hover {
 }
 
 .LogoArea {
-	margin-top: 100px;
+	margin-top: 200px;
 	margin-bottom: -180px;
 	margin-left: 43%;
 }
@@ -43,7 +43,7 @@ button:hover {
 	background: #DDE3EC;
 	width: 400px;
 	height: 40px;
-	border: none;
+/* 	border: none; */
 	padding-left: 20px;
 	font-size: 16px;
 }

@@ -43,16 +43,11 @@
 	</bean>
 
 
-
-
-
 	<!-- 트랜젝션 매니저 bean 등록 -->
 	<!-- <bean id="transactionManager" 
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"/>
 	</bean> -->
-	
-	
 	
 	
 	
