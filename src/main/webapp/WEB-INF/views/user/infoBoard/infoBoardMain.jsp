@@ -129,7 +129,7 @@
 	}
 </style>
 </head>
-<body onload="$('#route1').text('정보공유게시판')">
+<body onload="$('#route1').text('커뮤니'); $('#route2').text('정보게시판')">
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp" />
 	<jsp:include page="/WEB-INF/views/user/common/sidebar2.jsp" />
 	<div class="panel panel-headline">
@@ -139,7 +139,7 @@
 				<table align="left" style="margin-bottom: 10px;">
 					<tr>
 						<td><button class="projectBtn"
-								onclick="location.href='infoBoardMain.ib'">
+								onclick="location.href='insertBoard.ib'">
 								<i class="fas fa-edit"></i> &nbsp;게시글 등록
 							</button>
 						<td colspan="6">

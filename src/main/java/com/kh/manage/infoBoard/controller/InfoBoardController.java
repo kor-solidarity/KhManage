@@ -22,4 +22,14 @@ public class InfoBoardController {
 		return "user/infoBoard/infoBoardMain";
 	}
 
+	
+	//게시글 작성페이지
+	@RequestMapping("/insertBoard.ib")
+	public String insertBoard() {
+		
+		return "user/infoBoard/infoBoardInsert";
+	}
+	
+	
+	
 }
