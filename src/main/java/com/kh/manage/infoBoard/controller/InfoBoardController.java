@@ -122,6 +122,7 @@ public class InfoBoardController {
 		String boardNo = request.getParameter("boardNo");
 		String replyContent = request.getParameter("replyContent");
 		String memberNo = request.getParameter("memberNo");
+//		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
 		
 		System.out.println("boardNo : " + boardNo);
 		System.out.println("replyContent : " + replyContent);
