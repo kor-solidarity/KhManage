@@ -576,6 +576,7 @@
 		}); 
 		
 		$("#workChangeSubmit").click(function(){
+			send("1");
 			$('#workRegChange').submit();
 		}); 
 	
@@ -697,7 +698,8 @@
     }
     
     function writeResponse(text){
-    	$("#bodyAll").val(text);
+    	//location.reload();
+    	//$("#bodyAll").val(text);
     	//$(".newlistinput").before(text);
     }
 	
