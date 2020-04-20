@@ -134,7 +134,7 @@ body {
 		margin-top: 5px;
 		margin-bottom: auto;
 		margin-right: 10px;
-		border-radius: 25px;
+		border-radius: 5px;
 		background-color: orange;
 		color:white;
 		padding: 10px;
@@ -176,14 +176,14 @@ body {
 
 
 </style>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
-<link rel="stylesheet" href="<c:url value="/resources/assets/vendor/bootstrap/css/bootstrap.css"/>">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="<c:url value="/resources/assets/vendor/bootstrap/css/bootstrap.css"/>">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 <script src="${path }/resources/js/chatsocket.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
@@ -210,7 +210,7 @@ body {
 			</tr>
 			<tr height="15px;"></tr>
 			<tr align="center">
-				<td><i class="fas fa-ellipsis-h" id="userList"
+				<td><i class="fas fa-ellipsis-h" id="userList" data-toggle="modal" data-target="#exampleModal"
 					style="color: white; font-size: 34px;"></i></td>
 			</tr>
 		</table>
@@ -221,7 +221,7 @@ body {
 		
 		<!-- 채팅 영역 -->
 		<div id="chatArea" style="width:90%; height:420px; background:white; border:2px solid #1E2B44; border-radius:10px; margin:0 auto; overflow: auto;">
-		<table style="width:100%">
+		<table id="chatAreaTable" style="width:100%">
 			<c:forEach var="a" items="${list}">
 				<c:if test="${a.memberNo eq loginUser.memberNo}">
 				<tr>	
@@ -233,7 +233,7 @@ body {
 					<c:if test="${a.memberNo != loginUser.memberNo}">
 					<tr>
 						<td style="width:50px;">
-						<div class="box" style="background:white;"><img class="profile" src="<c:url value="/resources/uploadFiles/${a.changeName}"/>.png"></div>
+						<div class='box' style='background:white;'><img class='profile' src="<c:url value="/resources/uploadFiles/${a.changeName}"/>.png"></div>
 						</td>
 						<td>
 						<div style="display: inline-flex; font-weight:600; font-size:12px;">${a.memberName }</div>
@@ -275,56 +275,30 @@ body {
 	</div>	
 
 		
-	<div class="modal fade" id="myModal" role="dialog"
-		aria-labelledby="gridSystemModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="gridSystemModalLabel">
-						<i class="fas fa-th-large"></i>&nbsp;최상위 부서 추가
-					</h4>
-				</div>
-				<div class="modal-body">
-					<div class="container-fluid">
-						<div class="row">
-							<table id="buseoInfoTable">
-								<tr>
-									<td class="titleId">부서명</td>
-									<td><input type="text" class="inputMenu"></td>
-								</tr>
-								<tr height="10px;"></tr>
-								<tr>
-									<td class="titleId">부서코드</td>
-									<td><input type="text" class="inputMenu"
-										style="width: 100px;"></td>
-								</tr>
-							</table>
-						</div>
-						<div class="row">
-							<div class="col-sm-9">
-								<div class="row"></div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-primary"
-						style="background: #1E2B44; outline: none; border: none;">저장</button>
-				</div>
-			</div>
-			<!-- /.modal-content -->
-		</div>
-		<!-- /.modal-dialog -->
-	</div>
-	<!-- /.modal -->
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 	<script type="text/javascript">
        var date;
         function send(){
+        	if($("#chatContent").val() != ""){
         	 $.ajax({
 					url:'selectDate.ct',
 					type: 'post',
@@ -334,7 +308,7 @@ body {
 					date = data;
 				 }
 				}); 
-            var text=document.getElementById("chatContent").value + "," + "${cr.chatRoomNo}"+ "," + "${loginUser.memberNo}" + "," + "텍스트" + "," + "${loginUser.memberName}" + "," + date;
+            var text=document.getElementById("chatContent").value + "," + "${cr.chatRoomNo}"+ "," + "${loginUser.memberNo}" + "," + "텍스트" + "," + "${loginUser.memberName}" + "," + date + "," + "${loginUser.changeName}";
         	var text1 = text.split(",");
         	//내용
         	var content = text1[0];
@@ -351,12 +325,13 @@ body {
 				 success:function(data){
 				 }
 				});
-		            $("#chatArea").append("<div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send'>"+ content +"<span class='msg_time_send'>"+date+"</span></div></div>");
+		            $("#chatAreaTable").append("<tr><td colspan='2'><div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send'>"+content+"<span class='msg_time_send'>"+date+"</span></div></div></td></tr>");
 		            $("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
 		            ws.send(text);
 		            str = $("#chatContent").val("");
 		            text="";
         	
+        	}
         }
         $(function(){
         	 $("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
@@ -374,14 +349,15 @@ body {
         	var memberNo = text1[2];
         	var memberName = text1[4];
         	var date = text1[5];
+        	var changeName = text1[6];
 			
         	//지금 내가 들어와 있는 방 번호
         	var chatNo2 = "${cr.chatRoomNo}";
         	console.log(chatNo2);
-        	if(chatNo2 == chatNo){
-        	$("#chatArea").append("<div class='card-body msg_card_body' style='padding-left: 10px;  padding-bottom: 0px;'>" + memberName + " <div class='d-flex justify-content-start mb-4'> <div class='msg_cotainer'>"+ content +  "<span class='msg_time'>" + date+ "</span> </div> </div> </div>");
+     		if(chatNo2 == chatNo){
+        	$("#chatAreaTable").append("<tr><td style='width:50px;'><div class='box' style='background:white;'><img class='profile' src='/manage/resources/uploadFiles/"+changeName+".png'></div></td><td><div style='display: inline-flex; font-weight:600; font-size:12px;'>"+memberName+"</div></td></tr><tr><td colspan='2'><div class='card-body msg_card_body' style='padding-left: 20px; padding-top:0px; padding-bottom: 0px;'><div class='d-flex justify-content-start mb-4'><div class='msg_cotainer'>"+content+"<br><span class='msg_time'>"+date+"</span></div></div></div></td></tr>");
         	 $("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
-        	}
+     		}
         }
 
 </script>
@@ -403,7 +379,7 @@ body {
     	if(event.keyCode == '13' && !event.shiftKey){
     		str = $("#chatContent").val();
     		console.log("엔터키 : " + str)
-			$("#sendBtn").click();
+			send();
     	}else if(event.keyCode == '13' && event.shiftKey){
     		str += '/n';
     	}

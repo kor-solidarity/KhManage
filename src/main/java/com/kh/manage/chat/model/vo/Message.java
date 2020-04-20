@@ -10,11 +10,12 @@ public class Message {
 	private String contentType;
 	private Date sendDate;
 	private String content;
+	private String readCount;
 	
 	public Message() {}
 
 	public Message(String messageNo, String chatRoomNo, String sender, String status, String contentType, Date sendDate,
-			String content) {
+			String content, String readCount) {
 		super();
 		this.messageNo = messageNo;
 		this.chatRoomNo = chatRoomNo;
@@ -23,6 +24,7 @@ public class Message {
 		this.contentType = contentType;
 		this.sendDate = sendDate;
 		this.content = content;
+		this.readCount = readCount;
 	}
 
 	public String getMessageNo() {
@@ -81,11 +83,21 @@ public class Message {
 		this.content = content;
 	}
 
+	public String getReadCount() {
+		return readCount;
+	}
+
+	public void setReadCount(String readCount) {
+		this.readCount = readCount;
+	}
+
 	@Override
 	public String toString() {
 		return "Message [messageNo=" + messageNo + ", chatRoomNo=" + chatRoomNo + ", sender=" + sender + ", status="
-				+ status + ", contentType=" + contentType + ", sendDate=" + sendDate + ", content=" + content + "]";
+				+ status + ", contentType=" + contentType + ", sendDate=" + sendDate + ", content=" + content
+				+ ", readCount=" + readCount + "]";
 	}
+
 	
 	
 }

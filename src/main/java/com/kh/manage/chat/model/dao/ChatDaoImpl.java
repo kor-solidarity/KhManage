@@ -88,4 +88,16 @@ public class ChatDaoImpl implements ChatDao {
 		return sqlSession.selectOne("Chat.selectOneChatRoom", cr);
 	}
 
+	@Override
+	public int updateChatAccessDate(SqlSessionTemplate sqlSession, ChatRoom cr) {
+		
+		return sqlSession.update("Chat.updateChatAccessDate", cr);
+	}
+
+	@Override
+	public int chatCount(SqlSessionTemplate sqlSession, ChatRoom chatRoom) {
+
+		return sqlSession.selectOne("Chat.chatCount", chatRoom);
+	}
+
 }

@@ -91,7 +91,7 @@
 		<foreach item="item" collection="list" open="INSERT ALL"
 			close="SELECT * FROM DUAL">
 			INTO CHAT_MEMBER(CHATROOM_NO, MEMBER_NO, JOIN_DATE, ACCESS_DATE, STATUS)
-			VALUES ('CT'|| TO_CHAR(SEQ_CHART_NO.CURRVAL, 'FM000'), #{item.memberNo}, SYSDATE, NULL, DEFAULT)
+			VALUES ('CT'|| TO_CHAR(SEQ_CHART_NO.CURRVAL, 'FM000'), #{item.memberNo}, SYSDATE, SYSDATE, DEFAULT)
 		</foreach>
 	</insert>
 	
@@ -192,6 +192,31 @@
 		        WHERE CHATROOM_NO = #{chatRoomNo}) AS COUNT
 		FROM CHATROOM
 		WHERE CHATROOM_NO = #{chatRoomNo}
+	</select>
+	
+	<update id="updateChatAccessDate" parameterType="ChatRoom">
+		UPDATE CHAT_MEMBER SET ACCESS_DATE = SYSDATE
+		WHERE CHATROOM_NO = #{chatRoomNo}
+		AND MEMBER_NO = #{memberNo}
+	</update>
+	
+	<select id="chatCount" parameterType="ChatRoom" resultType="_int">
+		SELECT COUNT(*)
+		FROM MESSAGE M
+		WHERE M.CHATROOM_NO = #{chatRoomNo}
+		AND SEND_DATE > (SELECT ACCESS_DATE
+						   FROM CHAT_MEMBER
+						   WHERE MEMBER_NO = #{memberNo}
+						   AND CHATROOM_NO = #{chatRoomNo})
+	</select>
+	
+	<select id="getReadCount" parameterType="Message" resultType="java.lang.String">
+		SELECT COUNT(*)
+		FROM CHAT_MEMBER
+		WHERE CHATROOM_NO = #{chatRoomNo}
+		AND ACCESS_DATE > (SELECT SEND_DATE
+							FROM MESSAGE
+							WHERE MESSAGE_NO = #{messageNo})		
 	</select>
 </mapper>
 

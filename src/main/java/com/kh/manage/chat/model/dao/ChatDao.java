@@ -37,5 +37,10 @@ public interface ChatDao {
 
 	ChatRoom selectOneChatRoom(SqlSessionTemplate sqlSession, ChatRoom cr);
 
+	int updateChatAccessDate(SqlSessionTemplate sqlSession, ChatRoom cr);
+
+	int chatCount(SqlSessionTemplate sqlSession, ChatRoom chatRoom);
+
+
 
 }

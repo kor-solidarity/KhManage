@@ -29,4 +29,9 @@ public interface ChatService {
 
 	ChatRoom selectOneChatRoom(ChatRoom cr);
 
+	int updateChatAccessDate(ChatRoom cr);
+
+	int chatCount(ChatRoom chatRoom);
+
+
 }
