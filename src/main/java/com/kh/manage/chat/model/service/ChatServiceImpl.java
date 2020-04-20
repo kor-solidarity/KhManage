@@ -66,6 +66,11 @@ public class ChatServiceImpl implements ChatService {
 		if(result > 0) {
 			result2 = cd.insertMessageContent(sqlSession, me);
 			int result3 = cd.updateRecentMessage(sqlSession, me);
+			ChatRoom cr = new ChatRoom();
+			
+			cr.setChatRoomNo(me.getChatRoomNo());
+			cr.setMemberNo(me.getSender());
+		    cd.updateChatAccessDate(sqlSession, cr);
 		}
 		
 		return result2;
@@ -88,5 +93,19 @@ public class ChatServiceImpl implements ChatService {
 		
 		return cd.selectOneChatRoom(sqlSession, cr);
 	}
+
+	@Override
+	public int updateChatAccessDate(ChatRoom cr) {
+		
+		return cd.updateChatAccessDate(sqlSession, cr);
+	}
+
+	@Override
+	public int chatCount(ChatRoom chatRoom) {
+		
+		return cd.chatCount(sqlSession, chatRoom);
+	}
+
+
 
 }

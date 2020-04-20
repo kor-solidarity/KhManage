@@ -130,14 +130,17 @@ body {
 }
 
 .count {
-	width: 36px;
-	height: 21px;
-	border-radius: 70%;
-	background: #FF5442;
+	width:30px;
+	height: 22px;
+	border-radius: 10px;
+	background: #1E2B44;
 	overflow: hidden;
 	margin-left: 20px;
 	margin-bottom: 3px;
 	color: white;
+	font-size:11px;
+	line-height: 22px;
+	font-weight:600;
 }
 
 .profile {
@@ -192,15 +195,15 @@ body {
 		</table>
 	</div>
 	<label style="margin-top: 8px; margin-left: 7px;">나의 채팅방</label>
-	<div
-		style="background: #EEEEEE; width: 430px; height: 400px; display: inline-block; overflow: auto;">
-		
+	<div id="chatMainDiv" style="background: #EEEEEE; width: 430px; height: 400px; display: inline-block; overflow: auto;">
 		<table id="chatMain" align="center" style="width: 100%;">
 		<tr height="3px;" style="background: white;"></tr>
 			<c:forEach var="a" items="${list}">
 			<tr class="chatRoom" style="margin-bottom: 5px;">
 				<td style="background: white; height: 60px; width: 90px;"> <input class="chatNo" type="hidden" value="${a.chatRoomNo}">
-					<!-- <div class="count" align="center">3</div> -->
+					<c:if test="${a.count != 0 }">
+					 <div class="count" align="center">${a.count }</div> 
+					 </c:if>
 				</td>
 				<td style="background: white; height: 60px; width: 150px; color:black;"><label>${a.chatRoomName}</label><br>${fn:substring(a.recentMessage,0,10)}</td>
 				<td
@@ -212,20 +215,20 @@ body {
 	</div>
 
 	<script>
-		$(function() {
+		 $(function() {
 			$(".chatRoom").on('click', function() {
 				console.log($(this).find('.chatNo').val())
 				var cr = $(this).find('.chatNo').val();
 				location.href='chatRoom.ct?chatRoomNo='+cr;
 			});
 		});
-		
+		 
 		$("#addchatRoom").click(function(){
 			$("#chatMain").append("<tr class='chatRoom' style='margin-bottom: 5px;'> <td style='background: #24415C; height: 60px; width: 90px; color:white;'> <input class='chatNo' type='hidden' value='3'> <div class='count' align='center'>1</div> </td> <td style='background: #24415C; height: 60px; width: 150px; color:white;'><label>개발부서 동기팀</label><br> 하..</td> <td style='background: #24415C; height: 60px; width: 90px; font-size: 12px; color:white;'>20.04.03 12:58</td> </tr>")
 		});
 		
 		 function writeResponse(text){
-			/*   $.ajax({
+			   $.ajax({
 					url:'selectChatList.ct',
 					type: 'post',
 					async: false,
@@ -233,9 +236,27 @@ body {
 				 success:function(data){
 					 console.log(data);
 				 }
-				});  */
+				});  
 				location.reload();
 		 }
+		/*  $("#chatMainDiv").children().find(".chatRoom").on({
+			 mousedown: function(event) {
+			      drag_x1 = event.offsetX;
+			    },
+			    mouseup: function(event) {
+			      if(event.offsetX - drag_x1 > 200) {
+			      	console.log("드래그");
+			      	 $(this).html(html);
+			      }
+			      if(event.offsetX - drag_x1 < -200) {
+			    	  console.log($(this).html());
+			    	  html = $(this).html();
+			    	  
+			    	 $(this).html("<td style='background: white; height: 60px; width: 90px;'> </td><td style='background: white; height: 60px; width: 150px; color:black;'><label></label><br></td><td style='background: white; height: 60px; width: 90px; color: black; font-size: 12px;'>삭제하기</td>");
+			    	 
+			      }
+			    }
+		 }); */
 	</script>
 	
 </body>

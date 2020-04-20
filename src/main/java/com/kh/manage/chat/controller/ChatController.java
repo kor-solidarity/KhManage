@@ -1,6 +1,7 @@
 package com.kh.manage.chat.controller;
 
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +35,13 @@ public class ChatController {
 		
 		List<ChatRoom> list = cs.selectAllChatRoom(m);
 		
+		for(int i = 0; i < list.size(); i++) {
+			list.get(i).setMemberNo(m.getMemberNo());
+			int count = cs.chatCount(list.get(i));
+			list.get(i).setCount(count);
+		}
+		System.out.println(list);
+		
 		model.addAttribute("list", list);
 		
 		return "user/chat/chatMainPage";
@@ -49,9 +57,16 @@ public class ChatController {
 	}
 	
 	@RequestMapping("/chatRoom.ct")
-	public String showChatRoomPage(ChatRoom cr, Model model) {
+	public String showChatRoomPage(ChatRoom cr, Model model, HttpSession session) {
+		Member m = (Member) session.getAttribute("loginUser");
+		cr.setMemberNo(m.getMemberNo());
+		int result = cs.updateChatAccessDate(cr);
 		
 		List<Message> mList = cs.selectAllMessage(cr);
+		
+//		for(int i = 0; i < mList.size(); i++) {
+//			mList.get(i).setReadCount(cs.getReadCount(mList.get(i)));
+//		}
 		ChatRoom crm = cs.selectOneChatRoom(cr);
 		
 		
@@ -152,6 +167,10 @@ public class ChatController {
 			e.printStackTrace();
 		}
 		
-		
+	}
+	
+	@RequestMapping("/selectImg.ct")
+	public void selectImg(Member m) {
+		System.out.println("회원정보 :                      " + m);
 	}
 }
