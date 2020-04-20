@@ -6,7 +6,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.manage.common.Attachment;
 import com.kh.manage.issue.model.dao.IssueDao;
+import com.kh.manage.issue.model.vo.Issue;
+import com.kh.manage.issue.model.vo.IssueProjectTeam;
 import com.kh.manage.issue.model.vo.IssueWPT;
 import com.kh.manage.issue.model.vo.IssueWork;
 import com.kh.manage.member.model.vo.Member;
@@ -28,6 +31,22 @@ public class IssueServiceImpl implements IssueService{
 	@Override
 	public List<IssueWork> selectWorkList(String pno) {
 		return id.selectWorkList(sqlSession, pno);
+	}
+
+	@Override
+	public List<IssueProjectTeam> selectProjectTeamList(String pno) {
+		return id.selectProjectTeamList(sqlSession, pno);
+	}
+
+	@Override
+	public Issue insertIssue(Issue issue) {
+		return null;
+	}
+
+	@Override
+	public int insertIssueAttachment(Attachment attachment) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	

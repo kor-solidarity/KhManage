@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,7 +44,7 @@
 	
 	#fileUploadArea{
 		width:1450px;
-		height:30px;
+		height:auto;
 		border:1px solid lightgray;
 		border-radius: 5px;
 	}
@@ -79,18 +80,22 @@
 		border-radius: 5px;
 		font-size:14px;
 	}
+	.btn{
+		display: inline;
+	}
 </style>
 </head>
 <body onload="$('#route1').text('일반업무'), $('#route2').text('이슈 관리')">
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
 	<jsp:include page="/WEB-INF/views/user/common/sidebar2.jsp"/>
-	
+	<jsp:useBean id="now" class="java.util.Date" />
+	<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
 	<div class="panel panel-headline">
 		<div class="panel-heading">
 			<div style="width:100%; height:700px; margin:0 auto; overflow:auto;">
 			<b>이슈 등록 정보</b>
 			<hr>
-			<form>
+			<form id="insertIssue" action="insertIssue.iu" method="post" enctype="multipart/form-data">
 			<table id="issueTable">	
 				<tr>
 					<td class="thRange"></td>
@@ -105,18 +110,15 @@
 					</td>
 					<td class="thRange" align="left">작업</td>
 					<td class="thRange" colspan="6">
-						<select id="taskList" name="taskList">
-							<option>작업을 선택하세요</option>
-							<option>로그인 작업</option>
-							<option>수강신청 작업</option>
-							<option>KH대학교 학사시스템 고도화</option>
+						<select id="taskList" name="workNo">
+							
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<td class="thRange"></td>
 					<td class="thRange">제기자</td>
-					<td class="thRange">심재우</td>
+					<td class="thRange">${sessionScope.loginUser.memberName }</td>
 					<td class="thRange"></td>
 					<td class="thRange"></td>
 					<td class="thRange"></td>
@@ -126,7 +128,7 @@
 					<td class="thRange"></td>
 					<td class="thRange"></td>
 					<td class="thRange">제기일자</td>
-					<td class="thRange">2020-04-03</td>
+					<td class="thRange"><c:out value="${today}"/></td>
 					<td class="thRange"></td>
 					<td class="thRange"></td>
 					<td class="thRange"></td>
@@ -137,11 +139,11 @@
 					<td class="thRange"></td>
 					<td class="thRange">이슈 구분</td>
 					<td class="thRange" colspan="9">
-					<select class="projectList">
+					<select class="projectList" id="issueType" name="issueType">
 						<option>선택하세요</option>
-						<option>KH대학교 학사시스템 개발</option>
-						<option>KH대학교 학사시스템 유지보수</option>
-						<option>KH대학교 학사시스템 고도화</option>
+						<option value="버그발생">버그 발생</option>
+						<option value="개선사항">개선사항</option>
+						<option value="새기능">새 기능</option>
 					</select>
 					</td>
 					<td class="thRange"></td>
@@ -155,13 +157,13 @@
 				<tr>
 					<td class="thRange"></td>
 					<td class="thRange">제목</td>
-					<td class="thRange" colspan="16"><input type="text" id="taskTitle" placeholder="제목을 입력해주세요"></td>
+					<td class="thRange" colspan="16"><input type="text" id="taskTitle" name="issueTitle" placeholder="제목을 입력해주세요"></td>
 					
 				</tr>
 				<tr>
 					<td class="thRange"></td>
 					<td class="thRange">이슈 내용</td>
-					<td class="thRange" rowspan="5" colspan="16"><input type="text" id="taskContent"></td>
+					<td class="thRange" rowspan="5" colspan="16"><input type="text" name="issueContent" id="taskContent"></td>
 					
 				</tr>
 				<tr>
@@ -185,7 +187,7 @@
 					<td class="thRange">첨부파일</td>
 					<td class="thRange" colspan="16">
 						<div id="fileUploadArea">
-							<input type="file" id="fileUpload" name="fileUpload">
+							<a href="#this" id="add" class="btn">파일 추가하기</a> 
 						</div>
 					</td>
 				</tr>
@@ -217,7 +219,7 @@
 					<td class="thRange"></td>
 					<td class="thRange">조치자</td>
 					<td class="thRange" colspan="9">
-						<select class="projectList">
+						<select class="projectList" id="projectTeam" name="teamWorker">
 							<option>선택하세요</option>
 							<option>심재우</option>
 							<option>김성준</option>
@@ -228,7 +230,7 @@
 					</td>
 					<td class="thRange" align="left">조치희망일</td>
 					<td class="thRange" colspan="6">
-						<input type="date" name="workDate" id="workDate">
+						<input type="date" name="actionDate" id="workDate">
 					</td>
 				</tr>
 				<tr>
@@ -242,7 +244,7 @@
 						</c:if>
 					</td>  --%>
 					<td class="thRange"></td>
-					<td class="thRange"><button class="okBtn"><i class="fas fa-check"></i>&nbsp;저장</button></td>
+					<td class="thRange"><button id="submitBtn" class="okBtn"><i class="fas fa-check"></i>&nbsp;저장</button></td>
 					<td class="thRange"><button class="cancleBtn"><i class="fas fa-ban"></i>&nbsp;취소</button></td>
 					<td class="thRange"></td>
 					<td class="thRange"></td>
@@ -288,10 +290,24 @@
 	
 	<script>
 	$(function(){
+		$("a[name='delete']").on("click",function(e){
+            e.preventDefault();
+            fn_fileDelete($(this));
+        });
+        $("#add").on("click",function(e){
+            e.preventDefault();
+            fn_fileAdd();
+        });
+        
+        $("#submitBtn").onclick(function(){
+        	$("#insertIssue").submit();
+        });
+        
 		$("#projectNo").change(function(){
 			var pno = $(this).val();
 			console.log(pno);
 			$("#taskList").empty();
+			$("#projectTeam").empty();
 			$.ajax({
 				type:"post",
 				url:"projectWorkList.iu",
@@ -303,6 +319,11 @@
 						$("#taskList").append("<option value='" + data.iw[i]['workNo'] + "'>" + data.iw[i]['workName'] + "</option>");
 						
 					}
+					
+					for(var i = 0; i < data.ipt.length; i++){
+						$("#projectTeam").append("<option value='" + data.ipt[i]['memberPk'] + "'>" + data.ipt[i]['memberName'] + "</option>");
+						
+					}
 				},
 				error:function(error){
 					
@@ -310,8 +331,22 @@
 			});
 		});
 		
-		
 	});
+	
+	
+	function fn_fileDelete(obj){
+        obj.parent().parent().remove();
+    }
+	
+    function fn_fileAdd(){
+        var str = "<div style='filePlus'><div style='display: inline-flex;'><input type='file' class='fileCss' name='file'></div><div style='display: inline-flex;'><a href='#this' name='delete' class='btn'><i class='fas fa-minus-square'></i></a></div></div>";
+        $("#fileUploadArea").append(str);
+         
+        $("a[name='delete']").on("click",function(e){
+            e.preventDefault();
+            fn_fileDelete($(this));         
+        })
+    }
 	</script>
 </body>
 </html>
