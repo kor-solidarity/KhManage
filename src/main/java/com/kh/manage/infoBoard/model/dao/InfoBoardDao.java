@@ -5,8 +5,8 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.manage.common.PageInfo;
+import com.kh.manage.infoBoard.model.vo.BoReply;
 import com.kh.manage.infoBoard.model.vo.InfoBoard;
-import com.kh.manage.infoBoard.model.vo.Reply;
 
 public interface InfoBoardDao {
 
@@ -20,7 +20,9 @@ public interface InfoBoardDao {
 
 	void countPlus(SqlSessionTemplate sqlSession, InfoBoard ib);
 
-	int insertReply(SqlSessionTemplate sqlSession, Reply rp);
+	int insertReply(SqlSessionTemplate sqlSession, BoReply rp);
+
+	List<BoReply> selectAllReply(SqlSessionTemplate sqlSession, InfoBoard ib);
 
 
 }

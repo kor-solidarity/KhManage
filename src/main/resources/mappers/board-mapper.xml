@@ -27,6 +27,20 @@
 		<result property="status" column="STATUS"/>
 	</resultMap>	
 	
+	<resultMap type="BoReply" id="replyResultSet">
+		<id property="replyNo" column="REPLY_NO"/>
+		<result property="replyContent" column="REPLY_CONTENT"/>
+		<result property="createDate" column="CREATE_DATE"/>
+		<result property="modifyDate" column="MODIFY_DATE"/>
+		<result property="status" column="STATUS"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="memberName" column="MEMBER_NAME"/>
+		<result property="forumNo" column="FORUM_NO"/>
+	</resultMap>
+	
+	
+	
+	
 	<insert id="insertBoard" parameterType="InfoBoard">
 		INSERT INTO INFO_TABLE
 		VALUES('BO'|| TO_CHAR(SEQ_INFO.NEXTVAL, 'FM000'), #{boardTitle}, #{boardContent}, SYSDATE, SYSDATE, #{memberNo}, 'Y', 0)
@@ -71,10 +85,22 @@
 	</update>
 	
 	<!-- 댓글등록 -->
-	<insert id="insertReply" parameterType="Reply">
+	<insert id="insertReply" parameterType="BoReply">
 		INSERT INTO REPLY
-		VALUES('BORE'|| TO_CHAR(SEQ_REPLY.NEXTVAL, 'FM000'),#{replyContent},SYSDATE, SYSDATE, 'Y',#{memberNo},#{forumNo})
+		VALUES('BORE'|| TO_CHAR(SEQ_REPLY.NEXTVAL, 'FM000'), #{replyContent}, SYSDATE, SYSDATE, 'Y', #{memberNo}, #{forumNo})
 	</insert>
+	
+	<!-- 댓글조회 -->
+	<select id="selectAllReply" resultMap="replyResultSet" parameterType="InfoBoard">
+		SELECT M.MEMBER_NAME
+			  ,R.REPLY_NO
+		      ,R.REPLY_CONTENT
+		      ,R.CREATE_DATE
+		FROM REPLY R
+		JOIN MEMBER M ON(M.MEMBER_NO = R.MEMBER_NO)
+		WHERE R.FORUM_NO = #{boardNo}
+		AND R.STATUS = 'Y'
+	</select>
 
 
 </mapper>

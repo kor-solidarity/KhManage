@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,8 +17,8 @@ import com.amazonaws.Request;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.common.Pagination;
 import com.kh.manage.infoBoard.model.service.InfoBoardService;
+import com.kh.manage.infoBoard.model.vo.BoReply;
 import com.kh.manage.infoBoard.model.vo.InfoBoard;
-import com.kh.manage.infoBoard.model.vo.Reply;
 import com.kh.manage.member.model.vo.Member;
 
 @Controller
@@ -26,7 +27,7 @@ public class InfoBoardController {
 	@Autowired
 	private InfoBoardService is;
 	@Autowired
-	private Reply rp;
+	private BoReply rp;
 	
 	//게시판 메인페이지 + 리스트 조회
 	@RequestMapping("/infoBoard.ib")
@@ -99,8 +100,19 @@ public class InfoBoardController {
 		 
 		model.addAttribute("board", board);
 		
+		
+		//댓글리스트
+		List<BoReply> rlist = is.selectAllReply(ib);
+		
+		System.out.println("rlist : " + rlist);
+		
+		request.setAttribute("rlist", rlist);
+			
+		
+		
 		return "user/infoBoard/infoBoardDetail";
 	}
+	
 	
 	
 	//댓글등록
@@ -125,6 +137,24 @@ public class InfoBoardController {
 	}
 	
 	
+//	// 댓글 ajax조회
+//	@RequestMapping("selectAllReply.ib")
+//	public void selectAllReply(HttpServletResponse response, HttpServletRequest request) {
+//		
+//		String boardNo = request.getParameter("boardNo");
+//		System.out.println("댓글 : " + boardNo);
+//		
+//		List<Reply> rlist = is.selectAllReply(boardNo);
+//		
+//		request.setAttribute("rlist", rlist);
+//		response.setContentType("application/json");
+//		response.setCharacterEncoding("UTF-8");
+//		
+////		String gson = new Gson().toJson(rlist);
+//		
+//		
+//		
+//	}
 	
 	
 }

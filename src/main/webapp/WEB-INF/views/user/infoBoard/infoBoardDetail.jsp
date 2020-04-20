@@ -107,16 +107,18 @@
 }
 
 .replyTextArea {
-	width: 100%;
-	/* height: 100%; */
+	width: 80%;
+	height: 120px;
 	border-radius: 5px;
 	padding: 10px;
-	display: inline-block;
+	display: inline-block; 
+	
 }
 
 .replyBtn {
 	height:100%;
 	width: 45px;
+	display: inline-block;
 }
 
 .content {
@@ -126,32 +128,75 @@
 
 .replyAuthor1 {
 	width: 20%;
-	margin-left: 20px;
 	text-align: left;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+	vertical-align: top;
 }
 
 .replyAuthor2 {
-	width: 80%
-	margin-left: 20px;
-	display: inline-block;
+	width: 70%;
 	text-align: left;
+	padding-left: 10px;
 	padding-right: 25px;
 	padding-top: 10px;
 	padding-bottom: 10px;
+	vertical-align: top;
 }
 
 .replyAuthor3 {
-	margin-right: 20px;
-	display: inline-block;
-	text-align: right;
-}
-
-.replyAuthor4 {
-	margin-top: -15px;
+	width: 15%;
+	font-size: 14px;
 	text-align: center;
-	font-size: 14px;	
+	align: center;
+	padding-right: 25px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	vertical-align: top;
 }
 
+.repBtn {
+	width:70px;
+	height:30px;
+	line-height: 30px;
+	border:none;
+	background:#1E2B44;
+	color:white;
+	font-weight:600;
+	border-radius: 5px;
+	font-size:14px;
+	margin-left: 10px;
+	margin-top: 0px;
+}
+
+.modifyBtn {
+	width:40px;
+	height:30px;
+	line-height: 30px;
+	border:none;
+	background:#1E2B44;
+	color:white;
+	font-weight:600;
+	border-radius: 5px;
+	font-size:14px;
+	/* margin-left: 10px; */
+	margin-top: 0px;	
+
+}
+
+.removeBtn {
+	width:40px;
+	height:30px;
+	line-height: 30px;
+	border:none;
+	background:gray;
+	color:white;
+	font-weight:600;
+	border-radius: 5px;
+	font-size:14px;
+	margin-top: 0px;
+}
 
 
 </style>
@@ -188,29 +233,29 @@
 			<!-- 버튼추가 -->
 			
 			<div id="" class="replyDivArea">
-				<div class="" style="margin-left: 10px;"><b>댓글</b><span>&nbsp;&nbsp; 5</span></div>
+				<div class="" style="margin-left: 10px;"><b>댓글</b><span>&nbsp;&nbsp; ${rlist.size()}</span></div>
 			</div>
 			
+			<c:forEach var="r" items="${rlist}">
 			<div id="" class="replyArea">
-				
-				<table border="1">
-					<tr>
-						<td colspan="1" class="replyAuthor1">댓글작성자</td>
-						<td colspan="1" class="replyAuthor2">댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용
-						댓글내용댓글내용댓글내용댓글내용댓글내용내용댓글내용내용댓글내용내용댓글내용내용댓글내용내용댓글내용내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용</td>
+				<table id="" class="" >
+					<tr style="">
+						<td class="replyAuthor1">${r.memberName}</td>
+						<td rowspan="2" class="replyAuthor2">${r.replyContent}</td>
+						<td class="replyAuthor3">${r.createDate}</td>
 					</tr>
 					<tr>
-						<td>2020-04-20</td>
+						<td>
+							<button id="" class="repBtn Btn" onclick="">댓글달기</button>
+						</td>
+						<td align="center" style="height: 80px;">
+							<button id="" class="modifyBtn Btn" onclick="">수정</button>
+							<button id="" class="removeBtn Btn" onclick="">삭제</button>
+						</td>
 					</tr>
 				</table>
-				
-				
-				
-				<!-- <div class="replyAuthor1" style="">댓글작성자</div>
-				<div class="replyAuthor2">댓글내용입니다.댓글내용입니다.댓글내용입니다댓글내용입니다..댓글내용입니다.댓글내용입니다.댓글내용입니다.댓글내용입니다.댓글내용입니다.댓글내용입니다.댓글내용입니다.</div>
-				<div class="replyAuthor3">댓글입니다.</div>
-				<div class="replyAuthor4" style="margin-left: 10px; text-align: left">2020-04-20</div> -->
 			</div>
+			</c:forEach>
 			
 			
 			
@@ -224,25 +269,23 @@
 			</div><br> -->
 			
 			<br>
+			
+			
 			<div id="" class="replyInsert">
-				<form action="">
-					<table>
-						<tr>
-							<td class="taTd" style="height: 100px;">
-								<textarea rows="" cols="" id="replyTextArea" class="replyTextArea form-control" name="replyContent" placeholder="댓글을 입력하세요."></textarea>
-							</td>
-							<td>
-								<button type="button" id="replyBtn" class="replyBtn" name="replyBtn" style="">댓글등록</button>
-							</td>
-						</tr>
-					</table>				
+				<form action="" id="commentForm" name="commentForm" method="post">
+					<div class="">
+						<textarea rows="" cols="" class="replyTextArea form-control" name="replyContent" placeholder="댓글을 입력하세요."></textarea>
+						<input type="hidden" id="" class="" name="">
+						<input type="hidden" id="" class="" name="">
+						<input type="hidden" id="" class="" name="">
+						<input type="hidden" id="" class="" name="">
+					</div>
+					<div class="">
+						<button type="submit" id="replyBtn" class="replyBtn Btn" name="replyBtn" style="">댓글등록</button>
+					</div>
 				</form>
 			</div>
-			<br>
-			
-
-
-
+			<br><br><br>
 		</div>
 	</div>
 	
@@ -290,8 +333,37 @@
 	});
 	
 	
-	//댓글 조회
-	
+	/* //댓글 조회
+	function getCommnetList() {
+		
+		var boardNo = ${board.boardNo}
+		var memberNo = ${loginUser.memberNo}
+		
+		console.log("boardNo : " + boardNo);
+		console.log("memberNo : " + memberNo);
+		
+		$.ajax({
+			
+			type: "get",
+			url: "selectAllReply.ib",
+			dataType: "json",
+			data: $("#commentForm").serialize(),
+			data: {
+				
+				boardNo : boardNo
+			},
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			success : function(data) {
+			
+				console.log(data);
+				
+				
+			},
+			
+			
+		});
+
+	} */
 	
 	
 	
@@ -303,6 +375,12 @@
 	
 </body>
 </html>
+
+
+
+
+
+
 
 
 
