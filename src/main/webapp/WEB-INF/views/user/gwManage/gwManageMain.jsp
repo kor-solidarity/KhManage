@@ -23,6 +23,7 @@
 <script src="resources/fullcalendar/interaction/main.min.js"></script>
 <script src="resources/fullcalendar/timegrid/main.min.js"></script>
 <script src="resources/fullcalendar/core/locales/ko.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js" integrity="sha256-AdQN98MVZs44Eq2yTwtoKufhnU+uZ7v2kXnD5vqzZVo=" crossorigin="anonymous"></script>
 <style type="text/css">
    #calendar {
    height: 800px;
@@ -177,9 +178,9 @@
 
     			 var title = info.event.title;
     			 var start = info.event.start;
-    			 var end = info.event.end;
+    			 var end = moment(info.event.end).format('YYYY-MM-DDThh:mm:ss');
     			 
-    			 console.log(start);
+    			 console.log(end);
     			 
     			 $("#gwName2").val(title);
     			 $("#beginDate2").val(start);
@@ -212,6 +213,15 @@
     
 	    
     </script>
+    <script>
+    function getFormatDate(date){ var year = date.getFullYear(); //yyyy 
+    var month = (1 + date.getMonth()); //M 
+    month = month >= 10 ? month : '0' + month; //month 두자리로 저장 
+    var day = date.getDate(); //d
+    day = day >= 10 ? day : '0' + day; //day 두자리로 저장 
+    return year + '-' + month + '-' + day; }
+    	
+    </script>
     <!-- 캘린더 영역 -->
     <div id="calendar"></div>
     
@@ -237,12 +247,12 @@
 						<tr>
 							<td class="titleId">시작
 							</td>
-							<td><input type="date" name="beginDate" id="beginDate2" class="inputMenu form-control" style="width: 280px;" required="required" readOnly></td>
+							<td><input type="datetime-local" name="beginDate" id="beginDate2" class="inputMenu form-control" style="width: 280px;" required="required" readOnly></td>
 						</tr>
 						<tr>
 							<td class="titleId">종료</td>
 							<td>
-							<input type="date" id="endDate2" name="endDate" class="inputMenu form-control" style="width: 280px;" readOnly required="required">
+							<input type="datetime-local" id="endDate2" name="endDate" class="inputMenu form-control" style="width: 280px;"  required="required">
 							</td>
 						</tr>
 						<tr>
@@ -320,7 +330,7 @@
 						<tr>
 							<td class="titleId">시작</td>
 							<td>
-							<input type="date" id="beginDate" name="beginDate" class="inputMenu form-control" style="width: 280px;" required="required">
+							<input type="date" id="beginDate" name="beginDate" class="inputMenu form-control" style="width: 280px;" required="required" value="20-05-12">
 							</td>
 						</tr>
 						<tr>
@@ -331,7 +341,7 @@
 						</tr>
 						<tr>
 							<td class="titleId">종일 일정</td>
-							<td><input name="asdsad" id="asdsad" type="text" class="inputMenu form-control" style="width: 280px;" readOnly required="required"></td>
+							<td><input  name="check" id="check" type="checkbox" checked="checked" checked></td>
 						</tr>
 						<tr>
 							<td class="titleId">반복</td>
@@ -375,6 +385,7 @@
 	  	</div><!-- /.modal -->
 	  	
 	  	<script>
+	  	var bd;
 	  	
 	  		$("#gwSubmit").click(function(){
 	  			
@@ -386,7 +397,8 @@
 	  		        contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
 	  		        success : function(data){
 	  		        	console.log(data);
-	  		      		$('#insertModal').modal('hide');
+	  		        	location.href = "gwManageMain.gwm";
+	  		      		//$('#insertModal').modal('hide');
 	  		        },
 	  		        error:function(request,status,error){
 	  		            
@@ -394,6 +406,37 @@
 	  		    });
 	  			
 	  		});
+	  		
+			$("#check").change(function(){
+	  			console.log(bd);
+				
+	  			
+	  			if($("#check").is(":checked")){
+	  				
+	  				var date = new Date(); 
+	  				var year = date.getFullYear(); 
+	  				var month = new String(date.getMonth()+1); 
+	  				var day = new String(date.getDate()); 
+
+	  				$("#beginDate").attr("type", "date");
+	  				$("#beginDate").val(bd);
+	  				console.log("11: " + bd);
+	  				/* $("#beginDate").val(year+"-"+month+"-"+day); */
+	  				
+	  				
+	  				
+	  			}else{
+	  				bd = $(this).parent().parent().parent().children().children().eq(3).children().val();
+	  				$("#beginDate").attr("type", "datetime-local");
+	  				$("#beginDate").val(bd  + "T12:00");
+	  				console.log($("#beginDate").val())
+	  			}
+	  			
+			})	;  		
+	  			
+	  		
+	  		
+	  		
 	  	</script>
 	  	
 	  	
