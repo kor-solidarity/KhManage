@@ -274,7 +274,7 @@
 			<div id="" class="replyInsert">
 				<form action="" id="commentForm" name="commentForm" method="post">
 					<div class="">
-						<textarea rows="" cols="" class="replyTextArea form-control" name="replyContent" placeholder="댓글을 입력하세요."></textarea>
+						<textarea rows="" cols="" class="replyTextArea form-control" id="replyTextArea" class="replyTextArea form-control" name="replyContent" placeholder="댓글을 입력하세요."></textarea>
 						<input type="hidden" id="" class="" name="">
 						<input type="hidden" id="" class="" name="">
 						<input type="hidden" id="" class="" name="">
@@ -319,11 +319,18 @@
 			},
 			success: function(data) {
 				
-				if(result) {
-					alert("댓글이 등록되었습니다.");
-					console.log(data);
+				if(replyContent == null) {
+					
+					alert("댓글을 입력해주세요.")
 				} else {
-					alert("취소하였습니다.");
+					
+					if(result) {
+						alert("댓글이 등록되었습니다.");
+						console.log(data);
+					} else {
+						alert("취소하였습니다.");
+					}
+					
 				}
 				
 			}
