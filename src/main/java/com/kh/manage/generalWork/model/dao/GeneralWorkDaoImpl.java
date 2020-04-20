@@ -2,6 +2,7 @@ package com.kh.manage.generalWork.model.dao;
 
 import java.util.List;
 
+
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -10,8 +11,6 @@ import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.generalWork.model.vo.GeneralWork;
 import com.kh.manage.member.model.vo.Member;
-
-import oracle.net.aso.a;
 
 @Repository
 public class GeneralWorkDaoImpl implements GeneralWorkDao{

@@ -178,16 +178,16 @@ body {
 			</tr>
 			<tr height="5px;"></tr>
 			<tr>
-				<td style="width: 110px; border-bottom: 4px solid white; background:#24415C; color:white;">
-					<div class="box" style="background:#24415C;">
+				<td style="width: 110px; border-bottom: 4px solid white; background:#EEEEEE; color:white;">
+					<div class="box" style="background:white;">
 						<img class="profile"
-							src="<c:url value="/resources/img/profile.png"/>">
+							src="<c:url value="/resources/uploadFiles/${loginUser.changeName}"/>.png">
 					</div>
 				</td>
 				<td align="center"
-					style="width: 120px; border-bottom: 4px solid white; background:#24415C; color:white;"> ${loginUser.deapTeamNo}/ ${loginUser.rankName}</td>
+					style="width: 120px; border-bottom: 4px solid white; background:#EEEEEE; color:black;"> ${loginUser.deptName}/ ${loginUser.rankName}</td>
 				<td align="center"
-					style="width: 120px; border-bottom: 4px solid white; background:#24415C; color:white;">${loginUser.memberName }</td>
+					style="width: 120px; border-bottom: 4px solid white; background:#EEEEEE; color:black;">${loginUser.memberName }</td>
 			</tr>
 		</table>
 	</div>
@@ -196,14 +196,15 @@ body {
 		style="background: #EEEEEE; width: 430px; height: 400px; display: inline-block; overflow: auto;">
 		
 		<table id="chatMain" align="center" style="width: 100%;">
+		<tr height="3px;" style="background: white;"></tr>
 			<c:forEach var="a" items="${list}">
 			<tr class="chatRoom" style="margin-bottom: 5px;">
-				<td style="background: #24415C; height: 60px; width: 90px;"> <input class="chatNo" type="hidden" value="${a.chatRoomNo}">
-					<div class="count" align="center">3</div>
+				<td style="background: white; height: 60px; width: 90px;"> <input class="chatNo" type="hidden" value="${a.chatRoomNo}">
+					<!-- <div class="count" align="center">3</div> -->
 				</td>
-				<td style="background: #24415C; height: 60px; width: 150px; color:white;"><label>${a.chatRoomName}</label><br>${fn:substring(a.recentMessage,0,10)}</td>
+				<td style="background: white; height: 60px; width: 150px; color:black;"><label>${a.chatRoomName}</label><br>${fn:substring(a.recentMessage,0,10)}</td>
 				<td
-					style="background: #24415C; height: 60px; width: 90px; color:white; font-size: 12px;">${a.modifyDate}</td>
+					style="background: white; height: 60px; width: 90px; color: black; font-size: 12px;">${a.modifyDate}</td>
 			</tr>
 			<tr height="3px;" style="background: white;"></tr>
 			</c:forEach>
@@ -224,13 +225,16 @@ body {
 		});
 		
 		 function writeResponse(text){
-			 $.ajax({
-					url:'insertMessage.ct',
+			/*   $.ajax({
+					url:'selectChatList.ct',
 					type: 'post',
+					async: false,
 					data:{message:text},
 				 success:function(data){
+					 console.log(data);
 				 }
-				});
+				});  */
+				location.reload();
 		 }
 	</script>
 	

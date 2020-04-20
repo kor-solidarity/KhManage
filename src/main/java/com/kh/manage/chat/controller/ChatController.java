@@ -54,7 +54,8 @@ public class ChatController {
 		List<Message> mList = cs.selectAllMessage(cr);
 		ChatRoom crm = cs.selectOneChatRoom(cr);
 		
-		model.addAttribute("cr", cr);
+		
+		model.addAttribute("cr", crm);
 		model.addAttribute("list", mList);
 		
 		return "user/chat/chatRoom";
@@ -131,5 +132,26 @@ public class ChatController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@RequestMapping("/selectChatList.ct")
+	public void selectChatList(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+		Member m = (Member) session.getAttribute("loginUser");
+		
+		List<ChatRoom> list = cs.selectAllChatRoom(m);
+		
+		request.setAttribute("list", list);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+
+		String gson = new Gson().toJson(list);
+
+		try {
+			response.getWriter().write(gson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
 	}
 }

@@ -6,19 +6,23 @@ public class ChatMessageList {
 	private String memberNo;
 	private String chatRoomNo;
 	private String status;
+	private String changeName;
+	private String ext;
 	private String sendDate;
 	private String content;
 	
 	public ChatMessageList() {}
 
 	public ChatMessageList(String messageNo, String memberName, String memberNo, String chatRoomNo, String status,
-			String sendDate, String content) {
+			String changeName, String ext, String sendDate, String content) {
 		super();
 		this.messageNo = messageNo;
 		this.memberName = memberName;
 		this.memberNo = memberNo;
 		this.chatRoomNo = chatRoomNo;
 		this.status = status;
+		this.changeName = changeName;
+		this.ext = ext;
 		this.sendDate = sendDate;
 		this.content = content;
 	}
@@ -63,6 +67,22 @@ public class ChatMessageList {
 		this.status = status;
 	}
 
+	public String getChangeName() {
+		return changeName;
+	}
+
+	public void setChangeName(String changeName) {
+		this.changeName = changeName;
+	}
+
+	public String getExt() {
+		return ext;
+	}
+
+	public void setExt(String ext) {
+		this.ext = ext;
+	}
+
 	public String getSendDate() {
 		return sendDate;
 	}
@@ -82,9 +102,9 @@ public class ChatMessageList {
 	@Override
 	public String toString() {
 		return "ChatMessageList [messageNo=" + messageNo + ", memberName=" + memberName + ", memberNo=" + memberNo
-				+ ", chatRoomNo=" + chatRoomNo + ", status=" + status + ", sendDate=" + sendDate + ", content="
-				+ content + "]";
+				+ ", chatRoomNo=" + chatRoomNo + ", status=" + status + ", changeName=" + changeName + ", ext=" + ext
+				+ ", sendDate=" + sendDate + ", content=" + content + "]";
 	}
-	
+
 	
 }

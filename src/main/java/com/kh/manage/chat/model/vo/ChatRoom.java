@@ -10,11 +10,12 @@ public class ChatRoom implements java.io.Serializable{
 	private String recentMessage;
 	private String status;
 	private Date modifyDate;
+	private int count;
 	
 	public ChatRoom() {}
 
 	public ChatRoom(String chatRoomNo, String chatRoomName, String memberNo, String createMemberNo,
-			String recentMessage, String status, Date modifyDate) {
+			String recentMessage, String status, Date modifyDate, int count) {
 		super();
 		this.chatRoomNo = chatRoomNo;
 		this.chatRoomName = chatRoomName;
@@ -23,6 +24,7 @@ public class ChatRoom implements java.io.Serializable{
 		this.recentMessage = recentMessage;
 		this.status = status;
 		this.modifyDate = modifyDate;
+		this.count = count;
 	}
 
 	public String getChatRoomNo() {
@@ -81,13 +83,20 @@ public class ChatRoom implements java.io.Serializable{
 		this.modifyDate = modifyDate;
 	}
 
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
 	@Override
 	public String toString() {
 		return "ChatRoom [chatRoomNo=" + chatRoomNo + ", chatRoomName=" + chatRoomName + ", memberNo=" + memberNo
 				+ ", createMemberNo=" + createMemberNo + ", recentMessage=" + recentMessage + ", status=" + status
-				+ ", modifyDate=" + modifyDate + "]";
+				+ ", modifyDate=" + modifyDate + ", count=" + count + "]";
 	}
-
 
 	
 }
