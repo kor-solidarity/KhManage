@@ -3,6 +3,7 @@ package com.kh.manage.work.model.vo;
 import java.sql.Date;
 
 
+
 public class Work implements java.io.Serializable{
 	private String workNo;
 	private String workName;

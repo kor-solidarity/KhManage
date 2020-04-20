@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.manage.issue.model.dao.IssueDao;
 import com.kh.manage.issue.model.vo.IssueWPT;
+import com.kh.manage.issue.model.vo.IssueWork;
 import com.kh.manage.member.model.vo.Member;
 
 @Service
@@ -23,5 +24,12 @@ public class IssueServiceImpl implements IssueService{
 	public List<IssueWPT> selectProjectName(Member member) {
 		return id.selectProjectName(sqlSession, member);
 	}
+
+	@Override
+	public List<IssueWork> selectWorkList(String pno) {
+		return id.selectWorkList(sqlSession, pno);
+	}
+
+	
 
 }
