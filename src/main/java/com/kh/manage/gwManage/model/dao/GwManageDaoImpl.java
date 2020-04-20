@@ -11,9 +11,15 @@ import com.kh.manage.gwManage.model.vo.GWork;
 public class GwManageDaoImpl implements GwManageDao{
 
 	@Override
-	public List<GWork> selectAllList(SqlSessionTemplate sqlSession) {
+	public List<GWork> selectAllList(SqlSessionTemplate sqlSession, String memberNo) {
 
-		return sqlSession.selectList("GWork.selectAllList");
+		return sqlSession.selectList("GWork.selectAllList", memberNo);
+	}
+
+	@Override
+	public int insertGw(SqlSessionTemplate sqlSession, GWork g) {
+
+		return sqlSession.insert("GWork.insertGw", g);
 	}
 	
 	

@@ -212,6 +212,10 @@ public class ForumController {
 		System.out.println("댓글" + no);
 		
 		List<Reply> list = fs.selectAllReply(no);
+		request.setAttribute("list", list);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		
 		
 		String gson = new Gson().toJson(list);
 
@@ -284,6 +288,8 @@ public class ForumController {
 		
 		int result = fs.replyUpdate(rp);
 		
+		System.out.println("댓글 수정 완료");
+		
 		
 	}
 	
@@ -297,32 +303,38 @@ public class ForumController {
 		System.out.println("root : " + root);
 			
 		String filePath = root + "\\uploadFiles"; 
-			
-		String originFileName = upfile.getOriginalFilename();//원본 파일 이름
-		String ext = originFileName.substring(originFileName.lastIndexOf("."));//.png , .jpg 
-		String changeName = CommonsUtils.getRandomString();
-			
-		Attachment at = new Attachment();
-		at.setChangeName(changeName);
-		at.setOriginName(originFileName);
-		at.setFilePath(filePath);
-		at.setExt(ext);
-			
-		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
-			
-		System.out.println(loginUser);
-			
-		n.setMemberNo(loginUser.getMemberNo());
 		
-		try {
-			int result = fs.noticeUpdate(n,at);
-			System.out.println("controller : " + result);
-			upfile.transferTo(new File(filePath + "\\" +  changeName + ext));
+		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
+		
+		System.out.println(loginUser);
+		
+		n.setMemberNo(loginUser.getMemberNo());
+		if(upfile.getOriginalFilename() != null) {
+			
+			String originFileName = upfile.getOriginalFilename();//원본 파일 이름
+			String ext = originFileName.substring(originFileName.lastIndexOf("."));//.png , .jpg 
+			String changeName = CommonsUtils.getRandomString();
+			
+			Attachment at = new Attachment();
+			at.setChangeName(changeName);
+			at.setOriginName(originFileName);
+			at.setFilePath(filePath);
+			at.setExt(ext);
+			try {
+				int result = fs.noticeUpdate(n,at);
+				System.out.println("controller : " + result);
+				upfile.transferTo(new File(filePath + "\\" +  changeName + ext));
 				
-		} catch (Exception e) {
+			} catch (Exception e) {
 				
-			new File(filePath + "\\" + changeName + ext).delete();
+				new File(filePath + "\\" + changeName + ext).delete();
+			}
+		}else {
+			
+			int result2 = fs.noticeUpdate2(n); 
+			
 		}
+		
 			
 			return "redirect:noticeMain.fo";
 		}

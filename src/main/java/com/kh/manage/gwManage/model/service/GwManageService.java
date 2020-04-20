@@ -7,6 +7,8 @@ import com.kh.manage.gwManage.model.vo.GWork;
 
 public interface GwManageService {
 
-	List<GWork> selectAllList();
+	List<GWork> selectAllList(String memberNo);
+
+	int insertGw(GWork g);
 
 }
