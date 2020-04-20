@@ -96,7 +96,7 @@
 					<td class="thRange"></td>
 					<td class="thRange">프로젝트</td>
 					<td class="thRange" colspan="9">
-						<select name="projectNo" class="projectList">
+						<select name="projectNo" id="projectNo" class="projectList">
 							<option>선택하세요</option>
 							<c:forEach var="iwpt" items="${iwpt }">
 								<option value="${iwpt.projectPk }"><c:out value="${iwpt.projectName }"/></option> 
@@ -105,7 +105,7 @@
 					</td>
 					<td class="thRange" align="left">작업</td>
 					<td class="thRange" colspan="6">
-						<select id="taskList">
+						<select id="taskList" name="taskList">
 							<option>작업을 선택하세요</option>
 							<option>로그인 작업</option>
 							<option>수강신청 작업</option>
@@ -235,6 +235,12 @@
 					<td class="thRange" colspan="18"><hr></td>
 				</tr>
 				<tr>
+				
+					<%-- <td id="account-status">
+						<c:if test="${v.accountNum is not empty}">
+						<c:out value="등록"/>
+						</c:if>
+					</td>  --%>
 					<td class="thRange"></td>
 					<td class="thRange"><button class="okBtn"><i class="fas fa-check"></i>&nbsp;저장</button></td>
 					<td class="thRange"><button class="cancleBtn"><i class="fas fa-ban"></i>&nbsp;취소</button></td>
@@ -279,5 +285,33 @@
 			</div>
 		</div>
 	</div>
+	
+	<script>
+	$(function(){
+		$("#projectNo").change(function(){
+			var pno = $(this).val();
+			console.log(pno);
+			$("#taskList").empty();
+			$.ajax({
+				type:"post",
+				url:"projectWorkList.iu",
+				data:{pno:pno},
+				dataType:"json",
+				success:function(data){
+					console.log(data);
+					for(var i = 0; i < data.iw.length; i++){
+						$("#taskList").append("<option value='" + data.iw[i]['workNo'] + "'>" + data.iw[i]['workName'] + "</option>");
+						
+					}
+				},
+				error:function(error){
+					
+				}
+			});
+		});
+		
+		
+	});
+	</script>
 </body>
 </html>

@@ -10,6 +10,11 @@
 		<result property="role" column="ROLE"/>
 		<result property="projectName" column="PROJECT_NAME"/>
 	</resultMap>
+	
+	<resultMap type="IssueWork" id="selectIssueWorkList">
+		<id property="workNo" column="WORK_NO"/>
+		<result property="workName" column="WORK_NAME"/>
+	</resultMap>
 
 
 	<select id="selectProjectName" parameterType="Member" resultMap="selectIssueTeamProject">
@@ -17,6 +22,13 @@
 		FROM PROJECT_TEAM PT
 		JOIN PROJECT P ON (P.PROJECT_PK = PT.PROJECT_PK)
 		WHERE PT.MEMBER_PK = #{memberNo}
+	</select>
+	
+	
+	<select id="selectWorkList" parameterType="java.lang.String" resultMap="selectIssueWorkList">
+		SELECT *
+		FROM WORK
+		WHERE PROJECT_NO = #{pno}
 	</select>
 </mapper>
 

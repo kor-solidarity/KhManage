@@ -687,7 +687,6 @@
 
 	<script>
 
-	
 	  
 	function send(text){
     	ws.send(text);

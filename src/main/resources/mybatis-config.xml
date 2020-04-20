@@ -39,6 +39,7 @@
         <typeAlias type="com.kh.manage.chat.model.vo.ChatRoom" alias="ChatRoom"/>
         <typeAlias type="com.kh.manage.chat.model.vo.Message" alias="Message"/>
         <typeAlias type="com.kh.manage.chat.model.vo.ChatMessageList" alias="ChatMessageList"/>
+        <typeAlias type="com.kh.manage.issue.model.vo.IssueWork" alias="IssueWork"/>
   	</typeAliases>
   
   
