@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.infoBoard.model.dao.InfoBoardDao;
+import com.kh.manage.infoBoard.model.vo.BoReply;
 import com.kh.manage.infoBoard.model.vo.InfoBoard;
-import com.kh.manage.infoBoard.model.vo.Reply;
 
 @Service
 public class InfoBoardServiceImpl implements InfoBoardService {
@@ -58,10 +58,21 @@ public class InfoBoardServiceImpl implements InfoBoardService {
 
 
 	@Override
-	public int insertReply(Reply rp) {
+	public int insertReply(BoReply rp) {
 		
 		return id.insertReply(sqlSession, rp);
 	}
+
+
+
+	@Override
+	public List<BoReply> selectAllReply(InfoBoard ib) {
+
+		return id.selectAllReply(sqlSession, ib);
+	}
+
+
+
 
 
 

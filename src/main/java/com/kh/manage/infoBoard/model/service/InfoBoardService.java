@@ -3,8 +3,8 @@ package com.kh.manage.infoBoard.model.service;
 import java.util.List;
 
 import com.kh.manage.common.PageInfo;
+import com.kh.manage.infoBoard.model.vo.BoReply;
 import com.kh.manage.infoBoard.model.vo.InfoBoard;
-import com.kh.manage.infoBoard.model.vo.Reply;
 
 public interface InfoBoardService {
 
@@ -16,7 +16,10 @@ public interface InfoBoardService {
 
 	InfoBoard selectOneBoard(InfoBoard ib);
 
-	int insertReply(Reply rp);
+	int insertReply(BoReply rp);
+
+	List<BoReply> selectAllReply(InfoBoard ib);
+
 
 
 	

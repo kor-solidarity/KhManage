@@ -7,8 +7,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.manage.common.PageInfo;
+import com.kh.manage.infoBoard.model.vo.BoReply;
 import com.kh.manage.infoBoard.model.vo.InfoBoard;
-import com.kh.manage.infoBoard.model.vo.Reply;
 
 @Repository
 public class InfoBoardDaoImpl implements InfoBoardDao {
@@ -49,10 +49,17 @@ public class InfoBoardDaoImpl implements InfoBoardDao {
 	}
 
 	@Override
-	public int insertReply(SqlSessionTemplate sqlSession, Reply rp) {
+	public int insertReply(SqlSessionTemplate sqlSession, BoReply rp) {
 
 		return sqlSession.insert("InfoBoard.insertReply", rp);
 	}
+
+	@Override
+	public List<BoReply> selectAllReply(SqlSessionTemplate sqlSession, InfoBoard ib) {
+
+		return sqlSession.selectList("InfoBoard.selectAllReply", ib);
+	}
+
 
 
 
