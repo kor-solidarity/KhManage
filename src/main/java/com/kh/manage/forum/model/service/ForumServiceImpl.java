@@ -132,7 +132,6 @@ public class ForumServiceImpl implements ForumService{
 
 	@Override
 	public int noticeUpdate(Notice n, Attachment at) {
-		System.out.println("service");
 		int result = 0;
 		
 		int result1 = fd.noticeUpdate(sqlSession,n);
@@ -151,6 +150,12 @@ public class ForumServiceImpl implements ForumService{
 		}
 		
 		return result;
+	}
+
+	@Override
+	public int noticeUpdate2(Notice n) {
+		
+		return fd.noticeUpdate(sqlSession, n);
 	}
 
 }

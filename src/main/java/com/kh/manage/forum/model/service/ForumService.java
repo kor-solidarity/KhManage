@@ -35,4 +35,6 @@ public interface ForumService {
 
 	int noticeUpdate(Notice n, Attachment at);
 
+	int noticeUpdate2(Notice n);
+
 }

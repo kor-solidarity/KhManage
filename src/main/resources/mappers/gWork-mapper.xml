@@ -20,7 +20,13 @@
 		SELECT * 
 		FROM GENERAL_WORK
 		WHERE STATUS = 'Y'
+		AND MEMBER_NO = #{memberNo}
 	</select>
+	
+	<insert id="insertGw" parameterType="GWork">
+		INSERT INTO GENERAL_WORK
+		VALUES('GW'|| TO_CHAR(SEQ_GWNO.NEXTVAL, 'FM000'), #{gwName}, #{beginDate}, #{endDate}, SYSDATE, #{gwMemo}, #{gwType}, #{memberNo}, DEFAULT)
+	</insert>
 	
 		
 </mapper>

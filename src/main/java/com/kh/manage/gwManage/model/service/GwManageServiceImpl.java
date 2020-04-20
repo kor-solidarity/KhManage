@@ -19,9 +19,15 @@ public class GwManageServiceImpl implements GwManageService{
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
-	public List<GWork> selectAllList() {
+	public List<GWork> selectAllList(String memberNo) {
 		
-		return gd.selectAllList(sqlSession);
+		return gd.selectAllList(sqlSession, memberNo);
+	}
+
+	@Override
+	public int insertGw(GWork g) {
+		
+		return gd.insertGw(sqlSession, g);
 	}
 
 }

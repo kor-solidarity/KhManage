@@ -9,6 +9,8 @@ import com.kh.manage.gwManage.model.vo.GWork;
 
 public interface GwManageDao {
 
-	List<GWork> selectAllList(SqlSessionTemplate sqlSession);
+	List<GWork> selectAllList(SqlSessionTemplate sqlSession, String memberNo);
+
+	int insertGw(SqlSessionTemplate sqlSession, GWork g);
 
 }

@@ -261,6 +261,7 @@
 	            alert("댓글이 등록되었습니다.");
 	            console.log(data);
 	            
+	            $("#comment").val("");
 	            getCommentList();
 	                }
 	            });
@@ -297,11 +298,11 @@
 	        type:'GET',
 	        url : "replySelectAll.fo",
 	        dataType : "json",
-	        //data:$("#commentForm").serialize(),
+	        data:$("#commentForm").serialize(),
 	        data:{
 	        	nNo : nNo
 	        },
-	        //contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
+	        contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
 	        success : function(data){
 	            
 	        	console.log(data);
@@ -436,9 +437,11 @@
 			        type:'GET',
 			        url : "replySelectAll.fo",
 			        dataType : "json",
+			        data:$("#commentForm").serialize(),
 			        data:{
 			        	nNo : nNo
 			        },
+			        contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
 			        success : function(data){
 			            
 			        	console.log(data);
