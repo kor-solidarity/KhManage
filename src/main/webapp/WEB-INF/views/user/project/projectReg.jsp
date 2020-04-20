@@ -545,11 +545,8 @@
                         }
                     }
                 });
-
             }
         }
-
-        $
 
 	</script>
 	<link rel="stylesheet"
