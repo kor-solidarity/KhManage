@@ -35,6 +35,7 @@ public class ProjectController {
 	// 프로젝트 목록페이지 (프로젝트 센터)
 	@RequestMapping("/projectCenter.pr")
 	public String projectSelectAll(Model model, HttpServletRequest request) {
+		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
 		int currentPage = 1;
 		
 		if (request.getParameter("currentPage") != null) {
@@ -50,7 +51,7 @@ public class ProjectController {
 		// TODO: 2020-04-15  산출물과 이슈는 아직 안만들었으니 0 처리한다
 		// 우선 프로젝트명 뽑는다...
 		
-		List<ProjectList> teamList = ps.selectProjectList(pi);
+		List<ProjectList> teamList = ps.selectProjectList(pi, loginUser);
 		
 		System.out.println("teamList: " + teamList);
 		
@@ -107,8 +108,27 @@ public class ProjectController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
+	
+	// 프로젝트 작업 배정을 위한 프로젝트 담당자 명단뽑기.
+	@RequestMapping("/viewProjectTeamList.pr")
+	public void viewProjectTeamList(HttpServletResponse response, HttpServletRequest request) {
+		// 작업중인 프로젝트 PK
+		String pid = request.getParameter("pid");
+		
+		List<ProjectTeam> teamList = ps.selectProjectTeamList(pid);
+		
+		String gson = new Gson().toJson(teamList);
+		
+		try {
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(gson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	// 프로젝트 등록 실시
 	@RequestMapping(value = "/registerProject.pr", method = RequestMethod.POST)
@@ -185,12 +205,12 @@ public class ProjectController {
 		int memberInsertResult = 0;
 		if (projectInsertResult != null) {
 			// 책임자 넣기
-			ProjectTeam projectManager = new ProjectTeam(null, projectInsertResult, project_manager, "PM");
+			ProjectTeam projectManager = new ProjectTeam(null, projectInsertResult, project_manager, "PM", null, null);
 			ps.insertProjectTeam(projectManager);
 			// 위에 써져있던 부책임자들 다 건든다.
 			if (memberNo != null) {
 				for (String m : memberNo) {
-					ProjectTeam team = new ProjectTeam(null, projectInsertResult, m, "PSM");
+					ProjectTeam team = new ProjectTeam(null, projectInsertResult, m, "PSM", null, null);
 					ps.insertProjectTeam(team);
 				}
 			}

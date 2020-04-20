@@ -4,6 +4,7 @@ import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.template.model.vo.Template;
 import com.kh.manage.common.PageInfo;
+import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.project.model.vo.*;
 
 import java.util.List;
@@ -23,11 +24,13 @@ public interface ProjectService {
 	
 	int insertProjectTeam(ProjectTeam team);
 	
-	List<ProjectList> selectProjectList(PageInfo pi);
+	List<ProjectList> selectProjectList(PageInfo pi, Member loginUser);
 	
 	int getProjectListCount();
 	
 	List<ProjectWork> selectProjectWorkList(String pid);
 	
 	int insertProjectWork(ProjectWork projectWork);
+	
+	List<ProjectTeam> selectProjectTeamList(String pid);
 }

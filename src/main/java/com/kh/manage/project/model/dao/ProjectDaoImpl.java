@@ -4,7 +4,9 @@ import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.template.model.vo.Template;
 import com.kh.manage.common.PageInfo;
+import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.project.model.vo.*;
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 
@@ -58,8 +60,12 @@ public class ProjectDaoImpl implements ProjectDao {
 	}
 	
 	@Override
-	public List<ProjectList> selectProjectList(SqlSessionTemplate sqlSession, PageInfo pi) {
-		return sqlSession.selectList("Project.selectProjectList");
+	public List<ProjectList> selectProjectList(SqlSessionTemplate sqlSession, PageInfo pi, Member loginUser) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+		
+		return sqlSession.selectList("Project.selectProjectList", loginUser, rowBounds);
 	}
 	
 	@Override
@@ -70,5 +76,10 @@ public class ProjectDaoImpl implements ProjectDao {
 	@Override
 	public int insertProjectWork(SqlSessionTemplate sqlSession, ProjectWork projectWork) {
 		return sqlSession.insert("Project.insertProjectWork", projectWork);
+	}
+	
+	@Override
+	public List<ProjectTeam> selectProjectTeamList(SqlSessionTemplate sqlSession, String pid) {
+		return sqlSession.selectList("Project.selectProjectTeamList", pid);
 	}
 }
