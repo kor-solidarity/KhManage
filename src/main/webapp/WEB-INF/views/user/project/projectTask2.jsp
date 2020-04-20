@@ -603,10 +603,13 @@
                             // 완료율
                             "<td></td>" +
                             // 담당자
-                            "<td  data-toggle=\"modal\" data-target=\"#myModal5\">" +
+                            "<td  data-toggle=\"modal\" data-target=\"#myModal5\" " +
+                            "onclick=\"viewWorkInCharge('#projectWork')\">" +
                             "<span></span><input type='text' name='' id=''></td>" +
                             // 돋보기마크. 이 경우는 그냥 submit. 자세한건 등록 다 하고 하던가.
-                            "<td><button onclick='sendProjectWork()'></button></td>" +
+                            "<td><button onclick='sendProjectWork()'>" +
+                            "<i class='far fa-save'></i>" +
+                            "</button></td>" +
                             "</tr>"
                         )
 
@@ -657,8 +660,9 @@
 							aria-hidden="true">&times;</span></button>
 					<h4 class="modal-title" id="myModalLabel">담당자 목록</h4>
 				</div>
-				<div class="modal-body">
-					...
+				<div class="modal-body" id="workerList">
+					<input type="checkbox" name="workCharger" value="P0" id="P0"> <label for="P0">부서 이름 직급</label> <br>
+					<input type="checkbox" name="workCharger" value="P1" id="P1"> <label for="P1">부서 이름 직급</label>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -667,6 +671,32 @@
 			</div>
 		</div>
 	</div>
+	<script>
+        /***
+		 * 담당자 목록 갱신.
+		 *
+         * @param workId 해당 모달창이 가리키고 있는 작업의 아이디. 작업번호가 없으면 무조건 신규등록인거?
+         */
+        function viewWorkInCharge (workId) {
+            // 담당자 목록은 해당 프로젝트에 담당된 모든 인원을 우선 불러오는걸로.
+            $.ajax({
+                url: 'viewProjectTeamList.pr',
+                type: 'post',
+                data: {
+                    pid: "${pid}"
+                },
+                success: function (data) {
+                    for (key in data){
+                        console.log(key);
+                        console.log(data[key])
+                    }
+                    // 안에 내용물을 다 엎고 새로운걸로 바꾼다.
+                    // $("#workerList").empty();
+                }
+            })
+            $()
+        }
+	</script>
 	<%--작업 상세보기 모달창--%>
 
 </body>

@@ -88,6 +88,16 @@
         <result property="status" column="STATUS"/>
     </resultMap>
 
+
+    <resultMap type="ProjectTeam" id="projectTeamResultSet">
+        <id property="teamPk" column="TEAM_PK"/>
+        <result property="projectPk" column="PROJECT_PK"/>
+        <result property="memberPk" column="MEMBER_PK"/>
+        <result property="role" column="role"/>
+        <result property="memberName" column="MEMBER_NAME"/>
+        <result property="rankName" column="RANK_NAME"/>
+    </resultMap>
+
     <!--부서목록-->
     <select id="selectDeptList" resultMap="deptResultSet">
         SELECT *
@@ -114,12 +124,25 @@
         from WORK
     </select>
 
+    <!--프로젝트 담당자 명단뽑기.-->
+    <select id="selectProjectTeamList" parameterType="String" resultMap="projectTeamResultSet">
+        SELECT T.TEAM_PK, PROJECT_PK, MEMBER_PK, ROLE, MEMBER_NAME, RANK_NAME
+        FROM PROJECT_TEAM T
+                 JOIN (SELECT *
+                       FROM MEMBER M
+                                JOIN DEPT D ON M.DEPT_NO = D.DEPT_NO
+                                JOIN RANK R2 ON M.RANK_NO = R2.RANK_NO) M ON T.MEMBER_PK = M.MEMBER_NO
+        WHERE PROJECT_PK = #{value}
+    </select>
+
+    <!--프로젝트 등록을 했을 시 해당 프로젝트의 관리번호 반환 -->
     <select id="getSeq" resultType="String">
         select to_char(SEQ_PROJ.currval, 'FM000')
         from dual
     </select>
     <!--모든 프로젝트 목록조회-->
-    <select id="selectProjectList" resultMap="projectListResultSet">
+    <!--Admin 용도임.-->
+    <select id="selectProjectListAdmin" resultMap="projectListResultSet">
         SELECT P.PROJECT_PK      AS PROJECT_PK,
                P.PROJECT_NAME    AS PROJECT_NAME,
                P.IS_IMPORTANT    AS IS_IMPORTANT,
@@ -127,6 +150,29 @@
                PT.TYPE_NAME      AS TYPE_NAME,
                P.PROJECT_RANK    AS PROJECT_RANK,
                P.PROJECT_MANAGER AS PROJECT_MANAGER,
+               M.MEMBER_NAME     AS MEMBER_NAME,
+               P.PROJECT_TYPE_PK AS PROJECT_TYPE_PK,
+               P.DEPT_NO         AS DEPT_NO,
+               D.DEPT_NAME       AS DEPT_NAME,
+               P.START_DATE      AS START_DATE,
+               P.END_DATE        AS END_DATE,
+               P.STATUS          AS STATUS
+        FROM PROJECT P
+                 JOIN DEPT D ON P.DEPT_NO = D.DEPT_NO
+                 JOIN PROJECT_TYPE PT ON P.PROJECT_TYPE_PK = PT.TYPE_PK
+                 JOIN MEMBER M ON P.PROJECT_MANAGER = M.MEMBER_NO
+    </select>
+    <!--프로젝트 목록 조회. -->
+    <!--loginUser 에 따라 다르게 간다.-->
+    <select id="selectProjectList" parameterType="Member" resultMap="projectListResultSet">
+        SELECT P.PROJECT_PK      AS PROJECT_PK,
+               P.PROJECT_NAME    AS PROJECT_NAME,
+               P.IS_IMPORTANT    AS IS_IMPORTANT,
+               P.PROJECT_TYPE_PK AS PROJECT_TYPE_PK,
+               PT.TYPE_NAME      AS TYPE_NAME,
+               P.PROJECT_RANK    AS PROJECT_RANK,
+               P.PROJECT_MANAGER AS PROJECT_MANAGER,
+               T.MEMBER_PK       AS MEMBER_PK,
                T.MEMBER_NAME     AS MEMBER_NAME,
                P.PROJECT_TYPE_PK AS PROJECT_TYPE_PK,
                P.DEPT_NO         AS DEPT_NO,
@@ -141,7 +187,7 @@
                        FROM PROJECT_TEAM
                                 JOIN MEMBER M ON PROJECT_TEAM.MEMBER_PK = M.MEMBER_NO) T
                       ON P.PROJECT_PK = T.PROJECT_PK
-        where T.ROLE = 'PM'
+        WHERE T.MEMBER_PK = #{memberNo}
     </select>
     <!--모든 프로젝트 목록조회를 위한 총 목록 수-->
     <select id="getProjectListCount" resultType="_int">

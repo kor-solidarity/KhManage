@@ -4,6 +4,7 @@ import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.template.model.vo.Template;
 import com.kh.manage.common.PageInfo;
+import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.project.model.vo.*;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,8 +71,8 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 	
 	@Override
-	public List<ProjectList> selectProjectList(PageInfo pi) {
-		return pd.selectProjectList(sqlSession, pi);
+	public List<ProjectList> selectProjectList(PageInfo pi, Member loginUser) {
+		return pd.selectProjectList(sqlSession, pi, loginUser);
 	}
 	
 	@Override
@@ -88,5 +89,10 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public int insertProjectWork(ProjectWork projectWork) {
 		return pd.insertProjectWork(sqlSession, projectWork);
+	}
+	
+	@Override
+	public List<ProjectTeam> selectProjectTeamList(String pid) {
+		return pd.selectProjectTeamList(sqlSession, pid);
 	}
 }
