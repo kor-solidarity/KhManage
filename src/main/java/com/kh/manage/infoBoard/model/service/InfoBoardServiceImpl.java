@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.manage.common.PageInfo;
-import com.kh.manage.forum.model.vo.Reply;
 import com.kh.manage.infoBoard.model.dao.InfoBoardDao;
 import com.kh.manage.infoBoard.model.vo.InfoBoard;
+import com.kh.manage.infoBoard.model.vo.Reply;
 
 @Service
 public class InfoBoardServiceImpl implements InfoBoardService {
@@ -54,6 +54,20 @@ public class InfoBoardServiceImpl implements InfoBoardService {
 		
 		return board;
 	}
+
+
+
+	@Override
+	public int insertReply(Reply rp) {
+		
+		return id.insertReply(sqlSession, rp);
+	}
+
+
+
+
+
+
 
 
 

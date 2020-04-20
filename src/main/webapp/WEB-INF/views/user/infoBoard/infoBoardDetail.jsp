@@ -108,7 +108,7 @@
 
 .replyTextArea {
 	width: 100%;
-	height: 100%;
+	/* height: 100%; */
 	border-radius: 5px;
 	padding: 10px;
 	display: inline-block;
@@ -123,6 +123,36 @@
 	margin-left: 35px;
 	margin-right: 35px;
 }
+
+.replyAuthor1 {
+	width: 20%;
+	margin-left: 20px;
+	text-align: left;
+}
+
+.replyAuthor2 {
+	width: 80%
+	margin-left: 20px;
+	display: inline-block;
+	text-align: left;
+	padding-right: 25px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.replyAuthor3 {
+	margin-right: 20px;
+	display: inline-block;
+	text-align: right;
+}
+
+.replyAuthor4 {
+	margin-top: -15px;
+	text-align: center;
+	font-size: 14px;	
+}
+
+
 
 </style>
 </head>
@@ -160,15 +190,40 @@
 			<div id="" class="replyDivArea">
 				<div class="" style="margin-left: 10px;"><b>댓글</b><span>&nbsp;&nbsp; 5</span></div>
 			</div>
+			
 			<div id="" class="replyArea">
-				<table id="" class="replyTable">
-					<tr class="" style="padding 20px;">
-						<td class="replyAuthor" style="width: 25%;">글쓴이</td>
-						<td class="replyAuthor" style="width: 75%;">댓글내용</td>
+				
+				<table border="1">
+					<tr>
+						<td colspan="1" class="replyAuthor1">댓글작성자</td>
+						<td colspan="1" class="replyAuthor2">댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용
+						댓글내용댓글내용댓글내용댓글내용댓글내용내용댓글내용내용댓글내용내용댓글내용내용댓글내용내용댓글내용내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용</td>
+					</tr>
+					<tr>
+						<td>2020-04-20</td>
 					</tr>
 				</table>
-			</div><br>
+				
+				
+				
+				<!-- <div class="replyAuthor1" style="">댓글작성자</div>
+				<div class="replyAuthor2">댓글내용입니다.댓글내용입니다.댓글내용입니다댓글내용입니다..댓글내용입니다.댓글내용입니다.댓글내용입니다.댓글내용입니다.댓글내용입니다.댓글내용입니다.댓글내용입니다.</div>
+				<div class="replyAuthor3">댓글입니다.</div>
+				<div class="replyAuthor4" style="margin-left: 10px; text-align: left">2020-04-20</div> -->
+			</div>
 			
+			
+			
+			<!-- <div id="" class="replyArea">
+				<table id="" class="replyTable" border="1">
+					<tr class="" style="padding 20px;">
+						<td class="replyAuthor" style="width: 20%;">글쓴이</td>
+						<td class="replyAuthor" style="width: 750%;">댓글내용</td>
+					</tr>
+				</table>
+			</div><br> -->
+			
+			<br>
 			<div id="" class="replyInsert">
 				<form action="">
 					<table>
@@ -197,7 +252,7 @@
 	
 	
 	//게시판 댓글등록
-	/* $("#replyBtn").click(function(){
+	$("#replyBtn").click(function(){
 		
 		var boardNo = "${board.boardNo}";
 		var replyContent = $("#replyTextArea").val();
@@ -224,18 +279,19 @@
 				if(result) {
 					alert("댓글이 등록되었습니다.");
 					console.log(data);
-					
 				} else {
-					
-					
+					alert("취소하였습니다.");
 				}
-				
 				
 			}
 			
 		});
 		
-	}); */
+	});
+	
+	
+	//댓글 조회
+	
 	
 	
 	

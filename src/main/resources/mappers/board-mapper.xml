@@ -71,11 +71,10 @@
 	</update>
 	
 	<!-- 댓글등록 -->
-	<!-- <insert id="insertReply" parameterType="Reply">
+	<insert id="insertReply" parameterType="Reply">
 		INSERT INTO REPLY
-		VALUES('RE'|| TO_CHAR(SEQ_REPLY.NEXTVAL, 'FM000'),#{replyContent},SYSDATE, SYSDATE, 'Y',#{memberNo},#{forumNo})
-		VALUES('BRE' || TO_CAHAR(SEQ_REPLY.NEXTVAL, 'FM000'), #{replyContent}, SYSDATE, SYSDATE, 'Y', {memberNo}, #{forumNo})
-	</insert> -->
+		VALUES('BORE'|| TO_CHAR(SEQ_REPLY.NEXTVAL, 'FM000'),#{replyContent},SYSDATE, SYSDATE, 'Y',#{memberNo},#{forumNo})
+	</insert>
 
 
 </mapper>

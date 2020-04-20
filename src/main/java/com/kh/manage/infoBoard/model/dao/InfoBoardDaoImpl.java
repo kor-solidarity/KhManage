@@ -7,8 +7,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.manage.common.PageInfo;
-import com.kh.manage.forum.model.vo.Reply;
 import com.kh.manage.infoBoard.model.vo.InfoBoard;
+import com.kh.manage.infoBoard.model.vo.Reply;
 
 @Repository
 public class InfoBoardDaoImpl implements InfoBoardDao {
@@ -47,6 +47,14 @@ public class InfoBoardDaoImpl implements InfoBoardDao {
 		sqlSession.update("InfoBoard.countPlus", ib);
 		
 	}
+
+	@Override
+	public int insertReply(SqlSessionTemplate sqlSession, Reply rp) {
+
+		return sqlSession.insert("InfoBoard.insertReply", rp);
+	}
+
+
 
 
 }

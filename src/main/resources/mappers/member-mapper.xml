@@ -18,6 +18,8 @@
 		<result property="deptName" column="DEPT_NAME"/>
 		<result property="projectPk" column="PROJECT_PK"/>
 		<result property="enrollDate" column="ENROLL_DATE"/>
+		<result property="changeName" column="CHANGE_NAME"/>
+		<result property="ext" column="EXT"/>
 		<result property="status" column="STATUS"/>
 	</resultMap>
 	
@@ -48,14 +50,38 @@
 	</resultMap>
 	
 	
-	<select id="loginCheck" resultMap="memberResultSet" parameterType="Member">
+	<!-- <select id="loginCheck" resultMap="memberResultSet" parameterType="Member">
 		SELECT *
 		FROM MEMBER
-		<!-- JOIN RANK R ON(M.RANK_NO = R.RANK_NO) -->
+		JOIN RANK R ON(M.RANK_NO = R.RANK_NO)
 		WHERE MEMBER_ID = #{memberId}
 		AND PASSWORD = #{memberPwd}
 		AND STATUS = 'Y'
+	</select> -->
+	
+	<select id="loginCheck" resultMap="memberResultSet" parameterType="Member">
+		SELECT M.MEMBER_NO
+		      ,M.MEMBER_ID
+		      ,M.PASSWORD
+		      ,M.MEMBER_NAME
+		      ,M.PHONE
+		      ,M.EMAIL
+		      ,M.MEMBER_TYPE
+		      ,M.RANK_NO
+		      ,R.RANK_NAME
+		      ,M.DEPT_NO
+		      ,D.DEPT_NAME
+		      ,M.ENROLL_DATE
+		      ,M.MODIFY_DATE
+		      ,M.STATUS
+		FROM MEMBER M
+		JOIN RANK R ON(M.RANK_NO = R.RANK_NO)
+		JOIN DEPT D ON(D.DEPT_NO = M.DEPT_NO)
+		WHERE M.MEMBER_ID = #{memberId}
+		AND M.PASSWORD = #{memberPwd}
+		AND M.STATUS = 'Y'
 	</select>
+	
 	 
 	<insert id="insertMember" parameterType="Member">
 		INSERT INTO MEMBER
@@ -70,10 +96,28 @@
 	</select>
 	
 	<select id="selectLoginUser" resultMap="memberResultSet" parameterType="Member">
-		SELECT *
-		FROM MEMBER
-		WHERE MEMBER_ID = #{memberId}
-		AND STATUS = 'Y'
+		SELECT M.MEMBER_NO
+            ,M.MEMBER_ID
+            ,M.PASSWORD
+            ,M.MEMBER_NAME
+            ,M.PHONE
+            ,M.EMAIL
+            ,M.MEMBER_TYPE
+            ,M.RANK_NO
+            ,R.RANK_NAME
+            ,M.DEPT_NO
+            ,D.DEPT_NAME
+            ,M.ENROLL_DATE
+            ,M.MODIFY_DATE
+            ,M.STATUS
+            ,A.CHANGE_NAME
+            ,A.EXT
+        FROM MEMBER M
+        JOIN RANK R ON(M.RANK_NO = R.RANK_NO)
+        JOIN DEPT D ON(D.DEPT_NO = M.DEPT_NO)
+        JOIN ATTACHMENT A ON(M.MEMBER_NO = A.DIVISION)
+		WHERE M.MEMBER_ID = #{memberId}
+		AND M.STATUS = 'Y'
 	</select>
 	
 	

@@ -23,9 +23,39 @@ public class Member implements Serializable {
 	private int countProject;
 	private Date enrollDate;
 	private Date modifyDate;
+	private String changeName;
+	private String ext;
 	private String status;
 	
 	public Member() {}
+
+	public Member(String memberNo, String memberId, String memberPwd, String memberName, String phone, String email,
+			String jobCode, String memberType, String rankNo, String rankName, String deptNo, String deptName,
+			String deapTeamNo, String deptTeamName, String projectPk, int countProject, Date enrollDate,
+			Date modifyDate, String changeName, String ext, String status) {
+		super();
+		this.memberNo = memberNo;
+		this.memberId = memberId;
+		this.memberPwd = memberPwd;
+		this.memberName = memberName;
+		this.phone = phone;
+		this.email = email;
+		this.jobCode = jobCode;
+		this.memberType = memberType;
+		this.rankNo = rankNo;
+		this.rankName = rankName;
+		this.deptNo = deptNo;
+		this.deptName = deptName;
+		this.deapTeamNo = deapTeamNo;
+		this.deptTeamName = deptTeamName;
+		this.projectPk = projectPk;
+		this.countProject = countProject;
+		this.enrollDate = enrollDate;
+		this.modifyDate = modifyDate;
+		this.changeName = changeName;
+		this.ext = ext;
+		this.status = status;
+	}
 
 	public String getMemberNo() {
 		return memberNo;
@@ -171,6 +201,22 @@ public class Member implements Serializable {
 		this.modifyDate = modifyDate;
 	}
 
+	public String getChangeName() {
+		return changeName;
+	}
+
+	public void setChangeName(String changeName) {
+		this.changeName = changeName;
+	}
+
+	public String getExt() {
+		return ext;
+	}
+
+	public void setExt(String ext) {
+		this.ext = ext;
+	}
+
 	public String getStatus() {
 		return status;
 	}
@@ -186,11 +232,8 @@ public class Member implements Serializable {
 				+ memberType + ", rankNo=" + rankNo + ", rankName=" + rankName + ", deptNo=" + deptNo + ", deptName="
 				+ deptName + ", deapTeamNo=" + deapTeamNo + ", deptTeamName=" + deptTeamName + ", projectPk="
 				+ projectPk + ", countProject=" + countProject + ", enrollDate=" + enrollDate + ", modifyDate="
-				+ modifyDate + ", status=" + status + "]";
+				+ modifyDate + ", changeName=" + changeName + ", ext=" + ext + ", status=" + status + "]";
 	}
-
-
-	
 	
 	
 }
