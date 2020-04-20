@@ -20,7 +20,7 @@
 			<div id="sidebar" class="sidebar-scroll" style="background: #1E2B44;">
 				<nav>
 					<ul class="nav">
-						<li><a href="index.jsp" class="active"><i
+						<li><a href="goHome.me" class="active"><i
 								class="lnr lnr-home"></i> <span>HOME</span></a></li>
 					<c:forEach var="m" items="${menuAllList}">
 						<li>

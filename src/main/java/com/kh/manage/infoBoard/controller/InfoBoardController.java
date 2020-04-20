@@ -11,12 +11,13 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.google.gson.Gson;
 import com.amazonaws.Request;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.common.Pagination;
-import com.kh.manage.forum.model.vo.Reply;
 import com.kh.manage.infoBoard.model.service.InfoBoardService;
 import com.kh.manage.infoBoard.model.vo.InfoBoard;
+import com.kh.manage.infoBoard.model.vo.Reply;
 import com.kh.manage.member.model.vo.Member;
 
 @Controller
@@ -24,8 +25,8 @@ public class InfoBoardController {
 	
 	@Autowired
 	private InfoBoardService is;
-//	@Autowired
-//	private Reply rp;
+	@Autowired
+	private Reply rp;
 	
 	//게시판 메인페이지 + 리스트 조회
 	@RequestMapping("/infoBoard.ib")
@@ -102,25 +103,26 @@ public class InfoBoardController {
 	}
 	
 	
-//	//댓글등록
-//	@RequestMapping("insertReply.ib")
-//	public void insertReply(HttpServletResponse response, HttpServletRequest request) {
-//		
-//		String boardNo = request.getParameter("boardNo");
-//		String replyContent = request.getParameter("replyContent");
-//		String memberNo = request.getParameter("memberNo");
-//		
-//		System.out.println("boardNo : " + boardNo);
-//		System.out.println("replyContent : " + replyContent);
-//		System.out.println("memberNo : " + memberNo);
-//		
-//		rp.setMemberNo(memberNo);
-//		rp.setReplyContent(replyContent);
-//		rp.setForumNo(boardNo);
-//		
-//		int result = is.insertReply(rp);
-//		
-//	}
+	//댓글등록
+	@RequestMapping("insertReply.ib")
+	public void insertReply(HttpServletResponse response, HttpServletRequest request) {
+		
+		String boardNo = request.getParameter("boardNo");
+		String replyContent = request.getParameter("replyContent");
+		String memberNo = request.getParameter("memberNo");
+		
+		System.out.println("boardNo : " + boardNo);
+		System.out.println("replyContent : " + replyContent);
+		System.out.println("memberNo : " + memberNo);
+		
+		rp.setMemberNo(memberNo);
+		rp.setReplyContent(replyContent);
+		rp.setForumNo(boardNo);
+		
+		int result = is.insertReply(rp);
+		
+		
+	}
 	
 	
 	

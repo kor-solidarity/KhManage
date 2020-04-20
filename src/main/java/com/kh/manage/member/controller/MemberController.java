@@ -66,6 +66,12 @@ public class MemberController {
 	}
 
 	
+	//개인 대시보드 이동
+	@RequestMapping("/goHome.me")
+	public String goHome() {
+		
+		return "user/main/userMainPage";
+	}
 	
 	//디테일 대시보드 이동
 	@RequestMapping("/detailDashboard.me")

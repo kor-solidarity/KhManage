@@ -43,7 +43,7 @@ button:hover {
 	background: #DDE3EC;
 	width: 400px;
 	height: 40px;
-/* 	border: none; */
+ 	border: none;
 	padding-left: 20px;
 	font-size: 16px;
 }
@@ -54,7 +54,7 @@ button:hover {
 	color: white;
 	font-weight: bold;
 	font-size: 16px;
-	width: 100px;
+	width: 100%;
 	height: 40px;
 	margin-top: 30px;
 	
