@@ -34,10 +34,22 @@
 		<result property="modifyDate" column="ENROLL_DATE"/>
 	</resultMap>
 	
+	<resultMap type="ChatRoom" id="ChatDetailResultSet">
+		<id property="chatRoomNo" column="CHATROOM_NO"/>
+		<result property="createMemberNo" column="MEMBER_NO"/>
+		<result property="chatRoomName" column="ROOM_NAME"/>
+		<result property="recentMessage" column="M_CONTENT"/>
+		<result property="status" column="STATUS"/>
+		<result property="modifyDate" column="ENROLL_DATE"/>
+		<result property="count" column="COUNT"/>
+	</resultMap>
+	
 	<resultMap type="ChatMessageList" id="messageResultSet">
 		<id property="messageNo" column="MESSAGE_NO"/>
 		<result property="memberName" column="MEMBER_NAME"/>
 		<result property="memberNo" column="SENDER"/>
+		<result property="changeName" column="CHANGE_NAME"/>
+		<result property="ext" column="EXT"/>
 		<result property="chatRoomNo" column="CHATROOM_NO"/>
 		<result property="status" column="STATUS"/>
 		<result property="sendDate" column="SEND_DATE"/>
@@ -138,7 +150,7 @@
 	</insert>
 	
 	<update id="updateRecentMessage" parameterType="Message">
-		UPDATE CHATROOM SET RECENT_MESSAGE = 'ME'|| TO_CHAR(SEQ_MSG_NO.CURRVAL, 'FM000')
+		UPDATE CHATROOM SET RECENT_MESSAGE = 'ME'|| TO_CHAR(SEQ_MSG_NO.CURRVAL, 'FM000'), ENROLL_DATE = SYSDATE
 		WHERE CHATROOM_NO = #{chatRoomNo}
 	</update>
 	
@@ -148,6 +160,8 @@
 		      ,M.SENDER
 		      ,M.CHATROOM_NO
 		      ,M.STATUS
+              ,A.CHANGE_NAME
+              ,A.EXT
 		      ,TO_CHAR(M.SEND_DATE,'YY-MM-DD HH24:MI') AS SEND_DATE
 		      ,CASE WHEN M.CONTENT = '텍스트' THEN MC.M_CONTENT
 		      WHEN M.CONTENT = '첨부파일' THEN MA.MESSAGE_ATTACHMENT
@@ -156,17 +170,28 @@
 		JOIN MEMBER MB ON (M.SENDER = MB.MEMBER_NO)
 		LEFT JOIN MESSAGE_CONTENT MC ON(M.MESSAGE_NO = MC.MESSAGE_NO)
 		LEFT JOIN MESSAGE_ATTACHMENT MA ON(M.MESSAGE_NO = MA.MESSAGE_NO)
+        LEFT JOIN ATTACHMENT A ON (M.SENDER = A.DIVISION)
 		WHERE M.STATUS = 'Y'
 		AND M.CHATROOM_NO = #{chatRoomNo}
-		ORDER BY SEND_DATE 
+		ORDER BY SEND_DATE
 	</select>
 	
 	<select id="selectDate" resultType="java.lang.String">
 		SELECT TO_CHAR(SYSDATE,'YY-MM-DD HH24:MI') FROM DUAL
 	</select>
 	
-	<select id="selectOneChatRoom" resultMap="ChatRoomResultSet">
-		
+	<select id="selectOneChatRoom" parameterType="ChatRoom" resultMap="ChatDetailResultSet">
+		SELECT CHATROOM_NO
+		      ,MEMBER_NO
+		      ,ROOM_NAME
+		      ,RECENT_MESSAGE
+		      ,STATUS
+		      ,ENROLL_DATE
+		      ,(SELECT COUNT(*)
+		        FROM CHAT_MEMBER
+		        WHERE CHATROOM_NO = #{chatRoomNo}) AS COUNT
+		FROM CHATROOM
+		WHERE CHATROOM_NO = #{chatRoomNo}
 	</select>
 </mapper>
 

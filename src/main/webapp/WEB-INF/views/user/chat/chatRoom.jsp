@@ -109,11 +109,26 @@ body {
 		margin-top: auto;
 		margin-bottom: auto;
 		margin-left: 10px;
-		border-radius: 25px;
+		border-radius: 5px;
 		background-color: #24415C;
 		padding: 10px;
 		color:white;
 		position: relative;
+		left: 30px;
+		bottom: 13px;
+		max-width: 250px;
+	}
+	
+	.msg_cotainer:after {
+	 border-top:12px solid #24415C;
+	 border-left: 15px solid transparent;
+	 border-right: 10px solid transparent;
+	 border-bottom: 0px solid transparent;
+	 content:"";
+	 position:absolute;
+	 top:10px;
+	 left:-15px;
+	 bottom: 15px;
 	}
 	.msg_cotainer_send{
 		margin-top: 5px;
@@ -124,6 +139,7 @@ body {
 		color:white;
 		padding: 10px;
 		position: relative;
+		max-width: 300px;
 	}
 	.msg_time{
 		position: absolute;
@@ -141,6 +157,22 @@ body {
 		font-size: 10px;
 		width:70px;
 	}
+	.box {
+	width: 40px;
+	height: 40px;
+	border-radius: 40%;
+	overflow: hidden;
+	margin-left: 5px;
+	margin-top:20px;
+	display: inline-block;
+}
+.profile {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+
 
 
 </style>
@@ -185,19 +217,37 @@ body {
 	</div>
 	<div id="section"
 		style="background: #EEEEEE; width: 430px; height: 598px; float: left;">
-		<label style="margin-left: 23px; margin-bottom: 10px; margin-top: 10px;">파이널 프로젝트 팀 (5명)</label>
+		<label style="margin-left: 23px; margin-bottom: 10px; margin-top: 10px;">${cr.chatRoomName} (${cr.count}명)</label>
 		
 		<!-- 채팅 영역 -->
 		<div id="chatArea" style="width:90%; height:420px; background:white; border:2px solid #1E2B44; border-radius:10px; margin:0 auto; overflow: auto;">
+		<table style="width:100%">
 			<c:forEach var="a" items="${list}">
 				<c:if test="${a.memberNo eq loginUser.memberNo}">
+				<tr>	
+					<td colspan="2">
 						<div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send'>${a.content}<span class='msg_time_send'>${a.sendDate}</span></div></div>	
+					</td>	
+				</tr>		
 					</c:if>
 					<c:if test="${a.memberNo != loginUser.memberNo}">
-						<div class='card-body msg_card_body' style='padding-left: 10px; padding-bottom: 0px;'>${a.memberName} <div class='d-flex justify-content-start mb-4'><div class='msg_cotainer'>${a.content}<br><span class='msg_time'>${a.sendDate}</span> </div> </div> </div>
+					<tr>
+						<td style="width:50px;">
+						<div class="box" style="background:white;"><img class="profile" src="<c:url value="/resources/uploadFiles/${a.changeName}"/>.png"></div>
+						</td>
+						<td>
+						<div style="display: inline-flex; font-weight:600; font-size:12px;">${a.memberName }</div>
+						</td>
+					</tr>	
+					<tr>	
+						<td colspan="2">
+						<div class='card-body msg_card_body' style='padding-left: 20px; padding-top:0px; padding-bottom: 0px;'><div class='d-flex justify-content-start mb-4'><div class='msg_cotainer'>${a.content}<br><span class='msg_time'>${a.sendDate}</span></div> </div> 
+						</div>
+						</td>
+					</tr>	
 					</c:if>
 			</c:forEach>
-	
+	</table>
 	  <div>
         <input type="text" id="sender" value="test" style="display: none;">
     </div>
@@ -296,6 +346,7 @@ body {
         	 $.ajax({
 					url:'insertMessage.ct',
 					type: 'post',
+					async: false,
 					data:{message:text},
 				 success:function(data){
 				 }
