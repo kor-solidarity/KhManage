@@ -37,6 +37,20 @@
 		<result property="projectNo" column="PROJECT_NO"/>
 		<result property="actionDate" column="ACTION_DATE"/>
 	</resultMap>
+	
+	<resultMap type="IssueList" id="selectIssueList2">
+		<id property="issueNo" column="ISSUE_NO"/>
+		<result property="projectName" column="PROJECT_NAME"/>
+		<result property="workName" column="WORK_NAME"/>
+		<result property="issueTitle" column="ISSUE_TITLE"/>
+		<result property="registerDate" column="REGISTER_DATE"/>
+		<result property="issueType" column="ISSUE_TYPE"/>
+		<result property="registerName" column="REGISTER_NAME"/>
+		<result property="status" column="STATUS"/>
+		<result property="teamWorkerName" column="TEAMWORKER_NAME"/>
+		<result property="actionDate" column="ACTION_DATE"/>
+		<result property="ihDate" column="IH_DATE"/>
+	</resultMap>
 
 
 	<select id="selectProjectName" parameterType="Member" resultMap="selectIssueTeamProject">
@@ -87,6 +101,45 @@
 		VALUES ('RP' || TO_CHAR(SEQ_RP_NO.NEXTVAL, 'FM000'), 'I' || TO_CHAR(SEQ_IS.CURRVAL, 'FM000'), #{memberPk} )
 	</insert>
 	
+	<insert id="insertIssueHistory" parameterType="Issue">
+		INSERT INTO ISSUE_HISTORY
+		VALUES ('IH' || TO_CHAR(SEQ_IH_NO.NEXTVAL, 'FM000'), 'I' || TO_CHAR(SEQ_IS.CURRVAL, 'FM000'), #{issueTitle}, SYSDATE, DEFAULT)
+	</insert>
+	
+	<select id="selectIssueList2" parameterType="java.lang.String" resultMap="selectIssueList2">
+		SELECT 
+			   I.ISSUE_NO
+			 , P.PROJECT_NAME
+			 , W.WORK_NAME
+			 , I.ISSUE_TITLE
+			 , I.REGISTER_DATE
+			 , I.ISSUE_TYPE
+			 , M.MEMBER_NAME AS REGISTER_NAME
+			 , IH.STATUS
+			 , M2.MEMBER_NAME AS TEAMWORKER_NAME
+			 , I.ACTION_DATE
+			 , IH.IH_DATE
+		FROM ISSUE I
+		JOIN PROJECT P ON (I.PROJECT_NO = P.PROJECT_PK)
+		JOIN WORK W ON (I.WORK_NO = W.WORK_NO)
+		JOIN MEMBER M ON (I.REGISTER_TYPE = M.MEMBER_NO)
+		JOIN (SELECT ISSUE_NO, STATUS, IH_DATE
+              FROM ISSUE_HISTORY
+              WHERE (ISSUE_NO, IH_DATE) IN 
+                             (SELECT ISSUE_NO, MAX(IH_DATE)
+                              FROM ISSUE_HISTORY
+                              GROUP BY ISSUE_NO)) IH ON (I.ISSUE_NO = IH.ISSUE_NO)
+		JOIN MEMBER M2 ON (I.TEAMWORKER = M2.MEMBER_NO)
+		WHERE I.PROJECT_NO = #{pno}
+		ORDER BY I.ISSUE_NO DESC
+		
+	</select>
+	
+	<select id="getListCount" parameterType="java.lang.String" resultType="_int">
+		SELECT COUNT(*)
+		FROM ISSUE
+		WHERE PROJECT_NO = #{pno}
+	</select>
 	
 </mapper>
 

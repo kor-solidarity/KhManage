@@ -2,10 +2,12 @@ package com.kh.manage.issue.model.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.manage.common.Attachment;
+import com.kh.manage.common.PageInfo;
 import com.kh.manage.issue.model.vo.Issue;
 import com.kh.manage.issue.model.vo.IssueProjectTeam;
 import com.kh.manage.issue.model.vo.IssueWPT;
@@ -54,6 +56,24 @@ public class IssueDaoImpl implements IssueDao{
 	@Override
 	public int insertReportProjectTeam(SqlSessionTemplate sqlSession, IssueProjectTeam ipt) {
 		return sqlSession.insert("Issue.insertReportProjectTeam", ipt);
+	}
+
+	@Override
+	public int insertIssueHistory(SqlSessionTemplate sqlSession, Issue issue) {
+		return sqlSession.insert("Issue.insertIssueHistory", issue);
+	}
+
+	@Override
+	public List<Issue> selectIssueList2(SqlSessionTemplate sqlSession, String pno, PageInfo pi) {
+		int offset = (pi.getCurrentPage()-1) * pi.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+		
+		return sqlSession.selectList("Issue.selectIssueList2", pno, rowBounds);
+	}
+
+	@Override
+	public int getListCount(SqlSessionTemplate sqlSession, String pno) {
+		return sqlSession.selectOne("Issue.getListCount", pno);
 	}
 
 }

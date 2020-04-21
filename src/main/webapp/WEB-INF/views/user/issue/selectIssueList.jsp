@@ -190,22 +190,27 @@
 								<td class="tdText thRange"><input type="text" class="inputCss" style="visibility:hidden; width:50px;"></td>
 							</tr>
 							
-							
+							<c:forEach var="l" items="${list }">
 							<tr class="trRange">
-								<td class="td1">KH대학교 학사시스템 개발</td>
-								<td class="tdText">기능 개발</td>
-								<td class="tdText">수강신청 구현</td>
-								<td class="tdText">2020-04-03</td>
-								<td class="tdText">오류발생</td>
-								<td class="tdText">심재우</td>
-								<td class="tdText"><label class="issueOpen">오픈</label></td>
-								<td class="tdText">김성준</td>
-								<td class="tdText">2020-04-03</td>
-								<td class="tdText">2020-04-05</td>
+								<td class="td1">${l.projectName }</td>
+								<td class="tdText">${l.workName }</td>
+								<td class="tdText">${l.issueTitle }</td>
+								<td class="tdText">${l.registerDate }</td>
+								<td class="tdText">${l.issueType }</td>
+								<td class="tdText">${l.registerName }</td>
+								<td class="tdText"><label class="issueOpen">${l.status }</label></td>
+								<td class="tdText">${l.teamWorkerName }</td>
+								<td class="tdText">${l.actionDate }</td>
+								<td class="tdText">${l.ihDate }</td>
 							</tr>
+							</c:forEach>
+							
 							<tr class="pagingArea">
                         		<td colspan="10">
-                           			<div class="paging"><< < 1 2 > >></div>
+                           			<div class="paging">
+                           				<%-- <c:if test="${pi.currentPage <= 1 }"> --%>
+                           				
+                           			<< < 1 2 > >></div>
                         		</td>
                      		</tr>
 						</table>

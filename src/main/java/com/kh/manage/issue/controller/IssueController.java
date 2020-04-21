@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.manage.common.Attachment;
 import com.kh.manage.common.CommonsUtils;
+import com.kh.manage.common.PageInfo;
+import com.kh.manage.common.Pagination;
 import com.kh.manage.issue.model.service.IssueService;
 import com.kh.manage.issue.model.vo.Issue;
 import com.kh.manage.issue.model.vo.IssueProjectTeam;
@@ -51,17 +52,37 @@ public class IssueController {
 		
 	}
 	
-//	@GetMapping("/issueList.iu")
-//	public String issueListpno(@RequestParam String pno, Model m, HttpServletRequest request) {
-//		Member member = (Member) request.getSession().getAttribute("loginUser");
-//		
-//		List<IssueWPT> iwpt = is.selectProjectName(member);
-//		
-//		List<Issue> list = 
-//		
-//		
-//		return "";
-//	}
+	@GetMapping("/selectIssueList.iu")
+	public String issueListpno(String pno, Model m, HttpServletRequest request) {
+		Member member = (Member) request.getSession().getAttribute("loginUser");
+		
+		int currentPage = 1;
+		
+		List<IssueWPT> iwpt = is.selectProjectName(member);
+		
+		
+		if(request.getParameter("currentPage") != null) {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+		
+		int listCount = is.getListCount(pno);
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		
+		List<Issue> list = is.selectIssueList2(pno, pi);
+		
+		if(iwpt != null && list != null) {
+			m.addAttribute("iwpt", iwpt);
+			m.addAttribute("list", list);
+			m.addAttribute("pi", pi);
+			return "user/issue/selectIssueList";
+		}else{
+			m.addAttribute("msg", "이슈 리스트 출력 오류");
+			
+			return "common/errorPage";
+		}
+		
+	}
 	
 	@RequestMapping("/issueInsertPage.iu")
 	public String issueInsertPage(Model m, HttpServletRequest request) {
@@ -178,7 +199,7 @@ public class IssueController {
 		
 		if(result > 0) {
 			List<IssueProjectTeam> ipt = is.selectProjectTeamList(issue);
-			
+			int result3 = is.insertIssueHistory(issue);
 			
 			for(int i = 0; i < ipt.size(); i++) {
 				int result2 = is.insertReportProjectTeam(ipt.get(i));

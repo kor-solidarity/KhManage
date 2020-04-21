@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.manage.common.Attachment;
+import com.kh.manage.common.PageInfo;
 import com.kh.manage.issue.model.dao.IssueDao;
 import com.kh.manage.issue.model.vo.Issue;
 import com.kh.manage.issue.model.vo.IssueProjectTeam;
@@ -61,6 +62,21 @@ public class IssueServiceImpl implements IssueService{
 	@Override
 	public int insertReportProjectTeam(IssueProjectTeam ipt) {
 		return id.insertReportProjectTeam(sqlSession, ipt);
+	}
+
+	@Override
+	public int insertIssueHistory(Issue issue) {
+		return id.insertIssueHistory(sqlSession, issue);
+	}
+
+	@Override
+	public List<Issue> selectIssueList2(String pno, PageInfo pi) {
+		return id.selectIssueList2(sqlSession, pno, pi);
+	}
+
+	@Override
+	public int getListCount(String pno) {
+		return id.getListCount(sqlSession, pno);
 	}
 
 	
