@@ -9,13 +9,13 @@
 <title>Insert title here</title>
     
     <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       /*  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
         ga('create', 'UA-87786286-1', 'auto');
-        ga('send', 'pageview');
+        ga('send', 'pageview'); */
     </script>
 
 
@@ -92,13 +92,14 @@
 	border-radius: 70%;
 	overflow: hidden;
 	margin-bottom: 50px;
+	margin-left: 60px;
 }
 
 .pImamage {
 	width: 100%;
 	heigh: 100%;
 	object-fit: cover;
-	margin-left: 25%;
+	/* margin-left: 25%; */
 }
 
 
@@ -133,7 +134,7 @@
 
                                 <div class="pImamageDiv">
                                 	<%-- <img src="<c:url value="/resources/img/profile.png"/>" class="thumb-lg pImamage"> --%>
-                                	<img src="<c:url value="resources/uploadFiles/${at.changeName}.png"/>" class="thumb-lg pImamage">
+                                	<img class="thumb-lg pImamage" src="<c:url value="resources/uploadFiles/${at.changeName}.png"/>">
                                 </div>
                                 
                                 <div class="" style="align: center;">
@@ -178,17 +179,17 @@
                     <ul class="nav customtab nav-tabs" role="tablist">
                         <li role="presentation" class="nav-item active">
                             <a href="#profile" class="nav-link active" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="true">
-                                <span class="visible-xs"><i class="fa fa-cog"></i></span> <span class="hidden-xs">프로필</span>
+                                <span class="visible-xs"><i class="fa fa-cog"></i></span> <span class="hidden-xs"><b>프로필</b></span>
                             </a>
                         </li>
                         <li role="presentation" class="nav-item">
                             <a href="#changePassword" class="nav-link" aria-controls="changePassword" role="tab" data-toggle="tab" aria-expanded="false">
-                                <span class="visible-xs"><i class="fa fa-envelope-o"></i></span> <span class="hidden-xs">패스워드 변경</span>
+                                <span class="visible-xs"><i class="fa fa-envelope-o"></i></span> <span class="hidden-xs"><b>패스워드 변경</b></span>
                             </a>
                         </li>
                         <li role="presentation" class="nav-item">
                             <a href="#changeProfileImage" class="nav-link" aria-controls="changeProfileImage" role="tab" data-toggle="tab" aria-expanded="false">
-                                <span class="visible-xs"><i class="fa fa-envelope-o"></i></span> <span class="hidden-xs">프로필 이미지 변경</span>
+                                <span class="visible-xs"><i class="fa fa-envelope-o"></i></span> <span class="hidden-xs"><b>프로필 이미지 변경</b></span>
                             </a>
                         </li>
                     </ul>
@@ -313,9 +314,9 @@
 	                                        </div>
                                         </div>
                                         <script>
-											kendo.syncReady(function(){
+											/* kendo.syncReady(function(){
 												jQuery("#profileImage").kendoUpload({"validation":{"allowedExtensions":[".gif",".jpg",".png",".bmp"]}});
-											});
+											}); */
 										</script>
                                     </div>
                                 </div>

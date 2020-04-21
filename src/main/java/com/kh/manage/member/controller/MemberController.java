@@ -289,6 +289,7 @@ public class MemberController {
 		at.setChangeName(changeName);
 		at.setOriginName(originFileName);
 		at.setFilePath(filePath);
+		at.setExt(ext);
 		
 		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
 		at.setDivision(loginUser.getMemberNo());

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -177,15 +178,16 @@
 					<tr class="tr">
 						<th class="titletd">제목</th>
 						<th class="sendtd">조회수</th>
-						<th class="sendtd">등록날짜</th>
-						<th class="datetd">등록자</th>
+						<th class="sendtd">등록일</th>
+						<th class="datetd">글쓴이</th>
 						<th></th>
 					</tr>
 					<c:forEach var="ib" items="${blist}">
 					<tr id="tr" style="border-bottom: 1px solid #d2d2d2; border-top: 1px solid #d2d2d2; height:30px;">
+						<%-- <td class="titletd2">${ib.boardTitle} &nbsp;&nbsp;<span><b>[${rlist.size()}]</b></span></td> --%>
 						<td class="titletd2">${ib.boardTitle}</td>
 						<td class="sendtd2">${ib.viewCount}</td>
-						<td class="sendtd2">${ib.createDate}</td>
+						<td class="sendtd2"><fmt:formatDate value="${ib.createDate}" pattern="yyyy-MM-dd hh-mm:SS"/></td>
 						<td class="datetd2">${ib.memberName}</td>
 						<td class="td">
 							<input type="hidden" value="${ib.boardNo}">

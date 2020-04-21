@@ -73,6 +73,17 @@ public class InfoBoardServiceImpl implements InfoBoardService {
 
 
 
+	@Override
+	public int updateBoard(InfoBoard ib) {
+
+		return id.updateBoard(sqlSession, ib);
+	}
+
+
+
+
+
+	
 
 
 

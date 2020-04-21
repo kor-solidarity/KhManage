@@ -84,6 +84,16 @@
 		WHERE INFO_PK = #{boardNo}
 	</update>
 	
+	<!-- 게시물 수정 -->
+	<update id="updateBoard" parameterType="InfoBoard">
+		UPDATE INFO_TABLE
+		SET (TITLE, CONTENT, EDIT_DATE) = (SELECT #{boardTitle}, #{boardContent}, SYSDATE
+										   FROM INFO_TABLE
+										   WHERE INFO_PK = #{boardNo})
+		WHERE INFO_PK = #{boardNo}
+	</update>
+	
+	
 	<!-- 댓글등록 -->
 	<insert id="insertReply" parameterType="BoReply">
 		INSERT INTO REPLY
@@ -101,6 +111,7 @@
 		WHERE R.FORUM_NO = #{boardNo}
 		AND R.STATUS = 'Y'
 	</select>
+	
 
 
 </mapper>

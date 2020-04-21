@@ -63,9 +63,9 @@ public class InfoBoardController {
 	
 	//게시글 등록
 	@RequestMapping("/insertBoard.ib")
-	public String insertBoard(InfoBoard ib, Model model, HttpServletRequest request) {
+	public String insertBoard(InfoBoard ib, HttpSession session, Model model, HttpServletRequest request) {
 		
-		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
+		Member loginUser = (Member) session.getAttribute("loginUser");
 		
 		System.out.println(loginUser);
 		
@@ -156,6 +156,80 @@ public class InfoBoardController {
 //		
 //		
 //	}
+	
+	
+	
+	//게시글 수정 select
+	@RequestMapping("modifyBoardSelect.ib")
+	public String updateBoardSelect(InfoBoard ib, Model model, HttpServletRequest request) {
+		
+		String boardNo = request.getParameter("boardNo");
+		System.out.println("boardNo : " + boardNo);
+
+		System.out.println("파라미터 boardNo : " + boardNo);
+		
+		ib.setBoardNo(boardNo);
+		
+		InfoBoard board = is.selectOneBoard(ib);
+		 
+		model.addAttribute("board", board);
+		
+		
+		return "user/infoBoard/infoBoardUpdate";
+	}
+	
+	
+	
+	
+	//게시글 수정
+	@RequestMapping("updateBoard.ib")
+	public String updateBoard(HttpServletRequest request, HttpServletResponse response, HttpSession session, Model model) { 
+		
+		String boardNo = request.getParameter("boardNo");
+		String boardTitle = request.getParameter("boardTitle");
+		String boardContent = request.getParameter("boardContent");
+		
+		System.out.println("boardNo : " + boardNo);
+		System.out.println("boardTitle : " + boardTitle);
+		System.out.println("boardContent : " + boardContent);
+		
+		InfoBoard ib = new InfoBoard();
+		ib.setBoardNo(boardNo);
+		ib.setBoardTitle(boardTitle);
+		ib.setBoardContent(boardContent);
+		
+		int result = is.updateBoard(ib);
+		
+		System.out.println("게시글 수정 result : " + result);
+		
+		if(result > 0) {
+			
+			//게시글 상세보기
+			ib.setBoardNo(boardNo);
+			InfoBoard board = is.selectOneBoard(ib);
+			model.addAttribute("board", board);
+			
+			//댓글 상세보기
+			ib.setBoardNo(boardNo);
+			List<BoReply> rlist = is.selectAllReply(ib);
+			request.setAttribute("rlist", rlist);
+			
+			
+			return "user/infoBoard/infoBoardDetail";
+		} else {
+			
+			return "user/infoBoard/infoBoardDetail";
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }

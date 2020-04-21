@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -150,7 +151,7 @@
 	font-size: 14px;
 	text-align: center;
 	align: center;
-	padding-right: 25px;
+	/* padding-right: 15px; */
 	padding-top: 10px;
 	padding-bottom: 10px;
 	vertical-align: top;
@@ -181,7 +182,7 @@
 	border-radius: 5px;
 	font-size:14px;
 	/* margin-left: 10px; */
-	margin-top: 0px;	
+	margin-top: 0px;
 
 }
 
@@ -212,7 +213,9 @@
 			
 			<div id="" class="titleArea">
 				<div id="" class="title"><b>${board.boardTitle}</b></div>
-				<div id="" class="date"><span>${board.createDate}</span></div>
+				<%-- <div id="" class="date"><span>${board.createDate}</span></div> --%>
+				<div id="" class="date"><span><fmt:formatDate value="${board.createDate}" pattern="yyyy-MM-dd a HH-mm:SS"/></span></div>
+				
 			</div>
 			
 			<%-- <div id="" class="titleArea">
@@ -224,11 +227,21 @@
 				<div id="" class="author"><b>작성자 :<span>&nbsp;&nbsp; ${board.memberName}</span></b></div>
 				<div id="" class="view"><span style="color: #999999">조회수 : &nbsp; <span>${board.viewCount}</span></span></div>
 			</div>
+			<div style="margin-top: 20px; float: right; padding-right: 20px;">
+				<button id="modifyBoBtn" class="modifyBtn Btn" onclick="">수정</button>
+				<button id="deleteBoBtn" class="removeBtn Btn" onclick="">삭제</button>
+			</div>
+			<br>
+			
 			
 			<div id="" class="contentArea">
 				<div id="" class="content" style="">${board.boardContent}</div>
 			</div>
-			
+			<!-- <div style="margin-top: 20px; float: right; padding-right: 20px;">
+				<button id="" class="modifyBtn Btn" onclick="">수정</button>
+				<button id="" class="removeBtn Btn" onclick="">삭제</button>
+			</div>
+			<br> -->
 			
 			<!-- 버튼추가 -->
 			
@@ -238,7 +251,7 @@
 			
 			<c:forEach var="r" items="${rlist}">
 			<div id="" class="replyArea">
-				<table id="" class="" >
+				<table id="" class="" style="width: 100%;">
 					<tr style="">
 						<td class="replyAuthor1">${r.memberName}</td>
 						<td rowspan="2" class="replyAuthor2">${r.replyContent}</td>
@@ -248,10 +261,13 @@
 						<td>
 							<button id="" class="repBtn Btn" onclick="">댓글달기</button>
 						</td>
+						<c:if test="${loginUser.memberNo == r.memberNo }">
 						<td align="center" style="height: 80px;">
-							<button id="" class="modifyBtn Btn" onclick="">수정</button>
-							<button id="" class="removeBtn Btn" onclick="">삭제</button>
+							<button type="button" id="" class="modifyBtn Btn">수정</button>
+							<button type="button" id="" class="removeBtn Btn">삭제</button>
 						</td>
+						</c:if>
+						
 					</tr>
 				</table>
 			</div>
@@ -319,9 +335,12 @@
 			},
 			success: function(data) {
 				
-				if(replyContent == null) {
+				if(replyContent.value == "") {
 					
 					alert("댓글을 입력해주세요.")
+					replyContent.focus();
+					return false;
+					
 				} else {
 					
 					if(result) {
@@ -371,6 +390,29 @@
 		});
 
 	} */
+	
+	
+	
+	$(function() {
+		
+		var boardNo = "${board.boardNo}";
+		var memberNo = "${loginUser.memberNo}";
+		
+		//게시글 수정
+		$("#modifyBoBtn").click(function(){
+			
+			location.href = "modifyBoardSelect.ib?boardNo=" + boardNo;
+			
+			console.log(boardNo);
+		});
+		 
+		//게시글 삭제
+		$("#deleteBoBtn").click(function(){
+			
+			location.href = "deleteBoard.ib?boardNo=" + boardNo;
+		});
+		
+	});
 	
 	
 	
