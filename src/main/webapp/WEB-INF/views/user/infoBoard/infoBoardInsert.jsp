@@ -109,6 +109,20 @@ summernote{
 	color: #FFFFFF;
 }
 
+/* .filebox label { 
+	display: inline-block; 
+	padding: .5em .75em; 
+	color: #999; 
+	font-size: inherit; 
+	line-height: normal; 
+	vertical-align: middle; 
+	background-color: #fdfdfd; 
+	cursor: pointer; 
+	border: 1px solid lightgray; 
+	border-bottom-color: lightgray;
+	border-radius: .25em;
+} */
+
 /* div {
 	margin: 10px;
 } */
@@ -128,22 +142,28 @@ summernote{
 
 				<div class="" style="margin-left: 20px;">			
 					
-					<form class="" id="" action="insertBoard.ib" method="post">
+					<form class="" id="" action="insertBoard.ib" method="post" enctype="multipart/form-data">
 						<div>제목</div>
 						<div>
 							<input type="text" id="memberId" class="register form-control" name="boardTitle" placeholder="제목을 입력해주세요." focus
 											oninvalid="this.setCustomValidity('제목을 입력해주세요.')" oninput="('ㄴㄴㄴㄴㄴ')">
 						</div><br>
+
 						<div>포스트내용</div>
 						<div style="width: 100%">
 							<textarea cols="80" rows="14" class="summernote form-control note-editor note-frame" class="summernote" id="summernote" name="boardContent" style="width: 100%;">
-							</textarea>
-						</div>
+							${board.boardContent}</textarea>
+						</div><br>
 						
+						<div></div>
+						<div class="filebox">
+							<label for="file">파일업로드</label>
+							<input type="file" id="attachmentFile" class="form-control file" name="attachmentFile" style="background: #F3F3F3; /* display: none; */">
+						</div><br>
 						
 						<br>
 						<div class="">
-							<button type="submit" class="okBtn" onclick="goWrite();"><i class="fas fa-check"></i>&nbsp;저장</button>
+							<button type="submit" class="okBtn" onclick="goWrite();"><i class="fas fa-check"></i>&nbsp;등록</button>
 								&nbsp;&nbsp;&nbsp;&nbsp;
 							<button type="reset" class="cancleBtn"><i class="fas fa-ban" onclick="goBack()"></i>&nbsp;취소</button>
 						</div>
@@ -153,8 +173,7 @@ summernote{
 			</div>
 		</div>
 	</div>
-	<br><br><br>
-	
+	<br><br><br>	
 	
 	
 	
@@ -176,8 +195,8 @@ summernote{
 	
 	
 	function goWrite(frm) {
-		var title = frm.noticeTitle.value;
-		var content = frm.noticeContent.value;
+		var title = frm.boardTitle.value;
+		var content = frm.boardContent.value;
 		
 		if (title.trim() == ''){
 			alert("제목을 입력해주세요");
@@ -189,6 +208,9 @@ summernote{
 		}
 		frm.submit();
 	}
+	
+	
+	
 	
 	
 	

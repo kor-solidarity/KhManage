@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.infoBoard.model.dao.InfoBoardDao;
 import com.kh.manage.infoBoard.model.vo.BoReply;
@@ -19,11 +20,16 @@ public class InfoBoardServiceImpl implements InfoBoardService {
 	private InfoBoardDao id;
 	
 	
-	
+	//등록 
 	@Override
-	public int insertBoard(InfoBoard ib) {
+	public int insertBoard(InfoBoard ib, Attachment at) {
 
-		int result = id.insertBoard(sqlSession,ib);
+		int result = 0;
+		
+		int result1 = id.insertBoard(sqlSession,ib);
+		System.out.println("result1 : " + result1);
+		
+		
 		
 		return result;
 	}
@@ -78,6 +84,7 @@ public class InfoBoardServiceImpl implements InfoBoardService {
 
 		return id.updateBoard(sqlSession, ib);
 	}
+
 
 
 

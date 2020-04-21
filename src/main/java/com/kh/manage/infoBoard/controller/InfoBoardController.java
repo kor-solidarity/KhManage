@@ -1,5 +1,8 @@
 package com.kh.manage.infoBoard.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,9 +14,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 import com.amazonaws.Request;
+import com.kh.manage.common.Attachment;
+import com.kh.manage.common.CommonsUtils;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.common.Pagination;
 import com.kh.manage.infoBoard.model.service.InfoBoardService;
@@ -61,29 +68,83 @@ public class InfoBoardController {
 	}
 	
 	
-	//게시글 등록
-	@RequestMapping("/insertBoard.ib")
-	public String insertBoard(InfoBoard ib, HttpSession session, Model model, HttpServletRequest request) {
-		
-		Member loginUser = (Member) session.getAttribute("loginUser");
-		
-		System.out.println(loginUser);
-		
-		ib.setMemberNo(loginUser.getMemberNo());
-		
-		int result = is.insertBoard(ib);
-		
-		if(result > 0) {
-			
-			return "redirect:infoBoard.ib";
-		} else {
-			
-			model.addAttribute("msg", "게시글 등록실패");
-			
-			return "common/errorPage";
-		}
-		
-	}
+//	//게시글 등록
+//	@RequestMapping("/insertBoard.ib")
+//	public String insertBoard(InfoBoard ib, HttpSession session, Model model, HttpServletRequest request,
+//			@RequestParam MultipartFile[] attachmentFile) {
+//		
+//		int result = 0;
+//		
+//		for(int i = 0; i < attachmentFile.length; i++) {
+//			System.out.println(attachmentFile[i]);
+//		}
+//
+//		List<Attachment> alist = new ArrayList<Attachment>();
+//		
+//		if(attachmentFile.length > 0) { 
+//			
+//			for(int i = 0; i < attachmentFile.length; i++) {
+//				
+//				if(attachmentFile[i].getSize() > 0) {
+//					
+//					String root = request.getSession().getServletContext().getRealPath("resources");
+//					System.out.println("root : " + root);
+//					
+//					String filePath = root + "\\uploadFiles";
+//					
+//					String originFileName = attachmentFile[i].getOriginalFilename();
+//					String ext = originFileName.substring(originFileName.lastIndexOf("."));
+//					String changeName = CommonsUtils.getRandomString();
+//					
+//					Attachment at = new Attachment();
+//					at.setChangeName(changeName);
+//					at.setOriginName(originFileName);
+//					at.setFilePath(filePath);
+//					at.setExt(ext);
+//					
+//					alist.add(at);
+//					
+//				}
+//			}
+//			
+//			
+//			
+//			
+//			
+//			
+//		}
+//		
+//		Member loginUser = (Member) session.getAttribute("loginUser");
+//		
+//		at.setDivision(loginUser.getMemberNo());
+//		ib.setMemberNo(loginUser.getMemberNo());
+//		
+//		
+//		try {
+//			
+//			int result = is.insertBoard(ib, at);
+//			System.out.println("result : " + result);
+//			attachmentFile.transferTo(new File(filePath + "\\" + changeName + ext));
+//			
+//		} catch (Exception e) {
+//
+//			new File(filePath + "\\" + changeName + ext).delete();
+//		}
+//		
+//		return "redirect:infoBoard.ib";
+//		
+//		
+////		if(result > 0) {
+////			
+////			return "redirect:infoBoard.ib";
+////		} else {
+////			
+////			model.addAttribute("msg", "게시글 등록실패");
+////			
+////			return "common/errorPage";
+////		}
+//		
+//	}
 
 	
 	
