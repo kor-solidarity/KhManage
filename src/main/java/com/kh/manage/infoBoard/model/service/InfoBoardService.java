@@ -2,13 +2,14 @@ package com.kh.manage.infoBoard.model.service;
 
 import java.util.List;
 
+import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.infoBoard.model.vo.BoReply;
 import com.kh.manage.infoBoard.model.vo.InfoBoard;
 
 public interface InfoBoardService {
 
-	int insertBoard(InfoBoard ib);
+	int insertBoard(InfoBoard ib, Attachment at);
 
 	int boardListCount();
 
