@@ -334,11 +334,11 @@
 						<%--ID--%>
 						<th style="width: 30px">ID</th>
 						<%--작업명--%>
-						<th style="width: 250px">작업명</th>
+						<th style="width: 240px">작업명</th>
 						<%--상태--%>
-						<th style="width: 40px">상태</th>
+						<th style="width: 70px">상태</th>
 						<%--기간--%>
-						<th style="width: 60px">기간</th>
+						<th style="width: 40px">기간</th>
 						<%--시작--%>
 						<th style="width: 110px">시작</th>
 						<%--완료--%>
@@ -603,7 +603,7 @@
                             // 완료율
                             "<td></td>" +
                             // 담당자
-                            "<td  data-toggle=\"modal\" data-target=\"#myModal5\" " +
+                            "<td  data-toggle=\"modal\" data-target=\"#workMemberModal\" " +
                             "onclick=\"viewWorkInCharge('#projectWork')\" id='addWorkers'>" +
                             "" +
                             // 돋보기마크. 이 경우는 그냥 submit. 자세한건 등록 다 하고 하던가.
@@ -652,13 +652,22 @@
 		해당 프로젝트의 담당자 목록,
 		그리고 작업으로 이미 배정(체크)된 인원 목록
 	--%>
-	<div class="modal fade" id="myModal5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<style>
+		.workerSelector {
+			font-weight: normal;
+		}
+
+		.workerSelector:hover {
+			font-weight: bolder;
+		}
+	</style>
+	<div class="modal fade" id="workMemberModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
 							aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="myModalLabel">담당자 목록</h4>
+					<h4 class="modal-title" id="myModalLabel"><i class="fas fa-th-large"></i>&nbsp;담당자 목록</h4>
 				</div>
 				<div class="modal-body" id="workerList">
 					<input type="checkbox" name="workCharger" value="P0" id="P0"> <label for="P0">부서 이름 직급</label> <br>
@@ -666,8 +675,9 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" id="workerSubmitBtn" class="btn btn-primary"
-							onclick="updateWorkInCharge($('#myModal5'))">Save changes
+					<button type="button" id="nullifyWorkerBtn" class="btn btn-primary"
+							onclick="nullifyWorker($('#workMemberModal'))"
+							style="background: #1E2B44; outline: none; border: none;">저장
 					</button>
 				</div>
 			</div>
@@ -698,21 +708,44 @@
                     $("#workerList").empty();
                     for (key in data) {
                         $("#workerList").append(
+                            // NULLIFIED - 담당자 배정에 변동이 있음 - 작업 하나에 담당자 한명임
                             // 소속된 인원 확인.
-                            // todo 추후 인원 수정할때 체크여부 고려!!!
-                            '<input type="checkbox" name="workCharger" value="' + data[key]['memberPk'] + '" id="' +
-                            data[key]['memberPk'] + '"> ' +
-                            '<label for="' + data[key]['memberPk'] + '">' + data[key]['deptName'] +
-                            ' <span class="workerName">' +
+                            // 추후 인원 수정할때 체크여부 고려!!!
+
+                            '<input type="text" name="workCharger" value="' + data[key]['memberPk'] + '" ' +
+                            'id="' + data[key]['memberPk'] + '" style="display: none;"> ' +
+                            '<label class="workerSelector" for="' + data[key]['memberPk'] +
+							'" onclick="updateWorkerInCharge(\'new\')">' +
+                            data[key]['deptName'] + ' <span class="workerName">' +
                             data[key]['memberName'] + '</span> ' +
                             data[key]['rankName'] + '</label> <br>'
+
+                            // '<label for="' + data[key]['memberPk'] + '">' + data[key]['deptName'] +
+                            // ' <span class="workerName">' +
+                            // data[key]['memberName'] + '</span> ' +
+                            // data[key]['rankName'] + '</label> <br>'
+
+                            // 인원목록 불러오기.
+                            // '<span class="selector"></span>'
+
                         );
                     }
-                    $("#workerSubmitBtn").attr('onclick', 'updateWorkInCharge("new")');
+                    $("#nullifyWorkerBtn").attr('onclick', 'nullifyWorker("new")');
                 }
             });
         }
 
+        // 작업에 배정된 인원을 없앤다.
+        function nullifyWorker (val) {
+
+        }
+
+        // 작업에 인원을 배정한다.
+        function updateWorkerInCharge (val) {
+
+        }
+
+        // 작업을 여러명 배정을 안하기로 되서 우선 보류
         // 담당자 목록 모달에
         function updateWorkInCharge (val) {
             console.log(val);
@@ -720,7 +753,6 @@
             if (val == 'new') {
                 for (let i = 0; i < $("[name=workCharger]").length; i++) {
                     let wid = $("[name=workCharger]").eq(i);
-
                 }
                 // 인풋만 넣는거로.
                 $("#addWorkers").append(
@@ -763,21 +795,35 @@
 
                     // 돌아가면서 넘긴다.
                     for (key in data) {
+                        target_id = "#" + data[key]['workNo'];
+                        // 선행작업 값
+                        precedeNo = data[key]['precedeNo'];
+                        if (precedeNo == undefined) {
+                            precedeNo = "";
+                        }
+                        // 상태값 관련
+
                         $("#chart-left-table tr:last-of-type").after(
                             // ' + data[key][''] + '
                             '<tr id="' + data[key]['workNo'] + '">' +
                             // 작업아이디
                             '<td>' + data[key]['workNo'] + '</td>' +
                             '<td>' + data[key]['workName'] + '</td>' +
-								// 상태
-                            '<td><span style="" class="fa fa-circle" data-toggle="tooltip" title="대기중"></span></td>' +
-                            '<td>10</td>' +
-                            '<td>2020.03.10</td>' +
-                            '<td>2020.03.19</td>' +
-                            '<td></td>' +
-                            '<td>0%</td>' +
-                            '<td>홍길동</td>' +
-                            '<td><i class="fas fa-search"></i></td>' +
+                            // 상태
+                            // '<td><span style="" class="fa fa-circle" data-toggle="tooltip" title="대기중"></span></td>' +
+                            '<td>' + data[key]['status'] + '</td>' +
+                            // 기간
+                            '<td>' + data[key]['days'] + '</td>' +
+                            '<td>' + data[key]['beginDate'] + '</td>' +
+                            '<td>' + data[key]['completeDate'] + '</td>' +
+                            // 선행작업
+                            '<td>' + precedeNo + '</td>' +
+                            '<td>' + data[key]['completeRate'] + '%' + '</td>' +
+                            // 작업에 배정된 인원
+                            '<td>' + data[key]['memberName'] + '</td>' +
+                            '<td><i class="fas fa-search" data-toggle="modal" ' +
+                            'data-target="#workDetails" ></i></td>' +
+                            // 우선 여기까지 채우고 추가내용은 값에따라 바뀌기 때문에 별도추가?
                             '</tr>'
                         );
                     }
@@ -786,8 +832,137 @@
             })
         }
 	</script>
-	<%--작업 상세보기 모달창--%>
 
+	<!-- 모달 창 -->
+	<div class="modal fade" id="workDetails" role="dialog"
+		 aria-labelledby="gridSystemModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="gridSystemModalLabel">
+						<i class="fas fa-th-large"></i>&nbsp;권한그룹 사용자
+					</h4>
+				</div>
+				<div class="modal-body">
+					<div class="container-fluid">
+						<div class="row" style="overflow: auto;">
+							<table id="projectTable" align="center" style="width:200px;">
+								<tr>
+									<td class="thRange th1"></td>
+									<td class="thRange th1">부서</td>
+									<td class="tdText thRange">이름</td>
+									<td class="tdText thRange">직급</td>
+									<td class="tdText thRange">이메일</td>
+
+								</tr>
+								<tr class="front">
+									<td class="thRange th1" align="center"><input type="checkbox"></td>
+									<td class="thRange th1">
+										<select id="searchDept" class="inputCss">
+											<option>선택</option>
+											<c:forEach var="d" items="${dList}">
+												<option value="${d.deptName}"><c:out value="${d.deptName}"/></option>
+											</c:forEach>
+										</select>
+									</td>
+									<td class="tdText thRange"><input type="text"
+																	  class="inputCss" style="width: 90px"></td>
+									<td class="tdText thRange"><input type="text"
+																	  class="inputCss" style="width: 90px;"></td>
+									<td class="tdText thRange"><input type="text"
+																	  class="inputCss" style="width: 170px;"></td>
+								</tr>
+
+								<tr class="pagingArea">
+									<td colspan="5">
+										<div class="paging"><< < 1 2 > >></div>
+									</td>
+								</tr>
+
+							</table>
+
+						</div>
+						<div class="row">
+							<div class="col-sm-9">
+								<div class="row"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default"
+							data-dismiss="modal">취소
+					</button>
+					<button type="button" class="btn btn-primary" id="saveBtn"
+							style="background: #1E2B44; outline: none; border: none;">저장
+					</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<%-- ---------------------------------- --%>
+	<%--작업 상세보기 모달창--%>
+	<div class="modal fade" id="workDetails2" tabindex="-1" role="dialog" aria-labelledby="workDetailTitle">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="workDetailTitle">담당자 목록</h4>
+				</div>
+				<div class="modal-body" id="workDetailContent">
+					<div class="container">
+						<h2>Dynamic Tabs</h2>
+						<p>To make the tabs toggleable, add the data-toggle="tab" attribute to each link. Then add a
+							.tab-pane class with a unique ID for every tab and wrap them inside a div element with class
+							.tab-content.</p>
+
+						<ul class="nav nav-tabs">
+							<li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+							<li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
+							<li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
+							<li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
+						</ul>
+
+						<div class="tab-content">
+							<div id="home" class="tab-pane fade in active">
+								<h3>HOME</h3>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+									incididunt ut labore et dolore magna aliqua.</p>
+							</div>
+							<div id="menu1" class="tab-pane fade">
+								<h3>Menu 1</h3>
+								<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+									ea commodo consequat.</p>
+							</div>
+							<div id="menu2" class="tab-pane fade">
+								<h3>Menu 2</h3>
+								<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+									laudantium, totam rem aperiam.</p>
+							</div>
+							<div id="menu3" class="tab-pane fade">
+								<h3>Menu 3</h3>
+								<p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta
+									sunt explicabo.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" id="workDetailSubmitBtn" class="btn btn-primary"
+							onclick="">Save changes
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
 
