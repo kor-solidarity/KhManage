@@ -3,6 +3,7 @@ package com.kh.manage.issue.model.service;
 import java.util.List;
 
 import com.kh.manage.common.Attachment;
+import com.kh.manage.common.PageInfo;
 import com.kh.manage.issue.model.vo.Issue;
 import com.kh.manage.issue.model.vo.IssueProjectTeam;
 import com.kh.manage.issue.model.vo.IssueWPT;
@@ -26,6 +27,12 @@ public interface IssueService {
 	List<IssueProjectTeam> selectProjectTeamList(Issue issue);
 
 	int insertReportProjectTeam(IssueProjectTeam ipt);
+
+	int insertIssueHistory(Issue issue);
+
+	List<Issue> selectIssueList2(String pno, PageInfo pi);
+
+	int getListCount(String pno);
 
 
 }

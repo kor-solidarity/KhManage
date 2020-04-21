@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.manage.common.Attachment;
+import com.kh.manage.common.PageInfo;
 import com.kh.manage.issue.model.vo.Issue;
 import com.kh.manage.issue.model.vo.IssueProjectTeam;
 import com.kh.manage.issue.model.vo.IssueWPT;
@@ -28,5 +29,11 @@ public interface IssueDao {
 	List<IssueProjectTeam> selectProjectTeamList(SqlSessionTemplate sqlSession, Issue issue);
 
 	int insertReportProjectTeam(SqlSessionTemplate sqlSession, IssueProjectTeam ipt);
+
+	int insertIssueHistory(SqlSessionTemplate sqlSession, Issue issue);
+
+	List<Issue> selectIssueList2(SqlSessionTemplate sqlSession, String pno, PageInfo pi);
+
+	int getListCount(SqlSessionTemplate sqlSession, String pno);
 
 }
