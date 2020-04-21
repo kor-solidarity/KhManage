@@ -17,8 +17,15 @@ public interface IssueService {
 
 	List<IssueProjectTeam> selectProjectTeamList(String pno);
 
-	Issue insertIssue(Issue issue);
+	int insertIssue(Issue issue);
 
-	int insertIssueAttachment(Attachment attachment);
+	int insertIssueAttachment(Attachment at);
+
+	List<Issue> selectIssueList(Member member);
+
+	List<IssueProjectTeam> selectProjectTeamList(Issue issue);
+
+	int insertReportProjectTeam(IssueProjectTeam ipt);
+
 
 }

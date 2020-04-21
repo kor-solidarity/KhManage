@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.manage.common.Attachment;
+import com.kh.manage.issue.model.vo.Issue;
 import com.kh.manage.issue.model.vo.IssueProjectTeam;
 import com.kh.manage.issue.model.vo.IssueWPT;
 import com.kh.manage.issue.model.vo.IssueWork;
@@ -16,5 +18,15 @@ public interface IssueDao {
 	List<IssueWork> selectWorkList(SqlSessionTemplate sqlSession, String pno);
 
 	List<IssueProjectTeam> selectProjectTeamList(SqlSessionTemplate sqlSession, String pno);
+
+	int insertIssue(SqlSessionTemplate sqlSession, Issue issue);
+
+	int insertIssueAttachment(SqlSessionTemplate sqlSession, Attachment at);
+
+	List<Issue> selectIssueList(SqlSessionTemplate sqlSession, Member member);
+
+	List<IssueProjectTeam> selectProjectTeamList(SqlSessionTemplate sqlSession, Issue issue);
+
+	int insertReportProjectTeam(SqlSessionTemplate sqlSession, IssueProjectTeam ipt);
 
 }

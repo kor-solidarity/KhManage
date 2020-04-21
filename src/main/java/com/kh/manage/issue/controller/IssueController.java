@@ -11,6 +11,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,10 +34,34 @@ public class IssueController {
 	private IssueService is;
 
 	@RequestMapping("/issueList.iu")
-	public String issueList() {
+	public String issueList(Model m, HttpServletRequest request) {
 		
-		return "user/issue/issueList";
+		Member member = (Member) request.getSession().getAttribute("loginUser");
+		
+		List<IssueWPT> iwpt = is.selectProjectName(member);
+		
+		
+		if(iwpt != null) {
+			request.setAttribute("iwpt", iwpt);
+			return "user/issue/issueList";
+		}else {
+			request.setAttribute("msg", "이슈 리스트 출력 오류");
+			return "common/errorPage";
+		}
+		
 	}
+	
+//	@GetMapping("/issueList.iu")
+//	public String issueListpno(@RequestParam String pno, Model m, HttpServletRequest request) {
+//		Member member = (Member) request.getSession().getAttribute("loginUser");
+//		
+//		List<IssueWPT> iwpt = is.selectProjectName(member);
+//		
+//		List<Issue> list = 
+//		
+//		
+//		return "";
+//	}
 	
 	@RequestMapping("/issueInsertPage.iu")
 	public String issueInsertPage(Model m, HttpServletRequest request) {
@@ -101,52 +127,71 @@ public class IssueController {
 	
 	@RequestMapping("/insertIssue.iu")
 	public String insertIssue(Issue issue, HttpServletRequest request, HttpSession session, @RequestParam MultipartFile[] file) {
-//		for(int i = 0; i < file.length; i++) {
-//			System.out.println(file[i]);
-//		}
-//		System.out.println(issue);
-//		List<Attachment> aList = new ArrayList<Attachment>();
-//		
-//		if(file.length > 0) {
-//			for(int i = 0; i < file.length; i++) {
-//				if(file[i].getSize() > 0) {
-//					String root = request.getSession().getServletContext().getRealPath("resources");
-//					String filePath = root + "\\uploadfiles";
-//					String originFileName = file[i].getOriginalFilename();
-//					String ext = originFileName.substring(originFileName.lastIndexOf("."));
-//					String changeName = CommonsUtils.getRandomString();
-//					
-//					try {
-//						file[i].transferTo(new File(filePath + "\\" + changeName + ext));
-//					} catch (IllegalStateException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					} catch (IOException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//					
-//					Attachment at = new Attachment();
-//					at.setChangeName(changeName);
-//					at.setOriginName(originFileName);
-//					at.setFilePath(filePath);
-//					at.setExt(ext);
-//					
-//					aList.add(at);
-//				}
-//			}
-//		}
-//		
-//		Issue ist = is.insertIssue(issue);
-//		
-//		if(ist.getIssueNo() != null) {
-//			for(int i = 0; i < aList.size(); i++) {
-//				aList.get(i).setDivision(ist.getIssueNo());
-//				int result = is.insertIssueAttachment(aList.get(i));
-//			}
-//		}
+		int result = 0;
+		for(int i = 0; i < file.length; i++) {
+			System.out.println(file[i]);
+		}
+		List<Attachment> aList =  new ArrayList<Attachment>();
 		
-		return "";
+		if(file.length > 0) {
+			for(int i = 0; i < file.length; i++) {
+				if(file[i].getSize() > 0) {
+					String root = request.getSession().getServletContext().getRealPath("resources");
+					String filePath = root + "\\uploadfiles";
+					String originFileName = file[i].getOriginalFilename();
+					String ext = originFileName.substring(originFileName.lastIndexOf("."));
+					String changeName = CommonsUtils.getRandomString();
+					
+					try {
+						file[i].transferTo(new File(filePath + "\\" + changeName + ext));
+					} catch (IllegalStateException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					Attachment at = new Attachment();
+					at.setChangeName(changeName);
+					at.setOriginName(originFileName);
+					at.setFilePath(filePath);
+					at.setExt(ext);
+					
+					aList.add(at);
+					
+				}
+			}
+			  result = is.insertIssue(issue);
+			System.out.println(aList);
+			if(result > 0) {
+				for(int i = 0; i < aList.size(); i++) {
+					int result1 = is.insertIssueAttachment(aList.get(i));
+				}
+			}
+			
+		}else {
+			result = is.insertIssue(issue);
+		}
+
+		
+		
+		if(result > 0) {
+			List<IssueProjectTeam> ipt = is.selectProjectTeamList(issue);
+			
+			
+			for(int i = 0; i < ipt.size(); i++) {
+				int result2 = is.insertReportProjectTeam(ipt.get(i));
+				
+			}
+			
+			return "redirect:issueList.iu";
+		}else {
+			
+			request.setAttribute("msg", "이슈 등록 오류");
+			return "common/errorPage";
+		}
+	
 	}
 	
 	
