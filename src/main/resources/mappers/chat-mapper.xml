@@ -114,6 +114,8 @@
 		LEFT JOIN MESSAGE_CONTENT MC ON(MC.MESSAGE_NO = M.MESSAGE_NO)
 		WHERE C.RECENT_MESSAGE IS NOT NULL
 		AND CM.MEMBER_NO = #{memberNo}
+		AND CM.STATUS = 'Y'
+		 AND M.SENDER != 'M999'
 		UNION
 		SELECT C.CHATROOM_NO
 		      ,C.MEMBER_NO
@@ -124,7 +126,8 @@
 		FROM CHATROOM C
 		LEFT JOIN MESSAGE M ON(C.RECENT_MESSAGE = M.MESSAGE_NO)
 		LEFT JOIN MESSAGE_CONTENT MC ON(MC.MESSAGE_NO = M.MESSAGE_NO)
-		WHERE C.MEMBER_NO = #{memberNo})
+		WHERE C.MEMBER_NO = #{memberNo}
+		  AND M.SENDER != 'M999')
 		ORDER BY ENROLL_DATE DESC
 	</select>
 	
@@ -173,7 +176,7 @@
         LEFT JOIN ATTACHMENT A ON (M.SENDER = A.DIVISION)
 		WHERE M.STATUS = 'Y'
 		AND M.CHATROOM_NO = #{chatRoomNo}
-		ORDER BY SEND_DATE
+		ORDER BY SEND_DATE, MESSAGE_NO ASC
 	</select>
 	
 	<select id="selectDate" resultType="java.lang.String">
@@ -189,7 +192,8 @@
 		      ,ENROLL_DATE
 		      ,(SELECT COUNT(*)
 		        FROM CHAT_MEMBER
-		        WHERE CHATROOM_NO = #{chatRoomNo}) AS COUNT
+		        WHERE CHATROOM_NO = #{chatRoomNo}
+		        AND STATUS = 'Y') AS COUNT
 		FROM CHATROOM
 		WHERE CHATROOM_NO = #{chatRoomNo}
 	</select>
@@ -208,6 +212,7 @@
 						   FROM CHAT_MEMBER
 						   WHERE MEMBER_NO = #{memberNo}
 						   AND CHATROOM_NO = #{chatRoomNo})
+		AND M.SENDER != 'M999'
 	</select>
 	
 	<select id="getReadCount" parameterType="Message" resultType="java.lang.String">
@@ -218,6 +223,51 @@
 							FROM MESSAGE
 							WHERE MESSAGE_NO = #{messageNo})		
 	</select>
+	
+	<select id="selectLastMessage" parameterType="ChatRoom"  resultType="java.lang.String">
+		SELECT MAX(SEND_DATE)
+		FROM MESSAGE
+		WHERE CHATROOM_NO = #{chatRoomNo}
+		AND SENDER != 'M999'
+	</select>
+	
+	<select id="selectInsertDateInfo" parameterType="Message" resultType="java.lang.String">
+		 SELECT TO_DATE(#{status}, 'RRRR-MM-DD')||TO_CHAR( TO_DATE(#{status}, 'RRRR-MM-DD'), 'DY') 
+ 		 FROM DUAL
+	</select>
+	
+	<select id="checkChatRoom" parameterType="ChatRoom" resultMap="ChatRoomResultSet">
+		SELECT C.CHATROOM_NO
+		      ,C.MEMBER_NO
+		      ,C.ROOM_NAME
+		      ,C.RECENT_MESSAGE
+		      ,C.STATUS
+		FROM CHATROOM C
+		WHERE C.MEMBER_NO = #{memberNo}
+		AND C.CHATROOM_NO = #{chatRoomNo}
+	</select>
+	
+	<select id="changeMember" parameterType="ChatRoom" resultType="java.lang.String">
+		 SELECT MEMBER_NO
+		  FROM CHAT_MEMBER
+		 WHERE CHATROOM_NO = #{chatRoomNo}
+		   AND MEMBER_NO != #{memberNo}
+	</select>
+	
+	<update id="chatRoomChangeMemberNo" parameterType="ChatRoom">
+		UPDATE CHATROOM SET MEMBER_NO = #{memberNo}
+		WHERE CHATROOM_NO = #{chatRoomNo}
+	</update>
+	
+	<insert id="insertInfoMessage" parameterType="Message">
+		INSERT INTO MESSAGE VALUES('ME'|| TO_CHAR(SEQ_MSG_NO.NEXTVAL, 'FM000'), #{chatRoomNo}, #{sender}, 'Y', #{contentType}, SYSDATE)
+	</insert>
+	
+	<update id="deleteChatMember" parameterType="ChatRoom">
+		UPDATE CHAT_MEMBER SET STATUS = 'N'
+		WHERE MEMBER_NO = #{memberNo}
+		AND CHATROOM_NO = #{chatRoomNo}
+	</update>
 </mapper>
 
 

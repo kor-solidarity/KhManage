@@ -219,6 +219,7 @@ body {
 			$(".chatRoom").on('click', function() {
 				console.log($(this).find('.chatNo').val())
 				var cr = $(this).find('.chatNo').val();
+				ws.send("ss");
 				location.href='chatRoom.ct?chatRoomNo='+cr;
 			});
 		});

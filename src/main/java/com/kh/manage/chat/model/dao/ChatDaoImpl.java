@@ -100,4 +100,46 @@ public class ChatDaoImpl implements ChatDao {
 		return sqlSession.selectOne("Chat.chatCount", chatRoom);
 	}
 
+	@Override
+	public String selectLastMessage(SqlSessionTemplate sqlSession, ChatRoom cr) {
+		
+		return sqlSession.selectOne("Chat.selectLastMessage", cr);
+	}
+
+	@Override
+	public String selectInsertDateInfo(SqlSessionTemplate sqlSession, Message message) {
+		
+		return sqlSession.selectOne("Chat.selectInsertDateInfo", message);
+	}
+
+	@Override
+	public ChatRoom checkChatRoom(SqlSessionTemplate sqlSession, ChatRoom cr) {
+		
+		return sqlSession.selectOne("Chat.checkChatRoom", cr);
+	}
+
+	@Override
+	public String changeMember(SqlSessionTemplate sqlSession, ChatRoom crCheck) {
+		
+		return sqlSession.selectOne("Chat.changeMember", crCheck);
+	}
+
+	@Override
+	public int chatRoomChangeMemberNo(SqlSessionTemplate sqlSession, ChatRoom crCheck) {
+		
+		return sqlSession.update("Chat.chatRoomChangeMemberNo", crCheck);
+	}
+
+	@Override
+	public int insertInfoMessage(SqlSessionTemplate sqlSession, Message me) {
+		
+		return sqlSession.insert("Chat.insertInfoMessage", me);
+	}
+
+	@Override
+	public int deleteChatMember(SqlSessionTemplate sqlSession, ChatRoom cr) {
+		
+		return sqlSession.update("Chat.deleteChatMember", cr);
+	}
+
 }

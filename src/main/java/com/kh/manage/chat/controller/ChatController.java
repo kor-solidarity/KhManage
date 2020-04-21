@@ -40,11 +40,36 @@ public class ChatController {
 			int count = cs.chatCount(list.get(i));
 			list.get(i).setCount(count);
 		}
-		System.out.println(list);
 		
 		model.addAttribute("list", list);
 		
 		return "user/chat/chatMainPage";
+	}
+	
+	@RequestMapping("/selectAllMessageCount.ct")
+	public void selectAllMessageCount(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+		Member m = (Member) session.getAttribute("loginUser");
+		
+		List<ChatRoom> list = cs.selectAllChatRoom(m);
+		int num = 0;
+		for(int i = 0; i < list.size(); i++) {
+			list.get(i).setMemberNo(m.getMemberNo());
+			int count = cs.chatCount(list.get(i));
+			num += count;
+		}
+		
+		request.setAttribute("num", num);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+
+		String gson = new Gson().toJson(num);
+
+		try {
+			response.getWriter().write(gson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	@RequestMapping("/showCreatChat.ct")
@@ -149,6 +174,23 @@ public class ChatController {
 		}
 	}
 	
+	@RequestMapping("/selectLastMessage.ct")
+	public void selectLastMessage(ChatRoom cr, HttpServletRequest request, HttpServletResponse response) {
+		String day = cs.selectLastMessage(cr);
+		
+		request.setAttribute("day", day);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+
+		String gson = new Gson().toJson(day);
+
+		try {
+			response.getWriter().write(gson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@RequestMapping("/selectChatList.ct")
 	public void selectChatList(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		Member m = (Member) session.getAttribute("loginUser");
@@ -169,8 +211,80 @@ public class ChatController {
 		
 	}
 	
+	@RequestMapping("/insertInfoMessage.ct")
+	public void insertInfoMessage(String message, HttpServletRequest request, HttpServletResponse response) {
+		String[] str = message.split(",");
+    	
+    	Message me = new Message();
+    	me.setContent(str[0]);
+    	me.setChatRoomNo(str[1]);
+    	me.setSender("M999");
+    	me.setContentType(str[3]);
+    	me.setStatus(str[5]);
+		System.out.println("메세지 객체~~~~~~~~~~~~~~~~~~: " + me);
+    	String date = cs.selectInsertDateInfo(me);
+    	me.setContent(date);
+    	System.out.println("값~~~~~~~~~~~~~~~~~~: " + date);
+    	
+    	int result = cs.insertMessage(me);  
+    	
+
+		request.setAttribute("date", date);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+
+		String gson = new Gson().toJson(date);
+
+		try {
+			response.getWriter().write(gson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@RequestMapping("/selectImg.ct")
 	public void selectImg(Member m) {
-		System.out.println("회원정보 :                      " + m);
+		
+		System.out.println("회원정보 : " + m);
+	}
+	
+	@RequestMapping("/leaveChatRoom.ct")
+	public String leaveChatRoom(ChatRoom cr, HttpSession session) {
+		Member m = (Member) session.getAttribute("loginUser");
+		
+		cr.setMemberNo(m.getMemberNo());
+		
+		ChatRoom crCheck = cs.checkChatRoom(cr);
+		
+		if(crCheck != null) {
+			System.out.println("가져온 값 : " + crCheck);
+			String changeMember = cs.changeMember(crCheck);
+			
+			crCheck.setMemberNo(changeMember);
+			
+			int result = cs.chatRoomChangeMemberNo(crCheck);
+			
+			if(result > 0) {
+				int result2 = cs.deleteChatMember(cr);
+			}
+		}else {
+			int result2 = cs.deleteChatMember(cr);
+		}
+		
+		return "redirect:showChatPage.ct";
+	}
+	
+	@RequestMapping("/deleteInfo.ct")
+	public void deletInfo(String text) {
+		String[] str = text.split(",");
+		
+		Message me = new Message();
+    	me.setContent(str[0]);
+    	me.setChatRoomNo(str[1]);
+    	me.setSender("M999");
+    	me.setContentType(str[3]);
+    	me.setStatus(str[5]);
+    	
+    	int result = cs.insertInfoMessage(me);
 	}
 }
