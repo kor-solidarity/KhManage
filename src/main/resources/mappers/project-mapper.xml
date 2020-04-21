@@ -43,6 +43,7 @@
         <result property="projectNo" column="project_no"/>
         <result property="beginDate" column="begin_date"/>
         <result property="completeDate" column="complete_date"/>
+        <result property="precedeNo" column="PRECEDE_NO"/>
         <result property="completeRate" column="complete_rate"/>
         <result property="grantorNo" column="grantor_no"/>
         <result property="workLevel" column="work_level"/>
@@ -50,6 +51,9 @@
         <result property="memo" column="memo"/>
         <result property="workType" column="work_type"/>
         <result property="workStatus" column="work_status"/>
+        <result property="memberName" column="MEMBER_NAME"/>
+        <result property="memberNo" column="member_no"/>
+        <result property="days" column="days"/>
     </resultMap>
 
     <resultMap id="projectTypeResultSet" type="ProjectType">
@@ -95,6 +99,7 @@
         <result property="memberPk" column="MEMBER_PK"/>
         <result property="role" column="role"/>
         <result property="memberName" column="MEMBER_NAME"/>
+        <result property="deptName" column="DEPT_NAME"/>
         <result property="rankName" column="RANK_NAME"/>
     </resultMap>
 
@@ -120,13 +125,33 @@
     </select>
 
     <select id="selectProjectWorkList" resultMap="projectWorkListResultSet" parameterType="String">
-        select *
-        from WORK
+        SELECT W.WORK_NO       AS WORK_NO,
+               W.WORK_NAME     AS WORK_NAME,
+               W.STATUS        AS STATUS,
+               W.PROJECT_NO    AS PROJECT_NO,
+               W.BEGIN_DATE    AS BEGIN_DATE,
+               W.COMPLETE_DATE AS COMPLETE_DATE,
+               W.PRECEDE_NO    AS PRECEDE_NO,
+               W.COMPLETE_RATE AS COMPLETE_RATE,
+               W.WORK_LEVEL    AS WORK_LEVEL,
+               W.HIGH_WORK_NO  AS HIGH_WORK_NO,
+               W.WORK_TYPE     AS WORK_TYPE,
+               W.MEMBER_NO     AS MEMBER_NO,
+               W.WORK_STATUS   AS WORK_STATUS,
+               M.MEMBER_NAME   AS MEMBER_NAME,
+               M.MEMBER_TYPE   AS MEMBER_TYPE,
+               (COMPLETE_DATE - BEGIN_DATE) AS DAYS
+        FROM WORK W
+                 JOIN MEMBER M ON W.MEMBER_NO = M.MEMBER_NO
+        WHERE PROJECT_NO = #{value}
+          AND WORK_TYPE = '프로젝트'
+          AND WORK_STATUS = 'Y'
+        ORDER BY BEGIN_DATE
     </select>
 
     <!--프로젝트 담당자 명단뽑기.-->
     <select id="selectProjectTeamList" parameterType="String" resultMap="projectTeamResultSet">
-        SELECT T.TEAM_PK, PROJECT_PK, MEMBER_PK, ROLE, MEMBER_NAME, RANK_NAME
+        SELECT T.TEAM_PK, PROJECT_PK, MEMBER_PK, ROLE, MEMBER_NAME, DEPT_NAME, RANK_NAME
         FROM PROJECT_TEAM T
                  JOIN (SELECT *
                        FROM MEMBER M

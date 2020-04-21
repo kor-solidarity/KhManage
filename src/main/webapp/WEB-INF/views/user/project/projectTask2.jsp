@@ -604,8 +604,8 @@
                             "<td></td>" +
                             // 담당자
                             "<td  data-toggle=\"modal\" data-target=\"#myModal5\" " +
-                            "onclick=\"viewWorkInCharge('#projectWork')\">" +
-                            "<span></span><input type='text' name='' id=''></td>" +
+                            "onclick=\"viewWorkInCharge('#projectWork')\" id='addWorkers'>" +
+                            "" +
                             // 돋보기마크. 이 경우는 그냥 submit. 자세한건 등록 다 하고 하던가.
                             "<td><button onclick='sendProjectWork()'>" +
                             "<i class='far fa-save'></i>" +
@@ -666,15 +666,19 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Save changes</button>
+					<button type="button" id="workerSubmitBtn" class="btn btn-primary"
+							onclick="updateWorkInCharge($('#myModal5'))">Save changes
+					</button>
 				</div>
 			</div>
 		</div>
 	</div>
 	<script>
+        $(updateWorkList());
+
         /***
-		 * 담당자 목록 갱신.
-		 *
+         * 담당자 목록 갱신.
+         *
          * @param workId 해당 모달창이 가리키고 있는 작업의 아이디. 작업번호가 없으면 무조건 신규등록인거?
          */
         function viewWorkInCharge (workId) {
@@ -686,15 +690,100 @@
                     pid: "${pid}"
                 },
                 success: function (data) {
-                    for (key in data){
+                    for (key in data) {
                         console.log(key);
                         console.log(data[key])
                     }
                     // 안에 내용물을 다 엎고 새로운걸로 바꾼다.
-                    // $("#workerList").empty();
+                    $("#workerList").empty();
+                    for (key in data) {
+                        $("#workerList").append(
+                            // 소속된 인원 확인.
+                            // todo 추후 인원 수정할때 체크여부 고려!!!
+                            '<input type="checkbox" name="workCharger" value="' + data[key]['memberPk'] + '" id="' +
+                            data[key]['memberPk'] + '"> ' +
+                            '<label for="' + data[key]['memberPk'] + '">' + data[key]['deptName'] +
+                            ' <span class="workerName">' +
+                            data[key]['memberName'] + '</span> ' +
+                            data[key]['rankName'] + '</label> <br>'
+                        );
+                    }
+                    $("#workerSubmitBtn").attr('onclick', 'updateWorkInCharge("new")');
+                }
+            });
+        }
+
+        // 담당자 목록 모달에
+        function updateWorkInCharge (val) {
+            console.log(val);
+            // 새 작업인 경우 아직 추가대상은 아닌거.
+            if (val == 'new') {
+                for (let i = 0; i < $("[name=workCharger]").length; i++) {
+                    let wid = $("[name=workCharger]").eq(i);
+
+                }
+                // 인풋만 넣는거로.
+                $("#addWorkers").append(
+                    '<input type="text" name="" id="">'
+                );
+            }
+            return;
+            $.ajax({
+                url: 'updateWorkInCharge.pr',
+                type: 'post',
+                data: {
+                    pid: "${pid}"
+                },
+                success: function (data) {
+
                 }
             })
-            $()
+        }
+
+        /**
+         * 작업목록에 있는 모든 목록을 지우고 새로 불러와서 정렬시키는 역할을 한다.
+         *
+         */
+        function updateWorkList () {
+            console.log("updateWorkList");
+            $.ajax({
+                url: 'updateWorkList.pr',
+                type: 'post',
+                data: {
+                    pid: "${pid}"
+                },
+                success: function (data) {
+                    for (key in data) {
+                        console.log(key);
+                        console.log(data[key])
+                    }
+                    // 좌측 목록 몽땅 제거.
+                    $("#chart-left-table tr:not(tr:first-of-type)").empty()
+                    // todo 우측도 이거 끝나면 제거해야함. 당장은 좌측이 더 급하니 이거부터 하는걸로.
+
+                    // 돌아가면서 넘긴다.
+                    for (key in data) {
+                        $("#chart-left-table tr:last-of-type").after(
+                            // ' + data[key][''] + '
+                            '<tr id="' + data[key]['workNo'] + '">' +
+                            // 작업아이디
+                            '<td>' + data[key]['workNo'] + '</td>' +
+                            '<td>' + data[key]['workName'] + '</td>' +
+								// 상태
+                            '<td><span style="" class="fa fa-circle" data-toggle="tooltip" title="대기중"></span></td>' +
+                            '<td>10</td>' +
+                            '<td>2020.03.10</td>' +
+                            '<td>2020.03.19</td>' +
+                            '<td></td>' +
+                            '<td>0%</td>' +
+                            '<td>홍길동</td>' +
+                            '<td><i class="fas fa-search"></i></td>' +
+                            '</tr>'
+                        );
+                    }
+
+                }
+            })
         }
 	</script>
 	<%--작업 상세보기 모달창--%>

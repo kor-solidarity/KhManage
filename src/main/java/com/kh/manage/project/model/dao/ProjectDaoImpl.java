@@ -70,7 +70,7 @@ public class ProjectDaoImpl implements ProjectDao {
 	
 	@Override
 	public List<ProjectWork> selectProjectWorkList(SqlSessionTemplate sqlSession, String pid) {
-		return sqlSession.selectList("Project.selectProjectWorkList");
+		return sqlSession.selectList("Project.selectProjectWorkList", pid);
 	}
 	
 	@Override
