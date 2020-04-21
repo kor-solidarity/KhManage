@@ -42,6 +42,8 @@
         <typeAlias type="com.kh.manage.issue.model.vo.IssueWork" alias="IssueWork"/>
         <typeAlias type="com.kh.manage.issue.model.vo.IssueProjectTeam" alias="IssueProjectTeam"/>
         <typeAlias type="com.kh.manage.infoBoard.model.vo.BoReply" alias="BoReply"/>
+        <typeAlias type="com.kh.manage.issue.model.vo.Issue" alias="Issue"/>
+        <typeAlias type="com.kh.manage.common.Report" alias="Report"/>
   	</typeAliases>
   
   

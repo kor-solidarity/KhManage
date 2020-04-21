@@ -177,6 +177,7 @@
 <body id="bodyAll" onload="$('#route1').text('내 작업'), $('#route2').text('작업 관리')">
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
 	<jsp:include page="/WEB-INF/views/user/common/sidebar2.jsp"/>
+	
 	<script src="${path }/resources/js/websocketopen.js"></script>
 	<div class="panel panel-headline">
 		<div class="panel-heading">
@@ -576,7 +577,6 @@
 		}); 
 		
 		$("#workChangeSubmit").click(function(){
-			send("1");
 			$('#workRegChange').submit();
 		}); 
 	
@@ -591,7 +591,6 @@
  					console.log(data);
  					
 					console.log(data.beginDate);
-					
 					//시작일
 					//4월 17, 2020
 					var test = data.beginDate;

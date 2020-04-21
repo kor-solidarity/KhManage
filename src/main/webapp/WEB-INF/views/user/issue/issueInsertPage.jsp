@@ -95,7 +95,7 @@
 			<div style="width:100%; height:700px; margin:0 auto; overflow:auto;">
 			<b>이슈 등록 정보</b>
 			<hr>
-			<form id="insertIssue" action="insertIssue.iu" method="post" enctype="multipart/form-data">
+			<form id="insertIssue" action="insertIssue.iu" method="post" enctype="multipart/form-data" novalidate="true">
 			<table id="issueTable">	
 				<tr>
 					<td class="thRange"></td>
@@ -119,7 +119,7 @@
 					<td class="thRange"></td>
 					<td class="thRange">제기자</td>
 					<td class="thRange">${sessionScope.loginUser.memberName }</td>
-					<td class="thRange"></td>
+					<td class="thRange"><input type="hidden" name="registerType" value="${sessionScope.loginUser.memberNo }"></td>
 					<td class="thRange"></td>
 					<td class="thRange"></td>
 					<td class="thRange"></td>
@@ -290,19 +290,6 @@
 	
 	<script>
 	$(function(){
-		$("a[name='delete']").on("click",function(e){
-            e.preventDefault();
-            fn_fileDelete($(this));
-        });
-        $("#add").on("click",function(e){
-            e.preventDefault();
-            fn_fileAdd();
-        });
-        
-        $("#submitBtn").onclick(function(){
-        	$("#insertIssue").submit();
-        });
-        
 		$("#projectNo").change(function(){
 			var pno = $(this).val();
 			console.log(pno);
@@ -330,6 +317,22 @@
 				}
 			});
 		});
+		
+		
+		$("a[name='delete']").on("click",function(e){
+            e.preventDefault();
+            fn_fileDelete($(this));
+        });
+		
+        $("#add").on("click",function(e){
+            e.preventDefault();
+            fn_fileAdd();
+        });
+        
+        $("#submitBtn").click(function(){
+        	$("#insertIssue").submit();
+        });
+        
 		
 	});
 	

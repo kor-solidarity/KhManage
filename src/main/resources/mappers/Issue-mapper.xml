@@ -23,6 +23,20 @@
 		<result property="role" column="ROLE"/>
 		<result property="memberName" column="MEMBER_NAME"/>
 	</resultMap>
+	
+	
+	<resultMap type="Issue" id="selectIssueList">
+		<id property="issueNo" column="ISSUE_NO"/>
+		<result property="issueType" column="ISSUE_TYPE"/>
+		<result property="issueTitle" column="ISSUE_TITLE"/>
+		<result property="issueContent" column="ISSUE_CONTENT"/>
+		<result property="registerType" column="REGISTER_TYPE"/>
+		<result property="workNo" column="WORK_NO"/>
+		<result property="teamWorker" column="TEAMWORKER"/>
+		<result property="registerDate" column="REGISTER_DATE"/>
+		<result property="projectNo" column="PROJECT_NO"/>
+		<result property="actionDate" column="ACTION_DATE"/>
+	</resultMap>
 
 
 	<select id="selectProjectName" parameterType="Member" resultMap="selectIssueTeamProject">
@@ -45,6 +59,35 @@
 		JOIN MEMBER M ON (PT.MEMBER_PK = M.MEMBER_NO)
 		WHERE PT.PROJECT_PK = #{pno}
 	</select>
+	
+	<insert id="insertIssue" parameterType="Issue">
+		INSERT INTO ISSUE
+		VALUES('I' || TO_CHAR(SEQ_IS.NEXTVAL, 'FM000'), #{issueType}, #{issueTitle}, #{issueContent}, #{registerType}, #{workNo}, #{teamWorker}, SYSDATE, #{projectNo}, #{actionDate})
+	</insert>
+	
+	<insert id="insertIssueAttachment" parameterType="Attachment">
+		INSERT INTO ATTACHMENT
+		VALUES('AT'|| TO_CHAR(SEQ_AT_NO.NEXTVAL, 'FM000'),'I' || TO_CHAR(SEQ_IS.CURRVAL, 'FM000'), #{originName}, #{changeName} , #{filePath}, #{ext})
+	</insert>
+	
+	<select id="selectIssueList" parameterType="Member">
+		SELECT *
+		FROM ISSUE
+	</select>
+	
+	<select id="selectProjectTeamList2" parameterType="Issue" resultMap="selectIssueTeamList">
+		SELECT PT.TEAM_PK, PT.PROJECT_PK, PT.MEMBER_PK, PT.ROLE, M.MEMBER_NAME
+		FROM PROJECT_TEAM PT
+		JOIN MEMBER M ON (PT.MEMBER_PK = M.MEMBER_NO)
+		WHERE PT.PROJECT_PK = #{projectNo}
+	</select>
+	
+	<insert id="insertReportProjectTeam" parameterType="IssueProjectTeam">
+		INSERT INTO REPORT
+		VALUES ('RP' || TO_CHAR(SEQ_RP_NO.NEXTVAL, 'FM000'), 'I' || TO_CHAR(SEQ_IS.CURRVAL, 'FM000'), #{memberPk} )
+	</insert>
+	
+	
 </mapper>
 
 

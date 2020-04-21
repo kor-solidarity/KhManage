@@ -39,15 +39,31 @@ public class IssueServiceImpl implements IssueService{
 	}
 
 	@Override
-	public Issue insertIssue(Issue issue) {
-		return null;
+	public int insertIssue(Issue issue) {
+		return id.insertIssue(sqlSession, issue);
 	}
 
 	@Override
-	public int insertIssueAttachment(Attachment attachment) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertIssueAttachment(Attachment at) {
+		return id.insertIssueAttachment(sqlSession, at);
 	}
+
+	@Override
+	public List<Issue> selectIssueList(Member member) {
+		return id.selectIssueList(sqlSession, member);
+	}
+
+	@Override
+	public List<IssueProjectTeam> selectProjectTeamList(Issue issue) {
+		return id.selectProjectTeamList(sqlSession, issue);
+	}
+
+	@Override
+	public int insertReportProjectTeam(IssueProjectTeam ipt) {
+		return id.insertReportProjectTeam(sqlSession, ipt);
+	}
+
+	
 
 	
 

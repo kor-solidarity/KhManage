@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +10,9 @@
 	#projectTable{
 		width:100%;
 		text-align:left;
+	}
+	#projectJoin{
+		width:130px;
 	}
 	.projectBtn{
 		width:130px;
@@ -119,6 +123,8 @@
       margin-left:200px;
       width:50%;
    }
+   
+   
 </style>
 </head>
 <body onload="$('#route1').text('일반업무'), $('#route2').text('이슈 관리')">
@@ -131,13 +137,22 @@
 							<tr>
 								<td><button class="projectBtn" onclick="location.href='issueInsertPage.iu'"><i class="fas fa-edit"></i> &nbsp;이슈  등록</button>
 								<td><button class="projectBtn"><i class="fas fa-download"></i> &nbsp;액셀 다운로드</button>
-								<td colspan="6"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<td><label id="projectJoin">참여 프로젝트 : </label></td>
+								<td>
+									<select name="projectNo" id="projectNo" class="projectList">
+										<option>선택하세요</option>
+											<c:forEach var="iwpt" items="${iwpt }">
+												<option value="${iwpt.projectPk }"><c:out value="${iwpt.projectName }"/></option> 
+											</c:forEach>
+									</select>
+								</td>
+								<td > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<!-- <label style="color:#626262">수행부서   </label>&nbsp;&nbsp;
 									<select class="buseoSelect">
 										<option>선택하세요</option>
 									</select> -->
 								</td>
-								<td style="width:65%"></td>
+								<td style="width:50%"></td>
 								<td><label class="issueOpen">오픈</label></td>
 								<td>&nbsp;&nbsp;</td>
 								<td><label class="issueCpl">완료</label></td>
@@ -198,7 +213,16 @@
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
+		<script>
+		$(function(){
+			$("#projectNo").change(function(){
+				var pno = $(this).val();
+				console.log(pno);
+				location.href="issueList.iu?pno=" + pno;
+			});
+		});
+		
+		</script>	
+			
 </body>
 </html>
