@@ -7,6 +7,8 @@ public class ProjectTeam {
 	private String role;
 	// 이하 프로젝트 팀 테이블에 존재하진 않음.
 	private String memberName;
+	// 소속부서명
+	private String deptName;
 	// 직책
 	private String rankName;
 	// 작업에 팀 목록을 불러오고 있는 경우 쓰임. 해당 작업에 배정됬는지에 대한 여부.
@@ -16,12 +18,13 @@ public class ProjectTeam {
 	}
 	
 	public ProjectTeam(String teamPk, String projectPk, String memberPk, String role,
-					   String memberName, String rankName) {
+					   String memberName, String deptName, String rankName) {
 		this.teamPk = teamPk;
 		this.projectPk = projectPk;
 		this.memberPk = memberPk;
 		this.role = role;
 		this.memberName = memberName;
+		this.deptName = deptName;
 		this.rankName = rankName;
 	}
 	
@@ -36,6 +39,14 @@ public class ProjectTeam {
 				", rankName='" + rankName + '\'' +
 				", checked=" + checked +
 				'}';
+	}
+	
+	public String getDeptName() {
+		return deptName;
+	}
+	
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
 	}
 	
 	public String getTeamPk() {

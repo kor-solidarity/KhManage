@@ -205,12 +205,14 @@ public class ProjectController {
 		int memberInsertResult = 0;
 		if (projectInsertResult != null) {
 			// 책임자 넣기
-			ProjectTeam projectManager = new ProjectTeam(null, projectInsertResult, project_manager, "PM", null, null);
+			ProjectTeam projectManager = new ProjectTeam(null, projectInsertResult,
+					project_manager, "PM", null, null, null);
 			ps.insertProjectTeam(projectManager);
 			// 위에 써져있던 부책임자들 다 건든다.
 			if (memberNo != null) {
 				for (String m : memberNo) {
-					ProjectTeam team = new ProjectTeam(null, projectInsertResult, m, "PSM", null, null);
+					ProjectTeam team = new ProjectTeam(null, projectInsertResult,
+							m, "PSM", null, null, null);
 					ps.insertProjectTeam(team);
 				}
 			}
@@ -240,8 +242,36 @@ public class ProjectController {
 		// 작업 담당자 목록
 		// List<ProjectCharger> projectChargerList = ps.getProj
 		model.addAttribute("pid", pid);
+		model.addAttribute("projectWorkList", projectWorkList);
 		return "user/project/projectTask2";
 	}
+	
+	// 위에 프로젝트 작업목록 조회를 위한 AJAX
+	@RequestMapping(value = "/updateWorkList.pr")
+	public void selectProjectTaskList(HttpServletResponse response, HttpServletRequest request) {
+		System.out.println("updateWorkList");
+		String pid = request.getParameter("pid");
+		
+		// 목록 뽑아오는거.
+		// 작업아이디, 작업명 상태 프로젝트번호 시작·완료일 선행작업 상위작업 완료율 담당자이름
+		List<ProjectWork> projectWorkList = ps.selectProjectWorkList(pid);
+		
+		// 추후 고도화때 담당자가 여럿일수도 있긴 한데 지금은 고려대상이 아님.
+		
+		
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		
+		String gson = new Gson().toJson(projectWorkList);
+		
+		try {
+			response.getWriter().write(gson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	
 	// 프로젝트 작업 추가에 쓰일 AJAX
 	@RequestMapping(value = "/projectWorkInsert.pr")

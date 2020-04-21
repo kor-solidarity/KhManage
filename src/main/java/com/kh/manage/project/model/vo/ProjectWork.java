@@ -1,6 +1,7 @@
 package com.kh.manage.project.model.vo;
 
 import java.sql.Date;
+import java.util.List;
 
 public class ProjectWork {
 	private String workNo;
@@ -18,10 +19,15 @@ public class ProjectWork {
 	private String highWorkNo;
 	private String memo;
 	private String workType;
-	// 이 작업을 담당해야 하는 회원.
+	// 이 작업을 담당해야 하는 직원.
 	private String memberNo;
+	// 작업 취소/종료여부 -
 	private String workStatus;
-	// private String[]
+	// 여기서부턴 테이블은 아님.
+	// 이 작업에 배정된 인원.
+	private String memberName;
+	// 총 몇일짜리 프로젝트?: completeDate - beginDate + 1
+	private int days;
 	
 	public ProjectWork() {
 	}
@@ -67,6 +73,22 @@ public class ProjectWork {
 				", memberNo='" + memberNo + '\'' +
 				", workStatus='" + workStatus + '\'' +
 				'}';
+	}
+	
+	public int getDays() {
+		return days;
+	}
+	
+	public void setDays(int days) {
+		this.days = days + 1;
+	}
+	
+	public String getMemberName() {
+		return memberName;
+	}
+	
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
 	}
 	
 	public String getWorkNo() {
