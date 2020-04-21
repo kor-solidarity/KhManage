@@ -11,4 +11,6 @@ public interface GwManageService {
 
 	int insertGw(GWork g);
 
+	int updateGw(GWork g);
+
 }

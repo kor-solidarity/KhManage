@@ -13,4 +13,6 @@ public interface GwManageDao {
 
 	int insertGw(SqlSessionTemplate sqlSession, GWork g);
 
+	int updateGw(SqlSessionTemplate sqlSession, GWork g);
+
 }

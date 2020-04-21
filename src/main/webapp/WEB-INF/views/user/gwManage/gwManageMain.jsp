@@ -149,6 +149,10 @@
                           title : '<%=gw.getGwName() %>',
                           start: '<%=gw.getBeginDate() %>',
                           end : '<%=gw.getEndDate() %>',
+                          memo : '<%=gw.getGwMemo() %>',
+                          type : '<%=gw.getGwType()%>',
+                          gno : '<%=gw.getGwNo()%>',
+                          to : '<%=gw.getTo()%>',
                           constraint: 'businessHours',
                           color: '#61F3EB',   // an option!
                           textColor: 'black' // an option!                          
@@ -164,6 +168,10 @@
                               title : '<%=gw.getGwName() %>',
                               start: '<%=gw.getBeginDate() %>',
                               end : '<%=gw.getEndDate() %>',
+                              memo : '<%=gw.getGwMemo() %>',
+                              type : '<%=gw.getGwType()%>',
+                              gno : '<%=gw.getGwNo()%>',
+                              to : '<%=gw.getTo()%>',
                               constraint: 'businessHours',
                               color: '#82EB5A',   // an option!
                               textColor: 'black' // an option!
@@ -177,14 +185,21 @@
              eventClick: function(info) {
 
     			 var title = info.event.title;
-    			 var start = info.event.start;
+    			 var start = moment(info.event.start).format('YYYY-MM-DDThh:mm:ss');
+    			 console.log(info.event.start);
+    			 console.log('start' + start)
     			 var end = moment(info.event.end).format('YYYY-MM-DDThh:mm:ss');
-    			 
-    			 console.log(end);
-    			 
+    			 var memo = info.event.extendedProps.memo;
+    			 var type = info.event.extendedProps.type;
+    			 var gno = info.event.extendedProps.gno;
+    			 var to = moment(info.event.extendedProps.to).format('YYYY-MM-DDThh:mm:ss');
+    			 console.log("to" + to);
     			 $("#gwName2").val(title);
-    			 $("#beginDate2").val(start);
+    			 $("#beginDate2").val(to);
     			 $("#endDate2").val(end);
+    			 $("#gwMemo2").val(memo);
+    			 $("#gwType2").val(type);
+    			 $("#gno2").val(gno);
     			 
     			 $('#selectModal').modal('show');
     			 
@@ -237,58 +252,63 @@
 		        <div class="modal-body">
 		          <div class="container-fluid">
 		            <div class="row" style="margin: 10px;  padding:10px; ">
-		            <form id="workRegChange" action="myWorkChange.wk" method="post">
+		            <form id="gwUpdate" action="update.gwm" method="post">
 		              <table id="buseoInfoTable" style="border-spacing:0 10px; border-collapse: separate;">
 						<tr>
 							<td class="titleId" style="width: 130px;">제목</td>
 							<td>
-							<input type="text" id="gwName2" name="gwName" class="inputMenu form-control" style="width: 280px;" readOnly required="required"></td>
+							<input type="text" id="gwName2" name="gwName" class="inputMenu form-control" style="width: 280px;"  required="required"></td>
 						</tr>
 						<tr>
 							<td class="titleId">시작
 							</td>
-							<td><input type="datetime-local" name="beginDate" id="beginDate2" class="inputMenu form-control" style="width: 280px;" required="required" readOnly></td>
+							<td><input type="datetime-local" name="beginDate2" id="beginDate2" class="inputMenu form-control" style="width: 280px;" required="required" ></td>
 						</tr>
 						<tr>
 							<td class="titleId">종료</td>
 							<td>
-							<input type="datetime-local" id="endDate2" name="endDate" class="inputMenu form-control" style="width: 280px;"  required="required">
+							<input type="datetime-local" id="endDate2" name="endDate2" class="inputMenu form-control" style="width: 280px;"  required="required">
 							</td>
 						</tr>
 						<tr>
 							<td class="titleId">종일 일정</td>
-							<td><input name="beginDate" id="beginDate1" type="text" class="inputMenu form-control" style="width: 280px;" readOnly required="required"></td>
+							<td><input  name="check" id="check2" type="checkbox" checked="checked" checked></td>
 						</tr>
 						<tr>
 							<td class="titleId">반복</td>
-							<td><input name="completeDate" id="completeDate" type="text" class="inputMenu form-control" style="width: 280px;" readOnly required="required"></td>
+							<td>
+								<select name="repeat" id="repeat2" class="inputMenu form-control" style="width: 280px;">
+									<option>없음</option>
+									<option>일별</option>
+									<option>주별</option>
+									<option>월별</option>
+									<option>년별</option>
+								</select>
+							</td>
 						</tr>
 						<tr>
 							<td class="titleId" style="width: 130px;">설명</td>
-							<td><input name="gwMemo" id="gwMemo2" type="text" class="inputMenu form-control" style="width: 280px;" readOnly required="required"></td>
+							<td><textarea name="gwMemo" id="gwMemo2"  class="inputMenu form-control" style="width: 280px;"  required="required"></textarea></td>
 						</tr>
 						<tr>
 							<td class="titleId">작업 종류</td>
 							<td>
 							<select name="gwType" id="gwType2" class="inputMenu form-control" style="width: 280px;" required="required">
-									<option value="개발중" 
-									<c:if test="${data.status == '개발중' }"> selected </c:if>>개발중</option>
-									<option value="개발완료" 
-									<c:if test="${data.status == '개발완료' }">selected</c:if>>개발완료</option>
-									<option value="테스트완료" 
-									<c:if test="${data.status == '테스트완료' }">selected</c:if>>테스트완료</option>
-									<option value="PL검토중" 
-									<c:if test="${data.status == 'PL검토중' }">selected</c:if>>PL검토중</option>
-									<option value="PL검토완료" 
-									<c:if test="${data.status == 'PL검토완료' }">selected</c:if>>PL검토완료</option>
+									<option value="일반작업" >일반작업</option>
+									<option value="출장" >출장</option>
 							</select>
 							</td>
 						</tr>
 						<tr>
 							<td class="titleId">참석자</td>
 							<td>
-							<input type="text" id="memberNo2" name="memberNo" class="inputMenu form-control" style="width: 280px;" readOnly required="required">
+							<input type="text" id="memberNo2" name="memberNo" class="inputMenu form-control" style="width: 280px;"  required="required">
 							</td>
+						</tr>
+						<tr>
+							<td><input type="hidden" id="bDate" name="bDate"></td>
+							<td><input type="hidden" id="bTime" name="bTime"></td>
+							<td><input type="hidden" id="gno2" name="gwNo"></td>
 						</tr>
 					 </table>
 					</form>
@@ -301,6 +321,7 @@
 		          </div>
 		        </div>
 		        <div class="modal-footer">
+		          <button type="button" class="btn btn-default" id="workDelete" style="float: left;color:white; background: #F3565D;">삭제</button>
 		          <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 		          <button type="button" class="btn btn-primary" id="workChangeSubmit" style="background:#1E2B44; outline:none; border:none;">저장</button>
 		        </div>
@@ -386,6 +407,7 @@
 	  	
 	  	<script>
 	  	var bd;
+	  	var ed;
 	  	
 	  		$("#gwSubmit").click(function(){
 	  			
@@ -398,7 +420,6 @@
 	  		        success : function(data){
 	  		        	console.log(data);
 	  		        	location.href = "gwManageMain.gwm";
-	  		      		//$('#insertModal').modal('hide');
 	  		        },
 	  		        error:function(request,status,error){
 	  		            
@@ -409,37 +430,47 @@
 	  		
 			$("#check").change(function(){
 	  			console.log(bd);
-				
-	  			
 	  			if($("#check").is(":checked")){
 	  				
-	  				var date = new Date(); 
-	  				var year = date.getFullYear(); 
-	  				var month = new String(date.getMonth()+1); 
-	  				var day = new String(date.getDate()); 
-
 	  				$("#beginDate").attr("type", "date");
 	  				$("#beginDate").val(bd);
+	  				$("#endDate").attr("type", "date");
+	  				$("#endDate").val(ed);
 	  				console.log("11: " + bd);
-	  				/* $("#beginDate").val(year+"-"+month+"-"+day); */
-	  				
 	  				
 	  				
 	  			}else{
 	  				bd = $(this).parent().parent().parent().children().children().eq(3).children().val();
+	  				ed = $(this).parent().parent().parent().children().children().eq(5).children().val();
 	  				$("#beginDate").attr("type", "datetime-local");
 	  				$("#beginDate").val(bd  + "T12:00");
+	  				$("#endDate").attr("type", "datetime-local");
+	  				$("#endDate").val(ed  + "T12:00");
 	  				console.log($("#beginDate").val())
 	  			}
 	  			
 			})	;  		
 	  			
-	  		
+	  		$("#workDelete").click(function(){
+	  		 	
+	  			//var dd = moment($("#beginDate2").val()).format('YYYY-MM-DD hh:mm');
+	  			console.log($("#beginDate2").val());
+	  			
+	  			var beginDate = $("#beginDate2").val();
+	  			var bDate = beginDate.substring(0,10);
+	  			var bTime = beginDate.substring(11,19);
+	  			
+	  			console.log(bDate);
+	  			console.log(bTime);
+	  			$("#bDate").val(bDate);
+	  			$("#bTime").val(bTime);
+	  		 	  			
+	  			$("#gwUpdate").submit();
+	  			
+	  		});
 	  		
 	  		
 	  	</script>
-	  	
-	  	
 	  	
 	  	
 	  	
