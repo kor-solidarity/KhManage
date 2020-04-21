@@ -21,6 +21,13 @@ public class GwManageDaoImpl implements GwManageDao{
 
 		return sqlSession.insert("GWork.insertGw", g);
 	}
+
+	@Override
+	public int updateGw(SqlSessionTemplate sqlSession, GWork g) {
+
+		System.out.println("asdasdads");
+		return sqlSession.update("GWork.updateGw", g);
+	}
 	
 	
 

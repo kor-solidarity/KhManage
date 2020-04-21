@@ -1,6 +1,10 @@
 package com.kh.manage.gwManage.controller;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +40,7 @@ public class GwManageController {
 		
 		m.addAttribute("list", list);
 		
+		
 		return "user/gwManage/gwManageMain";
 	}
 	
@@ -63,7 +68,31 @@ public class GwManageController {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	@RequestMapping("update.gwm")
+	public String updateGw(GWork g, Model m, HttpServletRequest request) throws ParseException {
 		
+		System.out.println("update : " +g);
+		String bg = request.getParameter("beginDate2");
+		System.out.println(bg);
+		
+		String bDate = request.getParameter("bDate");
+		String bTime = request.getParameter("bTime");
+		String bDate2 = bDate + bTime;
+		g.setStatus(bDate2);
+		System.out.println("bDate2 : " + bDate2);
+		
+		java.sql.Date bd = java.sql.Date.valueOf(bDate);
+
+		System.out.println(bd);
+		System.out.println(bTime);
+		
+		int result = gs.updateGw(g);
+		System.out.println(result);
+		
+		System.out.println("1개의 행이 업데이트 되었습니다.^^");
+		return "redirect:gwManageMain.gwm";
 	}
 	
 	

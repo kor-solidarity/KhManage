@@ -13,11 +13,12 @@ public class GWork {
 	private String gwType;
 	private String memberNo;
 	private String status;
+	private String to;
 	
 	public GWork() {}
 
 	public GWork(String gwNo, String gwName, Date beginDate, Date endDate, Date enrollDate, String gwMemo,
-			String gwType, String memberNo, String status) {
+			String gwType, String memberNo, String status, String to) {
 		super();
 		this.gwNo = gwNo;
 		this.gwName = gwName;
@@ -28,6 +29,14 @@ public class GWork {
 		this.gwType = gwType;
 		this.memberNo = memberNo;
 		this.status = status;
+		this.to = to;
+	}
+
+	@Override
+	public String toString() {
+		return "GWork [gwNo=" + gwNo + ", gwName=" + gwName + ", beginDate=" + beginDate + ", endDate=" + endDate
+				+ ", enrollDate=" + enrollDate + ", gwMemo=" + gwMemo + ", gwType=" + gwType + ", memberNo=" + memberNo
+				+ ", status=" + status + ", to=" + to + "]";
 	}
 
 	public String getGwNo() {
@@ -102,12 +111,14 @@ public class GWork {
 		this.status = status;
 	}
 
-	@Override
-	public String toString() {
-		return "GWork [gwNo=" + gwNo + ", gwName=" + gwName + ", beginDate=" + beginDate + ", endDate=" + endDate
-				+ ", enrollDate=" + enrollDate + ", gwMemo=" + gwMemo + ", gwType=" + gwType + ", memberNo=" + memberNo
-				+ ", status=" + status + "]";
+	public String getTo() {
+		return to;
 	}
+
+	public void setTo(String to) {
+		this.to = to;
+	}
+	
 	
 	
 	

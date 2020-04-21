@@ -14,10 +14,11 @@
 		<result property="gwType" column="GW_TYPE"/>
 		<result property="memberNo" column="MEMBER_NO"/>
 		<result property="status" column="STATUS"/>
+		<result property="to" column="TT"/>
 	</resultMap>
 	
 	<select id="selectAllList" resultMap="gWorkResultSet">
-		SELECT * 
+		SELECT GW_NO, GW_NAME,BEGIN_DATE,TO_CHAR(BEGIN_DATE, 'YYYY/MM/DD HH24:MI') AS TT,END_DATE,ENROLL_DATE,GW_MEMO,GW_TYPE,MEMBER_NO,STATUS
 		FROM GENERAL_WORK
 		WHERE STATUS = 'Y'
 		AND MEMBER_NO = #{memberNo}
@@ -27,6 +28,11 @@
 		INSERT INTO GENERAL_WORK
 		VALUES('GW'|| TO_CHAR(SEQ_GWNO.NEXTVAL, 'FM000'), #{gwName}, #{beginDate}, #{endDate}, SYSDATE, #{gwMemo}, #{gwType}, #{memberNo}, DEFAULT)
 	</insert>
+	
+	<update id="updateGw" parameterType="GWork">
+		UPDATE GENERAL_WORK SET GW_NAME = #{gwName} , BEGIN_DATE = to_date(#{status},'YYYY/MM/DD HH24:MI')
+		WHERE GW_NO = #{gwNo}
+	</update>
 	
 		
 </mapper>

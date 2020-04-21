@@ -30,4 +30,10 @@ public class GwManageServiceImpl implements GwManageService{
 		return gd.insertGw(sqlSession, g);
 	}
 
+	@Override
+	public int updateGw(GWork g) {
+		
+		return gd.updateGw(sqlSession, g);
+	}
+
 }
