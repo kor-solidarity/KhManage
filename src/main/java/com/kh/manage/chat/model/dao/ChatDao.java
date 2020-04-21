@@ -41,6 +41,20 @@ public interface ChatDao {
 
 	int chatCount(SqlSessionTemplate sqlSession, ChatRoom chatRoom);
 
+	String selectLastMessage(SqlSessionTemplate sqlSession, ChatRoom cr);
+
+	String selectInsertDateInfo(SqlSessionTemplate sqlSession, Message message);
+
+	ChatRoom checkChatRoom(SqlSessionTemplate sqlSession, ChatRoom cr);
+
+	String changeMember(SqlSessionTemplate sqlSession, ChatRoom crCheck);
+
+	int chatRoomChangeMemberNo(SqlSessionTemplate sqlSession, ChatRoom crCheck);
+
+	int insertInfoMessage(SqlSessionTemplate sqlSession, Message me);
+
+	int deleteChatMember(SqlSessionTemplate sqlSession, ChatRoom cr);
+
 
 
 }

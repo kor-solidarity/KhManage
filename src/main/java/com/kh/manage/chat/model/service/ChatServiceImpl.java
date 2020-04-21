@@ -106,6 +106,55 @@ public class ChatServiceImpl implements ChatService {
 		return cd.chatCount(sqlSession, chatRoom);
 	}
 
+	@Override
+	public String selectLastMessage(ChatRoom cr) {
+		
+		return cd.selectLastMessage(sqlSession, cr);
+	}
+
+	@Override
+	public String selectInsertDateInfo(Message message) {
+		
+		return cd.selectInsertDateInfo(sqlSession, message);
+	}
+
+	@Override
+	public ChatRoom checkChatRoom(ChatRoom cr) {
+		
+		return cd.checkChatRoom(sqlSession, cr);
+	}
+
+	@Override
+	public String changeMember(ChatRoom crCheck) {
+		
+		return cd.changeMember(sqlSession, crCheck);
+	}
+
+	@Override
+	public int chatRoomChangeMemberNo(ChatRoom crCheck) {
+		
+		return cd.chatRoomChangeMemberNo(sqlSession, crCheck);
+	}
+
+	@Override
+	public int insertInfoMessage(Message me) {
+		
+		int result =  cd.insertInfoMessage(sqlSession, me);
+		int result2 = 0;
+		
+		if(result > 0) {
+			result2 = cd.insertMessageContent(sqlSession, me);
+		}
+		
+		return result2;
+	}
+
+	@Override
+	public int deleteChatMember(ChatRoom cr) {
+		
+		return cd.deleteChatMember(sqlSession, cr);
+	}
+
 
 
 }

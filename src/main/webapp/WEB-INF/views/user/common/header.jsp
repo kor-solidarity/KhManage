@@ -26,6 +26,7 @@
 	<!-- ICONS -->
 	<link rel="apple-touch-icon" sizes="76x76" href="<c:url value="/resources/assets/img/apple-icon.png"/>">
 	<link rel="icon" type="image/png" sizes="96x96" href="<c:url value="/resources/assets/img/favicon.png"/>">
+	<script src="${path }/resources/js/chatsocket.js"></script>
 	<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 	<script src="<c:url value="/resources/assets/vendor/jquery/jquery.min.js"/>"></script>
 	<script src="<c:url value="/resources/assets/vendor/bootstrap/js/bootstrap.min.js"/>"></script>
@@ -73,7 +74,7 @@
 						<li class="dropdown"><a href="#"
 							class="dropdown-toggle icon-menu" data-toggle="dropdown">
 							<i class="fas fa-bell" style="font-size: 25px; color: #1E2B44;"></i>
-								<span class="badge bg-danger" style="background:red;">5</span>
+								<!-- <span class="badge bg-danger" style="background:red;">5</span> -->
 						</a>
 							<ul class="dropdown-menu notifications">
 								<li><a href="#" class="notification-item"><span
@@ -89,10 +90,13 @@
 								<li><a href="#" class="more">See all notifications</a></li>
 							</ul></li>
 
-						<!-- 채팅 -->
-						<li class="dropdown"><a id="chat" class="dropdown-toggle"
-							data-toggle="dropdown"> <i class="fas fa-comment-dots" style="font-size: 25px; color: #1E2B44;"></i>
-							</a></li>
+							
+						<li class="dropdown"><a id="chat"
+							class="dropdown-toggle icon-menu" data-toggle="dropdown">
+							<i class="fas fa-comment-dots" style="font-size: 25px; color: #1E2B44;"></i>
+								<span id="chatCount" class="badge bg-danger" style="background:red; padding-left:0px; padding-right:0px; left:32px; top:20px; font-size:12px; width:auto; height:18px;">300+</span>
+						</a></li>
+							
 
 						<!-- 메일 -->
 						<li class="dropdown"><a href="mailMain.ma" class="dropdown-toggle"> <i class="fas fa-envelope"
@@ -102,12 +106,12 @@
 							data-toggle="dropdown"><i class="fas fa-user-cog"
 								style="font-size: 24px; color: #1E2B44;"></i></a>
 							<ul class="dropdown-menu">
-								<li><a href="myProfile.me"><i class="lnr lnr-user"></i><span>My Profile</span></a></li>
-								<li><a href="#"><i class="lnr lnr-envelope"></i> <span>Message</span></a></li>
+								<li><a href="myProfile.me"><i class="lnr lnr-user"></i><span>나의 정보</span></a></li>
+								<li><a href="#"><i class="lnr lnr-envelope"></i> <span>메일함</span></a></li>
 								<!-- 접근권한설정 -->
 								
-								<li><a href="adminShowMain.me"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li>
-								<li><a href="logout.me"><i class="lnr lnr-exit"></i> <span>Logout</span></a></li>
+								<!-- <li><a href="adminShowMain.me"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li> -->
+								<li><a href="logout.me"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
 							</ul></li>
 
 					</ul>
@@ -120,6 +124,39 @@
 					window.open('showChatPage.ct', 'pop01', 'top=160, left=800, width=500, height=600, status=no, menubar=no, toolbar=no, resizable=no');
 				});
 			});
+			
+			
+			$(function(){
+				$.ajax({
+					url:'selectAllMessageCount.ct',
+					type: 'post',
+					async: false,
+					data:{},
+				 success:function(data){
+					 $("#chatCount").text(data);
+					 if(data == 0){
+						 $("#chatCount").hide();
+					 }
+				 }
+			});
+			});
+			
+			  function writeResponse(text){
+				  $.ajax({
+						url:'selectAllMessageCount.ct',
+						type: 'post',
+						async: false,
+						data:{},
+					 success:function(data){
+						 if(data == 0){
+							 $("#chatCount").hide();
+						 }else{
+							 $("#chatCount").show();
+							 $("#chatCount").text(data);
+						 }
+					 }
+				});
+		        }
 		</script>
 </body>
 

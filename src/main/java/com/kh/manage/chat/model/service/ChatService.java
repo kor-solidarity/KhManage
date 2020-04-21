@@ -33,5 +33,19 @@ public interface ChatService {
 
 	int chatCount(ChatRoom chatRoom);
 
+	String selectLastMessage(ChatRoom cr);
+
+	String selectInsertDateInfo(Message me);
+
+	ChatRoom checkChatRoom(ChatRoom cr);
+
+	String changeMember(ChatRoom crCheck);
+
+	int chatRoomChangeMemberNo(ChatRoom crCheck);
+
+	int insertInfoMessage(Message me);
+
+	int deleteChatMember(ChatRoom cr);
+
 
 }
