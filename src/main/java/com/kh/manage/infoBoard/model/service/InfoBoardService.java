@@ -20,6 +20,10 @@ public interface InfoBoardService {
 
 	List<BoReply> selectAllReply(InfoBoard ib);
 
+	int updateBoard(InfoBoard ib);
+
+	
+	
 
 
 	

@@ -24,5 +24,8 @@ public interface InfoBoardDao {
 
 	List<BoReply> selectAllReply(SqlSessionTemplate sqlSession, InfoBoard ib);
 
+	int updateBoard(SqlSessionTemplate sqlSession, InfoBoard ib);
+
+
 
 }

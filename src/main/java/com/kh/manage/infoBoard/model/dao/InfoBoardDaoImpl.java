@@ -60,6 +60,15 @@ public class InfoBoardDaoImpl implements InfoBoardDao {
 		return sqlSession.selectList("InfoBoard.selectAllReply", ib);
 	}
 
+	@Override
+	public int updateBoard(SqlSessionTemplate sqlSession, InfoBoard ib) {
+
+		return sqlSession.update("InfoBoard.updateBoard", ib);
+	}
+
+
+
+
 
 
 
