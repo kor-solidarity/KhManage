@@ -255,17 +255,26 @@ public class ChatController {
 		cr.setMemberNo(m.getMemberNo());
 		
 		ChatRoom crCheck = cs.checkChatRoom(cr);
-		
 		if(crCheck != null) {
 			System.out.println("가져온 값 : " + crCheck);
-			String changeMember = cs.changeMember(crCheck);
+			List<ChatRoom> changeMember = cs.changeMember(crCheck);
 			
-			crCheck.setMemberNo(changeMember);
-			
+			System.out.println(changeMember);
+			if(changeMember != null) {
+			crCheck.setMemberNo(changeMember.get(0).getMemberNo());
+			System.out.println("ssssssssssssssssssssssssssss : " + crCheck);
+
 			int result = cs.chatRoomChangeMemberNo(crCheck);
 			
 			if(result > 0) {
 				int result2 = cs.deleteChatMember(cr);
+				}
+			
+			}else {
+				int result2 = cs.deleteChatMember(cr);
+				if(result2 > 0) {
+					int result3 = cs.deleteChatRoom(cr);
+				}
 			}
 		}else {
 			int result2 = cs.deleteChatMember(cr);

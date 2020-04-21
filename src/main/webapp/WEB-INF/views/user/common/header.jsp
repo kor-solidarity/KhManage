@@ -26,9 +26,9 @@
 	<!-- ICONS -->
 	<link rel="apple-touch-icon" sizes="76x76" href="<c:url value="/resources/assets/img/apple-icon.png"/>">
 	<link rel="icon" type="image/png" sizes="96x96" href="<c:url value="/resources/assets/img/favicon.png"/>">
-	<script src="${path }/resources/js/chatsocket.js"></script>
 	<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 	<script src="<c:url value="/resources/assets/vendor/jquery/jquery.min.js"/>"></script>
+	<script src="${path }/resources/js/chatsocket.js"></script>
 	<script src="<c:url value="/resources/assets/vendor/bootstrap/js/bootstrap.min.js"/>"></script>
 	<script src="<c:url value="/resources/assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"/>"></script>
 	<script src="<c:url value="/resources/assets/vendor/chartist/js/chartist.min.js"/>"></script>

@@ -39,13 +39,15 @@ public interface ChatService {
 
 	ChatRoom checkChatRoom(ChatRoom cr);
 
-	String changeMember(ChatRoom crCheck);
+	List<ChatRoom> changeMember(ChatRoom crCheck);
 
 	int chatRoomChangeMemberNo(ChatRoom crCheck);
 
 	int insertInfoMessage(Message me);
 
 	int deleteChatMember(ChatRoom cr);
+
+	int deleteChatRoom(ChatRoom cr);
 
 
 }

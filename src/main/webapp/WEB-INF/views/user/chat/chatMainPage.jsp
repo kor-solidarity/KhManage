@@ -207,7 +207,7 @@ body {
 				</td>
 				<td style="background: white; height: 60px; width: 150px; color:black;"><label>${a.chatRoomName}</label><br>${fn:substring(a.recentMessage,0,10)}</td>
 				<td
-					style="background: white; height: 60px; width: 90px; color: black; font-size: 12px;">${a.modifyDate}</td>
+					style="background: white; height: 60px; width: 90px; color: black; font-size: 12px;">${a.date}</td>
 			</tr>
 			<tr height="3px;" style="background: white;"></tr>
 			</c:forEach>
