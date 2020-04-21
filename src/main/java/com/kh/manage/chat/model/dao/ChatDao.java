@@ -47,13 +47,15 @@ public interface ChatDao {
 
 	ChatRoom checkChatRoom(SqlSessionTemplate sqlSession, ChatRoom cr);
 
-	String changeMember(SqlSessionTemplate sqlSession, ChatRoom crCheck);
+	List<ChatRoom> changeMember(SqlSessionTemplate sqlSession, ChatRoom crCheck);
 
 	int chatRoomChangeMemberNo(SqlSessionTemplate sqlSession, ChatRoom crCheck);
 
 	int insertInfoMessage(SqlSessionTemplate sqlSession, Message me);
 
 	int deleteChatMember(SqlSessionTemplate sqlSession, ChatRoom cr);
+
+	int deleteChatRoom(SqlSessionTemplate sqlSession, ChatRoom cr);
 
 
 

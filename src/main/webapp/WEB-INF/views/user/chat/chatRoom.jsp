@@ -248,7 +248,12 @@ body {
 					<c:if test="${a.memberNo != loginUser.memberNo && a.memberNo != 'M999'}">
 					<tr>
 						<td style="width:50px;">
+						<c:if test="${a.changeName != null }">
 						<div class='box' style='background:white;'><img class='profile' src="<c:url value="/resources/uploadFiles/${a.changeName}"/>.png"></div>
+						</c:if>
+						<c:if test="${a.changeName == null }">
+						<div class='box' style='background:white;'><img class='profile' src="<c:url value="/resources/img/people.png"/>"></div>
+						</c:if>
 						</td>
 						<td>
 						<div style="display: inline-flex; font-weight:600; font-size:12px;">${a.memberName }</div>
@@ -268,9 +273,18 @@ body {
 					<c:if test="${fn:length(a.content)>=11}">
 					<tr height='10px;'></tr><tr><td colspan='2'><div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send' align='center' style='width:100%; font-size:10px; margin-right: 40px; background:#1E2B44; height:15px; padding: 0px;'>${a.content}<span class='msg_time_send'></span></div></div></td></tr>
 					</c:if>
-					
 				</c:if>	
 			</c:forEach>
+		<c:if test="${cr.count <2}">
+				<tr height='10px;'></tr>
+				<tr>
+					<td colspan='2'><div class='d-flex justify-content-end mb-4'> 
+						<div class='msg_cotainer_send' align='center' style='width:100%; font-size:10px; margin-right: 40px; background:#FAA500; height:35px; padding: 0px;'>
+						<p>새로운 인원을 초대하시거나 또는 <br> 나가기를 하시면 자동으로 방이 삭제됩니다.</p>
+						<span class='msg_time_send'></span>
+						</div>
+						</div></td></tr>
+		</c:if>
 	</table>
 	  <div>
         <input type="text" id="sender" value="test" style="display: none;">
@@ -448,13 +462,17 @@ body {
         	var date = text1[5];
         	var changeName = text1[6];
 			console.log(content);
-        	console.log(changeName=="M999");
-        	
+        	console.log(changeName == "");
         	//지금 내가 들어와 있는 방 번호
         	var chatNo2 = "${cr.chatRoomNo}";
      		if(chatNo2 == chatNo && changeName != "M999"){
+     			if(changeName != ""){
 	        	$("#chatAreaTable").append("<tr><td style='width:50px;'><div class='box' style='background:white;'><img class='profile' src='/manage/resources/uploadFiles/"+changeName+".png'></div></td><td><div style='display: inline-flex; font-weight:600; font-size:12px;'>"+memberName+"</div></td></tr><tr><td colspan='2'><div class='card-body msg_card_body' style='padding-left: 20px; padding-top:0px; padding-bottom: 0px;'><div class='d-flex justify-content-start mb-4'><div class='msg_cotainer'>"+content+"<br><span class='msg_time'>"+date.substring(8,14)+"</span></div></div></div></td></tr>");
 	        	$("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
+     			}else{
+     				$("#chatAreaTable").append("<tr><td style='width:50px;'><div class='box' style='background:white;'><img class='profile' src='/ma/resources/img/people.png'></div></td><td><div style='display: inline-flex; font-weight:600; font-size:12px;'>"+memberName+"</div></td></tr><tr><td colspan='2'><div class='card-body msg_card_body' style='padding-left: 20px; padding-top:0px; padding-bottom: 0px;'><div class='d-flex justify-content-start mb-4'><div class='msg_cotainer'>"+content+"<br><span class='msg_time'>"+date.substring(8,14)+"</span></div></div></div></td></tr>");
+    	        	$("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
+     			}
      		
      		}else if(changeName == "M999"){
      			 $("#chatAreaTable").append("<tr height='10px;'></tr><tr><br><td colspan='2'><div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send' align='center' style='width:100%; font-size:10px; margin-right: 40px; background:#1E2B44; height:15px; padding: 0px;'>"+content+"<span class='msg_time_send'>${a.sendDate}</span></div></div></td></tr>")

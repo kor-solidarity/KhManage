@@ -31,7 +31,7 @@
 		<result property="chatRoomName" column="ROOM_NAME"/>
 		<result property="recentMessage" column="M_CONTENT"/>
 		<result property="status" column="STATUS"/>
-		<result property="modifyDate" column="ENROLL_DATE"/>
+		<result property="date" column="ENROLL_DATE"/>
 	</resultMap>
 	
 	<resultMap type="ChatRoom" id="ChatDetailResultSet">
@@ -101,7 +101,7 @@
 		       ,ROOM_NAME
 		       ,M_CONTENT
 		       ,STATUS
-		       ,ENROLL_DATE
+		       ,TO_CHAR(ENROLL_DATE,'YY-MM-DD HH24:MI') AS ENROLL_DATE
 		FROM (SELECT C.CHATROOM_NO
 		      ,C.MEMBER_NO
 		      ,C.ROOM_NAME
@@ -115,7 +115,6 @@
 		WHERE C.RECENT_MESSAGE IS NOT NULL
 		AND CM.MEMBER_NO = #{memberNo}
 		AND CM.STATUS = 'Y'
-		 AND M.SENDER != 'M999'
 		UNION
 		SELECT C.CHATROOM_NO
 		      ,C.MEMBER_NO
@@ -125,9 +124,9 @@
 		      ,C.ENROLL_DATE
 		FROM CHATROOM C
 		LEFT JOIN MESSAGE M ON(C.RECENT_MESSAGE = M.MESSAGE_NO)
-		LEFT JOIN MESSAGE_CONTENT MC ON(MC.MESSAGE_NO = M.MESSAGE_NO)
-		WHERE C.MEMBER_NO = #{memberNo}
-		  AND M.SENDER != 'M999')
+		LEFT JOIN MESSAGE_CONTENT MC ON(MC.MESSAGE_NO = M.MESSAGE_NO) 
+		WHERE C.MEMBER_NO = #{memberNo})
+		WHERE STATUS = 'Y'  
 		ORDER BY ENROLL_DATE DESC
 	</select>
 	
@@ -247,11 +246,11 @@
 		AND C.CHATROOM_NO = #{chatRoomNo}
 	</select>
 	
-	<select id="changeMember" parameterType="ChatRoom" resultType="java.lang.String">
+	<select id="changeMember" parameterType="ChatRoom" resultMap="ChatRoomResultSet">
 		 SELECT MEMBER_NO
 		  FROM CHAT_MEMBER
 		 WHERE CHATROOM_NO = #{chatRoomNo}
-		   AND MEMBER_NO != #{memberNo}
+		   AND MEMBER_NO != #{createMemberNo}
 	</select>
 	
 	<update id="chatRoomChangeMemberNo" parameterType="ChatRoom">
@@ -267,6 +266,11 @@
 		UPDATE CHAT_MEMBER SET STATUS = 'N'
 		WHERE MEMBER_NO = #{memberNo}
 		AND CHATROOM_NO = #{chatRoomNo}
+	</update>
+	
+	<update id="deleteChatRoom" parameterType="ChatRoom">
+		UPDATE CHATROOM SET STATUS = 'N'
+		WHERE CHATROOM_NO = #{chatRoomNo}
 	</update>
 </mapper>
 

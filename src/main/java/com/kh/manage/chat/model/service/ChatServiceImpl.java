@@ -125,7 +125,7 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	@Override
-	public String changeMember(ChatRoom crCheck) {
+	public List<ChatRoom> changeMember(ChatRoom crCheck) {
 		
 		return cd.changeMember(sqlSession, crCheck);
 	}
@@ -153,6 +153,12 @@ public class ChatServiceImpl implements ChatService {
 	public int deleteChatMember(ChatRoom cr) {
 		
 		return cd.deleteChatMember(sqlSession, cr);
+	}
+
+	@Override
+	public int deleteChatRoom(ChatRoom cr) {
+		
+		return cd.deleteChatRoom(sqlSession, cr);
 	}
 
 

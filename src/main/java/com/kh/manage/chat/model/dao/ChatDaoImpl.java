@@ -119,9 +119,9 @@ public class ChatDaoImpl implements ChatDao {
 	}
 
 	@Override
-	public String changeMember(SqlSessionTemplate sqlSession, ChatRoom crCheck) {
+	public List<ChatRoom> changeMember(SqlSessionTemplate sqlSession, ChatRoom crCheck) {
 		
-		return sqlSession.selectOne("Chat.changeMember", crCheck);
+		return sqlSession.selectList("Chat.changeMember", crCheck);
 	}
 
 	@Override
@@ -140,6 +140,12 @@ public class ChatDaoImpl implements ChatDao {
 	public int deleteChatMember(SqlSessionTemplate sqlSession, ChatRoom cr) {
 		
 		return sqlSession.update("Chat.deleteChatMember", cr);
+	}
+
+	@Override
+	public int deleteChatRoom(SqlSessionTemplate sqlSession, ChatRoom cr) {
+		
+		return sqlSession.update("Chat.deleteChatRoom", cr);
 	}
 
 }
