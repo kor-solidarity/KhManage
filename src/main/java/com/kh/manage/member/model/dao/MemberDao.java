@@ -9,6 +9,7 @@ import com.kh.manage.admin.adminManage.vo.Menu;
 import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.rank.model.vo.Rank;
 import com.kh.manage.common.Attachment;
+import com.kh.manage.common.PageInfo;
 import com.kh.manage.member.model.exception.LoginException;
 import com.kh.manage.member.model.vo.Member;
 
@@ -41,7 +42,7 @@ public interface MemberDao {
 
 	Attachment selectProfileImg(SqlSessionTemplate sqlSession, Member m);
 
-	List<Member> selectMemberList(SqlSessionTemplate sqlSession);
+	List<Member> selectMemberList(SqlSessionTemplate sqlSession, PageInfo pi);
 
 	Attachment selectAttachment(SqlSessionTemplate sqlSession, Member loginUser);
 
@@ -50,6 +51,10 @@ public interface MemberDao {
 	List<Menu> selectAllMenu(SqlSessionTemplate sqlSession);
 
 	List<Menu> noAccessMenu(SqlSessionTemplate sqlSession, Member loginUser);
+
+	int memberListCount(SqlSessionTemplate sqlSession);
+
+	List<Member> searchMemberName(SqlSessionTemplate sqlSession, Member member);
 
 
 }

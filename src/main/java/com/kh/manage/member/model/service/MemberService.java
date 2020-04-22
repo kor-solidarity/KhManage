@@ -7,6 +7,7 @@ import com.kh.manage.admin.adminManage.vo.Menu;
 import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.rank.model.vo.Rank;
 import com.kh.manage.common.Attachment;
+import com.kh.manage.common.PageInfo;
 import com.kh.manage.member.model.exception.LoginException;
 import com.kh.manage.member.model.vo.Member;
 
@@ -34,7 +35,7 @@ public interface MemberService {
 
 	Attachment selectProfileImg(Member m);
 
-	List<Member> selectMemberList();
+	List<Member> selectMemberList(PageInfo pi);
 
 	Attachment selectAttachment(Member loginUser);
 
@@ -43,6 +44,10 @@ public interface MemberService {
 	List<Menu> selectAllMenu();
 
 	List<Menu> noAccessMenu(Member loginUser);
+
+	int memberListCount();
+
+	List<Member> searchMemberName(Member member);
 
 
 	
