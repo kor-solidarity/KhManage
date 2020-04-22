@@ -14,11 +14,13 @@ public class GWork {
 	private String memberNo;
 	private String status;
 	private String to;
+	private String to2;
+	private String repeatStatus;
 	
 	public GWork() {}
 
 	public GWork(String gwNo, String gwName, Date beginDate, Date endDate, Date enrollDate, String gwMemo,
-			String gwType, String memberNo, String status, String to) {
+			String gwType, String memberNo, String status, String to, String to2, String repeatStatus) {
 		super();
 		this.gwNo = gwNo;
 		this.gwName = gwName;
@@ -30,13 +32,15 @@ public class GWork {
 		this.memberNo = memberNo;
 		this.status = status;
 		this.to = to;
+		this.to2 = to2;
+		this.repeatStatus = repeatStatus;
 	}
 
 	@Override
 	public String toString() {
 		return "GWork [gwNo=" + gwNo + ", gwName=" + gwName + ", beginDate=" + beginDate + ", endDate=" + endDate
 				+ ", enrollDate=" + enrollDate + ", gwMemo=" + gwMemo + ", gwType=" + gwType + ", memberNo=" + memberNo
-				+ ", status=" + status + ", to=" + to + "]";
+				+ ", status=" + status + ", to=" + to + ", to2=" + to2 + ", repeatStatus=" + repeatStatus + "]";
 	}
 
 	public String getGwNo() {
@@ -118,7 +122,25 @@ public class GWork {
 	public void setTo(String to) {
 		this.to = to;
 	}
+
+	public String getTo2() {
+		return to2;
+	}
+
+	public void setTo2(String to2) {
+		this.to2 = to2;
+	}
+
+	public String getRepeatStatus() {
+		return repeatStatus;
+	}
+
+	public void setRepeatStatus(String repeatStatus) {
+		this.repeatStatus = repeatStatus;
+	}
+
 	
+
 	
 	
 	

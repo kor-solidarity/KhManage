@@ -15,10 +15,12 @@
 		<result property="memberNo" column="MEMBER_NO"/>
 		<result property="status" column="STATUS"/>
 		<result property="to" column="TT"/>
+		<result property="to2" column="TTT"/>
+		<result property="repeatStatus" column="REPEAT_STATUS"/>
 	</resultMap>
 	
 	<select id="selectAllList" resultMap="gWorkResultSet">
-		SELECT GW_NO, GW_NAME,BEGIN_DATE,TO_CHAR(BEGIN_DATE, 'YYYY/MM/DD HH24:MI') AS TT,END_DATE,ENROLL_DATE,GW_MEMO,GW_TYPE,MEMBER_NO,STATUS
+		SELECT GW_NO, GW_NAME,BEGIN_DATE,TO_CHAR(BEGIN_DATE, 'YYYY/MM/DD HH24:MI') AS TT, TO_CHAR(END_DATE, 'YYYY/MM/DD HH24:MI') AS TTT,END_DATE,ENROLL_DATE,GW_MEMO,GW_TYPE,MEMBER_NO,STATUS
 		FROM GENERAL_WORK
 		WHERE STATUS = 'Y'
 		AND MEMBER_NO = #{memberNo}
@@ -26,11 +28,17 @@
 	
 	<insert id="insertGw" parameterType="GWork">
 		INSERT INTO GENERAL_WORK
-		VALUES('GW'|| TO_CHAR(SEQ_GWNO.NEXTVAL, 'FM000'), #{gwName}, #{beginDate}, #{endDate}, SYSDATE, #{gwMemo}, #{gwType}, #{memberNo}, DEFAULT)
+		VALUES('GW'|| TO_CHAR(SEQ_GWNO.NEXTVAL, 'FM000'), #{gwName},  to_date(#{status},'YYYY/MM/DD HH24:MI'),  to_date(#{to},'YYYY/MM/DD HH24:MI'), SYSDATE, #{gwMemo}, #{gwType}, #{memberNo}, DEFAULT , #{repeatStatus})
 	</insert>
 	
 	<update id="updateGw" parameterType="GWork">
-		UPDATE GENERAL_WORK SET GW_NAME = #{gwName} , BEGIN_DATE = to_date(#{status},'YYYY/MM/DD HH24:MI')
+		UPDATE GENERAL_WORK SET GW_NAME = #{gwName} , BEGIN_DATE = to_date(#{status},'YYYY/MM/DD HH24:MI'),  END_DATE = to_date(#{to},'YYYY/MM/DD HH24:MI')
+		, ENROLL_DATE = SYSDATE , GW_MEMO = #{gwMemo}, GW_TYPE = #{gwType} , REPEAT_STATUS = #{repeatStatus}
+		WHERE GW_NO = #{gwNo}
+	</update>
+	
+	<update id="deleteGw" parameterType="GWork">
+		UPDATE GENERAL_WORK SET STATUS = 'N'
 		WHERE GW_NO = #{gwNo}
 	</update>
 	
