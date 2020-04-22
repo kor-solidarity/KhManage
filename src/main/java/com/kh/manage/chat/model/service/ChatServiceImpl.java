@@ -13,6 +13,7 @@ import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.chat.model.dao.ChatDao;
 import com.kh.manage.chat.model.vo.ChatRoom;
 import com.kh.manage.chat.model.vo.Message;
+import com.kh.manage.chat.model.vo.SearchKeyWord;
 import com.kh.manage.member.model.vo.Member;
 
 @Service
@@ -166,6 +167,13 @@ public class ChatServiceImpl implements ChatService {
 		
 		return cd.selectAllChatMember(sqlSession, cr);
 	}
+
+	@Override
+	public List<Member> searchMember(SearchKeyWord sw) {
+		
+		return cd.searchMember(sqlSession, sw);
+	}
+
 
 
 

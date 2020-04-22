@@ -9,6 +9,7 @@ import com.kh.manage.admin.adminManage.vo.DepartMent;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.chat.model.vo.ChatRoom;
 import com.kh.manage.chat.model.vo.Message;
+import com.kh.manage.chat.model.vo.SearchKeyWord;
 import com.kh.manage.member.model.vo.Member;
 
 public interface ChatDao {
@@ -58,6 +59,8 @@ public interface ChatDao {
 	int deleteChatRoom(SqlSessionTemplate sqlSession, ChatRoom cr);
 
 	List<Member> selectAllChatMember(SqlSessionTemplate sqlSession, ChatRoom cr);
+
+	List<Member> searchMember(SqlSessionTemplate sqlSession, SearchKeyWord sw);
 
 
 

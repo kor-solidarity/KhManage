@@ -10,6 +10,7 @@ import com.kh.manage.admin.adminManage.vo.DepartMent;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.chat.model.vo.ChatRoom;
 import com.kh.manage.chat.model.vo.Message;
+import com.kh.manage.chat.model.vo.SearchKeyWord;
 import com.kh.manage.member.model.vo.Member;
 
 @Repository
@@ -152,6 +153,12 @@ public class ChatDaoImpl implements ChatDao {
 	public List<Member> selectAllChatMember(SqlSessionTemplate sqlSession, ChatRoom cr) {
 	
 		return sqlSession.selectList("Chat.selectAllChatMember", cr);
+	}
+
+	@Override
+	public List<Member> searchMember(SqlSessionTemplate sqlSession, SearchKeyWord sw) {
+		
+		return sqlSession.selectList("Chat.searchMember", sw);
 	}
 
 }

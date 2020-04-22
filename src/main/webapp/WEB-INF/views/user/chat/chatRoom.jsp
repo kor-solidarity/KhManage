@@ -362,7 +362,7 @@ body {
 <!-- 인원 추가 모달 -->
 <div class="modal fade" id="memberPlus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <div class="modal-content" style="width:350px;">
+    <div class="modal-content" style="width:370px;">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-plus"></i>&nbsp; 채팅방 인원 추가</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -380,9 +380,10 @@ body {
         		</td>
         	</tr>
         </table>
+        <table id="plusMemberTable"></table>
       </div>
       <div class="modal-footer">
-        <button type="button" id="leaveChatRoom" class="btn btn-primary" style="background:#F3565D; border:none;"><i class="fas fa-sign-out-alt"></i></button>
+     <!--    <button type="button" id="leaveChatRoom" class="btn btn-primary" style="background:#F3565D; border:none;"><i class="fas fa-sign-out-alt"></i></button> -->
       </div>
     </div>
   </div>
@@ -407,6 +408,12 @@ body {
 		$("#keyWord").keyup(function(){
 			var kind = $("#searchInfo").val();
 			var keyWork = $(this).val();
+			
+			if($(this).val() == ""){
+				console.log(keyWork);
+				keyWork = "+";
+			}
+			 $("#plusMemberTable").empty();
 			$.ajax({
    				url:'plusSearchMember.ct',
    				type: 'post',
@@ -414,19 +421,48 @@ body {
    				data:{keyWord:keyWork,
    					  kind:kind},
    			 success:function(data){
-   				
+   					 $("#plusMemberTable").empty();
+   				 for(key in data) {
+   					if(data[key]['changeName'] != null){
+   					$("#plusMemberTable").append("<tr class='tr1'><td><div class='box' style='background:white;'><img class='profile' src='/manage/resources/uploadFiles/"+data[key]['changeName']+".png'></div></td><td style='padding-top: 14px; padding-left: 10px;'>"+data[key]['memberName']+" / "+data[key]['deptName']+" / "+data[key]['rankName']+"<input type='hidden' class='hideMemberNo' value='"+data[key]['memberNo']+"'></td><td style='padding-top:10px; padding-left:20px;'><div class='plusBtn' style='width:30px; margin-top: 20px; height:30px;'><i class='fas fa-user-plus' style='font-size:18px; color:#1E2B44;'><input type='hidden' class='hideMember' value='"+data[key]['memberNo']+"'></i></div></td></tr>")
+   					}else{
+   						$("#plusMemberTable").append("<tr><td><div class='box' style='background:white;'><img class='profile' src='/manage/resources/img/people.png'></div></td><td style='padding-top: 14px; padding-left: 10px;'>"+data[key]['memberName']+" / "+data[key]['deptName']+" / "+data[key]['rankName']+"<input type='hidden' class='hideMemberNo' value='"+data[key]['memberNo']+"'></td><td style='padding-top:19px; padding-left:20px;'><div class='plusBtn'><i class='fas fa-user-plus' style='font-size:18px; color:#1E2B44;'><input type='hidden' class='hideMember' value='"+data[key]['memberNo']+"'></i></div></td></tr>")	
+   					}
+   				 }																					
    			 }
    			});	
 		});
 		
 	</script>
-	
 	<script>
-		$("#modalTable").click(function(){
-			$("#modalTable").find(".hideMemberNo").filter(function(){
-				console.log($(this).parent().parent());
-			});
+	$(document).on('click', '.plusBtn', function(){
+		var memberNo = $(this).find(".hideMember").val();
+		
+		swal({
+			  title: "초대하시겠습니까?",
+			  icon: "warning",
+			  buttons: ["취소", "초대"],
+			  dangerMode: true,
+			})
+			.then((willDelete) => {
+			  if (willDelete) {
+			    swal({
+			    	title: "초대 완료!",
+			      	icon: "success"
+			    }).then((value) => {	// 애니메이션 V 나오는 부분!
+			    
+			    	 
+			    });
+			  } else {
+				  swal({
+				  	title: "취소 하셨습니다.",
+				    icon: "error"
+				  });
+			  }
 		});
+		
+	});
+		
 	</script>
 
 	<script>
@@ -479,7 +515,6 @@ body {
 	   				data:{chatRoomNo:"${cr.chatRoomNo}"},
 	   			 success:function(data){
 	   				 if(data != null){
-	   				 console.log("현재 마지막 일자 : " + data.substring(8,10));
 	   				 lastDay = data.substring(8,10)
 	   				 }else{
 	   					 lastDay = 40;
@@ -497,6 +532,7 @@ body {
 					date = data;
 					curDay = date.substring(6,9);
 					infoDate = date.substring(0,8);
+					
 					if(Number(lastDay) < Number(curDay)){
 						var text=document.getElementById("chatContent").value + "," + "${cr.chatRoomNo}"+ "," + "${loginUser.memberNo}" + "," + "텍스트" + "," + "${loginUser.memberName}" + "," + infoDate + "," + "Info";
 						$.ajax({
@@ -565,11 +601,12 @@ body {
         	//지금 내가 들어와 있는 방 번호
         	var chatNo2 = "${cr.chatRoomNo}";
      		if(chatNo2 == chatNo && changeName != "M999"){
+     			
      			if(changeName != ""){
-	        	$("#chatAreaTable").append("<tr><td style='width:50px;'><div class='box' style='background:white;'><img class='profile' src='/manage/resources/uploadFiles/"+changeName+".png'></div></td><td><div style='display: inline-flex; font-weight:600; font-size:12px;'>"+memberName+"</div></td></tr><tr><td colspan='2'><div class='card-body msg_card_body' style='padding-left: 20px; padding-top:0px; padding-bottom: 0px;'><div class='d-flex justify-content-start mb-4'><div class='msg_cotainer'>"+content+"<br><span class='msg_time'>"+date.substring(8,14)+"</span></div></div></div></td></tr>");
-	        	$("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
+		        	$("#chatAreaTable").append("<tr><td style='width:50px;'><div class='box' style='background:white;'><img class='profile' src='/manage/resources/uploadFiles/"+changeName+".png'></div></td><td><div style='display: inline-flex; font-weight:600; font-size:12px;'>"+memberName+"</div></td></tr><tr><td colspan='2'><div class='card-body msg_card_body' style='padding-left: 20px; padding-top:0px; padding-bottom: 0px;'><div class='d-flex justify-content-start mb-4'><div class='msg_cotainer'>"+content+"<br><span class='msg_time'>"+date.substring(8,14)+"</span></div></div></div></td></tr>");
+		        	$("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
      			}else{
-     				$("#chatAreaTable").append("<tr><td style='width:50px;'><div class='box' style='background:white;'><img class='profile' src='/ma/resources/img/people.png'></div></td><td><div style='display: inline-flex; font-weight:600; font-size:12px;'>"+memberName+"</div></td></tr><tr><td colspan='2'><div class='card-body msg_card_body' style='padding-left: 20px; padding-top:0px; padding-bottom: 0px;'><div class='d-flex justify-content-start mb-4'><div class='msg_cotainer'>"+content+"<br><span class='msg_time'>"+date.substring(8,14)+"</span></div></div></div></td></tr>");
+     				$("#chatAreaTable").append("<tr><td style='width:50px;'><div class='box' style='background:white;'><img class='profile' src='/manage/resources/img/people.png'></div></td><td><div style='display: inline-flex; font-weight:600; font-size:12px;'>"+memberName+"</div></td></tr><tr><td colspan='2'><div class='card-body msg_card_body' style='padding-left: 20px; padding-top:0px; padding-bottom: 0px;'><div class='d-flex justify-content-start mb-4'><div class='msg_cotainer'>"+content+"<br><span class='msg_time'>"+date.substring(8,14)+"</span></div></div></div></td></tr>");
     	        	$("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
      			}
      		
