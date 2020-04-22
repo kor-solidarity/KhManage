@@ -57,6 +57,8 @@ public interface ChatDao {
 
 	int deleteChatRoom(SqlSessionTemplate sqlSession, ChatRoom cr);
 
+	List<Member> selectAllChatMember(SqlSessionTemplate sqlSession, ChatRoom cr);
+
 
 
 }

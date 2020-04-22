@@ -10,7 +10,6 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<!-- VENDOR CSS -->
 	<link rel="stylesheet" href="<c:url value="/resources/assets/vendor/bootstrap/css/bootstrap.css"/>">
 	<link rel="stylesheet" href="<c:url value="/resources/assets/vendor/font-awesome/css/font-awesome.min.css"/>">
@@ -26,6 +25,7 @@
 	<!-- ICONS -->
 	<link rel="apple-touch-icon" sizes="76x76" href="<c:url value="/resources/assets/img/apple-icon.png"/>">
 	<link rel="icon" type="image/png" sizes="96x96" href="<c:url value="/resources/assets/img/favicon.png"/>">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 	<script src="<c:url value="/resources/assets/vendor/jquery/jquery.min.js"/>"></script>
 	<script src="${path }/resources/js/chatsocket.js"></script>

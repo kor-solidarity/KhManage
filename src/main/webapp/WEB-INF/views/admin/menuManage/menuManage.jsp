@@ -364,7 +364,7 @@ ul{
 	</script>
 	<script>
 	//트리 구조 생성 
-	var open = 1;
+	var open1 = 1;
 		function tree_menu() {
 			$(".menuTable").find(".title").on('click', function(e){
 								var temp_el = $(this).parent().parent().nextUntil(".depth_2");
@@ -423,11 +423,11 @@ ul{
 									$("#noUse").prop("checked", false);
 								}
 								
-								if(temp_el.size() == 0 && open ==1){
+								if(temp_el.size() == 0 && open1 ==1){
 									$(this).find('em').addClass('on').html('하위폴더 열림');
 									$(this).css('color', '#F59E1C').css("font-weight", "600");
 									$(this).find("#folderImg").attr("src","<c:url value="/resources/assets/img/folderOpen.png"/>");
-									open = 0;
+									open1 = 0;
 									  var menuNo = $(this).next().val();
 									   $.ajax({
 											url:'selectOneMenu.am',
@@ -445,9 +445,9 @@ ul{
 												}
 										    }
 										}); 
-								}else if(open == 0){
+								}else if(open1 == 0){
 									$(this).css('color', '#1E2B44').css("font-weight", "400");
-									open = 1;
+									open1 = 1;
 								}
 								return false;
 							});

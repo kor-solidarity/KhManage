@@ -220,6 +220,12 @@ body {
 					onclick="location.href='showCreatChat.ct'"
 					style="color: white; font-size: 34px;"></i></td>
 			</tr>
+			<tr height="18px;"></tr>
+			<tr align="center">
+				<td><i class="fas fa-user-plus" id="userList" data-toggle="modal" data-target="#memberPlus"
+					style="color: white; font-size: 30px;"></i></td>
+			</tr>
+			
 			<tr height="15px;"></tr>
 			<tr align="center">
 				<td><i class="fas fa-ellipsis-h" id="userList" data-toggle="modal" data-target="#exampleModal"
@@ -316,15 +322,34 @@ body {
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
+    <div class="modal-content" style="width:350px;">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-atom"></i>&nbsp; 채팅방 정보</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        ...
+      <div class="modal-body" style="height:400px; overflow: auto;">
+        <table id="modalTable">
+        	<c:forEach var="m" items="${m }">
+        	<c:if test="${m.changeName == null }">
+        	<tr>
+					<td><div class='box' style='background:white;'><img class='profile' src="<c:url value="/resources/img/people.png"/>"></div></td>
+					<td style="padding-top: 14px; padding-left: 10px;">${m.memberName } / ${m.deptName} / ${m.rankName }
+						<input type="hidden" class="hideMemberNo" value="${m.memberNo}">
+					</td>
+			</tr>		
+			</c:if>
+			<c:if test="${m.changeName != null }">
+        	<tr>
+        		<td><div class='box' style='background:white;'><img class='profile' src="<c:url value="/resources/uploadFiles/${m.changeName}"/>.png"></div></td>
+        		<td style="padding-top: 14px; padding-left: 10px;">${m.memberName } / ${m.deptName} / ${m.rankName }
+        			<input type="hidden" class="hideMemberNo" value="${m.memberNo}">
+        		</td>
+        	</tr>
+        	</c:if>
+        	</c:forEach>
+        </table>
       </div>
       <div class="modal-footer">
         <button type="button" id="leaveChatRoom" class="btn btn-primary" style="background:#F3565D; border:none;"><i class="fas fa-sign-out-alt"></i></button>
@@ -332,6 +357,78 @@ body {
     </div>
   </div>
 </div>
+
+
+<!-- 인원 추가 모달 -->
+<div class="modal fade" id="memberPlus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="width:350px;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-plus"></i>&nbsp; 채팅방 인원 추가</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="height:400px; overflow: auto;">
+        <table id="modalTable">
+        	<tr>
+        		<td><input type="text" id="keyWord" placeholder="이름/부서 검색 " style="border:1px solid lightgray; width:200px; border-radius: 5px; margin-bottom: 2px; margin-right: 10px;"></td>
+        		<td>
+        			<div id="member" align="center" style="width:52px; background:#1E2B44; color:white; font-size:12px; line-height:24px; height:24px; border:1px solid black; display: inline-block; border:1px solid lightgray; border-radius: 5px;">이름</div>
+        			<div id="dept" align="center" style="width:52px; height:24px; border:1px solid black;font-size:12px; line-height:24px; display: inline-block; border:1px solid lightgray; border-radius: 5px;">부서명</div>
+        			<input type="hidden" id="searchInfo" value="member">
+        		</td>
+        	</tr>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="leaveChatRoom" class="btn btn-primary" style="background:#F3565D; border:none;"><i class="fas fa-sign-out-alt"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+	<script>
+		$("#dept").on("click", function(){
+			$("#member").css("background", "white");
+			$("#member").css("color", "black");
+			$(this).css("background", "#1E2B44");
+			$(this).css("color", "white");
+			$("#searchInfo").val("dept");
+		});
+		
+		$("#member").on("click", function(){
+			$("#dept").css("background", "white");
+			$("#dept").css("color", "black");
+			$(this).css("background", "#1E2B44");
+			$(this).css("color", "white");
+			$("#searchInfo").val("member");
+		});
+		
+		$("#keyWord").keyup(function(){
+			var kind = $("#searchInfo").val();
+			var keyWork = $(this).val();
+			$.ajax({
+   				url:'plusSearchMember.ct',
+   				type: 'post',
+   				async: false,
+   				data:{keyWord:keyWork,
+   					  kind:kind},
+   			 success:function(data){
+   				
+   			 }
+   			});	
+		});
+		
+	</script>
+	
+	<script>
+		$("#modalTable").click(function(){
+			$("#modalTable").find(".hideMemberNo").filter(function(){
+				console.log($(this).parent().parent());
+			});
+		});
+	</script>
+
 	<script>
 		$("#leaveChatRoom").click(function(){
 	    	 var text= "${loginUser.memberName}님이 나갔습니다" + "," + "${cr.chatRoomNo}"+ "," + "${loginUser.memberNo}" + "," + "텍스트" + "," + "${loginUser.memberName}" + "," +"sss" + "," + "M999";
@@ -408,7 +505,9 @@ body {
 							async: false,
 							data:{message:text},
 						 success:function(data){
-							 $("#chatAreaTable").append("<tr height='10px;'></tr><tr><br><td colspan='2'><div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send' align='center' style='width:100%; font-size:10px; margin-right: 40px; background:#1E2B44; height:15px; padding: 0px;'>"+ date +"<span class='msg_time_send'></span></div></div></td></tr>")
+							 $("#chatAreaTable").append("<tr height='10px;'></tr><tr><br><td colspan='2'><div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send' align='center' style='width:100%; font-size:10px; margin-right: 40px; background:#1E2B44; height:15px; padding: 0px;'>"+ date.substring(0, 8) +"<span class='msg_time_send'></span></div></div></td></tr>")
+							 var text= date.substring(0, 8) + "," + "${cr.chatRoomNo}"+ "," + "${loginUser.memberNo}" + "," + "텍스트" + "," + "${loginUser.memberName}" + "," +"sss" + "," + "M999";
+							 ws.send(text);
 						 }
 						});
 					}
@@ -477,7 +576,14 @@ body {
      		}else if(changeName == "M999"){
      			 $("#chatAreaTable").append("<tr height='10px;'></tr><tr><br><td colspan='2'><div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send' align='center' style='width:100%; font-size:10px; margin-right: 40px; background:#1E2B44; height:15px; padding: 0px;'>"+content+"<span class='msg_time_send'>${a.sendDate}</span></div></div></td></tr>")
      			 var text =  $("#memberCount").text().substring(0,1);
-     			
+     			 
+     			$("#modalTable").find(".hideMemberNo").filter(function(){
+    				if($(this).val() == memberNo){
+    					$(this).parent().parent().remove(); 
+    				}
+    			});
+     			 
+     			 
      			 $("#memberCount").text(text -1 + "명");
      			 $("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
      		}

@@ -7,7 +7,7 @@
                  return;
              }
              //웹소켓 객체 만드는 코드
-             ws=new WebSocket("ws://localhost:8001/ma/chatRoom.ct?");
+             ws=new WebSocket("ws://localhost:8001/manage/chatRoom.ct?");
              
              ws.onopen=function(event){
                  if(event.data===undefined) return;

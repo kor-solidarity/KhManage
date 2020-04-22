@@ -94,9 +94,12 @@ public class ChatController {
 //		}
 		ChatRoom crm = cs.selectOneChatRoom(cr);
 		
+		List<Member> list = cs.selectAllChatMember(cr);
+		System.out.println(list);
 		
 		model.addAttribute("cr", crm);
 		model.addAttribute("list", mList);
+		model.addAttribute("m", list);
 		
 		return "user/chat/chatRoom";
 	}
@@ -295,5 +298,11 @@ public class ChatController {
     	me.setStatus(str[5]);
     	
     	int result = cs.insertInfoMessage(me);
+	}
+	
+	@RequestMapping("/plusSearchMember.ct")
+	public void plusSearchMember(String kind, String keyWord) {
+		System.out.println("종류 : " + kind);
+		System.out.println("검색어  :"+ keyWord);
 	}
 }
