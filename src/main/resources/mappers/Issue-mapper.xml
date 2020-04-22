@@ -141,6 +141,26 @@
 		WHERE PROJECT_NO = #{pno}
 	</select>
 	
+	<select id="selectIssueOne" parameterType="java.lagn.String" resultMap="">
+		SELECT 
+				I.ISSUE_NO
+			  , I.ISSUE_TYPE
+			  , I.ISSUE_TITLE
+			  , I.ISSUE_CONTENT
+			  , I.REGISTER_TYPE
+			  , I.WORK_NO
+			  , I.TEAMWORKER
+			  , I.REGISTER_DATE
+			  , I.PROJECT_NO
+			  , I.PROJECT_NAME
+			  , I.ACTION_DATE
+		FROM ISSUE I
+		JOIN PROJECT P ON (I.PROJECT_NO = P.PROJECT_PK)
+		WHERE I.STATUS = 'Y'
+		AND I.ISSUE_NO = #{issueNo}
+		
+	</select>
+	
 </mapper>
 
 

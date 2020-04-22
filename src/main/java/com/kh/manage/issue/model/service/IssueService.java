@@ -34,5 +34,7 @@ public interface IssueService {
 
 	int getListCount(String pno);
 
+	Issue selectIssueOne(String issueNo);
+
 
 }

@@ -76,4 +76,9 @@ public class IssueDaoImpl implements IssueDao{
 		return sqlSession.selectOne("Issue.getListCount", pno);
 	}
 
+	@Override
+	public Issue selectIssueOne(SqlSessionTemplate sqlSession, String issueNo) {
+		return sqlSession.selectOne("Issue.selectIssueOne", issueNo);
+	}
+
 }

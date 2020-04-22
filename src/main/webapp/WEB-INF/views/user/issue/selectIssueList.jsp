@@ -192,9 +192,10 @@
 							
 							<c:forEach var="l" items="${list }">
 							<tr class="trRange">
-								<td class="td1">${l.projectName }</td>
+								<td style="display:none;">${l.issueNo }</td>
+								<td class="tdText">${l.projectName }</td>
 								<td class="tdText">${l.workName }</td>
-								<td class="tdText">${l.issueTitle }</td>
+								<td class="td1" style="text-align:center">${l.issueTitle }</td>
 								<td class="tdText">${l.registerDate }</td>
 								<td class="tdText">${l.issueType }</td>
 								<td class="tdText">${l.registerName }</td>
@@ -225,6 +226,18 @@
 				console.log(pno);
 				location.href="selectIssueList.iu?pno=" + pno;
 			});
+			
+			$("#projectTable td").mouseenter(function(){
+		    	$(this).parent().css({"background":"darkgray", "cursor":"pointer", "color":"white"});
+		    }).mouseout(function(){
+		    	$(this).parent().css({"background":"white", "color":"black"});
+		    }).click(function(){
+		    	 var num = $(this).parent().children().eq(0).text();
+		    	
+		    	console.log(num);
+		    	location.href="selectIssueOne.iu?issueNo="+num;
+		    }); 
+			
 		});
 		
 		</script>	
