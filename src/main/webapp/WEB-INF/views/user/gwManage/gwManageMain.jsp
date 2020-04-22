@@ -63,8 +63,14 @@
       max-height: 900px;
       margin: 20px auto;
    }
-    .fc-day-number.fc-sat.fc-past { color:#0000FF; }     /* 토요일 */
-    .fc-day-number.fc-sun.fc-past { color:#FF0000; }    /* 일요일 */
+   .dayselect{
+   	width: 70px;
+   	height: 34px;
+   	border-radius: 5px; 
+   }
+   
+    .fc-sat { color:#0000FF; }     /* 토요일 */
+    .fc-sun{ color:#FF0000; }    /* 일요일 */
 </style>
 </head>
 <body onload="$('#route1').text('작업 관리'), $('#route2').text('일정 관리')">
@@ -154,8 +160,8 @@
                           gno : '<%=gw.getGwNo()%>',
                           to : '<%=gw.getTo()%>',
                           constraint: 'businessHours',
-                          color: '#61F3EB',   // an option!
-                          textColor: 'black' // an option!                          
+                          color: '#FF848F',   // an option!
+                          textColor: 'white' // an option!                          
                        },
                        
                        
@@ -172,9 +178,10 @@
                               type : '<%=gw.getGwType()%>',
                               gno : '<%=gw.getGwNo()%>',
                               to : '<%=gw.getTo()%>',
+                              to2 : '<%=gw.getTo2()%>',
                               constraint: 'businessHours',
-                              color: '#82EB5A',   // an option!
-                              textColor: 'black' // an option!
+                              color: '#3CA0E1',   // an option!
+                              textColor: 'white' // an option!
                            },
                    <%	
     					}
@@ -192,15 +199,17 @@
     			 var memo = info.event.extendedProps.memo;
     			 var type = info.event.extendedProps.type;
     			 var gno = info.event.extendedProps.gno;
-    			 var to = moment(info.event.extendedProps.to).format('YYYY-MM-DDThh:mm:ss');
+    			 var to = moment(info.event.extendedProps.to).format('YYYY-MM-DDThh:mm');
+    			 var to2 = moment(info.event.extendedProps.to2).format('YYYY-MM-DDThh:mm');
     			 console.log("to" + to);
+    			 console.log("to2" + to2)
     			 $("#gwName2").val(title);
     			 $("#beginDate2").val(to);
-    			 $("#endDate2").val(end);
+    			 $("#endDate2").val(to2);
     			 $("#gwMemo2").val(memo);
     			 $("#gwType2").val(type);
     			 $("#gno2").val(gno);
-    			 
+    			 $("#repeat2").parent().parent().parent().children('.rr').remove();
     			 $('#selectModal').modal('show');
     			 
  			 },	
@@ -228,20 +237,13 @@
     
 	    
     </script>
-    <script>
-    function getFormatDate(date){ var year = date.getFullYear(); //yyyy 
-    var month = (1 + date.getMonth()); //M 
-    month = month >= 10 ? month : '0' + month; //month 두자리로 저장 
-    var day = date.getDate(); //d
-    day = day >= 10 ? day : '0' + day; //day 두자리로 저장 
-    return year + '-' + month + '-' + day; }
-    	
-    </script>
+    
     <!-- 캘린더 영역 -->
     <div id="calendar"></div>
     
     
     <!-- 일정 상세보기 모달-->
+		            <form id="gwUpdate"  method="post">
 		<div class="modal fade" id="selectModal" role="dialog" aria-labelledby="gridSystemModalLabel" aria-hidden="true">
 		    <div class="modal-dialog">
 		      <div class="modal-content">
@@ -252,7 +254,6 @@
 		        <div class="modal-body">
 		          <div class="container-fluid">
 		            <div class="row" style="margin: 10px;  padding:10px; ">
-		            <form id="gwUpdate" action="update.gwm" method="post">
 		              <table id="buseoInfoTable" style="border-spacing:0 10px; border-collapse: separate;">
 						<tr>
 							<td class="titleId" style="width: 130px;">제목</td>
@@ -272,15 +273,15 @@
 						</tr>
 						<tr>
 							<td class="titleId">종일 일정</td>
-							<td><input  name="check" id="check2" type="checkbox" checked="checked" checked></td>
+							<td><input  name="check" id="check2" type="checkbox" ></td>
 						</tr>
 						<tr>
 							<td class="titleId">반복</td>
 							<td>
 								<select name="repeat" id="repeat2" class="inputMenu form-control" style="width: 280px;">
 									<option>없음</option>
-									<option>일별</option>
-									<option>주별</option>
+									<option value="day">일별</option>
+									<option value="week">주별</option>
 									<option>월별</option>
 									<option>년별</option>
 								</select>
@@ -302,16 +303,19 @@
 						<tr>
 							<td class="titleId">참석자</td>
 							<td>
-							<input type="text" id="memberNo2" name="memberNo" class="inputMenu form-control" style="width: 280px;"  required="required">
+							<select name="memberNo" id="memberNo2" class="inputMenu form-control" style="width: 280px;" required="required">
+								<option></option>
+							</select>
 							</td>
 						</tr>
 						<tr>
 							<td><input type="hidden" id="bDate" name="bDate"></td>
 							<td><input type="hidden" id="bTime" name="bTime"></td>
+							<td><input type="hidden" id="eDate" name="eDate"></td>
+							<td><input type="hidden" id="eTime" name="eTime"></td>
 							<td><input type="hidden" id="gno2" name="gwNo"></td>
 						</tr>
 					 </table>
-					</form>
 		            </div>
 		            <div class="row">
 		              <div class="col-sm-9">
@@ -321,13 +325,14 @@
 		          </div>
 		        </div>
 		        <div class="modal-footer">
-		          <button type="button" class="btn btn-default" id="workDelete" style="float: left;color:white; background: #F3565D;">삭제</button>
+		          <button type="submit" class="btn btn-default" id="gwDelete" style="float: left;color:white; background: #F3565D;" formaction="delete.gwm">삭제</button>
 		          <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-		          <button type="button" class="btn btn-primary" id="workChangeSubmit" style="background:#1E2B44; outline:none; border:none;">저장</button>
+		          <button type="submit" class="btn btn-primary" id="gwUpdate" style="background:#1E2B44; outline:none; border:none;" formaction="update.gwm">저장</button>
 		        </div>
 		      </div><!-- /.modal-content -->
 		    </div><!-- /.modal-dialog -->
 	  	</div><!-- /.modal -->
+		</form>
 	  	
 	  	
 	  	 <!-- 일정 등록 모달-->
@@ -351,13 +356,13 @@
 						<tr>
 							<td class="titleId">시작</td>
 							<td>
-							<input type="date" id="beginDate" name="beginDate" class="inputMenu form-control" style="width: 280px;" required="required" value="20-05-12">
+							<input type="date" id="beginDate" name="beginDate2" class="inputMenu form-control" style="width: 280px;" required="required">
 							</td>
 						</tr>
 						<tr>
 							<td class="titleId">종료</td>
 							<td>
-							<input type="date" id="endDate" name="endDate" class="inputMenu form-control" style="width: 280px;" required="required">
+							<input type="date" id="endDate" name="endDate2" class="inputMenu form-control" style="width: 280px;" required="required">
 							</td>
 						</tr>
 						<tr>
@@ -366,7 +371,15 @@
 						</tr>
 						<tr>
 							<td class="titleId">반복</td>
-							<td><input name="completeDate" id="completeDate" type="text" class="inputMenu form-control" style="width: 280px;" readOnly required="required"></td>
+							<td>
+								<select name="repeat" id="repeat" class="inputMenu form-control" style="width: 280px;">
+									<option>없음</option>
+									<option value="day">일별</option>
+									<option value="week">주별</option>
+									<option>월별</option>
+									<option>년별</option>
+								</select>
+							</td>
 						</tr>
 						<tr>
 							<td class="titleId" style="width: 130px;">설명</td>
@@ -386,6 +399,12 @@
 							<td>
 							<input type="text" id="memberNo" name="memberNo" class="inputMenu form-control" style="width: 280px;"  required="required">
 							</td>
+						</tr>
+						<tr>
+							<td><input type="hidden" id="bDate2" name="bDate"></td>
+							<td><input type="hidden" id="bTime2" name="bTime"></td>
+							<td><input type="hidden" id="eDate2" name="eDate"></td>
+							<td><input type="hidden" id="eTime2" name="eTime"></td>
 						</tr>
 					 </table>
 					</form>
@@ -411,22 +430,43 @@
 	  	
 	  		$("#gwSubmit").click(function(){
 	  			
-	  		   $.ajax({
-	  		        type:'post',
-	  		        url : "insertGw.gwm",
-	  		        dataType : "json",
-	  		        data:$("#gwInsertForm").serialize(),
-	  		        contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
-	  		        success : function(data){
-	  		        	console.log(data);
-	  		        	location.href = "gwManageMain.gwm";
-	  		        },
-	  		        error:function(request,status,error){
-	  		            
-	  		       }
-	  		    });
+	  			var beginDate = $("#beginDate").val();
+	  			var bDate = beginDate.substring(0,10);
+	  			var bTime = beginDate.substring(11,16);
+	  			
+	  			var endDate = $("#endDate").val();
+	  			var eDate = endDate.substring(0,10);
+	  			var eTime = endDate.substring(11,16);
+	  			
+	  			
+	  			console.log(bDate);
+	  			console.log(bTime);
+	  			console.log("Ddd : " + eDate);
+	  			console.log("Ddd : " + eTime);
+	  			
+	  			$("#bDate2").val(bDate);
+	  			$("#bTime2").val(bTime);
+	  			$("#eDate2").val(eDate);
+	  			$("#eTime2").val(eTime);
+	  			
+					
+		  		   $.ajax({
+		  		        type:'post',
+		  		        url : "insertGw.gwm",
+		  		        dataType : "json",
+		  		        data:$("#gwInsertForm").serialize(),
+		  		        contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
+		  		        success : function(data){
+		  		        	console.log(data);
+		  		        	location.href = "gwManageMain.gwm";
+		  		        },
+		  		        error:function(request,status,error){
+		  		            
+		  		       }
+		  		   });
 	  			
 	  		});
+	  		
 	  		
 			$("#check").change(function(){
 	  			console.log(bd);
@@ -449,25 +489,190 @@
 	  				console.log($("#beginDate").val())
 	  			}
 	  			
-			})	;  		
+			})	;  
+			
+			
+			$("#check2").change(function(){
+	  			console.log("checked : " + bd);
+	  			if($("#check2").is(":checked")){
+	  				
+	  				bd = $(this).parent().parent().parent().children().children().eq(3).children().val();
+	  				ed = $(this).parent().parent().parent().children().children().eq(5).children().val();
+	  				var bdd = bd.substring(0,10);
+	  				var edd = ed.substring(0,10);
+	  				$("#beginDate2").attr("type", "date");
+	  				$("#endDate2").attr("type", "date");
+	  				$("#beginDate2").val(bdd);
+	  				$("#endDate2").val(edd);
+	  				console.log("11: " + bdd);
+	  				
+	  			}else{
+	  				console.log("bd" + bd)
+	  				
+
+	  				$("#beginDate2").attr("type", "datetime-local");
+	  				$("#endDate2").attr("type", "datetime-local");
+	  				$("#beginDate2").val(bd);
+	  				$("#endDate2").val(ed);
+	  				console.log($("#beginDate").val())
+	  				
+	  			}
 	  			
-	  		$("#workDelete").click(function(){
+			})	;  	
+			
+			
+			
+	  			
+	  		$("#gwUpdate").click(function(){
 	  		 	
 	  			//var dd = moment($("#beginDate2").val()).format('YYYY-MM-DD hh:mm');
 	  			console.log($("#beginDate2").val());
 	  			
 	  			var beginDate = $("#beginDate2").val();
 	  			var bDate = beginDate.substring(0,10);
-	  			var bTime = beginDate.substring(11,19);
+	  			var bTime = beginDate.substring(11,16);
+	  			
+	  			var endDate = $("#endDate2").val();
+	  			var eDate = endDate.substring(0,10);
+	  			var eTime = endDate.substring(11,16);
+	  			
 	  			
 	  			console.log(bDate);
 	  			console.log(bTime);
+	  			console.log("Ddd : " + eDate);
+	  			console.log("Ddd : " + eTime);
+	  			
 	  			$("#bDate").val(bDate);
 	  			$("#bTime").val(bTime);
-	  		 	  			
-	  			$("#gwUpdate").submit();
+	  			$("#eDate").val(eDate);
+	  			$("#eTime").val(eTime);
+	  		 	 
+	  			 //$("#gwUpdate").attr("formaction", "update.gwm");
+	  			
+	  			//$("#gwUpdate").submit(); 
 	  			
 	  		});
+	  		
+	  		$("#gwDelete").click(function(){
+	  			
+/* 				$("#gwUpdate").attr("formaction", "delete.gwm");
+	  			
+	  			$("#gwUpdate").submit(); */
+	  			
+	  		});
+	  		
+	  		
+	  		$(function(){
+	  			
+	  			console.log($("#repeat2").val());
+	  			
+	  			$("#repeat2").change(function(){
+	  				
+	  			if($("#repeat2").val() == "day"){
+	  				
+	  				$("#repeat2").parent().parent().parent().children('.rr').remove();
+	  				
+	  				console.log($("#repeat2").parent().parent());
+	  				
+	  				var tr = "<tr class='rr'><td class='titleId'>매 </td><td><select class='dayselect' ><option>1</option></select> 일 마다 되풀이</td></tr><tr class='rr'><td class='titleId'>종료 </td><td><input type='radio' name='daySelect'>없음</td></tr><tr class='rr'><td class='titleId'> </td><td class='titleId'><input type='radio' name='daySelect'> <select class='dayselect'><option></option></select> 반복</td></tr><tr class='rr'><td class='titleId'></td><td><input type='radio' name='daySelect'> 종료 날짜  <input type='date'></td></tr>"                                       
+	  				
+	  				$("#repeat2").parent().parent().after(tr);
+	  			}
+				if($("#repeat2").val() == "없음"){
+	  				
+	  				$("#repeat2").parent().parent().parent().children('.rr').remove();
+	  			}
+				
+				
+				if($("#repeat2").val() == 'week'){
+					
+					$("#repeat2").parent().parent().parent().children('.rr').remove();
+					
+					var tr = "<tr class='rr'><td class='titleId'>매 </td><td><select class='dayselect'><option>1</option></select> 주 마다 되풀이</td><tr class='rr'><td class='titleId'>반복</td><td><input type='checkbox'> 일 <input type='checkbox'> 월 <input type='checkbox'> 화 <input type='checkbox'> 수 <input type='checkbox'> 목 <input type='checkbox'> 금 <input type='checkbox'> 토</td></tr></tr><tr class='rr'><td class='titleId'>종료 </td><td><input type='radio' name='daySelect'>없음</td></tr><tr class='rr'><td class='titleId'> </td><td class='titleId'><input type='radio' name='daySelect'> <select class='dayselect'><option></option></select> 반복</td></tr><tr class='rr'><td class='titleId'></td><td><input type='radio' name='daySelect'> 종료 날짜    <input type='date'></td></tr>"                                       
+		  				
+		  			$("#repeat2").parent().parent().after(tr);
+					
+					
+				}
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+	  			
+	  			
+	  			});
+	  			
+	  			$(function(){
+	  				
+	  				 $.ajax({
+			  		        type:'get',
+			  		        url : "selectMember.gwm",
+			  		        dataType : "json",
+			  		        contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
+			  		        success : function(data){
+			  		        	console.log(data);
+			  		        	
+			  		        	for(var i =0; i < data.length; i++){
+			  		        		
+			  		        	   $("#memberNo2").append("<option class='option' value='"+data[i].memberNo+"'>"+data[i].memberName+"</option>")
+			  		        	}
+			  		        },
+			  		        error:function(request,status,error){
+			  		            
+			  		       }
+			  		   });
+	  				 
+	  				 
+	  				 $(".option").click(function(){
+	  					
+	  					 
+	  				 });
+	  				 
+	  				
+	  			});
+	  			
+	  			
+	  			
+	  			/* $("#memberNo2").click(function(){
+	  				
+			  		   $.ajax({
+			  		        type:'get',
+			  		        url : "selectMember.gwm",
+			  		        dataType : "json",
+			  		        contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
+			  		        success : function(data){
+			  		        	console.log(data);
+			  		        	
+			  		        	for(var i =0; i < data.length; i++){
+			  		        		
+			  		        	   $("#memberNo2").after("<option value='"+data[i].memberName+"'>"+data[i].memberName+"</option>")
+			  		        		
+			  		        	}
+			  		        	
+			  		        },
+			  		        error:function(request,status,error){
+			  		            
+			  		       }
+			  		   });
+	  				
+	  				
+	  			}); */
+	  			
+	  			
+	  			
+	  		});
+	  		
+	  		
+	  		
+	  		
 	  		
 	  		
 	  	</script>

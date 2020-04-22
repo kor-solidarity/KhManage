@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.manage.gwManage.model.vo.GWork;
+import com.kh.manage.member.model.vo.Member;
 
 @Repository
 public class GwManageDaoImpl implements GwManageDao{
@@ -27,6 +28,18 @@ public class GwManageDaoImpl implements GwManageDao{
 
 		System.out.println("asdasdads");
 		return sqlSession.update("GWork.updateGw", g);
+	}
+
+	@Override
+	public int deleteGw(SqlSessionTemplate sqlSession, GWork g) {
+
+		return sqlSession.update("GWork.deleteGw",g);
+	}
+
+	@Override
+	public List<Member> MemberList(SqlSessionTemplate sqlSession) {
+	
+		return sqlSession.selectList("Member.selectMemberList");
 	}
 	
 	

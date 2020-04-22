@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.manage.gwManage.model.dao.GwManageDao;
 import com.kh.manage.gwManage.model.vo.GWork;
+import com.kh.manage.member.model.vo.Member;
 
 @Service
 public class GwManageServiceImpl implements GwManageService{
@@ -34,6 +35,18 @@ public class GwManageServiceImpl implements GwManageService{
 	public int updateGw(GWork g) {
 		
 		return gd.updateGw(sqlSession, g);
+	}
+
+	@Override
+	public int deleteGw(GWork g) {
+		
+		return gd.deleteGw(sqlSession, g);
+	}
+
+	@Override
+	public List<Member> memberList() {
+
+		return gd.MemberList(sqlSession);
 	}
 
 }

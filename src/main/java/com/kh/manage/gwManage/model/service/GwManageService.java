@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import com.kh.manage.gwManage.model.vo.GWork;
+import com.kh.manage.member.model.vo.Member;
 
 public interface GwManageService {
 
@@ -12,5 +13,9 @@ public interface GwManageService {
 	int insertGw(GWork g);
 
 	int updateGw(GWork g);
+
+	int deleteGw(GWork g);
+
+	List<Member> memberList();
 
 }
