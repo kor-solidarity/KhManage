@@ -92,7 +92,6 @@
         <result property="status" column="STATUS"/>
     </resultMap>
 
-
     <resultMap type="ProjectTeam" id="projectTeamResultSet">
         <id property="teamPk" column="TEAM_PK"/>
         <result property="projectPk" column="PROJECT_PK"/>
@@ -101,6 +100,43 @@
         <result property="memberName" column="MEMBER_NAME"/>
         <result property="deptName" column="DEPT_NAME"/>
         <result property="rankName" column="RANK_NAME"/>
+    </resultMap>
+
+    <resultMap type="ProjectDetail" id="projectDetailResultSet">
+        <id property="projectPk" column="PROJECT_PK"/>
+        <result property="projectName" column="PROJECT_NAME"/>
+        <result property="isImportant" column="IS_IMPORTANT"/>
+        <result property="projectTypePk" column="PROJECT_TYPE_PK"/>
+        <result property="projectTypeName" column="TYPE_NAME"/>
+        <result property="projectRank" column="PROJECT_RANK"/>
+        <result property="projectManager" column="PROJECT_MANAGER"/>
+        <result property="managerName" column="MEMBER_NAME"/>
+        <result property="deptNo" column="DEPT_NO"/>
+        <result property="deptName" column="DEPT_NAME"/>
+        <result property="startDate" column="START_DATE"/>
+        <result property="endDate" column="END_DATE"/>
+        <result property="detail" column="DETAIL"/>
+        <result property="remarks" column="REMARKS"/>
+        <result property="status" column="TEAMPLATE_PK"/>
+        <result property="teamplatePk" column="status"/>
+    </resultMap>
+    <resultMap type="Member" id="memberResultSet">
+        <id property="memberNo" column="MEMBER_NO"/>
+        <result property="memberId" column="MEMBER_ID"/>
+        <result property="memberPwd" column="PASSWORD"/>
+        <result property="memberName" column="MEMBER_NAME"/>
+        <result property="phone" column="PHONE"/>
+        <result property="email" column="EMAIL"/>
+        <result property="memberType" column="MEMBER_TYPE"/>
+        <result property="rankNo" column="RANK_NO"/>
+        <result property="rankName" column="RANK_NAME"/>
+        <result property="deptNo" column="DEPT_NO"/>
+        <result property="deptName" column="DEPT_NAME"/>
+        <result property="projectPk" column="PROJECT_PK"/>
+        <result property="enrollDate" column="ENROLL_DATE"/>
+        <result property="changeName" column="CHANGE_NAME"/>
+        <result property="ext" column="EXT"/>
+        <result property="status" column="STATUS"/>
     </resultMap>
 
     <!--부서목록-->
@@ -125,21 +161,21 @@
     </select>
 
     <select id="selectProjectWorkList" resultMap="projectWorkListResultSet" parameterType="String">
-        SELECT W.WORK_NO       AS WORK_NO,
-               W.WORK_NAME     AS WORK_NAME,
-               W.STATUS        AS STATUS,
-               W.PROJECT_NO    AS PROJECT_NO,
-               W.BEGIN_DATE    AS BEGIN_DATE,
-               W.COMPLETE_DATE AS COMPLETE_DATE,
-               W.PRECEDE_NO    AS PRECEDE_NO,
-               W.COMPLETE_RATE AS COMPLETE_RATE,
-               W.WORK_LEVEL    AS WORK_LEVEL,
-               W.HIGH_WORK_NO  AS HIGH_WORK_NO,
-               W.WORK_TYPE     AS WORK_TYPE,
-               W.MEMBER_NO     AS MEMBER_NO,
-               W.WORK_STATUS   AS WORK_STATUS,
-               M.MEMBER_NAME   AS MEMBER_NAME,
-               M.MEMBER_TYPE   AS MEMBER_TYPE,
+        SELECT W.WORK_NO                    AS WORK_NO,
+               W.WORK_NAME                  AS WORK_NAME,
+               W.STATUS                     AS STATUS,
+               W.PROJECT_NO                 AS PROJECT_NO,
+               W.BEGIN_DATE                 AS BEGIN_DATE,
+               W.COMPLETE_DATE              AS COMPLETE_DATE,
+               W.PRECEDE_NO                 AS PRECEDE_NO,
+               W.COMPLETE_RATE              AS COMPLETE_RATE,
+               W.WORK_LEVEL                 AS WORK_LEVEL,
+               W.HIGH_WORK_NO               AS HIGH_WORK_NO,
+               W.WORK_TYPE                  AS WORK_TYPE,
+               W.MEMBER_NO                  AS MEMBER_NO,
+               W.WORK_STATUS                AS WORK_STATUS,
+               M.MEMBER_NAME                AS MEMBER_NAME,
+               M.MEMBER_TYPE                AS MEMBER_TYPE,
                (COMPLETE_DATE - BEGIN_DATE) AS DAYS
         FROM WORK W
                  JOIN MEMBER M ON W.MEMBER_NO = M.MEMBER_NO
@@ -223,10 +259,34 @@
                  JOIN PROJECT_TEAM T ON P.PROJECT_PK = T.PROJECT_PK
         WHERE T.MEMBER_PK = P.PROJECT_MANAGER
     </select>
+
     <select id="selectTemplateList" resultMap="templateResultSet">
         select *
         from PROJECT_TEMPLATE
     </select>
+
+    <select id="selectOutdatedWorks" parameterType="String" resultMap="projectWorkListResultSet">
+        <![CDATA[
+        select *
+        from WORK
+        WHERE to_date(sysdate) > COMPLETE_DATE
+          and STATUS != '개발완료'
+          and PROJECT_NO = #{value}
+        ]]>
+    </select>
+
+    <update id="updateOutdatedWork" parameterType="String">
+        update WORK
+        set STATUS = '개발지연'
+        where WORK_NO = #{value}
+    </update>
+
+    <insert id="insertWorkHistory" parameterType="WorkHistory">
+        insert into WORK_HISTORY
+        values ('WH' || to_char(SEQ_WH.NEXTVAL, 'FM000'),
+                #{workNo}, #{status}, #{memo}, #{modifyDate}, #{projectTeamNo})
+    </insert>
+
     <insert id="insertProjectWork" parameterType="ProjectWork">
         INSERT INTO WORK
         VALUES ('W' || to_char(SEQ_WNO.NEXTVAL, 'FM000'),
@@ -246,4 +306,57 @@
         values ('PT' || to_char(SEQ_TEAM.nextval, 'FM000'), #{projectPk},
                 #{memberPk}, #{role})
     </insert>
+
+    <!--첨부파일 추가-->
+    <insert id="insertAttachment" parameterType="Attachment">
+        INSERT INTO ATTACHMENT
+        VALUES ('AT' || TO_CHAR(SEQ_AT_NO.NEXTVAL, 'FM000'),
+                #{division}, #{originName}, #{changeName}, #{filePath}, #{ext})
+    </insert>
+
+
+    <!-- 프로젝트 하나의 디테일 정보를 불러옴 -->
+    <select id="selectOneProject" parameterType="java.lang.String" resultMap="projectDetailResultSet">
+        SELECT P.PROJECT_PK
+             , P.PROJECT_NAME
+             , P.IS_IMPORTANT
+             , P.PROJECT_TYPE_PK
+             , PT.TYPE_NAME
+             , P.PROJECT_RANK
+             , P.PROJECT_MANAGER
+             , M.MEMBER_NAME
+             , P.DEPT_NO
+             , D.DEPT_NAME
+             , P.START_DATE
+             , P.END_DATE
+             , P.DETAIL
+             , P.REMARKS
+             , P.STATUS
+             , P.TEAMPLATE_PK
+        FROM PROJECT P
+                 JOIN DEPT D ON (D.DEPT_NO = P.DEPT_NO)
+                 JOIN MEMBER M ON (M.MEMBER_NO = P.PROJECT_MANAGER)
+                 JOIN PROJECT_TYPE PT ON (PT.TYPE_PK = P.PROJECT_TYPE_PK)
+        WHERE P.PROJECT_PK = #{pid}
+    </select>
+
+    <!-- 리소스 jsp용 by TW -->
+    <select id="selectMemberListResource" parameterType="String" resultMap="memberResultSet">
+        SELECT M.MEMBER_NAME
+        ,M.MEMBER_NO
+        ,R.RANK_NAME
+        ,R.RANK_NO
+        ,D.DEPT_NAME
+        ,D.DEPT_NO
+        FROM MEMBER M
+        JOIN DEPT D ON(D.DEPT_NO = M.DEPT_NO)
+        JOIN RANK R ON(R.RANK_NO = M.RANK_NO)
+        WHERE 1 = 1
+        AND M.MEMBER_TYPE = '0'
+        AND M.STATUS = 'Y'
+        AND D.DEPT_NO != 'S05'
+        <if test="deptNo = null">
+            AND D.DEPT_NO = #{deptNo}
+        </if>
+    </select>
 </mapper>

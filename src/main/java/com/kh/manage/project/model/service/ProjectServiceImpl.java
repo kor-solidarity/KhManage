@@ -3,6 +3,7 @@ package com.kh.manage.project.model.service;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.template.model.vo.Template;
+import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.project.model.vo.*;
@@ -94,5 +95,38 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public List<ProjectTeam> selectProjectTeamList(String pid) {
 		return pd.selectProjectTeamList(sqlSession, pid);
+	}
+	
+	@Override
+	public ProjectDetail selectOneProject(String pid) {
+		
+		return pd.selectOneProject(sqlSession, pid);
+	}
+	
+	@Override
+	public int insertAttachment(Attachment at) {
+		return pd.insertAttachment(sqlSession, at);
+	}
+	
+	@Override
+	public List<ProjectWork> selectOutdatedWorks(String pid) {
+		return pd.selectOutdatedWorks(sqlSession, pid);
+	}
+	
+	@Override
+	public int updateOutdatedWork(String workNo) {
+		return pd.updateOutdatedWork(sqlSession, workNo);
+	}
+	
+	@Override
+	public int insertWorkHistory(WorkHistory workHistory) {
+		return pd.insertWorkHistory(sqlSession, workHistory);
+		
+	}
+	
+	
+	@Override
+	public List<DeptMember> selectMemberListResource(String deptNo) {
+		return pd.selectMemberListResource(sqlSession, deptNo);
 	}
 }

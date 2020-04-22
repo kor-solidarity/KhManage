@@ -40,9 +40,9 @@
 <%--todo 클릭시 이동, 그리고 해당 페이지에 도달했을 시 클릭여부 등 - 겟 형태로 프로젝트ID 넘겨야할듯--%>
 <div class="container" id="projectNav" style="width: 100%">
 	<ul class="nav nav-tabs">
-		<li role="presentation" class=""><a href="viewProject.pr?pid=${pid}&type=0">요약정보</a></li>
+		<li role="presentation" class=""><a href="showProjectSummary.pr?pid=${pid}&type=0">요약정보</a></li>
 		<li role="presentation"><a href="#">기본정보</a></li>
-		<li role="presentation"><a href="#">리소스</a></li>
+		<li role="presentation"><a href="showResource.pr?pid=${pid}&type=2">리소스</a></li>
 		<li role="presentation"><a href="${path}/projectTask.pr?pid=${pid}&type=3">프로젝트작업</a></li>
 		<li role="presentation"><a href="#">배정현황</a></li>
 		<li role="presentation"><a href="projectIssue.pr?pid=${pid}&type=5">이슈</a></li>

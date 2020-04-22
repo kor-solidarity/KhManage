@@ -3,6 +3,7 @@ package com.kh.manage.project.model.dao;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.template.model.vo.Template;
+import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.project.model.vo.*;
@@ -35,4 +36,16 @@ public interface ProjectDao {
 	int insertProjectWork(SqlSessionTemplate sqlSession, ProjectWork projectWork);
 	
 	List<ProjectTeam> selectProjectTeamList(SqlSessionTemplate sqlSession, String pid);
+	
+	ProjectDetail selectOneProject(SqlSessionTemplate sqlSession, String pid);
+	
+	int insertAttachment(SqlSessionTemplate sqlSession, Attachment at);
+	
+	List<ProjectWork> selectOutdatedWorks(SqlSessionTemplate sqlSession, String pid);
+	
+	int updateOutdatedWork(SqlSessionTemplate sqlSession, String workNo);
+	
+	int insertWorkHistory(SqlSessionTemplate sqlSession, WorkHistory workHistory);
+	
+	List<DeptMember> selectMemberListResource(SqlSessionTemplate sqlSession, String deptNo);
 }
