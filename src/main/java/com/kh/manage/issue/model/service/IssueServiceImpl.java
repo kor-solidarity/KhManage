@@ -79,6 +79,11 @@ public class IssueServiceImpl implements IssueService{
 		return id.getListCount(sqlSession, pno);
 	}
 
+	@Override
+	public Issue selectIssueOne(String issueNo) {
+		return id.selectIssueOne(sqlSession, issueNo);
+	}
+
 	
 
 	

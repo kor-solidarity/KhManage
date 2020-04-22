@@ -36,4 +36,6 @@ public interface IssueDao {
 
 	int getListCount(SqlSessionTemplate sqlSession, String pno);
 
+	Issue selectIssueOne(SqlSessionTemplate sqlSession, String issueNo);
+
 }

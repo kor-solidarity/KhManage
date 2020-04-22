@@ -215,5 +215,15 @@ public class IssueController {
 	
 	}
 	
+	@RequestMapping("selectIssueOne.iu")
+	public String selectIssueOne(String issueNo) {
+		System.out.println(issueNo);
+		
+		Issue issue = is.selectIssueOne(issueNo);
+		
+		
+		return "";
+	}
+	
 	
 }

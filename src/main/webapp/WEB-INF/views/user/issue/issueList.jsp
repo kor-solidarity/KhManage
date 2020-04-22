@@ -192,16 +192,16 @@
 							
 							
 							<tr class="trRange">
-								<td class="td1">KH대학교 학사시스템 개발</td>
-								<td class="tdText">기능 개발</td>
-								<td class="tdText">수강신청 구현</td>
-								<td class="tdText">2020-04-03</td>
-								<td class="tdText">오류발생</td>
-								<td class="tdText">심재우</td>
-								<td class="tdText"><label class="issueOpen">오픈</label></td>
-								<td class="tdText">김성준</td>
-								<td class="tdText">2020-04-03</td>
-								<td class="tdText">2020-04-05</td>
+								<td class="td1"></td>
+								<td class="tdText"></td>
+								<td class="tdText"></td>
+								<td class="tdText"></td>
+								<td class="tdText"></td>
+								<td class="tdText"></td>
+								<td class="tdText"></td>
+								<td class="tdText"></td>
+								<td class="tdText"></td>
+								<td class="tdText"></td>
 							</tr>
 							<tr class="pagingArea">
                         		<td colspan="10">
