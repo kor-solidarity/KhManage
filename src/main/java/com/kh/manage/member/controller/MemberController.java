@@ -26,6 +26,9 @@ import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.rank.model.vo.Rank;
 import com.kh.manage.common.Attachment;
 import com.kh.manage.common.CommonsUtils;
+import com.kh.manage.common.PageInfo;
+import com.kh.manage.common.Pagination;
+import com.kh.manage.infoBoard.model.vo.InfoBoard;
 import com.kh.manage.member.model.exception.LoginException;
 import com.kh.manage.member.model.service.MemberService;
 import com.kh.manage.member.model.vo.Member;
@@ -56,11 +59,26 @@ public class MemberController {
 	@RequestMapping("/userManagement.me")
 	public String userManagementMain(Model model, HttpServletRequest request) {
 		
-		List<Member> mlist = ms.selectMemberList();
 		
+		int currentPage = 1;
+		
+		if(request.getParameter("currentPage") != null) {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+		
+		//페이징
+		int listCount = ms.memberListCount();
+		System.out.println("listCount : " + listCount);
+
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		
+		//memberList
+		List<Member> mlist = ms.selectMemberList(pi);
 		System.out.println("mlist : " + mlist);
 		
 		request.setAttribute("mlist", mlist);
+		request.setAttribute("pi", pi);
+		
 
 		return "admin/userManagement/userManagement";
 	}
@@ -397,6 +415,31 @@ public class MemberController {
 		}
 		
 	}
+	
+	
+	//사용자 리스트 페이지내 회원명으로 검색
+	@RequestMapping("searchMemberName.me")
+	public void searchMemberName(Member member, Model model, HttpServletRequest request, HttpServletResponse response) {
+		
+		PageInfo pi = Pagination.getPageInfo(1, 1);
+		List<Member> list = ms.searchMemberName(member);
+		
+		request.setAttribute("list", list);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		
+		String gson = new Gson().toJson(list);
+		
+		try {
+			response.getWriter().write(gson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	
 	
 	
 	

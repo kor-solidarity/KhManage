@@ -15,13 +15,6 @@
 		border-radius: 5px;
 	}
 	
-	
-	/* .memberListTr:hover {
-		background: #F3F3F3;
-		color: black;
-		cursor: pointer;
-	} */
-	
 	.memberListTr {
 		width: 100%;
 		border: 1px solid black;
@@ -82,7 +75,7 @@
 						<!-- 인원 조회 영역 -->						
                             <div id="memberList" class="col-md-5" style="width:400px; height:500px; margin-left:50px; border:2px solid lightgray; padding-top: 10px;">
                                 <table class="memberListTable" border="1" style="width: 100%">
-                                	<tr id="" class="memberListTr">
+                                	<tr id="" class="memberListTr" style="width: 100%">
                                 		<td class="memberListTd chooseMember">인원을 추가해주세요.</td>
                                 	</tr>
                                 </table>
@@ -136,9 +129,12 @@
 					
 					$("#memberList").empty();
 					
+					
+					if(deptName != null) {
+						
 						for(key in data) {
 							
-							$("#memberList").append("<tr class='memberListTr'><td class='memberListTd'><b>" 
+							$("#memberList").append("<tr class='memberListTr' style='width:100%;'><td class='memberListTd'><b>" 
 									+ data[key]['memberName'] + "</b>" 
 									+ "&nbsp;/&nbsp;" + data[key]['deptName'] + "&nbsp;/&nbsp;" + data[key]['rankName'] 
 									
@@ -147,13 +143,16 @@
 									+ "<input type='hidden' id='rankNo' name='rankNo' value='" + data[key]['rankNo'] + "'>"
 									
 									+ "</td></tr>");
-							
-							
-							/* console.log(memberNo);
-							console.log(deptNo);
-							console.log(rankNo);
-							 */
 						}
+						
+						
+					} else {
+						
+						$("#memberList").append("<tr class='memberListTr' style='width:100%;'><td class='memberListTd'><b>" 
+								
+									+ "해당 부서에 조회된 사원이 없습니다." + "</b></td></tr>");
+					}
+					
 						
 				}
 				

@@ -201,7 +201,40 @@
 		WHERE MEMBER_NO != 'M001'
 	</select> -->
 	 
-
+	 <!-- 페이징 리스트 count-->
+	 <select id="memberListCount" resultType="_int">
+	 	SELECT COUNT(*)
+	 	FROM MEMBER
+	 </select>
+	 
+	 <!-- memberList 이름으로 검색 -->
+	 <select id="searchMemberName" resultMap="memberResultSet2">
+	 	SELECT M.MEMBER_NO
+		      ,M.MEMBER_NAME
+		      ,D.DEPT_NAME
+		      ,R.RANK_NAME
+		      ,COUNT(P.PROJECT_PK)
+		      ,M.EMAIL
+		      ,M.STATUS
+		FROM MEMBER M
+		JOIN DEPT D ON(M.DEPT_NO = D.DEPT_NO)
+		JOIN RANK R ON(M.RANK_NO = R.RANK_NO)
+		LEFT JOIN PROJECT_TEAM P ON(M.MEMBER_NO = P.MEMBER_PK)
+		WHERE M.MEMBER_NAME != '관리자' 
+		  AND M.STATUS = 'Y'
+		  AND M.MEMBER_NAME LIKE '%' || #{memberName} || '%'
+		GROUP BY  M.MEMBER_NO 
+		         ,M.MEMBER_NAME
+		         ,D.DEPT_NAME
+		         ,R.RANK_NAME
+		         ,M.EMAIL
+		         ,M.STATUS
+		
+	 </select>
+	 
+	
+	
+	
 </mapper>
 
 

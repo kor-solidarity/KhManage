@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <title>Insert title here</title>
 <style>
 	#projectTable{
@@ -39,7 +38,7 @@
 		padding:3px;		
 	}
 	.th1{
-		width:220px;
+		width:180px;
 		text-indent: 5px;
 	}
 	.td1{
@@ -71,17 +70,37 @@
 		color: gray;
 	}
 	
+	.pwdResetBtn:hover {
+		color: WHITE;
+		border: 1px solid gray;
+		font-weight: bold;
+		background: #1E2B44;
+	}	
+	
 	.pagingArea{
-      background:#F3F3F3;
-      height:50px;
-      border:1px solid #B0B0B0;
-   }
-   .paging{
-      margin-left:200px;
-      width:50%;
-   }
+		background:#F3F3F3;
+		height:50px;
+		border:1px solid #B0B0B0;
+	}
+	.paging{
+		margin-left:200px;
+		width:50%;
+	}
    
-   .titleId{color:#5E738B; font-weight: bold;}
+    .titleId{color:#5E738B; font-weight: bold;}
+   
+   
+    tr:nth-child(even) {
+   		background: #F9F9F9;
+   	}
+   	
+   	tr:hover {
+   		background: #F9F9F9;
+   		color: black;
+   	}
+   	
+   	
+   	
    
 </style>
 </head>
@@ -101,28 +120,28 @@
 					
 				<table id="projectTable" align="center">
 					<tr>
-						<td class="thRange th1">이름</td>
-						<td class="tdText thRange">부서</td>
-						<td class="tdText thRange">직급</td>
-						<td class="tdText thRange">진행중인프로젝트</td>
-						<td class="tdText thRange">이메일</td>
-						<td class="tdText thRange">사용여부</td>
-						<td class="tdText thRange">최근접속일</td>
-						<td class="tdText thRange"></td>
+						<th class="thRange th1">이름</th>
+						<th class="tdText thRange">부서</th>
+						<th class="tdText thRange">직급</th>
+						<th class="tdText thRange">진행중인프로젝트</th>
+						<th class="tdText thRange">이메일</th>
+						<th class="tdText thRange">사용여부</th>
+						<th class="tdText thRange">최근접속일</th>
+						<th class="tdText thRange"></th>
 					</tr>
-					<tr>
-						<td class="thRange th1"><input type="text" class="inputCss" style="width:200px;"></td>
-						<td class="tdText thRange"><input type="text" class="inputCss" style="width:100px"></td>
-						<td class="tdText thRange"><input type="text" class="inputCss" style="width:100px;"></td>
-						<td class="tdText thRange"><input type="text" class="inputCss" style="visibility:hidden; width:60px;"></td>
-						<td class="tdText thRange"><input type="text" class="inputCss" style="width:220px;"></td>
-						<td class="tdText thRange"><input type="text" class="inputCss" style="width:100px;"></td>
-						<td class="tdText thRange"><input type="text" class="inputCss" style="width:100px;"></td>
-						<td class="tdText thRange"><input type="text" class="inputCss" style="visibility:hidden; width:160px;"></td>
+					<tr class="front">
+						<th class="thRange th1"><input type="search" id="searchMemberName" class="inputCss form-control" style="width:95%;"></th>
+						<th class="tdText thRange"><input type="text" class="inputCss form-control" style="width:95%;"></th>
+						<th class="tdText thRange"><input type="text" class="inputCss form-control" style="width:95%;"></th>
+						<th class="tdText thRange"><input type="text" class="inputCss form-control" style="visibility:hidden; width:95%;"></th>
+						<th class="tdText thRange"><input type="text" class="inputCss form-control" style="width:95%;"></th>
+						<th class="tdText thRange"><input type="text" class="inputCss form-control" style="width:95%;"></th>
+						<th class="tdText thRange"><input type="text" class="inputCss form-control" style="width:95%;"></th>
+						<th class="tdText thRange"><input type="text" class="inputCss form-control" style="visibility:hidden; width:95%;"></th>
 					</tr>
 					
 					<c:forEach var="m" items="${mlist}">
-					<tr class="trRange">
+					<tr id="memberList" class="trRange">
 						<%-- <td class="td1"><a href="selecMemberModal.me?memberNo=${m.memberNo}" id="memberName">${m.memberName}</a></td> --%>
 						<td class="td1"><a href="#" id="memberName">${m.memberName}</a></td>
 						<td class="tdText">${m.deptName}</td>
@@ -137,11 +156,44 @@
 					</tr>
 					</c:forEach>
 					
+					<!-- 페이징 영역 -->
 					<tr class="pagingArea">
-                        <td colspan="8">
-                           <div class="paging"><< < 1 2 > >></div>
-                        </td>
-                    </tr>
+						<td colspan="8">
+							<div class="paging">
+								<c:if test="${pi.currentPage <= 1 }">
+										[이전] &nbsp;
+								</c:if>
+								<c:if test="${ pi.currentPage > 1 }">
+								<c:url var="alistBack" value="userManagement.me">
+									<c:param name="currentPage" value="${pi.currentPage - 1 }"/>
+								</c:url>
+									<a href="${ alistBack }">[이전]</a>&nbsp;
+								</c:if>
+								<c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage }">
+									<c:if test="${p eq pi.currentPage }">
+										<font color="red" size="4"><b>[${p }]</b></font>
+									</c:if>
+									<c:if test="${p ne pi.currentPage }">
+										<c:url var="alistCheck" value="userManagement.me">
+											<c:param name="currentPage" value="${p }"/>
+										</c:url>
+										
+										<a href="${alistCheck }"> ${p}</a>
+									</c:if>
+								</c:forEach>
+								
+								<c:if test="${pi.currentPage >= pi.endPage }">
+									[다음] &nbsp;
+								</c:if>
+								<c:if test="${pi.currentPage < pi.endPage }">
+								<c:url var="alistEnd" value="userManagement.me">
+									<c:param name="currentPage" value="${pi.currentPage + 1 }"/>
+								</c:url>
+									<a href="${alistEnd}">[다음]</a>
+								</c:if>									
+							</div>
+						</td>
+					</tr><!-- 페이징 영역 End-->
 					
 				</table>
 				</div>
@@ -245,6 +297,66 @@
 	
 	
 	
+	 //검색
+	 $(function() {
+		
+		 $("#searchMemberName").keyup(function() {
+			 
+			 var memberName = $(this).val();
+			 console.log("memberName : " + memberName);
+			 
+			 $.ajax({
+
+				 url: 'searchMemberName.me',
+				 type: 'post',
+				 data: {
+					 memberName : memberName
+				 },
+				 success: function(data) {
+					 
+					 if(data != "") {
+						 
+						 $(".trRange").empty();
+						 
+						 for(key in data) {
+							 
+							 $(".front").after("<tr class='trRange' id='memberList'><td class='td1'>" + data[key]['memberName'] + "</td>" 
+											 + "<td class='tdText'>" + data[key]['deptName'] + "</td>"
+											 + "<td class='tdText'>" + data[key]['rankName'] + "</td>"
+											 + "<td class='tdText'>" + data[key]['countProject'] + "</td>"
+											 + "<td class='tdText' style='text-align:left; padding-left: 25px;'>" + data[key]['email'] + "</td>"
+											 + "<td class='tdText'>" + data[key]['status'] + "</td>"
+											 + "<td class='tdText'>" + "날짜추가" + "</td>"
+											 + "<td class='tdText'><button class='pwdResetBtn'>" + data[key]['status'] + "</button></td>"
+											 + "</tr>");
+							 
+							/*  
+							 <tr id="memberList" class="trRange">
+								<td class="td1"><a href="#" id="memberName">${m.memberName}</a></td>
+								<td class="tdText">${m.deptName}</td>
+								<td class="tdText">${m.rankName}</td>
+								<td class="tdText">${m.countProject}</td>
+								<td class="tdText" style="text-align:left; padding-left: 25px;">${m.email}</td>
+								<td class="tdText">${m.status}</td>
+								<td class="tdText">2020-04-03 추가할 것</td>
+								<td class="tdText">
+									<button class="pwdResetBtn">패스워드 초기화</button>
+								</td>
+							</tr>	
+							
+							  */
+							 
+						 }
+						 
+					 }
+					 
+				 }
+				 
+			 });
+			 
+		 });
+		 
+	 });
 	
 	
 	
