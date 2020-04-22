@@ -38,12 +38,12 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int insertMember(Member m) {
 		
-		int result = 0;
+//		int result = 0;
 		
-		int result1 = md.insertMember(sqlSession, m);
+		int result = md.insertMember(sqlSession, m);
 		
 		
-		return md.insertMember(sqlSession, m);
+		return result;
 	}
 	
 	//AOP 설정 후 트랜젝션 적용

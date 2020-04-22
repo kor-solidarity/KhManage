@@ -178,7 +178,7 @@
 							<td>소속 부서<span style="color:red;"> *</span></td>
 							<td></td>
 							<td>
-								<select id="deptNo" class="register form-control" name="deptNo">
+								<select id="deptNo" class="register form-control" name="">
 									<option id="deptSelect" class="form-control" value="0">선택하세요</option>
 									<c:forEach var="a" items="${list}">
 										<option class="form-control" value="${a.deptNo}">
@@ -240,7 +240,8 @@
 					<br>
 					<hr>
 					<br>
-					<button type="submit" class="okBtn" onclick="submitSweet()"><i class="fas fa-check"></i>&nbsp;저장</button>
+					<!-- <button type="submit" class="okBtn" onclick="submitSweet()"><i class="fas fa-check"></i>&nbsp;저장</button> -->
+					<button type="submit" class="okBtn"><i class="fas fa-check"></i>&nbsp;저장</button>
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<button type="reset" class="cancleBtn"><i class="fas fa-ban" onclick="goBack()"></i>&nbsp;취소</button>
 					
@@ -297,7 +298,7 @@
 	
 	
 	//Alert
-/* 	$(".okBtn").click(function(){
+	$(".okBtn").click(function(){
 		swal({	
 		  title: 'Are you sure?',
 		  text: "You won't be able to revert this!",
@@ -324,7 +325,7 @@
 		    )
 		  }
 		})
-	}); */
+	});
 	
 	
 	//하위부서 select Ajax
@@ -414,14 +415,15 @@
 	});
 	
 	
-	
+/* 	
 	
 	//최종 폼전송 시 모든 input 부분 작성되었는 지 유효성 검사
+	//"아이디를 6~12자 영문 소문자, 숫자를 입력해주세요"
 	function submitSweet() {
 		
 		var msg = "";
 		/* var regId = /^[a-z][a-z,0-9]{5,11}$/ */
-		var regId = "";
+		/* var regId = "";
 		var password = $("#password1").val();
 		var mamberName = $("#memberName").val();
 		var phone = $("#phone").val();
@@ -433,7 +435,7 @@
 		
 		if(!regId.test($("#memberId").val())){
             swal({
-               title: "아이디를 입력해주세요.",  /* "아이디를 6~12자 영문 소문자, 숫자를 입력해주세요", */
+               title: "아이디를 입력해주세요.",  
                text: "",
               icon: "error"
             }).then((value) => {
@@ -485,10 +487,8 @@
                 });
          }
 		
-	}
-		
-	
-	
+	} */
+
 	
 	
 	
