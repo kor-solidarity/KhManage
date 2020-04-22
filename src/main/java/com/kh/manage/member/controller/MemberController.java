@@ -206,6 +206,20 @@ public class MemberController {
 		System.out.println("updateMemberInfo result : " + result);
 		
 		
+		//프로필 사진 조회
+		Attachment at = ms.selectProfileImg(member);
+
+		//부서조회 레벨1
+		List<Dept> list = ms.selectDeptList();
+		
+		System.out.println("Attacgment at : " + at);
+		
+		request.setAttribute("list", list);
+		request.setAttribute("at", at);
+		
+		
+		
+		
 		if(result > 0) {
 			
 			return "user/myProfile/myProfileMain";
