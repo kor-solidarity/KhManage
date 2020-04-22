@@ -22,6 +22,7 @@ import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.chat.model.service.ChatService;
 import com.kh.manage.chat.model.vo.ChatRoom;
 import com.kh.manage.chat.model.vo.Message;
+import com.kh.manage.chat.model.vo.SearchKeyWord;
 import com.kh.manage.member.model.vo.Member;
 
 @Controller
@@ -301,8 +302,24 @@ public class ChatController {
 	}
 	
 	@RequestMapping("/plusSearchMember.ct")
-	public void plusSearchMember(String kind, String keyWord) {
-		System.out.println("종류 : " + kind);
-		System.out.println("검색어  :"+ keyWord);
+	public void plusSearchMember(SearchKeyWord sw, HttpServletRequest request, HttpServletResponse response) {
+		System.out.println(sw);
+		
+		if(sw.getKeyWord().equals("")) {
+			sw.setKeyWord(null);
+		}
+		List<Member> list = cs.searchMember(sw);
+		
+		request.setAttribute("list", list);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+
+		String gson = new Gson().toJson(list);
+
+		try {
+			response.getWriter().write(gson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

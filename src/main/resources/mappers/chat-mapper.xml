@@ -302,6 +302,28 @@
 		WHERE C.CHATROOM_NO = #{chatRoomNo}
 		AND C.STATUS = 'Y'
 	</select>
+	
+	<select id="searchMember" parameterType="SearchKeyWord" resultMap="chatMemberResultSet">
+		SELECT M.MEMBER_NO
+		     , M.MEMBER_NAME
+		     , D.DEPT_NO
+		     , D.DEPT_NAME
+		     , M.RANK_NO
+		     , R.RANK_NAME
+		     , A.CHANGE_NAME
+		     , A.EXT	
+		FROM MEMBER M
+		JOIN RANK R ON(M.RANK_NO = R.RANK_NO)
+		JOIN DEPT D ON (M.DEPT_NO = D.DEPT_NO)
+		LEFT JOIN ATTACHMENT A ON(A.DIVISION = M.MEMBER_NO)		
+		WHERE M.STATUS = 'Y'
+		<if test="kind.equals('member') and keyWord !=null">
+		AND M.MEMBER_NAME LIKE '%' || #{keyWord} || '%'
+		 </if> 
+		<if test="kind.equals('dept') and keyWord !=null">
+		AND D.DEPT_NAME LIKE '%' || #{keyWord} || '%'
+		 </if>  
+	</select>
 </mapper>
 
 
