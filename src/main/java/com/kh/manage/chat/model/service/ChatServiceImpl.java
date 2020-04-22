@@ -161,6 +161,12 @@ public class ChatServiceImpl implements ChatService {
 		return cd.deleteChatRoom(sqlSession, cr);
 	}
 
+	@Override
+	public List<Member> selectAllChatMember(ChatRoom cr) {
+		
+		return cd.selectAllChatMember(sqlSession, cr);
+	}
+
 
 
 }

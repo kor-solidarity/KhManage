@@ -148,4 +148,10 @@ public class ChatDaoImpl implements ChatDao {
 		return sqlSession.update("Chat.deleteChatRoom", cr);
 	}
 
+	@Override
+	public List<Member> selectAllChatMember(SqlSessionTemplate sqlSession, ChatRoom cr) {
+	
+		return sqlSession.selectList("Chat.selectAllChatMember", cr);
+	}
+
 }

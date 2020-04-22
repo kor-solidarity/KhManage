@@ -49,5 +49,7 @@ public interface ChatService {
 
 	int deleteChatRoom(ChatRoom cr);
 
+	List<Member> selectAllChatMember(ChatRoom cr);
+
 
 }
