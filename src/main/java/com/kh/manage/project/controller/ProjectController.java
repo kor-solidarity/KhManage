@@ -29,6 +29,7 @@ import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -143,38 +144,6 @@ public class ProjectController {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		
-		System.out.println("project_excel: " + project_excel + ", name is: " + project_excel.getOriginalFilename());
-		System.out.println(project_excel.getOriginalFilename() == null);
-		System.out.println(request.getSession().getServletContext().getRealPath("resources"));
-		// 파일이 존재한다면
-		// if (project_excel.getOriginalFilename() != null && !project_excel.getOriginalFilename().equals("")){
-		if (project_excel.getSize() > 0) {
-			System.out.println("file exists");
-			String root = request.getSession().getServletContext().getRealPath("resources");
-			String filePath = root + "\\uploadfiles";
-			String originFileName = project_excel.getOriginalFilename();
-			String ext = originFileName.substring(originFileName.lastIndexOf("."));
-			String changeName = CommonsUtils.getRandomString();
-			
-			try {
-				project_excel.transferTo(new File(filePath + "\\" + changeName + ext));
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			Attachment at = new Attachment();
-			at.setChangeName(changeName);
-			at.setOriginName(originFileName);
-			at.setFilePath(filePath);
-			at.setExt(ext);
-		}
-		// project_excel.getOriginalFilename()
-		if (true) {
-			return null;
-		}
 		// 주요여부
 		String isImportant = request.getParameter("IS_IMPORTANT");
 		// 프로젝트명
@@ -257,6 +226,9 @@ public class ProjectController {
 				}
 			}
 			
+			// System.out.println("project_excel: " + project_excel + ", name is: " + project_excel.getOriginalFilename());
+			// System.out.println(project_excel.getOriginalFilename() == null);
+			// System.out.println(request.getSession().getServletContext().getRealPath("resources"));
 			// 마지막으로 엑셀파일을 넣는다.
 			if (project_excel.getSize() > 0) {
 				System.out.println("file exists");
@@ -340,14 +312,16 @@ public class ProjectController {
 	}
 	
 	
-	// 프로젝트 작업 추가에 쓰일 AJAX
+	// 프로젝트 작업 추가에 쓰일 AJAX - 프론트에선 sendProjectWork()
 	@RequestMapping(value = "/projectWorkInsert.pr")
 	public void projectWorkInsert(HttpServletRequest request) {
 		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
 		// 이거 이걸로 하면 안됨
-		String memberNo = loginUser.getMemberNo();
+		// String memberNo = loginUser.getMemberNo();
 		System.out.println("projectWorkInsert");
 		String workName = request.getParameter("workName");
+		String memberNo = request.getParameter("memberNo");
+		String highWorkNo = request.getParameter("highWorkNo");
 		String pid = request.getParameter("pid");
 		// String  beginDate = request.getParameter("beginDate");
 		// String  endDate = request.getParameter("endDate");
@@ -371,11 +345,19 @@ public class ProjectController {
 		ProjectWork projectWork =
 				new ProjectWork(null, workName, "시작전", pid,
 						beginDate, endDate, null, "0",
-						null, "1", null, null,
+						null, "1", highWorkNo, null,
 						"프로젝트", memberNo, "Y");
 		int result = ps.insertProjectWork(projectWork);
 		
 		System.out.println(result);
+		
+		if (result > 0) {
+			String workNo = ps.selectWorkSeq();
+			WorkHistory workHistory =
+					new WorkHistory(null, workNo, "시작전",
+							"작업 첫 생성", Date.valueOf(LocalDate.now()), projectWork.getMemberNo());
+			int result2 = ps.insertWorkHistory(workHistory);
+		}
 	}
 	
 	
@@ -413,6 +395,10 @@ public class ProjectController {
 		String pid = (String) request.getParameter("pid");
 		
 		model.addAttribute("pid", pid);
+		
+		//부서 조회
+		List<Dept> deptList = ps.selectDeptList();
+		request.setAttribute("deptList", deptList);
 		
 		return "user/project/resource";
 	}

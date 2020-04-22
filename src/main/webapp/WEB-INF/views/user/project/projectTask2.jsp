@@ -617,10 +617,11 @@
 
                     // 띄워져있는 새 작업 등록한다.
                     function sendProjectWork () {
+                        console.log("sendProjectWork");
                         if (document.getElementById('projectWork') == null) {
                             return;
                         }
-                        alert("wtf");
+                        console.log('aa')
                         // 유효성검사 하나도 안됬음. 전부 뜯어고쳐야함
                         $.ajax({
                             url: 'projectWorkInsert.pr',
@@ -629,7 +630,8 @@
                                 workName: $("#workName").val(),
                                 beginDate: $("#beginDate").val(),
                                 endDate: $("#endDate").val(),
-                                // 담당자도 있어야 하는데 우선은 통과. 넣는거 자체에 집중
+                                memberNo: $("#memberNo").val(),
+                                highWorkNo: $("#highWorkNo").val(),
                                 pid: "${pid}",
 
                             },
@@ -674,10 +676,10 @@
 					<input type="checkbox" name="workCharger" value="P1" id="P1"> <label for="P1">부서 이름 직급</label>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 					<button type="button" id="nullifyWorkerBtn" class="btn btn-primary"
-							onclick="nullifyWorker($('#workMemberModal'))"
-							style="background: #1E2B44; outline: none; border: none;">저장
+							onclick="nullifyNewWorker()"
+							style="background: #1E2B44; outline: none; border: none;">미배정
 					</button>
 				</div>
 			</div>
@@ -715,10 +717,12 @@
                             '<input type="text" name="workCharger" value="' + data[key]['memberPk'] + '" ' +
                             'id="' + data[key]['memberPk'] + '" style="display: none;"> ' +
                             '<label class="workerSelector" for="' + data[key]['memberPk'] +
-							'" onclick="updateWorkerInCharge(\'new\')">' +
-                            data[key]['deptName'] + ' <span class="workerName">' +
-                            data[key]['memberName'] + '</span> ' +
-                            data[key]['rankName'] + '</label> <br>'
+                            // '" onclick="updateNewWorkerInCharge(\'#' + data[key]['memberPk'] + '\')">' +
+                            '" onclick="updateNewWorkerInCharge(this)">' +
+                            ' <span class="deptName">' + data[key]['deptName'] + '</span> ' +
+                            ' <span class="memberName">' + data[key]['memberName'] + '</span> ' +
+                            ' <span class="rankName">' + data[key]['rankName'] + '</span> ' +
+                            '</label> <br>'
 
                             // '<label for="' + data[key]['memberPk'] + '">' + data[key]['deptName'] +
                             // ' <span class="workerName">' +
@@ -730,19 +734,33 @@
 
                         );
                     }
-                    $("#nullifyWorkerBtn").attr('onclick', 'nullifyWorker("new")');
+                    $("#nullifyWorkerBtn").attr('onclick', 'nullifyNewWorker("new")');
                 }
             });
         }
 
         // 작업에 배정된 인원을 없앤다.
-        function nullifyWorker (val) {
-
+        function nullifyNewWorker (val) {
+            $("#addWorkers").empty();
         }
 
-        // 작업에 인원을 배정한다.
-        function updateWorkerInCharge (val) {
+        // 새 작업에 인원을 배정한다.
+        function updateNewWorkerInCharge (val) {
+            $("#workMemberModal").modal("toggle");
+            valQ = $(val);
+            <%-- val 은 클릭한 글자 label DOM 전체임.--%>
+            console.log(val);
 
+            let memberNo = $(val).attr('for');
+            let memberName = valQ.find('span.memberName');
+            let deptName = valQ.find('span.deptName');
+            let rankName = valQ.find('span.rankName');
+            $("#addWorkers").empty();
+            // 내용물 지우고 새로 채우기.
+            $("#addWorkers").append(
+                "<input type='text' name='memberNo' id='memberNo' style='display: none' value='" + memberNo + "'>" +
+                "<span >" + memberName.html() + "</span>"
+            );
         }
 
         // 작업을 여러명 배정을 안하기로 되서 우선 보류

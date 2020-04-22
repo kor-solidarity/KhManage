@@ -46,4 +46,6 @@ public interface ProjectService {
 	int insertWorkHistory(WorkHistory workHistory);
 	
 	List<DeptMember> selectMemberListResource(String deptNo);
+	
+	String selectWorkSeq();
 }
