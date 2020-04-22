@@ -3,6 +3,7 @@ package com.kh.manage.project.model.service;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.template.model.vo.Template;
+import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.project.model.vo.*;
@@ -20,7 +21,7 @@ public interface ProjectService {
 	
 	List<Template> selectTemplateList();
 	
-	String  insertProject(Project project);
+	String insertProject(Project project);
 	
 	int insertProjectTeam(ProjectTeam team);
 	
@@ -33,4 +34,16 @@ public interface ProjectService {
 	int insertProjectWork(ProjectWork projectWork);
 	
 	List<ProjectTeam> selectProjectTeamList(String pid);
+	
+	ProjectDetail selectOneProject(String pid);
+	
+	int insertAttachment(Attachment at);
+	
+	List<ProjectWork> selectOutdatedWorks(String pid);
+	
+	int updateOutdatedWork(String workNo);
+	
+	int insertWorkHistory(WorkHistory workHistory);
+	
+	List<DeptMember> selectMemberListResource(String deptNo);
 }

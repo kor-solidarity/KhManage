@@ -281,7 +281,7 @@
 				<br>
 				<div class="row">
 					<div class="col-md-12">
-						<div class="btn btn-primary" style="background: #1E2B44;" onclick="submit()">
+						<div class="btn btn-primary" style="background: #1E2B44;" onclick="submitForm()">
 							<i class="fas fa-check"></i>
 							프로젝트 저장
 						</div>
@@ -379,7 +379,7 @@
 	<!-- /.modal -->
 
 	<script>
-        function submit () {
+        function submitForm () {
             // 하나하나 값들이 있는지 확인해보는거임.
             let regSpace = /\S/g;
             // 날짜확인용도
@@ -412,12 +412,11 @@
                 // PMO
                 alert('PMO를 정해주세요');
             }
-                // 템플릿은 필수가 아닌듯 함.
+            // 템플릿은 필수가 아닌듯 함.
             else if ($("#project_template").val() == 0) {
                 // 프로젝트 템플릿
                 alert('프로젝트 템플릿을 정해주세요');
-            }
-            else if (($("#startDate").val() === "" || $("#endDate").val() === "") ||
+            } else if (($("#startDate").val() === "" || $("#endDate").val() === "") ||
                 (endDate < startDate)) {
                 /*날짜값이 없거나 종료일이 시작일보다 빠르면 에러*/
                 alert("시작·종료일자를 제대로 써주세요. 종료일자는 시작일자와 같거나 이후여야 합니다.");
@@ -467,6 +466,16 @@
                         }
 
                         if (list[key]['memberNo'] == a) {
+                            let isOverlapped = false;
+                            // 목록에 중복된거 있나 확인 있으면 추가 안됨
+                            for (let i = 0; i < $(".trRange1 input[class=memberNo]").length; i++) {
+                                if (list[key]['memberNo'] == $(".trRange1 input[class=memberNo]").val()) {
+                                    isOverlapped = true;
+                                }
+                            }
+                            if (isOverlapped) {
+                                continue;
+                            }
                             $(".mainFront").
                                 after(
                                     "<tr class='trRange1'> <td class='td1'><input type='checkbox' id='idCheckMain' name='idCheck' class='inputCss' style='width: 30px;'></td> <td class='td1'>" +

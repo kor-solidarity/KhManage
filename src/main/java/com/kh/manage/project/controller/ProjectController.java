@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.template.model.vo.Template;
+import com.kh.manage.common.Attachment;
+import com.kh.manage.common.CommonsUtils;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.common.Pagination;
 import com.kh.manage.member.model.vo.Member;
@@ -16,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.kh.manage.project.model.service.ProjectService;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
@@ -132,7 +136,7 @@ public class ProjectController {
 	
 	// 프로젝트 등록 실시
 	@RequestMapping(value = "/registerProject.pr", method = RequestMethod.POST)
-	public String registerProject(MultipartHttpServletRequest request, HttpServletResponse response) {
+	public String registerProject(MultipartHttpServletRequest request, HttpServletResponse response, @RequestParam MultipartFile project_excel) {
 		System.out.println("registerProject");
 		try {
 			request.setCharacterEncoding("utf-8");
@@ -140,6 +144,37 @@ public class ProjectController {
 			e.printStackTrace();
 		}
 		
+		System.out.println("project_excel: " + project_excel + ", name is: " + project_excel.getOriginalFilename());
+		System.out.println(project_excel.getOriginalFilename() == null);
+		System.out.println(request.getSession().getServletContext().getRealPath("resources"));
+		// 파일이 존재한다면
+		// if (project_excel.getOriginalFilename() != null && !project_excel.getOriginalFilename().equals("")){
+		if (project_excel.getSize() > 0) {
+			System.out.println("file exists");
+			String root = request.getSession().getServletContext().getRealPath("resources");
+			String filePath = root + "\\uploadfiles";
+			String originFileName = project_excel.getOriginalFilename();
+			String ext = originFileName.substring(originFileName.lastIndexOf("."));
+			String changeName = CommonsUtils.getRandomString();
+			
+			try {
+				project_excel.transferTo(new File(filePath + "\\" + changeName + ext));
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			Attachment at = new Attachment();
+			at.setChangeName(changeName);
+			at.setOriginName(originFileName);
+			at.setFilePath(filePath);
+			at.setExt(ext);
+		}
+		// project_excel.getOriginalFilename()
+		if (true) {
+			return null;
+		}
 		// 주요여부
 		String isImportant = request.getParameter("IS_IMPORTANT");
 		// 프로젝트명
@@ -211,13 +246,45 @@ public class ProjectController {
 			// 위에 써져있던 부책임자들 다 건든다.
 			if (memberNo != null) {
 				for (String m : memberNo) {
+					System.out.println("memberNo: " + memberNo);
+					// 위에 책임자랑 중복되는 번호가 있으면 건너뛴다.
+					if (project_manager.equals(m)) {
+						continue;
+					}
 					ProjectTeam team = new ProjectTeam(null, projectInsertResult,
 							m, "PSM", null, null, null);
 					ps.insertProjectTeam(team);
 				}
 			}
 			
+			// 마지막으로 엑셀파일을 넣는다.
+			if (project_excel.getSize() > 0) {
+				System.out.println("file exists");
+				String root = request.getSession().getServletContext().getRealPath("resources");
+				String filePath = root + "\\uploadfiles";
+				String originFileName = project_excel.getOriginalFilename();
+				String ext = originFileName.substring(originFileName.lastIndexOf("."));
+				String changeName = CommonsUtils.getRandomString();
+				
+				try {
+					project_excel.transferTo(new File(filePath + "\\" + changeName + ext));
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				Attachment at = new Attachment();
+				at.setChangeName(changeName);
+				at.setOriginName(originFileName);
+				at.setFilePath(filePath);
+				at.setExt(ext);
+				at.setDivision(projectInsertResult);
+				int result = ps.insertAttachment(at);
+			}
 			
+			
+			// 사실 리다렉트를 쓰면 안됨....
 			return "redirect:/projectCenter.pr";
 		} else {
 			return "user/project/projectSelectAll";
@@ -248,7 +315,7 @@ public class ProjectController {
 	
 	// 위에 프로젝트 작업목록 조회를 위한 AJAX
 	@RequestMapping(value = "/updateWorkList.pr")
-	public void selectProjectTaskList(HttpServletResponse response, HttpServletRequest request) {
+	public void updateWorkList(HttpServletResponse response, HttpServletRequest request) {
 		System.out.println("updateWorkList");
 		String pid = request.getParameter("pid");
 		
@@ -302,7 +369,7 @@ public class ProjectController {
 		System.out.println("beginDate: " + beginDate);
 		System.out.println("endDate: " + endDate);
 		ProjectWork projectWork =
-				new ProjectWork(null, workName, "개발중", pid,
+				new ProjectWork(null, workName, "시작전", pid,
 						beginDate, endDate, null, "0",
 						null, "1", null, null,
 						"프로젝트", memberNo, "Y");
@@ -315,12 +382,39 @@ public class ProjectController {
 	// 프로젝트 요약정보 페이지
 	@RequestMapping("/viewProject.pr")
 	public String viewProject(Model model, HttpServletRequest request) {
+		
 		System.out.println("viewProject");
 		
 		String pid = (String) request.getParameter("pid");
 		
+		// 본격적으로 조회하기 전에 한번 필터 거친다.
+		// 작업 status 가 '개발완료'로 뜨기 전에 종료일자를 넘기면 전부 '개발지연'으로 분류시킨다.
+		// 또한 분류 후 작업 히스토리에 적용시킨다.
+		
+		List<ProjectWork> workList = ps.selectOutdatedWorks(pid);
+		for (ProjectWork work : workList) {
+			String workNo = work.getWorkNo();
+			int result = ps.updateOutdatedWork(workNo);
+			WorkHistory workHistory =
+					new WorkHistory(null, workNo, "개발지연",
+							"기한 초과로 인한 자동조치", null, null);
+			if (result > 0) {
+				int result2 = ps.insertWorkHistory(workHistory);
+			}
+		}
+		
 		model.addAttribute("pid", pid);
 		return "user/project/projectView";
+	}
+	
+	@RequestMapping("/showResource.pr")
+	public String showResource(Model model, HttpServletRequest request) {
+		
+		String pid = (String) request.getParameter("pid");
+		
+		model.addAttribute("pid", pid);
+		
+		return "user/project/resource";
 	}
 	
 	@RequestMapping("/projectIssue.pr")
@@ -343,4 +437,38 @@ public class ProjectController {
 		return "user/project/outputReg";
 	}
 	
+	//프로젝트 요약정보 조회(sj)
+	@RequestMapping("/showProjectSummary.pr")
+	public String showProjectSummary(Model model, HttpServletRequest request) {
+		
+		String pid = request.getParameter("pid");
+		
+		//프로젝트 디테일 정보 조회
+		ProjectDetail pd = ps.selectOneProject(pid);
+		
+		model.addAttribute("project", pd);
+		model.addAttribute("pid", pid);
+		
+		return "user/project/projectSummary";
+	}
+	
+	//TW
+	@RequestMapping("selectMember.pr")
+	public void selectMember(@RequestParam String deptNo, HttpServletRequest request, HttpServletResponse response) {
+		
+		List<DeptMember> memberList = ps.selectMemberListResource(deptNo);
+		System.out.println(memberList);
+		
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		
+		String gson = new Gson().toJson(memberList);
+		
+		try {
+			response.getWriter().write(gson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
 }

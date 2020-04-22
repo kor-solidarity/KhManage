@@ -3,6 +3,7 @@ package com.kh.manage.project.model.dao;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.template.model.vo.Template;
+import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.project.model.vo.*;
@@ -50,7 +51,7 @@ public class ProjectDaoImpl implements ProjectDao {
 	}
 	
 	@Override
-	public String  getSeq(SqlSessionTemplate sqlSession) {
+	public String getSeq(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("Project.getSeq");
 	}
 	
@@ -81,5 +82,36 @@ public class ProjectDaoImpl implements ProjectDao {
 	@Override
 	public List<ProjectTeam> selectProjectTeamList(SqlSessionTemplate sqlSession, String pid) {
 		return sqlSession.selectList("Project.selectProjectTeamList", pid);
+	}
+	
+	@Override
+	public ProjectDetail selectOneProject(SqlSessionTemplate sqlSession, String pid) {
+		
+		return sqlSession.selectOne("Project.selectOneProject", pid);
+	}
+	
+	@Override
+	public int insertAttachment(SqlSessionTemplate sqlSession, Attachment at) {
+		return sqlSession.insert("Project.insertAttachment", at);
+	}
+	
+	@Override
+	public List<ProjectWork> selectOutdatedWorks(SqlSessionTemplate sqlSession, String pid) {
+		return sqlSession.selectList("Project.selectOutdatedWorks", pid);
+	}
+	
+	@Override
+	public int updateOutdatedWork(SqlSessionTemplate sqlSession, String workNo) {
+		return sqlSession.update("Project.updateOutdatedWork", workNo);
+	}
+	
+	@Override
+	public int insertWorkHistory(SqlSessionTemplate sqlSession, WorkHistory workHistory) {
+		return sqlSession.insert("Project.insertWorkHistory", workHistory);
+	}
+	
+	@Override
+	public List<DeptMember> selectMemberListResource(SqlSessionTemplate sqlSession, String deptNo) {
+		return sqlSession.selectList("Project.selectMemberListResource", deptNo);
 	}
 }
