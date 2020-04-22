@@ -129,4 +129,9 @@ public class ProjectServiceImpl implements ProjectService {
 	public List<DeptMember> selectMemberListResource(String deptNo) {
 		return pd.selectMemberListResource(sqlSession, deptNo);
 	}
+	
+	@Override
+	public String selectWorkSeq() {
+		return pd.selectWorkSeq(sqlSession);
+	}
 }

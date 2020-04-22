@@ -201,6 +201,12 @@
         select to_char(SEQ_PROJ.currval, 'FM000')
         from dual
     </select>
+
+    <select id="selectWorkSeq" resultType="String">
+        select 'W' || to_char(SEQ_WNO.currval, 'FM000')
+        from dual
+    </select>
+
     <!--모든 프로젝트 목록조회-->
     <!--Admin 용도임.-->
     <select id="selectProjectListAdmin" resultMap="projectListResultSet">
@@ -284,7 +290,7 @@
     <insert id="insertWorkHistory" parameterType="WorkHistory">
         insert into WORK_HISTORY
         values ('WH' || to_char(SEQ_WH.NEXTVAL, 'FM000'),
-                #{workNo}, #{status}, #{memo}, #{modifyDate}, #{projectTeamNo})
+                #{workNo}, #{status}, #{memo}, to_date(sysdate), #{projectTeamNo})
     </insert>
 
     <insert id="insertProjectWork" parameterType="ProjectWork">
@@ -352,11 +358,14 @@
         JOIN DEPT D ON(D.DEPT_NO = M.DEPT_NO)
         JOIN RANK R ON(R.RANK_NO = M.RANK_NO)
         WHERE 1 = 1
-        AND M.MEMBER_TYPE = '0'
+        <!-- WHERE M.MEMBER_TYPE = '0' -->
         AND M.STATUS = 'Y'
         AND D.DEPT_NO != 'S05'
-        <if test="deptNo = null">
-            AND D.DEPT_NO = #{deptNo}
-        </if>
+        AND D.DEPT_NO = #{deptNo}
+        <!-- <if test="deptNo = null">
+            AND M.STATUS = 'Y'
+          AND D.DEPT_NO != 'S05'
+          AND D.DEPT_NO = #{deptNo}
+        </if> -->
     </select>
 </mapper>

@@ -114,4 +114,9 @@ public class ProjectDaoImpl implements ProjectDao {
 	public List<DeptMember> selectMemberListResource(SqlSessionTemplate sqlSession, String deptNo) {
 		return sqlSession.selectList("Project.selectMemberListResource", deptNo);
 	}
+	
+	@Override
+	public String selectWorkSeq(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("Project.selectWorkSeq");
+	}
 }

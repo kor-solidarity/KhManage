@@ -48,4 +48,6 @@ public interface ProjectDao {
 	int insertWorkHistory(SqlSessionTemplate sqlSession, WorkHistory workHistory);
 	
 	List<DeptMember> selectMemberListResource(SqlSessionTemplate sqlSession, String deptNo);
+	
+	String selectWorkSeq(SqlSessionTemplate sqlSession);
 }
