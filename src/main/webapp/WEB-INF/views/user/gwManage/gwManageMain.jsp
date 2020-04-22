@@ -23,6 +23,7 @@
 <script src="resources/fullcalendar/interaction/main.min.js"></script>
 <script src="resources/fullcalendar/timegrid/main.min.js"></script>
 <script src="resources/fullcalendar/core/locales/ko.js"></script>
+<script src="resources/fullcalendar/rrule/main.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js" integrity="sha256-AdQN98MVZs44Eq2yTwtoKufhnU+uZ7v2kXnD5vqzZVo=" crossorigin="anonymous"></script>
 <style type="text/css">
    #calendar {
@@ -67,7 +68,19 @@
    	width: 70px;
    	height: 34px;
    	border-radius: 5px; 
+   	padding: 4px;
    }
+   ./* plus{
+   	height: 18px;
+   	width: 20px;
+   	
+   }
+   .minus{
+   	height: 17px;
+   	width: 20px;
+   	margin-top: 18px;
+   	margin-left: -20px;
+   } */
    
     .fc-sat { color:#0000FF; }     /* 토요일 */
     .fc-sun{ color:#FF0000; }    /* 일요일 */
@@ -105,7 +118,7 @@
           // -----------------------------------------------------------------
        
           var calendar = new Calendar(calendarEl, {
-            plugins: [ 'interaction', 'dayGrid', 'timeGrid','list' ],
+            plugins: [ 'interaction', 'dayGrid', 'timeGrid','list' /* ,'rrule' */ ],
             header: {
               left: 'prev,next today',
               center: 'title',
@@ -144,7 +157,24 @@
             businessHours: true, // display business hours
             editable: true,
   			
-            events: [
+          /*   events: [
+            	
+            	 {
+                     // standard property
+                     title: 'my recurring event',
+
+                     // ...or, an object...
+                     rrule: {
+                       freq: 'weekly',
+                       interval: 5,
+                       byweekday: [ 'mo', 'fr' ],
+                       dtstart: '2020-04-01T10:30:00',
+                       until: '2020-04-30'
+                     },
+                     // for specifying the end time of each instance
+                     duration: '02:00'
+                   },
+ */
             
                <%
                   for(int i = 0; i < list.size(); i++) {
@@ -278,7 +308,7 @@
 						<tr>
 							<td class="titleId">반복</td>
 							<td>
-								<select name="repeat" id="repeat2" class="inputMenu form-control" style="width: 280px;">
+								<select name="gwrCycle" id="repeat2" class="inputMenu form-control repeat2" style="width: 280px;">
 									<option>없음</option>
 									<option value="day">일별</option>
 									<option value="week">주별</option>
@@ -372,7 +402,7 @@
 						<tr>
 							<td class="titleId">반복</td>
 							<td>
-								<select name="repeat" id="repeat" class="inputMenu form-control" style="width: 280px;">
+								<select name="gwrCycle" id="repeat" class="inputMenu form-control repeat1" style="width: 280px;">
 									<option>없음</option>
 									<option value="day">일별</option>
 									<option value="week">주별</option>
@@ -518,9 +548,7 @@
 	  				
 	  			}
 	  			
-			})	;  	
-			
-			
+			});  	
 			
 	  			
 	  		$("#gwUpdate").click(function(){
@@ -564,50 +592,42 @@
 	  		
 	  		$(function(){
 	  			
-	  			console.log($("#repeat2").val());
+	  			console.log($(".repeat1").val());
 	  			
-	  			$("#repeat2").change(function(){
+	  			$(".repeat1").change(function(){
 	  				
-	  			if($("#repeat2").val() == "day"){
+	  				console.log($(".repeat1").val());
+	  			
 	  				
-	  				$("#repeat2").parent().parent().parent().children('.rr').remove();
 	  				
-	  				console.log($("#repeat2").parent().parent());
+	  			if($(".repeat1").val() == "day"){
 	  				
-	  				var tr = "<tr class='rr'><td class='titleId'>매 </td><td><select class='dayselect' ><option>1</option></select> 일 마다 되풀이</td></tr><tr class='rr'><td class='titleId'>종료 </td><td><input type='radio' name='daySelect'>없음</td></tr><tr class='rr'><td class='titleId'> </td><td class='titleId'><input type='radio' name='daySelect'> <select class='dayselect'><option></option></select> 반복</td></tr><tr class='rr'><td class='titleId'></td><td><input type='radio' name='daySelect'> 종료 날짜  <input type='date'></td></tr>"                                       
+	  				$(".repeat1").parent().parent().parent().children('.rr').remove();
 	  				
-	  				$("#repeat2").parent().parent().after(tr);
+	  				console.log($(".repeat1").parent().parent());
+	  				
+	  				var tr = "<tr class='rr'><td class='titleId'>매 </td><td><input type=text class='dayselect' name='gwrLimit' value=0><input type=button class='plus' value='+' onClick='javascript:this.form.gwrLimit.value++;'><input type=button value='-' class='minus' onClick='javascript:this.form.gwrLimit.value--;'> 일 마다 되풀이</td></tr><tr class='rr'><td class='titleId'>종료 </td><td><input type='radio' name='endOption' value='없음'>없음</td></tr><tr class='rr'><td class='titleId'> </td><td class='titleId'><input type='radio' name='endOption' value='반복횟수'> <input type=text class='dayselect' name='endOptionCount' value=0><input type=button class='plus' value='+' onClick='javascript:this.form.endOptionCount.value++;'><input type=button class='minus' value='-' onClick='javascript:this.form.endOptionCount.value--;'> 반복</td></tr><tr class='rr'><td class='titleId'></td><td><input type='radio' name='endOption' value='종료일자'> 종료 날짜  <input type='date' name= 'endOptionDay'></td></tr>"                                       
+	  				
+	  				$(".repeat1").parent().parent().after(tr);
 	  			}
-				if($("#repeat2").val() == "없음"){
+				if($(".repeat1").val() == "없음"){
 	  				
-	  				$("#repeat2").parent().parent().parent().children('.rr').remove();
+	  				$(".repeat1").parent().parent().parent().children('.rr').remove();
 	  			}
 				
 				
-				if($("#repeat2").val() == 'week'){
+				if($(".repeat1").val() == 'week'){
 					
-					$("#repeat2").parent().parent().parent().children('.rr').remove();
+					$(".repeat1").parent().parent().parent().children('.rr').remove();
 					
-					var tr = "<tr class='rr'><td class='titleId'>매 </td><td><select class='dayselect'><option>1</option></select> 주 마다 되풀이</td><tr class='rr'><td class='titleId'>반복</td><td><input type='checkbox'> 일 <input type='checkbox'> 월 <input type='checkbox'> 화 <input type='checkbox'> 수 <input type='checkbox'> 목 <input type='checkbox'> 금 <input type='checkbox'> 토</td></tr></tr><tr class='rr'><td class='titleId'>종료 </td><td><input type='radio' name='daySelect'>없음</td></tr><tr class='rr'><td class='titleId'> </td><td class='titleId'><input type='radio' name='daySelect'> <select class='dayselect'><option></option></select> 반복</td></tr><tr class='rr'><td class='titleId'></td><td><input type='radio' name='daySelect'> 종료 날짜    <input type='date'></td></tr>"                                       
+					var tr = "<tr class='rr'><td class='titleId'>매 </td><td><input type=text class='dayselect' name='gwrLimit' value=0><input class='plus' type=button value='+' onClick='javascript:this.form.gwrLimit.value++;'><input type=button class='minus' value='-' onClick='javascript:this.form.gwrLimit.value--;'> 주 마다 되풀이</td><tr class='rr'><td class='titleId'>반복</td><td><input type='checkbox' name='gwrWeek' value='일'> 일 <input type='checkbox' name='gwrWeek' value='월'> 월 <input type='checkbox' name='gwrWeek' value='화'> 화 <input type='checkbox' name='gwrWeek' value='수'> 수 <input type='checkbox' name='gwrWeek' value='목'> 목 <input type='checkbox' name='gwrWeek' value='금'> 금 <input type='checkbox' name='gwrWeek' value='토'> 토</td></tr></tr><tr class='rr'><td class='titleId'>종료 </td><td><input type='radio' name='endOption' value='없음'>없음</td></tr><tr class='rr'><td class='titleId'> </td><td class='titleId'><input type='radio' name='endOption' value='반복횟수'> <input type=text class='dayselect' name='endOptionCount' value=0><input type=button class='plus' value='+' onClick='javascript:this.form.endOptionCount.value++;'><input type=button value='-' class='minus' onClick='javascript:this.form.endOptionCount.value--;'> 반복</td></tr><tr class='rr'><td class='titleId'></td><td><input type='radio' name='endOption' value='종료일자'> 종료 날짜    <input type='date' name='endOptionDay'></td></tr>"                                       
 		  				
-		  			$("#repeat2").parent().parent().after(tr);
+		  			$(".repeat1").parent().parent().after(tr);
 					
 					
 				}
 				
 				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-	  			
-	  			
 	  			});
 	  			
 	  			$(function(){

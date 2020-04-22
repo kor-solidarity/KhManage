@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.google.gson.Gson;
 import com.kh.manage.gwManage.model.service.GwManageService;
 import com.kh.manage.gwManage.model.vo.GWork;
+import com.kh.manage.gwManage.model.vo.GwRepeat;
 import com.kh.manage.member.model.vo.Member;
 
 @Controller
@@ -45,13 +46,13 @@ public class GwManageController {
 	}
 	
 	@RequestMapping("insertGw.gwm")
-	public void insertGw(GWork g, Model m, HttpServletRequest request, HttpServletResponse response) {
+	public void insertGw(GWork g, GwRepeat gr, Model m, HttpServletRequest request, HttpServletResponse response) {
 		
 		String bDate = request.getParameter("bDate");
 		String bTime = request.getParameter("bTime");
 		String eDate = request.getParameter("eDate");
 		String eTime = request.getParameter("eTime");
-		String repeat = request.getParameter("repeat");
+		//String repeat = request.getParameter("repeat");
 		
 		String bDate2 = bDate + bTime;
 		String eDate2 = eDate + eTime;
@@ -60,29 +61,29 @@ public class GwManageController {
 		System.out.println("bDate2 : " + bDate2);
 		System.out.println("eDate : " + eDate2);
 		
-		if(repeat.equals("없음")) {
-			
-			g.setRepeatStatus("N");
-		}else {
-			
-			g.setRepeatStatus("Y");
-		}
 		
 		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
 		String memberNo = loginUser.getMemberNo();
 		g.setMemberNo(memberNo);
 		
 		System.out.println(g);
+		System.out.println("Gwr" + gr);
 		
-		int result = gs.insertGw(g);
+		if(gr.getEndOptionDay().equals("")) {
+			gr.setEndOptionDay(null);
+		}
 		
+		int result = gs.insertGw(g,gr);
+		
+//		int result = gs.insertGw(g);
+//		
 		request.setAttribute("result", result);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		
-		
+//		
+//		
 		String gson = new Gson().toJson(result);
-
+//
 		try {
 			response.getWriter().write(gson);
 		} catch (IOException e) {

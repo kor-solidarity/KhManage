@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.manage.gwManage.model.dao.GwManageDao;
 import com.kh.manage.gwManage.model.vo.GWork;
+import com.kh.manage.gwManage.model.vo.GwRepeat;
 import com.kh.manage.member.model.vo.Member;
 
 @Service
@@ -26,9 +27,33 @@ public class GwManageServiceImpl implements GwManageService{
 	}
 
 	@Override
-	public int insertGw(GWork g) {
+	public int insertGw(GWork g, GwRepeat gr) {
 		
-		return gd.insertGw(sqlSession, g);
+		int result = gd.insertGw(sqlSession, g);
+		
+		if(gr.getGwrCycle() != null) {
+		
+		String gNo = gd.selectCurrval(sqlSession,g);
+		String gNo2 = "";
+		
+		int no = Integer.parseInt(gNo);
+		
+		if(no > 9) {
+			
+			gNo2 = "GW0" +gNo;
+		}else {
+			gNo2 = "GW00" +gNo;
+		}
+		
+		gr.setGwNo(gNo2);
+		System.out.println(gNo2);
+			
+				
+		int result2 = gd.insertGwWeek(sqlSession, gr);
+		}
+				
+		
+		return result;
 	}
 
 	@Override
