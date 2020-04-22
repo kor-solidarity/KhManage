@@ -141,7 +141,7 @@
 		WHERE PROJECT_NO = #{pno}
 	</select>
 	
-	<select id="selectIssueOne" parameterType="java.lagn.String" resultMap="">
+	<select id="selectIssueOne" parameterType="java.lang.String">
 		SELECT 
 				I.ISSUE_NO
 			  , I.ISSUE_TYPE
