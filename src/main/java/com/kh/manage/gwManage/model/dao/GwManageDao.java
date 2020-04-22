@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.manage.gwManage.model.vo.GWork;
+import com.kh.manage.gwManage.model.vo.GwRepeat;
 import com.kh.manage.member.model.vo.Member;
 
 public interface GwManageDao {
@@ -19,5 +20,11 @@ public interface GwManageDao {
 	int deleteGw(SqlSessionTemplate sqlSession, GWork g);
 
 	List<Member> MemberList(SqlSessionTemplate sqlSession);
+
+	String selectCurrval(SqlSessionTemplate sqlSession, GWork g);
+
+	int insertGwWeek(SqlSessionTemplate sqlSession, GwRepeat gr);
+
+	int insertGwDay(SqlSessionTemplate sqlSession, GwRepeat gr);
 
 }

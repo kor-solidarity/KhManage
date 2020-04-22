@@ -19,6 +19,19 @@
 		<result property="repeatStatus" column="REPEAT_STATUS"/>
 	</resultMap>
 	
+	<resultMap type="GwRepeat" id="gwrRepeatResultSet">
+		<id property="gwrNo" column="GWR_NO"/>
+		<result property="gwNo" column="GW_NO"/>
+		<result property="gwrCycle" column="GWR_CYCLE"/>
+		<result property="gwrLimit" column="GWR_LIMIT"/>
+		<result property="gwrWeek" column="GWR_WEEK"/>
+		<result property="gwrMonth" column="GWR_MONTH"/>
+		<result property="endOption" column="END_OPTION"/>
+		<result property="endOptionDay" column="END_OPTION_DAY"/>
+		<result property="endOptionCount" column="END_OPTION_COUNT"/>
+	</resultMap>
+	
+	
 	<select id="selectAllList" resultMap="gWorkResultSet">
 		SELECT GW_NO, GW_NAME,BEGIN_DATE,TO_CHAR(BEGIN_DATE, 'YYYY/MM/DD HH24:MI') AS TT, TO_CHAR(END_DATE, 'YYYY/MM/DD HH24:MI') AS TTT,END_DATE,ENROLL_DATE,GW_MEMO,GW_TYPE,MEMBER_NO,STATUS
 		FROM GENERAL_WORK
@@ -41,6 +54,16 @@
 		UPDATE GENERAL_WORK SET STATUS = 'N'
 		WHERE GW_NO = #{gwNo}
 	</update>
+	
+	<select id="selectCurrval"  resultType="java.lang.String" parameterType="java.lang.String">
+		SELECT SEQ_GWNO.CURRVAL FROM DUAL
+	</select>
+	
+	<insert id="insertGwRepeat" parameterType="GwRepeat">
+		INSERT INTO GW_REPEAT
+		VALUES('GWR'|| TO_CHAR(SEQ_GWR.NEXTVAL, 'FM000'), #{gwNo}, #{gwrCycle}, #{gwrLimit}, #{gwrWeek}, #{gwrMonth}, #{endOption} ,#{endOptionDay}, #{endOptionCount})
+	</insert>
+	
 	
 		
 </mapper>
