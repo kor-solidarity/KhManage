@@ -49,5 +49,7 @@ public interface ProjectService {
 	
 	String selectWorkSeq();
 	
-	String selectProjectTeamNo(String pid, String memberNo);
+	String selectProjectTeamNo(ProjectTeam team);
+	
+	int insertResource(Member member);
 }
