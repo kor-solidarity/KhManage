@@ -255,7 +255,45 @@
                                 JOIN MEMBER M ON PROJECT_TEAM.MEMBER_PK = M.MEMBER_NO) T
                       ON P.PROJECT_PK = T.PROJECT_PK
         WHERE T.MEMBER_PK = #{memberNo}
+          and P.STATUS = '1'
     </select>
+
+    <!-- 프로젝트 전체목록 조회. -->
+    <!-- 관리자 또는 이에 준하는 권한을 가진 사람은 모든걸 볼 수 있다.-->
+    <select id="selectProjectListForAdmin" parameterType="Member" resultMap="projectListResultSet">
+        SELECT P.PROJECT_PK      AS PROJECT_PK,
+               P.PROJECT_NAME    AS PROJECT_NAME,
+               P.IS_IMPORTANT    AS IS_IMPORTANT,
+               P.PROJECT_TYPE_PK AS PROJECT_TYPE_PK,
+               PT.TYPE_NAME      AS TYPE_NAME,
+               P.PROJECT_RANK    AS PROJECT_RANK,
+               P.PROJECT_MANAGER AS PROJECT_MANAGER,
+               T.MEMBER_PK       AS MEMBER_PK,
+               T.MEMBER_NAME     AS MEMBER_NAME,
+               P.PROJECT_TYPE_PK AS PROJECT_TYPE_PK,
+               P.DEPT_NO         AS DEPT_NO,
+               D.DEPT_NAME       AS DEPT_NAME,
+               P.START_DATE      AS START_DATE,
+               P.END_DATE        AS END_DATE,
+               P.STATUS          AS STATUS
+        FROM PROJECT P
+                 JOIN DEPT D ON P.DEPT_NO = D.DEPT_NO
+                 JOIN PROJECT_TYPE PT ON P.PROJECT_TYPE_PK = PT.TYPE_PK
+                 JOIN (SELECT *
+                       FROM PROJECT_TEAM
+                                JOIN MEMBER M ON PROJECT_TEAM.MEMBER_PK = M.MEMBER_NO) T
+                      ON P.PROJECT_PK = T.PROJECT_PK
+        WHERE P.STATUS = '1'
+    </select>
+
+    <select id="checkAdminStats" resultType="_int" parameterType="String">
+        SELECT *
+        FROM ACCESSGROUP A
+                 JOIN ACCESS_MEMBER AM ON A.ACCESSGROUP_NO = AM.ACCESSGROUP_NO
+        where A.ACCESSGROUP_NO = 'A015'
+          and MEMBER_NO = #{value}
+    </select>
+
     <!--모든 프로젝트 목록조회를 위한 총 목록 수-->
     <select id="getProjectListCount" resultType="_int">
         SELECT count(*)
@@ -286,11 +324,13 @@
         set STATUS = '개발지연'
         where WORK_NO = #{value}
     </update>
+    <select id="selectProjectTeamNo" parameterType="String">
 
+    </select>
     <insert id="insertWorkHistory" parameterType="WorkHistory">
         insert into WORK_HISTORY
         values ('WH' || to_char(SEQ_WH.NEXTVAL, 'FM000'),
-                #{workNo}, #{status}, #{memo}, to_date(sysdate), #{projectTeamNo})
+                #{workNo}, #{status}, #{memo}, sysdate, #{projectTeamNo})
     </insert>
 
     <insert id="insertProjectWork" parameterType="ProjectWork">

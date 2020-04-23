@@ -48,4 +48,6 @@ public interface ProjectService {
 	List<DeptMember> selectMemberListResource(String deptNo);
 	
 	String selectWorkSeq();
+	
+	String selectProjectTeamNo(String pid, String memberNo);
 }

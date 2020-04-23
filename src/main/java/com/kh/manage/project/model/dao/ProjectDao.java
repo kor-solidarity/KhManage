@@ -50,4 +50,6 @@ public interface ProjectDao {
 	List<DeptMember> selectMemberListResource(SqlSessionTemplate sqlSession, String deptNo);
 	
 	String selectWorkSeq(SqlSessionTemplate sqlSession);
+	
+	String selectProjectTeamNo(SqlSessionTemplate sqlSession, String pid, String memberNo);
 }

@@ -41,8 +41,13 @@ public class ProjectController {
 	@RequestMapping("/projectCenter.pr")
 	public String projectSelectAll(Model model, HttpServletRequest request) {
 		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
-		int currentPage = 1;
 		
+		// 권한그룹에 속해있는지 확인
+		boolean isAdmin = false;
+		
+		
+		
+		int currentPage = 1;
 		if (request.getParameter("currentPage") != null) {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
@@ -353,6 +358,10 @@ public class ProjectController {
 		
 		if (result > 0) {
 			String workNo = ps.selectWorkSeq();
+			// 누가 이 작업을 배정한거임??
+			String loginUserMemberNo = loginUser.getMemberNo();
+			String teamNo = ps.selectProjectTeamNo(pid, memberNo);
+			
 			WorkHistory workHistory =
 					new WorkHistory(null, workNo, "시작전",
 							"작업 첫 생성", Date.valueOf(LocalDate.now()), projectWork.getMemberNo());
