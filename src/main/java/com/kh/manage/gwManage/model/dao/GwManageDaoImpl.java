@@ -16,7 +16,7 @@ public class GwManageDaoImpl implements GwManageDao{
 	@Override
 	public List<GWork> selectAllList(SqlSessionTemplate sqlSession, String memberNo) {
 
-		return sqlSession.selectList("GWork.selectAllList", memberNo);
+		return sqlSession.selectList("GWork.selectAllList2", memberNo);
 	}
 
 	@Override

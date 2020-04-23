@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,7 +36,7 @@ public class GwManageController {
 		String memberNo = loginUser.getMemberNo();
 		
 		List<GWork> list = gs.selectAllList(memberNo);
-			
+		
 		
 		System.out.println(list);
 		
@@ -62,6 +63,18 @@ public class GwManageController {
 		System.out.println("eDate : " + eDate2);
 		
 		
+		
+		if(!gr.getGwrCycle().equals("없음")) {
+			g.setRepeatStatus("Y");
+			if(gr.getEndOptionDay().equals("")) {
+				gr.setEndOptionDay(null);
+			}
+		}else {
+			g.setRepeatStatus("N");
+		}
+		
+		
+		
 		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
 		String memberNo = loginUser.getMemberNo();
 		g.setMemberNo(memberNo);
@@ -69,9 +82,6 @@ public class GwManageController {
 		System.out.println(g);
 		System.out.println("Gwr" + gr);
 		
-		if(gr.getEndOptionDay().equals("")) {
-			gr.setEndOptionDay(null);
-		}
 		
 		int result = gs.insertGw(g,gr);
 		
@@ -116,14 +126,6 @@ public class GwManageController {
 
 		System.out.println(bd);
 		System.out.println(bTime);
-		
-		if(repeat.equals("없음")) {
-			
-			g.setRepeatStatus("N");
-		}else {
-			
-			g.setRepeatStatus("Y");
-		}
 		
 		
 		int result = gs.updateGw(g);

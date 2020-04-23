@@ -16,11 +16,13 @@ public class GWork {
 	private String to;
 	private String to2;
 	private String repeatStatus;
+	private GwRepeat gwRepeat;
 	
 	public GWork() {}
 
 	public GWork(String gwNo, String gwName, Date beginDate, Date endDate, Date enrollDate, String gwMemo,
-			String gwType, String memberNo, String status, String to, String to2, String repeatStatus) {
+			String gwType, String memberNo, String status, String to, String to2, String repeatStatus,
+			GwRepeat gwRepeat) {
 		super();
 		this.gwNo = gwNo;
 		this.gwName = gwName;
@@ -34,13 +36,7 @@ public class GWork {
 		this.to = to;
 		this.to2 = to2;
 		this.repeatStatus = repeatStatus;
-	}
-
-	@Override
-	public String toString() {
-		return "GWork [gwNo=" + gwNo + ", gwName=" + gwName + ", beginDate=" + beginDate + ", endDate=" + endDate
-				+ ", enrollDate=" + enrollDate + ", gwMemo=" + gwMemo + ", gwType=" + gwType + ", memberNo=" + memberNo
-				+ ", status=" + status + ", to=" + to + ", to2=" + to2 + ", repeatStatus=" + repeatStatus + "]";
+		this.gwRepeat = gwRepeat;
 	}
 
 	public String getGwNo() {
@@ -139,8 +135,24 @@ public class GWork {
 		this.repeatStatus = repeatStatus;
 	}
 
-	
+	public GwRepeat getGwRepeat() {
+		return gwRepeat;
+	}
 
+	public void setGwRepeat(GwRepeat gwRepeat) {
+		this.gwRepeat = gwRepeat;
+	}
+
+	@Override
+	public String toString() {
+		return "GWork [gwNo=" + gwNo + ", gwName=" + gwName + ", beginDate=" + beginDate + ", endDate=" + endDate
+				+ ", enrollDate=" + enrollDate + ", gwMemo=" + gwMemo + ", gwType=" + gwType + ", memberNo=" + memberNo
+				+ ", status=" + status + ", to=" + to + ", to2=" + to2 + ", repeatStatus=" + repeatStatus
+				+ ", gwRepeat=" + gwRepeat + "]";
+	}
+	
+	
+	
 	
 	
 	
