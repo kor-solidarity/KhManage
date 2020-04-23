@@ -23,6 +23,8 @@ import com.kh.manage.common.PageInfo;
 import com.kh.manage.common.Pagination;
 import com.kh.manage.issue.model.service.IssueService;
 import com.kh.manage.issue.model.vo.Issue;
+import com.kh.manage.issue.model.vo.IssueHistory;
+import com.kh.manage.issue.model.vo.IssueList;
 import com.kh.manage.issue.model.vo.IssueProjectTeam;
 import com.kh.manage.issue.model.vo.IssueWPT;
 import com.kh.manage.issue.model.vo.IssueWork;
@@ -216,14 +218,48 @@ public class IssueController {
 	}
 	
 	@RequestMapping("selectIssueOne.iu")
-	public String selectIssueOne(String issueNo) {
+	public String selectIssueOne(String issueNo, Model m) {
 		System.out.println(issueNo);
 		
-		Issue issue = is.selectIssueOne(issueNo);
+		IssueList issue = is.selectIssueOne(issueNo);
 		
-		
-		return "";
+		if(issue != null) {
+			m.addAttribute("issue", issue);
+			return "user/issue/selectIssueDetail";
+		}else {
+			m.addAttribute("msg", "이슈 확인 실패");
+			return "common/errorPage";
+		}
 	}
 	
+	@RequestMapping("issueAgree.iu")
+	public String issueAgree(String issueNo, Model m) {
+		
+		int result = is.selectissueAgree(issueNo);
+		
+		if(result > 0) {
+			return "redirect:selectIssueOne.iu?issueNo=" + issueNo;
+		}else {
+			m.addAttribute("msg", "이슈 승인 실패");
+			return "common/errorPage";
+		}
+		
+	}
+	
+	@RequestMapping("issueComplete.iu")
+	public String issueComplete(IssueHistory ih, Model m) {
+		
+		System.out.println(ih);
+		
+		int result = is.insertIssueComplete(ih);
+		
+		if(result > 0) {
+			return "redirect:selectIssueOne.iu?issueNo=" + ih.getIssueNo();
+		}else {
+			m.addAttribute("msg", "이슈 승인 실패");
+			return "common/errorPage";
+		}
+		
+	}
 	
 }

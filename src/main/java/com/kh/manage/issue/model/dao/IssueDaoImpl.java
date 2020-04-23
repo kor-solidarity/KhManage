@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.issue.model.vo.Issue;
+import com.kh.manage.issue.model.vo.IssueHistory;
+import com.kh.manage.issue.model.vo.IssueList;
 import com.kh.manage.issue.model.vo.IssueProjectTeam;
 import com.kh.manage.issue.model.vo.IssueWPT;
 import com.kh.manage.issue.model.vo.IssueWork;
@@ -77,8 +79,18 @@ public class IssueDaoImpl implements IssueDao{
 	}
 
 	@Override
-	public Issue selectIssueOne(SqlSessionTemplate sqlSession, String issueNo) {
+	public IssueList selectIssueOne(SqlSessionTemplate sqlSession, String issueNo) {
 		return sqlSession.selectOne("Issue.selectIssueOne", issueNo);
+	}
+
+	@Override
+	public int selectIssueAgree(SqlSessionTemplate sqlSession, String issueNo) {
+		return sqlSession.insert("Issue.selectIssueAgree", issueNo);
+	}
+
+	@Override
+	public int insertIssueComplete(SqlSessionTemplate sqlSession, IssueHistory ih) {
+		return sqlSession.insert("Issue.insertIssueComplete", ih);
 	}
 
 }

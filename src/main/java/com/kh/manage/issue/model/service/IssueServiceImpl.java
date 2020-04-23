@@ -10,6 +10,8 @@ import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.issue.model.dao.IssueDao;
 import com.kh.manage.issue.model.vo.Issue;
+import com.kh.manage.issue.model.vo.IssueHistory;
+import com.kh.manage.issue.model.vo.IssueList;
 import com.kh.manage.issue.model.vo.IssueProjectTeam;
 import com.kh.manage.issue.model.vo.IssueWPT;
 import com.kh.manage.issue.model.vo.IssueWork;
@@ -80,8 +82,18 @@ public class IssueServiceImpl implements IssueService{
 	}
 
 	@Override
-	public Issue selectIssueOne(String issueNo) {
+	public IssueList selectIssueOne(String issueNo) {
 		return id.selectIssueOne(sqlSession, issueNo);
+	}
+
+	@Override
+	public int selectissueAgree(String issueNo) {
+		return id.selectIssueAgree(sqlSession, issueNo);
+	}
+
+	@Override
+	public int insertIssueComplete(IssueHistory ih) {
+		return id.insertIssueComplete(sqlSession, ih);
 	}
 
 	

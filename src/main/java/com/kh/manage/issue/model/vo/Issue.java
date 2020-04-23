@@ -13,13 +13,14 @@ public class Issue implements java.io.Serializable{
 	private Date registerDate;
 	private String projectNo;
 	private Date actionDate;
-	
+	private String projectName;
+	private String workName;
 	
 	public Issue() {}
 
-
 	public Issue(String issueNo, String issueType, String issueTitle, String issueContent, String registerType,
-			String workNo, String teamWorker, Date registerDate, String projectNo, Date actionDate) {
+			String workNo, String teamWorker, Date registerDate, String projectNo, Date actionDate, String projectName,
+			String workName) {
 		super();
 		this.issueNo = issueNo;
 		this.issueType = issueType;
@@ -31,117 +32,114 @@ public class Issue implements java.io.Serializable{
 		this.registerDate = registerDate;
 		this.projectNo = projectNo;
 		this.actionDate = actionDate;
+		this.projectName = projectName;
+		this.workName = workName;
 	}
-
 
 	public String getIssueNo() {
 		return issueNo;
 	}
 
-
 	public void setIssueNo(String issueNo) {
 		this.issueNo = issueNo;
 	}
-
 
 	public String getIssueType() {
 		return issueType;
 	}
 
-
 	public void setIssueType(String issueType) {
 		this.issueType = issueType;
 	}
-
 
 	public String getIssueTitle() {
 		return issueTitle;
 	}
 
-
 	public void setIssueTitle(String issueTitle) {
 		this.issueTitle = issueTitle;
 	}
-
 
 	public String getIssueContent() {
 		return issueContent;
 	}
 
-
 	public void setIssueContent(String issueContent) {
 		this.issueContent = issueContent;
 	}
-
 
 	public String getRegisterType() {
 		return registerType;
 	}
 
-
 	public void setRegisterType(String registerType) {
 		this.registerType = registerType;
 	}
-
 
 	public String getWorkNo() {
 		return workNo;
 	}
 
-
 	public void setWorkNo(String workNo) {
 		this.workNo = workNo;
 	}
-
 
 	public String getTeamWorker() {
 		return teamWorker;
 	}
 
-
 	public void setTeamWorker(String teamWorker) {
 		this.teamWorker = teamWorker;
 	}
-
 
 	public Date getRegisterDate() {
 		return registerDate;
 	}
 
-
 	public void setRegisterDate(Date registerDate) {
 		this.registerDate = registerDate;
 	}
-
 
 	public String getProjectNo() {
 		return projectNo;
 	}
 
-
 	public void setProjectNo(String projectNo) {
 		this.projectNo = projectNo;
 	}
-
 
 	public Date getActionDate() {
 		return actionDate;
 	}
 
-
 	public void setActionDate(Date actionDate) {
 		this.actionDate = actionDate;
 	}
 
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+
+	public String getWorkName() {
+		return workName;
+	}
+
+	public void setWorkName(String workName) {
+		this.workName = workName;
+	}
 
 	@Override
 	public String toString() {
 		return "Issue [issueNo=" + issueNo + ", issueType=" + issueType + ", issueTitle=" + issueTitle
 				+ ", issueContent=" + issueContent + ", registerType=" + registerType + ", workNo=" + workNo
 				+ ", teamWorker=" + teamWorker + ", registerDate=" + registerDate + ", projectNo=" + projectNo
-				+ ", actionDate=" + actionDate + "]";
+				+ ", actionDate=" + actionDate + ", projectName=" + projectName + ", workName=" + workName + "]";
 	}
-	
+
 	
 	
 }
