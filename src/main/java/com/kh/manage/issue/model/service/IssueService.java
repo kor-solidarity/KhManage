@@ -5,6 +5,8 @@ import java.util.List;
 import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.issue.model.vo.Issue;
+import com.kh.manage.issue.model.vo.IssueHistory;
+import com.kh.manage.issue.model.vo.IssueList;
 import com.kh.manage.issue.model.vo.IssueProjectTeam;
 import com.kh.manage.issue.model.vo.IssueWPT;
 import com.kh.manage.issue.model.vo.IssueWork;
@@ -34,7 +36,11 @@ public interface IssueService {
 
 	int getListCount(String pno);
 
-	Issue selectIssueOne(String issueNo);
+	IssueList selectIssueOne(String issueNo);
+
+	int selectissueAgree(String issueNo);
+
+	int insertIssueComplete(IssueHistory ih);
 
 
 }

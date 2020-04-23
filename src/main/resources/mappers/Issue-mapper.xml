@@ -51,6 +51,24 @@
 		<result property="actionDate" column="ACTION_DATE"/>
 		<result property="ihDate" column="IH_DATE"/>
 	</resultMap>
+	
+	<resultMap type="IssueList" id="selectIssueOne">
+		<id property="issueNo" column="ISSUE_NO"/>
+		<result property="projectName" column="PROJECT_NAME"/>
+		<result property="workName" column="WORK_NAME"/>
+		<result property="issueTitle" column="ISSUE_TITLE"/>
+		<result property="issueContent" column="ISSUE_CONTENT"/>
+		<result property="registerDate" column="REGISTER_DATE"/>
+		<result property="issueType" column="ISSUE_TYPE"/>
+		<result property="registerType" column="REGISTER_TYPE"/>
+		<result property="registerName" column="REGISTER_NAME"/>
+		<result property="status" column="STATUS"/>
+		<result property="teamWorker" column="TEAMWORKER"/>
+		<result property="teamWorkerName" column="TEAMWORKER_NAME"/>
+		<result property="actionDate" column="ACTION_DATE"/>
+		<result property="ihDate" column="IH_DATE"/> 
+		<result property="ihContent" column="IH_CONTENT"/> 
+	</resultMap>
 
 
 	<select id="selectProjectName" parameterType="Member" resultMap="selectIssueTeamProject">
@@ -141,26 +159,48 @@
 		WHERE PROJECT_NO = #{pno}
 	</select>
 	
-	<select id="selectIssueOne" parameterType="java.lang.String">
+	<select id="selectIssueOne" parameterType="java.lang.String" resultMap="selectIssueOne">
 		SELECT 
-				I.ISSUE_NO
-			  , I.ISSUE_TYPE
-			  , I.ISSUE_TITLE
-			  , I.ISSUE_CONTENT
-			  , I.REGISTER_TYPE
-			  , I.WORK_NO
-			  , I.TEAMWORKER
-			  , I.REGISTER_DATE
-			  , I.PROJECT_NO
-			  , I.PROJECT_NAME
-			  , I.ACTION_DATE
+			   I.ISSUE_NO
+			 , P.PROJECT_NAME
+			 , W.WORK_NAME
+			 , I.ISSUE_TITLE
+             , I.ISSUE_CONTENT
+			 , I.REGISTER_DATE
+			 , I.ISSUE_TYPE
+             , I.REGISTER_TYPE
+			 , M.MEMBER_NAME AS REGISTER_NAME
+			 , IH.STATUS
+             , I.TEAMWORKER
+			 , M2.MEMBER_NAME AS TEAMWORKER_NAME
+			 , I.ACTION_DATE
+			 , IH.IH_DATE
+			 , IH.IH_CONTENT
 		FROM ISSUE I
 		JOIN PROJECT P ON (I.PROJECT_NO = P.PROJECT_PK)
-		WHERE I.STATUS = 'Y'
-		AND I.ISSUE_NO = #{issueNo}
-		
+		JOIN WORK W ON (I.WORK_NO = W.WORK_NO)
+		JOIN MEMBER M ON (I.REGISTER_TYPE = M.MEMBER_NO)
+		JOIN (SELECT ISSUE_NO, STATUS, IH_DATE, IH_CONTENT
+              FROM ISSUE_HISTORY
+              WHERE (ISSUE_NO, IH_DATE) IN 
+                             (SELECT ISSUE_NO, MAX(IH_DATE)
+                              FROM ISSUE_HISTORY
+                              GROUP BY ISSUE_NO)) IH ON (I.ISSUE_NO = IH.ISSUE_NO)
+		JOIN MEMBER M2 ON (I.TEAMWORKER = M2.MEMBER_NO)
+        WHERE I.STATUS = 'Y'
+        AND I.ISSUE_NO = #{issueNo}
 	</select>
 	
+	
+	<insert id="selectIssueAgree" parameterType="java.lang.String">
+		INSERT INTO ISSUE_HISTORY
+		VALUES ('IH' || TO_CHAR(SEQ_IH_NO.NEXTVAL, 'FM000'), #{issueNo}, NULL, SYSDATE, '조치중')
+	</insert>
+	
+	<insert id="insertIssueComplete" parameterType="IssueHistory">
+		INSERT INTO ISSUE_HISTORY
+		VALUES ('IH' || TO_CHAR(SEQ_IH_NO.NEXTVAL, 'FM000'), #{issueNo}, #{ihContent}, #{ihDate}, '조치완료')
+	</insert>
 </mapper>
 
 

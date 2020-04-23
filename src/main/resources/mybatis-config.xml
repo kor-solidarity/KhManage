@@ -49,6 +49,7 @@
         <typeAlias type="com.kh.manage.project.model.vo.WorkHistory" alias="WorkHistory"/>
         <typeAlias type="com.kh.manage.gwManage.model.vo.GwRepeat" alias="GwRepeat"/>
         <typeAlias type="com.kh.manage.chat.model.vo.SearchKeyWord" alias="SearchKeyWord"/>
+        <typeAlias type="com.kh.manage.issue.model.vo.IssueHistory" alias="IssueHistory"/>
   	</typeAliases>
   
   
