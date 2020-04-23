@@ -123,7 +123,7 @@
 						<th class="thRange th1">이름</th>
 						<th class="tdText thRange">부서</th>
 						<th class="tdText thRange">직급</th>
-						<th class="tdText thRange">진행중인프로젝트</th>
+						<th class="tdText thRange">진행중인<br>프로젝트</th>
 						<th class="tdText thRange">이메일</th>
 						<th class="tdText thRange">사용여부</th>
 						<th class="tdText thRange">최근접속일</th>
@@ -136,7 +136,7 @@
 						<th class="tdText thRange"><input type="text" class="inputCss form-control" style="visibility:hidden; width:95%;"></th>
 						<th class="tdText thRange"><input type="text" class="inputCss form-control" style="width:95%;"></th>
 						<th class="tdText thRange"><input type="text" class="inputCss form-control" style="width:95%;"></th>
-						<th class="tdText thRange"><input type="text" class="inputCss form-control" style="width:95%;"></th>
+						<th class="tdText thRange"><input type="date" class="inputCss form-control" style="width:95%;"></th>
 						<th class="tdText thRange"><input type="text" class="inputCss form-control" style="visibility:hidden; width:95%;"></th>
 					</tr>
 					
@@ -327,7 +327,7 @@
 											 + "<td class='tdText' style='text-align:left; padding-left: 25px;'>" + data[key]['email'] + "</td>"
 											 + "<td class='tdText'>" + data[key]['status'] + "</td>"
 											 + "<td class='tdText'>" + "날짜추가" + "</td>"
-											 + "<td class='tdText'><button class='pwdResetBtn'>" + data[key]['status'] + "</button></td>"
+											 + "<td class='tdText'><button class='pwdResetBtn'>" + "패스워드초기화" + "</button></td>"
 											 + "</tr>");
 							 
 							/*  
