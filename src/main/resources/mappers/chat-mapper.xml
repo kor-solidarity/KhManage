@@ -54,6 +54,7 @@
 		<result property="status" column="STATUS"/>
 		<result property="sendDate" column="SEND_DATE"/>
 		<result property="content" column="CONTENT"/>
+		<result property="contentType" column="CONTENT_TYPE"/>
 	</resultMap>
 	
 	<resultMap type="Member" id="chatMemberResultSet">
@@ -66,6 +67,15 @@
 		<result property="changeName" column="CHANGE_NAME"/>
 		<result property="ext" column="EXT"/>
 	</resultMap>
+	
+	<resultMap type="Attachment" id="ChatAttachmentResultSet">
+		<id property="atNo" column="MESSAGE_ATTACHMENT"/>
+		<result property="division" column="MESSAGE_NO"/>
+		<result property="originName" column="ORIGIN_NAME"/>
+		<result property="changeName" column="CHANGE_NAME"/>
+		<result property="filePath" column=" SAVE_PATH"/>
+	</resultMap>
+
 	
 	<select id="selectAllDeptList" resultMap="departResultSet">
 		SELECT DEPT_NO
@@ -163,8 +173,16 @@
 		INSERT INTO MESSAGE VALUES('ME'|| TO_CHAR(SEQ_MSG_NO.NEXTVAL, 'FM000'), #{chatRoomNo}, #{sender}, 'Y', #{contentType}, SYSDATE)
 	</insert>
 	
+	<insert id="insertAttMessage" parameterType="Message">
+		INSERT INTO MESSAGE VALUES('ME'|| TO_CHAR(SEQ_MSG_NO.NEXTVAL, 'FM000'), #{chatRoomNo}, #{sender}, 'Y', #{contentType}, SYSDATE)
+	</insert>
+	
 	<insert id="insertMessageContent" parameterType="Message">
 		INSERT INTO MESSAGE_CONTENT VALUES('ME'|| TO_CHAR(SEQ_MSG_NO.CURRVAL, 'FM000'), #{content})
+	</insert>
+	
+	<insert id="insertAttChat" parameterType="Attachment">
+		INSERT INTO MESSAGE_ATTACHMENT VALUES('MSG'|| TO_CHAR(SEQ_MSG_AT.NEXTVAL, 'FM000'), 'ME'|| TO_CHAR(SEQ_MSG_NO.CURRVAL, 'FM000'), #{originName}, #{changeName}, #{filePath})
 	</insert>
 	
 	<update id="updateRecentMessage" parameterType="Message">
@@ -179,10 +197,11 @@
 		      ,M.CHATROOM_NO
 		      ,M.STATUS
               ,A.CHANGE_NAME
+              ,M.CONTENT AS CONTENT_TYPE
               ,A.EXT
 		      ,TO_CHAR(M.SEND_DATE,'YY-MM-DD HH24:MI') AS SEND_DATE
 		      ,CASE WHEN M.CONTENT = '텍스트' THEN MC.M_CONTENT
-		      WHEN M.CONTENT = '첨부파일' THEN MA.MESSAGE_ATTACHMENT
+		      WHEN M.CONTENT = '첨부파일' THEN MA.CHANGE_NAME
 		END AS CONTENT   
 		FROM MESSAGE M    
 		JOIN MEMBER MB ON (M.SENDER = MB.MEMBER_NO)
@@ -362,6 +381,12 @@
 		FROM CHAT_MEMBER
 		WHERE MEMBER_NO = #{memberNo}
 		AND CHATROOM_NO = #{chatRoomNo}
+	</select>
+	
+	<select id="selectChatAtt" parameterType="ChatMessageList" resultMap="ChatAttachmentResultSet">
+		SELECT *
+		FROM MESSAGE_ATTACHMENT
+		WHERE MESSAGE_ATTACHMENT = #{content}     
 	</select>
 </mapper>
 

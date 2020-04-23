@@ -10,11 +10,12 @@ public class ChatMessageList {
 	private String ext;
 	private String sendDate;
 	private String content;
+	private String contentType;
 	
 	public ChatMessageList() {}
 
 	public ChatMessageList(String messageNo, String memberName, String memberNo, String chatRoomNo, String status,
-			String changeName, String ext, String sendDate, String content) {
+			String changeName, String ext, String sendDate, String content, String contentType) {
 		super();
 		this.messageNo = messageNo;
 		this.memberName = memberName;
@@ -25,8 +26,9 @@ public class ChatMessageList {
 		this.ext = ext;
 		this.sendDate = sendDate;
 		this.content = content;
+		this.contentType = contentType;
 	}
-
+	
 	public String getMessageNo() {
 		return messageNo;
 	}
@@ -99,12 +101,21 @@ public class ChatMessageList {
 		this.content = content;
 	}
 
+	public String getContentType() {
+		return contentType;
+	}
+
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
+
 	@Override
 	public String toString() {
 		return "ChatMessageList [messageNo=" + messageNo + ", memberName=" + memberName + ", memberNo=" + memberNo
 				+ ", chatRoomNo=" + chatRoomNo + ", status=" + status + ", changeName=" + changeName + ", ext=" + ext
-				+ ", sendDate=" + sendDate + ", content=" + content + "]";
+				+ ", sendDate=" + sendDate + ", content=" + content + ", contentType=" + contentType + "]";
 	}
 
+	
 	
 }

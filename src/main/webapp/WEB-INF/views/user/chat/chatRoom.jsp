@@ -150,7 +150,7 @@ body {
 		color:white;
 		padding: 10px;
 		position: relative;
-		max-width: 300px;
+		max-width: 250px;
 	}
 	.msg_time{
 		position: absolute;
@@ -242,15 +242,21 @@ body {
 		<table id="chatAreaTable" style="width:100%">
 			<c:forEach var="a" items="${list}">
 				<c:if test="${a.memberNo eq loginUser.memberNo}">
-				<c:if test="${a.memberNo != 'M999'}">
+				<c:if test="${a.memberNo != 'M999' && a.contentType == '텍스트'}">
 				<tr>	
 					<td colspan="2">
 						<div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send'>${a.content}<span class='msg_time_send'>${fn:substring(a.sendDate,8,14)}</span></div></div>	
 					</td>	
 				</tr>		
 				</c:if>
+				<c:if test="${a.memberNo != 'M999' && a.contentType == '첨부파일'}">
+				<tr>	
+					<td colspan="2">
+						<div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send'><img class='profile' src="<c:url value="/resources/uploadFiles/${a.content}"/>"><span class='msg_time_send'>${fn:substring(a.sendDate,8,14)}</span></div></div>	
+					</td>	
+				</tr>		
+				</c:if>
 					</c:if>
-			
 					<c:if test="${a.memberNo != loginUser.memberNo && a.memberNo != 'M999'}">
 					<tr>
 						<td style="width:50px;">
@@ -265,12 +271,22 @@ body {
 						<div style="display: inline-flex; font-weight:600; font-size:12px;">${a.memberName }</div>
 						</td>
 					</tr>	
+					<c:if test="${a.memberNo != 'M999' && a.contentType == '텍스트'}">
 					<tr>	
 						<td colspan="2">
 						<div class='card-body msg_card_body' style='padding-left: 20px; padding-top:0px; padding-bottom: 0px;'><div class='d-flex justify-content-start mb-4'><div class='msg_cotainer'>${a.content}<br><span class='msg_time'>${fn:substring(a.sendDate,8,14)}</span></div> </div> 
 						</div>
 						</td>
-					</tr>	
+					</tr>
+					</c:if>
+					<c:if test="${a.memberNo != 'M999' && a.contentType == '첨부파일'}">
+					 <tr>	
+						<td colspan="2">
+						<div class='card-body msg_card_body' style='padding-left: 20px; padding-top:0px; padding-bottom: 0px;'><div class='d-flex justify-content-start mb-4'><div class='msg_cotainer'><img class='profile' src="<c:url value="/resources/uploadFiles/${a.content}"/>"><br><span class='msg_time'>${fn:substring(a.sendDate,8,14)}</span></div> </div> 
+						</div>
+						</td>
+					</tr>
+					</c:if>	
 					</c:if>
 					<c:if test="${a.memberNo eq 'M999'}">
 					<c:if test="${fn:length(a.content)<11}">
@@ -311,8 +327,8 @@ body {
 			<textarea id="chatContent" class="chatContent" style="resize:none; width:85%; height:73%; border:none; outline:none; overflow:hidden; border-bottom: 2px solid #EEEEEE;"></textarea>
 			
 			<input type="button" id="sendBtn"  onclick="send();" value="전송" style="background:#1E2B44; border:1px solid #1E2B44; color:white; width:15%; height:100%; float:right; outline:none;">
-			<form id="fileForm" action="insertChatAtt.ct" method="post" enctype="multipart/form-data">
-			<i class="fas fa-paperclip" id="fileUpload" style="margin-left: 7px;"></i> <input type="file" id="file" name="atImg" onchange="readURL(this);" style="display:none;">
+			<form id="fileForm" method="post" enctype="multipart/form-data">
+			   <i class="fas fa-paperclip" id="fileUpload" style="margin-left: 7px;"></i> <input type="file" id="file" name="file"  style="display:none;">
 			</form>
 		</div>
 		
@@ -389,52 +405,52 @@ body {
     </div>
   </div>
 </div>
+
 	<script>
-		function readURL(input) {
-	        if (input.files && input.files[0]) {
-	            var reader = new FileReader();
-	            	console.log(input.value);
-	            	 $.ajax({
-	 					url:'selectDate.ct',
-	 					type: 'post',
-	 					async: false,
-	 					data:{},
-	 				 success:function(data){
-	 					date = data;
-	 					curDay = date.substring(6,9);
-	 					infoDate = date.substring(0,8);
-	 				
-		            	var text=  "${cr.chatRoomNo}"+ "`" + "${loginUser.memberNo}" + "`" + "첨부파일" + "`" + "${loginUser.memberName}" + "`" + date + "`" + "${loginUser.changeName}";
-		            	
-		            	//ws.send(text);
-	 				 }
-	            	 });
-	            	
-	            
-	            reader.readAsDataURL(input.files[0]);
-	        }
-	    }
+		$(function() {
+			 $("#chatArea").on("change", function() {
+				 $("#chatArea").scrollTop($("#chatArea")[0].scrollHeight); 
+			 });
+		});
+	
 	</script>
 	<script>
 		$("#file").change(function(){
-			var formData = new FormData($("#fileForm")[0]);
-			console.log(formData);
-        	$.ajax({
-                type : 'post',
-                url : 'insertChatAtt.ct',
-                data : formData,
-                processData : false,
-                dataType : "json",
-                contentType : false,
-                async    : false,
-                success : function(data) {
-                    alert("파일 업로드 성공.");
-                },
-                error : function(error) {
-                    alert("파일 업로드에 실패하였습니다.");
-                   
-                }
-            });  			
+			 $("#chatArea").scrollTop($("#chatArea")[0].scrollHeight); 
+			var formData = new FormData($('#fileForm')[0]);
+			 var text= "${loginUser.memberName}님이 나갔습니다" + "`" + "${cr.chatRoomNo}"+ "`" + "${loginUser.memberNo}" + "`" + "첨부파일" + "`" + "${loginUser.memberName}" + "`" +"sss" + "`" + "${loginUser.changeName}";
+			 var date;
+			 $.ajax({
+					url:'selectDate.ct',
+					type: 'post',
+					async: false,
+					data:{},
+				 success:function(data){
+					date = data;
+					curDay = date.substring(6,9);
+					infoDate = date.substring(0,8);
+				 }
+			 });
+			 
+			$.ajax({
+				type: "POST",
+				enctype: 'multipart/form-data',	// 필수
+				url: 'insertChatAtt.ct?chatRoomNo=${cr.chatRoomNo}',
+				data:formData,		// 필수
+				processData: false,	// 필수
+				contentType: false,	// 필수
+				cache: false,
+				success: function (data) {
+					 $("#chatAreaTable").append("<tr><td colspan='2'><div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send'><img class='profile' src='/manage/resources/uploadFiles/"+data['changeName']+"'><span class='msg_time_send'>"+ date.substring(8,14) +"</span></div></div></td></tr>");
+					 $("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
+					 
+					 var text= data['changeName'] + "`" + "${cr.chatRoomNo}"+ "`" + "${loginUser.memberNo}" + "`" + "첨부파일" + "`" + "${loginUser.memberName}" + "`" + date + "`" + "${loginUser.changeName}";
+					 ws.send(text);
+				},
+				error: function (e) {
+				}
+			});
+			 $("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
 		});
 	</script>
 	
@@ -528,9 +544,9 @@ body {
 						 var text= data['memberName']+ "님이 초대되었습니다" + "`" + "${cr.chatRoomNo}"+ "`" + "${loginUser.memberNo}" + "`" + "텍스트" + "`" + "${loginUser.memberName}" + "`" +"sss" + "`" + "M999";				
 						 
 						 $("#chatAreaTable").append("<tr height='10px;'></tr><tr><br><td colspan='2'><div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send' align='center' style='width:100%; font-size:10px; margin-right: 40px; background:#1E2B44; height:15px; padding: 0px;'>"+data['memberName']+"님이 초대되었습니다<span class='msg_time_send'></span></div></div></td></tr>");
-				    	 $("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
-							
+						 $("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);	
 				    	 $(".chatRoomMember").append("<tr><td><div class='box' style='background:white;'><img class='profile' src='<c:url value='/resources/img/people.png'/>'></div></td><td style='padding-top: 14px; padding-left: 10px;'>"+data['memberName']+" / "+data['deptName']+" /"+data['rankName']+"<input type='hidden' class='hideMemberNo' value='"+data['memberNo']+"'></td></tr>");
+				    	 $("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
 						 
 				    	 var c =  Number($("#memberCount").text().substring(0,1));	
 				    	 $("#memberCount").text(Number(c + 1) + "명");
@@ -554,6 +570,10 @@ body {
 	</script>
 
 	<script>
+		$(function(){
+			$("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
+		});
+	
 		$("#leaveChatRoom").click(function(){
 	    	 var text= "${loginUser.memberName}님이 나갔습니다" + "`" + "${cr.chatRoomNo}"+ "`" + "${loginUser.memberNo}" + "`" + "텍스트" + "`" + "${loginUser.memberName}" + "`" +"sss" + "`" + "M999";
 
@@ -686,20 +706,16 @@ body {
         	var date = text1[5];
         	var changeName = text1[6];
         	
-			console.log(content);
-			console.log(chatNo);
-        	console.log(memberNo);
-        	console.log(root);
         	
         	//지금 내가 들어와 있는 방 번호
         	var chatNo2 = "${cr.chatRoomNo}";
-        	
+        	console.log(root);
         	if(chatNo2 == chatNo && root=="첨부파일"){
-        		$("#chatAreaTable").append("<tr><td style='width:50px;'><div class='box' style='background:white;'><img class='profile' src='/manage/resources/uploadFiles/"+changeName+".png'></div></td><td><div style='display: inline-flex; font-weight:600; font-size:12px;'>"+memberName+"</div></td></tr><tr><td colspan='2'><div class='card-body msg_card_body' style='padding-left: 20px; padding-top:0px; padding-bottom: 0px;'><div class='d-flex justify-content-start mb-4'><div class='msg_cotainer'><img src='"+content+"'><br><span class='msg_time'>"+date.substring(8,14)+"</span></div></div></div></td></tr>");
+        		 $("#chatAreaTable").append("<tr><td style='width:50px;'><div class='box' style='background:white;'><img class='profile' src='/manage/resources/uploadFiles/"+changeName+".png'></div></td><td><div style='display: inline-flex; font-weight:600; font-size:12px;'>"+memberName+"</div></td></tr><tr><td colspan='2'><div class='card-body msg_card_body' style='padding-left: 20px; padding-top:0px; padding-bottom: 0px;'><div class='d-flex justify-content-start mb-4'><div class='msg_cotainer'><img class='profile' src='/manage/resources/uploadFiles/"+content+"'><br><span class='msg_time'>"+date.substring(8,14)+"</span></div></div></div></td></tr>");
+        		 $("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
         	}
         	
      		if(chatNo2 == chatNo && changeName != "M999" && root!="첨부파일"){
-     			
      			if(changeName != ""){
 		        	$("#chatAreaTable").append("<tr><td style='width:50px;'><div class='box' style='background:white;'><img class='profile' src='/manage/resources/uploadFiles/"+changeName+".png'></div></td><td><div style='display: inline-flex; font-weight:600; font-size:12px;'>"+memberName+"</div></td></tr><tr><td colspan='2'><div class='card-body msg_card_body' style='padding-left: 20px; padding-top:0px; padding-bottom: 0px;'><div class='d-flex justify-content-start mb-4'><div class='msg_cotainer'>"+content+"<br><span class='msg_time'>"+date.substring(8,14)+"</span></div></div></div></td></tr>");
 		        	$("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
@@ -707,6 +723,7 @@ body {
      				$("#chatAreaTable").append("<tr><td style='width:50px;'><div class='box' style='background:white;'><img class='profile' src='/manage/resources/img/people.png'></div></td><td><div style='display: inline-flex; font-weight:600; font-size:12px;'>"+memberName+"</div></td></tr><tr><td colspan='2'><div class='card-body msg_card_body' style='padding-left: 20px; padding-top:0px; padding-bottom: 0px;'><div class='d-flex justify-content-start mb-4'><div class='msg_cotainer'>"+content+"<br><span class='msg_time'>"+date.substring(8,14)+"</span></div></div></div></td></tr>");
     	        	$("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
      			}
+     			 $("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
      		
      		}else if(changeName == "M999" && root!="첨부파일"){
      			 $("#chatAreaTable").append("<tr height='10px;'></tr><tr><br><td colspan='2'><div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send' align='center' style='width:100%; font-size:10px; margin-right: 40px; background:orange; height:15px; padding: 0px;'>"+content+"<span class='msg_time_send'>${a.sendDate}</span></div></div></td></tr>")

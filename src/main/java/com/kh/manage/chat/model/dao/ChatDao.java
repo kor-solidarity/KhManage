@@ -11,6 +11,7 @@ import com.kh.manage.chat.model.vo.ChatMessageList;
 import com.kh.manage.chat.model.vo.ChatRoom;
 import com.kh.manage.chat.model.vo.Message;
 import com.kh.manage.chat.model.vo.SearchKeyWord;
+import com.kh.manage.common.Attachment;
 import com.kh.manage.member.model.vo.Member;
 
 public interface ChatDao {
@@ -33,7 +34,7 @@ public interface ChatDao {
 
 	int updateRecentMessage(SqlSessionTemplate sqlSession, Message me);
 
-	List<Message> selectAllMessage(SqlSessionTemplate sqlSession, ChatRoom cr);
+	List<ChatMessageList> selectAllMessage(SqlSessionTemplate sqlSession, ChatRoom cr);
 
 	String selectDate(SqlSessionTemplate sqlSession);
 
@@ -70,6 +71,12 @@ public interface ChatDao {
 	int inviteMemberUpdate(SqlSessionTemplate sqlSession, ChatRoom cr);
 
 	ChatRoom selectChatMember(SqlSessionTemplate sqlSession, ChatRoom cr);
+
+	int insertAttMessage(SqlSessionTemplate sqlSession, Message me);
+
+	int insertAttChat(SqlSessionTemplate sqlSession, Attachment at);
+
+	Attachment selectChatAtt(SqlSessionTemplate sqlSession, ChatMessageList chatMessageList);
 
 
 

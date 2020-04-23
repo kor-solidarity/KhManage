@@ -1,5 +1,6 @@
 package com.kh.manage.chat.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -27,6 +28,8 @@ import com.kh.manage.chat.model.vo.ChatMessageList;
 import com.kh.manage.chat.model.vo.ChatRoom;
 import com.kh.manage.chat.model.vo.Message;
 import com.kh.manage.chat.model.vo.SearchKeyWord;
+import com.kh.manage.common.Attachment;
+import com.kh.manage.common.CommonsUtils;
 import com.kh.manage.member.model.vo.Member;
 
 @Controller
@@ -63,6 +66,7 @@ public class ChatController {
 			num += count;
 		}
 		
+		
 		request.setAttribute("num", num);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
@@ -92,7 +96,10 @@ public class ChatController {
 		cr.setMemberNo(m.getMemberNo());
 		int result = cs.updateChatAccessDate(cr);
 		
-		List<Message> mList = cs.selectAllMessage(cr);
+		List<ChatMessageList> mList = cs.selectAllMessage(cr);
+		
+		
+		System.out.println("========================"+ mList);
 		
 //		for(int i = 0; i < mList.size(); i++) {
 //			mList.get(i).setReadCount(cs.getReadCount(mList.get(i)));
@@ -355,14 +362,68 @@ public class ChatController {
 	}
 	
 	@RequestMapping("/insertChatAtt.ct")
-	public void insertChatAtt(HttpServletRequest request) {
+	public void insertChatAtt(MultipartHttpServletRequest request, HttpSession session, HttpServletRequest rq, HttpServletResponse response) {
 		
-		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-		System.out.println("호출~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		List<MultipartFile> fileList = request.getFiles("file");
+		Member m = (Member) session.getAttribute("loginUser");
 		
 		String root = request.getSession().getServletContext().getRealPath("resources");
+		
+		
+		System.out.println("root : " + root);
+		
+		String filePath = root + "\\uploadfiles";
+		//---------파일명 변경---------------------------------------
+		//파일의 원본이름 originFileName
+		String originFileName = fileList.get(0).getOriginalFilename();
+		String ext = originFileName.substring(originFileName.lastIndexOf("."));
+		String changeName = CommonsUtils.getRandomString();
+		//--------------------------------------------------------
+		
+		Attachment at = new Attachment();
+		at.setChangeName(changeName + ext);
+		at.setOriginName(originFileName);
+		at.setFilePath(filePath);
+		at.setExt(ext);
+		System.out.println("========================================================");
+		System.out.println(at);
+		System.out.println(rq.getParameter("chatRoomNo"));
+		
+		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
+		at.setDivision(loginUser.getMemberNo());
+		
+		Message me = new Message();
+    	me.setContent("");
+    	me.setChatRoomNo(rq.getParameter("chatRoomNo"));
+    	me.setSender(m.getMemberNo());
+    	me.setContentType("첨부파일");
+    	
+    	int result = cs.insertAttMessage(me);   
+    	if(result > 0) {
+    		int result2 = cs.insertAttChat(at);
+    		
+    		try {
+				fileList.get(0).transferTo(new File(filePath + "\\" + changeName + ext));
+				
+				request.setAttribute("attachment", at);
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+
+				String gson = new Gson().toJson(at);
+
+				try {
+					response.getWriter().write(gson);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+    		} catch (Exception e) {
+    			//실패 시 파일 삭제
+    			new File(filePath + "\\" + changeName + ext).delete();
+    		}
         
-        
-        
+    	}
+    
 	}
+        
 }

@@ -12,6 +12,7 @@ import com.kh.manage.chat.model.vo.ChatMessageList;
 import com.kh.manage.chat.model.vo.ChatRoom;
 import com.kh.manage.chat.model.vo.Message;
 import com.kh.manage.chat.model.vo.SearchKeyWord;
+import com.kh.manage.common.Attachment;
 import com.kh.manage.member.model.vo.Member;
 
 @Repository
@@ -73,7 +74,7 @@ public class ChatDaoImpl implements ChatDao {
 	}
 
 	@Override
-	public List<Message> selectAllMessage(SqlSessionTemplate sqlSession, ChatRoom cr) {
+	public List<ChatMessageList> selectAllMessage(SqlSessionTemplate sqlSession, ChatRoom cr) {
 		
 		return sqlSession.selectList("Chat.selectAllMessage", cr);
 	}
@@ -184,6 +185,24 @@ public class ChatDaoImpl implements ChatDao {
 	public ChatRoom selectChatMember(SqlSessionTemplate sqlSession, ChatRoom cr) {
 		
 		return sqlSession.selectOne("Chat.selectChatMember", cr);
+	}
+
+	@Override
+	public int insertAttMessage(SqlSessionTemplate sqlSession, Message me) {
+		
+		return sqlSession.insert("Chat.insertAttMessage", me);
+	}
+
+	@Override
+	public int insertAttChat(SqlSessionTemplate sqlSession, Attachment at) {
+		
+		return sqlSession.insert("Chat.insertAttChat", at);
+	}
+
+	@Override
+	public Attachment selectChatAtt(SqlSessionTemplate sqlSession, ChatMessageList message) {
+
+		return sqlSession.selectOne("Chat.selectChatAtt", message);
 	}
 
 }
