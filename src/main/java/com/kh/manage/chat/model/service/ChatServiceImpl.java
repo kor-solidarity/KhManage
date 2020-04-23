@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.kh.manage.admin.adminManage.vo.DepartMent;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.chat.model.dao.ChatDao;
+import com.kh.manage.chat.model.vo.ChatMessageList;
 import com.kh.manage.chat.model.vo.ChatRoom;
 import com.kh.manage.chat.model.vo.Message;
 import com.kh.manage.chat.model.vo.SearchKeyWord;
@@ -172,6 +173,22 @@ public class ChatServiceImpl implements ChatService {
 	public List<Member> searchMember(SearchKeyWord sw) {
 		
 		return cd.searchMember(sqlSession, sw);
+	}
+
+	@Override
+	public Member inviteMember(ChatRoom cr) {
+		
+		ChatRoom crm =  cd.selectChatMember(sqlSession, cr);
+		
+		if(crm != null) {
+			int result = cd.inviteMemberUpdate(sqlSession, cr);
+		}else {
+			int result =  cd.inviteMember(sqlSession, cr);
+		}
+		
+		Member cl = cd.selectMember(sqlSession, cr);
+		
+		return cl;
 	}
 
 
