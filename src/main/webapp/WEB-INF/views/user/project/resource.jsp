@@ -17,28 +17,30 @@
 	
 	.memberListTr {
 		width: 100%;
-		border: 1px solid black;
 	}
 	
 	.memberListTd {
 		width: 100%;
-		
 	}
 	
-	/* .addedMemberTr:hover {
+	/* tr:hover {
 		background: #F3F3F3;
 		color: black;
 		cursor: pointer;
 	} */
 	
-	
-	
-	tr:hover {
-		background: #F3F3F3;
-		color: black;
-		cursor: pointer;
-		
+	.btn:hover {
+		font-weight: bold;
 	}
+	
+	tr * {
+		width: 100%;
+	}
+
+	td * {
+		padding-left: 10px;
+	}
+	
 	
 	
 </style>
@@ -71,34 +73,45 @@
 			   </div>
 			   
 			   
-				<div class="row">
-						<!-- 인원 조회 영역 -->						
+				<div class="row" style="width: 100%">
+						<!-- 인원 조회 영역 -->
+						<form id="formBeforeAdd" action="addResource.pr" method="get">
                             <div id="memberList" class="col-md-5" style="width:400px; height:500px; margin-left:50px; border:2px solid lightgray; padding-top: 10px;">
-                                <table class="memberListTable" border="1" style="width: 100%">
+                                <table id="memberListTable" class="memberListTable" style="width: 100%">
                                 	<tr id="" class="memberListTr" style="width: 100%">
-                                		<td class="memberListTd chooseMember">인원을 추가해주세요.</td>
+                                		<td class="memberListTd chooseMember" style="padding-left: 10px;">인원을 추가해주세요.</td>
                                 	</tr>
                                 </table>
                             </div>
+                            <input type="hidden" id="" class="" name="projectPk" value="${projectPk}">
+                        </form>
                         <!-- 인원 조회영역 종료 -->    
                             <div class="col-md-1" style="text-align:center;margin-top:150px;width:90px;">
                                     <button id="btnResourceAdd" type="button" class="btn point-color" style="margin-bottom:15px; background: #1E2B44;  color:white;">
                                         <i class="icon-arrow-right"></i>추가
                                     </button>
-                                    <button id="btnResourceDelete" type="button" class="btn point-color" style="margin-bottom:15px; color:white; background: #1E2B44;">
+                                    <button id="btnResourceDelete" type="button" class="btn point-color" style="margin-bottom:15px; color:white; background: #666666;">
                                         <i class="icon-arrow-left"></i>삭제
                                     </button>
-                                    <button id="btnResourceChange" type="button" class="btn point-color" style="background: #1E2B44; color:white">
+                                    <button id="btnResourceChange" type="button" class="btn point-color" style="background: #1E2B44; color:white; display: none;" >
                                         <i class="icon-refresh"></i>변경
                                     </button>
+                                    
+                                    <button id="saveResourceBtn" type="submit" class="btn point-color" style="margin-top:50px; background: #1E2B44; color:white;">
+                                        <i class="icon-refresh"></i>저장
+                                    </button>
+                                    
                             </div>
                          <!-- 현재 프로젝트에 소속되어 있거나 추가되는 인원 영역 -->   
                             <div class="addedMemberDiv col-md-5" style="width:400px; height:500px; border:2px solid lightgray; padding-top: 10px;">
-                                <table id="addedMemberTable" class="addedMemberTable">
-                                	<tr id="addedMemberTr" class="addedMemberTr addedTr">
-                                		<td>인원을 추가해주세요.</td>
-                                	</tr>
-                                </table>
+                            	<form id="formAdded" action="" method="post">
+	                                <table id="addedMemberTable" class="addedMemberTable">
+	                                	<tr id="addedMemberTr" class="addedMemberTr addedTr" style="width: 100%">
+	                                		<td style="width: 100%; padding-left: 10px;">인원을 추가해주세요.</td>
+	                                	</tr>
+	                                </table>
+	                                	<input type="hidden" id="" class="" name="projectPk" value="${projectPk}">
+                                </form>
                             </div>
                           <!-- 추가 인원 종료 -->  
                             <div class="col-md-1"></div>
@@ -127,14 +140,21 @@
 					
 					/* console.log(data); */
 					
-					$("#memberList").empty();
+					$("#memberListTable").empty();
 					
 					
 					if(deptName != null) {
 						
 						for(key in data) {
 							
-							$("#memberList").append("<tr class='memberListTr' style='width:100%;'><td class='memberListTd'><b>" 
+							$("#memberListTable").append("<tr class='memberListTr' style='width:100%;'><td class='memberListTd' style='width:100%;'><b>" 
+									+ data[key]['memberName'] + "</b>" 
+									+ "&nbsp;/&nbsp;" + data[key]['deptName'] + "&nbsp;/&nbsp;" + data[key]['rankName'] 
+									
+									+ "<input type='hidden' id='memberNo' class='memberNo clicked' name='memberNo' value='" + data[key]['memberNo'] + "'>"
+									+ "</td></tr>");
+							
+							/* $("#memberList").append("<tr class='memberListTr' style='width:100%;'><td class='memberListTd' style='width:100%;'><b>" 
 									+ data[key]['memberName'] + "</b>" 
 									+ "&nbsp;/&nbsp;" + data[key]['deptName'] + "&nbsp;/&nbsp;" + data[key]['rankName'] 
 									
@@ -142,9 +162,9 @@
 									+ "<input type='hidden' id='deptNo' name='deptNo' value='" + data[key]['deptNo'] + "'>"
 									+ "<input type='hidden' id='rankNo' name='rankNo' value='" + data[key]['rankNo'] + "'>"
 									
-									+ "</td></tr>");
+									+ "</td></tr>"); */
+							
 						}
-						
 						
 					} else {
 						
@@ -164,7 +184,7 @@
 
 	
 	
-	
+	/* 
 	$(function() {
 		//선택된 member 추가하기(div3으로 이동)
 		$(document).on('click', '.memberListTr', function(){
@@ -172,9 +192,8 @@
 			var memberListTr = $(this).html();
 			var memberNo = $(this).find("#memberNo").val();
 			
-			/* console.log(memberList);
-			console.log(memberNo);
-			console.log($(".memberListTr").children().find(".memberNo").val()); */
+			//console.log(memberNo);
+			//console.log($(".memberListTr").children().find(".memberNo").val());
 			
 			//리스트에 남아있어야 함 삭제X
 			//$(this).remove();
@@ -200,15 +219,9 @@
 			
 		});
 		
-		//셀렉트 옵션 "인원을 선택하세요" 나타내기
-		/* $(document).on('click', '.chooseMember'), function(){
-			$(this).show();
-		} */
 		
 	});
-	
-	
-	
+
 	
 	//우측 추가된 목록에서 제외(삭제)
 	$(document).on('click', '#addedMemberTable tr', function(){
@@ -216,12 +229,73 @@
 		$(this).css("color", "red");
 	});
 
+	 */
 	
-	//css처리
-	//$("#addedMemberTable tr").css("color", "red");		
 	
+	//조회한 사원 선택
+	$(function () {
+		
+		$(document).on('click', 'td', function() {
+			
+			if($(this).hasClass("clicked")) {
+				$(this).removeClass("clicked");
+				$(this).css({"background": "white", "color":"#676a6d", "border":"1px solid #red"});
+			} else {
+				$(this).addClass("clicked");
+				$(this).css({"background": "#F0F0F0", "color":"black"});
+			}
+			
+			var memberNo = $(this).find("input[name='memberNo']").val();
+			console.log("memberNo : " + memberNo);
+			
+		});
+		
+	});
+	 
+	 
+	//추가하기
+	$("#btnResourceAdd").on('click', function() {
+		
+		$("#formBeforeAdd").submit();
+		
+	});
 		
 		
+		
+		
+		
+	 
+	
+	
+	
+	
+	
+	//저장 후 DB에 insert
+	/* $(document).ready(function() {
+		
+		$("#saveResourceBtn").click(function() {
+			
+			//insert 시 필요한 값 ROJECT_PK, MEMBER_PK
+			var projectPk = "${pid}";
+			var memberNo = $("#addedMemberTable").children().children().find("input[name='memberNo']").val();
+			console.log("projectPk : " + projectPk);
+			console.log("memberNo : " + memberNo);
+			
+			//쿼리스트링은 안 쓴다! 써 주려면 split 해줘야 함
+			//location.href="addResource.pr?projectPk=" + projectPk + "?memberNo=" + memberNo;
+			
+			//저장버튼 form add?? submit 함수?
+			//$("#addResourceForm").submit();
+			
+		});
+		
+	}); */
+	
+	
+	
+	
+	
+	
 	
 	</script>
 	
