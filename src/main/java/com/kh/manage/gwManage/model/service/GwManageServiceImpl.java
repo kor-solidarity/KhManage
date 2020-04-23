@@ -31,7 +31,7 @@ public class GwManageServiceImpl implements GwManageService{
 		
 		int result = gd.insertGw(sqlSession, g);
 		
-		if(gr.getGwrCycle() != null) {
+		if(g.getRepeatStatus().equals("Y")) {
 		
 		String gNo = gd.selectCurrval(sqlSession,g);
 		String gNo2 = "";
@@ -47,7 +47,6 @@ public class GwManageServiceImpl implements GwManageService{
 		
 		gr.setGwNo(gNo2);
 		System.out.println(gNo2);
-			
 				
 		int result2 = gd.insertGwWeek(sqlSession, gr);
 		}

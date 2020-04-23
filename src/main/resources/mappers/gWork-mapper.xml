@@ -19,6 +19,22 @@
 		<result property="repeatStatus" column="REPEAT_STATUS"/>
 	</resultMap>
 	
+	<resultMap type="GWork" id="gWorkResultSet2">
+		<id property="gwNo" column="GW_NO"/>
+		<result property="gwName" column="GW_NAME"/>
+		<result property="beginDate" column="BEGIN_DATE"/>
+		<result property="endDate" column="END_DATE"/>
+		<result property="enrollDate" column="ENROLL_DATE"/>
+		<result property="gwMemo" column="GW_MEMO"/>
+		<result property="gwType" column="GW_TYPE"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="status" column="STATUS"/>
+		<result property="to" column="TT"/>
+		<result property="to2" column="TTT"/>
+		<result property="repeatStatus" column="REPEAT_STATUS"/>
+		<collection property="gwRepeat" resultMap="gwrRepeatResultSet"/>
+	</resultMap>
+	
 	<resultMap type="GwRepeat" id="gwrRepeatResultSet">
 		<id property="gwrNo" column="GWR_NO"/>
 		<result property="gwNo" column="GW_NO"/>
@@ -39,6 +55,16 @@
 		AND MEMBER_NO = #{memberNo}
 	</select>
 	
+	<select id="selectAllList2" resultMap="gWorkResultSet2">
+		SELECT G.GW_NO, G.GW_NAME,G.BEGIN_DATE,TO_CHAR(BEGIN_DATE, 'YYYY/MM/DD HH24:MI') AS TT, TO_CHAR(END_DATE, 'YYYY/MM/DD HH24:MI') AS TTT,G.END_DATE,G.ENROLL_DATE,G.GW_MEMO,G.GW_TYPE,G.MEMBER_NO,G.STATUS
+        ,REPEAT_STATUS,GR.GWR_CYCLE, GWR_NO, GWR_LIMIT,GWR_WEEK,GWR_MONTH, END_OPTION, END_OPTION_DAY, END_OPTION_COUNT
+		FROM GENERAL_WORK G
+        LEFT JOIN GW_REPEAT GR ON(G.GW_NO = GR.GW_NO) 
+		WHERE STATUS = 'Y'
+		AND MEMBER_NO = #{memberNo}
+	</select>
+	
+	
 	<insert id="insertGw" parameterType="GWork">
 		INSERT INTO GENERAL_WORK
 		VALUES('GW'|| TO_CHAR(SEQ_GWNO.NEXTVAL, 'FM000'), #{gwName},  to_date(#{status},'YYYY/MM/DD HH24:MI'),  to_date(#{to},'YYYY/MM/DD HH24:MI'), SYSDATE, #{gwMemo}, #{gwType}, #{memberNo}, DEFAULT , #{repeatStatus})
@@ -46,7 +72,7 @@
 	
 	<update id="updateGw" parameterType="GWork">
 		UPDATE GENERAL_WORK SET GW_NAME = #{gwName} , BEGIN_DATE = to_date(#{status},'YYYY/MM/DD HH24:MI'),  END_DATE = to_date(#{to},'YYYY/MM/DD HH24:MI')
-		, ENROLL_DATE = SYSDATE , GW_MEMO = #{gwMemo}, GW_TYPE = #{gwType} , REPEAT_STATUS = #{repeatStatus}
+		, ENROLL_DATE = SYSDATE , GW_MEMO = #{gwMemo}, GW_TYPE = #{gwType} 
 		WHERE GW_NO = #{gwNo}
 	</update>
 	

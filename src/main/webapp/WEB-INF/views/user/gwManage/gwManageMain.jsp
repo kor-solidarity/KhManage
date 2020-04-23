@@ -22,8 +22,8 @@
 <script src="resources/fullcalendar/daygrid/main.js"></script>
 <script src="resources/fullcalendar/interaction/main.min.js"></script>
 <script src="resources/fullcalendar/timegrid/main.min.js"></script>
-<script src="resources/fullcalendar/core/locales/ko.js"></script>
 <script src="resources/fullcalendar/rrule/main.js"></script>
+<script src="resources/fullcalendar/core/locales/ko.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js" integrity="sha256-AdQN98MVZs44Eq2yTwtoKufhnU+uZ7v2kXnD5vqzZVo=" crossorigin="anonymous"></script>
 <style type="text/css">
    #calendar {
@@ -118,7 +118,7 @@
           // -----------------------------------------------------------------
        
           var calendar = new Calendar(calendarEl, {
-            plugins: [ 'interaction', 'dayGrid', 'timeGrid','list' /* ,'rrule' */ ],
+            plugins: [ 'interaction', 'dayGrid', 'timeGrid','list'  ],
             header: {
               left: 'prev,next today',
               center: 'title',
@@ -175,10 +175,14 @@
                      duration: '02:00'
                    },
  */
-            
+ 		events: [
+		
                <%
                   for(int i = 0; i < list.size(); i++) {
                      GWork gw = (GWork)list.get(i);
+                     
+                     if(gw.getRepeatStatus().equals("N")){
+                     
 						if(gw.getGwType().equals("출장")){                  
                %>		
                        {
@@ -191,7 +195,7 @@
                           to : '<%=gw.getTo()%>',
                           constraint: 'businessHours',
                           color: '#FF848F',   // an option!
-                          textColor: 'white' // an option!                          
+                          textColor: 'white', // an option! 
                        },
                        
                        
@@ -215,12 +219,63 @@
                            },
                    <%	
     					}
+                  }else{ //반복일정일때.
+                      
+ 						if(gw.getGwType().equals("출장")){                  
+                %>		
+                        {
+                           title : '<%=gw.getGwName() %>',
+                           start: '<%=gw.getBeginDate() %>',
+                           end : '<%=gw.getEndDate() %>',
+                           memo : '<%=gw.getGwMemo() %>',
+                           type : '<%=gw.getGwType()%>',
+                           gno : '<%=gw.getGwNo()%>',
+                           to : '<%=gw.getTo()%>',
+                           constraint: 'businessHours',
+                           color: '#FF848F',   // an option!
+                           textColor: 'white', // an option!
+                           daysOfWeek : [<%=gw.getGwRepeat().getGwrWeek()%>,],
+                           startRecur : '<%=gw.getBeginDate()%>',
+                           endRecur : '<%=gw.getGwRepeat().getEndOptionDay()%>'
+                        },
+                        
+                        
+                <%	
+ 						}
+                   
+              		  if(gw.getGwType().equals("일반작업")){                  
+                 %>		
+                            {
+                               title : '<%=gw.getGwName() %>',
+                               start: '<%=gw.getBeginDate() %>',
+                               end : '<%=gw.getEndDate() %>',
+                               memo : '<%=gw.getGwMemo() %>',
+                               type : '<%=gw.getGwType()%>',
+                               gno : '<%=gw.getGwNo()%>',
+                               to : '<%=gw.getTo()%>',
+                               to2 : '<%=gw.getTo2()%>',
+                               constraint: 'businessHours',
+                               color: '#3CA0E1',   // an option!
+                               textColor: 'white',// an option!
+                               daysOfWeek : [<%=gw.getGwRepeat().getGwrWeek()%>,],
+                               startRecur : '<%=gw.getBeginDate()%>',
+                               endRecur : '<%=gw.getGwRepeat().getEndOptionDay()%>'
+                            },
+                    <%	
+     					}  
+                	  
+                	  
+                	  
+                	  }
                   }
                %>
             ],
             //등록된 이벤트 클릭할 떄 나오는 함수
              eventClick: function(info) {
 
+            	 console.log(info)
+            	 
+            	 
     			 var title = info.event.title;
     			 var start = moment(info.event.start).format('YYYY-MM-DDThh:mm:ss');
     			 console.log(info.event.start);
@@ -242,8 +297,8 @@
     			 $("#repeat2").parent().parent().parent().children('.rr').remove();
     			 $('#selectModal').modal('show');
     			 
+    			 
  			 },	
-
 	            
             /* calendar.on('dateClick', function(info) {
                console.log('clicked on' + info.dateStr);
@@ -333,7 +388,7 @@
 						<tr>
 							<td class="titleId">참석자</td>
 							<td>
-							<select name="memberNo" id="memberNo2" class="inputMenu form-control" style="width: 280px;" required="required">
+							<select name="memberNo" id="memberNo2" class="inputMenu form-control" style="width: 280px;" >
 								<option></option>
 							</select>
 							</td>
@@ -620,7 +675,7 @@
 					
 					$(".repeat1").parent().parent().parent().children('.rr').remove();
 					
-					var tr = "<tr class='rr'><td class='titleId'>매 </td><td><input type=text class='dayselect' name='gwrLimit' value=0><input class='plus' type=button value='+' onClick='javascript:this.form.gwrLimit.value++;'><input type=button class='minus' value='-' onClick='javascript:this.form.gwrLimit.value--;'> 주 마다 되풀이</td><tr class='rr'><td class='titleId'>반복</td><td><input type='checkbox' name='gwrWeek' value='일'> 일 <input type='checkbox' name='gwrWeek' value='월'> 월 <input type='checkbox' name='gwrWeek' value='화'> 화 <input type='checkbox' name='gwrWeek' value='수'> 수 <input type='checkbox' name='gwrWeek' value='목'> 목 <input type='checkbox' name='gwrWeek' value='금'> 금 <input type='checkbox' name='gwrWeek' value='토'> 토</td></tr></tr><tr class='rr'><td class='titleId'>종료 </td><td><input type='radio' name='endOption' value='없음'>없음</td></tr><tr class='rr'><td class='titleId'> </td><td class='titleId'><input type='radio' name='endOption' value='반복횟수'> <input type=text class='dayselect' name='endOptionCount' value=0><input type=button class='plus' value='+' onClick='javascript:this.form.endOptionCount.value++;'><input type=button value='-' class='minus' onClick='javascript:this.form.endOptionCount.value--;'> 반복</td></tr><tr class='rr'><td class='titleId'></td><td><input type='radio' name='endOption' value='종료일자'> 종료 날짜    <input type='date' name='endOptionDay'></td></tr>"                                       
+					var tr = "<tr class='rr'><td class='titleId'>매 </td><td><input type=text class='dayselect' name='gwrLimit' value=0><input class='plus' type=button value='+' onClick='javascript:this.form.gwrLimit.value++;'><input type=button class='minus' value='-' onClick='javascript:this.form.gwrLimit.value--;'> 주 마다 되풀이</td><tr class='rr'><td class='titleId'>반복</td><td><input type='checkbox' name='gwrWeek' value='0'> 일 <input type='checkbox' name='gwrWeek' value='1'> 월 <input type='checkbox' name='gwrWeek' value='2'> 화 <input type='checkbox' name='gwrWeek' value='3'> 수 <input type='checkbox' name='gwrWeek' value='4'> 목 <input type='checkbox' name='gwrWeek' value='5'> 금 <input type='checkbox' name='gwrWeek' value='6'> 토</td></tr></tr><tr class='rr'><td class='titleId'>종료 </td><td><input type='radio' name='endOption' value='없음'>없음</td></tr><tr class='rr'><td class='titleId'> </td><td class='titleId'><input type='radio' name='endOption' value='반복횟수'> <input type=text class='dayselect' name='endOptionCount' value=0><input type=button class='plus' value='+' onClick='javascript:this.form.endOptionCount.value++;'><input type=button value='-' class='minus' onClick='javascript:this.form.endOptionCount.value--;'> 반복</td></tr><tr class='rr'><td class='titleId'></td><td><input type='radio' name='endOption' value='종료일자'> 종료 날짜    <input type='date' name='endOptionDay'></td></tr>"                                       
 		  				
 		  			$(".repeat1").parent().parent().after(tr);
 					
