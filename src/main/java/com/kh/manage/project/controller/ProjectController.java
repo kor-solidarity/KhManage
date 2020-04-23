@@ -46,7 +46,6 @@ public class ProjectController {
 		boolean isAdmin = false;
 		
 		
-		
 		int currentPage = 1;
 		if (request.getParameter("currentPage") != null) {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
@@ -360,11 +359,11 @@ public class ProjectController {
 			String workNo = ps.selectWorkSeq();
 			// 누가 이 작업을 배정한거임??
 			String loginUserMemberNo = loginUser.getMemberNo();
-			String teamNo = ps.selectProjectTeamNo(pid, memberNo);
+			String teamNo = ps.selectProjectTeamNo(pid, loginUserMemberNo);
 			
 			WorkHistory workHistory =
 					new WorkHistory(null, workNo, "시작전",
-							"작업 첫 생성", Date.valueOf(LocalDate.now()), projectWork.getMemberNo());
+							"작업 첫 생성", null, teamNo);
 			int result2 = ps.insertWorkHistory(workHistory);
 		}
 	}
@@ -466,4 +465,34 @@ public class ProjectController {
 		}
 		
 	}
+	//TW 리소스, 팀프로젝트 member 추가
+	   @RequestMapping("addResource.pr")
+	   public String addResource(Member member, HttpServletRequest request, HttpServletResponse response) {
+	      
+	      System.out.println("member : " + member);
+	      
+	      String memberNoString = request.getParameter("memberNo");
+	      
+	       String[] memberNo = memberNoString.split("\\,");
+	       
+	       for(int i = 0; i < memberNo.length; i++) {
+	          System.out.println("array : " + memberNo[i]);
+	       }
+
+	      
+	      
+	      
+	      
+//	      String projectPk = request.getParameter("projectPk");
+//	      String memberNo = request.getParameter("memberNo");
+//	      
+//	      System.out.println("projectPk : " + projectPk);
+//	      System.out.println("memberNo : " + memberNo);
+	      
+	      
+	      
+	      
+	      
+	      return "";
+	   }
 }
