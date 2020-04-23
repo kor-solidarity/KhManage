@@ -93,4 +93,9 @@ public class IssueDaoImpl implements IssueDao{
 		return sqlSession.insert("Issue.insertIssueComplete", ih);
 	}
 
+	@Override
+	public List<Attachment> selectAttachment(SqlSessionTemplate sqlSession, Attachment at) {
+		return sqlSession.selectList("Issue.selectAttachment", at);
+	}
+
 }

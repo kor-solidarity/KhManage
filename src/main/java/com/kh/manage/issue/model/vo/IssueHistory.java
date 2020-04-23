@@ -8,16 +8,18 @@ public class IssueHistory implements java.io.Serializable{
 	private String ihContent;
 	private Date ihDate;
 	private String status;
+	private String dateAndTime;
 	
 	public IssueHistory() {}
 
-	public IssueHistory(String ihNo, String issueNo, String ihContent, Date ihDate, String status) {
+	public IssueHistory(String ihNo, String issueNo, String ihContent, Date ihDate, String status, String dateAndTime) {
 		super();
 		this.ihNo = ihNo;
 		this.issueNo = issueNo;
 		this.ihContent = ihContent;
 		this.ihDate = ihDate;
 		this.status = status;
+		this.dateAndTime = dateAndTime;
 	}
 
 	public String getIhNo() {
@@ -60,11 +62,20 @@ public class IssueHistory implements java.io.Serializable{
 		this.status = status;
 	}
 
+	public String getDateAndTime() {
+		return dateAndTime;
+	}
+
+	public void setDateAndTime(String dateAndTime) {
+		this.dateAndTime = dateAndTime;
+	}
+
 	@Override
 	public String toString() {
 		return "IssueHistory [ihNo=" + ihNo + ", issueNo=" + issueNo + ", ihContent=" + ihContent + ", ihDate=" + ihDate
-				+ ", status=" + status + "]";
+				+ ", status=" + status + ", dateAndTime=" + dateAndTime + "]";
 	}
+
 	
 	
 }

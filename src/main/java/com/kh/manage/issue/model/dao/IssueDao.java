@@ -44,4 +44,6 @@ public interface IssueDao {
 
 	int insertIssueComplete(SqlSessionTemplate sqlSession, IssueHistory ih);
 
+	List<Attachment> selectAttachment(SqlSessionTemplate sqlSession, Attachment at);
+
 }

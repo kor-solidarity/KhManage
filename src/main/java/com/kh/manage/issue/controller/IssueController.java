@@ -2,6 +2,8 @@ package com.kh.manage.issue.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -221,10 +223,18 @@ public class IssueController {
 	public String selectIssueOne(String issueNo, Model m) {
 		System.out.println(issueNo);
 		
+		
 		IssueList issue = is.selectIssueOne(issueNo);
+		
+		Attachment at = new Attachment();
+		
+		at.setDivision(issueNo);
+		
+		List<Attachment> at2 = is.selectAttachment(at);
 		
 		if(issue != null) {
 			m.addAttribute("issue", issue);
+			m.addAttribute("at", at2);
 			return "user/issue/selectIssueDetail";
 		}else {
 			m.addAttribute("msg", "이슈 확인 실패");
@@ -251,7 +261,16 @@ public class IssueController {
 		
 		System.out.println(ih);
 		
+		LocalDateTime dateAndtime = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+		String time = dateAndtime.format(formatter);
+		
+		ih.setDateAndTime(ih.getIhDate()+time);
+		
+		
 		int result = is.insertIssueComplete(ih);
+		
+		
 		
 		if(result > 0) {
 			return "redirect:selectIssueOne.iu?issueNo=" + ih.getIssueNo();
