@@ -1,7 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--도무지 어떻게 해야할지 답이 안나오고 있어서 테이블용으로 제작...--%>
-<%--죽고싶다... 진짜 죽고싶다--%>
+
 <html>
 <head>
 	<title>Title</title>
@@ -637,7 +636,7 @@
                             },
                             success: function (data) {
                                 alert("done!");
-
+                                updateWorkList();
                             }
                         })
                     }

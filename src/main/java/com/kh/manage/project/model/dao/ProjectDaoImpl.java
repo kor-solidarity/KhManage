@@ -119,4 +119,9 @@ public class ProjectDaoImpl implements ProjectDao {
 	public String selectWorkSeq(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("Project.selectWorkSeq");
 	}
+	
+	@Override
+	public String selectProjectTeamNo(SqlSessionTemplate sqlSession, String pid, String memberNo) {
+		return sqlSession.selectOne("Project.selectProjectTeamNo", new String[]{pid, memberNo});
+	}
 }

@@ -134,4 +134,9 @@ public class ProjectServiceImpl implements ProjectService {
 	public String selectWorkSeq() {
 		return pd.selectWorkSeq(sqlSession);
 	}
+	
+	@Override
+	public String selectProjectTeamNo(String pid, String memberNo) {
+		return pd.selectProjectTeamNo(sqlSession, pid, memberNo);
+	}
 }
