@@ -96,6 +96,11 @@ public class IssueServiceImpl implements IssueService{
 		return id.insertIssueComplete(sqlSession, ih);
 	}
 
+	@Override
+	public List<Attachment> selectAttachment(Attachment at) {
+		return id.selectAttachment(sqlSession, at);
+	}
+
 	
 
 	

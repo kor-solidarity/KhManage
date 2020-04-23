@@ -279,6 +279,17 @@
 					<td class="thRange3" colspan="2">등록일</td>
 					<td class="thRange3" colspan="2">삭제</td>
 				</tr>
+				<c:forEach var="at" items="${at }">
+				<tr>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange" colspan="8">${at.originName }</td>
+					<td class="thRange" colspan="2">버전</td>
+					<td class="thRange" colspan="2">${issue.registerName }(${issue.registerType })</td>
+					<td class="thRange" colspan="2">${issue.registerDate }</td>
+					<td class="thRange" colspan="2">삭제</td>
+				</tr>
+				</c:forEach>
 				<tr>
 					<td class="thRange" colspan="18"></td>
 				</tr>

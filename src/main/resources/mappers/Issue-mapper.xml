@@ -69,6 +69,15 @@
 		<result property="ihDate" column="IH_DATE"/> 
 		<result property="ihContent" column="IH_CONTENT"/> 
 	</resultMap>
+	
+	<resultMap type="Attachment" id="attachmentResultSet">
+		<id property="atNo" column="AT_NO"/>
+		<result property="division" column="DIVISION"/>
+		<result property="originName" column="ORIGIN_NAME"/>
+		<result property="changeName" column="CHANGE_NAME"/>
+		<result property="filePath" column="FILEPATH"/>
+		<result property="ext" column="EXT"/>
+	</resultMap>
 
 
 	<select id="selectProjectName" parameterType="Member" resultMap="selectIssueTeamProject">
@@ -94,7 +103,7 @@
 	
 	<insert id="insertIssue" parameterType="Issue">
 		INSERT INTO ISSUE
-		VALUES('I' || TO_CHAR(SEQ_IS.NEXTVAL, 'FM000'), #{issueType}, #{issueTitle}, #{issueContent}, #{registerType}, #{workNo}, #{teamWorker}, SYSDATE, #{projectNo}, #{actionDate})
+		VALUES('I' || TO_CHAR(SEQ_IS.NEXTVAL, 'FM000'), #{issueType}, #{issueTitle}, #{issueContent}, #{registerType}, #{workNo}, #{teamWorker}, SYSDATE, #{projectNo}, #{actionDate}, DEFAULT)
 	</insert>
 	
 	<insert id="insertIssueAttachment" parameterType="Attachment">
@@ -199,8 +208,14 @@
 	
 	<insert id="insertIssueComplete" parameterType="IssueHistory">
 		INSERT INTO ISSUE_HISTORY
-		VALUES ('IH' || TO_CHAR(SEQ_IH_NO.NEXTVAL, 'FM000'), #{issueNo}, #{ihContent}, #{ihDate}, '조치완료')
+		VALUES ('IH' || TO_CHAR(SEQ_IH_NO.NEXTVAL, 'FM000'), #{issueNo}, #{ihContent}, TO_DATE(#{dateAndTime},'YYYY/MM/DD HH24:MI:SS'), '조치완료')
 	</insert>
+	
+	<select id="selectAttachment" resultMap="attachmentResultSet" parameterType="Attachment">
+		SELECT *
+		FROM ATTACHMENT
+		WHERE DIVISION = #{division}
+	</select>
 </mapper>
 
 

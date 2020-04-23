@@ -42,5 +42,7 @@ public interface IssueService {
 
 	int insertIssueComplete(IssueHistory ih);
 
+	List<Attachment> selectAttachment(Attachment at);
+
 
 }
