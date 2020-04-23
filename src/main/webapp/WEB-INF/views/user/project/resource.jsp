@@ -82,8 +82,8 @@
                                 		<td class="memberListTd chooseMember" style="padding-left: 10px;">인원을 추가해주세요.</td>
                                 	</tr>
                                 </table>
+	                            <input type="hidden" id="" class="" name="projectPk" value="${pid}">
                             </div>
-                            <input type="hidden" id="" class="" name="projectPk" value="${projectPk}">
                         </form>
                         <!-- 인원 조회영역 종료 -->    
                             <div class="col-md-1" style="text-align:center;margin-top:150px;width:90px;">
@@ -246,14 +246,16 @@
 			}
 			
 			var memberNo = $(this).find("input[name='memberNo']").val();
+			var projectPk = "${pid}"; 
 			console.log("memberNo : " + memberNo);
+			console.log("projectPk : " + projectPk);
 			
 		});
 		
 	});
 	 
 	 
-	//추가하기
+	//resource 추가하기
 	$("#btnResourceAdd").on('click', function() {
 		
 		$("#formBeforeAdd").submit();
