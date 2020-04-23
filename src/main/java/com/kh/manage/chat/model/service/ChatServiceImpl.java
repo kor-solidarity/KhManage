@@ -15,6 +15,7 @@ import com.kh.manage.chat.model.vo.ChatMessageList;
 import com.kh.manage.chat.model.vo.ChatRoom;
 import com.kh.manage.chat.model.vo.Message;
 import com.kh.manage.chat.model.vo.SearchKeyWord;
+import com.kh.manage.common.Attachment;
 import com.kh.manage.member.model.vo.Member;
 
 @Service
@@ -79,7 +80,7 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	@Override
-	public List<Message> selectAllMessage(ChatRoom cr) {
+	public List<ChatMessageList> selectAllMessage(ChatRoom cr) {
 		
 		return cd.selectAllMessage(sqlSession, cr);
 	}
@@ -189,6 +190,26 @@ public class ChatServiceImpl implements ChatService {
 		Member cl = cd.selectMember(sqlSession, cr);
 		
 		return cl;
+	}
+
+	@Override
+	public int insertAttMessage(Message me) {
+		
+		int result = cd.insertAttMessage(sqlSession, me);
+		
+		return result;
+	}
+
+	@Override
+	public int insertAttChat(Attachment at) {
+		
+		return cd.insertAttChat(sqlSession, at);
+	}
+
+	@Override
+	public Attachment selectChatAtt(ChatMessageList chatMessageList) {
+		// TODO Auto-generated method stub
+		return cd.selectChatAtt(sqlSession, chatMessageList);
 	}
 
 

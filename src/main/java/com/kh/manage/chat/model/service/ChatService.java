@@ -9,6 +9,7 @@ import com.kh.manage.chat.model.vo.ChatMessageList;
 import com.kh.manage.chat.model.vo.ChatRoom;
 import com.kh.manage.chat.model.vo.Message;
 import com.kh.manage.chat.model.vo.SearchKeyWord;
+import com.kh.manage.common.Attachment;
 import com.kh.manage.member.model.vo.Member;
 
 public interface ChatService {
@@ -25,7 +26,7 @@ public interface ChatService {
 
 	int insertMessage(Message me);
 
-	List<Message> selectAllMessage(ChatRoom cr);
+	List<ChatMessageList> selectAllMessage(ChatRoom cr);
 
 	String selectDate();
 
@@ -56,6 +57,12 @@ public interface ChatService {
 	List<Member> searchMember(SearchKeyWord sw);
 
 	Member inviteMember(ChatRoom cr);
+
+	int insertAttMessage(Message me);
+
+	int insertAttChat(Attachment at);
+
+	Attachment selectChatAtt(ChatMessageList chatMessageList);
 
 
 }
