@@ -1,7 +1,7 @@
 package com.kh.manage.chat.controller;
 
 import java.io.IOException;
-
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,11 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.google.gson.Gson;
 import com.kh.manage.admin.adminManage.vo.DepartMent;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.chat.model.service.ChatService;
+import com.kh.manage.chat.model.vo.ChatMessageList;
 import com.kh.manage.chat.model.vo.ChatRoom;
 import com.kh.manage.chat.model.vo.Message;
 import com.kh.manage.chat.model.vo.SearchKeyWord;
@@ -150,7 +154,7 @@ public class ChatController {
 	
 	@RequestMapping("/insertMessage.ct")
 	public void insertMessage(String message) {
-		String[] str = message.split(",");
+		String[] str = message.split("`");
     	
     	Message me = new Message();
     	me.setContent(str[0]);
@@ -217,7 +221,7 @@ public class ChatController {
 	
 	@RequestMapping("/insertInfoMessage.ct")
 	public void insertInfoMessage(String message, HttpServletRequest request, HttpServletResponse response) {
-		String[] str = message.split(",");
+		String[] str = message.split("`");
     	
     	Message me = new Message();
     	me.setContent(str[0]);
@@ -260,13 +264,10 @@ public class ChatController {
 		
 		ChatRoom crCheck = cs.checkChatRoom(cr);
 		if(crCheck != null) {
-			System.out.println("가져온 값 : " + crCheck);
 			List<ChatRoom> changeMember = cs.changeMember(crCheck);
 			
-			System.out.println(changeMember);
 			if(changeMember != null) {
 			crCheck.setMemberNo(changeMember.get(0).getMemberNo());
-			System.out.println("ssssssssssssssssssssssssssss : " + crCheck);
 
 			int result = cs.chatRoomChangeMemberNo(crCheck);
 			
@@ -289,7 +290,9 @@ public class ChatController {
 	
 	@RequestMapping("/deleteInfo.ct")
 	public void deletInfo(String text) {
-		String[] str = text.split(",");
+		String[] str = text.split("`");
+		System.out.println(str);
+		
 		
 		Message me = new Message();
     	me.setContent(str[0]);
@@ -303,7 +306,6 @@ public class ChatController {
 	
 	@RequestMapping("/plusSearchMember.ct")
 	public void plusSearchMember(SearchKeyWord sw, HttpServletRequest request, HttpServletResponse response) {
-		System.out.println(sw);
 		
 		if(sw.getKeyWord().equals("")) {
 			sw.setKeyWord(null);
@@ -321,5 +323,46 @@ public class ChatController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@RequestMapping("/inviteMember.ct")
+	public void inviteMember(ChatRoom cr, String text, HttpServletRequest request, HttpServletResponse response) {
+		System.out.println(text);
+		String[] str = text.split("`");
+		Member m = cs.inviteMember(cr);
+		
+		Message me = new Message();
+    	me.setContent(m.getMemberName() +"님이 초대되었습니다.");
+    	me.setChatRoomNo(str[1]);
+    	me.setSender("M999");
+    	me.setContentType(str[3]);
+    	me.setStatus(str[5]);
+    	
+    	int result = cs.insertInfoMessage(me);
+    	
+    	request.setAttribute("member", m);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+
+		String gson = new Gson().toJson(m);
+
+		try {
+			response.getWriter().write(gson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@RequestMapping("/insertChatAtt.ct")
+	public void insertChatAtt(HttpServletRequest request) {
+		
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+		System.out.println("호출~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		
+		String root = request.getSession().getServletContext().getRealPath("resources");
+        
+        
+        
 	}
 }

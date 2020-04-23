@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.manage.admin.adminManage.vo.DepartMent;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
+import com.kh.manage.chat.model.vo.ChatMessageList;
 import com.kh.manage.chat.model.vo.ChatRoom;
 import com.kh.manage.chat.model.vo.Message;
 import com.kh.manage.chat.model.vo.SearchKeyWord;
@@ -61,6 +62,14 @@ public interface ChatDao {
 	List<Member> selectAllChatMember(SqlSessionTemplate sqlSession, ChatRoom cr);
 
 	List<Member> searchMember(SqlSessionTemplate sqlSession, SearchKeyWord sw);
+
+	int inviteMember(SqlSessionTemplate sqlSession, ChatRoom cr);
+
+	Member selectMember(SqlSessionTemplate sqlSession, ChatRoom cr);
+
+	int inviteMemberUpdate(SqlSessionTemplate sqlSession, ChatRoom cr);
+
+	ChatRoom selectChatMember(SqlSessionTemplate sqlSession, ChatRoom cr);
 
 
 

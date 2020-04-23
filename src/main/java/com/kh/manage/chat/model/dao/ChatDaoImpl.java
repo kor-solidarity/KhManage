@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.manage.admin.adminManage.vo.DepartMent;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
+import com.kh.manage.chat.model.vo.ChatMessageList;
 import com.kh.manage.chat.model.vo.ChatRoom;
 import com.kh.manage.chat.model.vo.Message;
 import com.kh.manage.chat.model.vo.SearchKeyWord;
@@ -159,6 +160,30 @@ public class ChatDaoImpl implements ChatDao {
 	public List<Member> searchMember(SqlSessionTemplate sqlSession, SearchKeyWord sw) {
 		
 		return sqlSession.selectList("Chat.searchMember", sw);
+	}
+
+	@Override
+	public int inviteMember(SqlSessionTemplate sqlSession, ChatRoom cr) {
+		
+		return sqlSession.insert("Chat.inviteMember", cr);
+	}
+
+	@Override
+	public Member selectMember(SqlSessionTemplate sqlSession, ChatRoom cr) {
+		
+		return sqlSession.selectOne("Chat.selectMember", cr);
+	}
+
+	@Override
+	public int inviteMemberUpdate(SqlSessionTemplate sqlSession, ChatRoom cr) {
+		
+		return sqlSession.update("Chat.inviteMemberUpdate", cr);
+	}
+
+	@Override
+	public ChatRoom selectChatMember(SqlSessionTemplate sqlSession, ChatRoom cr) {
+		
+		return sqlSession.selectOne("Chat.selectChatMember", cr);
 	}
 
 }

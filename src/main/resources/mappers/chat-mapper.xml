@@ -107,6 +107,10 @@
 		</foreach>
 	</insert>
 	
+	<insert id="inviteMember" parameterType="ChatRoom">
+		INSERT INTO CHAT_MEMBER VALUES (#{chatRoomNo}, #{memberNo}, SYSDATE, SYSDATE, DEFAULT)
+	</insert>
+	
 	<select id="selectAllChatRoom" parameterType="Member" resultMap="ChatRoomResultSet">
 		SELECT CHATROOM_NO
 		       ,MEMBER_NO
@@ -187,6 +191,10 @@
         LEFT JOIN ATTACHMENT A ON (M.SENDER = A.DIVISION)
 		WHERE M.STATUS = 'Y'
 		AND M.CHATROOM_NO = #{chatRoomNo}
+		AND M.SEND_DATE >= (SELECT JOIN_DATE 
+                             FROM CHAT_MEMBER
+                             WHERE MEMBER_NO = #{memberNo}
+                             AND CHATROOM_NO = #{chatRoomNo})
 		ORDER BY SEND_DATE, MESSAGE_NO ASC
 	</select>
 	
@@ -323,6 +331,37 @@
 		<if test="kind.equals('dept') and keyWord !=null">
 		AND D.DEPT_NAME LIKE '%' || #{keyWord} || '%'
 		 </if>  
+	</select>
+	
+	<select id="selectMember" parameterType="ChatRoom" resultMap="chatMemberResultSet">
+		SELECT CM.MEMBER_NO
+		     , M.MEMBER_NAME
+		     , D.DEPT_NO
+		     , D.DEPT_NAME
+		     , M.RANK_NO
+		     , R.RANK_NAME
+		     , A.CHANGE_NAME
+		     , A.EXT	
+		FROM CHAT_MEMBER CM 
+		JOIN MEMBER M ON(CM.MEMBER_NO = M.MEMBER_NO)
+		JOIN RANK R ON(M.RANK_NO = R.RANK_NO)
+		JOIN DEPT D ON (M.DEPT_NO = D.DEPT_NO)
+		LEFT JOIN ATTACHMENT A ON(A.DIVISION = M.MEMBER_NO)	 
+		WHERE CM.CHATROOM_NO = #{chatRoomNo}
+		AND CM.MEMBER_NO = #{memberNo}
+	</select>
+	
+	<update id="inviteMemberUpdate" parameterType="ChatRoom">
+		UPDATE CHAT_MEMBER SET STATUS = 'Y', JOIN_DATE= SYSDATE
+		WHERE MEMBER_NO = #{memberNo}
+		AND CHATROOM_NO = #{chatRoomNo}
+	</update>
+	
+	<select id="selectChatMember" parameterType="ChatRoom" resultMap="ChatRoomResultSet">
+		SELECT CHATROOM_NO
+		FROM CHAT_MEMBER
+		WHERE MEMBER_NO = #{memberNo}
+		AND CHATROOM_NO = #{chatRoomNo}
 	</select>
 </mapper>
 
