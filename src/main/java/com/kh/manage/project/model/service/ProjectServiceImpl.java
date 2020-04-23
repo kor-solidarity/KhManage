@@ -124,7 +124,6 @@ public class ProjectServiceImpl implements ProjectService {
 		
 	}
 	
-	
 	@Override
 	public List<DeptMember> selectMemberListResource(String deptNo) {
 		return pd.selectMemberListResource(sqlSession, deptNo);
@@ -136,7 +135,13 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 	
 	@Override
-	public String selectProjectTeamNo(String pid, String memberNo) {
-		return pd.selectProjectTeamNo(sqlSession, pid, memberNo);
+	public String selectProjectTeamNo(ProjectTeam team) {
+		return pd.selectProjectTeamNo(sqlSession, team);
 	}
+	
+	@Override
+	public int insertResource(Member member) {
+		return pd.insertResource(sqlSession, member);
+	}
+	
 }

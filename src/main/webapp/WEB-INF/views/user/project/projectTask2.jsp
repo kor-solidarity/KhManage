@@ -675,7 +675,7 @@
 					<input type="checkbox" name="workCharger" value="P1" id="P1"> <label for="P1">부서 이름 직급</label>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+					<button type="button" id="cancelWorkerBtn" class="btn btn-default" data-dismiss="modal">취소</button>
 					<button type="button" id="nullifyWorkerBtn" class="btn btn-primary"
 							onclick="nullifyNewWorker()"
 							style="background: #1E2B44; outline: none; border: none;">미배정
@@ -745,7 +745,8 @@
 
         // 새 작업에 인원을 배정한다.
         function updateNewWorkerInCharge (val) {
-            $("#workMemberModal").modal("toggle");
+            // $("#workMemberModal").modal("toggle");
+            $("#cancelWorkerBtn").click();
             valQ = $(val);
             <%-- val 은 클릭한 글자 label DOM 전체임.--%>
             console.log(val);

@@ -324,11 +324,14 @@
         set STATUS = '개발지연'
         where WORK_NO = #{value}
     </update>
-    <select id="selectProjectTeamNo" parameterType="java.util.ArrayList" resultType="String">
+
+
+
+    <select id="selectProjectTeamNo" parameterType="ProjectTeam" resultType="String">
         select TEAM_PK
         from PROJECT_TEAM
-        where PROJECT_PK = #{0}
-          and MEMBER_PK = #{1}
+        where PROJECT_PK = #{projectPk}
+          and MEMBER_PK = #{memberPk}
     </select>
     <insert id="insertWorkHistory" parameterType="WorkHistory">
         insert into WORK_HISTORY
@@ -411,4 +414,11 @@
           AND D.DEPT_NO = #{deptNo}
         </if> -->
     </select>
+
+    <!-- 리소스 추가  TW -->
+    <insert id="insertResource" parameterType="Member">
+        INSERT INTO PROJECT_TEAM
+        VALUES ('PT' || TO_CHAR(SEQ_TEAM.NEXTVAL, 'FM000'),
+                #{projectPk}, #{memberNo}, 'TM')
+    </insert>
 </mapper>

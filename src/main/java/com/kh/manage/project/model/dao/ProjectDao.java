@@ -51,5 +51,8 @@ public interface ProjectDao {
 	
 	String selectWorkSeq(SqlSessionTemplate sqlSession);
 	
-	String selectProjectTeamNo(SqlSessionTemplate sqlSession, String pid, String memberNo);
+	String selectProjectTeamNo(SqlSessionTemplate sqlSession, ProjectTeam team);
+	
+	int insertResource(SqlSessionTemplate sqlSession, Member member);
+	
 }

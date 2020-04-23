@@ -29,7 +29,6 @@ import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -42,7 +41,7 @@ public class ProjectController {
 	public String projectSelectAll(Model model, HttpServletRequest request) {
 		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
 		
-		// 권한그룹에 속해있는지 확인
+		// 권한그룹에 속해있는지 확인. 속해있으면 모든 목록을 조회하는 것이고 아니면 로그인유저에 해당하는거만.
 		boolean isAdmin = false;
 		
 		
@@ -295,11 +294,18 @@ public class ProjectController {
 		System.out.println("updateWorkList");
 		String pid = request.getParameter("pid");
 		
-		// 목록 뽑아오는거.
+		
+		// 목록을 뽑기 전에 1차 필터를 거쳐 종료기한이 지났는데 안끝난 작업이 있으면 자동으로 지연표시.
+		// List<ProjectWork> outdatedProjectWorkList = ps.selectOutdatedWorks()
+		
+		
+		
+		// 목록 뽑기.
 		// 작업아이디, 작업명 상태 프로젝트번호 시작·완료일 선행작업 상위작업 완료율 담당자이름
 		List<ProjectWork> projectWorkList = ps.selectProjectWorkList(pid);
 		
 		// 추후 고도화때 담당자가 여럿일수도 있긴 한데 지금은 고려대상이 아님.
+		
 		
 		
 		response.setContentType("application/json");
@@ -329,6 +335,7 @@ public class ProjectController {
 		String pid = request.getParameter("pid");
 		// String  beginDate = request.getParameter("beginDate");
 		// String  endDate = request.getParameter("endDate");
+		String loginUserMemberNo = loginUser.getMemberNo();
 		
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Date beginDate = null;
@@ -358,8 +365,9 @@ public class ProjectController {
 		if (result > 0) {
 			String workNo = ps.selectWorkSeq();
 			// 누가 이 작업을 배정한거임??
-			String loginUserMemberNo = loginUser.getMemberNo();
-			String teamNo = ps.selectProjectTeamNo(pid, loginUserMemberNo);
+			ProjectTeam team = new ProjectTeam(null, pid, loginUserMemberNo, null, null, null, null);
+			String teamNo = ps.selectProjectTeamNo(team);
+			// System.out.println("teamNo: " + teamNo);
 			
 			WorkHistory workHistory =
 					new WorkHistory(null, workNo, "시작전",
@@ -465,34 +473,51 @@ public class ProjectController {
 		}
 		
 	}
-	//TW 리소스, 팀프로젝트 member 추가
-	   @RequestMapping("addResource.pr")
-	   public String addResource(Member member, HttpServletRequest request, HttpServletResponse response) {
-	      
-	      System.out.println("member : " + member);
-	      
-	      String memberNoString = request.getParameter("memberNo");
-	      
-	       String[] memberNo = memberNoString.split("\\,");
-	       
-	       for(int i = 0; i < memberNo.length; i++) {
-	          System.out.println("array : " + memberNo[i]);
-	       }
 
-	      
-	      
-	      
-	      
-//	      String projectPk = request.getParameter("projectPk");
-//	      String memberNo = request.getParameter("memberNo");
-//	      
-//	      System.out.println("projectPk : " + projectPk);
-//	      System.out.println("memberNo : " + memberNo);
-	      
-	      
-	      
-	      
-	      
-	      return "";
-	   }
+//TW 리소스, 팀프로젝트 member 추가
+	
+	@RequestMapping("addResource.pr")
+	public String addResource(Member member, Model m, HttpServletRequest request, HttpServletResponse response) {
+		
+		System.out.println("member : " + member);
+		
+		String memberNoString = member.getMemberNo();
+		//String projectPk = request.getParameter("projectPk");
+		
+		System.out.println("memberNoString : " + memberNoString);
+		//System.out.println("projectPk : " + projectPk);
+		
+		String[] memberNo = memberNoString.split(",");
+		
+		System.out.println(memberNo[0]);
+		System.out.println(memberNo[1]);
+		
+		
+		Member test[] = new Member[memberNo.length];
+		
+		System.out.println(test[0]);
+		
+		int result1 = 0;
+		
+		for (int i = 0; i < memberNo.length; i++) {
+			test[i] = new Member();
+			
+			test[i].setMemberNo(memberNo[i]);
+			test[i].setProjectPk(member.getProjectPk());
+			
+			result1 = ps.insertResource(test[i]);
+			System.out.println(test[i]);
+		}
+		
+		if (result1 > 0) {
+			
+			return "user/project/resource";
+		} else {
+			
+			m.addAttribute("msg", "실패 !!");
+			return "common/errorPage";
+		}
+		
+		
+	}
 }

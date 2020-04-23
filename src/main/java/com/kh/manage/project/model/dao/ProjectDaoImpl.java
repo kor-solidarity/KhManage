@@ -11,6 +11,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -121,7 +122,12 @@ public class ProjectDaoImpl implements ProjectDao {
 	}
 	
 	@Override
-	public String selectProjectTeamNo(SqlSessionTemplate sqlSession, String pid, String memberNo) {
-		return sqlSession.selectOne("Project.selectProjectTeamNo", new String[]{pid, memberNo});
+	public String selectProjectTeamNo(SqlSessionTemplate sqlSession, ProjectTeam team) {
+		return sqlSession.selectOne("Project.selectProjectTeamNo", team);
+	}
+	
+	@Override
+	public int insertResource(SqlSessionTemplate sqlSession, Member member) {
+		return sqlSession.insert("Project.insertResource", member);
 	}
 }
