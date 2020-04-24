@@ -636,7 +636,11 @@
                             },
                             success: function (data) {
                                 alert("done!");
+                                console.log(data);
                                 updateWorkList();
+                            },
+                            error: function (xhr, status, error) {
+                                alert("wut");
                             }
                         })
                     }
@@ -808,7 +812,7 @@
                         console.log(data[key])
                     }
                     // 좌측 목록 몽땅 제거.
-                    $("#chart-left-table tr:not(tr:first-of-type)").empty()
+                    $("#chart-left-table tr:not(tr:first-of-type)").remove()
                     // todo 우측도 이거 끝나면 제거해야함. 당장은 좌측이 더 급하니 이거부터 하는걸로.
 
                     // 돌아가면서 넘긴다.
@@ -840,7 +844,7 @@
                             // 작업에 배정된 인원
                             '<td>' + data[key]['memberName'] + '</td>' +
                             '<td><i class="fas fa-search" data-toggle="modal" ' +
-                            'data-target="#workDetails" ></i></td>' +
+                            'data-target="#workDetails" onclick="" ></i></td>' +
                             // 우선 여기까지 채우고 추가내용은 값에따라 바뀌기 때문에 별도추가?
                             '</tr>'
                         );
@@ -850,9 +854,126 @@
             })
         }
 	</script>
+	<style>
 
-	<!-- 모달 창 -->
-	<div class="modal fade" id="workDetails" role="dialog"
+	</style>
+	<%--작업 상세보기 모달창--%>
+	<div class="modal fade" id="workDetails" tabindex="-1" role="dialog"
+		 aria-labelledby="workDetailTitle" style="top: 200px;">
+		<div class="modal-dialog " role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="workDetailTitle">
+						<i class="fas fa-th-large"></i>&nbsp;담당자 목록
+					</h4>
+				</div>
+				<div class="modal-body" id="workDetailContent">
+					<div class="container-fluid">
+						<%--
+						<h2>Dynamic Tabs</h2>
+						<p>To make the tabs toggleable, add the data-toggle="tab" attribute to each link. Then add a
+							.tab-pane class with a unique ID for every tab and wrap them inside a div element with class
+							.tab-content.</p>--%>
+
+						<ul class="nav nav-tabs">
+							<li class="active">
+								<a data-toggle="tab" href="#home">작업정보</a></li>
+							<li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
+							<li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
+							<li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
+						</ul>
+
+						<div class="tab-content"><br>
+							<%--작업정보--%>
+							<div id="home" class="tab-pane fade in active">
+								<div class="row">
+									<div class="col-lg-2 text-center">작업명</div>
+									<div class="col-lg-10">
+										<input class="form-control" type="text" name="workName" id="">
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-2 text-center">시작</div>
+									<div class="col-lg-4">
+										<input class="form-control" type="date" name="startDate" id="">
+									</div>
+									<div class="col-lg-2 text-center">완료</div>
+									<div class="col-lg-4">
+										<input class="form-control" type="date" name="completeDate" id="">
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-2 text-center">완료율</div>
+									<div class="col-lg-4">
+										<div class=" col-lg-10" style="padding-left: 0; padding-right: 0">
+											<input class="form-control" type="number" max="100" min="0"
+												   name="completeRate" id="">
+										</div>
+										<span >&nbsp;%</span>
+									</div>
+									<div class="col-lg-2 text-center">승인자</div>
+									<div class="col-lg-4">
+										<select class="form-control" name="grantor" id="">
+											<option value="ayy">미배정</option>
+											<option value="ayy">ayylmaodudethisiskindalongandstuffuknow</option>
+											<option value=""></option>
+										</select>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-2 text-center">산출물</div>
+									<div class="col-lg-4">
+											<select class="form-control" name="grantor" id="">
+												<option value="0">미배정</option>
+												<option value="UI보고서">UI보고서</option>
+												<option value="요구사항정의서">요구사항정의서</option>
+												<option value="프로세스정의서">프로세스정의서</option>
+												<option value="테이블정의서">테이블정의서</option>
+												<option value="통합테스트 시나리오">통합테스트 시나리오</option>
+											</select>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-2 text-center">메모</div>
+									<div class="col-lg-10">
+										<textarea name="" id="" cols="30" rows="10"></textarea>
+									</div>
+								</div>
+							</div>
+							<div id="menu1" class="tab-pane fade">
+								<h3>Menu 1</h3>
+								<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+									ea commodo consequat.</p>
+							</div>
+							<div id="menu2" class="tab-pane fade">
+								<h3>Menu 2</h3>
+								<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+									laudantium, totam rem aperiam.</p>
+							</div>
+							<div id="menu3" class="tab-pane fade">
+								<h3>Menu 3</h3>
+								<p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta
+									sunt explicabo.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+					<button type="button" id="workDetailSubmitBtn" class="btn btn-primary"
+							style="background: #1E2B44; outline: none; border: none;"
+							onclick="">저장
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- 모달 창. 불필요함. -->
+	<div class="modal fade" id="workDetails1" role="dialog"
 		 aria-labelledby="gridSystemModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -875,7 +996,6 @@
 									<td class="tdText thRange">이름</td>
 									<td class="tdText thRange">직급</td>
 									<td class="tdText thRange">이메일</td>
-
 								</tr>
 								<tr class="front">
 									<td class="thRange th1" align="center"><input type="checkbox"></td>
@@ -925,62 +1045,7 @@
 		<!-- /.modal-dialog -->
 	</div>
 	<%-- ---------------------------------- --%>
-	<%--작업 상세보기 모달창--%>
-	<div class="modal fade" id="workDetails2" tabindex="-1" role="dialog" aria-labelledby="workDetailTitle">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-							aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="workDetailTitle">담당자 목록</h4>
-				</div>
-				<div class="modal-body" id="workDetailContent">
-					<div class="container">
-						<h2>Dynamic Tabs</h2>
-						<p>To make the tabs toggleable, add the data-toggle="tab" attribute to each link. Then add a
-							.tab-pane class with a unique ID for every tab and wrap them inside a div element with class
-							.tab-content.</p>
 
-						<ul class="nav nav-tabs">
-							<li class="active"><a data-toggle="tab" href="#home">Home</a></li>
-							<li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
-							<li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
-							<li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
-						</ul>
-
-						<div class="tab-content">
-							<div id="home" class="tab-pane fade in active">
-								<h3>HOME</h3>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-									incididunt ut labore et dolore magna aliqua.</p>
-							</div>
-							<div id="menu1" class="tab-pane fade">
-								<h3>Menu 1</h3>
-								<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-									ea commodo consequat.</p>
-							</div>
-							<div id="menu2" class="tab-pane fade">
-								<h3>Menu 2</h3>
-								<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-									laudantium, totam rem aperiam.</p>
-							</div>
-							<div id="menu3" class="tab-pane fade">
-								<h3>Menu 3</h3>
-								<p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta
-									sunt explicabo.</p>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" id="workDetailSubmitBtn" class="btn btn-primary"
-							onclick="">Save changes
-					</button>
-				</div>
-			</div>
-		</div>
-	</div>
 </body>
 </html>
 

@@ -299,13 +299,11 @@ public class ProjectController {
 		// List<ProjectWork> outdatedProjectWorkList = ps.selectOutdatedWorks()
 		
 		
-		
 		// 목록 뽑기.
 		// 작업아이디, 작업명 상태 프로젝트번호 시작·완료일 선행작업 상위작업 완료율 담당자이름
 		List<ProjectWork> projectWorkList = ps.selectProjectWorkList(pid);
 		
 		// 추후 고도화때 담당자가 여럿일수도 있긴 한데 지금은 고려대상이 아님.
-		
 		
 		
 		response.setContentType("application/json");
@@ -324,7 +322,7 @@ public class ProjectController {
 	
 	// 프로젝트 작업 추가에 쓰일 AJAX - 프론트에선 sendProjectWork()
 	@RequestMapping(value = "/projectWorkInsert.pr")
-	public void projectWorkInsert(HttpServletRequest request) {
+	public void projectWorkInsert(HttpServletResponse response, HttpServletRequest request) {
 		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
 		// 이거 이걸로 하면 안됨
 		// String memberNo = loginUser.getMemberNo();
@@ -374,6 +372,11 @@ public class ProjectController {
 							"작업 첫 생성", null, teamNo);
 			int result2 = ps.insertWorkHistory(workHistory);
 		}
+		try {
+			response.getWriter().print(true);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -405,16 +408,21 @@ public class ProjectController {
 		return "user/project/projectView";
 	}
 	
+	//TW 리소스페이지 이동 : 부서리스트, 프로젝트팀원 조회 *
 	@RequestMapping("/showResource.pr")
 	public String showResource(Model model, HttpServletRequest request) {
 		
 		String pid = (String) request.getParameter("pid");
 		
-		model.addAttribute("pid", pid);
-		
 		//부서 조회
 		List<Dept> deptList = ps.selectDeptList();
+		model.addAttribute("pid", pid);
 		request.setAttribute("deptList", deptList);
+		
+		//멤버조회
+		Member member = new Member();
+		List<Member> tmList = ps.selectTeamMemberList(pid);
+		model.addAttribute("tmList", tmList);
 		
 		return "user/project/resource";
 	}
@@ -473,13 +481,10 @@ public class ProjectController {
 		}
 		
 	}
-
-//TW 리소스, 팀프로젝트 member 추가
 	
+	//TW 리소스, 팀프로젝트 member 추가
 	@RequestMapping("addResource.pr")
 	public String addResource(Member member, Model m, HttpServletRequest request, HttpServletResponse response) {
-		
-		System.out.println("member : " + member);
 		
 		String memberNoString = member.getMemberNo();
 		//String projectPk = request.getParameter("projectPk");
@@ -488,10 +493,9 @@ public class ProjectController {
 		//System.out.println("projectPk : " + projectPk);
 		
 		String[] memberNo = memberNoString.split(",");
-		
-		System.out.println(memberNo[0]);
-		System.out.println(memberNo[1]);
-		
+
+//      System.out.println(memberNo[0]);
+//      System.out.println(memberNo[1]);
 		
 		Member test[] = new Member[memberNo.length];
 		
@@ -511,13 +515,13 @@ public class ProjectController {
 		
 		if (result1 > 0) {
 			
-			return "user/project/resource";
+			return "redirect:showResource.pr?pid=" + request.getParameter("projectPk");
 		} else {
 			
 			m.addAttribute("msg", "실패 !!");
 			return "common/errorPage";
 		}
 		
-		
 	}
+	
 }

@@ -130,4 +130,9 @@ public class ProjectDaoImpl implements ProjectDao {
 	public int insertResource(SqlSessionTemplate sqlSession, Member member) {
 		return sqlSession.insert("Project.insertResource", member);
 	}
+	
+	@Override
+	public List<Member> teamMemberList(SqlSessionTemplate sqlSession, String pid) {
+		return sqlSession.selectList("Project.teamMemberList", pid);
+	}
 }
