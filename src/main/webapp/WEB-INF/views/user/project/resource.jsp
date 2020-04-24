@@ -231,7 +231,9 @@
 	//resource 추가하기
 	$("#btnResourceAdd").on('click', function() {
 		
+		
 		var memberNo = $("#memberNo").val();
+		
 		
 		//var addedMemberList = $("#addedMemberTd").text();
 		//console.log("addedMemberList : " + addedMemberList);
@@ -244,8 +246,8 @@
 		console.log("aa : " + JSON.stringify(aa));
 		
 		
+		 
 		
-				
 				
 		
 		//여러 개일 경우 왼쪽도 filter 
