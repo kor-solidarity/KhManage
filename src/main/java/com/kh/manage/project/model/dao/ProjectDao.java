@@ -55,4 +55,6 @@ public interface ProjectDao {
 	
 	int insertResource(SqlSessionTemplate sqlSession, Member member);
 	
+	List<Member> teamMemberList(SqlSessionTemplate sqlSession, String pid);
+	
 }

@@ -144,4 +144,9 @@ public class ProjectServiceImpl implements ProjectService {
 		return pd.insertResource(sqlSession, member);
 	}
 	
+	@Override
+	public List<Member> selectTeamMemberList(String pid) {
+		return pd.teamMemberList(sqlSession, pid);
+	}
+	
 }

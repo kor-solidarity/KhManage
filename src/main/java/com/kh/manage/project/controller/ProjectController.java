@@ -408,16 +408,21 @@ public class ProjectController {
 		return "user/project/projectView";
 	}
 	
+	//TW 리소스페이지 이동 : 부서리스트, 프로젝트팀원 조회 *
 	@RequestMapping("/showResource.pr")
 	public String showResource(Model model, HttpServletRequest request) {
 		
 		String pid = (String) request.getParameter("pid");
 		
-		model.addAttribute("pid", pid);
-		
 		//부서 조회
 		List<Dept> deptList = ps.selectDeptList();
+		model.addAttribute("pid", pid);
 		request.setAttribute("deptList", deptList);
+		
+		//멤버조회
+		Member member = new Member();
+		List<Member> tmList = ps.selectTeamMemberList(pid);
+		model.addAttribute("tmList", tmList);
 		
 		return "user/project/resource";
 	}
@@ -476,13 +481,10 @@ public class ProjectController {
 		}
 		
 	}
-
-//TW 리소스, 팀프로젝트 member 추가
 	
+	//TW 리소스, 팀프로젝트 member 추가
 	@RequestMapping("addResource.pr")
 	public String addResource(Member member, Model m, HttpServletRequest request, HttpServletResponse response) {
-		
-		System.out.println("member : " + member);
 		
 		String memberNoString = member.getMemberNo();
 		//String projectPk = request.getParameter("projectPk");
@@ -491,10 +493,9 @@ public class ProjectController {
 		//System.out.println("projectPk : " + projectPk);
 		
 		String[] memberNo = memberNoString.split(",");
-		
-		System.out.println(memberNo[0]);
-		System.out.println(memberNo[1]);
-		
+
+//      System.out.println(memberNo[0]);
+//      System.out.println(memberNo[1]);
 		
 		Member test[] = new Member[memberNo.length];
 		
@@ -514,13 +515,13 @@ public class ProjectController {
 		
 		if (result1 > 0) {
 			
-			return "user/project/resource";
+			return "redirect:showResource.pr?pid=" + request.getParameter("projectPk");
 		} else {
 			
 			m.addAttribute("msg", "실패 !!");
 			return "common/errorPage";
 		}
 		
-		
 	}
+	
 }

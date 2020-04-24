@@ -326,7 +326,6 @@
     </update>
 
 
-
     <select id="selectProjectTeamNo" parameterType="ProjectTeam" resultType="String">
         select TEAM_PK
         from PROJECT_TEAM
@@ -421,4 +420,23 @@
         VALUES ('PT' || TO_CHAR(SEQ_TEAM.NEXTVAL, 'FM000'),
                 #{projectPk}, #{memberNo}, 'TM')
     </insert>
+
+    <select id="teamMemberList" resultMap="memberResultSet">
+        SELECT M.MEMBER_NAME
+             , M.MEMBER_NO
+             , D.DEPT_NAME
+             , D.DEPT_NO
+             , R.RANK_NAME
+             , R.RANK_NO
+             , P.PROJECT_PK
+             , P.ROLE
+        FROM MEMBER M
+                 JOIN DEPT D ON (D.DEPT_NO = M.DEPT_NO)
+                 JOIN RANK R ON (R.RANK_NO = M.RANK_NO)
+                 JOIN PROJECT_TEAM P ON (P.MEMBER_PK = M.MEMBER_NO)
+        WHERE M.STATUS = 'Y'
+          AND P.ROLE = 'TM'
+          AND P.PROJECT_PK = #{projectPk}
+        ORDER BY D.DEPT_NAME
+    </select>
 </mapper>
