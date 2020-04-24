@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Report">
+	<resultMap type="Report" id="issueReportResultSet">
+		<id property="reportNo" column="REPORT_NO"/>
+		<result property="division" column="DIVISION"/>
+		<result property="reportMemberNo" column="REPORT_MEMBER"/>
+		<result property="status" column="STATUS"/>	
+		<result property="projectNo" column="PROJECT_NO"/>	
+		<result property="projectName" column="PROJECT_NAME"/>	
+		<result property="issueNo" column="ISSUE_NO"/>	
+		<result property="issueType" column="ISSUE_TYPE"/>	
+		<result property="issueTitle" column="ISSUE_TITLE"/>	
+		<result property="registerDate" column="REGISTER_DATE"/>	
+		<result property="workNo" column="WORK_NO"/>
+		<result property="workName" column="WORK_NAME"/>
+		<result property="createMemberNo" column="REGISTER_TYPE"/>
+		<result property="createMemberName" column="REGISTER_NAME"/>
+		<result property="teamWorker" column="TEAMWORKER"/>
+		<result property="teamWorkerName" column="TEAMWORKER_NAME"/>
+		<result property="actionDate" column="ACTION_DATE"/>
+		<result property="ihDate" column="IH_DATE"/>
+		<result property="ihStatus" column="HISTORY_DATE"/>
+		<result property="ihContent" column="IH_CONTENT"/>
+	</resultMap>
+	
+	<select id="issueSelectList" parameterType="Member" resultMap="issueReportResultSet">
+		SELECT R.REPORT_NO
+		     , R.DIVISION
+		     , R.REPORT_MEMBER
+		     , R.STATUS
+		     , I.PROJECT_NO
+		     , P.PROJECT_NAME
+		     , I.ISSUE_NO
+		     , I.ISSUE_TYPE
+		     , I.ISSUE_TITLE
+		     , I.REGISTER_DATE
+		     , I.WORK_NO
+		     , W.WORK_NAME
+		     , I.REGISTER_TYPE 
+		     , M1.MEMBER_NAME AS REGISTER_NAME
+		     , I.TEAMWORKER
+		     , M2.MEMBER_NAME AS TEAMWORKER_NAME
+		     , I.ACTION_DATE
+		     , IH.IH_DATE
+		     , IH.STATUS AS HISTORY_DATE
+		     , NVL(IH.IH_CONTENT, '조치전') AS IH_CONTENT
+		FROM REPORT R
+		JOIN ISSUE_HISTORY IH ON(R.DIVISION = IH.IH_NO) 
+		JOIN ISSUE I ON(IH.ISSUE_NO = I.ISSUE_NO)
+		JOIN WORK W ON (I.WORK_NO = W.WORK_NO)
+		JOIN PROJECT P ON (I.PROJECT_NO = P.PROJECT_PK)
+		JOIN MEMBER M1 ON (I.REGISTER_TYPE = M1.MEMBER_NO)
+		JOIN MEMBER M2 ON (I.TEAMWORKER = M2.MEMBER_NO)
+		WHERE R.REPORT_MEMBER = #{memberNo}
+		AND I.STATUS = 'Y'
+		AND R.STATUS = 'Y'
+	</select>
+</mapper>
