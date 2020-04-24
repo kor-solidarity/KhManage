@@ -164,7 +164,7 @@
 							<td>휴대폰번호<span style="color:red;"> *</span></td>
 							<td></td>
 							<td>
-								<input type="text" id="phone" class="register form-control" name="phone" style="color:#676A6D">
+								<input type="text" id="phone" class="register form-control" name="phone" maxlength="11" style="color:#676A6D">
 							</td>
 						</tr>
 						<tr class="tableTr">
