@@ -849,7 +849,6 @@
                             '</tr>'
                         );
                     }
-
                 }
             })
         }
@@ -859,7 +858,7 @@
 	</style>
 	<%--작업 상세보기 모달창--%>
 	<div class="modal fade" id="workDetails" tabindex="-1" role="dialog"
-		 aria-labelledby="workDetailTitle" style="top: 200px;">
+		 aria-labelledby="workDetailTitle">
 		<div class="modal-dialog " role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -878,11 +877,11 @@
 							.tab-content.</p>--%>
 
 						<ul class="nav nav-tabs">
-							<li class="active">
-								<a data-toggle="tab" href="#home">작업정보</a></li>
-							<li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
-							<li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
-							<li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
+							<li class="active"><a data-toggle="tab" href="#home">작업정보</a></li>
+							<li><a data-toggle="tab" href="#menu1">선행작업</a></li>
+							<li><a data-toggle="tab" href="#menu2">산출물</a></li>
+							<li><a data-toggle="tab" href="#menu3">가이드</a></li>
+							<li><a data-toggle="tab" href="#menu4">히스토리</a></li>
 						</ul>
 
 						<div class="tab-content"><br>
@@ -911,11 +910,11 @@
 											<input class="form-control" type="number" max="100" min="0"
 												   name="completeRate" id="">
 										</div>
-										<span >&nbsp;%</span>
+										<span>&nbsp;%</span>
 									</div>
 									<div class="col-lg-2 text-center">승인자</div>
 									<div class="col-lg-4">
-										<select class="form-control" name="grantor" id="">
+										<select class="form-control" name="grantor" id="grantor">
 											<option value="ayy">미배정</option>
 											<option value="ayy">ayylmaodudethisiskindalongandstuffuknow</option>
 											<option value=""></option>
@@ -925,34 +924,114 @@
 								<div class="row">
 									<div class="col-lg-2 text-center">산출물</div>
 									<div class="col-lg-4">
-											<select class="form-control" name="grantor" id="">
-												<option value="0">미배정</option>
-												<option value="UI보고서">UI보고서</option>
-												<option value="요구사항정의서">요구사항정의서</option>
-												<option value="프로세스정의서">프로세스정의서</option>
-												<option value="테이블정의서">테이블정의서</option>
-												<option value="통합테스트 시나리오">통합테스트 시나리오</option>
-											</select>
+										<select class="form-control" name="grantor" id="">
+											<option value="0">미배정</option>
+											<option value="UI보고서">UI보고서</option>
+											<option value="요구사항정의서">요구사항정의서</option>
+											<option value="프로세스정의서">프로세스정의서</option>
+											<option value="테이블정의서">테이블정의서</option>
+											<option value="통합테스트 시나리오">통합테스트 시나리오</option>
+										</select>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-2 text-center">메모</div>
 									<div class="col-lg-10">
-										<textarea name="" id="" cols="30" rows="10"></textarea>
+										<textarea name="memo" id="" cols="60" rows="10" style="width: 100%"></textarea>
 									</div>
 								</div>
 							</div>
+							<%--선행작업--%>
 							<div id="menu1" class="tab-pane fade">
-								<h3>Menu 1</h3>
-								<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-									ea commodo consequat.</p>
+								<table class="table table-striped table-bordered table-hover">
+									<thead>
+									<tr>
+										<th style="text-align: center; width: 70px;">
+											ID
+										</th>
+
+										<th style="text-align: center">
+											작업
+										</th>
+
+										<th style="text-align: center; width: 150px; display:none;">
+											선행작업 타입
+										</th>
+										<th style="text-align: center">
+											삭제
+										</th>
+									</tr>
+									</thead>
+									<tbody>
+									<tr>
+										<td style="text-align: center; width: 70px;">
+											<input type="number" id="predcessor_task_id_0"
+												   class="form-control "
+												   style="text-align: center; padding-left: 0;"
+												   onchange="ChangePredcessorTaskID(this, 0);">
+											<input type="hidden" id="pid_0" value="">
+										</td>
+										<td style="text-align: center;">
+											<select id="predcessor_task_0" class="form-control"
+													style="width: 100%;" onchange="ChangePredcessorTask(this, 0);"
+													tabindex="-1" title="">
+												<option value="1">새로운 작업</option>
+												<option value="2">신약 개발</option>
+												<option value="4">전임상시험</option>
+												<option value="5">물리적특성 연구</option>
+												<option value="6">새로운 작업이다</option>
+												<option value="7">새로운 작업</option>
+												<option value="8">새로운 작업</option>
+												<option value="9">생물학적특성 연구</option>
+												<option value="10">임상시험 의약품 허가신청</option>
+												<option value="11">허가신청자료 제출</option>
+												<option value="12">허가 심사</option>
+												<option value="13">새로운 작업</option>
+												<option value="14">새로운 작업</option>
+												<option value="15">새로운 작업</option>
+												<option value="16">임상시험</option>
+												<option value="17">제1상 시험</option>
+												<option value="18">제3상 시험</option>
+												<option value="19">제2상 시험</option>
+												<option value="20">신약승인신청</option>
+												<option value="21">심사자료 제출 및 심사</option>
+												<option value="22">최종 허가</option>
+												<option value="23">시판후 관리</option>
+												<option value="24">제4상 임상시험</option>
+												<option value="25">추가 적응 관리</option>
+												<option value="26">부작용 보고</option>
+												<option value="27">제품 결함 보고</option>
+												<option value="28">새로운 작업</option>
+												<option value="29">새로운 작업</option>
+												<option value="30">66+56+</option>
+											</select>
+										</td>
+
+										<td style="text-align: center; width: 70px;">
+											<button onclick="DeletePredcessorTask(this, 0);"
+													class="" style="display: inline-block;"
+													type="button">
+												<span class="glyphicon glyphicon-trash"> </span>
+											</button>
+										</td>
+									</tr>
+									</tbody>
+								</table>
 							</div>
+							<%--산출물--%>
 							<div id="menu2" class="tab-pane fade">
 								<h3>Menu 2</h3>
 								<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
 									laudantium, totam rem aperiam.</p>
 							</div>
+							<%--가이드--%>
 							<div id="menu3" class="tab-pane fade">
+								<h3>Menu 3</h3>
+								<p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta
+									sunt explicabo.</p>
+							</div>
+							<%--히스토리--%>
+							<div id="menu4" class="tab-pane fade">
 								<h3>Menu 3</h3>
 								<p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta
 									sunt explicabo.</p>

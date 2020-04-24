@@ -40,13 +40,13 @@
 <%--todo 클릭시 이동, 그리고 해당 페이지에 도달했을 시 클릭여부 등 - 겟 형태로 프로젝트ID 넘겨야할듯--%>
 <div class="container" id="projectNav" style="width: 100%">
 	<ul class="nav nav-tabs">
-		<li role="presentation" class=""><a href="showProjectSummary.pr?pid=${pid}&type=0">요약정보</a></li>
+		<li role="presentation" class=""><a href="showProjectSummary.pr?pid=${pid}&navType=0">요약정보</a></li>
 		<li role="presentation"><a href="#">기본정보</a></li>
-		<li role="presentation"><a href="showResource.pr?pid=${pid}&type=2">리소스</a></li>
-		<li role="presentation"><a href="${path}/projectTask.pr?pid=${pid}&type=3">프로젝트작업</a></li>
-		<li role="presentation"><a href="#">배정현황</a></li>
-		<li role="presentation"><a href="projectIssue.pr?pid=${pid}&type=5">이슈</a></li>
-		<li role="presentation"><a href="projectOutput.pr?pid=${pid}&type=6">산출물</a></li>
+		<li role="presentation"><a href="showResource.pr?pid=${pid}&navType=2">리소스</a></li>
+		<li role="presentation"><a href="${path}/projectTask.pr?pid=${pid}&navType=3">프로젝트작업</a></li>
+		<li role="presentation"><a href="showAssignment.pr?pid=${pid }&navType=4">배정현황</a></li>
+		<li role="presentation"><a href="projectIssue.pr?pid=${pid}&navType=5">이슈</a></li>
+		<li role="presentation"><a href="projectOutput.pr?pid=${pid}&navType=6">산출물</a></li>
 		<li role="presentation"><a href="#">히스토리</a></li>
 	</ul>
 	<%--
@@ -60,7 +60,14 @@
 		// 	그렇기에 프로젝트 작업페이지 여는게 있으면 무조건 타입 어트리뷰트 넣을것. 안그러면 오류남
 		// 	요약정보 부터 0에서 시작함
 		var urlString = window.location.href;
-		var url = new URL(urlString);
-		$(".nav-tabs li").eq(url.searchParams.get("type")).attr('class', 'active');
+        // var url = null;
+        var url = new URL(urlString);
+		<%--url = '<c:out value="${param.navType}">';--%>
+
+		// if (url == '' || url == null){
+		<%--    url = '${navType}';--%>
+		// }
+
+		$(".nav-tabs li").eq(url.searchParams.get("navType")).attr('class', 'active');
 	</script>
 </div>

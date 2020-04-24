@@ -134,7 +134,7 @@
 					<c:forEach var="pl" items="${list}">
 						<tr class="trRange">
 							<td class="td1">
-								<a href="${path}/showProjectSummary.pr?pid=${pl.projectPk}&type=0">${pl.projectName}</a>
+								<a href="${path}/showProjectSummary.pr?pid=${pl.projectPk}&navType=0">${pl.projectName}</a>
 							</td>
 							<td class="tdText">${pl.projectTypeName}</td>
 							<td class="tdText">${pl.projectManagerName}</td>
