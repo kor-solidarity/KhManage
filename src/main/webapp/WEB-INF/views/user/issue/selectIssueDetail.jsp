@@ -222,7 +222,7 @@
 					<td class="thRange" colspan="18"><hr></td>
 				</tr>
 				<tr>
-					<td class="thRange"></td>
+					<td class="thRange"><input type="hidden" name="projectNo" value="${issue.projectNo }"></td>
 					<td class="thRange">프로젝트</td>
 					<td class="thRange2" colspan="9">
 						${issue.projectName }
@@ -457,10 +457,12 @@
 	<script>
 	$(function(){
 		$("#issueAgreeBtn").click(function(){
+			ws.send("이슈");
 			$("#issueRegForm").attr('action', "issueAgree.iu")
 		});
 		
 		$("#issueComBtn").click(function(){
+			ws.send("이슈");
 			$("#issueRegForm").attr('action', "issueComplete.iu")
 		});
 	});

@@ -54,6 +54,7 @@
 	
 	<resultMap type="IssueList" id="selectIssueOne">
 		<id property="issueNo" column="ISSUE_NO"/>
+		<result property="projectNo" column="PROJECT_NO"/>
 		<result property="projectName" column="PROJECT_NAME"/>
 		<result property="workName" column="WORK_NAME"/>
 		<result property="issueTitle" column="ISSUE_TITLE"/>
@@ -125,7 +126,7 @@
 	
 	<insert id="insertReportProjectTeam" parameterType="IssueProjectTeam">
 		INSERT INTO REPORT
-		VALUES ('RP' || TO_CHAR(SEQ_RP_NO.NEXTVAL, 'FM000'), 'I' || TO_CHAR(SEQ_IS.CURRVAL, 'FM000'), #{memberPk} )
+		VALUES ('RP' || TO_CHAR(SEQ_RP_NO.NEXTVAL, 'FM000'), 'IH' || TO_CHAR(SEQ_IH_NO.CURRVAL, 'FM000'), #{memberPk}, DEFAULT)
 	</insert>
 	
 	<insert id="insertIssueHistory" parameterType="Issue">
@@ -171,6 +172,7 @@
 	<select id="selectIssueOne" parameterType="java.lang.String" resultMap="selectIssueOne">
 		SELECT 
 			   I.ISSUE_NO
+			 , I.PROJECT_NO
 			 , P.PROJECT_NAME
 			 , W.WORK_NAME
 			 , I.ISSUE_TITLE

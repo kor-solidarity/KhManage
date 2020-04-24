@@ -243,11 +243,15 @@ public class IssueController {
 	}
 	
 	@RequestMapping("issueAgree.iu")
-	public String issueAgree(String issueNo, Model m) {
+	public String issueAgree(String issueNo, String projectNo, Model m) {
 		
 		int result = is.selectissueAgree(issueNo);
 		
 		if(result > 0) {
+			List<IssueProjectTeam> ipt = is.selectProjectTeamList(projectNo);
+			for(int i = 0; i < ipt.size(); i++) {
+				int result2 = is.insertReportProjectTeam(ipt.get(i));
+			}
 			return "redirect:selectIssueOne.iu?issueNo=" + issueNo;
 		}else {
 			m.addAttribute("msg", "이슈 승인 실패");
@@ -257,7 +261,7 @@ public class IssueController {
 	}
 	
 	@RequestMapping("issueComplete.iu")
-	public String issueComplete(IssueHistory ih, Model m) {
+	public String issueComplete(IssueHistory ih, String projectNo, Model m) {
 		
 		System.out.println(ih);
 		
@@ -273,6 +277,11 @@ public class IssueController {
 		
 		
 		if(result > 0) {
+			
+			List<IssueProjectTeam> ipt = is.selectProjectTeamList(projectNo);
+			for(int i = 0; i < ipt.size(); i++) {
+				int result2 = is.insertReportProjectTeam(ipt.get(i));
+			}
 			return "redirect:selectIssueOne.iu?issueNo=" + ih.getIssueNo();
 		}else {
 			m.addAttribute("msg", "이슈 승인 실패");
