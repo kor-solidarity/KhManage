@@ -636,7 +636,11 @@
                             },
                             success: function (data) {
                                 alert("done!");
+                                console.log(data);
                                 updateWorkList();
+                            },
+                            error: function (xhr, status, error) {
+                                alert("wut");
                             }
                         })
                     }
@@ -808,7 +812,7 @@
                         console.log(data[key])
                     }
                     // 좌측 목록 몽땅 제거.
-                    $("#chart-left-table tr:not(tr:first-of-type)").empty()
+                    $("#chart-left-table tr:not(tr:first-of-type)").remove()
                     // todo 우측도 이거 끝나면 제거해야함. 당장은 좌측이 더 급하니 이거부터 하는걸로.
 
                     // 돌아가면서 넘긴다.
@@ -840,7 +844,7 @@
                             // 작업에 배정된 인원
                             '<td>' + data[key]['memberName'] + '</td>' +
                             '<td><i class="fas fa-search" data-toggle="modal" ' +
-                            'data-target="#workDetails" ></i></td>' +
+                            'data-target="#workDetails" onclick="" ></i></td>' +
                             // 우선 여기까지 채우고 추가내용은 값에따라 바뀌기 때문에 별도추가?
                             '</tr>'
                         );
@@ -852,7 +856,7 @@
 	</script>
 
 	<!-- 모달 창 -->
-	<div class="modal fade" id="workDetails" role="dialog"
+	<div class="modal fade" id="workDetails1" role="dialog"
 		 aria-labelledby="gridSystemModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -925,21 +929,27 @@
 		<!-- /.modal-dialog -->
 	</div>
 	<%-- ---------------------------------- --%>
+
+
 	<%--작업 상세보기 모달창--%>
-	<div class="modal fade" id="workDetails2" tabindex="-1" role="dialog" aria-labelledby="workDetailTitle">
-		<div class="modal-dialog" role="document">
+	<div class="modal fade" id="workDetails" tabindex="-1" role="dialog"
+		 aria-labelledby="workDetailTitle" style="top: 200px;">
+		<div class="modal-dialog " role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
 							aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="workDetailTitle">담당자 목록</h4>
+					<h4 class="modal-title" id="workDetailTitle">
+						<i class="fas fa-th-large"></i>&nbsp;담당자 목록
+					</h4>
 				</div>
 				<div class="modal-body" id="workDetailContent">
-					<div class="container">
+					<div class="container-fluid">
+						<%--
 						<h2>Dynamic Tabs</h2>
 						<p>To make the tabs toggleable, add the data-toggle="tab" attribute to each link. Then add a
 							.tab-pane class with a unique ID for every tab and wrap them inside a div element with class
-							.tab-content.</p>
+							.tab-content.</p>--%>
 
 						<ul class="nav nav-tabs">
 							<li class="active"><a data-toggle="tab" href="#home">Home</a></li>
@@ -973,9 +983,10 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 					<button type="button" id="workDetailSubmitBtn" class="btn btn-primary"
-							onclick="">Save changes
+							style="background: #1E2B44; outline: none; border: none;"
+							onclick="">저장
 					</button>
 				</div>
 			</div>
