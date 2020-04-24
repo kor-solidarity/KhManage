@@ -83,6 +83,7 @@
 					<div style="width:100%; height:700px; margin:0 auto; overflow:auto;">
 						<table align="left" style="margin-bottom:10px;">	
 							<tr>
+								<%--이거 이대로 넣으면 프로젝트 번호(pid)와 projectNav 목록(navType) 선택이 정상적으로 진행되지 않음. --%>
 								<td><button class="projectBtn" onclick="location.href='outputReg.pr'"><i class="fas fa-edit"></i> &nbsp;산출물 등록</button>
 								<td><button class="projectBtn"><i class="fas fa-download"></i> &nbsp;액셀 다운로드</button>
 								<td colspan="6"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
