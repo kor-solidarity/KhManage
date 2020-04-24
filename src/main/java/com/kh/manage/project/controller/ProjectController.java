@@ -520,4 +520,29 @@ public class ProjectController {
 		
 		
 	}
+	
+	
+	
+	//작업 배정 현황
+	@RequestMapping("showAssignment.pr")
+	public String showAssignment(HttpServletRequest request) {
+		
+		String pid = request.getParameter("pid");
+		
+		ProjectDetail pd = ps.selectOneProject(pid);
+		
+		//List<Member> list = ps.selectList
+		
+		
+		
+		return "user/project/workAssignment";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -44,7 +44,7 @@
 		<li role="presentation"><a href="#">기본정보</a></li>
 		<li role="presentation"><a href="showResource.pr?pid=${pid}&type=2">리소스</a></li>
 		<li role="presentation"><a href="${path}/projectTask.pr?pid=${pid}&type=3">프로젝트작업</a></li>
-		<li role="presentation"><a href="#">배정현황</a></li>
+		<li role="presentation"><a href="showAssignment.pr?pid=${pid }&type=4">배정현황</a></li>
 		<li role="presentation"><a href="projectIssue.pr?pid=${pid}&type=5">이슈</a></li>
 		<li role="presentation"><a href="projectOutput.pr?pid=${pid}&type=6">산출물</a></li>
 		<li role="presentation"><a href="#">히스토리</a></li>
