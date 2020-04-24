@@ -330,6 +330,8 @@
         });
         
         $("#submitBtn").click(function(){
+        	ws.send("이슈");
+        	
         	$("#insertIssue").submit();
         });
         

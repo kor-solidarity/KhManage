@@ -5,6 +5,7 @@ import java.sql.Date;
 public class IssueList implements java.io.Serializable{
 	
 	private String IssueNo;
+	private String projectNo;
 	private String projectName;
 	private String workName;
 	private String issueTitle;
@@ -22,11 +23,12 @@ public class IssueList implements java.io.Serializable{
 	
 	public IssueList() {}
 
-	public IssueList(String issueNo, String projectName, String workName, String issueTitle, String issueContent,
-			Date registerDate, String issueType, String registerType, String registerName, String status,
-			String teamWorker, String teamWorkerName, Date actionDate, Date ihDate, String ihContent) {
+	public IssueList(String issueNo, String projectNo, String projectName, String workName, String issueTitle,
+			String issueContent, Date registerDate, String issueType, String registerType, String registerName,
+			String status, String teamWorker, String teamWorkerName, Date actionDate, Date ihDate, String ihContent) {
 		super();
 		IssueNo = issueNo;
+		this.projectNo = projectNo;
 		this.projectName = projectName;
 		this.workName = workName;
 		this.issueTitle = issueTitle;
@@ -49,6 +51,14 @@ public class IssueList implements java.io.Serializable{
 
 	public void setIssueNo(String issueNo) {
 		IssueNo = issueNo;
+	}
+
+	public String getProjectNo() {
+		return projectNo;
+	}
+
+	public void setProjectNo(String projectNo) {
+		this.projectNo = projectNo;
 	}
 
 	public String getProjectName() {
@@ -165,12 +175,15 @@ public class IssueList implements java.io.Serializable{
 
 	@Override
 	public String toString() {
-		return "IssueList [IssueNo=" + IssueNo + ", projectName=" + projectName + ", workName=" + workName
-				+ ", issueTitle=" + issueTitle + ", issueContent=" + issueContent + ", registerDate=" + registerDate
-				+ ", issueType=" + issueType + ", registerType=" + registerType + ", registerName=" + registerName
-				+ ", status=" + status + ", teamWorker=" + teamWorker + ", teamWorkerName=" + teamWorkerName
-				+ ", actionDate=" + actionDate + ", ihDate=" + ihDate + ", ihContent=" + ihContent + "]";
+		return "IssueList [IssueNo=" + IssueNo + ", projectNo=" + projectNo + ", projectName=" + projectName
+				+ ", workName=" + workName + ", issueTitle=" + issueTitle + ", issueContent=" + issueContent
+				+ ", registerDate=" + registerDate + ", issueType=" + issueType + ", registerType=" + registerType
+				+ ", registerName=" + registerName + ", status=" + status + ", teamWorker=" + teamWorker
+				+ ", teamWorkerName=" + teamWorkerName + ", actionDate=" + actionDate + ", ihDate=" + ihDate
+				+ ", ihContent=" + ihContent + "]";
 	}
+	
+	
 
 	
 }

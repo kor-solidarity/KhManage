@@ -43,13 +43,13 @@
         <typeAlias type="com.kh.manage.issue.model.vo.IssueProjectTeam" alias="IssueProjectTeam"/>
         <typeAlias type="com.kh.manage.infoBoard.model.vo.BoReply" alias="BoReply"/>
         <typeAlias type="com.kh.manage.issue.model.vo.Issue" alias="Issue"/>
-        <typeAlias type="com.kh.manage.common.Report" alias="Report"/>
         <typeAlias type="com.kh.manage.issue.model.vo.IssueList" alias="IssueList"/>
         <typeAlias type="com.kh.manage.project.model.vo.ProjectDetail" alias="ProjectDetail"/>
         <typeAlias type="com.kh.manage.project.model.vo.WorkHistory" alias="WorkHistory"/>
         <typeAlias type="com.kh.manage.gwManage.model.vo.GwRepeat" alias="GwRepeat"/>
         <typeAlias type="com.kh.manage.chat.model.vo.SearchKeyWord" alias="SearchKeyWord"/>
         <typeAlias type="com.kh.manage.issue.model.vo.IssueHistory" alias="IssueHistory"/>
+        <typeAlias type="com.kh.manage.report.model.vo.Report" alias="Report"/>
   	</typeAliases>
   
   
@@ -70,6 +70,7 @@
         <mapper resource="mappers/gWork-mapper.xml"/>
         <mapper resource="mappers/Issue-mapper.xml"/>
         <mapper resource="mappers/chat-mapper.xml"/>
+        <mapper resource="mappers/report-mapper.xml"/>
   	</mappers>
   		
   

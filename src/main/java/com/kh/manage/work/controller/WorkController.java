@@ -45,7 +45,7 @@ public class WorkController {
 		if(map != null || wp != null) {
 			request.setAttribute("map", map);
 			request.setAttribute("wp", wp);
-			return "user/work/myWorkList";
+			return "user/work/myWorkList2";
 		}else {
 			request.setAttribute("msg", "작업 리스트 출력 오류");
 			return "common/errorPage";
