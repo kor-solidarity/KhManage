@@ -92,7 +92,8 @@
 	border-radius: 70%;
 	overflow: hidden;
 	margin-bottom: 50px;
-	margin-left: 60px;
+	/* margin-left: 60px; */
+	margin: 0 auto;
 }
 
 .pImamage {
@@ -137,8 +138,8 @@
                                 	<img class="thumb-lg pImamage" src="<c:url value="resources/uploadFiles/${at.changeName}.png"/>">
                                 </div>
                                 
-                                <div class="" style="align: center;">
-	                                <h4 class="text-white" style="margin-left: 25%">${loginUser.memberName}</h4>
+                                <div class="" style="margin-top: 40px;">
+	                                <h4 class="text-white" style="text-align: center">${loginUser.memberName}</h4>
 	                                <h5 class="text-white" style="margin-left: 25%">${loginUser.email}</h5>
                                 </div>
                             </div>
@@ -214,7 +215,7 @@
                                 <div class="form-group">
                                     <label class="col-md-12 required">소속부서</label>
                                     <div class="col-md-12">
-                                        <input id="" name="RES_OFFICE_PHONE" value="<%-- ${loginUser.deptName} --%>부서" type="text" class="form-control form-control-line" placeholder="이름을 입력하세요" data-error="이름을 입력하세요" required="" readonly>
+                                        <input id="" name="RES_OFFICE_PHONE" value="${loginUser.deptName}" type="text" class="form-control form-control-line" placeholder="이름을 입력하세요" data-error="이름을 입력하세요" required="" readonly>
                                         <span class="help-block with-errors"></span>
                                     </div>
                                 </div>
