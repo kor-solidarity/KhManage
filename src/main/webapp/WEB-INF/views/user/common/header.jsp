@@ -13,7 +13,6 @@
 	<!-- VENDOR CSS -->
 	<link rel="stylesheet" href="<c:url value="/resources/assets/vendor/bootstrap/css/bootstrap.css"/>">
 	<link rel="stylesheet" href="<c:url value="/resources/assets/vendor/font-awesome/css/font-awesome.min.css"/>">
-
 	<link rel="stylesheet" href="<c:url value="/resources/assets/vendor/linearicons/style.css"/>">
 	<link rel="stylesheet" href="<c:url value="/resources/assets/vendor/chartist/css/chartist-custom.css"/>">
 	<!-- MAIN CSS -->
@@ -32,10 +31,11 @@
 	<script src="<c:url value="/resources/assets/vendor/jquery/jquery.min.js"/>"></script>
 	<script src="<c:url value="/resources/assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"/>"></script>
 	<script src="<c:url value="/resources/assets/vendor/chartist/js/chartist.min.js"/>"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-modal/2.1.0/bootstrap-modal.pack.js" integrity="sha256-RaeejS89s+piuuCGQ6QO7ZRGQyP12ejAj7Rb78YC4GA=" crossorigin="anonymous"></script>
 	<script src="<c:url value="/resources/assets/scripts/klorofil-common.js"/>"></script>
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
+	
 <style>
 </style>
 </head>
@@ -75,24 +75,14 @@
 							class="dropdown-toggle icon-menu" data-toggle="dropdown">
 							<i class="fas fa-bell" style="font-size: 25px; color: #1E2B44;"></i>
 								<!-- <span class="badge bg-danger" style="background:red;">5</span> -->
+								<span id="reportCount" class="badge bg-danger" style="background:red; padding-left:0px; padding-right:0px; left:32px; top:20px; font-size:12px; width:auto; height:18px;">300+</span>
 						</a>
-							<ul class="dropdown-menu notifications">
-								<li><a href="#" class="notification-item"><span
-										class="dot bg-warning"></span>System space is almost full</a></li>
-								<li><a href="#" class="notification-item"><span
-										class="dot bg-danger"></span>You have 9 unfinished tasks</a></li>
-								<li><a href="#" class="notification-item"><span
-										class="dot bg-success"></span>Monthly report is available</a></li>
-								<li><a href="#" class="notification-item"><span
-										class="dot bg-warning"></span>Weekly meeting in 1 hour</a></li>
-								<li><a href="#" class="notification-item"><span
-										class="dot bg-success"></span>Your request has been approved</a></li>
-								<li><a href="#" class="more">See all notifications</a></li>
-							</ul></li>
+							<ul id="reportArea" class="dropdown-menu notifications" style="height:300px; overflow: auto;">
+								
+							</ul>
 
 							
-						<li class="dropdown"><a id="chat"
-							class="dropdown-toggle icon-menu" data-toggle="dropdown">
+						<li class="dropdown"><a id="chat" class="dropdown-toggle icon-menu" data-toggle="dropdown">
 							<i class="fas fa-comment-dots" style="font-size: 25px; color: #1E2B44;"></i>
 								<span id="chatCount" class="badge bg-danger" style="background:red; padding-left:0px; padding-right:0px; left:32px; top:20px; font-size:12px; width:auto; height:18px;">300+</span>
 						</a></li>
@@ -141,21 +131,62 @@
 			});
 			});
 			
-			  function writeResponse(text){
+			
+			$(function(){
+				 var memberNo = "${loginUser.memberNo}";
+				  console.log(memberNo);
 				  $.ajax({
-						url:'selectAllMessageCount.ct',
+						url:'selectIssueList.re',
 						type: 'post',
 						async: false,
-						data:{},
-					 success:function(data){
-						 if(data == 0){
-							 $("#chatCount").hide();
-						 }else{
-							 $("#chatCount").show();
-							 $("#chatCount").text(data);
+						data:{memberNo:memberNo},
+					 success: function(data){
+						 var i = 0;
+						 for(key in data) {
+							$("#reportArea").append("<li><a href='#' class='notification-item'><span class='dot bg-warning'>"+ data[key]['issueType'] +"</span></a></li>");
+							i++;
 						 }
+						 $("#reportCount").text(i);
 					 }
 				});
+			});
+			
+			  function writeResponse(text){
+				  if(text == '이슈'){
+					  var memberNo = "${loginUser.memberNo}";
+					  console.log(memberNo);
+					  $.ajax({
+							url:'selectIssueList.re',
+							type: 'post',
+							async: false,
+							data:{memberNo:memberNo},
+						 success:function(data){
+							 var i = 0;
+							 
+							 for(key in data) {
+								$("#reportArea").append("<li><a href='#' class='notification-item'><span class='dot bg-warning'>"+ data[key]['issueType'] +"</span></a></li>");
+								i++;
+							 }
+							 $("#reportCount").text(i);
+						 }
+					});
+					  
+				  }else{
+					  $.ajax({ 
+							url:'selectAllMessageCount.ct',
+							type: 'post',
+							async: false,
+							data:{},
+						 success:function(data){
+							 if(data == 0){
+								 $("#chatCount").hide();
+							 }else{
+								 $("#chatCount").show();
+								 $("#chatCount").text(data);
+							 }
+						 }
+					});
+				  }
 		        }
 		</script>
 </body>
