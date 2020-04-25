@@ -154,7 +154,7 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public List<Project> selectProjectList(SqlSessionTemplate sqlSession) {
 
-		return sqlSession.selectList("Project.selectProjectList");
+		return sqlSession.selectList("Member.selectProjectList");
 	}
 
 

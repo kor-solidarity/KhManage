@@ -20,6 +20,7 @@ public class Member implements Serializable {
 	private String deapTeamNo;
 	private String deptTeamName;
 	private String projectPk;
+	private String projectName;
 	private int countProject;
 	private Date enrollDate;
 	private Date modifyDate;
@@ -31,8 +32,8 @@ public class Member implements Serializable {
 
 	public Member(String memberNo, String memberId, String memberPwd, String memberName, String phone, String email,
 			String jobCode, String memberType, String rankNo, String rankName, String deptNo, String deptName,
-			String deapTeamNo, String deptTeamName, String projectPk, int countProject, Date enrollDate,
-			Date modifyDate, String changeName, String ext, String status) {
+			String deapTeamNo, String deptTeamName, String projectPk, String projectName, int countProject,
+			Date enrollDate, Date modifyDate, String changeName, String ext, String status) {
 		super();
 		this.memberNo = memberNo;
 		this.memberId = memberId;
@@ -49,6 +50,7 @@ public class Member implements Serializable {
 		this.deapTeamNo = deapTeamNo;
 		this.deptTeamName = deptTeamName;
 		this.projectPk = projectPk;
+		this.projectName = projectName;
 		this.countProject = countProject;
 		this.enrollDate = enrollDate;
 		this.modifyDate = modifyDate;
@@ -177,6 +179,14 @@ public class Member implements Serializable {
 		this.projectPk = projectPk;
 	}
 
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+
 	public int getCountProject() {
 		return countProject;
 	}
@@ -231,9 +241,11 @@ public class Member implements Serializable {
 				+ memberName + ", phone=" + phone + ", email=" + email + ", jobCode=" + jobCode + ", memberType="
 				+ memberType + ", rankNo=" + rankNo + ", rankName=" + rankName + ", deptNo=" + deptNo + ", deptName="
 				+ deptName + ", deapTeamNo=" + deapTeamNo + ", deptTeamName=" + deptTeamName + ", projectPk="
-				+ projectPk + ", countProject=" + countProject + ", enrollDate=" + enrollDate + ", modifyDate="
-				+ modifyDate + ", changeName=" + changeName + ", ext=" + ext + ", status=" + status + "]";
+				+ projectPk + ", projectName=" + projectName + ", countProject=" + countProject + ", enrollDate="
+				+ enrollDate + ", modifyDate=" + modifyDate + ", changeName=" + changeName + ", ext=" + ext
+				+ ", status=" + status + "]";
 	}
+
 	
 	
 }

@@ -273,6 +273,8 @@ public class MemberController {
 		
 		request.setAttribute("plist", plist);
 		
+		System.out.println("plist : " + plist);
+		
 		
 		return "admin/userManagement/registerUser";
 	}
