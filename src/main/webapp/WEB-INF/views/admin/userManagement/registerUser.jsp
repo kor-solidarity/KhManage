@@ -109,7 +109,8 @@
 				
 				<p>사용자 등록정보<span style="color:red;"> *</span><p>
 				<hr>
-				<form action="insert.me" method="post">
+				<!-- <form action="insert.me" method="post"> -->
+				<form action="#" method="post">
 					<table id="aa" border="0">
 					<br>
 						<tr class="tableTr">
@@ -225,7 +226,14 @@
 							<td>
 								<!-- <input type="text" id="rank" class="register form-control" name="rank"> -->
 								<select id="projectList" class="register form-control" name="projectName">
-									<option>선택하세요</option>
+									<option id="projectOption" class="form-control">선택하세요</option>
+									<c:forEach var="p" items="${plist}">
+									<option id="projectOption" class="form-control" value="${p.projectPk}">
+										<c:out value="${p.projectName}">
+										<input type="hidden" id="projectNo" name="projectNo" value="${p.projectPk}">											
+										</c:out>
+									</option>
+									</c:forEach>
 								</select>
 							</td>
 						</tr>
@@ -285,6 +293,8 @@
 		});
 	});
 	
+	
+	//고객사 선택여부 0, 1
 	$("#customer").on("change", function(){
 		if($("#customer").prop("checked")){
 			$("#memberType").val(1);
@@ -350,8 +360,11 @@
 	});
 	
 	
-	//-------------- 회원가입 유효성 검사-----------------
 
+	
+	
+	
+	//-------------- 회원가입 유효성 검사-----------------
 	// 아이디 중복검사
 	
 	$("#availableId").hide();
@@ -413,6 +426,10 @@
 		}
 		
 	});
+	
+	
+	
+	
 	
 	
 /* 	

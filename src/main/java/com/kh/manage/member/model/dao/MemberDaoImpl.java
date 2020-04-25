@@ -14,6 +14,7 @@ import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.member.model.exception.LoginException;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.project.model.vo.Project;
 
 @Repository
 public class MemberDaoImpl implements MemberDao {
@@ -148,6 +149,12 @@ public class MemberDaoImpl implements MemberDao {
 	public List<Member> searchMemberName(SqlSessionTemplate sqlSession, Member member) {
 
 		return sqlSession.selectList("Member.searchMemberName", member);
+	}
+
+	@Override
+	public List<Project> selectProjectList(SqlSessionTemplate sqlSession) {
+
+		return sqlSession.selectList("Project.selectProjectList");
 	}
 
 

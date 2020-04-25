@@ -32,6 +32,7 @@ import com.kh.manage.infoBoard.model.vo.InfoBoard;
 import com.kh.manage.member.model.exception.LoginException;
 import com.kh.manage.member.model.service.MemberService;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.project.model.vo.Project;
 
 
 @Controller
@@ -267,6 +268,12 @@ public class MemberController {
 		request.setAttribute("rlist", rlist);
 		
 		
+		//프로젝트 조회
+		List<Project> plist = ms.selectProjectList();
+		
+		request.setAttribute("plist", plist);
+		
+		
 		return "admin/userManagement/registerUser";
 	}
 	
@@ -339,7 +346,8 @@ public class MemberController {
 			System.out.println("이미지 업데이트 result : " + result); 
 			
 			try {
-				profileImage.transferTo(new File(filePath + "\\" + changeName + ext));
+//				profileImage.transferTo(new File(filePath + "\\" + changeName + ext));
+//				profileImage.transferTo(new File(filePath + changeName + ext)); // Mac
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -351,7 +359,7 @@ public class MemberController {
 			try {
 				int result = ms.insertProfileImage(at);
 				System.out.println("프로필이미지 result : " + result);
-				profileImage.transferTo(new File(filePath + "\\" + changeName + ext));
+//				profileImage.transferTo(new File(filePath + "\\" + changeName + ext));
 //				profileImage.transferTo(new File(filePath + changeName + ext)); // Mac
 				
 			} catch (Exception e) {

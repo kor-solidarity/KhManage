@@ -20,6 +20,7 @@ import com.kh.manage.common.PageInfo;
 import com.kh.manage.member.model.dao.MemberDao;
 import com.kh.manage.member.model.exception.LoginException;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.project.model.vo.Project;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -200,6 +201,12 @@ public class MemberServiceImpl implements MemberService {
 	public List<Member> searchMemberName(Member member) {
 		// TODO Auto-generated method stub
 		return md.searchMemberName(sqlSession, member);
+	}
+
+	@Override
+	public List<Project> selectProjectList() {
+		
+		return md.selectProjectList(sqlSession);
 	}
 
 	
