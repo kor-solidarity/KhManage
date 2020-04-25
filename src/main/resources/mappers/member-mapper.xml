@@ -17,6 +17,7 @@
 		<result property="deptNo" column="DEPT_NO"/>
 		<result property="deptName" column="DEPT_NAME"/>
 		<result property="projectPk" column="PROJECT_PK"/>
+		<result property="projectName" column="PROJECT_NAME"/>
 		<result property="enrollDate" column="ENROLL_DATE"/>
 		<result property="changeName" column="CHANGE_NAME"/>
 		<result property="ext" column="EXT"/>
@@ -232,8 +233,11 @@
 		
 	 </select>
 	 
-	
-	
+	<select id="selectProjectList" resultMap="memberResultSet">
+		SELECT PROJECT_PK
+			 , PROJECT_NAME
+		FROM PROJECT
+	</select>
 	
 </mapper>
 
