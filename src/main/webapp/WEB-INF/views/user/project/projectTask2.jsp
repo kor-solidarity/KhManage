@@ -860,7 +860,7 @@
 	<div class="modal fade" id="workDetails" tabindex="-1" role="dialog"
 		 aria-labelledby="workDetailTitle">
 		<div class="modal-dialog " role="document">
-			<div class="modal-content">
+			<div class="modal-content" style="width: 800px;">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
 							aria-hidden="true">&times;</span></button>
@@ -868,13 +868,8 @@
 						<i class="fas fa-th-large"></i>&nbsp;담당자 목록
 					</h4>
 				</div>
-				<div class="modal-body" id="workDetailContent">
+				<div class="modal-body" id="workDetailContent" >
 					<div class="container-fluid">
-						<%--
-						<h2>Dynamic Tabs</h2>
-						<p>To make the tabs toggleable, add the data-toggle="tab" attribute to each link. Then add a
-							.tab-pane class with a unique ID for every tab and wrap them inside a div element with class
-							.tab-content.</p>--%>
 
 						<ul class="nav nav-tabs">
 							<li class="active"><a data-toggle="tab" href="#home">작업정보</a></li>
@@ -949,11 +944,9 @@
 										<th style="text-align: center; width: 70px;">
 											ID
 										</th>
-
 										<th style="text-align: center">
 											작업
 										</th>
-
 										<th style="text-align: center; width: 150px; display:none;">
 											선행작업 타입
 										</th>
@@ -1020,9 +1013,86 @@
 							</div>
 							<%--산출물--%>
 							<div id="menu2" class="tab-pane fade">
-								<h3>Menu 2</h3>
-								<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-									laudantium, totam rem aperiam.</p>
+								<div class="tab-pane active" id="tab_1_4">
+									<div class="row" style="margin-bottom: 0px; display: block;" id="div_file_upload">
+										<div class="col-md-2">
+											<label class="control-label font-blue-dark"
+												   style="float:left; text-align:left; width:100px;padding-left:15px;">
+												산출물 등록</label>
+										</div>
+										<div class="col-md-4" style="padding-bottom:10px;">
+											<select class="select2me approvers select2-offscreen"
+													id="task_document_classify_check"
+													name="task_document_classify_check" tabindex="-1" title="">
+												<option value="UI보고서">UI보고서</option>
+												<option value="요구사항정의서">요구사항정의서</option>
+												<option value="프로세스 정의서">프로세스 정의서</option>
+												<option value="테이블 정의서">테이블 정의서</option>
+												<option value="통합테스트 시나리오">통합테스트 시나리오</option>
+											</select>
+										</div>
+										<div class="col-md-6">
+											<div class="">
+												<input id="attFiles" name="attFiles" type="file" autocomplete="off">
+											</div>
+										</div>
+									</div>
+									<div id="fileList" style="width:100%;">
+										<table class="table table-striped table-bordered table-advance table-hover">
+											<thead>
+											<tr>
+												<th style="text-align: center; width: 20%;">
+													산출물 분류
+												</th>
+												<th style="text-align: center; width: 40%;">
+													파일명
+												</th>
+												<th style="text-align: center; width: 7%;">
+													버전
+												</th>
+												<th style="text-align: center; width: 10%;">
+													등록자
+												</th>
+
+												<th style="text-align: center; width: 7%;">
+													삭제
+												</th>
+											</tr>
+											</thead>
+											<tbody>
+
+											<tr id="d726674b-be83-4317-8f1f-4b984fc4890c">
+												<td class="hidden-xs">
+													설계검토결과
+												</td>
+												<td class="highlight">
+													<img src="/Images/Files/jpg.png" style="width: 20px; float:left;">
+													<a href="/File/FileDownloadByFileUid?fileUid=d726674b-be83-4317-8f1f-4b984fc4890c">★부록자료
+														사용안내★.jpg</a>
+												</td>
+												<td class="hidden-xs" style="text-align: center;">
+													v1
+												</td>
+												<td class="hidden-xs" style="text-align: center;">
+													pmo01
+												</td>
+
+
+												<td style="text-align: center;">
+													<button onclick="FileDelete('d726674b-be83-4317-8f1f-4b984fc4890c');"
+															file_uid="d726674b-be83-4317-8f1f-4b984fc4890c"
+															class="k-upload-action k-button-bare"
+															style="display: inline-block;" type="button">
+														<span class="glyphicon glyphicon-trash"> </span>
+													</button>
+												</td>
+											</tr>
+
+											</tbody>
+										</table>
+
+									</div>
+								</div>
 							</div>
 							<%--가이드--%>
 							<div id="menu3" class="tab-pane fade">
