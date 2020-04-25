@@ -110,7 +110,7 @@
 				<p>사용자 등록정보<span style="color:red;"> *</span><p>
 				<hr>
 				<!-- <form action="insert.me" method="post"> -->
-				<form action="#" method="post">
+				<form action="insert.me" method="post">
 					<table id="aa" border="0">
 					<br>
 						<tr class="tableTr">
@@ -149,8 +149,9 @@
 						<tr class="hiddenTr">
 							<td class=""></td>
 							<td class=""></td>
-							<td class="msg-td-password"><div id="incorrectPwd" class="ajax-msg-pwdNotOk" style="color:orangered; font-size: 12px; display:none">패스워드가 일치하지 않습니다.</div>
-								<!-- <div id="correctPwd" class="ajax-msg-pwdOk" style="color:#048000"></div> -->
+							<td class="msg-td-password">
+								<div id="correctPwd" class="ajax-msg-pwdOk" style="color:#048000; font-size: 12px; display:none">패스워드가 일치합니다.</div>
+								<div id="incorrectPwd" class="ajax-msg-pwdNotOk" style="color:orangered; font-size: 12px; display:none">패스워드가 일치하지 않습니다.</div>
 							</td>
 						</tr><!-- 패스워드 유효성 검사 Begin -->
 						
@@ -180,7 +181,7 @@
 							<td></td>
 							<td>
 								<select id="deptNo" class="register form-control" name="">
-									<option id="deptSelect" class="form-control" value="0">선택하세요</option>
+									<option id="deptSelectOption" class="form-control" value="0">선택하세요</option>
 									<c:forEach var="a" items="${list}">
 										<option class="form-control" value="${a.deptNo}">
 											<c:out value="${a.deptName}"/>
@@ -194,7 +195,7 @@
 							<td></td>
 							<td>
 								<select id="deptTeam" class="register form-control" name="deptNo">
-									<option class="form-control" value="0">선택하세요</option>
+									<option id="deptTeamOption" class="form-control" value="0">선택하세요</option>
 									<!-- <option id="deptTeamOption" class="form-control" value="#">선택하세요</option> -->
 								</select>
 							</td>
@@ -204,7 +205,7 @@
 							<td></td>
 							<td>
 								<select id="rank" class="register form-control"  name="rankNo">
-									<option id="rank" class="form-control" value="0">선택하세요</option>
+									<option id="rankOption" class="form-control" value="0">선택하세요</option>
 									<c:forEach var="r" items="${rlist}">
 										<option class="form-control" value="${r.rankNo}">
 											<c:out value="${r.rankName}"/>
@@ -226,7 +227,7 @@
 							<td>
 								<!-- <input type="text" id="rank" class="register form-control" name="rank"> -->
 								<select id="projectList" class="register form-control" name="projectName">
-									<option id="projectOption" class="form-control">선택하세요</option>
+									<option id="projectOption" class="form-control" value="0">선택하세요</option>
 									<c:forEach var="p" items="${plist}">
 									<option id="projectOption" class="form-control" value="${p.projectPk}">
 										<c:out value="${p.projectName}">
@@ -296,20 +297,33 @@
 	
 	//고객사 선택여부 0, 1
 	$("#customer").on("change", function(){
+		
 		if($("#customer").prop("checked")){
+			
 			$("#memberType").val(1);
 			console.log($("#memberType").val());
+			
+			
+			$('select').each(function(){
+				$(this).find('option').attr('selected', false);
+			});
+			
+			
 		}else{
+			
 			$("#memberType").val(0);
 			console.log($("#memberType").val());
+			
 		}
 		
 	});
 	
 	
+	
+	
 	//Alert
 	$(".okBtn").click(function(){
-		swal({	
+		/* swal({	
 		  title: 'Are you sure?',
 		  text: "You won't be able to revert this!",
 		  icon: 'warning',
@@ -334,7 +348,7 @@
 		      'error'
 		    )
 		  }
-		})
+		}) */
 	});
 	
 	
@@ -349,18 +363,16 @@
 				
 			 	success:function(data){
 					$("#deptTeam").empty();
+					$("#deptTeam").append("<option id='deptTeamOption' value=''>" + "선택하세요" + "</option>");
 					
 						 for(key in data) {
-							/* $("#deptTeam").append("<option value='" + data[key]['0']+ "'>"+ "선택하세요" + "</option>"); */
-							$("#deptTeam").append("<option value='" + data[key]['deptNo']+ "'>"+ data[key]['deptName'] + "</option>");
+							$("#deptTeam").append("<option id='deptTeamOption' value='" + data[key]['deptNo']+ "'>"+ data[key]['deptName'] + "</option>");
 						 }
 				 }
 			}); 
 		});
 	});
 	
-	
-
 	
 	
 	
@@ -413,12 +425,14 @@
 		if(password1 != "" && password2 != "") {
 			
 			if(password1 == password2) {
-				/* $("#msg-pwdOk").show(); */
+				$("#correctPwd").show();
 				$("#incorrectPwd").hide();
-				$(".hiddenTr").hide()
+				$(".hiddenTr").show()
+				
 			} else {
 				$("#incorrectPwd").show();
 				$(".hiddenTr").show()
+				$("#correctPwd").hide();
 			}
 		} else {
 			$(".hiddenTr").hide()
