@@ -12,6 +12,7 @@ import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.member.model.exception.LoginException;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.project.model.vo.Project;
 
 
 public interface MemberDao {
@@ -55,6 +56,8 @@ public interface MemberDao {
 	int memberListCount(SqlSessionTemplate sqlSession);
 
 	List<Member> searchMemberName(SqlSessionTemplate sqlSession, Member member);
+
+	List<Project> selectProjectList(SqlSessionTemplate sqlSession);
 
 
 }
