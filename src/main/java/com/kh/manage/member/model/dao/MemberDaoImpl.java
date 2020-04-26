@@ -157,6 +157,30 @@ public class MemberDaoImpl implements MemberDao {
 		return sqlSession.selectList("Member.selectProjectList");
 	}
 
+	@Override
+	public int insertCustomerTable(SqlSessionTemplate sqlSession, Member m) {
+
+		return sqlSession.insert("Member.insertCustomerTable", m);
+	}
+
+	@Override
+	public int insertCustomer(SqlSessionTemplate sqlSession, Member m) {
+
+		return sqlSession.insert("Member.insertCustomer", m);
+	}
+
+	@Override
+	public int insertCustomerProjectTeam(SqlSessionTemplate sqlSession, Member m) {
+
+		return sqlSession.insert("Member.insertCustomerProjectTeam", m);
+	}
+
+	@Override
+	public String selectCurrval(SqlSessionTemplate sqlSession) {
+
+		return sqlSession.selectOne("Member.selectCurrval");
+	}
+
 
 
 

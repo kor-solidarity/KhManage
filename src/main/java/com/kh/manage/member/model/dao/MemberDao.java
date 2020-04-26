@@ -59,5 +59,13 @@ public interface MemberDao {
 
 	List<Project> selectProjectList(SqlSessionTemplate sqlSession);
 
+	int insertCustomerTable(SqlSessionTemplate sqlSession, Member m);
+
+	int insertCustomer(SqlSessionTemplate sqlSession, Member m);
+
+	int insertCustomerProjectTeam(SqlSessionTemplate sqlSession, Member m);
+
+	String selectCurrval(SqlSessionTemplate sqlSession);
+
 
 }
