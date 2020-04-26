@@ -209,6 +209,28 @@ public class MemberServiceImpl implements MemberService {
 		return md.selectProjectList(sqlSession);
 	}
 
+	@Override
+	public int insertCustomerTable(Member m) {
+
+		return md.insertCustomerTable(sqlSession, m);
+	}
+
+	@Override
+	public int insertCustomer(Member m) {
+
+		return md.insertCustomer(sqlSession, m);
+	}
+
+	@Override
+	public int insertCustomerProjectTeam(Member m) {
+
+		int result = md.insertCustomerProjectTeam(sqlSession, m);
+		
+		String memberNo = md.selectCurrval(sqlSession);
+		
+		return result;
+	}
+
 	
 	
 	

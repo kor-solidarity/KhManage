@@ -31,6 +31,7 @@ import com.kh.manage.common.Pagination;
 import com.kh.manage.infoBoard.model.vo.InfoBoard;
 import com.kh.manage.member.model.exception.LoginException;
 import com.kh.manage.member.model.service.MemberService;
+import com.kh.manage.member.model.vo.Customer;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.project.model.vo.Project;
 
@@ -151,30 +152,85 @@ public class MemberController {
 		 
 		status.setComplete();
 		
+		
 		return "redirect:index.jsp";
 	}
 	
 	
 	@RequestMapping("insert.me")
-	public String inertMember(Model model, Member m) {
+	public String inertMember(Model model, Member m, HttpServletRequest request) {
+
+
+		if(m.getRankNo().equals("0") || m.getRankNo().equals("")) {
+			m.setRankNo(null);
+		}
+
+		if(m.getDeptNo().equals("0") || m.getDeptNo().equals("")) {
+			m.setDeptNo(null);
+		}
+
 		
-//		System.out.println("controller member : " + m);
+		String memberNo = request.getParameter("memberNo");
+		System.out.println("파라미터 memberNo : " + memberNo);
 		
-		m.setMemberPwd(passwordEncoder.encode(m.getMemberPwd()));
+		String memberName = request.getParameter("memberName");
+		System.out.println("파라미터 memberName : " + memberName);
 		
-		int result = ms.insertMember(m);
+		String projectPk = request.getParameter("projecPk");
+		System.out.println("파라미터 projectPk : " + projectPk);
 		
-		if(result > 0) {
-			
-			return "redirect:index.jsp";
+
+		//	      System.out.println("controller member : " + m);
+
+		if(m.getMemberType().equals("0")) {
+
+			m.setMemberPwd(passwordEncoder.encode(m.getMemberPwd()));
+
+			int result = ms.insertMember(m);
+
+			if(result > 0) {
+
+				return "redirect:index.jsp";
+			} else {
+				model.addAttribute("msg", "회원가입 실패!");
+
+				return "common/errorPage";
+			}
 			
 		} else {
-			model.addAttribute("msg", "회원 가입실패!");
-			
-			return "common/errorPage";
+
+			if(m.getRankNo() == null || m.getDeptNo() == null) {
+
+				int result1 = ms.insertCustomerTable(m);
+
+				m.setMemberPwd(passwordEncoder.encode(m.getMemberPwd()));
+				
+				int result2 = ms.insertCustomer(m);
+				
+				
+				m.setMemberNo(memberNo);
+				m.setProjectPk(projectPk);
+				
+				int result3 = ms.insertCustomerProjectTeam(m);
+
+				
+				if (result1 > 0 || result2 > 0 || result3 > 0) {
+
+					return "redirect:index.jsp";
+				} else {
+
+					model.addAttribute("msg", "고객사리스트 삽입 실패!");
+
+					return "common/errorPage";
+				}
+
+			}
 		}
 		
+		
+		return "redirect:index.jsp";
 	}
+	
 	
 	
 	//회원비밀번호 변경
@@ -255,6 +311,7 @@ public class MemberController {
 	//부서 + 직급리스트 조회
 	@RequestMapping("registerMember.me")
 	public String registerUser(Model model, HttpServletRequest request) {
+		
 		
 		//부서조회 레벨1
 		List<Dept> list = ms.selectDeptList();

@@ -52,6 +52,12 @@ public interface MemberService {
 
 	List<Project> selectProjectList();
 
+	int insertCustomerTable(Member m);
+
+	int insertCustomer(Member m);
+
+	int insertCustomerProjectTeam(Member m);
+
 
 
 	

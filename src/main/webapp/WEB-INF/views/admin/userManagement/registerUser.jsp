@@ -231,7 +231,7 @@
 									<c:forEach var="p" items="${plist}">
 									<option id="projectOption" class="form-control" value="${p.projectPk}">
 										<c:out value="${p.projectName}">
-										<input type="hidden" id="projectNo" name="projectNo" value="${p.projectPk}">											
+										<input type="hidden" id="projectNo" name="projectPk" value="${p.projectPk}">											
 										</c:out>
 									</option>
 									</c:forEach>
@@ -239,6 +239,21 @@
 							</td>
 						</tr>
 					</table>
+					
+					<script>
+					
+					//projectPk
+					$(document).ready(function(){
+						
+						$("#projectList").on("change", function() {
+							
+							console.log($(this).val());
+						});
+						
+					});
+					
+					</script>
+					
 						<div class="checkBoxArea">
 							<label>
 							<input type="checkbox" id="customer" class="checkbox" name="customer" style="">

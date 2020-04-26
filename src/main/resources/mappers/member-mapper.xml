@@ -50,6 +50,11 @@
 		<result property="ext" column="EXT"/>
 	</resultMap>
 	
+	<!-- <resultMap type="Customer" id="customerResultSet">
+		<id property="customerNo" column="CUSTOMER_NO"/>
+		<result property="customerName" column="CUSTOMER_NAME"/>
+	</resultMap> -->
+	
 	
 	<!-- <select id="loginCheck" resultMap="memberResultSet" parameterType="Member">
 		SELECT *
@@ -191,6 +196,7 @@
 		         ,R.RANK_NAME
 		         ,M.EMAIL
 		         ,M.STATUS
+		ORDER BY MEMBER_NO DESC
 	</select>
 	
 	
@@ -238,6 +244,37 @@
 			 , PROJECT_NAME
 		FROM PROJECT
 	</select>
+	
+	
+	
+	
+	
+	<!-- 고객사 테이블 insert -->
+	<!-- <insert id="insertMember" parameterType="Member">
+		INSERT INTO MEMBER
+		VALUES ('M' || TO_CHAR(SEQ_MNO.NEXTVAL, 'FM000'), #{memberId}, #{memberPwd}, #{memberName}, #{phone}, #{email}, #{memberType}, #{rankNo}, #{deptNo}, SYSDATE, SYSDATE, 'Y')
+	</insert> -->
+	
+	<insert id="insertCustomerTable" parameterType="Member">
+		INSERT INTO CUSTOMER
+		VALUES ('C' || TO_CHAR(SEQ_CUSTOMER.NEXTVAL, 'FM000'), #{memberName})
+	</insert>
+	
+	<insert id="insertCustomer" parameterType="Member">
+		INSERT INTO MEMBER
+		VALUES ('C' || TO_CHAR(SEQ_MNO.NEXTVAL, 'FM000'), #{memberId}, #{memberPwd}, #{memberName}, #{phone}, #{email}, #{memberType}, NULL, NULL, SYSDATE, SYSDATE, 'Y')
+	</insert>
+	
+	<select id="selectCurrval" resultType="java.lang.String" parameterType="java.lang.String">
+		SELECT TO_CHAR(SEQ_MNO.CURRVAL, 'FM000')
+		FROM DUAL
+	</select>
+	
+    <insert id="insertCustomerProjectTeam" parameterType="Member">
+        INSERT INTO PROJECT_TEAM
+        VALUES ('PT' || TO_CHAR(SEQ_TEAM.NEXTVAL, 'FM000'),
+                #{projectPk}, #{memberNo}, 'CM')
+    </insert>
 	
 </mapper>
 
