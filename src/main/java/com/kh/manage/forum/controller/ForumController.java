@@ -25,9 +25,12 @@ import com.kh.manage.common.CommonsUtils;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.common.Pagination;
 import com.kh.manage.forum.model.service.ForumService;
+import com.kh.manage.forum.model.vo.Mwork;
 import com.kh.manage.forum.model.vo.Notice;
 import com.kh.manage.forum.model.vo.Reply;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.project.model.service.ProjectService;
+import com.kh.manage.project.model.vo.ProjectDetail;
 
 @Controller
 public class ForumController {
@@ -338,6 +341,28 @@ public class ForumController {
 			
 			return "redirect:noticeMain.fo";
 		}
+	
+	
+	
+	@RequestMapping("showAssignment.fo")
+	public String showAssignment(HttpServletRequest request, Model m) {
+		
+		String pid = request.getParameter("pid");
+		
+		Mwork w = new Mwork();
+		w.setProjectNo(pid);
+		
+		System.out.println("pid  : " + pid);
+		
+		List<Mwork> list = fs.selectListWork(w);
+		
+		System.out.println("list :" +list);
+		
+		m.addAttribute("list", list);
+		
+		return "user/project/workAssignment";
+	}
+	
 	
 	
 }

@@ -11,4 +11,6 @@ public interface ReportDao {
 
 	List<Report> issueSelectList(SqlSessionTemplate sqlSession, Member m);
 
+	int checkAllReport(SqlSessionTemplate sqlSession, Member m);
+
 }

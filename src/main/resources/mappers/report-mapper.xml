@@ -57,5 +57,11 @@
 		WHERE R.REPORT_MEMBER = #{memberNo}
 		AND I.STATUS = 'Y'
 		AND R.STATUS = 'Y'
+		ORDER BY IH.IH_DATE DESC
 	</select>
+	
+	<update id="checkAllReport" parameterType="Member">
+		UPDATE REPORT SET STATUS ='N'
+        WHERE REPORT_MEMBER = #{memberNo}
+	</update>
 </mapper>

@@ -17,10 +17,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.google.gson.Gson;
+import com.kh.manage.forum.model.vo.Mwork;
 import com.kh.manage.gwManage.model.service.GwManageService;
 import com.kh.manage.gwManage.model.vo.GWork;
 import com.kh.manage.gwManage.model.vo.GwRepeat;
+import com.kh.manage.gwManage.model.vo.Statistics;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.project.model.vo.Project;
+import com.kh.manage.work.model.vo.Work;
 
 @Controller
 public class GwManageController {
@@ -168,6 +172,78 @@ public class GwManageController {
 		}
 	}
 	
+	@RequestMapping("detailDashboard.gwm")
+	public String projectList(HttpServletRequest request, Model m) {
+		
+		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
+		
+		List<Project> list = gs.projectList(loginUser);
+		
+		System.out.println(list);
+		String pNo = list.get(0).getProjectPk();
+		
+		System.out.println("pno" + pNo);
+		
+		Project pro = gs.selectProject(pNo);
+		
+		List<Statistics> list2 = gs.statisticsList(pNo);
+		
+		List<Statistics> list3 = gs.statisticsList2(pNo);
+		
+		List<Statistics> list4 = gs.statisticsList3(pNo);
+		
+		Mwork w = new Mwork();
+		w.setProjectNo(pNo);
+		
+		List<Mwork> list5 = gs.selectListWork(w);
+		
+		
+		m.addAttribute("list", list);
+		m.addAttribute("pNo", pNo);
+		m.addAttribute("pro",pro);
+		m.addAttribute("list2", list2);
+		m.addAttribute("list3", list3);
+		m.addAttribute("list4", list4);
+		m.addAttribute("list5", list5);
+		
+		
+		return "user/main/detailDashboard";
+		
+	}
+	
+	@RequestMapping("selectDashBoard.gwm")
+	public String selectProjectList(HttpServletRequest request, Model m) {
+		
+		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
+		
+		List<Project> list = gs.projectList(loginUser);
+		
+		String pNo = request.getParameter("pNo");
+		
+		Project pro = gs.selectProject(pNo);
+		
+		List<Statistics> list2 = gs.statisticsList(pNo);
+		
+		List<Statistics> list3 = gs.statisticsList2(pNo);
+		
+		List<Statistics> list4 = gs.statisticsList3(pNo);
+		
+		Mwork w = new Mwork();
+		w.setProjectNo(pNo);
+		
+		List<Mwork> list5 = gs.selectListWork(w);
+		
+		
+		m.addAttribute("list", list);
+		m.addAttribute("pNo", pNo);
+		m.addAttribute("pro",pro);
+		m.addAttribute("list2", list2);
+		m.addAttribute("list3", list3);
+		m.addAttribute("list4", list4);
+		m.addAttribute("list5", list5);
+		
+		return "user/main/detailDashboard2";
+	}
 	
 	
 }

@@ -85,6 +85,11 @@
 	text-align: left;
 }
 
+#projectTable1 {
+	width: 100%;
+	text-align: left;
+}
+
 .projectBtn {
 	width: 130px;
 	height: 27px;
@@ -227,7 +232,7 @@
 						<tr>
 							<td colspan="2">
 								<div style="overflow: auto;">
-									<table id="projectTable" align="center">
+									<table id="projectTable1" align="center">
 										<tr>
 											<td class="thRange th1"></td>
 											<td class="tdText thRange">부서</td>
@@ -372,28 +377,52 @@
 					<script>
 					var memberList = new Array();
 					var bool = true;
+					var mlist;
+					var count = 1;
 					$("#saveBtn").on('click', function(){
 					    var b = $(".trRange").siblings().find(".memberNo").val();
+					    $("#projectTable1 tr").filter(function(){
+							var a =  $(this).find(".memberNo").val();
+							
+							if(a != undefined && count ==1){
+								mlist = a;
+								count ++;
+							}else if(a != undefined){
+								mlist += "," + a;
+							}
+						});
+					    console.log(mlist);
+					    var check = true;
 						$("input:checkbox[name=idCheck]:checked").filter(function(){
 								var a = $(this).parent().siblings().find(".memberNo").val();
-								$(".trRange1").siblings().find(".memberNo").each(function(){
-									 if($(this).val() == a){
-										 console.log("중복확인");
-										 bool = false;
-									 }
-								});
-								
-								if(bool){
-								for(key in list){
-									if(list[key]['memberNo']== a){
-										$(".mainFront").after("<tr class='trRange1'> <td class='td1'><input type='checkbox' id='idCheckMain' name='idCheck' class='inputCss' style='width: 30px;'></td> <td class='td1'>"+list[key]['deptName'] +"</td> <td class='tdText'>"+list[key]['memberName']+"</td> <td class='tdText'>"+list[key]['rankNo']+"<input type='hidden' id='memberNo' name='memberNo' class='memberNo' value='"+ list[key]['memberNo']+"'></td> <td class='tdText'>"+list[key]['email']+"</td> </tr>");
-										memberList = list[key]['memberNo'];
-									}         
+								if(mlist != undefined){
+									var str = mlist.split(',');
+									console.log(str);
+									for(var i = 0; i < str.length; i++){
+										if(str[i] == a){
+											console.log("중복!")
+											i = str.length;
+											check = false;
+										}
+									}
 								}
+								
+							  if(check == true){
+									for(key in list){
+										if(list[key]['memberNo']== a){
+											$(".mainFront").after("<tr class='trRange1'> <td class='td1'><input type='checkbox' id='idCheckMain' name='idCheck' class='inputCss' style='width: 30px;'></td> <td class='td1'>"+list[key]['deptName'] +"</td> <td class='tdText'>"+list[key]['memberName']+"</td> <td class='tdText'>"+list[key]['rankNo']+"<input type='hidden' id='memberNo' name='memberNo' class='memberNo' value='"+ list[key]['memberNo']+"'></td> <td class='tdText'>"+list[key]['email']+"</td> </tr>");
+											memberList = list[key]['memberNo'];
+										}         
+									}
+						       }else{
+						    	   swal({
+						                 title: "이미 포함된 회원입니다.",
+						                icon: "error"
+						             });
 						       }
 						    
 							});
-							if(!bool){
+							if(check = false){
 								swal({
 					                 title: "이미 포함된 회원입니다.",
 					                icon: "error"
