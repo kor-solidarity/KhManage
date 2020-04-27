@@ -185,6 +185,18 @@
         ORDER BY BEGIN_DATE
     </select>
 
+    <select id="selectProjectWork" parameterType="String" resultMap="projectWorkListResultSet">
+        select WORK_NAME,
+               BEGIN_DATE,
+               COMPLETE_DATE,
+               COMPLETE_RATE,
+               GRANTOR_NO,
+               MEMO,
+               HIGH_WORK_NO
+        from WORK
+        where WORK_NO = #{workNo};
+    </select>
+
     <!--프로젝트 담당자 명단뽑기.-->
     <select id="selectProjectTeamList" parameterType="String" resultMap="projectTeamResultSet">
         SELECT T.TEAM_PK, PROJECT_PK, MEMBER_PK, ROLE, MEMBER_NAME, DEPT_NAME, RANK_NAME

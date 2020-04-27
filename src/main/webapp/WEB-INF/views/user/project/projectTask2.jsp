@@ -844,13 +844,37 @@
                             // 작업에 배정된 인원
                             '<td>' + data[key]['memberName'] + '</td>' +
                             '<td><i class="fas fa-search" data-toggle="modal" ' +
-                            'data-target="#workDetails" onclick="" ></i></td>' +
+                            'data-target="#workDetails" ' +
+                            'onclick="clickedWorkDetails(' + data[key]['workNo'] + ')" ></i></td>' +
                             // 우선 여기까지 채우고 추가내용은 값에따라 바뀌기 때문에 별도추가?
                             '</tr>'
                         );
                     }
                 }
             })
+        }
+
+        <%--
+        작업 상세보기 클릭 시 내용 띄우기.
+        --%>
+        function clickedWorkDetails (workNo) {
+            $.ajax({
+                url: 'selectWork.pr',
+                type: 'post',
+                data: {
+                    workNo: workNo,
+                    pid: "${pid}",
+
+                },
+                success: function (data) {
+                    alert("done!");
+                    console.log(data);
+                    updateWorkList();
+                },
+                error: function (xhr, status, error) {
+                    alert("wut");
+                }
+			})
         }
 	</script>
 	<style>
@@ -868,7 +892,7 @@
 						<i class="fas fa-th-large"></i>&nbsp;담당자 목록
 					</h4>
 				</div>
-				<div class="modal-body" id="workDetailContent" >
+				<div class="modal-body" id="workDetailContent">
 					<div class="container-fluid">
 
 						<ul class="nav nav-tabs">
@@ -1038,22 +1062,30 @@
 										</div>
 									</div>
 									<div id="fileList" style="width:100%;">
+										<%--
+										산출물 목록에 들어가 있어야 할 목록:
+										작업 번호
+										산출물 구분*
+										제목* (파일제목)
+										내용 (여기선 누락해도 될듯? )
+										생성일
+										수정일 >> 이걸로 보이면 될듯?
+										--%>
 										<table class="table table-striped table-bordered table-advance table-hover">
 											<thead>
 											<tr>
 												<th style="text-align: center; width: 20%;">
-													산출물 분류
+													산출물 구분
 												</th>
 												<th style="text-align: center; width: 40%;">
 													파일명
 												</th>
-												<th style="text-align: center; width: 7%;">
-													버전
+												<th style="text-align: center; width: 10%;">
+													등록일
 												</th>
 												<th style="text-align: center; width: 10%;">
 													등록자
 												</th>
-
 												<th style="text-align: center; width: 7%;">
 													삭제
 												</th>
@@ -1102,9 +1134,31 @@
 							</div>
 							<%--히스토리--%>
 							<div id="menu4" class="tab-pane fade">
-								<h3>Menu 3</h3>
-								<p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta
-									sunt explicabo.</p>
+								<%--
+								내용물:
+								히스토리번호
+								작업번호
+								상태
+								메모*
+								변경날짜*
+								팀원번호*
+								--%>
+								<div class="row">
+									<div class="col-md-12">
+										<table class="table table-striped table-bordered table-advance table-hover">
+											<tr>
+												<th>내용</th>
+												<th>이름</th>
+												<th>변경일자</th>
+											</tr>
+											<tr>
+												<td>프로젝트 생성됨</td>
+												<td>사람이름</td>
+												<td>2020-02-22</td>
+											</tr>
+										</table>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
