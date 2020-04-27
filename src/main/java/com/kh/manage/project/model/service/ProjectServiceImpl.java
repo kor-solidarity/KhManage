@@ -149,4 +149,9 @@ public class ProjectServiceImpl implements ProjectService {
 		return pd.teamMemberList(sqlSession, pid);
 	}
 	
+	@Override
+	public ProjectWork selectProjectWork(String workNo) {
+		return pd.selectProjectWork(sqlSession, workNo);
+	}
+	
 }

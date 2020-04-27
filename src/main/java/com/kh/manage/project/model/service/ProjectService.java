@@ -54,4 +54,6 @@ public interface ProjectService {
 	int insertResource(Member member);
 	
 	List<Member> selectTeamMemberList(String pid);
+	
+	ProjectWork selectProjectWork(String workNo);
 }

@@ -379,6 +379,29 @@ public class ProjectController {
 		}
 	}
 	
+	// 작업 상세보기 클릭했을 때 띄우는 AJAX
+	@RequestMapping("selectWork.pr")
+	public String selectWork(HttpServletRequest request){
+		System.out.println("selectWork");
+		// 여기서 뽑아와야 하는 것들:
+		/**
+		 * 작업정보:
+		 * 관리번호, 이름, 시작·종료일, 완료율, 승인자, 메모사항, 선행작업
+		 * 선행작업: 위 선행작업의 이름과 관리번호
+		 * 산출물: 구분, 파일명, 등록일, 등록자.
+		 * 히스토리: 내용, 사람이름, 변경일
+ 		 */
+		String workNo = request.getParameter("workNo");
+		
+		// 우선 작업정보 가자.
+		ProjectWork projectWork = ps.selectProjectWork(workNo);
+		// 다음은 선행작업들.
+		ProjectWork highWork = ps.selectProjectWork(projectWork.getHighWorkNo());
+		// 산출물:
+		
+		
+		return "";
+	}
 	
 	// 프로젝트 요약정보 페이지
 	@RequestMapping("/viewProject.pr")

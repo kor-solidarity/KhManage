@@ -57,4 +57,5 @@ public interface ProjectDao {
 	
 	List<Member> teamMemberList(SqlSessionTemplate sqlSession, String pid);
 	
+	ProjectWork selectProjectWork(SqlSessionTemplate sqlSession, String workNo);
 }
