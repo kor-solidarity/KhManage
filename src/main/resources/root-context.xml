@@ -43,12 +43,11 @@
 	</bean>
 
 	<!-- ajax JsonView 파싱 -->
-	<bean id="jsonView" class="net.sf.json.spring.web.servlet.view.JsonView">
-	</bean>
-	<bean id="viewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
-		<property name="order" value="0"/>
-	</bean>
-	
+   <bean id="jsonView" class="net.sf.json.spring.web.servlet.view.JsonView">
+   </bean>
+   <bean id="viewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
+      <property name="order" value="0"/>
+   </bean>
 
 
 
