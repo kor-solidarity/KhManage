@@ -1,10 +1,21 @@
 package com.kh.manage.admin.template.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.poi.hssf.usermodel.HSSFDateUtil;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -86,8 +97,173 @@ public class TemplateController {
 		
 		return "admin/templateManage/templateManage";
 	}
+	
+	
+	
 	@RequestMapping("/templateExcel.am")
-	public String templateExcel() {
+	public String templateExcel(HttpServletRequest request) {
+		
+		
+		String tm = request.getParameter("tm");
+		System.out.println(tm);
+		
+//		XSSFRow row;
+//
+//		XSSFCell cell;
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//		DataFormatter formatter = new DataFormatter();
+//		
+//		
+//
+//		try {
+//
+//			FileInputStream inputStream = new FileInputStream("D:/tmp/file/test3.xlsx");
+//
+//			XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
+//
+//
+//
+//			//sheet수 취득
+//
+//			int sheetCn = workbook.getNumberOfSheets();
+//
+//			System.out.println("sheet수 : " + sheetCn);
+//
+//			
+//
+//			for(int cn = 0; cn < sheetCn; cn++){
+//
+//				System.out.println("취득하는 sheet 이름 : " + workbook.getSheetName(cn));
+//
+//				System.out.println(workbook.getSheetName(cn) + " sheet 데이터 취득 시작");
+//
+//				
+//
+//				//0번째 sheet 정보 취득
+//
+//				XSSFSheet sheet = workbook.getSheetAt(cn);
+//
+//				
+//
+//				//취득된 sheet에서 rows수 취득
+//
+//				int rows = sheet.getPhysicalNumberOfRows();
+//
+//				System.out.println(workbook.getSheetName(cn) + " sheet의 row수 : " + rows);
+//
+//				
+//
+//				//취득된 row에서 취득대상 cell수 취득
+//
+//				int cells = sheet.getRow(cn).getPhysicalNumberOfCells(); //
+//
+//				System.out.println(workbook.getSheetName(cn) + " sheet의 row에 취득대상 cell수 : " + cells);
+//				
+//				Map<String, String> map = null;
+//
+//				List<Map<String, String>> result = new ArrayList<Map<String, String>>(); 
+//
+//
+//				
+//
+//				for (int r = 0; r < rows; r++) {
+//
+//					row = sheet.getRow(r); // row 가져오기
+//
+//					if (row != null) {
+//						
+//						map = new HashMap<String, String>();
+//
+//
+//						for (int c = 0; c < cells; c++) {
+//
+//							cell = row.getCell(c);
+//
+//							if (cell != null) {
+//
+//								String value = null;
+//								
+//								if (HSSFDateUtil.isInternalDateFormat(cell.getCellStyle().getDataFormat())) {
+//									value = sdf.format(cell.getDateCellValue());
+//									
+//								}
+//								// 기타
+//								else {
+//									value = formatter.formatCellValue(cell);
+//								}
+//								
+//									
+//								
+//								 switch (cell.getCellType()) {
+//								  
+//								 case XSSFCell.CELL_TYPE_FORMULA:
+//								  
+//								  value = cell.getCellFormula();
+//								  
+//								  break;
+//								  
+//								  case XSSFCell.CELL_TYPE_NUMERIC:
+//									  
+//							      if (HSSFDateUtil.isInternalDateFormat(cell.getCellStyle().getDataFormat())) {
+//										value = sdf.format(cell.getDateCellValue());
+//											
+//							      }else {
+//							    	  
+//							    	  value = "" + cell.getNumericCellValue();
+//							      }
+//								  
+//								  
+//								  break;
+//								  
+//								  case XSSFCell.CELL_TYPE_STRING:
+//								  
+//								  value = "" + cell.getStringCellValue();
+//								  
+//								  break;
+//								 
+//								  case XSSFCell.CELL_TYPE_BLANK:
+//								  
+//								  value = "[null 아닌 공백]";
+//								  
+//								  break;
+//								  
+//								  case XSSFCell.CELL_TYPE_ERROR:
+//								  
+//								  value = "" + cell.getErrorCellValue();
+//								  
+//								  break;
+//								 
+//								  
+//								  default:
+//								 
+//								  }
+//								 
+//
+//								System.out.print(value + "\t");
+//
+//							} else {
+//
+//								System.out.print("[null]\t");
+//
+//							}
+//
+//						} // for(c) 문
+//
+//						System.out.print("새로운 줄\n");
+//
+//					}
+//
+//				} // for(r) 문
+//
+//			}
+//
+//		} catch (Exception e) {
+//
+//			e.printStackTrace();
+//
+//		}
+//
+//		
 		
 		return "admin/templateManage/templateExcel";
 	}
