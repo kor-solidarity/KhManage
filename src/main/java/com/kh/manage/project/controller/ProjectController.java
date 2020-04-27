@@ -29,6 +29,7 @@ import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -298,7 +299,6 @@ public class ProjectController {
 		// 목록을 뽑기 전에 1차 필터를 거쳐 종료기한이 지났는데 안끝난 작업이 있으면 자동으로 지연표시.
 		// List<ProjectWork> outdatedProjectWorkList = ps.selectOutdatedWorks()
 		
-		
 		// 목록 뽑기.
 		// 작업아이디, 작업명 상태 프로젝트번호 시작·완료일 선행작업 상위작업 완료율 담당자이름
 		List<ProjectWork> projectWorkList = ps.selectProjectWorkList(pid);
@@ -369,7 +369,8 @@ public class ProjectController {
 			
 			WorkHistory workHistory =
 					new WorkHistory(null, workNo, "시작전",
-							"작업 첫 생성", null, teamNo);
+							"작업 첫 생성", null, teamNo,
+							null, null, null);
 			int result2 = ps.insertWorkHistory(workHistory);
 		}
 		try {
@@ -381,16 +382,16 @@ public class ProjectController {
 	
 	// 작업 상세보기 클릭했을 때 띄우는 AJAX
 	@RequestMapping("selectWork.pr")
-	public String selectWork(HttpServletRequest request){
+	public void selectWork(HttpServletResponse response, HttpServletRequest request) {
 		System.out.println("selectWork");
 		// 여기서 뽑아와야 하는 것들:
 		/**
 		 * 작업정보:
 		 * 관리번호, 이름, 시작·종료일, 완료율, 승인자, 메모사항, 선행작업
 		 * 선행작업: 위 선행작업의 이름과 관리번호
-		 * 산출물: 구분, 파일명, 등록일, 등록자.
+		 * 산출물: 구분, 파일명, 등록일, 등록자. (목록)
 		 * 히스토리: 내용, 사람이름, 변경일
- 		 */
+		 */
 		String workNo = request.getParameter("workNo");
 		
 		// 우선 작업정보 가자.
@@ -398,9 +399,28 @@ public class ProjectController {
 		// 다음은 선행작업들.
 		ProjectWork highWork = ps.selectProjectWork(projectWork.getHighWorkNo());
 		// 산출물:
+		List<WorkProduct> workProduct = ps.selectWorkProductList(workNo);
+		// history
+		List<WorkHistory> workHistory = ps.selectWorkHistoryList(workNo);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("projectWork", projectWork);
+		System.out.println(projectWork.getBeginDate().toString());
+		map.put("highWork", highWork);
+		map.put("workProduct", workProduct);
+		map.put("workHistory", workHistory);
 		
 		
-		return "";
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		
+		String gson = new Gson().toJson(map);
+		
+		try {
+			response.getWriter().write(gson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	// 프로젝트 요약정보 페이지
@@ -421,7 +441,8 @@ public class ProjectController {
 			int result = ps.updateOutdatedWork(workNo);
 			WorkHistory workHistory =
 					new WorkHistory(null, workNo, "개발지연",
-							"기한 초과로 인한 자동조치", null, null);
+							"기한 초과로 인한 자동조치", null, null,
+							null, null, null);
 			if (result > 0) {
 				int result2 = ps.insertWorkHistory(workHistory);
 			}

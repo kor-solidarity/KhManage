@@ -140,4 +140,14 @@ public class ProjectDaoImpl implements ProjectDao {
 	public ProjectWork selectProjectWork(SqlSessionTemplate sqlSession, String workNo) {
 		return sqlSession.selectOne("Project.selectProjectWork", workNo);
 	}
+	
+	@Override
+	public List<WorkProduct> selectWorkProductList(SqlSessionTemplate sqlSession, String workNo) {
+		return sqlSession.selectList("Project.selectWorkProductList", workNo);
+	}
+	
+	@Override
+	public List<WorkHistory> selectWorkHistoryList(SqlSessionTemplate sqlSession, String workNo) {
+		return sqlSession.selectList("Project.selectWorkHistoryList", workNo);
+	}
 }

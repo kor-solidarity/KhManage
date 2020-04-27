@@ -170,8 +170,10 @@
 							<select class="form-control" name="pmo" id="pmo">
 								<option value="0">선택하세요</option>
 								<c:forEach var="d" items="${deptList}">
+									<%--
 									<option value="${d.deptNo}">
 										&nbsp;&nbsp;&nbsp;&nbsp;${d.deptName}</option>
+									--%>
 									<c:choose>
 										<c:when test="${d.highDept==null}">
 											<option value="${d.deptNo}">${d.deptName}</option>

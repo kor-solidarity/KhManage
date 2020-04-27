@@ -686,197 +686,229 @@
 					</button>
 				</div>
 			</div>
+			<script>
+                $(updateWorkList());
+
+                /***
+                 * 담당자 목록 갱신.
+                 *
+                 * @param workId 해당 모달창이 가리키고 있는 작업의 아이디. 작업번호가 없으면 무조건 신규등록인거?
+                 */
+                function viewWorkInCharge (workId) {
+                    // 담당자 목록은 해당 프로젝트에 담당된 모든 인원을 우선 불러오는걸로.
+                    $.ajax({
+                        url: 'viewProjectTeamList.pr',
+                        type: 'post',
+                        data: {
+                            pid: "${pid}"
+                        },
+                        success: function (data) {
+                            for (key in data) {
+                                console.log(key);
+                                console.log(data[key])
+                            }
+                            // 안에 내용물을 다 엎고 새로운걸로 바꾼다.
+                            $("#workerList").empty();
+                            for (key in data) {
+                                $("#workerList").append(
+                                    // NULLIFIED - 담당자 배정에 변동이 있음 - 작업 하나에 담당자 한명임
+                                    // 소속된 인원 확인.
+                                    // 추후 인원 수정할때 체크여부 고려!!!
+
+                                    '<input type="text" name="workCharger" value="' + data[key]['memberPk'] + '" ' +
+                                    'id="' + data[key]['memberPk'] + '" style="display: none;"> ' +
+                                    '<label class="workerSelector" for="' + data[key]['memberPk'] +
+                                    // '" onclick="updateNewWorkerInCharge(\'#' + data[key]['memberPk'] + '\')">' +
+                                    '" onclick="updateNewWorkerInCharge(this)">' +
+                                    ' <span class="deptName">' + data[key]['deptName'] + '</span> ' +
+                                    ' <span class="memberName">' + data[key]['memberName'] + '</span> ' +
+                                    ' <span class="rankName">' + data[key]['rankName'] + '</span> ' +
+                                    '</label> <br>'
+
+                                    // '<label for="' + data[key]['memberPk'] + '">' + data[key]['deptName'] +
+                                    // ' <span class="workerName">' +
+                                    // data[key]['memberName'] + '</span> ' +
+                                    // data[key]['rankName'] + '</label> <br>'
+
+                                    // 인원목록 불러오기.
+                                    // '<span class="selector"></span>'
+
+                                );
+                            }
+                            $("#nullifyWorkerBtn").attr('onclick', 'nullifyNewWorker("new")');
+                        }
+                    });
+                }
+
+                // 작업에 배정된 인원을 없앤다.
+                function nullifyNewWorker (val) {
+                    $("#addWorkers").empty();
+                }
+
+                // 새 작업에 인원을 배정한다.
+                function updateNewWorkerInCharge (val) {
+                    // $("#workMemberModal").modal("toggle");
+                    $("#cancelWorkerBtn").click();
+                    valQ = $(val);
+                    <%-- val 은 클릭한 글자 label DOM 전체임.--%>
+                    console.log(val);
+
+                    let memberNo = $(val).attr('for');
+                    let memberName = valQ.find('span.memberName');
+                    let deptName = valQ.find('span.deptName');
+                    let rankName = valQ.find('span.rankName');
+                    $("#addWorkers").empty();
+                    // 내용물 지우고 새로 채우기.
+                    $("#addWorkers").append(
+                        "<input type='text' name='memberNo' id='memberNo' style='display: none' value='" + memberNo +
+                        "'>" +
+                        "<span >" + memberName.html() + "</span>"
+                    );
+                }
+
+                // 작업을 여러명 배정을 안하기로 되서 우선 보류
+                // 담당자 목록 모달에
+                function updateWorkInCharge (val) {
+                    console.log(val);
+                    // 새 작업인 경우 아직 추가대상은 아닌거.
+                    if (val == 'new') {
+                        for (let i = 0; i < $("[name=workCharger]").length; i++) {
+                            let wid = $("[name=workCharger]").eq(i);
+                        }
+                        // 인풋만 넣는거로.
+                        $("#addWorkers").append(
+                            '<input type="text" name="" id="">'
+                        );
+                    }
+                    return;
+                    $.ajax({
+                        url: 'updateWorkInCharge.pr',
+                        type: 'post',
+                        data: {
+                            pid: "${pid}"
+                        },
+                        success: function (data) {
+
+                        }
+                    })
+                }
+
+                /**
+                 * 작업목록에 있는 모든 목록을 지우고 새로 불러와서 정렬시키는 역할을 한다.
+                 *
+                 */
+                function updateWorkList () {
+                    console.log("updateWorkList");
+                    $.ajax({
+                        url: 'updateWorkList.pr',
+                        type: 'post',
+                        data: {
+                            pid: "${pid}"
+                        },
+                        success: function (data) {
+                            for (key in data) {
+                                console.log(key);
+                                console.log(data[key])
+                            }
+                            // 좌측 목록 몽땅 제거.
+                            $("#chart-left-table tr:not(tr:first-of-type)").remove()
+                            // todo 우측도 이거 끝나면 제거해야함. 당장은 좌측이 더 급하니 이거부터 하는걸로.
+
+                            // 돌아가면서 넘긴다.
+                            for (key in data) {
+                                target_id = "#" + data[key]['workNo'];
+                                // 선행작업 값
+                                precedeNo = data[key]['precedeNo'];
+                                if (precedeNo == undefined) {
+                                    precedeNo = "";
+                                }
+                                // 상태값 관련
+
+                                $("#chart-left-table tr:last-of-type").after(
+                                    // ' + data[key][''] + '
+                                    '<tr id="' + data[key]['workNo'] + '">' +
+                                    // 작업아이디
+                                    '<td>' + data[key]['workNo'] + '</td>' +
+                                    '<td>' + data[key]['workName'] + '</td>' +
+                                    // 상태
+                                    // '<td><span style="" class="fa fa-circle" data-toggle="tooltip" title="대기중"></span></td>' +
+                                    '<td>' + data[key]['status'] + '</td>' +
+                                    // 기간
+                                    '<td>' + data[key]['days'] + '</td>' +
+                                    '<td>' + data[key]['beginDate'] + '</td>' +
+                                    '<td>' + data[key]['completeDate'] + '</td>' +
+                                    // 선행작업
+                                    '<td>' + precedeNo + '</td>' +
+                                    '<td>' + data[key]['completeRate'] + '%' + '</td>' +
+                                    // 작업에 배정된 인원
+                                    '<td>' + data[key]['memberName'] + '</td>' +
+                                    '<td><i class="fas fa-search" data-toggle="modal" ' +
+                                    'data-target="#workDetails" ' +
+                                    "onclick='clickedWorkDetails(\"" + data[key]['workNo'] + "\")' ></i></td>" +
+                                    // 우선 여기까지 채우고 추가내용은 값에따라 바뀌기 때문에 별도추가?
+                                    '</tr>'
+                                );
+                            }
+                        }
+                    })
+                }
+
+                <%--
+				작업 상세보기 클릭 시 내용 띄우기.
+				--%>
+
+                function clickedWorkDetails (workNo) {
+                    alert("clickedWorkDetails");
+                    console.log("clickedWorkDetails");
+                    $.ajax({
+                        url: 'selectWork.pr',
+                        type: 'post',
+                        data: {
+                            workNo: workNo,
+                            pid: "${pid}",
+                        },
+                        success: function (data) {
+                            // daata = data;
+                            // alert("done!");
+                            console.log(JSON.stringify(data));
+                            // 하나하나 뽑아서 모달창에 넣읍시다.
+                            // projectWork - 작업정보
+                            projectWork = data['projectWork'];
+                            // 작업 모달 제목창
+                            $("#workTitle").text(projectWork.workName);
+                            // 제목인풋
+                            $("#workName").val(projectWork.workName);
+                            // startDate
+                            $("#startDate").val(projectWork.beginDate);
+                            $("#completeDate").val(projectWork.completeDate.);
+                            $("#completeRate").val(projectWork.completeRate);
+                            // updateWorkList();
+                        },
+                        error: function (xhr, status, error) {
+                            alert("wut");
+                        }
+                    })
+                }
+
+                // 0월 00, 0000 인 날짜를 인풋에 드갈수 있게끔 변경
+                function parseKrDate (krDate) {
+                    var dateArray = krDate.split(/월 |, /);
+                    let month = dateArray[0];
+                    let day = dateArray[1];
+                    let year = dateArray[2];
+
+                    if (month > 10) {
+                        month = '0' + month
+                    }
+                    if (day < 10) {
+                        day = '0' + day;
+                    }
+
+                    return year + '-' + month + '-' + day;
+                }
+			</script>
 		</div>
 	</div>
-	<script>
-        $(updateWorkList());
-
-        /***
-         * 담당자 목록 갱신.
-         *
-         * @param workId 해당 모달창이 가리키고 있는 작업의 아이디. 작업번호가 없으면 무조건 신규등록인거?
-         */
-        function viewWorkInCharge (workId) {
-            // 담당자 목록은 해당 프로젝트에 담당된 모든 인원을 우선 불러오는걸로.
-            $.ajax({
-                url: 'viewProjectTeamList.pr',
-                type: 'post',
-                data: {
-                    pid: "${pid}"
-                },
-                success: function (data) {
-                    for (key in data) {
-                        console.log(key);
-                        console.log(data[key])
-                    }
-                    // 안에 내용물을 다 엎고 새로운걸로 바꾼다.
-                    $("#workerList").empty();
-                    for (key in data) {
-                        $("#workerList").append(
-                            // NULLIFIED - 담당자 배정에 변동이 있음 - 작업 하나에 담당자 한명임
-                            // 소속된 인원 확인.
-                            // 추후 인원 수정할때 체크여부 고려!!!
-
-                            '<input type="text" name="workCharger" value="' + data[key]['memberPk'] + '" ' +
-                            'id="' + data[key]['memberPk'] + '" style="display: none;"> ' +
-                            '<label class="workerSelector" for="' + data[key]['memberPk'] +
-                            // '" onclick="updateNewWorkerInCharge(\'#' + data[key]['memberPk'] + '\')">' +
-                            '" onclick="updateNewWorkerInCharge(this)">' +
-                            ' <span class="deptName">' + data[key]['deptName'] + '</span> ' +
-                            ' <span class="memberName">' + data[key]['memberName'] + '</span> ' +
-                            ' <span class="rankName">' + data[key]['rankName'] + '</span> ' +
-                            '</label> <br>'
-
-                            // '<label for="' + data[key]['memberPk'] + '">' + data[key]['deptName'] +
-                            // ' <span class="workerName">' +
-                            // data[key]['memberName'] + '</span> ' +
-                            // data[key]['rankName'] + '</label> <br>'
-
-                            // 인원목록 불러오기.
-                            // '<span class="selector"></span>'
-
-                        );
-                    }
-                    $("#nullifyWorkerBtn").attr('onclick', 'nullifyNewWorker("new")');
-                }
-            });
-        }
-
-        // 작업에 배정된 인원을 없앤다.
-        function nullifyNewWorker (val) {
-            $("#addWorkers").empty();
-        }
-
-        // 새 작업에 인원을 배정한다.
-        function updateNewWorkerInCharge (val) {
-            // $("#workMemberModal").modal("toggle");
-            $("#cancelWorkerBtn").click();
-            valQ = $(val);
-            <%-- val 은 클릭한 글자 label DOM 전체임.--%>
-            console.log(val);
-
-            let memberNo = $(val).attr('for');
-            let memberName = valQ.find('span.memberName');
-            let deptName = valQ.find('span.deptName');
-            let rankName = valQ.find('span.rankName');
-            $("#addWorkers").empty();
-            // 내용물 지우고 새로 채우기.
-            $("#addWorkers").append(
-                "<input type='text' name='memberNo' id='memberNo' style='display: none' value='" + memberNo + "'>" +
-                "<span >" + memberName.html() + "</span>"
-            );
-        }
-
-        // 작업을 여러명 배정을 안하기로 되서 우선 보류
-        // 담당자 목록 모달에
-        function updateWorkInCharge (val) {
-            console.log(val);
-            // 새 작업인 경우 아직 추가대상은 아닌거.
-            if (val == 'new') {
-                for (let i = 0; i < $("[name=workCharger]").length; i++) {
-                    let wid = $("[name=workCharger]").eq(i);
-                }
-                // 인풋만 넣는거로.
-                $("#addWorkers").append(
-                    '<input type="text" name="" id="">'
-                );
-            }
-            return;
-            $.ajax({
-                url: 'updateWorkInCharge.pr',
-                type: 'post',
-                data: {
-                    pid: "${pid}"
-                },
-                success: function (data) {
-
-                }
-            })
-        }
-
-        /**
-         * 작업목록에 있는 모든 목록을 지우고 새로 불러와서 정렬시키는 역할을 한다.
-         *
-         */
-        function updateWorkList () {
-            console.log("updateWorkList");
-            $.ajax({
-                url: 'updateWorkList.pr',
-                type: 'post',
-                data: {
-                    pid: "${pid}"
-                },
-                success: function (data) {
-                    for (key in data) {
-                        console.log(key);
-                        console.log(data[key])
-                    }
-                    // 좌측 목록 몽땅 제거.
-                    $("#chart-left-table tr:not(tr:first-of-type)").remove()
-                    // todo 우측도 이거 끝나면 제거해야함. 당장은 좌측이 더 급하니 이거부터 하는걸로.
-
-                    // 돌아가면서 넘긴다.
-                    for (key in data) {
-                        target_id = "#" + data[key]['workNo'];
-                        // 선행작업 값
-                        precedeNo = data[key]['precedeNo'];
-                        if (precedeNo == undefined) {
-                            precedeNo = "";
-                        }
-                        // 상태값 관련
-
-                        $("#chart-left-table tr:last-of-type").after(
-                            // ' + data[key][''] + '
-                            '<tr id="' + data[key]['workNo'] + '">' +
-                            // 작업아이디
-                            '<td>' + data[key]['workNo'] + '</td>' +
-                            '<td>' + data[key]['workName'] + '</td>' +
-                            // 상태
-                            // '<td><span style="" class="fa fa-circle" data-toggle="tooltip" title="대기중"></span></td>' +
-                            '<td>' + data[key]['status'] + '</td>' +
-                            // 기간
-                            '<td>' + data[key]['days'] + '</td>' +
-                            '<td>' + data[key]['beginDate'] + '</td>' +
-                            '<td>' + data[key]['completeDate'] + '</td>' +
-                            // 선행작업
-                            '<td>' + precedeNo + '</td>' +
-                            '<td>' + data[key]['completeRate'] + '%' + '</td>' +
-                            // 작업에 배정된 인원
-                            '<td>' + data[key]['memberName'] + '</td>' +
-                            '<td><i class="fas fa-search" data-toggle="modal" ' +
-                            'data-target="#workDetails" ' +
-                            'onclick="clickedWorkDetails(' + data[key]['workNo'] + ')" ></i></td>' +
-                            // 우선 여기까지 채우고 추가내용은 값에따라 바뀌기 때문에 별도추가?
-                            '</tr>'
-                        );
-                    }
-                }
-            })
-        }
-
-        <%--
-        작업 상세보기 클릭 시 내용 띄우기.
-        --%>
-        function clickedWorkDetails (workNo) {
-            $.ajax({
-                url: 'selectWork.pr',
-                type: 'post',
-                data: {
-                    workNo: workNo,
-                    pid: "${pid}",
-
-                },
-                success: function (data) {
-                    alert("done!");
-                    console.log(data);
-                    updateWorkList();
-                },
-                error: function (xhr, status, error) {
-                    alert("wut");
-                }
-			})
-        }
-	</script>
 	<style>
 
 	</style>
@@ -889,7 +921,7 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
 							aria-hidden="true">&times;</span></button>
 					<h4 class="modal-title" id="workDetailTitle">
-						<i class="fas fa-th-large"></i>&nbsp;담당자 목록
+						<i class="fas fa-th-large"></i>&nbsp;<span id="workTitle">담당자 목록</span>
 					</h4>
 				</div>
 				<div class="modal-body" id="workDetailContent">
@@ -909,17 +941,17 @@
 								<div class="row">
 									<div class="col-lg-2 text-center">작업명</div>
 									<div class="col-lg-10">
-										<input class="form-control" type="text" name="workName" id="">
+										<input class="form-control" type="text" name="workName" id="workName" value="">
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-lg-2 text-center">시작</div>
 									<div class="col-lg-4">
-										<input class="form-control" type="date" name="startDate" id="">
+										<input class="form-control" type="date" name="startDate" id="startDate">
 									</div>
 									<div class="col-lg-2 text-center">완료</div>
 									<div class="col-lg-4">
-										<input class="form-control" type="date" name="completeDate" id="">
+										<input class="form-control" type="date" name="completeDate" id="completeDate">
 									</div>
 								</div>
 								<div class="row">
