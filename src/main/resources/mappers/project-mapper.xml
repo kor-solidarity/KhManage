@@ -334,7 +334,8 @@
                FILEPATH,
                EXT
         from WORK_PRODUCT WP
-                 join ATTACHMENT A on wp.PRODUCT_NO = a.DIVISION
+                 join ATTACHMENT A on WP.PRODUCT_NO = A.DIVISION
+where WORK_NO = #{value}
     </select>
 
     <!--프로젝트 등록을 했을 시 해당 프로젝트의 관리번호 반환 -->

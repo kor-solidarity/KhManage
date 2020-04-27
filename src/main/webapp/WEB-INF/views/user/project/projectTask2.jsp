@@ -878,6 +878,10 @@
                             grantorList = data.grantorList;
                             // 선행작업 선택목록
                             highWorkList = data.highWorkList;
+                            // 산출물
+                            workProduct = data.workProduct;
+                            // history
+                            workHistory = data.workHistory;
 
                             // 작업 모달 제목창
                             $("#workTitle").text(projectWork.workName);
@@ -907,10 +911,62 @@
 
                             // 다음은 선행작업
                             $("#highWorkSel").empty();
-                            for (let i = 0; i < highWorkList.length; i++) {
+                            $("#highWorkSel").append(
+                                "<option value='0'>선행작업 없음</option>"
+                            );
 
+                            for (let i = 0; i < highWorkList.length; i++) {
+                                $("#highWorkSel").append(
+                                    "<option value='" + highWorkList[i].workNo + "' >" +
+                                    highWorkList[i].workName +
+                                    "</option>"
+                                );
+                                if (projectWork.higherWorkNo != undefined &&
+                                    projectWork.higherWorkNo == highWorkList[i].workNo) {
+                                    $("#highWorkSel option[value=" + projectWork.higherWorkNo + "]").
+                                        prop('selected', true);
+                                }
                             }
 
+                            // 여기서부터 산출물
+                            // 우선 산출물 항목 클리어
+                            $("#workProductTable tbody").empty();
+                            for (let i = 0; i < workProduct.length; i++) {
+                                $("#workProductTable tbody").append(
+                                    "<tr>" +
+                                    // 구분
+                                    "<td>" + workProduct[i].productType + "</td>" +
+                                    // 파일명
+                                    "<td>" + workProduct[i].originName + "</td>" +
+                                    // 등록일
+                                    "<td>" + workProduct[i].enrollDate + "</td>" +
+                                    // 등록자 - 등록자가 테이블에 없음
+                                    // "<td>" +workProduct[i].productType + "</td>" +
+                                    // 삭제창?
+                                    "<td>" + workProduct[i].productType + "</td>" +
+                                    "</tr>"
+                                );
+                            }
+
+                            // 히스토리
+                            $("#historyTable").empty();
+                            $("#historyTable").append(
+                                "<tr>" +
+                                "<th>내용</th>" +
+                                "<th>이름</th>" +
+                                "<th>변경일자</th>" +
+                                "</tr>"
+                            );
+                            for (let i = 0; i < workHistory.length; i++) {
+                                $("#historyTable").append(
+                                    "<tr>" +
+                                    "<td>" + workHistory[i].memo + "</td>" +
+                                    "<td>" + workHistory[i].deptName + " " + workHistory[i].memberName + " " +
+                                    workHistory[i].rankName + "</td>" +
+                                    "<td>" + workHistory[i].modifyDate + "</td>" +
+                                    "</tr>"
+                                );
+                            }
                         },
                         error: function (xhr, status, error) {
                             alert("wut");
@@ -1047,8 +1103,8 @@
 											<input type="text" id="predcessor_task_id_0"
 												   class="form-control "
 												   style="text-align: center; padding-left: 0;"
-												   <%--체인지 할때마다 아래 테이블과 연동하는걸로.--%>
-													<%--그냥 이건 연동시키던가 없애던가 합시다.--%>
+											<%--체인지 할때마다 아래 테이블과 연동하는걸로.--%>
+											<%--그냥 이건 연동시키던가 없애던가 합시다.--%>
 												   onchange="ChangePredcessorTaskID(this, 0);" disabled>
 											<input type="hidden" id="pid_0" value="">
 										</td>
@@ -1059,33 +1115,6 @@
 
 												<option value="1">새로운 작업</option>
 												<option value="2">신약 개발</option>
-												<option value="4">전임상시험</option>
-												<option value="5">물리적특성 연구</option>
-												<option value="6">새로운 작업이다</option>
-												<option value="7">새로운 작업</option>
-												<option value="8">새로운 작업</option>
-												<option value="9">생물학적특성 연구</option>
-												<option value="10">임상시험 의약품 허가신청</option>
-												<option value="11">허가신청자료 제출</option>
-												<option value="12">허가 심사</option>
-												<option value="13">새로운 작업</option>
-												<option value="14">새로운 작업</option>
-												<option value="15">새로운 작업</option>
-												<option value="16">임상시험</option>
-												<option value="17">제1상 시험</option>
-												<option value="18">제3상 시험</option>
-												<option value="19">제2상 시험</option>
-												<option value="20">신약승인신청</option>
-												<option value="21">심사자료 제출 및 심사</option>
-												<option value="22">최종 허가</option>
-												<option value="23">시판후 관리</option>
-												<option value="24">제4상 임상시험</option>
-												<option value="25">추가 적응 관리</option>
-												<option value="26">부작용 보고</option>
-												<option value="27">제품 결함 보고</option>
-												<option value="28">새로운 작업</option>
-												<option value="29">새로운 작업</option>
-												<option value="30">66+56+</option>
 											</select>
 										</td>
 
@@ -1103,6 +1132,7 @@
 							<%--산출물--%>
 							<div id="menu2" class="tab-pane fade">
 								<div class="tab-pane active" id="tab_1_4">
+									<%--여기선 조회만 하지 보는건 안됨. --%>
 									<div class="row" style="margin-bottom: 0px; display: block;" id="div_file_upload">
 										<div class="col-md-2">
 											<label class="control-label font-blue-dark"
@@ -1136,9 +1166,9 @@
 										생성일
 										수정일 >> 이걸로 보이면 될듯?
 										--%>
-										<table class="table table-striped table-bordered table-advance table-hover">
+										<table class="table table-striped table-bordered table-advance table-hover"
+											   id="workProductTable">
 											<thead>
-
 											<tr>
 												<th style="text-align: center; width: 20%;">
 													산출물 구분
@@ -1146,19 +1176,19 @@
 												<th style="text-align: center; width: 40%;">
 													파일명
 												</th>
-												<th style="text-align: center; width: 10%;">
+												<th style="text-align: center; width: 20%;">
 													등록일
 												</th>
-												<th style="text-align: center; width: 10%;">
+												<%--테이블에 등록자가 없음...--%>
+												<%--<th style="text-align: center; width: 10%;">
 													등록자
-												</th>
+												</th>--%>
 												<th style="text-align: center; width: 7%;">
 													삭제
 												</th>
 											</tr>
 											</thead>
 											<tbody>
-
 											<tr id="d726674b-be83-4317-8f1f-4b984fc4890c">
 												<td class="hidden-xs">
 													설계검토결과
@@ -1194,9 +1224,9 @@
 							</div>
 							<%--가이드--%>
 							<div id="menu3" class="tab-pane fade">
-								<h3>Menu 3</h3>
+								<%--<h3>Menu 3</h3>
 								<p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta
-									sunt explicabo.</p>
+									sunt explicabo.</p>--%>
 							</div>
 							<%--히스토리--%>
 							<div id="menu4" class="tab-pane fade">
@@ -1211,7 +1241,8 @@
 								--%>
 								<div class="row">
 									<div class="col-md-12">
-										<table class="table table-striped table-bordered table-advance table-hover">
+										<table class="table table-striped table-bordered table-advance table-hover"
+											   id="historyTable">
 											<tr>
 												<th>내용</th>
 												<th>이름</th>
