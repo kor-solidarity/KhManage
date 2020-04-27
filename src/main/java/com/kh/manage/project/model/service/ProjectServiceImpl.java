@@ -154,4 +154,14 @@ public class ProjectServiceImpl implements ProjectService {
 		return pd.selectProjectWork(sqlSession, workNo);
 	}
 	
+	@Override
+	public List<WorkProduct> selectWorkProductList(String workNo) {
+		return pd.selectWorkProductList(sqlSession, workNo);
+	}
+	
+	@Override
+	public List<WorkHistory> selectWorkHistoryList(String workNo) {
+		return pd.selectWorkHistoryList(sqlSession, workNo);
+	}
+	
 }

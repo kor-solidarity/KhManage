@@ -56,4 +56,8 @@ public interface ProjectService {
 	List<Member> selectTeamMemberList(String pid);
 	
 	ProjectWork selectProjectWork(String workNo);
+	
+	List<WorkProduct> selectWorkProductList(String workNo);
+	
+	List<WorkHistory> selectWorkHistoryList(String workNo);
 }
