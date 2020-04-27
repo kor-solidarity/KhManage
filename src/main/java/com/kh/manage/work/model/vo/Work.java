@@ -9,6 +9,7 @@ public class Work implements java.io.Serializable{
 	private String workName;
 	private String status;
 	private String projectNo;
+	private String projectName;
 	private Date beginDate;
 	private Date completeDate;
 	private String precedeNo;
@@ -23,14 +24,15 @@ public class Work implements java.io.Serializable{
 	
 	public Work() {}
 
-	public Work(String workNo, String workName, String status, String projectNo, Date beginDate, Date completeDate,
-			String precedeNo, String completeRate, String grantorNo, String workLevel, String highWorkNo, String memo,
-			String workType, String memberNo, String workStatus) {
+	public Work(String workNo, String workName, String status, String projectNo, String projectName, Date beginDate,
+			Date completeDate, String precedeNo, String completeRate, String grantorNo, String workLevel,
+			String highWorkNo, String memo, String workType, String memberNo, String workStatus) {
 		super();
 		this.workNo = workNo;
 		this.workName = workName;
 		this.status = status;
 		this.projectNo = projectNo;
+		this.projectName = projectName;
 		this.beginDate = beginDate;
 		this.completeDate = completeDate;
 		this.precedeNo = precedeNo;
@@ -74,6 +76,14 @@ public class Work implements java.io.Serializable{
 
 	public void setProjectNo(String projectNo) {
 		this.projectNo = projectNo;
+	}
+
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
 	}
 
 	public Date getBeginDate() {
@@ -167,13 +177,11 @@ public class Work implements java.io.Serializable{
 	@Override
 	public String toString() {
 		return "Work [workNo=" + workNo + ", workName=" + workName + ", status=" + status + ", projectNo=" + projectNo
-				+ ", beginDate=" + beginDate + ", completeDate=" + completeDate + ", precedeNo=" + precedeNo
-				+ ", completeRate=" + completeRate + ", grantorNo=" + grantorNo + ", workLevel=" + workLevel
-				+ ", highWorkNo=" + highWorkNo + ", memo=" + memo + ", workType=" + workType + ", memberNo=" + memberNo
-				+ ", workStatus=" + workStatus + "]";
+				+ ", projectName=" + projectName + ", beginDate=" + beginDate + ", completeDate=" + completeDate
+				+ ", precedeNo=" + precedeNo + ", completeRate=" + completeRate + ", grantorNo=" + grantorNo
+				+ ", workLevel=" + workLevel + ", highWorkNo=" + highWorkNo + ", memo=" + memo + ", workType="
+				+ workType + ", memberNo=" + memberNo + ", workStatus=" + workStatus + "]";
 	}
-
-	
 
 	
 

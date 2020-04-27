@@ -8,9 +8,12 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.manage.common.Attachment;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.work.model.dao.WorkDao;
+import com.kh.manage.work.model.vo.Grantor;
 import com.kh.manage.work.model.vo.Work;
+import com.kh.manage.work.model.vo.WorkProductw;
 import com.kh.manage.work.model.vo.WorkProjectTeam;
 
 @Service
@@ -52,6 +55,21 @@ public class WorkServiceImpl implements WorkService{
 	@Override
 	public int updateMyWork(Work work) {
 		return wd.updateMyWork(sqlSession, work);
+	}
+
+	@Override
+	public List<Grantor> selectGrantorList(String pk) {
+		return wd.selectGrantorList(sqlSession, pk);
+	}
+
+	@Override
+	public int insertWorkProduct(WorkProductw wp) {
+		return wd.insertWorkProduct(sqlSession, wp);
+	}
+
+	@Override
+	public int insertWorkAttachment(Attachment at) {
+		return wd.insertWorkAttachment(sqlSession, at);
 	}
 
 	

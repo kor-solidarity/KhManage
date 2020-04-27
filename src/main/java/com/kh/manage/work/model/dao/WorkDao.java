@@ -6,8 +6,11 @@ import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.manage.common.Attachment;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.work.model.vo.Grantor;
 import com.kh.manage.work.model.vo.Work;
+import com.kh.manage.work.model.vo.WorkProductw;
 import com.kh.manage.work.model.vo.WorkProjectTeam;
 
 public interface WorkDao {
@@ -23,5 +26,11 @@ public interface WorkDao {
 	List<WorkProjectTeam> selectTeamWork(SqlSessionTemplate sqlSession, Member member);
 
 	int updateMyWork(SqlSessionTemplate sqlSession, Work work);
+
+	List<Grantor> selectGrantorList(SqlSessionTemplate sqlSession, String pk);
+
+	int insertWorkProduct(SqlSessionTemplate sqlSession, WorkProductw wp);
+
+	int insertWorkAttachment(SqlSessionTemplate sqlSession, Attachment at);
 
 }

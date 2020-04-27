@@ -1,28 +1,31 @@
 package com.kh.manage.work.controller;
 
+import java.io.File;
 import java.io.IOException;
-import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.kh.manage.common.Attachment;
+import com.kh.manage.common.CommonsUtils;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.work.model.service.WorkService;
+import com.kh.manage.work.model.vo.Grantor;
 import com.kh.manage.work.model.vo.Work;
+import com.kh.manage.work.model.vo.WorkProductw;
 import com.kh.manage.work.model.vo.WorkProjectTeam;
 
 @Controller
@@ -109,5 +112,76 @@ public class WorkController {
 			return "common/errorPage";
 		}
 		
+	}
+	
+	@RequestMapping("/projectGrantorList.wk")
+	public ModelAndView projectGrantorList(String pno, ModelAndView mv) {
+		System.out.println("값 출력 확인 : " + pno);
+		List<Grantor> gt = ws.selectGrantorList(pno);
+		
+		mv.addObject("gt", gt);
+		
+		mv.setViewName("jsonView");
+		
+		return mv;
+	}
+	
+	
+	@RequestMapping("/myWorkFile.wk")
+	public String workFileInsert(WorkProductw wp, HttpServletRequest request, HttpSession session, @RequestParam MultipartFile[] file) {
+		int result = 0;
+		System.out.println("산출물 확인 " +  wp);
+		for(int i = 0; i < file.length; i++) {
+			System.out.println("파일 확인" + file[i]);
+		}
+		List<Attachment> aList =  new ArrayList<Attachment>();
+		
+		if(file.length > 0) {
+			for(int i = 0; i < file.length; i++) {
+				if(file[i].getSize() > 0) {
+					String root = request.getSession().getServletContext().getRealPath("resources");
+					String filePath = root + "\\uploadfiles";
+					String originFileName = file[i].getOriginalFilename();
+					String ext = originFileName.substring(originFileName.lastIndexOf("."));
+					String changeName = CommonsUtils.getRandomString();
+					
+					try {
+						file[i].transferTo(new File(filePath + "\\" + changeName + ext));
+					} catch (IllegalStateException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					Attachment at = new Attachment();
+					at.setChangeName(changeName);
+					at.setOriginName(originFileName);
+					at.setFilePath(filePath);
+					at.setExt(ext);
+					
+					aList.add(at);
+					
+				}
+			}
+			  result = ws.insertWorkProduct(wp);
+			System.out.println(aList);
+			if(result > 0) {
+				for(int i = 0; i < aList.size(); i++) {
+					int result1 = ws.insertWorkAttachment(aList.get(i));
+				}
+			}
+			
+		}else {
+			result = ws.insertWorkProduct(wp);
+		}
+		
+		if(result > 0) {
+			return "redirect:myWorkList.wk";
+		}else {
+			request.setAttribute("msg", "산출물 등록 오류");
+			return "common/errorPage";
+		}
 	}
 }
