@@ -907,8 +907,21 @@
 
                             // 다음은 선행작업
                             $("#highWorkSel").empty();
+                            $("#highWorkSel").append(
+                                "<option value='0'>선행작업 없음</option>"
+                            );
                             for (let i = 0; i < highWorkList.length; i++) {
-
+                                if (projectWork.higherWorkNo != undefined && projectWork.higherWorkNo == highWorkList[i].workNo) {
+                                    $("#highWorkSel").append(
+                                        "<option value='" + highWorkList[i].workNo + "' selected>" + highWorkList[i].workName +
+                                        "</option>"
+                                    );
+                                }else {
+                                    $("#highWorkSel").append(
+                                        "<option value='" + highWorkList[i].workNo + "'>" + highWorkList[i].workName +
+                                        "</option>"
+                                    );
+                                }
                             }
 
                         },
@@ -1059,33 +1072,6 @@
 
 												<option value="1">새로운 작업</option>
 												<option value="2">신약 개발</option>
-												<option value="4">전임상시험</option>
-												<option value="5">물리적특성 연구</option>
-												<option value="6">새로운 작업이다</option>
-												<option value="7">새로운 작업</option>
-												<option value="8">새로운 작업</option>
-												<option value="9">생물학적특성 연구</option>
-												<option value="10">임상시험 의약품 허가신청</option>
-												<option value="11">허가신청자료 제출</option>
-												<option value="12">허가 심사</option>
-												<option value="13">새로운 작업</option>
-												<option value="14">새로운 작업</option>
-												<option value="15">새로운 작업</option>
-												<option value="16">임상시험</option>
-												<option value="17">제1상 시험</option>
-												<option value="18">제3상 시험</option>
-												<option value="19">제2상 시험</option>
-												<option value="20">신약승인신청</option>
-												<option value="21">심사자료 제출 및 심사</option>
-												<option value="22">최종 허가</option>
-												<option value="23">시판후 관리</option>
-												<option value="24">제4상 임상시험</option>
-												<option value="25">추가 적응 관리</option>
-												<option value="26">부작용 보고</option>
-												<option value="27">제품 결함 보고</option>
-												<option value="28">새로운 작업</option>
-												<option value="29">새로운 작업</option>
-												<option value="30">66+56+</option>
 											</select>
 										</td>
 
@@ -1103,7 +1089,8 @@
 							<%--산출물--%>
 							<div id="menu2" class="tab-pane fade">
 								<div class="tab-pane active" id="tab_1_4">
-									<div class="row" style="margin-bottom: 0px; display: block;" id="div_file_upload">
+									<%--여기선 조회만 하지 보는건 안됨. --%>
+									<%--<div class="row" style="margin-bottom: 0px; display: block;" id="div_file_upload">
 										<div class="col-md-2">
 											<label class="control-label font-blue-dark"
 												   style="float:left; text-align:left; width:100px;padding-left:15px;">
@@ -1125,7 +1112,7 @@
 												<input id="attFiles" name="attFiles" type="file" autocomplete="off">
 											</div>
 										</div>
-									</div>
+									</div>--%>
 									<div id="fileList" style="width:100%;">
 										<%--
 										산출물 목록에 들어가 있어야 할 목록:
