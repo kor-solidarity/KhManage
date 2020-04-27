@@ -58,6 +58,8 @@ public interface MemberService {
 
 	int insertCustomerProjectTeam(Member m);
 
+	int resetPassword(Member m);
+
 
 
 	

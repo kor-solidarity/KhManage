@@ -231,6 +231,15 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 
+	@Override
+	public int resetPassword(Member m) {
+
+		int result = md.resetPassword(sqlSession, m);
+		
+		return result;
+	}
+
+
 	
 	
 	

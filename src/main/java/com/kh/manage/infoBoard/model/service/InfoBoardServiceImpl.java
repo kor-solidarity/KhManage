@@ -87,6 +87,14 @@ public class InfoBoardServiceImpl implements InfoBoardService {
 
 
 
+	@Override
+	public int deleteBoard(String boardNo) {
+		
+		return id.deleteBoard(sqlSession, boardNo);
+	}
+
+
+
 
 
 

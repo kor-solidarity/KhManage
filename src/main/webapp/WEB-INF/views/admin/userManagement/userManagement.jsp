@@ -151,7 +151,7 @@
 						<td class="tdText">${m.status}</td>
 						<td class="tdText">2020-04-03 추가</td>
 						<td class="tdText">
-							<button type="button"  class="pwdResetBtn" onclick="resetPassword(${m.memberNo})">패스워드 초기화<%--  ${m.memberNo} --%></button>
+							<button type="button" id="pwdResetBtn" class="pwdResetBtn">패스워드 초기화</button>
 							<input type="hidden" id="inputMemberNo" class="" name="memberNo" value="${m.memberNo}">
 						</td>
 					</tr>
@@ -364,22 +364,35 @@
 	 
 	 
 	 
-	//패스워드 초기화 : 해당 memberNo 가 안 넘어온다 ㅠㅠ
-	function resetPassword() {
-		
+	//패스워드 초기화
+/* 	$("#projectTable tr").children().find("#pwdResetBtn").on("click", function(){
+
 		var result = confirm("해당인원의 패스워드 정보를 초기화 하시겠습니까?");
-		
-		//memberList
-		var memberNo = $("#inputMemberNo").eq(0).val();
-		console.log("memberNo: " + memberNo);
-		
-		if(result) {
-			alert("비밀번호를 초기화 하였습니다.");
-		} 
-		
-	}
-	
-	
+	    
+		var memberNo = $($(this).parent().find("#inputMemberNo").val());
+		   	console.log(memberNo);
+	   	
+	   	
+	   	if(result) {
+
+	   		//location.href="userManagement.me?memberNo=" + memberNo;
+	   		
+	   	} */
+	   	
+	   	
+    $("#projectTable tr").children().find("#pwdResetBtn").on("click", function(){
+     
+    	var result = confirm("해당인원의 패스워드 정보를 초기화 하시겠습니까?");
+        
+     	var memberNo = $(this).parent().find("#inputMemberNo").val();
+        console.log(memberNo);
+        
+        if(result) {
+        	location.href="userManagement.me?memberNo=" + memberNo;
+        }
+        
+        
+    });
 	
 	
 	

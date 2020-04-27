@@ -112,7 +112,12 @@
 		AND R.STATUS = 'Y'
 	</select>
 	
-
+	<!-- 게시글 삭제 -->
+	<update id="deleteBoard" parameterType="java.lang.String">
+		UPDATE INFO_PK
+		SET STATYS = 'N'
+		WHERE INFO_PK = #{boardNo}
+	</update>
 
 </mapper>
 

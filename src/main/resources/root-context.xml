@@ -42,6 +42,14 @@
 		<property name="maxUploadSize" value="10000000"/>
 	</bean>
 
+	<!-- ajax JsonView 파싱 -->
+   <bean id="jsonView" class="net.sf.json.spring.web.servlet.view.JsonView">
+   </bean>
+   <bean id="viewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
+      <property name="order" value="0"/>
+   </bean>
+
+
 
 	<!-- 트랜젝션 매니저 bean 등록 -->
 	<!-- <bean id="transactionManager" 

@@ -227,10 +227,12 @@
 				<div id="" class="author"><b>작성자 :<span>&nbsp;&nbsp; ${board.memberName}</span></b></div>
 				<div id="" class="view"><span style="color: #999999">조회수 : &nbsp; <span>${board.viewCount}</span></span></div>
 			</div>
-			<div style="margin-top: 20px; float: right; padding-right: 20px;">
-				<button id="modifyBoBtn" class="modifyBtn Btn" onclick="">수정</button>
-				<button id="deleteBoBtn" class="removeBtn Btn" onclick="">삭제</button>
-			</div>
+			<%-- <c:if test="${loginUser.memberNo == inforBoard.memberNo }"> --%>
+				<div style="margin-top: 20px; float: right; padding-right: 20px;">
+					<button id="modifyBoBtn" class="modifyBtn Btn" onclick="">수정</button>
+					<button id="deleteBoBtn" class="removeBtn Btn" onclick="">삭제</button>
+				</div>
+			<%-- </c:if> --%>
 			<br>
 			
 			
@@ -398,18 +400,38 @@
 		var boardNo = "${board.boardNo}";
 		var memberNo = "${loginUser.memberNo}";
 		
+		
+		
 		//게시글 수정
 		$("#modifyBoBtn").click(function(){
+		
+			var result = confirm("게시글을 수정하시겠습니까?");
 			
-			location.href = "modifyBoardSelect.ib?boardNo=" + boardNo;
+			if(result) {
+
+				location.href = "modifyBoardSelect.ib?boardNo=" + boardNo;
+				
+				console.log(boardNo);
+				
+			}			
 			
-			console.log(boardNo);
 		});
 		 
+		
 		//게시글 삭제
 		$("#deleteBoBtn").click(function(){
 			
-			location.href = "deleteBoard.ib?boardNo=" + boardNo;
+			var result = confirm("삭제하시겠습니까?");
+			
+			console.log(boardNo);
+			
+			if(result) {
+
+				location.href = "deleteBoard.ib?boardNo=" + boardNo;
+				alert("게시글이 삭제되었습니다.");
+				
+			}
+			
 		});
 		
 	});

@@ -23,6 +23,8 @@ public interface InfoBoardService {
 
 	int updateBoard(InfoBoard ib);
 
+	int deleteBoard(String boardNo);
+
 	
 	
 

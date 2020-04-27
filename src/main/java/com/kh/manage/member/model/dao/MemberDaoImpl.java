@@ -181,6 +181,12 @@ public class MemberDaoImpl implements MemberDao {
 		return sqlSession.selectOne("Member.selectCurrval");
 	}
 
+	@Override
+	public int resetPassword(SqlSessionTemplate sqlSession, Member m) {
+
+		return sqlSession.update("Member.resetPassword", m);
+	}
+
 
 
 
