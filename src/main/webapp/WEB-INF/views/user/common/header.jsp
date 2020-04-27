@@ -81,16 +81,16 @@
 							class="dropdown-toggle icon-menu" data-toggle="dropdown">
 							<i class="fas fa-bell" style="font-size: 25px; color: #1E2B44;"></i>
 								<!-- <span class="badge bg-danger" style="background:red;">5</span> -->
-								<span id="reportCount" class="badge bg-danger" style="background:red; padding-left:0px; padding-right:0px; left:32px; top:20px; font-size:12px; width:auto; height:18px;">300+</span>
+								<span id="reportCount" class="badge bg-danger" style="background:red; padding-left:0px; padding-right:0px; left:32px; top:20px; font-size:12px; width:auto; height:18px;"></span>
 						</a>
 							<ul id="reportArea" class="dropdown-menu notifications" style="height:300px; width:250px; overflow: auto;">
-								<li><a href='#' ><span class='dot bg-warning'><button type="button" id="checkBtn" style="border:1px solid lightgray; width:150px; background:lightgray; color:white; border-radius: 5px;">전체 확인</button></span></a></li>
+								<li><a href='#' ><span class='dot bg-warning'><button type="button" id="checkBtn" style="border:1px solid lightgray; margin-left:20px; width:150px; background:lightgray; color:white; border-radius: 5px;">전체 확인</button></span></a></li>
 							</ul>
 
 							
 						<li class="dropdown"><a id="chat" class="dropdown-toggle icon-menu" data-toggle="dropdown">
 							<i class="fas fa-comment-dots" style="font-size: 25px; color: #1E2B44;"></i>
-								<span id="chatCount" class="badge bg-danger" style="background:red; padding-left:0px; padding-right:0px; left:32px; top:20px; font-size:12px; width:auto; height:18px;">300+</span>
+								<span id="chatCount" class="badge bg-danger" style="background:red; padding-left:0px; padding-right:0px; left:32px; top:20px; font-size:12px; width:auto; height:18px;"></span>
 						</a></li>
 							
 
@@ -132,6 +132,8 @@
 					 $("#chatCount").text(data);
 					 if(data == 0){
 						 $("#chatCount").hide();
+					 }else{
+						 $("#chatCount").show();
 					 }
 				 }
 			});
@@ -148,8 +150,8 @@
 					 success: function(data){
 						 if(data == 1){
 							 $("#reportArea").empty();
-							 $("$reportArea").append("<li><a href='#' ><span class='dot bg-warning'><button type='button' id='checkBtn' style='border:1px solid lightgray; width:150px; background:lightgray; color:white; border-radius: 5px;'>전체 확인</button></span></a></li>");
-							 $("#reportCount").text(0);
+							 $("#reportArea").append("<li><a href='#' ><span class='dot bg-warning'><button type='button' id='checkBtn' style='border:1px solid lightgray; margin-left:20px;  width:150px; background:lightgray; color:white; border-radius: 5px;'>전체 확인</button></span></a></li>");
+							 $("#reportCount").hide();
 						 }
 					 }
 				});			
@@ -169,18 +171,28 @@
 							
 							if(data[key]['createMemberNo'] == memberNo && data[key]['ihStatus'] == "조치중"){
 								$("#reportArea").append("<li><a href='#' class='notification-item'><span class='dot bg-warning'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>" + data[key]['teamWorkerName'] +"님 께서 조치승인 하셨습니다.</span></a></li>");
-							}else{
+								i++;
+							}else if(data[key]['ihStatus'] == '확인중'){
 								$("#reportArea").append("<li><a href='#' class='notification-item'><span class='dot bg-warning'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>"+"등록자 : " +data[key]['createMemberName'] + "//조치자 : " + data[key]['teamWorkerName'] +"</span></a></li>");
+								i++;
 							}
-							i++;
 						 }
-						 $("#checkBtn").css("background", "#1E2B44");
-						 $("#reportCount").text(i);
+						 
+						 if(i == 0){
+							 $("#checkBtn").css("background", "lightgray");
+							 $("#reportCount").text(i);
+							 $("#reportCount").hide();
+						 }else{
+							 $("#checkBtn").css("background", "#1E2B44");
+							 $("#reportCount").show();
+							 $("#reportCount").text(i);
+						 }
 					 }
 				});
 			});
 			
 			  function writeResponse(text){
+				  console.log(text);
 				  if(text == '이슈'){
 					  var memberNo = "${loginUser.memberNo}";
 					  console.log(memberNo);
@@ -188,24 +200,30 @@
 					  $.ajax({
 							url:'selectIssueList.re',
 							type: 'post',
-							async: false,
 							data:{memberNo:memberNo},
 						 success:function(data){
 							 var i = 0;
 							 $("#reportArea").empty();
-							 $("$reportArea").append("<li><a href='#' ><span class='dot bg-warning'><button type='button' id='checkBtn' style='border:1px solid lightgray; width:150px; background:lightgray; color:white; border-radius: 5px;'>전체 확인</button></span></a></li>");
+							 $("#reportArea").append("<li><a href='#' ><span class='dot bg-warning'><button type='button' id='checkBtn' style='border:1px solid lightgray; margin-left:20px;  width:150px; background:lightgray; color:white; border-radius: 5px;'>전체 확인</button></span></a></li>");
+							 
+							 console.log(data);
 							 
 							 for(key in data) {
-								
 								if(data[key]['createMemberNo'] == memberNo && data[key]['ihStatus'] == "조치중"){
 									$("#reportArea").append("<li><a href='#' class='notification-item'><span class='dot bg-warning'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>" + data[key]['teamWorkerName'] +"님 께서 조치승인 하셨습니다.</span></a></li>");
-								}else{
+									i++;
+								}else if(data[key]['ihStatus'] == '확인중'){
 									$("#reportArea").append("<li><a href='#' class='notification-item'><span class='dot bg-warning'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>"+"등록자 : " +data[key]['createMemberName'] + "//조치자 : " + data[key]['teamWorkerName'] +"</span></a></li>");
+									i++;
 								}
-								i++;
+								
 							 }
-							 $("#checkBtn").css("background", "#1E2B44");
-							 $("#reportCount").text(i);
+							 if(i != 0){
+								 $("#checkBtn").css("background", "#1E2B44");
+								 $("#reportCount").text(i);
+							 }else{
+								 $("#reportCount").hide();
+							 }
 						 }
 					});
 					  
