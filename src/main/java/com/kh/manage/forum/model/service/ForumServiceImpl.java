@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.forum.model.dao.ForumDao;
+import com.kh.manage.forum.model.vo.Mwork;
 import com.kh.manage.forum.model.vo.Notice;
 import com.kh.manage.forum.model.vo.Reply;
+import com.kh.manage.project.model.vo.ProjectDetail;
 
 @Service
 public class ForumServiceImpl implements ForumService{
@@ -157,5 +159,13 @@ public class ForumServiceImpl implements ForumService{
 		
 		return fd.noticeUpdate(sqlSession, n);
 	}
+
+
+	@Override
+	public List<Mwork> selectListWork(Mwork w) {
+
+		return fd.selectListWork(sqlSession, w);
+	}
+
 
 }

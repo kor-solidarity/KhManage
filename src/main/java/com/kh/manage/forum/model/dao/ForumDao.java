@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
+import com.kh.manage.forum.model.vo.Mwork;
 import com.kh.manage.forum.model.vo.Notice;
 import com.kh.manage.forum.model.vo.Reply;
 
@@ -44,6 +45,8 @@ public interface ForumDao {
 	int noticeUpdate(SqlSessionTemplate sqlSession, Notice n);
 
 	int attachUpdate(SqlSessionTemplate sqlSession, Attachment at);
+
+	List<Mwork> selectListWork(SqlSessionTemplate sqlSession, Mwork w);
 
 
 }

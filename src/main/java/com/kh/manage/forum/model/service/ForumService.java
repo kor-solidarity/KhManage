@@ -4,8 +4,10 @@ import java.util.List;
 
 import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
+import com.kh.manage.forum.model.vo.Mwork;
 import com.kh.manage.forum.model.vo.Notice;
 import com.kh.manage.forum.model.vo.Reply;
+import com.kh.manage.project.model.vo.ProjectDetail;
 
 public interface ForumService {
 
@@ -36,5 +38,7 @@ public interface ForumService {
 	int noticeUpdate(Notice n, Attachment at);
 
 	int noticeUpdate2(Notice n);
+
+	List<Mwork> selectListWork(Mwork w);
 
 }

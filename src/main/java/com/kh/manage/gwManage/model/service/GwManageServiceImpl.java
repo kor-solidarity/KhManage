@@ -6,10 +6,13 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.manage.forum.model.vo.Mwork;
 import com.kh.manage.gwManage.model.dao.GwManageDao;
 import com.kh.manage.gwManage.model.vo.GWork;
 import com.kh.manage.gwManage.model.vo.GwRepeat;
+import com.kh.manage.gwManage.model.vo.Statistics;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.project.model.vo.Project;
 
 @Service
 public class GwManageServiceImpl implements GwManageService{
@@ -71,6 +74,42 @@ public class GwManageServiceImpl implements GwManageService{
 	public List<Member> memberList() {
 
 		return gd.MemberList(sqlSession);
+	}
+
+	@Override
+	public List<Project> projectList(Member loginUser) {
+
+		return gd.projectList(sqlSession, loginUser);
+	}
+
+	@Override
+	public Project selectProject(String pNo) {
+
+		return gd.selectProject(sqlSession, pNo);
+	}
+
+	@Override
+	public List<Statistics> statisticsList(String pNo) {
+
+		return gd.statisticsList(sqlSession, pNo);
+	}
+
+	@Override
+	public List<Statistics> statisticsList2(String pNo) {
+
+		return gd.statisticsList2(sqlSession, pNo);
+	}
+
+	@Override
+	public List<Mwork> selectListWork(Mwork w) {
+
+		return gd.selectListWork(sqlSession, w);
+	}
+
+	@Override
+	public List<Statistics> statisticsList3(String pNo) {
+
+		return gd.selectList3(sqlSession, pNo);
 	}
 
 }

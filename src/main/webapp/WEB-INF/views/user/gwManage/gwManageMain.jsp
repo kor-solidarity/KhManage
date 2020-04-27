@@ -695,10 +695,10 @@
 			  		        success : function(data){
 			  		        	console.log(data);
 			  		        	
-			  		        	for(var i =0; i < data.length; i++){
+			  		        	/* for(var i =0; i < data.length; i++){
 			  		        		
 			  		        	   $("#memberNo2").append("<option class='option' value='"+data[i].memberNo+"'>"+data[i].memberName+"</option>")
-			  		        	}
+			  		        	} */
 			  		        },
 			  		        error:function(request,status,error){
 			  		            
