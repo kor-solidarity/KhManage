@@ -88,11 +88,11 @@
 	width: 100%;
 	background: #F3F3F3;
 	line-height: 35px;
-	border: 4px solid lightgray;
+	/* border: 4px solid lightgray; */
 	border-left: none;
 	border-right: none;
 	border-top: 1px solid lightgray;
-	border-bottom: 1px solid lightgray;
+	/* border-bottom: 1px solid lightgray; */
 	margin-top: 60px;
 }
 
@@ -103,7 +103,7 @@
 	border: 4px solid lightgray;
 	border-left: none;
 	border-right: none;
-	border-top: none;
+	border-top: 1px solid lightgray;
 	border-bottom: 1px solid lightgray;
 }
 
@@ -128,7 +128,7 @@
 }
 
 .replyAuthor1 {
-	width: 20%;
+	width: 15%;
 	text-align: left;
 	padding-top: 10px;
 	padding-bottom: 10px;
@@ -147,7 +147,7 @@
 }
 
 .replyAuthor3 {
-	width: 15%;
+	width: 20%;
 	font-size: 14px;
 	text-align: center;
 	align: center;
@@ -199,6 +199,63 @@
 	margin-top: 0px;
 }
 
+.modifyReplyBtn2 {
+	height:30px;
+	line-height: 30px;
+	border:none;
+	background:#1E2B44;
+	color:white;
+	font-weight:600;
+	border-radius: 5px;
+	font-size:14px;
+}
+
+.cancelReplyBtn2 {
+	width:40px;
+	height:30px;
+	line-height: 30px;
+	border:none;
+	background:gray;
+	color:white;
+	font-weight:600;
+	border-radius: 5px;
+	font-size:14px;
+}
+
+
+
+.replyModifyDiv1 {
+	background: #F3F3F3;
+	vertical-align: middle;
+}
+
+.replyModifyDiv2 {
+	/* border-bottom: 1px solid lightgray; */
+	height: 200px;
+	vertical-align: middle;
+	
+}
+
+.replyModifyTextarea {
+	height: 55%;
+	width: 88%;
+	border: 1px solid gray;
+	margin-right: 22px;
+	float: right;
+	resize: none;
+	padding: 5px;
+	padding-left: 10px;
+	margin-top: 25px;
+	
+}
+
+.replyBtnDiv {
+	float: right;
+	width: 20%;
+	margin-right: -100px;
+	margin-top: 10px;
+}
+
 
 </style>
 </head>
@@ -227,7 +284,7 @@
 				<div id="" class="author"><b>작성자 :<span>&nbsp;&nbsp; ${board.memberName}</span></b></div>
 				<div id="" class="view"><span style="color: #999999">조회수 : &nbsp; <span>${board.viewCount}</span></span></div>
 			</div>
-			<%-- <c:if test="${loginUser.memberNo == inforBoard.memberNo }"> --%>
+			<%-- <c:if test="${loginUser.memberNo == board.memberNo}"> --%>
 				<div style="margin-top: 20px; float: right; padding-right: 20px;">
 					<button id="modifyBoBtn" class="modifyBtn Btn" onclick="">수정</button>
 					<button id="deleteBoBtn" class="removeBtn Btn" onclick="">삭제</button>
@@ -253,41 +310,45 @@
 			
 			<c:forEach var="r" items="${rlist}">
 			<div id="" class="replyArea">
-				<table id="" class="" style="width: 100%;">
+				<table id="replyTable" class="" style="width: 100%;">
 					<tr style="">
-						<td class="replyAuthor1">${r.memberName}</td>
-						<td rowspan="2" class="replyAuthor2">${r.replyContent}</td>
+						<td class="replyAuthor1"><b>${r.memberName}</b>
+							<input type="hidden" id="rReplyNo" class="" value="${r.replyNo}">	
+							<input type="hidden" id="rMemberNo" class="" value="${r.memberNo}">
+						</td>
+						<td id="replyContent" rowspan="2" class="replyAuthor2">${r.replyContent}</td>
 						<td class="replyAuthor3">${r.createDate}</td>
 					</tr>
 					<tr>
 						<td>
 							<button id="" class="repBtn Btn" onclick="">댓글달기</button>
 						</td>
-						<c:if test="${loginUser.memberNo == r.memberNo }">
+						<%-- <c:if test="${loginUser.memberNo == board.memberNo }"> --%>
 						<td align="center" style="height: 80px;">
-							<button type="button" id="" class="modifyBtn Btn">수정</button>
-							<button type="button" id="" class="removeBtn Btn">삭제</button>
+							<button type="button" id="modifyReplyBtn" class="modifyBtn Btn">수정</button>
+							<button type="button" id="removeReplyBtn" class="removeBtn Btn">삭제</button>
 						</td>
-						</c:if>
-						
+						<%-- </c:if> --%>
 					</tr>
 				</table>
 			</div>
+			
+			<!-- 댓글수정영역 -->
+			<div id="" class="replyModifyDiv1">
+				<div class="replyModifyDiv2">
+					<textarea id="" class="replyModifyTextarea" rows="" cols=""></textarea>
+					<div>
+						<p style="padding: 30px;"><b>댓글수정</b></p>
+					</div>
+					<div class="replyBtnDiv">
+						<button id="" class="modifyReplyBtn2" onclick="">수정</button>
+						<button id="" class="cancelReplyBtn2" onclick="">취소</button>
+					</div>
+				</div>
+			</div>
 			</c:forEach>
 			
-			
-			
-			<!-- <div id="" class="replyArea">
-				<table id="" class="replyTable" border="1">
-					<tr class="" style="padding 20px;">
-						<td class="replyAuthor" style="width: 20%;">글쓴이</td>
-						<td class="replyAuthor" style="width: 750%;">댓글내용</td>
-					</tr>
-				</table>
-			</div><br> -->
-			
 			<br>
-			
 			
 			<div id="" class="replyInsert">
 				<form action="" id="commentForm" name="commentForm" method="post">
@@ -348,9 +409,7 @@
 					if(result) {
 						alert("댓글이 등록되었습니다.");
 						console.log(data);
-					} else {
-						alert("취소하였습니다.");
-					}
+					} 
 					
 				}
 				
@@ -437,6 +496,55 @@
 	});
 	
 	
+	
+	//댓글수정
+	$(function() {
+		
+		 /* $("#projectTable tr").children().find("#pwdResetBtn").on("click", function(){
+		       var result = confirm("해당인원의 패스워드 정보를 초기화 하시겠습니까?");
+		       
+		      console.log($(this).parent().find("#inputMemberNo").val()); 
+		    }); */
+		
+		
+		
+		$(document).on('click', "#modifyReplyBtn", function(){
+			
+			/* var replyNo = $("#rReplyNo").val();
+			var replyContent = $("#replyContent").text();
+			
+			var memberNo = "${loginUser.memberNo}"; */
+			
+			var replyNo = $("#replyTable").children().find("#rReplyNo").val();
+			console.log(replyNo);
+			
+			
+			//console.log(replyContent);
+			//console.log(memberNo);
+			
+			
+			
+			
+			
+			/* $.ajax({
+				type: "post",
+				url: "updateReply.ib",
+				data: {
+					
+					replyNo : replyNo,
+					
+				}
+				
+			}); */
+			
+			
+			
+			
+			
+		});
+		
+		
+	});
 	
 	
 	

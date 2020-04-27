@@ -289,7 +289,7 @@ public class InfoBoardController {
 	@RequestMapping("deleteBoard.ib")
 	public String deleteBoard(HttpServletRequest request) {
 		
-		String boardNo = request.getParameter("boradNo");
+		String boardNo = request.getParameter("boardNo");
 		System.out.println("boardNo : " + boardNo);
 		
 		int result = is.deleteBoard(boardNo);
