@@ -59,7 +59,7 @@ public class MemberController {
 	
 	//member리스트 조회	
 	@RequestMapping("/userManagement.me")
-	public String userManagementMain(Model model, HttpServletRequest request) {
+	public String userManagementMain(Member m, Model model, HttpServletRequest request) {
 		
 		
 		int currentPage = 1;
@@ -80,6 +80,25 @@ public class MemberController {
 		
 		request.setAttribute("mlist", mlist);
 		request.setAttribute("pi", pi);
+		
+		
+		//memberNo 비밀번호 초기화
+		System.out.println(m.getMemberNo());
+		
+		
+		
+		m.getMemberNo();
+		m.setMemberPwd(passwordEncoder.encode("0000"));
+		
+		int result = ms.resetPassword(m);
+		System.out.println("패스워드 초기화 result : " + result);
+		
+		
+		if(result > 0) {
+			//return "redirect:userManagement.jsp";
+			return "admin/userManagement/userManagement";
+		} 
+		
 		
 
 		return "admin/userManagement/userManagement";
@@ -170,14 +189,14 @@ public class MemberController {
 		}
 
 		
-		String memberNo = request.getParameter("memberNo");
-		System.out.println("파라미터 memberNo : " + memberNo);
-		
-		String memberName = request.getParameter("memberName");
-		System.out.println("파라미터 memberName : " + memberName);
-		
-		String projectPk = request.getParameter("projecPk");
-		System.out.println("파라미터 projectPk : " + projectPk);
+//		String memberNo = request.getParameter("memberNo");
+//		System.out.println("파라미터 memberNo : " + memberNo);
+//		
+//		String memberName = request.getParameter("memberName");
+//		System.out.println("파라미터 memberName : " + memberName);
+//		
+//		String projectPk = request.getParameter("projecPk");
+//		System.out.println("파라미터 projectPk : " + projectPk);
 		
 
 		//	      System.out.println("controller member : " + m);
@@ -207,10 +226,6 @@ public class MemberController {
 				
 				int result2 = ms.insertCustomer(m);
 				
-				
-				m.setMemberNo(memberNo);
-				m.setProjectPk(projectPk);
-				
 				int result3 = ms.insertCustomerProjectTeam(m);
 
 				
@@ -236,7 +251,6 @@ public class MemberController {
 	//회원비밀번호 변경
 	@RequestMapping("updatePassword.me")
 	public String updatePassword(Member m, Model model, HttpSession session) {
-		System.out.println("비밀번호 변경 요청");
 		
 		//loginUser
 		Member member = (Member) session.getAttribute("loginUser");
@@ -384,14 +398,14 @@ public class MemberController {
 		//--------------------------------------------------------
 		
 		Attachment at = new Attachment();
-		at.setChangeName(changeName);
+		at.setChangeName(changeName + ext);
 		at.setOriginName(originFileName);
 		at.setFilePath(filePath);
 		at.setExt(ext);
 		
 		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
 		at.setDivision(loginUser.getMemberNo());
-			
+		
 		
 		Attachment originFile = ms.selectAttachment(loginUser);
 
@@ -405,7 +419,7 @@ public class MemberController {
 			System.out.println("이미지 업데이트 result : " + result); 
 			
 			try {
-//				profileImage.transferTo(new File(filePath + "\\" + changeName + ext));
+				profileImage.transferTo(new File(filePath + "\\" + changeName + ext));
 //				profileImage.transferTo(new File(filePath + changeName + ext)); // Mac
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -418,7 +432,7 @@ public class MemberController {
 			try {
 				int result = ms.insertProfileImage(at);
 				System.out.println("프로필이미지 result : " + result);
-//				profileImage.transferTo(new File(filePath + "\\" + changeName + ext));
+				profileImage.transferTo(new File(filePath + "\\" + changeName + ext));
 //				profileImage.transferTo(new File(filePath + changeName + ext)); // Mac
 				
 			} catch (Exception e) {

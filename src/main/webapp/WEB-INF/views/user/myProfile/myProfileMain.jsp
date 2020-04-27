@@ -134,8 +134,8 @@
                                     <!-- <a href=""><img src="" class="thumb-lg" alt="image"></a> -->
 
                                 <div class="pImamageDiv">
-                                	<%-- <img src="<c:url value="/resources/img/profile.png"/>" class="thumb-lg pImamage"> --%>
-                                	<img class="thumb-lg pImamage" src="<c:url value="resources/uploadFiles/${at.changeName}.png"/>">
+                                	<%-- <img class="thumb-lg pImamage" src="<c:url value="resources/uploadFiles/${at.changeName}.png"/>"> --%>
+                                	<img class="thumb-lg pImamage" src="<c:url value="resources/uploadFiles/${at.changeName}"/>">
                                 </div>
                                 
                                 <div class="" style="margin-top: 40px;">

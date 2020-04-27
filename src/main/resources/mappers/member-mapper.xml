@@ -156,15 +156,21 @@
 	<!-- 회원정보수정 : 프로필 이미지 등록 -->
 	<insert id="insertProfileImage" parameterType="Attachment">
 		INSERT INTO ATTACHMENT
-		VALUES('AT'|| TO_CHAR(SEQ_AT_NO.NEXTVAL, 'FM000'), #{division}, #{originName}, #{changeName} , #{filePath}, #{ext})
+		VALUES('AT'|| TO_CHAR(SEQ_AT_NO.NEXTVAL, 'FM000'), #{division}, #{originName}, #{changeName} ,#{filePath}, NULL)
 	</insert>
 	
 	<!-- 회원정보 수정 : 프로필 이미지 수정 -->
 	<update id="updateProfileImage" parameterType="Attachment">
 		UPDATE ATTACHMENT 
-		SET ORIGIN_NAME = #{originName}, CHANGE_NAME = #{changeName}, FILEPATH = #{filePath}, EXT = #{ext}
+		SET ORIGIN_NAME = #{originName}, CHANGE_NAME = #{changeName}, FILEPATH = #{filePath}, NULL
 		WHERE DIVISION = #{division}
 	</update>
+	
+	<!-- <update id="updateProfileImage" parameterType="Attachment">
+		UPDATE ATTACHMENT 
+		SET ORIGIN_NAME = #{originName}, CHANGE_NAME = #{changeName}, FILEPATH = #{filePath}, EXT = #{ext}
+		WHERE DIVISION = #{division}
+	</update> -->
 
 	
 	<select id="selectProfileImg" parameterType="Member" resultMap="attachmentResultSet">
@@ -273,8 +279,29 @@
     <insert id="insertCustomerProjectTeam" parameterType="Member">
         INSERT INTO PROJECT_TEAM
         VALUES ('PT' || TO_CHAR(SEQ_TEAM.NEXTVAL, 'FM000'),
-                #{projectPk}, #{memberNo}, 'CM')
+                #{projectPk}, 'C' || TO_CHAR(SEQ_MNO.CURRVAL, 'FM000'), 'CM')
     </insert>
+	
+	<!-- <update id="updatePassword" parameterType="Member">
+		UPDATE MEMBER
+		SET(PASSWORD, MODIFY_DATE) = (SELECT #{memberPwd}, SYSDATE
+									  FROM MEMBER
+									  WHERE MEMBER_ID = #{memberId})
+		WHERE MEMBER_ID = #{memberId}
+	</update> -->
+	
+	<!-- 회원 패스워드 초기화 -->
+	<update id="resetPassword" parameterType="Member">
+		UPDATE MEMBER
+		SET(PASSWORD, MODIFY_DATE) = (SELECT #{memberPwd}, SYSDATE
+		                              FROM MEMBER
+		                              WHERE MEMBER_NO = #{memberNo})
+		WHERE MEMBER_NO = #{memberNo}
+	</update>
+	
+	
+	
+	
 	
 </mapper>
 

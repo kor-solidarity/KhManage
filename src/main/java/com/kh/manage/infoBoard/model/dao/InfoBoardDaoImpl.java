@@ -66,6 +66,12 @@ public class InfoBoardDaoImpl implements InfoBoardDao {
 		return sqlSession.update("InfoBoard.updateBoard", ib);
 	}
 
+	@Override
+	public int deleteBoard(SqlSessionTemplate sqlSession, String boardNo) {
+
+		return sqlSession.update("InforBoard.deleteBoard", boardNo);
+	}
+
 
 
 

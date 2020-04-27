@@ -226,16 +226,14 @@
 							<td></td>
 							<td>
 								<!-- <input type="text" id="rank" class="register form-control" name="rank"> -->
-								<select id="projectList" class="register form-control" name="projectName">
-									<option id="projectOption" class="form-control" value="0">선택하세요</option>
-									<c:forEach var="p" items="${plist}">
-									<option id="projectOption" class="form-control" value="${p.projectPk}">
-										<c:out value="${p.projectName}">
-										<input type="hidden" id="projectNo" name="projectPk" value="${p.projectPk}">											
-										</c:out>
-									</option>
-									</c:forEach>
-								</select>
+								<select id="projectList" class="register form-control" name="projectPk">
+		                           <option class="form-control" value="0">선택하세요</option>
+		                           <c:forEach var="p" items="${plist}">
+			                           <option class="form-control" value="${p.projectPk}">${p.projectName}
+			                              <%-- <input type="hidden" id="projectNo" name="projectPk" value="${p.projectPk}"> --%>                                 
+			                           </option>
+                           		   </c:forEach>
+                        		</select>
 							</td>
 						</tr>
 					</table>

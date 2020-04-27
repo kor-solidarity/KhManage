@@ -285,6 +285,20 @@ public class InfoBoardController {
 	}
 	
 	
+	//게시글 삭제
+	@RequestMapping("deleteBoard.ib")
+	public String deleteBoard(HttpServletRequest request) {
+		
+		String boardNo = request.getParameter("boradNo");
+		System.out.println("boardNo : " + boardNo);
+		
+		int result = is.deleteBoard(boardNo);
+		
+		System.out.println("게시글 삭제 result : " + result);
+		
+		
+		return "redirect:infoBoard.ib";
+	}
 	
 	
 	

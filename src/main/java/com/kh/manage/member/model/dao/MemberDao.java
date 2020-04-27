@@ -67,5 +67,7 @@ public interface MemberDao {
 
 	String selectCurrval(SqlSessionTemplate sqlSession);
 
+	int resetPassword(SqlSessionTemplate sqlSession, Member m);
+
 
 }

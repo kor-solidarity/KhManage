@@ -188,6 +188,8 @@ summernote{
 			alert("내용을 입력해주세요");
 			return false;
 		}
+		
+		alert("게시글을 수정하였습니다.");
 		frm.submit();
 	}
 	

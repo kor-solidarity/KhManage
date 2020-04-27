@@ -26,6 +26,8 @@ public interface InfoBoardDao {
 
 	int updateBoard(SqlSessionTemplate sqlSession, InfoBoard ib);
 
+	int deleteBoard(SqlSessionTemplate sqlSession, String boardNo);
+
 
 
 }
