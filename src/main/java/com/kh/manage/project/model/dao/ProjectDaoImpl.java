@@ -150,4 +150,9 @@ public class ProjectDaoImpl implements ProjectDao {
 	public List<WorkHistory> selectWorkHistoryList(SqlSessionTemplate sqlSession, String workNo) {
 		return sqlSession.selectList("Project.selectWorkHistoryList", workNo);
 	}
+	
+	@Override
+	public List<ProjectTeam> selectProjectTeamGrantorList(SqlSessionTemplate sqlSession, String pid) {
+		return sqlSession.selectList("Project.selectProjectTeamGrantorList", pid);
+	}
 }

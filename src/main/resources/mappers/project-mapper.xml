@@ -170,14 +170,29 @@
 
     <!--부서목록-->
     <select id="selectDeptList" resultMap="deptResultSet">
-        SELECT *
+        SELECT dept_no
+             , dept_name
+             , high_dept
+             , dept_level
+             , status
         FROM DEPT
         where status = 'Y'
     </select>
 
     <!--현역 사원목록-->
     <select id="selectActiveMember" parameterType="String" resultMap="deptMemberResultSet">
-        SELECT *
+        SELECT member_no
+             , member_id
+             , password
+             , member_name
+             , phone
+             , email
+             , member_type
+             , rank_no
+             , dept_no
+             , enroll_date
+             , modify_date
+             , status
         FROM MEMBER
         WHERE MEMBER_TYPE = '0'
           AND STATUS = 'Y'
@@ -235,6 +250,17 @@
                                 JOIN DEPT D ON M.DEPT_NO = D.DEPT_NO
                                 JOIN RANK R2 ON M.RANK_NO = R2.RANK_NO) M ON T.MEMBER_PK = M.MEMBER_NO
         WHERE PROJECT_PK = #{value}
+    </select>
+
+    <!--프로젝트 담당 승인 자격자 명단뽑기.-->
+    <select id="selectProjectTeamGrantorList" parameterType="String" resultMap="projectTeamResultSet">
+        SELECT T.TEAM_PK, PROJECT_PK, MEMBER_PK, ROLE, MEMBER_NAME, DEPT_NAME, RANK_NAME
+        FROM PROJECT_TEAM T
+                 JOIN (SELECT *
+                       FROM MEMBER M
+                                JOIN DEPT D ON M.DEPT_NO = D.DEPT_NO
+                                JOIN RANK R2 ON M.RANK_NO = R2.RANK_NO) M ON T.MEMBER_PK = M.MEMBER_NO
+        WHERE (ROLE = 'PM' or ROLE = 'PL') and PROJECT_PK = #{value}
     </select>
 
     <!--프로젝트 작업 히스토리 목록 조회 -->

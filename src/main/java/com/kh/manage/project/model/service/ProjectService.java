@@ -60,4 +60,6 @@ public interface ProjectService {
 	List<WorkProduct> selectWorkProductList(String workNo);
 	
 	List<WorkHistory> selectWorkHistoryList(String workNo);
+	
+	List<ProjectTeam> selectProjectTeamGrantorList(String pid);
 }

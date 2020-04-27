@@ -62,4 +62,6 @@ public interface ProjectDao {
 	List<WorkProduct> selectWorkProductList(SqlSessionTemplate sqlSession, String workNo);
 	
 	List<WorkHistory> selectWorkHistoryList(SqlSessionTemplate sqlSession, String workNo);
+	
+	List<ProjectTeam> selectProjectTeamGrantorList(SqlSessionTemplate sqlSession, String pid);
 }

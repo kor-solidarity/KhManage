@@ -164,4 +164,9 @@ public class ProjectServiceImpl implements ProjectService {
 		return pd.selectWorkHistoryList(sqlSession, workNo);
 	}
 	
+	@Override
+	public List<ProjectTeam> selectProjectTeamGrantorList(String pid) {
+		return pd.selectProjectTeamGrantorList(sqlSession, pid);
+	}
+	
 }

@@ -858,8 +858,8 @@
 				--%>
 
                 function clickedWorkDetails (workNo) {
-                    alert("clickedWorkDetails");
-                    console.log("clickedWorkDetails");
+                    // alert("clickedWorkDetails");
+                    // console.log("clickedWorkDetails");
                     $.ajax({
                         url: 'selectWork.pr',
                         type: 'post',
@@ -868,7 +868,7 @@
                             pid: "${pid}",
                         },
                         success: function (data) {
-                            // daata = data;
+                            daata = data;
                             // alert("done!");
                             console.log(JSON.stringify(data));
                             // 하나하나 뽑아서 모달창에 넣읍시다.
@@ -879,9 +879,10 @@
                             // 제목인풋
                             $("#workName").val(projectWork.workName);
                             // startDate
-                            $("#startDate").val(projectWork.beginDate);
-                            $("#completeDate").val(projectWork.completeDate.);
+                            $("#startDate").val(parseKrDate(projectWork.beginDate));
+                            $("#completeDate").val(parseKrDate(projectWork.completeDate));
                             $("#completeRate").val(projectWork.completeRate);
+                            // for (key in projectWork)
                             // updateWorkList();
                         },
                         error: function (xhr, status, error) {
@@ -890,14 +891,15 @@
                     })
                 }
 
-                // 0월 00, 0000 인 날짜를 인풋에 드갈수 있게끔 변경
+                // 0월 00, 0000 인 날짜를 인풋에 드갈수 있게끔
+                // 0000-00-00 로 변경
                 function parseKrDate (krDate) {
                     var dateArray = krDate.split(/월 |, /);
                     let month = dateArray[0];
                     let day = dateArray[1];
                     let year = dateArray[2];
 
-                    if (month > 10) {
+                    if (month < 10) {
                         month = '0' + month
                     }
                     if (day < 10) {
@@ -926,7 +928,6 @@
 				</div>
 				<div class="modal-body" id="workDetailContent">
 					<div class="container-fluid">
-
 						<ul class="nav nav-tabs">
 							<li class="active"><a data-toggle="tab" href="#home">작업정보</a></li>
 							<li><a data-toggle="tab" href="#menu1">선행작업</a></li>
@@ -934,7 +935,6 @@
 							<li><a data-toggle="tab" href="#menu3">가이드</a></li>
 							<li><a data-toggle="tab" href="#menu4">히스토리</a></li>
 						</ul>
-
 						<div class="tab-content"><br>
 							<%--작업정보--%>
 							<div id="home" class="tab-pane fade in active">
@@ -959,14 +959,15 @@
 									<div class="col-lg-4">
 										<div class=" col-lg-10" style="padding-left: 0; padding-right: 0">
 											<input class="form-control" type="number" max="100" min="0"
-												   name="completeRate" id="">
+												   name="completeRate" id="completeRate">
 										</div>
 										<span>&nbsp;%</span>
 									</div>
 									<div class="col-lg-2 text-center">승인자</div>
 									<div class="col-lg-4">
+										<%--승인자는 PM 또는 PL--%>
 										<select class="form-control" name="grantor" id="grantor">
-											<option value="ayy">미배정</option>
+											<option value="0">미배정</option>
 											<option value="ayy">ayylmaodudethisiskindalongandstuffuknow</option>
 											<option value=""></option>
 										</select>
