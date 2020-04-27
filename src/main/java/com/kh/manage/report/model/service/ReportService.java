@@ -9,4 +9,6 @@ public interface ReportService {
 
 	List<Report> issueSelectList(Member m);
 
+	int checkAllReport(Member m);
+
 }

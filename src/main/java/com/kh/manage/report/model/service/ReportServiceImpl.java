@@ -23,4 +23,10 @@ public class ReportServiceImpl implements ReportService {
 		return rd.issueSelectList(sqlSession, m);
 	}
 
+	@Override
+	public int checkAllReport(Member m) {
+		
+		return rd.checkAllReport(sqlSession, m);
+	}
+
 }
