@@ -280,7 +280,7 @@
 			<ul class="changeList">
 				<li id="requestLi"><a href="templateManagePage.am">등록정보</a>
 				</li>
-				<li id="approveLi"><a href="templateExcel.am">WBS</a>
+				<li id="approveLi"><a id="excel">WBS</a>
 				</li>
 			</ul>
 			<div class="panel panel-headline">
@@ -359,6 +359,13 @@
 <script>
 	$(function(){
 		
+		var tm2= '${tem.templatePk}';
+		var tm = "templateExcel.am?tm="+tm2
+		
+		
+		
+		console.log(tm);
+		
 		/* $("#select").childenren().val() == ${tem.projectTypePk} */
 		 $("select option").each(function(){
 
@@ -369,13 +376,17 @@
 			    }
 
 		 });
+		$("#excel").click(function(){
+			
+			$("#excel").prop("href",tm);
+		});
+		
 	});
 	
 	$("#okBtn").click(function(){
 		
 		$("#tempForm").submit();
 	});
-	
 	
 	
 </script>

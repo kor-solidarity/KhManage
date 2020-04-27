@@ -110,12 +110,13 @@
 		JOIN MEMBER M ON(M.MEMBER_NO = R.MEMBER_NO)
 		WHERE R.FORUM_NO = #{boardNo}
 		AND R.STATUS = 'Y'
+		ORDER BY R.REPLY_NO ASC
 	</select>
 	
 	<!-- 게시글 삭제 -->
 	<update id="deleteBoard" parameterType="java.lang.String">
-		UPDATE INFO_PK
-		SET STATYS = 'N'
+		UPDATE INFO_TABLE
+		SET STATUS = 'N'
 		WHERE INFO_PK = #{boardNo}
 	</update>
 
