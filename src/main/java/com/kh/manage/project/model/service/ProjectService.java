@@ -8,6 +8,7 @@ import com.kh.manage.common.PageInfo;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.project.model.vo.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface ProjectService {
@@ -60,4 +61,8 @@ public interface ProjectService {
 	List<WorkProduct> selectWorkProductList(String workNo);
 	
 	List<WorkHistory> selectWorkHistoryList(String workNo);
+	
+	List<ProjectTeam> selectProjectTeamGrantorList(String pid);
+	
+	List<ProjectWork> selectProjectHighWorkList(HashMap<String, String> highWorkMap);
 }

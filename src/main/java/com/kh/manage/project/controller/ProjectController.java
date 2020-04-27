@@ -391,17 +391,26 @@ public class ProjectController {
 		 * 선행작업: 위 선행작업의 이름과 관리번호
 		 * 산출물: 구분, 파일명, 등록일, 등록자. (목록)
 		 * 히스토리: 내용, 사람이름, 변경일
+		 * 작업 승인 담당자: 멤버테이블
 		 */
 		String workNo = request.getParameter("workNo");
+		String pid = request.getParameter("pid");
 		
 		// 우선 작업정보 가자.
 		ProjectWork projectWork = ps.selectProjectWork(workNo);
-		// 다음은 선행작업들.
+		// 다음은 선행작업.
 		ProjectWork highWork = ps.selectProjectWork(projectWork.getHighWorkNo());
+		// 선택할 수 있는 선행작업 목록
+		HashMap<String, String> highWorkMap = new HashMap<>();
+		highWorkMap.put("pid", pid);
+		highWorkMap.put("workNo", workNo);
+		List<ProjectWork> highWorkList = ps.selectProjectHighWorkList(highWorkMap);
 		// 산출물:
 		List<WorkProduct> workProduct = ps.selectWorkProductList(workNo);
 		// history
 		List<WorkHistory> workHistory = ps.selectWorkHistoryList(workNo);
+		// 승인 담당 대상자 목록
+		List<ProjectTeam> grantorList = ps.selectProjectTeamGrantorList(pid);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("projectWork", projectWork);
@@ -409,6 +418,8 @@ public class ProjectController {
 		map.put("highWork", highWork);
 		map.put("workProduct", workProduct);
 		map.put("workHistory", workHistory);
+		map.put("grantorList", grantorList);
+		map.put("highWorkList", highWorkList);
 		
 		
 		response.setContentType("application/json");

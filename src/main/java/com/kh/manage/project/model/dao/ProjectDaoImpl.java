@@ -12,6 +12,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -149,5 +150,15 @@ public class ProjectDaoImpl implements ProjectDao {
 	@Override
 	public List<WorkHistory> selectWorkHistoryList(SqlSessionTemplate sqlSession, String workNo) {
 		return sqlSession.selectList("Project.selectWorkHistoryList", workNo);
+	}
+	
+	@Override
+	public List<ProjectTeam> selectProjectTeamGrantorList(SqlSessionTemplate sqlSession, String pid) {
+		return sqlSession.selectList("Project.selectProjectTeamGrantorList", pid);
+	}
+	
+	@Override
+	public List<ProjectWork> selectProjectHighWorkList(SqlSessionTemplate sqlSession, HashMap<String, String> highWorkMap) {
+		return sqlSession.selectList("Project.selectProjectHighWorkList", highWorkMap);
 	}
 }
