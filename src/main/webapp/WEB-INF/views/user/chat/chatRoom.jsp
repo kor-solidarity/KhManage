@@ -146,7 +146,7 @@ body {
 		margin-bottom: auto;
 		margin-right: 10px;
 		border-radius: 5px;
-		background-color: orange;
+		background-color: skyblue;
 		color:white;
 		padding: 10px;
 		position: relative;
@@ -235,7 +235,7 @@ body {
 	</div>
 	<div id="section"
 		style="background: #EEEEEE; width: 430px; height: 598px; float: left;">
-		<div style="margin-left: 23px; margin-bottom: 5px; margin-top: 10px;">${cr.chatRoomName}(<label id="memberCount">${cr.count}명</label>)</div>
+		<div style="margin-left: 23px; margin-bottom: 5px; margin-top: 10px;">${cr.chatRoomName}(<label id="memberCount">${cr.count}</label>명)</div>
 		
 		<!-- 채팅 영역 -->
 		<div id="chatArea" style="width:90%; height:420px; background:white; border:2px solid #1E2B44; border-radius:10px; margin:0 auto; overflow: auto; overflow-x:hidden">
@@ -290,10 +290,10 @@ body {
 					</c:if>
 					<c:if test="${a.memberNo eq 'M999'}">
 					<c:if test="${fn:length(a.content)<11}">
-					<tr height='10px;'></tr><tr><td colspan='2'><div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send' align='center' style='width:100%; font-size:10px; margin-right: 40px; background:orange; height:15px; padding: 0px;'>${fn:substring(a.content,0,8)} &nbsp; ${fn:substring(a.content,8,10)}요일<span class='msg_time_send'></span></div></div></td></tr>
+					<tr height='10px;'></tr><tr><td colspan='2'><div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send' align='center' style='width:100%; font-size:10px; margin-right: 60px; background:orange; height:15px; padding: 0px;'>${fn:substring(a.content,0,8)} &nbsp; ${fn:substring(a.content,8,10)}요일<span class='msg_time_send'></span></div></div></td></tr>
 					</c:if>
 					<c:if test="${fn:length(a.content)>=11}">
-					<tr height='10px;'></tr><tr><td colspan='2'><div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send' align='center' style='width:100%; font-size:10px; margin-right: 40px; background:#1E2B44; height:15px; padding: 0px;'>${a.content}<span class='msg_time_send'></span></div></div></td></tr>
+					<tr height='10px;'></tr><tr><td colspan='2'><div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send' align='center' style='width:100%; font-size:10px; margin-right: 60px; background:skyblue; height:15px; padding: 0px;'>${a.content}<span class='msg_time_send'></span></div></div></td></tr>
 					</c:if>
 				</c:if>	
 			</c:forEach>
@@ -548,8 +548,9 @@ body {
 				    	 $(".chatRoomMember").append("<tr><td><div class='box' style='background:white;'><img class='profile' src='<c:url value='/resources/img/people.png'/>'></div></td><td style='padding-top: 14px; padding-left: 10px;'>"+data['memberName']+" / "+data['deptName']+" /"+data['rankName']+"<input type='hidden' class='hideMemberNo' value='"+data['memberNo']+"'></td></tr>");
 				    	 $("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
 						 
-				    	 var c =  Number($("#memberCount").text().substring(0,1));	
-				    	 $("#memberCount").text(Number(c + 1) + "명");
+				    	 var c =  $("#memberCount").text();	
+				    	 console.log(c);
+				    	 $("#memberCount").text((Number(c) + Number(1)));
 				    	
 				    	 ws.send(text);
 					 } 
@@ -734,8 +735,9 @@ body {
     					$(this).parent().parent().remove(); 
     				}
     			});
-     			 
-     			 $("#memberCount").text(text -1 + "명");
+     			 var c =  Number($("#memberCount").text());	
+     			 console.log(c);
+		    	 $("#memberCount").text((Number(c) - Number(1)));
      			 $("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
      		}
         }

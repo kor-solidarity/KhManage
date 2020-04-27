@@ -16,5 +16,11 @@ public class ReportDaoImpl implements ReportDao{
 
 		return sqlSession.selectList("Report.issueSelectList", m);
 	}
+
+	@Override
+	public int checkAllReport(SqlSessionTemplate sqlSession, Member m) {
+		
+		return sqlSession.update("Report.checkAllReport", m);
+	}
 	
 }

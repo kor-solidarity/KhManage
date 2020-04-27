@@ -38,4 +38,23 @@ public class ReportController {
 			e.printStackTrace();
 		}
 	}
+	
+	@RequestMapping("/checkAllReport.re")
+	public void checkAllReport(Member m, HttpServletRequest request, HttpServletResponse response) {
+		int result  = rs.checkAllReport(m);
+		int i = 1;
+		
+		request.setAttribute("result", i);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+
+		String gson = new Gson().toJson(i);
+
+		try {
+			response.getWriter().write(gson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
 }
