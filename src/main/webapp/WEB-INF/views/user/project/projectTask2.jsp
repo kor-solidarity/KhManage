@@ -874,6 +874,11 @@
                             // 하나하나 뽑아서 모달창에 넣읍시다.
                             // projectWork - 작업정보
                             projectWork = data['projectWork'];
+                            // 승인자
+                            grantorList = data.grantorList;
+                            // 선행작업 선택목록
+                            highWorkList = data.highWorkList;
+
                             // 작업 모달 제목창
                             $("#workTitle").text(projectWork.workName);
                             // 제목인풋
@@ -882,8 +887,30 @@
                             $("#startDate").val(parseKrDate(projectWork.beginDate));
                             $("#completeDate").val(parseKrDate(projectWork.completeDate));
                             $("#completeRate").val(projectWork.completeRate);
-                            // for (key in projectWork)
-                            // updateWorkList();
+
+                            // 우선 내용을 싹 다 비우고 시작
+                            $("#grantor").empty();
+                            $("#grantor").append(
+                                "<option value='0'>승인자 없음</option>"
+                            );
+                            for (let i = 0; i < grantorList.length; i++) {
+                                $("#grantor").append(
+                                    "<option value='" + grantorList[i].memberPk + "'>" + grantorList[i].deptName + " " +
+                                    grantorList[i].memberName + " " + grantorList[i].rankName + "</option>"
+                                );
+                            }
+                            // memo
+                            $("#memo").append(
+                                projectWork.memo
+                            );
+                            // 여기까지 작업정보 항목 끝.
+
+                            // 다음은 선행작업
+                            $("#highWorkSel").empty();
+                            for (let i = 0; i < highWorkList.length; i++) {
+
+                            }
+
                         },
                         error: function (xhr, status, error) {
                             alert("wut");
@@ -973,10 +1000,11 @@
 										</select>
 									</div>
 								</div>
-								<div class="row">
+								<%--여기 원래 PMS에는 산출물이 있었는데 우린 굳이 필요 없는거 같으니 삭제--%>
+								<%--<div class="row">
 									<div class="col-lg-2 text-center">산출물</div>
 									<div class="col-lg-4">
-										<select class="form-control" name="grantor" id="">
+										<select class="form-control" name="workProduct" id="workProduct">
 											<option value="0">미배정</option>
 											<option value="UI보고서">UI보고서</option>
 											<option value="요구사항정의서">요구사항정의서</option>
@@ -985,11 +1013,12 @@
 											<option value="통합테스트 시나리오">통합테스트 시나리오</option>
 										</select>
 									</div>
-								</div>
+								</div>--%>
 								<div class="row">
 									<div class="col-lg-2 text-center">메모</div>
 									<div class="col-lg-10">
-										<textarea name="memo" id="" cols="60" rows="10" style="width: 100%"></textarea>
+										<textarea name="memo" id="memo" cols="60" rows="10"
+												  style="width: 100%"></textarea>
 									</div>
 								</div>
 							</div>
@@ -1015,16 +1044,19 @@
 									<tbody>
 									<tr>
 										<td style="text-align: center; width: 70px;">
-											<input type="number" id="predcessor_task_id_0"
+											<input type="text" id="predcessor_task_id_0"
 												   class="form-control "
 												   style="text-align: center; padding-left: 0;"
-												   onchange="ChangePredcessorTaskID(this, 0);">
+												   <%--체인지 할때마다 아래 테이블과 연동하는걸로.--%>
+													<%--그냥 이건 연동시키던가 없애던가 합시다.--%>
+												   onchange="ChangePredcessorTaskID(this, 0);" disabled>
 											<input type="hidden" id="pid_0" value="">
 										</td>
 										<td style="text-align: center;">
-											<select id="predcessor_task_0" class="form-control"
+											<select id="highWorkSel" class="form-control"
 													style="width: 100%;" onchange="ChangePredcessorTask(this, 0);"
 													tabindex="-1" title="">
+
 												<option value="1">새로운 작업</option>
 												<option value="2">신약 개발</option>
 												<option value="4">전임상시험</option>
@@ -1106,6 +1138,7 @@
 										--%>
 										<table class="table table-striped table-bordered table-advance table-hover">
 											<thead>
+
 											<tr>
 												<th style="text-align: center; width: 20%;">
 													산출물 구분

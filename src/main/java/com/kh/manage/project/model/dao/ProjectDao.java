@@ -9,6 +9,7 @@ import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.project.model.vo.*;
 import org.mybatis.spring.SqlSessionTemplate;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface ProjectDao {
@@ -64,4 +65,6 @@ public interface ProjectDao {
 	List<WorkHistory> selectWorkHistoryList(SqlSessionTemplate sqlSession, String workNo);
 	
 	List<ProjectTeam> selectProjectTeamGrantorList(SqlSessionTemplate sqlSession, String pid);
+	
+	List<ProjectWork> selectProjectHighWorkList(SqlSessionTemplate sqlSession, HashMap<String, String> highWorkMap);
 }

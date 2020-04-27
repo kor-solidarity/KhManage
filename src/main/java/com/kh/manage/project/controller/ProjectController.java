@@ -398,8 +398,13 @@ public class ProjectController {
 		
 		// 우선 작업정보 가자.
 		ProjectWork projectWork = ps.selectProjectWork(workNo);
-		// 다음은 선행작업들.
+		// 다음은 선행작업.
 		ProjectWork highWork = ps.selectProjectWork(projectWork.getHighWorkNo());
+		// 선택할 수 있는 선행작업 목록
+		HashMap<String, String> highWorkMap = new HashMap<>();
+		highWorkMap.put("pid", pid);
+		highWorkMap.put("workNo", workNo);
+		List<ProjectWork> highWorkList = ps.selectProjectHighWorkList(highWorkMap);
 		// 산출물:
 		List<WorkProduct> workProduct = ps.selectWorkProductList(workNo);
 		// history
@@ -414,6 +419,7 @@ public class ProjectController {
 		map.put("workProduct", workProduct);
 		map.put("workHistory", workHistory);
 		map.put("grantorList", grantorList);
+		map.put("highWorkList", highWorkList);
 		
 		
 		response.setContentType("application/json");

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.kh.manage.project.model.dao.ProjectDao;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -167,6 +168,11 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public List<ProjectTeam> selectProjectTeamGrantorList(String pid) {
 		return pd.selectProjectTeamGrantorList(sqlSession, pid);
+	}
+	
+	@Override
+	public List<ProjectWork> selectProjectHighWorkList(HashMap<String, String> highWorkMap) {
+		return pd.selectProjectHighWorkList(sqlSession, highWorkMap);
 	}
 	
 }

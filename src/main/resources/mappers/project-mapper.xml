@@ -229,6 +229,34 @@
         ORDER BY BEGIN_DATE
     </select>
 
+    <!--특정 프로젝트 작업의 하위작업으로 쓸 수 있는 작업목록-->
+    <!--프로젝트 작업 중 지금 조회중인 작업을 제외한 목록.-->
+    <select id="selectProjectHighWorkList" resultMap="projectWorkListResultSet" parameterType="java.util.HashMap">
+        SELECT W.WORK_NO                    AS WORK_NO,
+               W.WORK_NAME                  AS WORK_NAME,
+               W.STATUS                     AS STATUS,
+               W.PROJECT_NO                 AS PROJECT_NO,
+               W.BEGIN_DATE                 AS BEGIN_DATE,
+               W.COMPLETE_DATE              AS COMPLETE_DATE,
+               W.PRECEDE_NO                 AS PRECEDE_NO,
+               W.COMPLETE_RATE              AS COMPLETE_RATE,
+               W.WORK_LEVEL                 AS WORK_LEVEL,
+               W.HIGH_WORK_NO               AS HIGH_WORK_NO,
+               W.WORK_TYPE                  AS WORK_TYPE,
+               W.MEMBER_NO                  AS MEMBER_NO,
+               W.WORK_STATUS                AS WORK_STATUS,
+               M.MEMBER_NAME                AS MEMBER_NAME,
+               M.MEMBER_TYPE                AS MEMBER_TYPE,
+               (COMPLETE_DATE - BEGIN_DATE) AS DAYS
+        FROM WORK W
+                 JOIN MEMBER M ON W.MEMBER_NO = M.MEMBER_NO
+        WHERE PROJECT_NO = #{pid}
+          AND WORK_TYPE = '프로젝트'
+          AND WORK_STATUS = 'Y'
+          and WORK_NO != #{workNo}
+        ORDER BY BEGIN_DATE
+    </select>
+
     <select id="selectProjectWork" parameterType="String" resultMap="projectWorkListResultSet">
         select WORK_NAME,
                BEGIN_DATE,
@@ -260,7 +288,8 @@
                        FROM MEMBER M
                                 JOIN DEPT D ON M.DEPT_NO = D.DEPT_NO
                                 JOIN RANK R2 ON M.RANK_NO = R2.RANK_NO) M ON T.MEMBER_PK = M.MEMBER_NO
-        WHERE (ROLE = 'PM' or ROLE = 'PL') and PROJECT_PK = #{value}
+        WHERE (ROLE = 'PM' or ROLE = 'PL')
+          and PROJECT_PK = #{value}
     </select>
 
     <!--프로젝트 작업 히스토리 목록 조회 -->
