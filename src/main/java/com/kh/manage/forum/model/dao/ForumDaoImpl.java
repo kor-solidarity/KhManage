@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
+import com.kh.manage.forum.model.vo.Mwork;
 import com.kh.manage.forum.model.vo.Notice;
 import com.kh.manage.forum.model.vo.Reply;
 
@@ -122,6 +123,12 @@ public class ForumDaoImpl implements ForumDao{
 	public int attachUpdate(SqlSessionTemplate sqlSession, Attachment at) {
 		
 		return sqlSession.update("Attachment.attachUpdate",at);
+	}
+
+	@Override
+	public List<Mwork> selectListWork(SqlSessionTemplate sqlSession, Mwork w) {
+
+		return sqlSession.selectList("Notice.selectListWork",w);
 	}
 
 	

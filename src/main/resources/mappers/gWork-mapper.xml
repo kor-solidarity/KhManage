@@ -47,6 +47,50 @@
 		<result property="endOptionCount" column="END_OPTION_COUNT"/>
 	</resultMap>
 	
+	<resultMap id="projectResultSet" type="Project">
+        <id property="projectPk" column="project_pk"/>
+        <result property="projectName" column="project_name"/>
+        <result property="isImportant" column="is_important"/>
+        <result property="projectTypePk" column="project_type_pk"/>
+        <result property="projectRank" column="project_rank"/>
+        <result property="projectManager" column="project_manager"/>
+        <result property="deptNo" column="dept_no"/>
+        <result property="startDate" column="start_date"/>
+        <result property="endDate" column="end_date"/>
+        <result property="detail" column="detail"/>
+        <result property="remarks" column="remarks"/>
+        <result property="status" column="status"/>
+        <result property="templatePk" column="template_pk"/>
+    </resultMap>
+    
+    <resultMap type="Statistics" id="statisticsResultSet">
+    	<result property="wStatus" column="STATUS" />
+    	<result property="issueType" column="ISSUE_TYPE" />
+    	<result property="hStatus" column="STATUS" />
+    	<result property="cnt" column="CNT" />
+    	<result property="cnt2" column="CNT2" />
+    	<result property="cnt3" column="CNT3" />
+    </resultMap>
+    
+    <resultMap type="Mwork" id="mWorkResultSet">
+		<id property="workNo" column="WORK_NO"/>
+		<result property="workName" column="WORK_NAME"/>
+		<result property="status" column="STATUS"/>
+		<result property="projectNo" column="PROJECT_NO"/>
+		<result property="beginDate" column="BEGIN_DATE"/>
+		<result property="completeDate" column="COMPLETE_DATE"/>
+		<result property="precedeNo" column="PRECEDE_NO"/>
+		<result property="completeRate" column="COMPLETE_RATE"/>
+		<result property="grantorNo" column="GRANTOR_NO"/>
+		<result property="workLevel" column="WORK_LEVEL"/>
+		<result property="highWorkNo" column="HIGH_WORK_NO"/>
+		<result property="memo" column="MEMO"/>
+		<result property="workType" column="WORK_TYPE"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="workStatus" column="WORK_STATUS"/>
+		<result property="memberName" column="MEMBER_NAME"/>		
+	</resultMap>
+	
 	
 	<select id="selectAllList" resultMap="gWorkResultSet">
 		SELECT GW_NO, GW_NAME,BEGIN_DATE,TO_CHAR(BEGIN_DATE, 'YYYY/MM/DD HH24:MI') AS TT, TO_CHAR(END_DATE, 'YYYY/MM/DD HH24:MI') AS TTT,END_DATE,ENROLL_DATE,GW_MEMO,GW_TYPE,MEMBER_NO,STATUS
@@ -90,6 +134,54 @@
 		VALUES('GWR'|| TO_CHAR(SEQ_GWR.NEXTVAL, 'FM000'), #{gwNo}, #{gwrCycle}, #{gwrLimit}, #{gwrWeek}, #{gwrMonth}, #{endOption} ,#{endOptionDay}, #{endOptionCount})
 	</insert>
 	
+	<select id="selectProjectList" parameterType="Member" resultMap="projectResultSet">
+		SELECT PT.PROJECT_PK,P.PROJECT_NAME
+		FROM PROJECT P
+		LEFT JOIN PROJECT_TEAM PT ON(P.PROJECT_PK = PT.PROJECT_PK)
+		LEFT JOIN MEMBER M ON(PT.MEMBER_PK = M.MEMBER_NO)
+		WHERE MEMBER_NO = #{memberNo}
+	</select>
 	
+	<select id="selectProject" parameterType="java.lang.String" resultMap="projectResultSet">
+		SELECT * 
+		FROM PROJECT P 
+		WHERE PROJECT_PK = #{pNo}
+	</select>
+	
+	<select id="statisticsList" parameterType="java.lang.String" resultMap="statisticsResultSet" >
+		SELECT STATUS, COUNT(*) AS CNT 
+		FROM WORK 
+		WHERE PROJECT_NO = #{pNo}
+		GROUP BY STATUS
+	</select>
+	
+	<select id="statisticList2" parameterType="java.lang.String" resultMap="statisticsResultSet" >
+		SELECT ISSUE_TYPE, COUNT(*) AS CNT2 
+		FROM ISSUE 
+		WHERE PROJECT_NO = #{pNo}
+		GROUP BY ISSUE_TYPE
+	</select>
+	
+	<select id="selectListWork" parameterType="Mwork" resultMap="mWorkResultSet">
+		SELECT M.MEMBER_NAME, WORK_NAME , BEGIN_DATE, COMPLETE_DATE, MEMO
+		FROM PROJECT P 
+		JOIN PROJECT_TEAM PT ON(PT.PROJECT_PK = P.PROJECT_PK)
+		JOIN MEMBER M ON(PT.MEMBER_PK = M.MEMBER_NO)
+		LEFT JOIN (SELECT *
+         		  FROM WORK
+          		 WHERE PROJECT_NO=#{projectNo}) W ON(W.MEMBER_NO = PT.MEMBER_PK)
+		WHERE P.PROJECT_PK = #{projectNo}
+	</select>
+	
+	<select id="statisticList3" parameterType="java.lang.String" resultMap="statisticsResultSet">
+		SELECT CR.STATUS ,  COUNT(*) AS cnt3
+		FROM CHANGE_REQUEST_HISTORY CR
+		WHERE CHANGE_NO = 
+		(SELECT MEMBER_NO
+		FROM MEMBER M
+		JOIN PROJECT_TEAM PT ON(M.MEMBER_NO = PT.MEMBER_PK)
+		WHERE PROJECT_PK = #{pNo})
+		GROUP BY STATUS
+	</select>
 		
 </mapper>

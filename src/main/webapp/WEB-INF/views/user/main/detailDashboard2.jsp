@@ -1,45 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.*, com.kh.manage.forum.model.vo.*"%>
+    pageEncoding="UTF-8" import="java.util.*, com.kh.manage.gwManage.model.vo.*, com.kh.manage.forum.model.vo.*"%>
+<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-   List<Mwork> list = (ArrayList<Mwork>) request.getAttribute("list");
-%>   
+	List<Statistics> list2 = (ArrayList<Statistics>) request.getAttribute("list2");
+%>
+<%
+	List<Statistics> list3 = (ArrayList<Statistics>) request.getAttribute("list3");
+%>
+<%
+	List<Statistics> list4 = (ArrayList<Statistics>) request.getAttribute("list4");
+%>
+<%
+	List<Mwork> list5 = (ArrayList<Mwork>) request.getAttribute("list5");
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<style>
-	.scheduler_default_corner_inner{
-		display:none !important;
-	}
-	.scheduler_default_tree_image_no_children{
-		display:none !important;
-	}
-	.scheduler_default_event_inner{
-		background: #617E84 !important;
-		color : white !important;
-		text-align: center  !important;
-		font-weight: bold;
-		vertical-align:middle !important;
-	}
-	.scheduler_default_event_bar{
-		background: white !important;
-	}
-	.scheduler_default_event_bar_inner{
-		background: white !important;	
-	}
-	.scheduler_default_rowheader_scroll,.scheduler_default_rowheader_inner,.scheduler_default_timeheadergroup_inner, .scheduler_default_timeheader_cell_inner
-	,.scheduler_default_corner{
-		background: #4F5467 !important;
-		color: white !important;
-	}
-	.scheduler_default_main{
-		border: 1px #4F5467 #1E2B44;
-	}
-</style>
 <title>Insert title here</title>
-
-  <!-- demo stylesheet -->
-    <link type="text/css" rel="stylesheet" href="resources/daypilot/demo/helpers/demo.css" />
+ <link type="text/css" rel="stylesheet" href="resources/daypilot/demo/helpers/demo.css" />
     <link type="text/css" rel="stylesheet" href="resources/daypilot/demo/helpers/media/layout.css" />
     <link type="text/css" rel="stylesheet" href="resources/daypilot/demo/helpers/media/elements.css" />
 	<!-- helper libraries -->
@@ -71,45 +50,177 @@
     <script src="resources/daypilot/demo/js/daypilot-all.min.js" type="text/javascript"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js" integrity="sha256-qE/6vdSYzQu9lgosKxhFplETvWvqAAlmAuR+yPh/0SI=" crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+<style>
+
+.select{width: 49%; height: 25px; border-radius: 5px;}
+.midTable{width:100%;}
+.tdMid {width: 49%; height: 380px; padding: 20px; border: 1px solid lightgray; vertical-align:top; background: white;}
+.tableDiv{margin-left: 40px;}
+.projectInfoTable{width:90%; margin: 5px; font-size: 13px;}
+.pjtTd{width: 25%; height: 40px; font-weight:bold; color:#5E738B}
+.pjtTd2{width: 30%;}
+.pjtTd3{width: 20%; font-weight:bold; color:#5E738B}
+.pjtTd4{width: 30%;}
+.td{padding-left: 5px;}
+#myChart,#myChart2,#myChart3{
+	margin-left: 250px;
+	height: 250px;
+}
+.scheduler_default_corner_inner{
+		display:none !important;
+	}
+	.scheduler_default_tree_image_no_children{
+		display:none !important;
+	}
+	.scheduler_default_event_inner{
+		background: #617E84 !important;
+		color : white !important;
+		text-align: center  !important;
+		font-weight: bold;
+		vertical-align:middle !important;
+	}
+	.scheduler_default_event_bar{
+		background: white !important;
+	}
+	.scheduler_default_event_bar_inner{
+		background: white !important;	
+	}
+	.scheduler_default_rowheader_scroll,.scheduler_default_rowheader_inner,.scheduler_default_timeheadergroup_inner, .scheduler_default_timeheader_cell_inner
+	,.scheduler_default_corner{
+		background: #4F5467 !important;
+		color: white !important;
+	}
+	.scheduler_default_main{
+		border: 1px #4F5467 #1E2B44;
+	}
+</style>
 
 </head>
-<script type="text/javascript">
+<body onload="$('#route1').text('대시보드'); $('#route2').text('상세대시보드')">
+	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
+	<jsp:include page="/WEB-INF/views/user/common/sidebar.jsp"/>
 	
-	  var _gaq = _gaq || [];
-	  _gaq.push(['_setAccount', 'UA-212202-16']);
-	  _gaq.push(['_trackPageview']);
+	<div id="wrap">
 	
-	  (function() {
-	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	  })();
+		<br>
+		<div class="panel-heading pnselect" style="margin-top: -20px;">
+			<select class="select">
+			<c:forEach var="p" items="${list}">
+				<option class="option" value="${p.projectPk}">${p.projectName}</option>
+			</c:forEach>
+			</select>
+		</div>
 
-	function track(link, target) {
-		if (typeof _gaq !== 'undefined') { _gaq.push(['_trackPageview', target]); }
-		if ("_blank" == link.target) return true;
-		setTimeout('document.location = "' + link.href + '"', 150);
-		return false;        
-	}
+		<div class="" style="margin-top: -15px;">
+			<div class="panel-heading">
+				<br>
+				<div class="middle">
+					<table class="midTable">
+						<tr>
+							<td class="tdMid"><b>프로젝트 정보</b>
+							<hr>
+								<div class="tableDiv">
+									<table border="0" class="projectInfoTable">
+										<tr>
+											<td class="pjtTd td">프로젝트 명</td>
+											<td class="pjtTd2 td"><c:out value="${pro.projectName }"/></td>
+											<td class="pjtTd3 td"></td>
+											<td class="pjtTd4 td"></td>
+										</tr>
+										<tr>
+											<td class="pjtTd td">프로젝트 번호</td>
+											<td class="pjtTd2 td"><c:out value="${pro.projectPk }"/></td>
+											<td class="pjtTd3 td"></td>
+											<td class="pjtTd4 td"></td>
+										</tr>
+										<tr>
+											<td class="pjtTd td">개발 형태</td>
+											<td class="pjtTd2 td">
+											
+											${pro.projectTypePk}
+											
+											</td>
+											<td class="pjtTd3 td">개발 등급</td>
+											<td class="pjtTd4 td"><c:out value="${pro.projectRank }"/></td>
+										</tr>
+										<tr>
+											<td class="pjtTd td">PMO</td>
+											<td class="pjtTd2 td"><c:out value="${pro.projectManager }"/></td>
+											<td class="pjtTd3 td"></td>
+											<td class="pjtTd4 td"></td>
+										</tr>
+										<tr>
+											<td colspan="4" class="pjtTd td">제품기능(설명)</td>
+										</tr>
+										<tr>
+									 		<td colspan="4" class="pjtTd td"><c:out value="${pro.detail }"/></td>
+										</tr>
+									</table>
+								</div>
+							</td>
+							<td class="td2"></td>
+							<td class="tdMid"><b>프로젝트 태스크 진행상태</b>
+							<hr>
+								<div id="task">
+								<canvas id="myChart" width="400" height="400"></canvas>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+				
+		<div class="">
+			<div class="panel-heading">
+				<br>
+				<div class="middle">
+					<table class="midTable">
+						<tr>
+							<td class="tdMid"><b>이슈 현황</b>
+							<hr>
+								<div class="chart-none-data">
+									<div id="issue"><!-- No data available -->
+									<canvas id="myChart2" width="400" height="400"></canvas>	
+									</div>
+								</div>
+							</td>
+							<td class="td2"></td>
+							<td class="tdMid"><b>변경요청</b>
+							<hr>
+								<div id="change">
+								<canvas id="myChart3" width="400" height="400"></canvas>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
 
-	$(document).ready(function() {
-		$(".track-download").click(function() {
-			return track(this, '/action/trialdownload');
-		});
-	});
+		<div class="">
+			<div class="panel-heading">
+				<br>
+				<div class="middle">
+					<table class="midTable">
+						<tr>
+							<td class="tdMid"><b>작업배정 현황</b>
+							<hr>
+								<div class="">
+									<div id="dp"></div>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+
+	</div>
 	
-	</script>
-<body>
-	<body onload="$('#route1').text('프로젝트 센터')">
-	<jsp:include page="/WEB-INF/views/user/common/header.jsp" />
-<jsp:include page="/WEB-INF/views/user/common/sidebar2.jsp" />
-<jsp:include page="/WEB-INF/views/user/common/projectNav.jsp" />
-	<div class="panel panel-headline">
-		<div class="panel-heading">
-			<div style="width: 100%; height: 600px; margin: 0 auto; overflow: auto;">
-				<div id="dp"></div>
-
-<script type="text/javascript">
+	<script type="text/javascript">
 
 
 
@@ -136,8 +247,8 @@
     
     
     dp.resources = [
-    	<% for(int i=0; i < list.size(); i++){
-    		 Mwork w = (Mwork)list.get(i);
+    	<% for(int i=0; i < list5.size(); i++){
+    		 Mwork w = (Mwork)list5.get(i);
     	%>
     	 	 {
     		    "name": "<%=w.getMemberName()%>",
@@ -151,8 +262,8 @@
 	var e;
      dp.events.list = [];
 	
-    	<%for(int i=0; i < list.size(); i++){
-		 Mwork w = (Mwork)list.get(i);
+    	<%for(int i=0; i < list5.size(); i++){
+		 Mwork w = (Mwork)list5.get(i);
 		 if(w.getWorkName() != null){
 		%>
         e = {
@@ -378,13 +489,219 @@
 		    </div><!-- /.modal-dialog -->
 	  	</div><!-- /.modal -->
 	  	
-			   <div style="margin-left:50px; margin-top: 10px; margin-bottom: 10px;"></div>
-			</div>
-		</div>
-	</div>
+	
+	<script>
+	
+	var pNo2 = '${pNo}';
+	console.log(pNo2);
+	
+		$(function(){
+			
+			$(".select").val(pNo2).prop("selected", true);
+			
+		}); 
+	
+		$(".select").change(function(){
+			console.log("dsadsadsa");
+			console.log($(this).val());
+			var	pNo = $(this).val();
+			
+			location.href = "selectDashBoard.gwm?pNo="+pNo;
+			
+			
+		});
+		
+	</script>
+	<script>
+	<% if(list2.size() > 0){ %>
+	var ctx = document.getElementById('myChart');
+	var myChart = new Chart(ctx, {
+		type: 'doughnut',
+		data: {
+			labels: [
+			<%for(int i =0; i < list2.size(); i++){
+				 Statistics st = (Statistics)list2.get(i);
+			%> 
+			
+				'<%=st.getwStatus() %>',
+			<%
+			}
+			%>
+			],
+			datasets: [{
+				label: '# of Votes',
+				data: [
+					<%for(int i =0; i < list2.size(); i++){
+						 Statistics st = (Statistics)list2.get(i);
+					%> 
+					
+						<%=st.getCnt()%>,
+					<%
+					}
+					%>	
+				],
+				backgroundColor: [
+					'rgba(255, 99, 132, 0.2)',
+					'rgba(54, 162, 235, 0.2)',
+					'rgba(255, 206, 86, 0.2)',
+					'rgba(75, 192, 192, 0.2)',
+					'rgba(153, 102, 255, 0.2)',
+					'rgba(255, 159, 64, 0.2)'
+				],
+				borderColor: [
+					'rgba(255, 99, 132, 1)',
+					'rgba(54, 162, 235, 1)',
+					'rgba(255, 206, 86, 1)',
+					'rgba(75, 192, 192, 1)',
+					'rgba(153, 102, 255, 1)',
+					'rgba(255, 159, 64, 1)'
+				],
+				borderWidth: 1,
+				
+				hoverBorderWidth : 1
+			}]
+		},
+		options: {
+			responsive: false,
+			scales: {
+					ticks: {
+						cutoutPercentage: 60,
+						beginAtZero: true
+					}
+			},
+		}
+	});
+	<%}else {%>
+	$("#task").text("No data available");
+	<%}%>
+</script>
+<script>
 
+	var size = <%=list3.size()%>;
+	console.log(size);
 
+	<% if(list3.size() > 0){ %>
+	var ctx = document.getElementById('myChart2');
+	var myChart = new Chart(ctx, {
+		type: 'doughnut',
+		data: {
+			labels: [
+			<%for(int i =0; i < list3.size(); i++){
+				 Statistics st = (Statistics)list3.get(i);
+			%> 
+			
+				'<%=st.getIssueType() %>',
+			<%
+			}
+			%>
+			],
+			datasets: [{
+				label: '# of Votes',
+				data: [
+					<%for(int i =0; i < list3.size(); i++){
+						 Statistics st = (Statistics)list3.get(i);
+					%> 
+					
+						<%=st.getCnt2()%>,
+					<%
+					}
+					%>	
+				],
+				backgroundColor: [
+					'rgba(255, 99, 132, 0.2)',
+					'rgba(54, 162, 235, 0.2)',
+					'rgba(255, 206, 86, 0.2)',
+					'rgba(75, 192, 192, 0.2)',
+					'rgba(153, 102, 255, 0.2)',
+					'rgba(255, 159, 64, 0.2)'
+				],
+				borderColor: [
+					'rgba(255, 99, 132, 1)',
+					'rgba(54, 162, 235, 1)',
+					'rgba(255, 206, 86, 1)',
+					'rgba(75, 192, 192, 1)',
+					'rgba(153, 102, 255, 1)',
+					'rgba(255, 159, 64, 1)'
+				],
+				borderWidth: 1
+			}]
+		},
+		options: {
+			responsive: false,
+			scales: {
+					ticks: {
+						cutoutPercentage: 60,
+						beginAtZero: true
+					}
+			},
+		}
+	});
+	<%}else {%>
+	
+		$("#issue").text("No data available");
+	<%}%>
+</script>
+<script>
+	<% if(list4.size() > 0){ %>
+	var ctx = document.getElementById('myChart3');
+	var myChart = new Chart(ctx, {
+		type: 'doughnut',
+		data: {
+			labels: [
+				<%for(int i =0; i < list4.size(); i++){
+					 Statistics st = (Statistics)list4.get(i);
+				%> 
+				
+					'<%=st.getIssueType() %>',
+				<%
+				}
+				%>
+				],
+			datasets: [{
+				label: '# of Votes',
+				data: [
+					<%for(int i =0; i < list4.size(); i++){
+						 Statistics st = (Statistics)list4.get(i);
+					%> 
+					
+						<%=st.getCnt3()%>,
+					<%
+					}
+					%>	
+				],
+				backgroundColor: [
+					'rgba(255, 99, 132, 0.2)',
+					'rgba(54, 162, 235, 0.2)',
+					'rgba(255, 206, 86, 0.2)',
+					'rgba(75, 192, 192, 0.2)',
+					'rgba(153, 102, 255, 0.2)',
+					'rgba(255, 159, 64, 0.2)'
+				],
+				borderColor: [
+					'rgba(255, 99, 132, 1)',
+					'rgba(54, 162, 235, 1)',
+					'rgba(255, 206, 86, 1)',
+					'rgba(75, 192, 192, 1)',
+					'rgba(153, 102, 255, 1)',
+					'rgba(255, 159, 64, 1)'
+				],
+				borderWidth: 1
+			}]
+		},
+		options: {
+			responsive: false,
+			scales: {
+					ticks: {
+						cutoutPercentage: 60,
+						beginAtZero: true
+					}
+			},
+		}
+	});
+	<%}else {%>
+	
+	$("#change").text("No data available");
+	<%}%>
+</script>	
 </body>
-
-
 </html>
