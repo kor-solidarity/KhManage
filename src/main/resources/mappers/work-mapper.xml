@@ -9,6 +9,7 @@
 		<result property="workName" column="WORK_NAME"/>
 		<result property="status" column="STATUS"/>
 		<result property="projectNo" column="PROJECT_NO"/>
+		<result property="projectName" column="PROJECT_Name"/>
 		<result property="beginDate" column="BEGIN_DATE"/>
 		<result property="completeDate" column="COMPLETE_DATE"/>
 		<result property="precedeNo" column="PRECEDE_NO"/>
@@ -50,6 +51,10 @@
 		<result property="projectName" column="PROJECT_NAME"/>
 	</resultMap>
 	
+	<resultMap type="Grantor" id="selectGrantorList">
+		<id property="memberPk" column="MEMBER_PK"/>
+		<result property="memberName" column="MEMBER_NAME"/>
+	</resultMap>
 	
 	
 
@@ -69,8 +74,25 @@
 	</select>
 	
 	<select id="selectWork" parameterType="java.lang.String" resultMap="workResultSet">
-	SELECT *
-	FROM WORK
+	SELECT 
+        W.WORK_NO
+      , W.WORK_NAME
+      , W.STATUS
+      , W.PROJECT_NO
+      , W.BEGIN_DATE
+      , W.COMPLETE_DATE
+      , W.PRECEDE_NO
+      , W.COMPLETE_RATE
+      , W.GRANTOR_NO
+      , W.WORK_LEVEL
+      , W.HIGH_WORK_NO
+      , W.MEMO
+      , W.WORK_TYPE
+      , W.MEMBER_NO
+      , W.WORK_STATUS
+      , P.PROJECT_NAME
+	FROM WORK W
+    JOIN PROJECT P ON (W.PROJECT_NO = P.PROJECT_PK)
 	WHERE WORK_NO = #{workNo}
 	</select>
 	
@@ -82,11 +104,13 @@
 	WHERE W.MEMBER_NO = #{memberNo}
 	AND W.WORK_STATUS = 'Y'
 	ORDER BY (CASE STATUS
-                   WHEN '개발중' THEN 1
-                   WHEN '개발완료' THEN 2
-                   WHEN '테스트완료' THEN 3
-                   WHEN 'PL검토중' THEN 4
-                   ELSE 5
+				   WHEN '시작전' THEN 1
+                   WHEN '개발중' THEN 2
+                   WHEN '개발완료' THEN 3
+                   WHEN '테스트완료' THEN 4
+                   WHEN 'PL검토중' THEN 5
+                   WHEN 'PL검토완료' THEN 6
+                   ELSE 7
               END),
               W.WORK_NO ASC
 	</select>
@@ -171,6 +195,25 @@
 		WORK_STATUS = #{workStatus}
 	WHERE WORK_NO = #{workNo}
 	</update>
+	
+	<select id="selectGrantorList" parameterType="java.lang.String" resultMap="selectGrantorList">
+	SELECT PT.MEMBER_PK, M.MEMBER_NAME
+	FROM PROJECT_TEAM PT
+	JOIN MEMBER M ON (PT.MEMBER_PK = M.MEMBER_NO)
+	WHERE PROJECT_PK = #{pk}
+	AND ROLE IN ('PM', 'PSM')
+	</select>
+	
+	<insert id="insertWorkProduct" parameterType="WorkProductw">
+	INSERT INTO WORK_PRODUCT
+	VALUES('WP' || TO_CHAR(SEQ_WP.NEXTVAL, 'FM000'), #{workNo}, #{productType}, #{productTitle}, #{productContent}, SYSDATE, SYSDATE)
+	</insert>
+	
+	<insert id="insertWorkAttachment" parameterType="Attachment">
+		INSERT INTO ATTACHMENT
+		VALUES('AT'|| TO_CHAR(SEQ_AT_NO.NEXTVAL, 'FM000'), 'WP' || TO_CHAR(SEQ_WP.CURRVAL, 'FM000'), #{originName}, #{changeName} , #{filePath}, #{ext})
+	</insert>
+	
 </mapper>
 
 

@@ -166,14 +166,46 @@
 		min-width:10px;
 		float:left;
 	}
-	.clear {clear:both; height:0; overflow:hidden;}
+	
+	.clear {
+		clear:both; 
+		height:0; 
+		overflow:hidden;
+	}
 	
 	.rate{
 		float:right;
 	}
 	
+	.modalTd_T{
+		/* width:250px; */
+		height:30px;
+		text-align:right;
+		padding-right:10px;
+	}
+	
 	.modalTd{
-		width:200px;
+		/* width:200px; */
+		height:30px;
+		text-align:left;
+	}
+	
+	.modalTd2{
+		height:15px;
+	}
+	
+	#fileUploadArea{
+		height:auto;
+		border:1px solid lightgray;
+		border-radius: 5px;
+	}
+	
+	#buttonArea1{
+		float:right;
+	}
+	
+	#buttonArea2{
+		float:right;
 	}
 	
 </style>
@@ -353,122 +385,6 @@
 			</div>
 		</div>
 	</div>
-
-
-	<!-- 모달_사용자정보수정 begin -->
-		<div class="modal fade" id="myModal" role="dialog" aria-labelledby="gridSystemModalLabel" aria-hidden="true">
-		    <div class="modal-dialog">
-		      <div class="modal-content">
-		        <div class="modal-header">
-		          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
-		          <h4 class="modal-title" id="gridSystemModalLabel"><i class="fas fa-th-large"></i>&nbsp;신규 작업 등록</h4>
-		        </div>
-		        <div class="modal-body">
-		          <div class="container-fluid">
-		            <div class="row" style="margin: 10px;  padding:10px; ">
-		            <form id="workRegForm" action="myWorkReg.wk" method="post">
-		              <table id="buseoInfoTable" style="border-spacing:0 10px; border-collapse: separate;">
-						<tr>
-							<td class="titleId" style="width: 130px;">작업명</td>
-							<td><input type="text" name="workName" class="inputMenu form-control" style="width: 280px;" required="required"></td>
-						</tr>
-						<tr>
-							<td class="titleId">프로젝트 번호
-							<input type="hidden" name="memberNo" value="${sessionScope.loginUser.memberNo }">
-							</td>
-							<td>
-							<select name="projectNo" class="inputMenu form-control" style="width: 280px;" required="required">
-									<option value="#" >선택하세요</option>
-									
-									<c:forEach var="wp" items="${wp }">
-									<option value="${wp.projectPk }"><c:out value="${wp.projectName }"/></option> 
-									</c:forEach>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td class="titleId">작업유형</td>
-							<td>
-								<select name="workType" class="inputMenu form-control" style="width: 280px;" required="required">
-									<option value="#" >선택하세요</option>
-									<option value="개인">개인</option>
-									<option value="일반">일반</option>
-									<option value="프로젝트">프로젝트</option>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td class="titleId">시작일</td>
-							<td><input name="beginDate" type="date" class="inputMenu form-control" style="width: 280px;" required="required"></td>
-						</tr>
-						<tr>
-							<td class="titleId">완료일</td>
-							<td><input name="completeDate" type="date" class="inputMenu form-control" style="width: 280px;" required="required"></td>
-						</tr>
-						<tr>
-							<td class="titleId" style="width: 130px;">선행작업번호</td>
-							<td><input name="precedeNo" type="text" class="inputMenu form-control" style="width: 280px;" required="required"></td>
-						</tr>
-						<tr>
-							<td class="titleId">완료율</td>
-							<td><input name="completeRate" type="number" class="inputMenu form-control" style="width: 280px;" min="0" max="100"></td>
-						</tr>
-						<tr>
-							<td class="titleId">승인자</td>
-							<td>
-							<select name="grantorNo" class="inputMenu form-control" style="width: 280px;" required="required">
-									<option value="#" >선택하세요</option>
-									<option value="test01">개인</option>
-									<option value="test02">일반</option>
-									<option value="test03">프로젝트</option>
-							</select>
-							</td>
-						</tr>
-						<tr>
-							<td class="titleId">작업단계</td>
-							<td>
-							<select name="workLevel" class="inputMenu form-control" style="width: 280px;" required="required">
-									<option value="#" >선택하세요</option>
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-							</select>
-							</td>
-						</tr>
-						<tr>
-							<td class="titleId">작업상태</td>
-							<td>
-							<select name="status" class="inputMenu form-control" style="width: 280px;" required="required">
-									<option value="#" >선택하세요</option>
-									<option value="개발중">개발중</option>
-									<option value="개발완료">개발완료</option>
-									<option value="테스트완료">테스트완료</option>
-									<option value="PL검토중">PL검토중</option>
-									<option value="PL검토완료">PL검토완료</option>
-							</select>
-							</td>
-						</tr>
-						<tr>
-							<td class="titleId">상위작업 번호</td>
-							<td><input type="text" name="highWorkNo" class="inputMenu form-control" style="width: 280px;" required="required"></td>
-						</tr>
-					 </table>
-					</form>
-		            </div>
-		            <div class="row">
-		              <div class="col-sm-9">
-		                <div class="row"></div>
-		              </div>
-		            </div>
-		          </div>
-		        </div>
-		        <div class="modal-footer">
-		          <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-		          <button type="button" class="btn btn-primary" id="workRegSubmit" style="background:#1E2B44; outline:none; border:none;">저장</button>
-		        </div>
-		      </div><!-- /.modal-content -->
-		    </div><!-- /.modal-dialog -->
-	  	</div><!-- /.modal -->
 	  	
 	  	
 	  	<!-- 모달_사용자정보수정 begin -->
@@ -505,7 +421,7 @@
 
                         <div class="tab-pane active" id="profile" aria-expanded="true">
 
-                            <form id="workRegForm" action="myWorkReg.wk" method="post">
+                            <form id="workRegForm11" action="myWorkReg.wk" method="post">
 		              <table id="buseoInfoTable" style="border-spacing:0 10px; border-collapse: separate;">
 						<tr>
 							<td class="titleId" style="width: 130px;">작업명</td>
@@ -603,22 +519,23 @@
 		        </div>
 		        <div class="modal-footer">
 		          <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-		          <button type="button" class="btn btn-primary" id="workRegSubmit" style="background:#1E2B44; outline:none; border:none;">저장</button>
+		          <button type="button" class="btn btn-primary" id="workRegSubmit11" style="background:#1E2B44; outline:none; border:none;">저장</button>
+		        </div>
+		        </div>
 		        </div>
 		      </div><!-- /.modal-content -->
 		    </div><!-- /.modal-dialog -->
 	  	</div><!-- /.modal -->
 	  	
-	  	<%--작업 상세보기 모달창--%>
-	<div class="modal fade" id="selectModal" tabindex="-1" role="dialog"
-		 aria-labelledby="workDetailTitle">
+	  	<%--작업 신규등록 모달창--%>
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="workDetailTitle">
 		<div class="modal-dialog " role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-							aria-hidden="true">&times;</span></button>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span></button>
 					<h4 class="modal-title" id="workDetailTitle">
-						<i class="fas fa-th-large"></i>&nbsp;작업 등록 정보
+						<i class="fas fa-th-large"></i>&nbsp;신규 작업 등록
 					</h4>
 				</div>
 				<div class="modal-body" id="workDetailContent">
@@ -641,8 +558,264 @@
 						<div class="tab-content"><br>
 							<%--작업정보--%>
 							<div id="home" class="tab-pane fade in active"><%--id 홈 --%>
-							<form>
-							<table id="buseoInfoTable" style="border-spacing:0 10px; border-collapse: separate;" border="1">
+							<form id="workRegForm" action="myWorkReg.wk" method="post">
+							<table id="buseoInfoTable" style="width:540px; padding:0px; table-layout: fixed">
+								<tr>
+									<td class="modalTd" style="width:16%;"></td>
+									<td class="modalTd" style="width:16%;"></td>
+									<td class="modalTd" style="width:16%;"></td>
+									<td class="modalTd" style="width:16%;"></td>
+									<td class="modalTd" style="width:16%;"></td>
+									<td class="modalTd" style="width:16%;"></td>
+								</tr>
+								<tr>
+									<td class="modalTd_T">프로젝트명
+									<input type="hidden" name="memberNo" value="${sessionScope.loginUser.memberNo }">
+									</td>
+									<td class="modalTd" colspan="5">
+									<select name="projectNo" id="projectNo" class="inputMenu form-control" required="required">
+										<option value="#" >선택하세요</option>
+									
+										<c:forEach var="wp" items="${wp }">
+										<option value="${wp.projectPk }"><c:out value="${wp.projectName }"/></option> 
+										</c:forEach>
+									</select>
+								</td>
+								</tr>
+								<tr>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+								</tr>
+								<tr>
+									<td class="modalTd_T">작업명</td>
+									<td class="modalTd" colspan="2" >
+									<input type="text" name="workName" class="inputMenu form-control">
+									</td>
+									<td class="modalTd_T">작업유형</td>
+									<td class="modalTd" colspan="2">
+									<select name="workType" class="inputMenu form-control" required="required">
+										<option value="#" >선택하세요</option>
+										<option value="개인">개인</option>
+										<option value="일반">일반</option>
+										<option value="프로젝트">프로젝트</option>
+									</select>
+									</td>
+								</tr>
+								<tr>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+								</tr>
+								<tr>
+									<td class="modalTd_T">시작일</td>
+									<td class="modalTd" colspan="2">
+									<input name="beginDate" type="date" class="inputMenu form-control" required="required">
+									</td>
+									<td class="modalTd_T">완료일</td>
+									<td class="modalTd" colspan="2">
+									<input name="completeDate" type="date" class="inputMenu form-control" required="required">
+									</td>
+								</tr>
+								<tr>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+								</tr>
+								<tr>
+									<td class="modalTd_T">선행작업</td>
+									<td class="modalTd" colspan="2" >
+									<input name="precedeNo" type="text" class="inputMenu form-control" required="required">
+									</td>
+									<td class="modalTd_T">완료율</td>
+									<td class="modalTd" colspan="2">
+									<input name="completeRate" type="number" class="inputMenu form-control" min="0" max="100">	
+									</td>
+								</tr>
+								<tr>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+								</tr>
+								<tr>
+									<td class="modalTd_T">작업단계</td>
+									<td class="modalTd" colspan="2" >
+										<select name="workLevel" class="inputMenu form-control" required="required">
+											<option value="#" >선택하세요</option>
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+										</select>
+									</td>
+									<td class="modalTd_T">작업상태</td>
+									<td class="modalTd" colspan="2">
+										<select name="status" class="inputMenu form-control" required="required">
+											<option value="#" >선택하세요</option>
+											<option value="시작전">시작전</option>
+											<option value="개발중">개발중</option>
+											<option value="개발완료">개발완료</option>
+											<option value="테스트완료">테스트완료</option>
+											<option value="PL검토중">PL검토중</option>
+											<option value="PL검토완료">PL검토완료</option>
+											<option value="개발지연">개발지연</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+								</tr>
+								<tr>
+									<td class="modalTd_T">상위작업</td>
+									<td class="modalTd" colspan="2" >
+									<input type="text" name="highWorkNo" class="inputMenu form-control" required="required">
+									</td>
+									<td class="modalTd_T">승인자</td>
+									<td class="modalTd" colspan="2">
+										<select name="grantorNo" id="grantorList" class="inputMenu form-control" required="required">
+											
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td class="modalTd"></td>
+									<td class="modalTd"></td>
+									<td class="modalTd"></td>
+									<td class="modalTd"></td>
+									<td class="modalTd"></td>
+									<td class="modalTd"></td>
+								</tr>
+								
+					 		</table>
+					 		<hr style="border:solid 1px lightgray;">
+					 		<div id="buttonArea1">
+					 		<button type="button" id="workRegCancel" class="btn btn-default" data-dismiss="modal">취소</button>
+							<button type="button" id="workRegSubmit" class="btn btn-primary"
+									style="background: #1E2B44; outline: none; border: none;">저장
+							</button>
+							</div>
+							</form>
+							
+							</div><%--id 홈 end --%>
+							
+							<div id="menu1" class="tab-pane fade">
+								<h3>Menu 1</h3>
+								<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+									ea commodo consequat.</p>
+							</div>
+							<div id="menu2" class="tab-pane fade">
+								<form>
+									<table id="buseoInfoTable" style="width:540px; padding:0px; table-layout: fixed">
+								<tr>
+									<td class="modalTd" style="width:16%;"></td>
+									<td class="modalTd" style="width:16%;"></td>
+									<td class="modalTd" style="width:16%;"></td>
+									<td class="modalTd" style="width:16%;"></td>
+									<td class="modalTd" style="width:16%;"></td>
+									<td class="modalTd" style="width:16%;"></td>
+								</tr>
+								<tr>
+									<td class="modalTd_T">프로젝트명</td>
+									<td class="modalTd" colspan="5">
+									<input type="text" name="projectName" class="inputMenu form-control"></td>
+								</tr>
+								<tr>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+								</tr>
+								<tr>
+									<td class="modalTd_T">작업명</td>
+									<td class="modalTd" colspan="2" >
+									<input type="text" name="projectName" class="inputMenu form-control">
+									</td>
+									<td class="modalTd_T">작업유형</td>
+									<td class="modalTd" colspan="2">
+									<input type="text" name="projectName" class="inputMenu form-control">
+									</td>
+								</tr>
+								<tr>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+								</tr>
+								<tr>
+									<td class="modalTd_T">산출물 종류</td>
+									<td class="modalTd" colspan="5">
+									<select class="inputMenu form-control">
+										<option>--선택하세요--</option>
+										<option value="UI보고서">UI보고서</option>
+										<option value="요구사항 정의서">요구사항 정의서</option>
+										<option value="프로세스 정의서">프로세스 정의서</option>
+										<option value="테이블 정의서">테이블 정의서</option>
+										<option value="통합테스트 시나리오">통합테스트 시나리오</option>
+									</select>
+									</td>
+								</tr>
+								<tr>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+								</tr>
+								<tr>
+									<td class="modalTd_T">제목</td>
+									<td class="modalTd" colspan="5" >
+									<input type="text" name="projectName" class="inputMenu form-control">
+									</td>
+								</tr>
+								<tr>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+								</tr>
+								<tr>
+									<td class="modalTd_T">내용</td>
+									<td class="modalTd" colspan="5" rowspan="3">
+									<textarea name="projectName" class="inputMenu form-control" style="resize:none;"></textarea>
+									</td>
+								</tr>
+								<tr>
+									<td class="modalTd"></td>
+								</tr>
+								<tr>
+									<td class="modalTd"></td>
+								</tr>
+								<!-- <tr>
+									<td class="modalTd_T">첨부파일</td>
+									<td class="modalTd" colspan="5" >
+									<div id="fileUploadArea66">
+										<a href="#this" id="add" class="btn">파일 추가하기</a> 
+									</div>
+									</td>
+								</tr> -->
 								<tr>
 									<td class="modalTd"></td>
 									<td class="modalTd"></td>
@@ -655,17 +828,13 @@
 					 		</table>
 							</form>
 							
-							</div><%--id 홈 end --%>
-							
-							<div id="menu1" class="tab-pane fade">
-								<h3>Menu 1</h3>
-								<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-									ea commodo consequat.</p>
-							</div>
-							<div id="menu2" class="tab-pane fade">
-								<h3>Menu 2</h3>
-								<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-									laudantium, totam rem aperiam.</p>
+							<hr style="border:solid 1px lightgray;">
+					 		<!-- <div id="buttonArea2">
+					 		<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+							<button type="button" id="workFileSubmit" class="btn btn-primary"
+									style="background: #1E2B44; outline: none; border: none;">저장
+							</button>
+							</div> -->
 							</div>
 							<div id="menu3" class="tab-pane fade">
 								<h3>Menu 3</h3>
@@ -675,18 +844,372 @@
 						</div>
 					</div>
 				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-					<button type="button" id="workDetailSubmitBtn" class="btn btn-primary"
-							style="background: #1E2B44; outline: none; border: none;"
-							onclick="">저장
-					</button>
+				
+			</div>
+		</div>
+	</div><%--모달 종료 --%>
+	
+	<%--작업 상세보기 모달창--%>
+		<div class="modal fade" id="selectModal" tabindex="-1" role="dialog" aria-labelledby="workDetailTitle">
+		<div class="modal-dialog " role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="workDetailTitle">
+						<i class="fas fa-th-large"></i>&nbsp;작업 등록 정보
+					</h4>
+				</div>
+				<div class="modal-body" id="workDetailContent">
+					<div class="container-fluid">
+						<%--
+						<h2>Dynamic Tabs</h2>
+						<p>To make the tabs toggleable, add the data-toggle="tab" attribute to each link. Then add a
+							.tab-pane class with a unique ID for every tab and wrap them inside a div element with class
+							.tab-content.</p>--%>
+
+						<ul class="nav nav-tabs">
+							<li class="active">
+								<a data-toggle="tab" href="#homeInfo">작업정보</a></li>
+							<li><a data-toggle="tab" href="#menuInfo1">선행작업</a></li>
+							<li><a data-toggle="tab" href="#menuInfo2">산출물</a></li>
+							<li><a data-toggle="tab" href="#menuInfo3">가이드</a></li>
+							<li><a data-toggle="tab" href="#menuInfo4">히스토리</a></li>
+						</ul>
+
+						<div class="tab-content"><br>
+							<%--작업정보--%>
+							<div id="homeInfo" class="tab-pane fade in active"><%--id 홈 --%>
+							<form id="workRegChange" action="myWorkChange.wk" method="post">
+							<table id="workInfoTable" style="width:540px; padding:0px; table-layout: fixed">
+								<tr>
+									<td class="modalTd" style="width:16%;"></td>
+									<td class="modalTd" style="width:16%;"></td>
+									<td class="modalTd" style="width:16%;"></td>
+									<td class="modalTd" style="width:16%;"></td>
+									<td class="modalTd" style="width:16%;"></td>
+									<td class="modalTd" style="width:16%;"></td>
+								</tr>
+								<tr>
+									<td class="modalTd_T">프로젝트명
+									<input type="hidden" name="memberNo" value="${sessionScope.loginUser.memberNo }">
+									
+									</td>
+									<td class="modalTd" colspan="5">
+									<input type="text" name="projectName" id="projectName" class="inputMenu form-control projectName">
+									<%-- <select name="projectNo" id="projectNo" class="inputMenu form-control" required="required">
+										<option value="#" >선택하세요</option>
+									
+										<c:forEach var="wp" items="${wp }">
+										<option value="${wp.projectPk }"><c:out value="${wp.projectName }"/></option> 
+										</c:forEach>
+									</select> --%>
+								</td>
+								</tr>
+								<tr>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+								</tr>
+								<tr>
+									<td class="modalTd_T">작업명</td>
+									<td class="modalTd" colspan="2" >
+									<input type="text" name="workName" class="inputMenu form-control workName">
+									</td>
+									<td class="modalTd_T">작업유형</td>
+									<td class="modalTd" colspan="2">
+									<select name="workType" class="inputMenu form-control" required="required">
+										<option value="#" >선택하세요</option>
+										<option value="개인">개인</option>
+										<option value="일반">일반</option>
+										<option value="프로젝트">프로젝트</option>
+									</select>
+									</td>
+								</tr>
+								<tr>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+								</tr>
+								<tr>
+									<td class="modalTd_T">시작일</td>
+									<td class="modalTd" colspan="2">
+									<input name="beginDate" type="date" class="inputMenu form-control" required="required">
+									</td>
+									<td class="modalTd_T">완료일</td>
+									<td class="modalTd" colspan="2">
+									<input name="completeDate" type="date" class="inputMenu form-control" required="required">
+									</td>
+								</tr>
+								<tr>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+								</tr>
+								<tr>
+									<td class="modalTd_T">선행작업</td>
+									<td class="modalTd" colspan="2" >
+									<input name="precedeNo" type="text" class="inputMenu form-control" required="required">
+									</td>
+									<td class="modalTd_T">완료율</td>
+									<td class="modalTd" colspan="2">
+									<input name="completeRate" type="number" class="inputMenu form-control" min="0" max="100">	
+									</td>
+								</tr>
+								<tr>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+								</tr>
+								<tr>
+									<td class="modalTd_T">작업단계</td>
+									<td class="modalTd" colspan="2" >
+										<select name="workLevel" class="inputMenu form-control" required="required">
+											<option value="#" >선택하세요</option>
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+										</select>
+									</td>
+									<td class="modalTd_T">작업상태</td>
+									<td class="modalTd" colspan="2">
+										<select name="status" class="inputMenu form-control" required="required">
+											<option value="#" >선택하세요</option>
+											<option value="시작전">시작전</option>
+											<option value="개발중">개발중</option>
+											<option value="개발완료">개발완료</option>
+											<option value="테스트완료">테스트완료</option>
+											<option value="PL검토중">PL검토중</option>
+											<option value="PL검토완료">PL검토완료</option>
+											<option value="개발지연">개발지연</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+								</tr>
+								<tr>
+									<td class="modalTd_T">상위작업</td>
+									<td class="modalTd" colspan="2" >
+									<input type="text" name="highWorkNo" class="inputMenu form-control" required="required">
+									</td>
+									<td class="modalTd_T">승인자</td>
+									<td class="modalTd" colspan="2">
+										<select name="grantorNo" id="grantorList" class="inputMenu form-control" required="required">
+											
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td class="modalTd"></td>
+									<td class="modalTd"></td>
+									<td class="modalTd"></td>
+									<td class="modalTd"></td>
+									<td class="modalTd"></td>
+									<td class="modalTd"></td>
+								</tr>
+								
+					 		</table>
+					 		<hr style="border:solid 1px lightgray;">
+					 		<div id="buttonArea1">
+					 		<button type="button" id="workRegCancel" class="btn btn-default" data-dismiss="modal">취소</button>
+							<button type="button" id="workRegSubmit" class="btn btn-primary"
+									style="background: #1E2B44; outline: none; border: none;">저장
+							</button>
+							</div>
+							</form>
+							
+							</div><%--id 홈 end --%>
+							
+							
+							<div id="menuInfo1" class="tab-pane fade">
+								<h3>Menu 1</h3>
+								<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+									ea commodo consequat.</p>
+							</div>
+							
+							<%--산출물 --%>
+							<div id="menuInfo2" class="tab-pane fade">
+							<form id="workFileInsert" action="myWorkFile.wk" method="post" enctype="multipart/form-data" novalidate="true">
+							<table id="buseoInfoTable" style="width:540px; padding:0px; table-layout: fixed">
+								<tr>
+									<td class="modalTd" style="width:16%;"></td>
+									<td class="modalTd" style="width:16%;"></td>
+									<td class="modalTd" style="width:16%;"></td>
+									<td class="modalTd" style="width:16%;"></td>
+									<td class="modalTd" style="width:16%;"></td>
+									<td class="modalTd" style="width:16%;"></td>
+								</tr>
+								<tr>
+									<td class="modalTd_T">프로젝트명
+									<input type="hidden" name="memberNo" value="${sessionScope.loginUser.memberNo }">
+									<input type="hidden" name="projectNo" class="projectNo" value="${sessionScope.loginUser.memberNo }">
+									</td>
+									<td class="modalTd" colspan="5">
+									<input type="text" name="projectName" class="inputMenu form-control projectName" readOnly></td>
+								</tr>
+								<tr>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+								</tr>
+								<tr>
+									<td class="modalTd_T">작업명
+									<input type="hidden" name="workNo" class="workNo">
+									</td>
+									<td class="modalTd" colspan="2" >
+									<input type="text" name="workName" class="inputMenu form-control workName">
+									</td>
+									<td class="modalTd_T">작업유형</td>
+									<td class="modalTd" colspan="2">
+									<input type="text" name="workType" class="inputMenu form-control workType">
+									</td>
+								</tr>
+								<tr>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+								</tr>
+								<tr>
+									<td class="modalTd_T">산출물 종류</td>
+									<td class="modalTd" colspan="5">
+									<select class="inputMenu form-control" name="productType">
+										<option>--선택하세요--</option>
+										<option value="UI보고서">UI보고서</option>
+										<option value="요구사항정의서">요구사항 정의서</option>
+										<option value="프로세스정의서">프로세스 정의서</option>
+										<option value="테이블정의서">테이블 정의서</option>
+										<option value="통합테스트 시나리오">통합테스트 시나리오</option>
+									</select>
+									</td>
+								</tr>
+								<tr>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+								</tr>
+								<tr>
+									<td class="modalTd_T">제목</td>
+									<td class="modalTd" colspan="5" >
+									<input type="text" name="productTitle" class="inputMenu form-control">
+									</td>
+								</tr>
+								<tr>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+								</tr>
+								<tr>
+									<td class="modalTd_T">내용</td>
+									<td class="modalTd" colspan="5" rowspan="3">
+									<textarea name="productContent" class="inputMenu form-control" style="resize:none;"></textarea>
+									</td>
+								</tr>
+								<tr>
+									<td class="modalTd"></td>
+								</tr>
+								<tr>
+									<td class="modalTd"></td>
+								</tr>
+								<tr>
+									<td class="modalTd_T">첨부파일</td>
+									<td class="modalTd" colspan="5" >
+									<div id="fileUploadArea">
+										<a href="#this" id="add" class="btn">파일 추가하기</a> 
+									</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="modalTd"></td>
+									<td class="modalTd"></td>
+									<td class="modalTd"></td>
+									<td class="modalTd"></td>
+									<td class="modalTd"></td>
+									<td class="modalTd"></td>
+								</tr>
+								
+					 		</table>
+							</form>
+							<hr style="border:solid 1px lightgray;">
+					 		<div id="buttonArea2">
+					 		<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+							<button type="button" id="workFileSubmit" class="btn btn-primary"
+									style="background: #1E2B44; outline: none; border: none;">저장
+							</button>
+							</div>
+							</div>
+							<div id="menuInfo3" class="tab-pane fade">
+								<h3>Menu 3</h3>
+								<p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta
+									sunt explicabo.</p>
+							</div>
+							<div id="menuInfo4" class="tab-pane fade">
+								<h3>Menu 4</h3>
+								<p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta
+									sunt explicabo.</p>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div><%--모달 종료 --%>
 	  
 	<script>
+	
+	$(function(){
+		$("#projectNo").change(function(){
+			var pno = $(this).val();
+			console.log(pno);
+			$("#grantorList").empty();
+			$.ajax({
+				type:"post",
+				url:"projectGrantorList.wk",
+				data:{pno:pno},
+				dataType:"json",
+				success:function(data){
+					console.log(data);
+					for(var i = 0; i < data.gt.length; i++){
+						$("#grantorList").append("<option value='" + data.gt[i]['memberPk'] + "'>" + data.gt[i]['memberName'] + "</option>");
+						
+					}
+					
+				},
+				error:function(error){
+					
+				}
+			});
+		});
+	
 	//모달
 		$("#newWork1").click(function(){
 			$('#myModal').modal('show');
@@ -699,6 +1222,10 @@
 		$("#workChangeSubmit").click(function(){
 			$('#workRegChange').submit();
 		}); 
+		
+		$("#workFileSubmit").click(function(){
+			$('#workFileInsert').submit();
+		});
 	
 		$("#workArea").find("div").click(function(){
 			var workNo = $(this).find("input").eq(0).val();
@@ -781,10 +1308,11 @@
 					console.log(beginDate);
 					console.log(completeDate);
 					
-					$("#workNo").val(workNo);
-					$("#workName").val(data.workName);
+					$(".workNo").val(workNo);
+					$(".workName").val(data.workName);
 					$("#workType").val(data.workType);
-					$("#projectNo").val(data.projectNo);
+					$("#projectNoForm").val(data.projectNo);
+					$(".projectName").val(data.projectName);
 					$("#beginDate").val(beginDate);
 					$("#completeDate").val(completeDate);
 					$("#precedeNo").val(data.precedeNo);
@@ -802,6 +1330,7 @@
 				}
 			});
 		});
+	});
 	
 	</script>
 
@@ -871,8 +1400,34 @@
 			}
 		
 		});
+	
+	$("a[name='delete']").on("click",function(e){
+        e.preventDefault();
+        fn_fileDelete($(this));
+    });
+	
+    $("#add").on("click",function(e){
+        e.preventDefault();
+        fn_fileAdd();
+    });
+	
+    
 	});
 	
+	
+	function fn_fileDelete(obj){
+        obj.parent().parent().remove();
+    }
+	
+    function fn_fileAdd(){
+        var str = "<div style='filePlus'><div style='display: inline-flex;'><input type='file' class='fileCss' name='file'></div><div style='display: inline-flex;'><a href='#this' name='delete' class='btn'><i class='fas fa-minus-square'></i></a></div></div>";
+        $("#fileUploadArea").append(str);
+         
+        $("a[name='delete']").on("click",function(e){
+            e.preventDefault();
+            fn_fileDelete($(this));         
+        })
+    }
 	
 	
 	</script>
