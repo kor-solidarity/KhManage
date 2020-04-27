@@ -309,12 +309,14 @@
 			</div>
 			
 			<c:forEach var="r" items="${rlist}">
+			
+			<c:if test="${rlist.size() > 0}">
 			<div id="" class="replyArea">
 				<table id="replyTable" class="" style="width: 100%;">
 					<tr style="">
 						<td class="replyAuthor1"><b>${r.memberName}</b>
-							<input type="hidden" id="rReplyNo" class="" value="${r.replyNo}">	
-							<input type="hidden" id="rMemberNo" class="" value="${r.memberNo}">
+							<input type="hidden" id="rReplyNo" class="" name="replyNo" value="${r.replyNo}">	
+							<input type="hidden" id="rMemberNo" class="" name="memberNo" value="${r.memberNo}">
 						</td>
 						<td id="replyContent" rowspan="2" class="replyAuthor2">${r.replyContent}</td>
 						<td class="replyAuthor3">${r.createDate}</td>
@@ -332,6 +334,18 @@
 					</tr>
 				</table>
 			</div>
+			</c:if>
+			
+			
+			<c:if test="${rlist.size() <= 0}">
+			<div id="" class="replyAreaa">
+				댓글이 없습니다.ssssssssssssssss
+			</div>
+			</c:if>
+			
+			
+			
+			
 			
 			<!-- 댓글수정영역 -->
 			<div id="" class="replyModifyDiv1">
@@ -542,6 +556,26 @@
 			
 			
 		});
+		
+		
+	});
+	
+	
+	 /* $("#projectTable tr").children().find("#pwdResetBtn").on("click", function(){
+		 
+		 var result = confirm("해당인원의 패스워드 정보를 초기화 하시겠습니까?");
+       
+	     console.log($(this).parent().find("#inputMemberNo").val()); 
+    }); */
+	
+	
+	
+	
+	//댓글삭제
+	$(document).on('click', "#removeReplyBtn", function() {
+		
+		console.log($("#replyTable").find("input[name=replyNo]").val());
+		
 		
 		
 	});
