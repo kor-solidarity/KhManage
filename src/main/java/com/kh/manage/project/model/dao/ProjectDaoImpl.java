@@ -161,4 +161,9 @@ public class ProjectDaoImpl implements ProjectDao {
 	public List<ProjectWork> selectProjectHighWorkList(SqlSessionTemplate sqlSession, HashMap<String, String> highWorkMap) {
 		return sqlSession.selectList("Project.selectProjectHighWorkList", highWorkMap);
 	}
+	
+	@Override
+	public int updateWork(SqlSessionTemplate sqlSession, ProjectWork work) {
+		return sqlSession.update("Project.updateWork", work);
+	}
 }

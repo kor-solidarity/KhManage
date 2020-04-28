@@ -868,6 +868,7 @@
                             pid: "${pid}",
                         },
                         success: function (data) {
+                            $('#modalWorkNo').val(workNo);
                             daata = data;
                             // alert("done!");
                             console.log(JSON.stringify(data));
@@ -925,6 +926,10 @@
                                     projectWork.higherWorkNo == highWorkList[i].workNo) {
                                     $("#highWorkSel option[value=" + projectWork.higherWorkNo + "]").
                                         prop('selected', true);
+                                    $("#oriVal").val(projectWork.higherWorkNo)
+                                }
+                                if (projectWork.higherWorkNo != undefined){
+                                    $("#oriVal").val('0')
                                 }
                             }
 
@@ -1007,6 +1012,7 @@
 							aria-hidden="true">&times;</span></button>
 					<h4 class="modal-title" id="workDetailTitle">
 						<i class="fas fa-th-large"></i>&nbsp;<span id="workTitle">담당자 목록</span>
+						<input type="text" name="modalWorkNo" id="modalWorkNo" style="display: none;">
 					</h4>
 				</div>
 				<div class="modal-body" id="workDetailContent">
@@ -1093,7 +1099,7 @@
 											선행작업 타입
 										</th>
 										<th style="text-align: center">
-											삭제
+
 										</th>
 									</tr>
 									</thead>
@@ -1105,11 +1111,11 @@
 												   style="text-align: center; padding-left: 0;"
 											<%--체인지 할때마다 아래 테이블과 연동하는걸로.--%>
 											<%--그냥 이건 연동시키던가 없애던가 합시다.--%>
-												   onchange="ChangePredcessorTaskID(this, 0);" disabled>
+												   onchange="/*ChangePredcessorTaskID(this, 0);*/" disabled>
 											<input type="hidden" id="pid_0" value="">
 										</td>
 										<td style="text-align: center;">
-											<select id="highWorkSel" class="form-control"
+											<select name="highWorkSel" id="highWorkSel" class="form-control"
 													style="width: 100%;" onchange="ChangePredcessorTask(this, 0);"
 													tabindex="-1" title="">
 
@@ -1124,6 +1130,7 @@
 													type="button">
 												<span class="glyphicon glyphicon-trash"> </span>
 											</button>
+											<input type="text" name="oriVal" id="oriVal" value="0" style="display: none;">
 										</td>
 									</tr>
 									</tbody>
@@ -1133,7 +1140,7 @@
 							<div id="menu2" class="tab-pane fade">
 								<div class="tab-pane active" id="tab_1_4">
 									<%--여기선 조회만 하지 보는건 안됨. --%>
-									<div class="row" style="margin-bottom: 0px; display: block;" id="div_file_upload">
+									<%--<div class="row" style="margin-bottom: 0px; display: block;" id="div_file_upload">
 										<div class="col-md-2">
 											<label class="control-label font-blue-dark"
 												   style="float:left; text-align:left; width:100px;padding-left:15px;">
@@ -1155,7 +1162,7 @@
 												<input id="attFiles" name="attFiles" type="file" autocomplete="off">
 											</div>
 										</div>
-									</div>
+									</div>--%>
 									<div id="fileList" style="width:100%;">
 										<%--
 										산출물 목록에 들어가 있어야 할 목록:
@@ -1264,87 +1271,43 @@
 					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 					<button type="button" id="workDetailSubmitBtn" class="btn btn-primary"
 							style="background: #1E2B44; outline: none; border: none;"
-							onclick="">저장
+							onclick="editWork()">저장
 					</button>
 				</div>
 			</div>
 		</div>
 	</div>
+	<script>
+        // 위에 작업 세부정보 수정
+        function editWork () {
+            alert("editWork")
+            // 값을 통째로 다 업데이트 해버린다.
+            $.ajax({
+                url: 'updateWork.pr',
+                type: 'post',
+                data: {
+                    workNo: $("#modalWorkNo").val(),
+                    workName: $("#workName").val(),
+                    startDate: $("#startDate").val(),
+                    completeDate: $("#completeDate").val(),
+                    completeRate: $("#completeRate").val(),
+                    grantor: $("#grantor").val(),
+                    memo: $("#memo").val(),
+                    highWorkSel: $("#highWorkSel").val(),
+                    pid: "${pid}",
+                },
+                success: function (data) {
+                    alert("done!");
+                    console.log(data);
+                    updateWorkList();
+                },
+                error: function (xhr, status, error) {
+                    alert("wut");
+                }
 
-
-	<!-- 모달 창. 불필요함. -->
-	<div class="modal fade" id="workDetails1" role="dialog"
-		 aria-labelledby="gridSystemModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="gridSystemModalLabel">
-						<i class="fas fa-th-large"></i>&nbsp;권한그룹 사용자
-					</h4>
-				</div>
-				<div class="modal-body">
-					<div class="container-fluid">
-						<div class="row" style="overflow: auto;">
-							<table id="projectTable" align="center" style="width:200px;">
-								<tr>
-									<td class="thRange th1"></td>
-									<td class="thRange th1">부서</td>
-									<td class="tdText thRange">이름</td>
-									<td class="tdText thRange">직급</td>
-									<td class="tdText thRange">이메일</td>
-								</tr>
-								<tr class="front">
-									<td class="thRange th1" align="center"><input type="checkbox"></td>
-									<td class="thRange th1">
-										<select id="searchDept" class="inputCss">
-											<option>선택</option>
-											<c:forEach var="d" items="${dList}">
-												<option value="${d.deptName}"><c:out value="${d.deptName}"/></option>
-											</c:forEach>
-										</select>
-									</td>
-									<td class="tdText thRange"><input type="text"
-																	  class="inputCss" style="width: 90px"></td>
-									<td class="tdText thRange"><input type="text"
-																	  class="inputCss" style="width: 90px;"></td>
-									<td class="tdText thRange"><input type="text"
-																	  class="inputCss" style="width: 170px;"></td>
-								</tr>
-
-								<tr class="pagingArea">
-									<td colspan="5">
-										<div class="paging"><< < 1 2 > >></div>
-									</td>
-								</tr>
-
-							</table>
-
-						</div>
-						<div class="row">
-							<div class="col-sm-9">
-								<div class="row"></div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default"
-							data-dismiss="modal">취소
-					</button>
-					<button type="button" class="btn btn-primary" id="saveBtn"
-							style="background: #1E2B44; outline: none; border: none;">저장
-					</button>
-				</div>
-			</div>
-			<!-- /.modal-content -->
-		</div>
-		<!-- /.modal-dialog -->
-	</div>
-	<%-- ---------------------------------- --%>
+            })
+        }
+	</script>
 
 </body>
 </html>
