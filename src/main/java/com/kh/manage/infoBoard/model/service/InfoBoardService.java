@@ -25,7 +25,9 @@ public interface InfoBoardService {
 
 	int deleteBoard(String boardNo);
 
-	
+	int deleteReply(String replyNo);
+
+	int updateReply(BoReply rp);
 	
 
 

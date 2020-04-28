@@ -92,7 +92,7 @@
 	border-left: none;
 	border-right: none;
 	border-top: 1px solid lightgray;
-	/* border-bottom: 1px solid lightgray; */
+	border-bottom: 1px solid lightgray;
 	margin-top: 60px;
 }
 
@@ -100,10 +100,9 @@
 	width: 100%;
 	background: transparent;
 	line-height: 35px;
-	border: 4px solid lightgray;
 	border-left: none;
 	border-right: none;
-	border-top: 1px solid lightgray;
+	/* border-top: 1px solid lightgray; */
 	border-bottom: 1px solid lightgray;
 }
 
@@ -227,6 +226,7 @@
 .replyModifyDiv1 {
 	background: #F3F3F3;
 	vertical-align: middle;
+	border-bottom: 1px solid lightgray;
 }
 
 .replyModifyDiv2 {
@@ -296,13 +296,7 @@
 			<div id="" class="contentArea">
 				<div id="" class="content" style="">${board.boardContent}</div>
 			</div>
-			<!-- <div style="margin-top: 20px; float: right; padding-right: 20px;">
-				<button id="" class="modifyBtn Btn" onclick="">수정</button>
-				<button id="" class="removeBtn Btn" onclick="">삭제</button>
-			</div>
-			<br> -->
 			
-			<!-- 버튼추가 -->
 			
 			<div id="" class="replyDivArea">
 				<div class="" style="margin-left: 10px;"><b>댓글</b><span>&nbsp;&nbsp; ${rlist.size()}</span></div>
@@ -333,7 +327,7 @@
 						<%-- </c:if> --%>
 					</tr>
 				</table>
-			</div>
+			</div>			
 			</c:if>
 			
 			
@@ -343,12 +337,10 @@
 			</div>
 			</c:if>
 			
-			
-			
-			
+			</c:forEach>
 			
 			<!-- 댓글수정영역 -->
-			<div id="" class="replyModifyDiv1">
+			<div id="" class="replyModifyDiv1" hidden>
 				<div class="replyModifyDiv2">
 					<textarea id="" class="replyModifyTextarea" rows="" cols=""></textarea>
 					<div>
@@ -360,7 +352,6 @@
 					</div>
 				</div>
 			</div>
-			</c:forEach>
 			
 			<br>
 			
@@ -394,7 +385,7 @@
 		var replyContent = $("#replyTextArea").val();
 		var memberNo = "${loginUser.memberNo}";
 		
-		var result = confirm('댓글을 등록하시겠습니까?');
+		//var result = confirm('댓글을 등록하시겠습니까?');
 
 		console.log("boardNo: " + boardNo);
 		console.log("replyContent: " + replyContent);
@@ -412,18 +403,20 @@
 			},
 			success: function(data) {
 				
-				if(replyContent.value == "") {
+				alert("댓글이 등록되었습니다.");
+				
+				
+				if(replyContent.value() == "") {
 					
-					alert("댓글을 입력해주세요.")
+					alert("댓글을 입력하세요.")
 					replyContent.focus();
 					return false;
 					
 				} else {
-					
-					if(result) {
-						alert("댓글이 등록되었습니다.");
-						console.log(data);
-					} 
+										
+					alert("댓글이 등록되었습니다.");
+					console.log(data);
+					 
 					
 				}
 				
@@ -503,6 +496,7 @@
 				location.href = "deleteBoard.ib?boardNo=" + boardNo;
 				alert("게시글이 삭제되었습니다.");
 				
+				
 			}
 			
 		});
@@ -512,73 +506,77 @@
 	
 	
 	//댓글수정
-	$(function() {
-		
-		 /* $("#projectTable tr").children().find("#pwdResetBtn").on("click", function(){
-		       var result = confirm("해당인원의 패스워드 정보를 초기화 하시겠습니까?");
-		       
-		      console.log($(this).parent().find("#inputMemberNo").val()); 
-		    }); */
-		
-		
-		
-		$(document).on('click', "#modifyReplyBtn", function(){
-			
-			/* var replyNo = $("#rReplyNo").val();
-			var replyContent = $("#replyContent").text();
-			
-			var memberNo = "${loginUser.memberNo}"; */
-			
-			var replyNo = $("#replyTable").children().find("#rReplyNo").val();
-			console.log(replyNo);
-			
-			
-			//console.log(replyContent);
-			//console.log(memberNo);
-			
-			
-			
-			
-			
-			/* $.ajax({
-				type: "post",
-				url: "updateReply.ib",
-				data: {
-					
-					replyNo : replyNo,
-					
-				}
-				
-			}); */
-			
-			
-			
-			
-			
+	$("#replyTable tr").find("#modifyReplyBtn").one("click", function(){
+    	
+    	var replyNo = $(this).parent().parent().parent().find("#rReplyNo").val();
+    	var replyContent = $(this).parent().parent().parent().find("#replyContent").text();
+    	
+    	console.log("replyNo : " + replyNo);
+    	console.log("replyContent : " + replyContent);
+    	
+		$(".replyArea").after("<div id='' class='replyModifyDiv1'>"
+							+ 	"<div class='replyModifyDiv2'>"
+							+		"<textarea id='replyModifyTextarea' class='replyModifyTextarea' rows='' cols=''></textarea>"
+							+				"<div>"
+							+				"<p style='padding: 30px;''><b>댓글수정</b></p>"
+							+			"</div>"
+							+			"<div class='replyBtnDiv'>"
+							+				"<button id='' class='modifyReplyBtn2' onclick=''>수정</button>"
+							+				"<button id='' class='cancelReplyBtn2' onclick=''>취소</button>"
+							+			"</div>"
+							+ 	"</div>"
+							+ "</div>");
+    	
+		$("#cancelReplyBtn2").on("click", function(){
+			$(".replyModifyDiv1").hide();
 		});
-		
-		
-	});
-	
-	
-	 /* $("#projectTable tr").children().find("#pwdResetBtn").on("click", function(){
-		 
-		 var result = confirm("해당인원의 패스워드 정보를 초기화 하시겠습니까?");
-       
-	     console.log($(this).parent().find("#inputMemberNo").val()); 
-    }); */
-	
-	
+    	
+    	$.ajax({
+    		type: "post",
+    		url: "updateReply.ib",
+    		data: {
+	    			replyNo : replyNo,
+	    			replyContent : replyContent
+    		},
+    		success: function(data) {
+    			
+    			alert("댓글이 수정되었습니다.");
+    			console.log(data);
+    			
+    			/* location.reload(); */
+    			
+    		}
+    		
+    	});
+    	
+    });
 	
 	
 	//댓글삭제
-	$(document).on('click', "#removeReplyBtn", function() {
-		
-		console.log($("#replyTable").find("input[name=replyNo]").val());
-		
-		
-		
-	});
+    $("#replyTable tr").find("#removeReplyBtn").on("click", function(){
+    	
+    	var replyNo = $(this).parent().parent().parent().find("#rReplyNo").val();
+    	
+    	console.log("replyNo : " + replyNo);
+    	
+    	$.ajax({
+    		type: "post",
+    		url: "deleteReply.ib",
+    		data: {
+    			replyNo : replyNo	
+    		},
+    		success: function(data) {
+    			
+    			alert("댓글이 삭제되었습니다.");
+    			console.log(data);
+    			
+    			location.reload();
+    			
+    		}
+    		
+    	});
+    	
+    });
 	
 	
 	

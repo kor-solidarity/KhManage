@@ -119,6 +119,21 @@
 		SET STATUS = 'N'
 		WHERE INFO_PK = #{boardNo}
 	</update>
+	
+	<!-- 댓글 삭제 -->
+	<update id="deleteReply" parameterType="java.lang.String">
+		UPDATE REPLY
+		SET STATUS = 'N'
+		WHERE REPLY_NO = #{replyNo}
+	</update>
+	
+	<update id="updateReply" parameterType="BoReply">
+		UPDATE REPLY
+		SET (REPLY_CONTENT, MODIFY_DATE) = (SELECT #{replyContent}, SYSDATE
+									 		FROM REPLY
+									  		WHERE REPLY_NO = #{replyNo})
+		WHERE REPLY_NO = #{replyNo}
+	</update>
 
 </mapper>
 

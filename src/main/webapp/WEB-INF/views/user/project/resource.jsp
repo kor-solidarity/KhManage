@@ -107,7 +107,7 @@
                               <form id="formAdded" action="" method="post">
                                 <table id="addedMemberTable" class="addedMemberTable" style="width: 100%">
                                 <c:forEach var="tm" items="${tmList}">
-                                   <tr id="addedMemberTr" class="addedMemberTr addedTr" style="width: 100%">
+                                   <tr id="addedMemberTr" class="addedMemberTr addedTr" style="width: 100%; margin-bottom: 15px;">
                                         <td id="addedMemberTd" class="addedMemberTd" style="width: 100%; padding-left: 10px;"><b>${tm.memberName}</b> / ${tm.deptName} / ${tm.rankName}
                                            <input type='hidden' id='memberNo' class='memberNo clicked' name='memberNo' value='${tm.memberNo}'>
                                         </td>
@@ -199,13 +199,6 @@
       
    });
 
-   /* 
-   //우측 추가된 목록에서 제외(삭제)
-   $(document).on('click', '#addedMemberTable tr', function(){
-      $(this).remove();
-      $(this).css("color", "red");
-   }); */
-
    
    //조회한 사원 선택
    $(function () {
@@ -232,7 +225,6 @@
    
       
    //resource 추가하기
-   
    var list;
    
    $("#btnResourceAdd").on('click', function() {
@@ -284,7 +276,6 @@
                 
              } else {
              	
-             	
              	 
              }
              
@@ -295,7 +286,7 @@
  		if(check) {
  			
  			$("#formBeforeAdd").submit();
- 		}   
+ 		}
       
       
       
@@ -337,34 +328,12 @@
       
    
    
+   $("#btnResourceDelete").on('click', function() {
+	      
+       var memberNo = $("#memberNo").val();   
       
-      
+   });
     
-   
-   
-   
-   
-   
-   //저장 후 DB에 insert
-   /* $(document).ready(function() {
-      
-      $("#saveResourceBtn").click(function() {
-         
-         //insert 시 필요한 값 ROJECT_PK, MEMBER_PK
-         var projectPk = "${pid}";
-         var memberNo = $("#addedMemberTable").children().children().find("input[name='memberNo']").val();
-         console.log("projectPk : " + projectPk);
-         console.log("memberNo : " + memberNo);
-         
-         //쿼리스트링은 안 쓴다! 써 주려면 split 해줘야 함
-         //location.href="addResource.pr?projectPk=" + projectPk + "?memberNo=" + memberNo;
-         
-         //저장버튼 form add?? submit 함수?
-         //$("#addResourceForm").submit();
-         
-      });
-      
-   }); */
    
    
    
