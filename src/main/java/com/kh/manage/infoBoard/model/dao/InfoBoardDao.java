@@ -28,6 +28,10 @@ public interface InfoBoardDao {
 
 	int deleteBoard(SqlSessionTemplate sqlSession, String boardNo);
 
+	int deleteReply(SqlSessionTemplate sqlSession, String replyNo);
+
+	int updateReply(SqlSessionTemplate sqlSession, BoReply rp);
+
 
 
 }

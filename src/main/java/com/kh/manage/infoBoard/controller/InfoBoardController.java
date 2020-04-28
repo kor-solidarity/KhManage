@@ -301,10 +301,33 @@ public class InfoBoardController {
 	}
 	
 	
+	//댓글삭제
+	@RequestMapping("deleteReply.ib")
+	public void deleteReply(HttpServletRequest request, HttpServletResponse response) {
+		
+		String replyNo = request.getParameter("replyNo");
+		System.out.println("replyNo : " + replyNo);
+		
+		int result = is.deleteReply(replyNo);
+		
+	}
 	
 	
-	
-	
+	//댓글삭제
+	@RequestMapping("updateReply.ib")
+	public void updateReply(HttpServletRequest request) {
+		
+		String replyNo = request.getParameter("replyNo");
+		String replyContent = request.getParameter("replyContent");
+		
+		System.out.println("replyNo : " + replyNo);
+		System.out.println("replyContent : " + replyContent);
+		
+		int result = is.updateReply(rp);
+		
+		System.out.println("댓글수정 result : " + result);
+		
+	}
 	
 	
 }

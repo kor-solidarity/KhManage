@@ -95,6 +95,22 @@ public class InfoBoardServiceImpl implements InfoBoardService {
 
 
 
+	@Override
+	public int deleteReply(String replyNo) {
+		
+		return id.deleteReply(sqlSession, replyNo);
+	}
+
+
+
+	@Override
+	public int updateReply(BoReply rp) {
+
+		return id.updateReply(sqlSession, rp);
+	}
+
+
+
 
 
 
