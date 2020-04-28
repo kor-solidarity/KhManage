@@ -214,11 +214,13 @@
 				</div>
 			</div>
 		<script>
-		$(document).load(function(){
-	          ws.send("이슈");
-	    });
+		 var timer = setInterval(function(){
+				 ws.send("이슈");
+				 clearInterval(timer)
+		    }, 300)
+		    
+	       
 		$(function(){
-			
 			$("#projectNo").change(function(){
 				var pno = $(this).val();
 				console.log(pno);
