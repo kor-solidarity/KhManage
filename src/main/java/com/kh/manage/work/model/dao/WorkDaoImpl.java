@@ -11,6 +11,7 @@ import com.kh.manage.common.Attachment;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.work.model.vo.Grantor;
 import com.kh.manage.work.model.vo.Work;
+import com.kh.manage.work.model.vo.WorkAttachment;
 import com.kh.manage.work.model.vo.WorkProductw;
 import com.kh.manage.work.model.vo.WorkProjectName;
 import com.kh.manage.work.model.vo.WorkProjectTeam;
@@ -80,6 +81,11 @@ public class WorkDaoImpl implements WorkDao{
 	@Override
 	public int insertWorkAttachment(SqlSessionTemplate sqlSession, Attachment at) {
 		return sqlSession.insert("Work.insertWorkAttachment", at);
+	}
+
+	@Override
+	public List<WorkAttachment> selectWorkAttachment(SqlSessionTemplate sqlSession, String workNo) {
+		return sqlSession.selectList("Work.selectWorkAttachment", workNo);
 	}
 
 }

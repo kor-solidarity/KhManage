@@ -8,6 +8,7 @@ import com.kh.manage.common.Attachment;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.work.model.vo.Grantor;
 import com.kh.manage.work.model.vo.Work;
+import com.kh.manage.work.model.vo.WorkAttachment;
 import com.kh.manage.work.model.vo.WorkProductw;
 import com.kh.manage.work.model.vo.WorkProjectTeam;
 
@@ -30,6 +31,8 @@ public interface WorkService {
 	int insertWorkProduct(WorkProductw wp);
 
 	int insertWorkAttachment(Attachment at);
+
+	List<WorkAttachment> selectWorkAttachment(String workNo);
 
 	
 

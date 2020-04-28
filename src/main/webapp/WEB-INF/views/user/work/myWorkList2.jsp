@@ -1060,7 +1060,7 @@
 								<tr>
 									<td class="modalTd_T">프로젝트명
 									<input type="hidden" name="memberNo" value="${sessionScope.loginUser.memberNo }">
-									<input type="hidden" name="projectNo" class="projectNo" value="${sessionScope.loginUser.memberNo }">
+									<input type="hidden" name="projectNo" class="projectNo">
 									</td>
 									<td class="modalTd" colspan="5">
 									<input type="text" name="projectName" class="inputMenu form-control projectName" readOnly></td>
@@ -1075,14 +1075,14 @@
 								</tr>
 								<tr>
 									<td class="modalTd_T">작업명
-									<input type="hidden" name="workNo" class="workNo">
+									<input type="hidden" name="workNo" class="workNo" readOnly>
 									</td>
 									<td class="modalTd" colspan="2" >
 									<input type="text" name="workName" class="inputMenu form-control workName">
 									</td>
 									<td class="modalTd_T">작업유형</td>
 									<td class="modalTd" colspan="2">
-									<input type="text" name="workType" class="inputMenu form-control workType">
+									<input type="text" name="workType" class="inputMenu form-control workType" readOnly>
 									</td>
 								</tr>
 								<tr>
@@ -1094,7 +1094,7 @@
 									<td class="modalTd2"></td>
 								</tr>
 								<tr>
-									<td class="modalTd_T">산출물 종류</td>
+									<td class="modalTd_T">산출물 구분</td>
 									<td class="modalTd" colspan="5">
 									<select class="inputMenu form-control" name="productType">
 										<option>--선택하세요--</option>
@@ -1156,9 +1156,49 @@
 									<td class="modalTd"></td>
 									<td class="modalTd"></td>
 								</tr>
-								
 					 		</table>
 							</form>
+							<table class="table table-striped table-bordered table-advance table-hover"
+											   id="workProductTable">
+											<thead>
+											<tr>
+												<th style="text-align: center; width: 20%;">
+													산출물 구분
+												</th>
+												<th style="text-align: center; width: 40%;">
+													파일명
+												</th>
+												<th style="text-align: center; width: 20%;">
+													등록일
+												</th>
+												<th style="text-align: center; width: 7%;">
+													삭제
+												</th>
+											</tr>
+											</thead>
+											<tbody>
+											<tr id="d726674b-be83-4317-8f1f-4b984fc4890c">
+												<td class="hidden-xs">
+													UI보고서 
+												</td>
+												<td class="highlight">
+													login.png
+												</td>
+												<td class="hidden-xs" style="text-align: center;">
+													2020-04-28
+												</td>
+												<td style="text-align: center;">
+													<button onclick="FileDelete('d726674b-be83-4317-8f1f-4b984fc4890c');"
+															file_uid="d726674b-be83-4317-8f1f-4b984fc4890c"
+															class="k-upload-action k-button-bare"
+															style="display: inline-block;" type="button">
+														<span class="glyphicon glyphicon-trash"> </span>
+													</button>
+												</td>
+											</tr>
+
+											</tbody>
+							</table>
 							<hr style="border:solid 1px lightgray;">
 					 		<div id="buttonArea2">
 					 		<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
@@ -1233,7 +1273,7 @@
 				url:"selectWork.wk",
 				type:"post",
 				data:{workNo:workNo},
-				dataType:"JSON",
+				dataType:"json",
 				success:function(data){
  					console.log(data);
  					
@@ -1310,11 +1350,11 @@
 					
 					$(".workNo").val(workNo);
 					$(".workName").val(data.workName);
-					$("#workType").val(data.workType);
+					$(".workType").val(data.workType);
 					$("#projectNoForm").val(data.projectNo);
 					$(".projectName").val(data.projectName);
-					$("#beginDate").val(beginDate);
-					$("#completeDate").val(completeDate);
+					$(".beginDate").val(beginDate);
+					$(".completeDate").val(completeDate);
 					$("#precedeNo").val(data.precedeNo);
 					$("#completeRate").val(data.completeRate);
 					$("#grantorNo").val(data.grantorNo);
@@ -1325,8 +1365,9 @@
 					
 					$("#selectModal").modal('show');
 				},
-				error:function(error){
-					console.log(error);
+				error:function(request,status,error){
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+
 				}
 			});
 		});

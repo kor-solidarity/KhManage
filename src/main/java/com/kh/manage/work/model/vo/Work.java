@@ -1,6 +1,7 @@
 package com.kh.manage.work.model.vo;
 
 import java.sql.Date;
+import java.util.List;
 
 
 
@@ -21,12 +22,14 @@ public class Work implements java.io.Serializable{
 	private String workType;
 	private String memberNo;
 	private String workStatus;
+	private List<WorkAttachment> workAttachment;
 	
 	public Work() {}
 
 	public Work(String workNo, String workName, String status, String projectNo, String projectName, Date beginDate,
 			Date completeDate, String precedeNo, String completeRate, String grantorNo, String workLevel,
-			String highWorkNo, String memo, String workType, String memberNo, String workStatus) {
+			String highWorkNo, String memo, String workType, String memberNo, String workStatus,
+			List<WorkAttachment> workAttachment) {
 		super();
 		this.workNo = workNo;
 		this.workName = workName;
@@ -44,6 +47,7 @@ public class Work implements java.io.Serializable{
 		this.workType = workType;
 		this.memberNo = memberNo;
 		this.workStatus = workStatus;
+		this.workAttachment = workAttachment;
 	}
 
 	public String getWorkNo() {
@@ -174,15 +178,23 @@ public class Work implements java.io.Serializable{
 		this.workStatus = workStatus;
 	}
 
+	public List<WorkAttachment> getWorkAttachment() {
+		return workAttachment;
+	}
+
+	public void setWorkAttachment(List<WorkAttachment> workAttachment) {
+		this.workAttachment = workAttachment;
+	}
+
 	@Override
 	public String toString() {
 		return "Work [workNo=" + workNo + ", workName=" + workName + ", status=" + status + ", projectNo=" + projectNo
 				+ ", projectName=" + projectName + ", beginDate=" + beginDate + ", completeDate=" + completeDate
 				+ ", precedeNo=" + precedeNo + ", completeRate=" + completeRate + ", grantorNo=" + grantorNo
 				+ ", workLevel=" + workLevel + ", highWorkNo=" + highWorkNo + ", memo=" + memo + ", workType="
-				+ workType + ", memberNo=" + memberNo + ", workStatus=" + workStatus + "]";
+				+ workType + ", memberNo=" + memberNo + ", workStatus=" + workStatus + ", workAttachment="
+				+ workAttachment + "]";
 	}
 
 	
-
 }

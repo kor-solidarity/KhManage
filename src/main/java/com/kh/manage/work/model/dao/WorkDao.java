@@ -10,6 +10,7 @@ import com.kh.manage.common.Attachment;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.work.model.vo.Grantor;
 import com.kh.manage.work.model.vo.Work;
+import com.kh.manage.work.model.vo.WorkAttachment;
 import com.kh.manage.work.model.vo.WorkProductw;
 import com.kh.manage.work.model.vo.WorkProjectTeam;
 
@@ -32,5 +33,7 @@ public interface WorkDao {
 	int insertWorkProduct(SqlSessionTemplate sqlSession, WorkProductw wp);
 
 	int insertWorkAttachment(SqlSessionTemplate sqlSession, Attachment at);
+
+	List<WorkAttachment> selectWorkAttachment(SqlSessionTemplate sqlSession, String workNo);
 
 }

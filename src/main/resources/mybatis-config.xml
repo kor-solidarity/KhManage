@@ -55,6 +55,7 @@
         <typeAlias type="com.kh.manage.forum.model.vo.Mwork" alias="Mwork"/>
         <typeAlias type="com.kh.manage.gwManage.model.vo.Statistics" alias="Statistics"/>
         <typeAlias type="com.kh.manage.project.model.vo.WorkProduct" alias="WorkProduct"/>
+        <typeAlias type="com.kh.manage.work.model.vo.WorkAttachment" alias="WorkAttachment"/>
   	</typeAliases>
   
   
