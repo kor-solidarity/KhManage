@@ -280,6 +280,18 @@
         WHERE PROJECT_PK = #{value}
     </select>
 
+    <update id="updateWork" parameterType="ProjectWork">
+        update WORK
+        set WORK_NAME     = #{workName}
+          , BEGIN_DATE    = #{beginDate}
+          , COMPLETE_DATE = #{ completeDate}
+          , COMPLETE_RATE = #{ completeRate}
+          , GRANTOR_NO    = #{ grantorNo}
+          , HIGH_WORK_NO  = #{highWorkNo}
+          , MEMO          = #{ memo}
+        where WORK_NO = #{workNo}
+    </update>
+
     <!--프로젝트 담당 승인 자격자 명단뽑기.-->
     <select id="selectProjectTeamGrantorList" parameterType="String" resultMap="projectTeamResultSet">
         SELECT T.TEAM_PK, PROJECT_PK, MEMBER_PK, ROLE, MEMBER_NAME, DEPT_NAME, RANK_NAME
@@ -288,7 +300,7 @@
                        FROM MEMBER M
                                 JOIN DEPT D ON M.DEPT_NO = D.DEPT_NO
                                 JOIN RANK R2 ON M.RANK_NO = R2.RANK_NO) M ON T.MEMBER_PK = M.MEMBER_NO
-        WHERE (ROLE = 'PM' or ROLE = 'PL')
+        WHERE (ROLE = 'PM' or ROLE = 'PSM')
           and PROJECT_PK = #{value}
     </select>
 
@@ -335,7 +347,7 @@
                EXT
         from WORK_PRODUCT WP
                  join ATTACHMENT A on WP.PRODUCT_NO = A.DIVISION
-where WORK_NO = #{value}
+        where WORK_NO = #{value}
     </select>
 
     <!--프로젝트 등록을 했을 시 해당 프로젝트의 관리번호 반환 -->

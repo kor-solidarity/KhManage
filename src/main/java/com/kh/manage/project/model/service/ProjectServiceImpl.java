@@ -175,4 +175,9 @@ public class ProjectServiceImpl implements ProjectService {
 		return pd.selectProjectHighWorkList(sqlSession, highWorkMap);
 	}
 	
+	@Override
+	public int updateWork(ProjectWork work) {
+		return pd.updateWork(sqlSession, work);
+	}
+	
 }

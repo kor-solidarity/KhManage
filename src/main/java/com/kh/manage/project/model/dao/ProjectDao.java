@@ -67,4 +67,6 @@ public interface ProjectDao {
 	List<ProjectTeam> selectProjectTeamGrantorList(SqlSessionTemplate sqlSession, String pid);
 	
 	List<ProjectWork> selectProjectHighWorkList(SqlSessionTemplate sqlSession, HashMap<String, String> highWorkMap);
+	
+	int updateWork(SqlSessionTemplate sqlSession, ProjectWork work);
 }

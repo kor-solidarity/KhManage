@@ -65,4 +65,6 @@ public interface ProjectService {
 	List<ProjectTeam> selectProjectTeamGrantorList(String pid);
 	
 	List<ProjectWork> selectProjectHighWorkList(HashMap<String, String> highWorkMap);
+	
+	int updateWork(ProjectWork work);
 }

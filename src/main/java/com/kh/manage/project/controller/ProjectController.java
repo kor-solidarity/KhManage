@@ -434,6 +434,54 @@ public class ProjectController {
 		}
 	}
 	
+	@RequestMapping(value = "/updateWork.pr", method = RequestMethod.POST)
+	public void updateWork(HttpServletResponse response,HttpServletRequest request) {
+		String workNo = request.getParameter("workNo");
+		String workName = request.getParameter("workName");
+		String completeRate = request.getParameter("completeRate");
+		String grantor = request.getParameter("grantor");
+		String memo = request.getParameter("memo");
+		String highWorkSel = request.getParameter("highWorkSel");
+		if (highWorkSel.equals("0")) {
+			highWorkSel = null;
+		}
+		String pid = request.getParameter("pid");
+		
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Date startDate = null;
+		Date completeDate = null;
+		try {
+			java.util.Date startUtilDate = format.parse(request.getParameter("startDate"));
+			java.util.Date endUtilDate = format.parse(request.getParameter("completeDate"));
+			startDate = new Date(startUtilDate.getTime());
+			completeDate = new Date(endUtilDate.getTime());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		ProjectWork work =
+				new ProjectWork(workNo, workName, null,
+						pid, startDate, completeDate,
+						null, completeRate, grantor,
+						null, highWorkSel, memo,
+						null, null, null);
+		int result = ps.updateWork(work);
+		System.out.println("res: " + result);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("result", result);
+		String gson = new Gson().toJson(map);
+		
+		try {
+			response.getWriter().write(gson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	// 프로젝트 요약정보 페이지
 	@RequestMapping("/viewProject.pr")
 	public String viewProject(Model model, HttpServletRequest request) {
@@ -507,6 +555,24 @@ public class ProjectController {
 	public String showProjectSummary(Model model, HttpServletRequest request) {
 		
 		String pid = request.getParameter("pid");
+		
+		// 본격적으로 조회하기 전에 한번 필터 거친다.
+		// 작업 status 가 '개발완료'로 뜨기 전에 종료일자를 넘기면 전부 '개발지연'으로 분류시킨다.
+		// 또한 분류 후 작업 히스토리에 적용시킨다.
+		
+		List<ProjectWork> workList = ps.selectOutdatedWorks(pid);
+		for (ProjectWork work : workList) {
+			String workNo = work.getWorkNo();
+			int result = ps.updateOutdatedWork(workNo);
+			WorkHistory workHistory =
+					new WorkHistory(null, workNo, "개발지연",
+							"기한 초과로 인한 자동조치", null, null,
+							null, null, null);
+			if (result > 0) {
+				int result2 = ps.insertWorkHistory(workHistory);
+			}
+		}
+		
 		
 		//프로젝트 디테일 정보 조회
 		ProjectDetail pd = ps.selectOneProject(pid);
