@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +17,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.Gson;
 import com.kh.manage.common.Attachment;
 import com.kh.manage.common.CommonsUtils;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.work.model.service.WorkService;
 import com.kh.manage.work.model.vo.Grantor;
 import com.kh.manage.work.model.vo.Work;
+import com.kh.manage.work.model.vo.WorkAttachment;
 import com.kh.manage.work.model.vo.WorkProductw;
 import com.kh.manage.work.model.vo.WorkProjectTeam;
 
@@ -73,26 +72,15 @@ public class WorkController {
 	}
 	
 	@RequestMapping("/selectWork.wk")
-	public void selectWork(String workNo, HttpServletRequest request,  HttpServletResponse response) {
+	public ModelAndView selectWork(String workNo, ModelAndView mv) {
 		
 		Work w = ws.selectWork(workNo);
-		
-		
 		System.out.println(w);
+		mv.addObject("work", w);
 		
-		request.setAttribute("work", w);
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
+		mv.setViewName("jsonView");
 		
-		String gson = new Gson().toJson(w);
-		
-		try {
-			response.getWriter().write(gson);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		return mv;
 	}
 	
 	

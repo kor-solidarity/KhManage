@@ -13,6 +13,7 @@ import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.work.model.dao.WorkDao;
 import com.kh.manage.work.model.vo.Grantor;
 import com.kh.manage.work.model.vo.Work;
+import com.kh.manage.work.model.vo.WorkAttachment;
 import com.kh.manage.work.model.vo.WorkProductw;
 import com.kh.manage.work.model.vo.WorkProjectTeam;
 
@@ -70,6 +71,11 @@ public class WorkServiceImpl implements WorkService{
 	@Override
 	public int insertWorkAttachment(Attachment at) {
 		return wd.insertWorkAttachment(sqlSession, at);
+	}
+
+	@Override
+	public List<WorkAttachment> selectWorkAttachment(String workNo) {
+		return wd.selectWorkAttachment(sqlSession, workNo);
 	}
 
 	
