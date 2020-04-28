@@ -455,6 +455,12 @@
 	</div>
 	
 	<script>
+	 var timer = setInterval(function(){
+		 ws.send("이슈");
+		 clearInterval(timer)
+    }, 300)
+	
+	
 	$(function(){
 		$("#issueAgreeBtn").click(function(){
 			ws.send("이슈");

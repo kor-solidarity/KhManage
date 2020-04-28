@@ -27,6 +27,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 	<script src="<c:url value="/resources/assets/vendor/jquery/jquery.min.js"/>"></script>
+	<script src=<c:url value="/resources/js/notify.min.js"/>></script>
 	<script src=<c:url value="/resources/js/chatsocket.js"/>></script>
 	<script src="<c:url value="/resources/assets/vendor/bootstrap/js/bootstrap.min.js"/>"></script>
 	<script src="<c:url value="/resources/assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"/>"></script>
@@ -42,6 +43,9 @@
 	height: 70px;
 	padding-top: 0px;
 	padding-left: 5px;
+}
+.bg-warning{
+	background:white;
 }
 </style>
 </head>
@@ -113,7 +117,9 @@
 					</ul>
 				</div>
 			</div>
+			
 		</nav>
+		
 		<script>
 			$(function(){
 				$("#chat").click(function(){
@@ -121,6 +127,26 @@
 				});
 			});
 			
+
+			/* $(function(){
+				        $.notifyDefaults({
+				            placement: {
+				                from: "bottom",
+				                align: "left"
+				            },
+				            animate:{
+				                enter: "animated bounceIn",
+				                exit: "animated fadeOutDown"
+				            },
+				            template:'<div data-notify="container" class="col-xs-11   col-sm-3 p-3 text-center alert alert-{0}" role="alert">' +
+
+				            '<img data-notify="icon" class="img-circle pull-left">' +
+				            '<span data-notify="title">{1}</span>' +
+				            '<span data-notify="message">{2}</span>' +
+				            '</div>'
+				        });
+				    }); */
+
 			
 			$(function(){
 				$.ajax({
@@ -166,14 +192,40 @@
 						async: false,
 						data:{memberNo:memberNo},
 					 success: function(data){
+						 
+						 
+						 $.notify.addStyle('happyblue', {
+							  html: "<div><i class='far fa-bell'></i>&nbsp;&nbsp;&nbsp;<span data-notify-text/></div>",
+							  classes: {
+							    base: {
+							      "white-space": "nowrap",
+							      "background-color": "#1BA39C",
+							      "color":"white",
+							      "padding": "5px",
+							      "font-size" : "12px",
+							      "border-radius":"5px"
+							    },
+							    superblue: {
+							      "color": "white",
+							      "background-color": "blue"
+							    }
+							  }
+							});
+						 $.notify.defaults( {position:"bottom right"} );
 						 var i = 0;
 						 for(key in data) {
 							
 							if(data[key]['createMemberNo'] == memberNo && data[key]['ihStatus'] == "조치중"){
-								$("#reportArea").append("<li><a href='#' class='notification-item'><span class='dot bg-warning'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>" + data[key]['teamWorkerName'] +"님 께서 조치승인 하셨습니다.</span></a></li>");
+								$("#reportArea").append("<li><a href='issueList.iu' class='notification-item'><span class='dot bg-warning'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>" + data[key]['teamWorkerName'] +"님 께서 조치승인 하셨습니다.</span></a></li>");
+								$.notify("등록하신 이슈를 " + data[key]['teamWorkerName'] + "님 께서 조치승인 하셨습니다." ,{
+									  style: 'happyblue'
+									});
 								i++;
-							}else if(data[key]['ihStatus'] == '확인중'){
-								$("#reportArea").append("<li><a href='#' class='notification-item'><span class='dot bg-warning'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>"+"등록자 : " +data[key]['createMemberName'] + "//조치자 : " + data[key]['teamWorkerName'] +"</span></a></li>");
+							}else if(data[key]['ihStatus'] == '확인중' && data[key]['createMemberNo'] != memberNo){
+								$.notify("『" + data[key]['projectName']+"』" + "에서 이슈가 등록되었습니다." ,{
+									  style: 'happyblue'
+									});
+								$("#reportArea").append("<li><a href='issueList.iu' class='notification-item'><span class='dot bg-warning'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>"+"등록자 : " +data[key]['createMemberName'] + "//조치자 : " + data[key]['teamWorkerName'] +"</span></a></li>");
 								i++;
 							}
 						 }
@@ -210,10 +262,10 @@
 							 
 							 for(key in data) {
 								if(data[key]['createMemberNo'] == memberNo && data[key]['ihStatus'] == "조치중"){
-									$("#reportArea").append("<li><a href='#' class='notification-item'><span class='dot bg-warning'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>" + data[key]['teamWorkerName'] +"님 께서 조치승인 하셨습니다.</span></a></li>");
+									$("#reportArea").append("<li><a href='issueList.iu' class='notification-item'><span class='dot bg-warning'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>" + data[key]['teamWorkerName'] +"님 께서 조치승인 하셨습니다.</span></a></li>");
 									i++;
 								}else if(data[key]['ihStatus'] == '확인중'){
-									$("#reportArea").append("<li><a href='#' class='notification-item'><span class='dot bg-warning'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>"+"등록자 : " +data[key]['createMemberName'] + "//조치자 : " + data[key]['teamWorkerName'] +"</span></a></li>");
+									$("#reportArea").append("<li><a href='issueList.iu' class='notification-item'><span class='dot bg-warning'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>"+"등록자 : " +data[key]['createMemberName'] + "//조치자 : " + data[key]['teamWorkerName'] +"</span></a></li>");
 									i++;
 								}
 								
