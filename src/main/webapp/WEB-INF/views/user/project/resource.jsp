@@ -109,7 +109,7 @@
                                 <c:forEach var="tm" items="${tmList}">
                                    <tr id="addedMemberTr" class="addedMemberTr addedTr" style="width: 100%; margin-bottom: 15px;">
                                         <td id="addedMemberTd" class="addedMemberTd" style="width: 100%; padding-left: 10px;"><b>${tm.memberName}</b> / ${tm.deptName} / ${tm.rankName}
-                                           <input type='hidden' id='memberNo' class='memberNo clicked' name='memberNo' value='${tm.memberNo}'>
+                                           <input type='hidden' id='memberNo' class='memberNo' name='memberNo' value='${tm.memberNo}'>
                                         </td>
                                    </tr>
                                    
@@ -165,11 +165,10 @@
                   for(key in data) {
                      
                      $("#memberListTable").append("<tr class='memberListTr' style='width:100%;'><td class='memberListTd' style='width:100%;'><b>" 
-                           + data[key]['memberName'] + "</b>" 
-                           + "&nbsp;/&nbsp;" + data[key]['deptName'] + "&nbsp;/&nbsp;" + data[key]['rankName'] 
-                           
-                           + "<input type='hidden' id='memberNo' class='memberNo clicked' name='memberNo' value='" + data[key]['memberNo'] + "'>"
-                           + "</td></tr>");
+			                           + 			data[key]['memberName'] + "</b>" 
+			                           + 			"&nbsp;/&nbsp;" + data[key]['deptName'] + "&nbsp;/&nbsp;" + data[key]['rankName'] 
+			                           + 			"<input type='hidden' id='memberNo' class='memberNo clicked' name='memberNo' value='" + data[key]['memberNo'] + "'>"
+			                           + 			"</td></tr>");
                      
                      /* $("#memberList").append("<tr class='memberListTr' style='width:100%;'><td class='memberListTd' style='width:100%;'><b>" 
                            + data[key]['memberName'] + "</b>" 
@@ -187,8 +186,22 @@
                   
                   $("#memberList").append("<tr class='memberListTr' style='width:100%;'><td class='memberListTd'><b>" 
                         
-                           + "해당 부서에 조회된 사원이 없습니다." + "</b></td></tr>");
+                           + "해당 부서에 조회된 사원이 없습니다. ssssssssss" + "</b></td></tr>");
                }
+               
+              
+
+               /* $("#deptOption").on('change', function() {
+            	   
+	               if($("#deptOption").val() == '0') {
+	            	   
+	            	   $("#memberListTable").append("<tr class='memberListTr' style='width:100%;'><td class='memberListTd' style='width:100%;'>
+	                           			+			"ssssssssssssssssssssssssssssssssssssssssss"
+	            	   					+ 			"</td></tr>");
+	            	   
+	               }
+               }); */
+               
                
                   
             }
@@ -285,24 +298,13 @@
        
  		if(check) {
  			
- 			$("#formBeforeAdd").submit();
+ 			//$("#formBeforeAdd").submit();
  		}
       
-      
-      
-      //var addedMemberList = $("#addedMemberTd").text();
-      //console.log("addedMemberList : " + addedMemberList);
-      
+ 		
       //추가 시 사원 중복 확인
       //filter를 돌린다 !! 
       // input의 value 값 
-      
-      var aa = $("#memberListTable").filter('input[name^="memberNo"]');
-      
-      
-       
-      
-            
       
       //여러 개일 경우 왼쪽도 filter 
       //filter가 돌다가 중복 되면 멈추게
@@ -328,12 +330,41 @@
       
    
    
+   
+   //리소스 삭제
    $("#btnResourceDelete").on('click', function() {
 	      
-       var memberNo = $("#memberNo").val();   
+       //var memberNo = $("#memberNo").val();
+       
+       /* if(a == undefined) {
+    	   
+    	   alert("삭제할 인원을 선택해주세요.");
+       } */
+       
+       
+       $("#addedMemberTable tr").filter(function(){
+     	  
+           var a = $(this).find("#addedMemberTd.clicked").find(".memberNo").val();
+           console.log("선택 member : " + a);
+           
+       });
+       
       
    });
-    
+   
+   
+   /* 
+	   
+   var aa = $("#memberListTr.clicked");
+   
+   if(aa && ) {
+	   
+	   alert("sss");
+	   
+   }
+	     */
+	   
+   
    
    
    
