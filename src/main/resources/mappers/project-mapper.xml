@@ -593,4 +593,25 @@
           AND P.PROJECT_PK = #{projectPk}
         ORDER BY D.DEPT_NO
     </select>
+    
+    <select id="selectCheckWorkMemberList" parameterType="String" resultMap="memberResultSet">
+    	SELECT COUNT(*)
+		FROM WORK W
+		JOIN MEMBER M ON(M.MEMBER_NO = W.MEMBER_NO)
+		WHERE W.MEMBER_NO = #{memberNo}
+    </select>
+    
+    
+    
+    
+    
 </mapper>
+
+
+
+
+
+
+
+
+

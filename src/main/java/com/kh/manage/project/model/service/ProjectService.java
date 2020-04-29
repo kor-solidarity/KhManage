@@ -67,4 +67,6 @@ public interface ProjectService {
 	List<ProjectWork> selectProjectHighWorkList(HashMap<String, String> highWorkMap);
 	
 	int updateWork(ProjectWork work);
+
+	List<Member> selectCheckWorkMemberList(Member m);
 }

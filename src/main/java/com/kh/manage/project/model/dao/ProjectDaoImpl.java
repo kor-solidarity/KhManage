@@ -166,4 +166,12 @@ public class ProjectDaoImpl implements ProjectDao {
 	public int updateWork(SqlSessionTemplate sqlSession, ProjectWork work) {
 		return sqlSession.update("Project.updateWork", work);
 	}
+
+	@Override
+	public List<Member> selectCheckWorkMemberList(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.selectList("Project.selectCheckWorkMemberList", m);
+	}
 }
+
+
+

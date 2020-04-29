@@ -179,5 +179,11 @@ public class ProjectServiceImpl implements ProjectService {
 	public int updateWork(ProjectWork work) {
 		return pd.updateWork(sqlSession, work);
 	}
+
+	@Override
+	public List<Member> selectCheckWorkMemberList(Member m) {
+		
+		return pd.selectCheckWorkMemberList(sqlSession, m);
+	}
 	
 }
