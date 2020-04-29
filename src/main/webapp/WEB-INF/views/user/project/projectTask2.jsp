@@ -806,6 +806,7 @@
                             pid: "${pid}"
                         },
                         success: function (data) {
+                            workList = data;
                             for (key in data) {
                                 console.log(key);
                                 console.log(data[key])
@@ -818,9 +819,16 @@
                             for (key in data) {
                                 target_id = "#" + data[key]['workNo'];
                                 // 선행작업 값
-                                precedeNo = data[key]['precedeNo'];
-                                if (precedeNo == undefined) {
-                                    precedeNo = "";
+                                highWorkNo = data[key]['highWorkNo'];
+                                if (highWorkNo == undefined) {
+                                    highWorkNo = "";
+                                }
+                                // 단계에 따른 상하위작업 들여쓰기
+                                workLevelTab = '&nbsp;'
+                                if (data[key].workLevel == 2) {
+                                    workLevelTab = '&nbsp;&nbsp;&nbsp;&nbsp;';
+                                } else if (data[key].workLevel == 3) {
+                                    workLevelTab = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
                                 }
                                 // 상태값 관련
 
@@ -829,7 +837,7 @@
                                     '<tr id="' + data[key]['workNo'] + '">' +
                                     // 작업아이디
                                     '<td>' + data[key]['workNo'] + '</td>' +
-                                    '<td>' + data[key]['workName'] + '</td>' +
+                                    '<td style="text-align: left">' + workLevelTab + data[key]['workName'] + '</td>' +
                                     // 상태
                                     // '<td><span style="" class="fa fa-circle" data-toggle="tooltip" title="대기중"></span></td>' +
                                     '<td>' + data[key]['status'] + '</td>' +
@@ -838,7 +846,7 @@
                                     '<td>' + data[key]['beginDate'] + '</td>' +
                                     '<td>' + data[key]['completeDate'] + '</td>' +
                                     // 선행작업
-                                    '<td>' + precedeNo + '</td>' +
+                                    '<td>' + highWorkNo + '</td>' +
                                     '<td>' + data[key]['completeRate'] + '%' + '</td>' +
                                     // 작업에 배정된 인원
                                     '<td>' + data[key]['memberName'] + '</td>' +
@@ -928,7 +936,7 @@
                                         prop('selected', true);
                                     $("#oriVal").val(projectWork.higherWorkNo)
                                 }
-                                if (projectWork.higherWorkNo != undefined){
+                                if (projectWork.higherWorkNo != undefined) {
                                     $("#oriVal").val('0')
                                 }
                             }
@@ -1130,7 +1138,8 @@
 													type="button">
 												<span class="glyphicon glyphicon-trash"> </span>
 											</button>
-											<input type="text" name="oriVal" id="oriVal" value="0" style="display: none;">
+											<input type="text" name="oriVal" id="oriVal" value="0"
+												   style="display: none;">
 										</td>
 									</tr>
 									</tbody>
