@@ -109,7 +109,7 @@
                                 <c:forEach var="tm" items="${tmList}">
                                    <tr id="addedMemberTr" class="addedMemberTr addedTr" style="width: 100%; margin-bottom: 15px;">
                                         <td id="addedMemberTd" class="addedMemberTd" style="width: 100%; padding-left: 10px;"><b>${tm.memberName}</b> / ${tm.deptName} / ${tm.rankName}
-                                           <input type='hidden' id='memberNo' class='memberNo' name='memberNo' value='${tm.memberNo}'>
+                                           <input type="hidden" id="memberNo" class="memberNo" name="memberNo" value="${tm.memberNo}">
                                         </td>
                                    </tr>
                                    
@@ -331,6 +331,7 @@
    
    
    
+   var deleteList;
    //리소스 삭제
    $("#btnResourceDelete").on('click', function() {
 	      
@@ -341,16 +342,57 @@
     	   alert("삭제할 인원을 선택해주세요.");
        } */
        
-       
+       var i = 0;
        $("#addedMemberTable tr").filter(function(){
-     	  
-           var a = $(this).find("#addedMemberTd.clicked").find(".memberNo").val();
-           console.log("선택 member : " + a);
-           
+           var clicked = $(this).find("#addedMemberTd.clicked").find(".memberNo").val();
+           //var clicked = $(this).find("#addedMemberTd.clicked").find(".memberNo").length();
+           if(clicked != undefined){
+	           console.log("선택 member clicked : " + clicked);
+	           if(i == 0){
+	        	   deleteList = clicked;
+	        	   i++;
+	           }else{
+	        	   deleteList += "," + clicked;
+	           }
+           }
        });
        
-      
+       var str1 = deleteList.split(",");
+       var result = true;
+       for(var i = 0; i < str1.length; i++){
+			$.ajax({
+				url:'checkWorkMember.pr',
+				type:'post',
+				data:{memberNo:str1[i]},
+				success:function(data){
+					if(data == false){
+						i = str1.length;
+						$.ajax({
+							url:'memberCheck.me',
+							type:'post',
+							data:{memberNo : str1[i]},
+							success:function(data){
+								result = false;
+								alert(data['memberName'] + "님에게 작업이 배정되어 있습니다.");
+							}
+						})
+					}
+				}
+			});
+       }
+       
+       if(result == true){
+    	   //삭제
+       }
+       
    });
+   
+   
+  
+   
+   
+   
+   
    
    
    /* 

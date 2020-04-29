@@ -69,4 +69,6 @@ public interface ProjectDao {
 	List<ProjectWork> selectProjectHighWorkList(SqlSessionTemplate sqlSession, HashMap<String, String> highWorkMap);
 	
 	int updateWork(SqlSessionTemplate sqlSession, ProjectWork work);
+
+	List<Member> selectCheckWorkMemberList(SqlSessionTemplate sqlSession, Member m);
 }
