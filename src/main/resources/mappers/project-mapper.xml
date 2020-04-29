@@ -591,6 +591,6 @@
         WHERE M.STATUS = 'Y'
           AND P.ROLE = 'TM'
           AND P.PROJECT_PK = #{projectPk}
-        ORDER BY D.DEPT_NAME
+        ORDER BY D.DEPT_NO
     </select>
 </mapper>
