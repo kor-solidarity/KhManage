@@ -2,7 +2,7 @@ package com.kh.manage.work.model.vo;
 
 import java.sql.Date;
 
-public class WorkAttachment implements java.io.Serializable{
+public class WorkAttachment {
 	private String productNo;
 	private String workNo;
 	private String productType;
