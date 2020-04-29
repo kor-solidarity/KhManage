@@ -1,7 +1,7 @@
 package com.kh.manage.work.model.vo;
 
 import java.sql.Date;
-import java.util.List;
+import java.util.ArrayList;
 
 
 
@@ -22,14 +22,14 @@ public class Work implements java.io.Serializable{
 	private String workType;
 	private String memberNo;
 	private String workStatus;
-	private List<WorkAttachment> workAttachment;
+	private ArrayList<WorkAttachment> workAttachment;
 	
 	public Work() {}
 
 	public Work(String workNo, String workName, String status, String projectNo, String projectName, Date beginDate,
 			Date completeDate, String precedeNo, String completeRate, String grantorNo, String workLevel,
 			String highWorkNo, String memo, String workType, String memberNo, String workStatus,
-			List<WorkAttachment> workAttachment) {
+			ArrayList<WorkAttachment> workAttachment) {
 		super();
 		this.workNo = workNo;
 		this.workName = workName;
@@ -178,11 +178,11 @@ public class Work implements java.io.Serializable{
 		this.workStatus = workStatus;
 	}
 
-	public List<WorkAttachment> getWorkAttachment() {
+	public ArrayList<WorkAttachment> getWorkAttachment() {
 		return workAttachment;
 	}
 
-	public void setWorkAttachment(List<WorkAttachment> workAttachment) {
+	public void setWorkAttachment(ArrayList<WorkAttachment> workAttachment) {
 		this.workAttachment = workAttachment;
 	}
 

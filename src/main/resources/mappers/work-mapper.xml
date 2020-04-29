@@ -72,7 +72,7 @@
 	</resultMap>
 	
 	<resultMap type="Work" id="workAttachResultSet">
-		<id property="workNo" column="WORK_NO"/>
+		<id property="workNo" column="asdf"/>
 		<result property="workName" column="WORK_NAME"/>
 		<result property="status" column="STATUS"/>
 		<result property="projectNo" column="PROJECT_NO"/>
@@ -88,7 +88,7 @@
 		<result property="workType" column="WORK_TYPE"/>
 		<result property="memberNo" column="MEMBER_NO"/>
 		<result property="workStatus" column="WORK_STATUS"/>
-		<collection property="workAttachment" javaType="java.util.List" resultMap="selectWorkAttachment"></collection>
+		<collection property="workAttachment" javaType="java.util.ArrayList" resultMap="selectWorkAttachment"></collection>
 	</resultMap>
 
 	<insert id="insertWork" parameterType="Work">
@@ -108,7 +108,7 @@
 	
 	<select id="selectWork" parameterType="java.lang.String" resultMap="workAttachResultSet">
 	SELECT 
-        W.WORK_NO
+        W.WORK_NO "asdf"
       , W.WORK_NAME
       , W.STATUS
       , W.PROJECT_NO
@@ -132,7 +132,6 @@
       , WP.ENROLL_DATE
       , WP.MODIFY_DATE
       , WP.AT_NO
-      , WP.DIVISION
       , WP.ORIGIN_NAME
       , WP.CHANGE_NAME
       , WP.FILEPATH
@@ -148,7 +147,6 @@
       , WP.ENROLL_DATE
       , WP.MODIFY_DATE
       , AT.AT_NO
-      , AT.DIVISION
       , AT.ORIGIN_NAME
       , AT.CHANGE_NAME
       , AT.FILEPATH
