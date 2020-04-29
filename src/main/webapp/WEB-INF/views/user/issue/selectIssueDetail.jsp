@@ -463,12 +463,10 @@
 	
 	$(function(){
 		$("#issueAgreeBtn").click(function(){
-			ws.send("이슈");
 			$("#issueRegForm").attr('action', "issueAgree.iu")
 		});
 		
 		$("#issueComBtn").click(function(){
-			ws.send("이슈");
 			$("#issueRegForm").attr('action', "issueComplete.iu")
 		});
 	});
