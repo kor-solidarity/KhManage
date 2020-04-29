@@ -144,6 +144,23 @@
 					window.open('showChatPage.ct', 'pop01', 'top=160, left=800, width=500, height=600, status=no, menubar=no, toolbar=no, resizable=no');
 				});
 			});
+			$(document).on('click', '#checkBtn', function(){
+				 var memberNo = "${loginUser.memberNo}";
+				 
+				 $.ajax({
+						url:'checkAllReport.re',
+						type: 'post',
+						async: false,
+						data:{memberNo:memberNo},
+					 success: function(data){
+						 if(data == 1){
+							 $("#reportArea").empty();
+							 $("#reportArea").append("<li><a href='#' ><span class='dot bg-warning'><button type='button' id='checkBtn' style='border:1px solid lightgray; margin-left:20px;  width:150px; background:lightgray; color:white; border-radius: 5px;'>전체 확인</button></span></a></li>");
+							 $("#reportCount").hide();
+						 }
+					 }
+				});			
+			});
 			
 
 			/* $(function(){
@@ -183,23 +200,6 @@
 			});
 			});
 			
-			$("#checkBtn").on("click", function(){
-				 var memberNo = "${loginUser.memberNo}";
-				 
-				 $.ajax({
-						url:'checkAllReport.re',
-						type: 'post',
-						async: false,
-						data:{memberNo:memberNo},
-					 success: function(data){
-						 if(data == 1){
-							 $("#reportArea").empty();
-							 $("#reportArea").append("<li><a href='#' ><span class='dot bg-warning'><button type='button' id='checkBtn' style='border:1px solid lightgray; margin-left:20px;  width:150px; background:lightgray; color:white; border-radius: 5px;'>전체 확인</button></span></a></li>");
-							 $("#reportCount").hide();
-						 }
-					 }
-				});			
-			});
 			
 			$(function(){
 				 var memberNo = "${loginUser.memberNo}";
@@ -256,8 +256,6 @@
 							 $("#reportArea").empty();
 							 $("#reportArea").append("<li><a href='#' ><span class='dot bg-warning'><button type='button' id='checkBtn' style='border:1px solid lightgray; margin-left:20px;  width:150px; background:lightgray; color:white; border-radius: 5px;'>전체 확인</button></span></a></li>");
 							 
-							 console.log(data);
-							 
 							 for(key in data) {
 								if(data[key]['createMemberNo'] == memberNo && data[key]['ihStatus'] == "조치중"){
 									$("#reportArea").append("<li><a href='issueList.iu' class='notification-item'><span class='dot bg-warning'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>" + data[key]['teamWorkerName'] +"님 께서 조치승인 하셨습니다.</span></a></li>");
@@ -265,7 +263,7 @@
 										  style: 'happyblue'
 										});
 									i++;
-								}else if(data[key]['ihStatus'] == '확인중'){
+								}else if(data[key]['ihStatus'] == '확인중' && data[key]['createMemberNo'] != memberNo){
 									$("#reportArea").append("<li><a href='issueList.iu' class='notification-item'><span class='dot bg-warning'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>"+"등록자 : " +data[key]['createMemberName'] + "//조치자 : " + data[key]['teamWorkerName'] +"</span></a></li>");
 									$.notify("『" + data[key]['projectName']+"』" + "에서 이슈가 등록되었습니다." ,{
 										  style: 'happyblue'

@@ -126,7 +126,7 @@
 	
 	<insert id="insertReportProjectTeam" parameterType="IssueProjectTeam">
 		INSERT INTO REPORT
-		VALUES ('RP' || TO_CHAR(SEQ_RP_NO.NEXTVAL, 'FM000'), 'IH' || TO_CHAR(SEQ_IH_NO.CURRVAL, 'FM000'), #{memberPk}, DEFAULT)
+		VALUES ('RP' || TO_CHAR(SEQ_RP_NO.NEXTVAL, 'FM0000'), 'IH' || TO_CHAR(SEQ_IH_NO.CURRVAL, 'FM000'), #{memberPk}, DEFAULT)
 	</insert>
 	
 	<insert id="insertIssueHistory" parameterType="Issue">
