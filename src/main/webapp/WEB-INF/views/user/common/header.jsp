@@ -3,8 +3,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!doctype html>
 <html lang="en">
-
-<head>
 <head>
 <title>test</title>
 	<meta charset="utf-8">
@@ -121,6 +119,26 @@
 		</nav>
 		
 		<script>
+		$.notify.addStyle('happyblue', {
+			  html: "<div><i class='far fa-bell'></i>&nbsp;&nbsp;&nbsp;<span data-notify-text/></div>",
+			  classes: {
+			    base: {
+			      "white-space": "nowrap",
+			      "background-color": "#1BA39C",
+			      "color":"white",
+			      "padding": "5px",
+			      "font-size" : "12px",
+			      "border-radius":"5px"
+			    },
+			    superblue: {
+			      "color": "white",
+			      "background-color": "blue"
+			    }
+			  }
+			});
+		 $.notify.defaults( {position:"bottom right"} );
+		
+		
 			$(function(){
 				$("#chat").click(function(){
 					window.open('showChatPage.ct', 'pop01', 'top=160, left=800, width=500, height=600, status=no, menubar=no, toolbar=no, resizable=no');
@@ -193,38 +211,19 @@
 						data:{memberNo:memberNo},
 					 success: function(data){
 						 
-						 
-						 $.notify.addStyle('happyblue', {
-							  html: "<div><i class='far fa-bell'></i>&nbsp;&nbsp;&nbsp;<span data-notify-text/></div>",
-							  classes: {
-							    base: {
-							      "white-space": "nowrap",
-							      "background-color": "#1BA39C",
-							      "color":"white",
-							      "padding": "5px",
-							      "font-size" : "12px",
-							      "border-radius":"5px"
-							    },
-							    superblue: {
-							      "color": "white",
-							      "background-color": "blue"
-							    }
-							  }
-							});
-						 $.notify.defaults( {position:"bottom right"} );
 						 var i = 0;
 						 for(key in data) {
 							
 							if(data[key]['createMemberNo'] == memberNo && data[key]['ihStatus'] == "조치중"){
 								$("#reportArea").append("<li><a href='issueList.iu' class='notification-item'><span class='dot bg-warning'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>" + data[key]['teamWorkerName'] +"님 께서 조치승인 하셨습니다.</span></a></li>");
-								$.notify("등록하신 이슈를 " + data[key]['teamWorkerName'] + "님 께서 조치승인 하셨습니다." ,{
+								/* $.notify("등록하신 이슈를 " + data[key]['teamWorkerName'] + "님 께서 조치승인 하셨습니다." ,{
 									  style: 'happyblue'
-									});
+									}); */
 								i++;
 							}else if(data[key]['ihStatus'] == '확인중' && data[key]['createMemberNo'] != memberNo){
-								$.notify("『" + data[key]['projectName']+"』" + "에서 이슈가 등록되었습니다." ,{
+								/* $.notify("『" + data[key]['projectName']+"』" + "에서 이슈가 등록되었습니다." ,{
 									  style: 'happyblue'
-									});
+									}); */
 								$("#reportArea").append("<li><a href='issueList.iu' class='notification-item'><span class='dot bg-warning'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>"+"등록자 : " +data[key]['createMemberName'] + "//조치자 : " + data[key]['teamWorkerName'] +"</span></a></li>");
 								i++;
 							}
@@ -247,7 +246,6 @@
 				  console.log(text);
 				  if(text == '이슈'){
 					  var memberNo = "${loginUser.memberNo}";
-					  console.log(memberNo);
 					  
 					  $.ajax({
 							url:'selectIssueList.re',
@@ -263,18 +261,27 @@
 							 for(key in data) {
 								if(data[key]['createMemberNo'] == memberNo && data[key]['ihStatus'] == "조치중"){
 									$("#reportArea").append("<li><a href='issueList.iu' class='notification-item'><span class='dot bg-warning'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>" + data[key]['teamWorkerName'] +"님 께서 조치승인 하셨습니다.</span></a></li>");
+									$.notify("등록하신 이슈를 " + data[key]['teamWorkerName'] + "님 께서 조치승인 하셨습니다." ,{
+										  style: 'happyblue'
+										});
 									i++;
 								}else if(data[key]['ihStatus'] == '확인중'){
 									$("#reportArea").append("<li><a href='issueList.iu' class='notification-item'><span class='dot bg-warning'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>"+"등록자 : " +data[key]['createMemberName'] + "//조치자 : " + data[key]['teamWorkerName'] +"</span></a></li>");
+									$.notify("『" + data[key]['projectName']+"』" + "에서 이슈가 등록되었습니다." ,{
+										  style: 'happyblue'
+										});
 									i++;
 								}
 								
 							 }
-							 if(i != 0){
-								 $("#checkBtn").css("background", "#1E2B44");
+							 if(i == 0){
+								 $("#checkBtn").css("background", "lightgray");
 								 $("#reportCount").text(i);
-							 }else{
 								 $("#reportCount").hide();
+							 }else{
+								 $("#checkBtn").css("background", "#1E2B44");
+								 $("#reportCount").show();
+								 $("#reportCount").text(i);
 							 }
 						 }
 					});
