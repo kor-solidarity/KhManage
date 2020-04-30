@@ -297,7 +297,7 @@
  		if(check) {
 			
  			//리소스 멤버 추가 버튼 실행
- 			//$("#formBeforeAdd").submit();
+ 			$("#formBeforeAdd").submit();
  		}
       
    });
@@ -308,6 +308,8 @@
    var deleteList;
    //리소스 삭제
    $("#btnResourceDelete").on('click', function() {
+	   
+	   var question = confirm("삭제하시겠습니까?");
 	      
        //var memberNo = $("#memberNo").val();
        
@@ -330,7 +332,9 @@
        var result = true;
        var projectPk = "${pid}";
        var memberNo;
+       
        for(var i = 0; i < str1.length; i++){
+    	   
 			$.ajax({
 				url:'checkWorkMember.pr',
 				type:'post',
@@ -350,15 +354,26 @@
 						result = false;
 						
 						
-						/* $.ajax({
+					} else {
+
+						$.ajax({
 							url:'memberCheck.pr',
 							type:'post',
-							data:{memberNo : str1[i]},
+							data:{
+								
+								memberNo : str1[i]
+			    	   
+			    	   		},
 							success:function(data){
+								
+								//i = str1.length;
 								result = false;
-								alert(data['memberName'] + "님에게 작업이 배정되어 있습니다.");
+								alert("삭제할 수 업습니다." + "<br>" + data['memberName'] + "님에게 작업이 배정되어 있습니다.");
+								
+								
+								//location.reload();
 							}
-						}); */
+						});
 					}
 				}
 			});
@@ -367,27 +382,60 @@
        
        //result == 0 일때 삭제
        if(result == true){
-       alert("result : " + result);
 
        	   //삭제 서블릿
-    	    $.ajax({
-    		  url: 'deleteProjectMember.pr',
-    		  type: 'post',
-    		  data: {
-    			  memberNo:deleteList,
-    			  projectPk : projectPk
-    		  },
-    		  success: function(data){
-    			  
-    			  alert("삭제되었습니다.");
-    			  location.reload();
-    			  
-    		  }
+       	   
+       	   if(question) {
+       		   
+	       	   for(var i = 0; i < str1.length; i++) {
+	
+	       		   $.ajax({
+		    		  url: 'deleteProjectMember.pr',
+		    		  type: 'post',
+		    		  data: {
+		    			  memberNo : str1[i],
+		    			  projectPk : projectPk
+		    		  },
+		    		  success: function(data){
+		    			  
+		    			  i = str1.length;
+		    			  
+		    			  location.reload();
+		    			  
+		    		  }
+		    		   
+		    	   }); 
+	       		   
+	       	   }
+       		   
+       	   }
+       	   
+       	   
+       } /* else {
     	   
+    	   for(var i = 0; i < str1.length; i++) {
     		   
-    	   }); 
-    	   //location.href='deleteProjectMember.pr?memberNo='+memberNo +"&projectPk="+projectPk;
-       }
+	    	   $.ajax({
+					url:'memberCheck.pr',
+					type:'post',
+					data:{
+						
+						memberNo : str1[i]
+	    	   
+	    	   		},
+					success:function(data){
+						
+						//i = str1.length;
+						result = false;
+						
+						alert("삭제할 수 업습니다." + "<br>" + data['memberName'] + "님에게 작업이 배정되어 있습니다.");
+						
+						//location.reload();
+					}
+				});
+    	   }
+    	   
+       } */
        
    });
    
