@@ -181,9 +181,17 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public List<Member> selectCheckWorkMemberList(Member m) {
-		
+	public int selectCheckWorkMemberList(Member m) {
 		return pd.selectCheckWorkMemberList(sqlSession, m);
 	}
 	
+	@Override
+	public int deleteProjectMember(Member m) {
+		return pd.deleteProjectMember(sqlSession, m);
+	}
+
+//	@Override
+//	public String selectCheckWorkMemberName(Member m) {
+//		return pd.selectCheckWorkMemberName(sqlSession, m);
+//	}
 }

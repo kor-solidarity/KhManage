@@ -207,6 +207,7 @@
     <!---->
     <select id="selectProjectWorkList" resultMap="projectWorkListResultSet" parameterType="String">
         SELECT LPAD(' ', 2 * (LEVEL - 1)) || w.WORK_NAME AS WORK_NAME
+             , w.WORK_NO                                 as WORK_NO
              , W.STATUS                                  AS STATUS
              , W.PROJECT_NO                              AS PROJECT_NO
              , W.BEGIN_DATE                              AS BEGIN_DATE
@@ -261,14 +262,15 @@
     </select>
 
     <select id="selectProjectWork" parameterType="String" resultMap="projectWorkListResultSet">
-        select WORK_NAME,
-               BEGIN_DATE,
-               COMPLETE_DATE,
-               COMPLETE_RATE,
-               GRANTOR_NO,
-               MEMO,
-               HIGH_WORK_NO
-        from WORK
+        select W.WORK_NAME,
+               W.MEMBER_NO,
+               W.BEGIN_DATE,
+               W.COMPLETE_DATE,
+               W.COMPLETE_RATE,
+               W.GRANTOR_NO,
+               W.MEMO,
+               W.HIGH_WORK_NO
+        from WORK W
         where WORK_NO = #{workNo}
     </select>
 
@@ -285,13 +287,8 @@
 
     <update id="updateWork" parameterType="ProjectWork">
         update WORK
-        set WORK_NAME     = #{workName}
-          , BEGIN_DATE    = #{beginDate}
-          , COMPLETE_DATE = #{ completeDate}
-          , COMPLETE_RATE = #{ completeRate}
-          , GRANTOR_NO    = #{ grantorNo}
-          , HIGH_WORK_NO  = #{highWorkNo}
-          , MEMO          = #{ memo}
+        set GRANTOR_NO = #{ grantorNo}
+          , MEMBER_NO  = #{memberNo}
         where WORK_NO = #{workNo}
     </update>
 
@@ -597,14 +594,21 @@
         ORDER BY D.DEPT_NO
     </select>
 
-    <select id="selectCheckWorkMemberList" parameterType="String" resultMap="memberResultSet">
+    <select id="selectCheckWorkMemberList" resultType="_int">
         SELECT COUNT(*)
         FROM WORK W
                  JOIN MEMBER M ON (M.MEMBER_NO = W.MEMBER_NO)
+                 JOIN PROJECT P ON (P.PROJECT_PK = W.PROJECT_NO)
         WHERE W.MEMBER_NO = #{memberNo}
+          AND W.PROJECT_NO = #{projectPk}
     </select>
 
-
+    <delete id="deleteProjectMember" parameterType="Member">
+        DELETE
+        FROM PROJECT_TEAM
+        WHERE MEMBER_PK = #{memberNo}
+          AND PROJECT_PK = #{projectPk}
+    </delete>
 </mapper>
 
 

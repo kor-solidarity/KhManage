@@ -877,6 +877,12 @@
                                     teamList[i].memberName + " " + teamList[i].rankName + "</option>"
                                 );
                             }
+                            // 다 넣고 이미 선택된 담당자가 있는지 확인한다.
+							console.log('다 넣고 이미 선택된 담당자가 있는지 확인: '+ projectWork.memberNo);
+                            if (projectWork.memberNo != undefined){
+                                $("#memberNo option[value=" + projectWork.memberNo + "]").
+                                    prop('selected', true);
+                            }
 
                             // 우선 내용을 싹 다 비우고 시작
                             $("#grantor").empty();
@@ -889,6 +895,17 @@
                                     grantorList[i].memberName + " " + grantorList[i].rankName + "</option>"
                                 );
                             }
+                            // todo 200430 해야하는 작업:
+							//  수정은 완료
+							//  이제 인서트문을 여기에 다 맞게 넣기.
+
+                            // 다 넣고 이미 선택된 grantor 가 있는지 확인한다.
+                            console.log('다 넣고 이미 선택된 grantor 있는지 확인: '+ projectWork.grantorNo);
+                            if (projectWork.grantorNo != undefined){
+                                $("#grantor option[value=" + projectWork.grantorNo + "]").
+                                    prop('selected', true);
+                            }
+
                             // memo
                             $("#memo").append(
                                 projectWork.memo
@@ -1032,13 +1049,13 @@
 								<div class="row">
 									<div class="col-lg-2 text-center">담당자</div>
 									<div class="col-lg-4">
-										<div class=" col-lg-10" style="padding-left: 0; padding-right: 0">
-											<%--<input class="form-control" type="number" max="100" min="0"
-											 name="completeRate" id="completeRate">--%>
-											<select class="form-control" name="memberNo" id="memberNo">
-												<option value="idHere">yolo</option>
-											</select>
-										</div>
+										<%--<div class=" col-lg-10" style="padding-left: 0; padding-right: 0">
+											<input class="form-control" type="number" max="100" min="0"
+											 name="completeRate" id="completeRate">
+										</div>--%>
+										<select class="form-control" name="memberNo" id="memberNo">
+											<option value="idHere">yolo</option>
+										</select>
 									</div>
 									<div class="col-lg-2 text-center">승인자</div>
 									<div class="col-lg-4">
@@ -1279,7 +1296,7 @@
                     workName: $("#workName").val(),
                     startDate: $("#startDate").val(),
                     completeDate: $("#completeDate").val(),
-                    completeRate: $("#completeRate").val(),
+                    memberNo: $("#memberNo").val(),
                     grantor: $("#grantor").val(),
                     memo: $("#memo").val(),
                     highWorkSel: $("#highWorkSel").val(),

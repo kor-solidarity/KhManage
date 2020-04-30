@@ -166,11 +166,21 @@ public class ProjectDaoImpl implements ProjectDao {
 	public int updateWork(SqlSessionTemplate sqlSession, ProjectWork work) {
 		return sqlSession.update("Project.updateWork", work);
 	}
-
+	
 	@Override
-	public List<Member> selectCheckWorkMemberList(SqlSessionTemplate sqlSession, Member m) {
-		return sqlSession.selectList("Project.selectCheckWorkMemberList", m);
+	public int selectCheckWorkMemberList(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.selectOne("Project.selectCheckWorkMemberList", m);
 	}
+	
+	@Override
+	public int deleteProjectMember(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.delete("Project.deleteProjectMember", m);
+	}
+
+//	@Override
+//	public String selectCheckWorkMemberName(SqlSessionTemplate sqlSession, Member m) {
+//		return sqlSession.selectOne("Project.selectCheckWorkMemberName", m);
+//	}
 }
 
 
