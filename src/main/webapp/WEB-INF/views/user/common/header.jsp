@@ -86,7 +86,6 @@
 								<span id="reportCount" class="badge bg-danger" style="background:red; padding-left:0px; padding-right:0px; left:32px; top:20px; font-size:12px; width:auto; height:18px;"></span>
 						</a>
 							<ul id="reportArea" class="dropdown-menu notifications" style="height:300px; width:250px; overflow: auto;">
-								<li><a href='#' ><span class='dot bg-warning'><button type="button" id="checkBtn" style="border:1px solid lightgray; margin-left:20px; width:150px; background:lightgray; color:white; border-radius: 5px;">전체 확인</button></span></a></li>
 							</ul>
 
 							
@@ -155,32 +154,12 @@
 					 success: function(data){
 						 if(data == 1){
 							 $("#reportArea").empty();
-							 $("#reportArea").append("<li><a href='#' ><span class='dot bg-warning'><button type='button' id='checkBtn' style='border:1px solid lightgray; margin-left:20px;  width:150px; background:lightgray; color:white; border-radius: 5px;'>전체 확인</button></span></a></li>");
+							 $("#reportArea").append("<li><a href='#' ><span class='dot bg-warning'><button type='button' id='checkBtn' style='border:1px solid lightgray; margin-left:30px; width:150px; color:white;border-radius: 5px;'>전체 확인</button></span></a></li>");
 							 $("#reportCount").hide();
 						 }
 					 }
 				});			
 			});
-			
-
-			/* $(function(){
-				        $.notifyDefaults({
-				            placement: {
-				                from: "bottom",
-				                align: "left"
-				            },
-				            animate:{
-				                enter: "animated bounceIn",
-				                exit: "animated fadeOutDown"
-				            },
-				            template:'<div data-notify="container" class="col-xs-11   col-sm-3 p-3 text-center alert alert-{0}" role="alert">' +
-
-				            '<img data-notify="icon" class="img-circle pull-left">' +
-				            '<span data-notify="title">{1}</span>' +
-				            '<span data-notify="message">{2}</span>' +
-				            '</div>'
-				        });
-				    }); */
 
 			
 			$(function(){
@@ -200,25 +179,26 @@
 			});
 			});
 			
-			
+			var reportNo;
+			var check =false;			
 			$(function(){
 				 var memberNo = "${loginUser.memberNo}";
-				 
+				 $("#reportArea").append("<li><a href='#' ><span class='dot bg-warning'><button type='button' id='checkBtn' style='border:1px solid lightgray; margin-left:30px; width:150px; background:#1E2B44; color:white; border-radius: 5px;'>전체 지우기</button></span></a></li>");
 				 $.ajax({
 						url:'selectIssueList.re',
 						type: 'post',
 						async: false,
 						data:{memberNo:memberNo},
 					 success: function(data){
-						 
 						 var i = 0;
 						 for(key in data) {
+							   reportNo = data[key]['reportNo'];
 								if(data[key]['createMemberNo'] == memberNo && data[key]['ihStatus'] == "조치중"){
 									if(data[key]['status'] == 'Y'){
-										$("#reportArea").append("<li><a href='updateStatus.re?reportNo="+ data[key]['reportNo'] +"' class='notification-item'><span class='dot bg-warning' style='font-weight:600;'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>" + data[key]['teamWorkerName'] +"님 께서 조치승인 하셨습니다.</span></a></li>");
+										$("#reportArea").append("<li><a href='updateStatus.re?reportNo="+ data[key]['reportNo'] +"' class='notification-item'><span class='dot bg-warning' style='font-weight:900;'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>" + data[key]['teamWorkerName'] +"님 께서 조치승인 하셨습니다.</span></a></li>");
 										i++;
 									}else{
-										$("#reportArea").append("<li><a href='updateStatus.re?reportNo="+ data[key]['reportNo'] +"'class='notification-item'><span class='dot bg-warning' style='font-weight:300;'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>" + data[key]['teamWorkerName'] +"님 께서 조치승인 하셨습니다.</span></a></li>");
+										$("#reportArea").append("<li><a href='updateStatus.re?reportNo="+ data[key]['reportNo'] +"'class='notification-item'><span class='dot bg-warning' style='font-weight:300; color:lightgray;'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>" + data[key]['teamWorkerName'] +"님 께서 조치승인 하셨습니다.</span></a></li>");
 									}
 			
 									if(data[key]['pStatus'] == 'Y'){
@@ -236,11 +216,11 @@
 										});
 									}
 								}else if(data[key]['ihStatus'] == '확인중' && data[key]['createMemberNo'] != memberNo){
-									if(data[key]['status'] == 'Y'){
-										$("#reportArea").append("<li><a href='updateStatus.re?reportNo="+ data[key]['reportNo'] +"' class='notification-item'><span class='dot bg-warning' style='font-weight:600;'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>"+"등록자 : " +data[key]['createMemberName'] + "//조치자 : " + data[key]['teamWorkerName'] +"</span></a></li>");
+ 									if(data[key]['status'] == 'Y'){
+										$("#reportArea").append("<li><a href='updateStatus.re?reportNo="+ data[key]['reportNo'] +"' class='notification-item'><span class='dot bg-warning' style='font-weight:900;'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>"+"등록자 : " +data[key]['createMemberName'] + "//조치자 : " + data[key]['teamWorkerName'] +"</span></a></li>");
 										i++;
 									}else{
-										$("#reportArea").append("<li><a href='updateStatus.re?reportNo="+ data[key]['reportNo'] +"' class='notification-item'><span class='dot bg-warning' style='font-weight:300;'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>"+"등록자 : " +data[key]['createMemberName'] + "//조치자 : " + data[key]['teamWorkerName'] +"</span></a></li>");
+										$("#reportArea").append("<li><a href='updateStatus.re?reportNo="+ data[key]['reportNo'] +"' class='notification-item'><span class='dot bg-warning' style='font-weight:300; color:lightgray;'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>"+"등록자 : " +data[key]['createMemberName'] + "//조치자 : " + data[key]['teamWorkerName'] +"</span></a></li>");
 									}
 									
 									if(data[key]['pStatus'] == 'Y'){
@@ -258,26 +238,31 @@
 										});
 									}
 								}else if(data[key]['ihStatus'] == '조치완료'){
+									var status = data[key]['status'];
 									if(data[key]['status']=='Y'){
-										i++;
-									}
 									$.ajax({
 										url:'checkProjectPl.re',
 										type: 'post',
+										async: false,
 										data:{projectNo:data[key]['projectNo']},
 										success:function(data1){
-											console.log(data1);
 											 for(key1 in data1) {
+												console.log(data1[key1]['memberNo'])
+												console.log(memberNo);
 												if(data1[key1]['memberNo'] == memberNo){
-													if(data[key]['status']=='Y'){
-														$("#reportArea").append("<li><a href='updateStatus.re?reportNo="+ data[key]['reportNo'] +"' class='notification-item'><span class='dot bg-warning' style='font-weight:600;'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>" + data[key]['teamWorkerName'] +"님 께서 조치완료 하셨습니다.</span></a></li>");
-													}else{
-														$("#reportArea").append("<li><a href='updateStatus.re?reportNo="+ data[key]['reportNo'] +"' class='notification-item'><span class='dot bg-warning' style='font-weight:300;'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>" + data[key]['teamWorkerName'] +"님 께서 조치완료 하셨습니다.</span></a></li>");
-													}
+													check = true;
 												}
 											 }
 										}
-									});
+										});
+									}
+									if(status =='Y' &&  check== true){
+										$("#reportArea").append("<li><a href='updateStatus.re?reportNo="+ reportNo +"' class='notification-item'><span class='dot bg-warning' style='font-weight:900;'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>" + data[key]['teamWorkerName'] +"님 께서 조치완료 하셨습니다.</span></a></li>");
+										i++;
+									}else{
+										$("#reportArea").append("<li><a href='updateStatus.re?reportNo="+ reportNo +"' class='notification-item'><span class='dot bg-warning' style='font-weight:300; color:lightgray;'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>" + data[key]['teamWorkerName'] +"님 께서 조치완료 하셨습니다.</span></a></li>");
+									}
+									
 									if(data[key]['pStatus'] == 'Y'){
 										$.notify("『" + data[key]['projectName']+"』" + "에서 이슈처리가 완료 되었습니다." ,{
 											  style: 'happyblue'
@@ -296,7 +281,7 @@
 							 }
 						 
 						 if(i == 0){
-							 $("#checkBtn").css("background", "lightgray");
+							 $("#checkBtn").css("background", "#1E2B44");
 							 $("#reportCount").text(i);
 							 $("#reportCount").hide();
 						 }else{
@@ -319,15 +304,17 @@
 							 console.log(data);
 							 var i = 0;
 							 $("#reportArea").empty();
-							 $("#reportArea").append("<li><a href='#' ><span class='dot bg-warning'><button type='button' id='checkBtn' style='border:1px solid lightgray; margin-left:20px;  width:150px; background:lightgray; color:white; border-radius: 5px;'>전체 확인</button></span></a></li>");
+							 $("#reportArea").append("<li><a href='#' ><span class='dot bg-warning'><button type='button' id='checkBtn' style='border:1px solid lightgray; margin-left:30px;  width:150px; background:#1E2B44; color:white; border-radius: 5px;'>전체 지우기</button></span></a></li>");
 							 
 							 for(key in data) {
+								 console.log(data);
+								 reportNo = data[key]['reportNo'];
 								if(data[key]['createMemberNo'] == memberNo && data[key]['ihStatus'] == "조치중"){
 									if(data[key]['status'] == 'Y'){
-										$("#reportArea").append("<li><a href='updateStatus.re?reportNo="+ data[key]['reportNo'] +"' class='notification-item'><span class='dot bg-warning' style='font-weight:600;'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>" + data[key]['teamWorkerName'] +"님 께서 조치승인 하셨습니다.</span></a></li>");
+										$("#reportArea").append("<li><a href='updateStatus.re?reportNo="+ data[key]['reportNo'] +"' class='notification-item'><span class='dot bg-warning' style='font-weight:900;'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>" + data[key]['teamWorkerName'] +"님 께서 조치승인 하셨습니다.</span></a></li>");
 										i++;
 									}else{
-										$("#reportArea").append("<li><a href='updateStatus.re?reportNo="+ data[key]['reportNo'] +"' class='notification-item'><span class='dot bg-warning' style='font-weight:300;'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>" + data[key]['teamWorkerName'] +"님 께서 조치승인 하셨습니다.</span></a></li>");
+										$("#reportArea").append("<li><a href='updateStatus.re?reportNo="+ data[key]['reportNo'] +"' class='notification-item'><span class='dot bg-warning' style='font-weight:300; color:lightgray;'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>" + data[key]['teamWorkerName'] +"님 께서 조치승인 하셨습니다.</span></a></li>");
 									}
 									if(data[key]['pStatus'] == 'Y'){
 										$.notify("등록하신 이슈를 " + data[key]['teamWorkerName'] + "님 께서 조치승인 하셨습니다." ,{
@@ -345,10 +332,10 @@
 									}
 								}else if(data[key]['ihStatus'] == '확인중' && data[key]['createMemberNo'] != memberNo){
 									if(data[key]['status'] == 'Y'){
-										$("#reportArea").append("<li><a href='updateStatus.re?reportNo="+ data[key]['reportNo'] +"' class='notification-item'><span class='dot bg-warning' style='font-weight:600;'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>"+"등록자 : " +data[key]['createMemberName'] + "//조치자 : " + data[key]['teamWorkerName'] +"</span></a></li>");
+										$("#reportArea").append("<li><a href='updateStatus.re?reportNo="+ data[key]['reportNo'] +"' class='notification-item'><span class='dot bg-warning' style='font-weight:900;'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>"+"등록자 : " +data[key]['createMemberName'] + "//조치자 : " + data[key]['teamWorkerName'] +"</span></a></li>");
 										i++;
 									}else{
-										$("#reportArea").append("<li><a href='updateStatus.re?reportNo="+ data[key]['reportNo'] +"' class='notification-item'><span class='dot bg-warning' style='font-weight:300;'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>"+"등록자 : " +data[key]['createMemberName'] + "//조치자 : " + data[key]['teamWorkerName'] +"</span></a></li>");
+										$("#reportArea").append("<li><a href='updateStatus.re?reportNo="+ data[key]['reportNo'] +"' class='notification-item'><span class='dot bg-warning' style='font-weight:300; color:lightgray;'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>"+"등록자 : " +data[key]['createMemberName'] + "//조치자 : " + data[key]['teamWorkerName'] +"</span></a></li>");
 									}
 									if(data[key]['pStatus'] == 'Y'){
 										$.notify("『" + data[key]['projectName']+"』" + "에서 이슈가 등록되었습니다." ,{
@@ -365,28 +352,31 @@
 										});
 									}
 								}else if(data[key]['ihStatus'] == '조치완료'){
+									var status = data[key]['status'];
+									if(data[key]['status']=='Y'){
 									$.ajax({
 										url:'checkProjectPl.re',
 										type: 'post',
+										async: false,
 										data:{projectNo:data[key]['projectNo']},
 										success:function(data1){
-											console.log(data1);
-											console.log(data);
 											 for(key1 in data1) {
+												console.log(data1[key1]['memberNo'])
+												console.log(memberNo);
 												if(data1[key1]['memberNo'] == memberNo){
-													 if(data[key]['status']=='Y'){
-														 console.log(data);
-														$("#reportArea").append("<li><a href='updateStatus.re?reportNo="+ data[key]['reportNo'] +"'class='notification-item'><span class='dot bg-warning' style='font-weight:600;'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>" + data[key]['teamWorkerName'] +"님 께서 조치완료 하셨습니다.</span></a></li>");
-													}else{
-														$("#reportArea").append("<li><a href='updateStatus.re?reportNo="+ data[key]['reportNo'] +"' class='notification-item'><span class='dot bg-warning' style='font-weight:300;'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>" + data[key]['teamWorkerName'] +"님 께서 조치완료 하셨습니다.</span></a></li>");
-													} 
+													check = true;
 												}
 											 }
 										}
-									});
-									if(data[key]['status']=='Y'){
-										i++;
+										});
 									}
+									if(status =='Y' &&  check== true){
+										$("#reportArea").append("<li><a href='updateStatus.re?reportNo="+ reportNo +"' class='notification-item'><span class='dot bg-warning' style='font-weight:900;'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>" + data[key]['teamWorkerName'] +"님 께서 조치완료 하셨습니다.</span></a></li>");
+										i++;
+									}else{
+										$("#reportArea").append("<li><a href='updateStatus.re?reportNo="+ reportNo +"' class='notification-item'><span class='dot bg-warning' style='font-weight:300; color:lightgray;'>『"+ data[key]['projectName']+"』" +"<br>《이슈》&nbsp;"+ data[key]['issueType'] + "<br>" + data[key]['teamWorkerName'] +"님 께서 조치완료 하셨습니다.</span></a></li>");
+									}
+									
 									if(data[key]['pStatus'] == 'Y'){
 										$.notify("『" + data[key]['projectName']+"』" + "에서 이슈처리가 완료 되었습니다." ,{
 											  style: 'happyblue'
@@ -405,7 +395,7 @@
 								
 							 }
 							 if(i == 0){
-								 $("#checkBtn").css("background", "lightgray");
+								 $("#checkBtn").css("background", "#1E2B44");
 								 $("#reportCount").text(i);
 								 $("#reportCount").hide();
 							 }else{

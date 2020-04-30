@@ -81,4 +81,9 @@
  		  WHERE PROJECT_PK = #{projectNo}
  		    AND ROLE IN ('PM', 'PSM')
 	</select>
+	
+	<update id="updateCheckReport" parameterType="Report">
+		UPDATE REPORT SET STATUS = 'N'
+		WHERE REPORT_NO = #{reportNo	}
+	</update>
 </mapper>

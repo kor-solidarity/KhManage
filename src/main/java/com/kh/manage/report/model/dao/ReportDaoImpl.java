@@ -34,5 +34,11 @@ public class ReportDaoImpl implements ReportDao{
 		
 		return sqlSession.selectList("Report.selectPsmPm", re);
 	}
+
+	@Override
+	public int updateCheckReport(SqlSessionTemplate sqlSession, Report re) {
+		
+		return sqlSession.update("Report.updateCheckReport", re);
+	}
 	
 }

@@ -86,7 +86,8 @@ public class ReportController {
 	public String updateStatus(Report re) {
 		System.out.println("sadsdsadsadasdasdsad : " + re);
 		
+		int result = rs.updateCheckReport(re);
 		
-		return null;
+		return "redirect:issueList.iu";
 	}
 }

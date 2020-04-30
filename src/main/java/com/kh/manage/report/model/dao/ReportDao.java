@@ -17,4 +17,6 @@ public interface ReportDao {
 
 	List<Member> selectPsmPm(SqlSessionTemplate sqlSession, Report re);
 
+	int updateCheckReport(SqlSessionTemplate sqlSession, Report re);
+
 }
