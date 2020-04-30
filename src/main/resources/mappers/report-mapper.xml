@@ -24,7 +24,12 @@
 		<result property="ihDate" column="IH_DATE"/>
 		<result property="ihStatus" column="HISTORY_DATE"/>
 		<result property="ihContent" column="IH_CONTENT"/>
+		<result property="pStatus" column="P_STATUS"/>
 	</resultMap>
+		
+	<resultMap type="Member" id="psmResultSet">
+		<result property="memberNo" column="MEMBER_PK"/>
+	</resultMap>	
 	
 	<select id="issueSelectList" parameterType="Member" resultMap="issueReportResultSet">
 		SELECT R.REPORT_NO
@@ -47,6 +52,7 @@
 		     , IH.IH_DATE
 		     , IH.STATUS AS HISTORY_DATE
 		     , NVL(IH.IH_CONTENT, '조치전') AS IH_CONTENT
+		     , R.P_STATUS
 		FROM REPORT R
 		JOIN ISSUE_HISTORY IH ON(R.DIVISION = IH.IH_NO) 
 		JOIN ISSUE I ON(IH.ISSUE_NO = I.ISSUE_NO)
@@ -55,13 +61,24 @@
 		JOIN MEMBER M1 ON (I.REGISTER_TYPE = M1.MEMBER_NO)
 		JOIN MEMBER M2 ON (I.TEAMWORKER = M2.MEMBER_NO)
 		WHERE R.REPORT_MEMBER = #{memberNo}
-		AND I.STATUS = 'Y'
-		AND R.STATUS = 'Y'
 		ORDER BY IH.IH_DATE DESC
 	</select>
 	
 	<update id="checkAllReport" parameterType="Member">
-		UPDATE REPORT SET STATUS ='N'
+		DELETE FROM REPORT
         WHERE REPORT_MEMBER = #{memberNo}
 	</update>
+	
+	<update id="checkReportPopup" parameterType="Report">
+		UPDATE REPORT SET P_STATUS = 'N'
+		WHERE REPORT_NO = #{reportNo}
+		AND REPORT_MEMBER = #{reportMemberNo}
+	</update>
+	
+	<select id="selectPsmPm" parameterType="Report" resultMap="psmResultSet">
+		 SELECT MEMBER_PK
+		   FROM PROJECT_TEAM
+ 		  WHERE PROJECT_PK = #{projectNo}
+ 		    AND ROLE IN ('PM', 'PSM')
+	</select>
 </mapper>

@@ -13,4 +13,8 @@ public interface ReportDao {
 
 	int checkAllReport(SqlSessionTemplate sqlSession, Member m);
 
+	int checkReportPopup(SqlSessionTemplate sqlSession, Report re);
+
+	List<Member> selectPsmPm(SqlSessionTemplate sqlSession, Report re);
+
 }

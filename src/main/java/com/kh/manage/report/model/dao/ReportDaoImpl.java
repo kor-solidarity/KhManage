@@ -20,7 +20,19 @@ public class ReportDaoImpl implements ReportDao{
 	@Override
 	public int checkAllReport(SqlSessionTemplate sqlSession, Member m) {
 		
-		return sqlSession.update("Report.checkAllReport", m);
+		return sqlSession.delete("Report.checkAllReport", m);
+	}
+
+	@Override
+	public int checkReportPopup(SqlSessionTemplate sqlSession, Report re) {
+		
+		return sqlSession.update("Report.checkReportPopup", re);
+	}
+
+	@Override
+	public List<Member> selectPsmPm(SqlSessionTemplate sqlSession, Report re) {
+		
+		return sqlSession.selectList("Report.selectPsmPm", re);
 	}
 	
 }

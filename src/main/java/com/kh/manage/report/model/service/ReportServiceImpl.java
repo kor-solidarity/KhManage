@@ -29,4 +29,16 @@ public class ReportServiceImpl implements ReportService {
 		return rd.checkAllReport(sqlSession, m);
 	}
 
+	@Override
+	public int checkReportPopup(Report re) {
+		
+		return rd.checkReportPopup(sqlSession, re);
+	}
+
+	@Override
+	public List<Member> selectPsmPm(Report re) {
+		
+		return rd.selectPsmPm(sqlSession, re);
+	}
+
 }
