@@ -397,11 +397,14 @@ public class ProjectController {
 		 */
 		String workNo = request.getParameter("workNo");
 		String pid = request.getParameter("pid");
-
+		
 		// 우선 작업정보 가자.
 		ProjectWork projectWork = ps.selectProjectWork(workNo);
 		// 다음은 선행작업.
-		ProjectWork highWork = ps.selectProjectWork(projectWork.getHighWorkNo());
+		ProjectWork highWork = null;
+		if (projectWork.getHighWorkNo() != null) {
+			highWork = ps.selectProjectWork(projectWork.getHighWorkNo());
+		}
 		// 선택할 수 있는 선행작업 목록
 		HashMap<String, String> highWorkMap = new HashMap<>();
 		highWorkMap.put("pid", pid);
@@ -411,24 +414,27 @@ public class ProjectController {
 		List<WorkProduct> workProduct = ps.selectWorkProductList(workNo);
 		// history
 		List<WorkHistory> workHistory = ps.selectWorkHistoryList(workNo);
+		// 담당자 지정대상명단
+		List<ProjectTeam> teamList = ps.selectProjectTeamList(pid);
 		// 승인 담당 대상자 목록
 		List<ProjectTeam> grantorList = ps.selectProjectTeamGrantorList(pid);
-
+		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("projectWork", projectWork);
 		System.out.println(projectWork.getBeginDate().toString());
 		map.put("highWork", highWork);
 		map.put("workProduct", workProduct);
 		map.put("workHistory", workHistory);
+		map.put("teamList", teamList);
 		map.put("grantorList", grantorList);
 		map.put("highWorkList", highWorkList);
-
-
+		
+		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-
+		
 		String gson = new Gson().toJson(map);
-
+		
 		try {
 			response.getWriter().write(gson);
 		} catch (IOException e) {
@@ -437,10 +443,10 @@ public class ProjectController {
 	}
 	
 	@RequestMapping(value = "/updateWork.pr", method = RequestMethod.POST)
-	public void updateWork(HttpServletResponse response,HttpServletRequest request) {
+	public void updateWork(HttpServletResponse response, HttpServletRequest request) {
 		String workNo = request.getParameter("workNo");
 		String workName = request.getParameter("workName");
-		String completeRate = request.getParameter("completeRate");
+		String memberNo = request.getParameter("memberNo");
 		String grantor = request.getParameter("grantor");
 		String memo = request.getParameter("memo");
 		String highWorkSel = request.getParameter("highWorkSel");
@@ -462,12 +468,20 @@ public class ProjectController {
 			e.printStackTrace();
 		}
 		
+		// ProjectWork work =
+		// 		new ProjectWork(workNo, workName, null,
+		// 				pid, startDate, completeDate,
+		// 				null, null, grantor,
+		// 				null, highWorkSel, memo,
+		// 				null, memberNo, null);
+		
+		// 승인자  담당자 변경  , 그 외 전부 수정 불허,
 		ProjectWork work =
-				new ProjectWork(workNo, workName, null,
-						pid, startDate, completeDate,
-						null, completeRate, grantor,
-						null, highWorkSel, memo,
-						null, null, null);
+				new ProjectWork(workNo, null, null,
+						null, null, null,
+						null, null, grantor,
+						null, null, null,
+						null, memberNo, null);
 		int result = ps.updateWork(work);
 		System.out.println("res: " + result);
 		response.setContentType("application/json");
@@ -662,40 +676,87 @@ public class ProjectController {
 	}
 	
 	
-	//TW 리소스삭제, 팀프로젝트 멤버 삭제
-//	@RequestMapping("checkWorkMember.pr")
-//	public int checkWorkMember (Member m, Model model, HttpServletRequest request, HttpServletResponse response) {
-//		
-//		String memberNo = request.getParameter("memberNo");
-//		List<Member> memberWorkList = ps.selectCheckWorkMemberList(m);
-//		System.out.println("리소스 삭제용 memberNo : " + memberWorkList);
+	//TW 리소스삭제 전 work를 가진 멤버 확인
+	@RequestMapping("checkWorkMember.pr")
+	public void checkWorkMember(Member m, Model model, HttpServletRequest request, HttpServletResponse response) {
+		
+		int result = ps.selectCheckWorkMemberList(m);
+		System.out.println("멤버확인 result : " + result);
+		
+		if (result == 0) {
+			
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			
+			String gson = new Gson().toJson(true);
+			
+			try {
+				response.getWriter().write(gson);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		} else {
+			
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			
+			String gson = new Gson().toJson(false);
+			
+			try {
+				response.getWriter().write(gson);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
+	//TW 리소스 work result == 0(true) 일 때, member 삭제
+	@RequestMapping("deleteProjectMember.pr")
+	public void deleteProjectMember(Member m, HttpServletRequest request, HttpServletResponse response) {
+		
+		int result = ps.deleteProjectMember(m);
+		
+		System.out.println("리소스 멤버삭제sss result : " + result);
+		
+		if (result > 0) {
+			
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			
+			String gson = new Gson().toJson(result);
+			
+			try {
+				response.getWriter().write(gson);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+	}
+
+
+//	//TW 리소스삭제, 팀프로젝트 work에 있는 멤버 확인
+//	@RequestMapping("memberCheck.pr")
+//	public void memberCheck(Member m, Model model, HttpServletRequest request, HttpServletResponse response) {
 //
-//		int result = 0;
-//		
-//		if(result == 0) { 
-//			
-////			return true;
-//			
-//		} else {
-//			
-////			return false;
-//		}
-//		
-//		
+//		String member = ps.selectCheckWorkMemberName(m);
+//		model.addAttribute("member", member);
+//
 //		response.setContentType("application/json");
 //		response.setCharacterEncoding("UTF-8");
-//		
-//		String gson = new Gson().toJson(memberWorkList);
-//		
+//
+//		String gson = new Gson().toJson(member);
+//
 //		try {
 //			response.getWriter().write(gson);
 //		} catch (IOException e) {
 //			e.printStackTrace();
 //		}
-//		
-//		return "";
+//
 //	}
-	
 	
 	
 }
