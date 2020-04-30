@@ -591,7 +591,7 @@
         WHERE M.STATUS = 'Y'
           AND P.ROLE = 'TM'
           AND P.PROJECT_PK = #{projectPk}
-        ORDER BY D.DEPT_NO
+        ORDER BY D.DEPT_NO, R.RANK_NO, M.MEMBER_NAME
     </select>
 
     <select id="selectCheckWorkMemberList" resultType="_int">
@@ -609,6 +609,18 @@
         WHERE MEMBER_PK = #{memberNo}
           AND PROJECT_PK = #{projectPk}
     </delete>
+    
+    <select id="selectCheckWorkMemberName" resultMap="memberResultSet">
+    	SELECT W.MEMBER_NO
+		     , M.MEMBER_NAME
+		     , W.WORK_NO
+		     , W.WORK_NAME     
+		FROM WORK W
+		JOIN MEMBER M ON (M.MEMBER_NO = W.MEMBER_NO)
+		JOIN PROJECT P ON (P.PROJECT_PK = W.PROJECT_NO)
+		WHERE W.MEMBER_NO = #{memberNo}
+		  AND W.PROJECT_NO = #{projectPk}
+    </select>
 </mapper>
 
 

@@ -74,5 +74,5 @@ public interface ProjectDao {
 	
 	int deleteProjectMember(SqlSessionTemplate sqlSession, Member m);
 
-//	String selectCheckWorkMemberName(SqlSessionTemplate sqlSession, Member m);
+	String selectCheckWorkMemberName(SqlSessionTemplate sqlSession, Member m);
 }

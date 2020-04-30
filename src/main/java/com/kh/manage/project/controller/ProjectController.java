@@ -738,25 +738,27 @@ public class ProjectController {
 	}
 
 
-//	//TW 리소스삭제, 팀프로젝트 work에 있는 멤버 확인
-//	@RequestMapping("memberCheck.pr")
-//	public void memberCheck(Member m, Model model, HttpServletRequest request, HttpServletResponse response) {
-//
-//		String member = ps.selectCheckWorkMemberName(m);
-//		model.addAttribute("member", member);
-//
-//		response.setContentType("application/json");
-//		response.setCharacterEncoding("UTF-8");
-//
-//		String gson = new Gson().toJson(member);
-//
-//		try {
-//			response.getWriter().write(gson);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//
-//	}
+	//TW 리소스삭제, 팀프로젝트 work에 있는 멤버 확인
+	@RequestMapping("memberCheck.pr")
+	public void memberCheck(Member m, Model model, HttpServletRequest request, HttpServletResponse response) {
+
+		String member = ps.selectCheckWorkMemberName(m);
+		model.addAttribute("member", member);
+		
+		System.out.println("work에 있는 member : " + member);
+
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+
+		String gson = new Gson().toJson(member);
+
+		try {
+			response.getWriter().write(gson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
 	
 	
 }

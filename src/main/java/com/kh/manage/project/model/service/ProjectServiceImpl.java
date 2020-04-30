@@ -190,8 +190,8 @@ public class ProjectServiceImpl implements ProjectService {
 		return pd.deleteProjectMember(sqlSession, m);
 	}
 
-//	@Override
-//	public String selectCheckWorkMemberName(Member m) {
-//		return pd.selectCheckWorkMemberName(sqlSession, m);
-//	}
+	@Override
+	public String selectCheckWorkMemberName(Member m) {
+		return pd.selectCheckWorkMemberName(sqlSession, m);
+	}
 }

@@ -177,10 +177,10 @@ public class ProjectDaoImpl implements ProjectDao {
 		return sqlSession.delete("Project.deleteProjectMember", m);
 	}
 
-//	@Override
-//	public String selectCheckWorkMemberName(SqlSessionTemplate sqlSession, Member m) {
-//		return sqlSession.selectOne("Project.selectCheckWorkMemberName", m);
-//	}
+	@Override
+	public String selectCheckWorkMemberName(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.selectOne("Project.selectCheckWorkMemberName", m);
+	}
 }
 
 

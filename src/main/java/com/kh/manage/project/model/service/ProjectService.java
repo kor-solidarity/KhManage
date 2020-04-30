@@ -72,6 +72,6 @@ public interface ProjectService {
 	
 	int deleteProjectMember(Member m);
 
-//	String selectCheckWorkMemberName(Member m);
+	String selectCheckWorkMemberName(Member m);
 
 }
