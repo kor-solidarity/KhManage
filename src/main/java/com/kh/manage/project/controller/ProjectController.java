@@ -104,9 +104,10 @@ public class ProjectController {
 	
 	// model 의 역할: 간단히 말해서 request.
 	// ajax 임
-	// @RequestParam 을 통해 아작스 데이터값을 뽑아오는거....
+	// @RequestParam 을 통해 AJAX 데이터값을 뽑아오는거....
 	@RequestMapping("/getMemberFromDept.pr")
-	public void getMemberFromDept(@RequestParam String deptNo, HttpServletRequest request, HttpServletResponse response) {
+	public void getMemberFromDept(@RequestParam String deptNo,
+								  HttpServletRequest request, HttpServletResponse response) {
 		
 		List<DeptMember> memberList = ps.selectMemberList(deptNo);
 		
@@ -122,15 +123,22 @@ public class ProjectController {
 		}
 	}
 	
-	// 프로젝트 작업 배정을 위한 프로젝트 담당자 명단뽑기.
+	// 프로젝트 작업 초기 등록때 필요한 자료를 뽑기 위한 AJAX.
 	@RequestMapping("/viewProjectTeamList.pr")
 	public void viewProjectTeamList(HttpServletResponse response, HttpServletRequest request) {
 		// 작업중인 프로젝트 PK
 		String pid = request.getParameter("pid");
 		
 		List<ProjectTeam> teamList = ps.selectProjectTeamList(pid);
+		List<ProjectTeam> grantorList = ps.selectProjectTeamGrantorList(pid);
+		List<ProjectWork> workList = ps.selectProjectWorkList(pid);
 		
-		String gson = new Gson().toJson(teamList);
+		HashMap<String, Object > map = new HashMap<>();
+		map.put("teamList", teamList);
+		map.put("grantorList", grantorList);
+		map.put("workList", workList);
+		
+		String gson = new Gson().toJson(map);
 		
 		try {
 			response.setContentType("application/json");
