@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.manage.admin.template.model.vo.Template;
+import com.kh.manage.admin.template.model.vo.TemplateWork;
 import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
 public interface TemplateDao {
@@ -22,6 +23,10 @@ public interface TemplateDao {
 	Template selectOneTemplate(SqlSessionTemplate sqlSession, Template tmp);
 
 	int updateTemplate(SqlSessionTemplate sqlSession, Template tmp);
+
+	int excelInsert(SqlSessionTemplate sqlSession, TemplateWork tw);
+
+	List<TemplateWork> selectTwList(SqlSessionTemplate sqlSession, String tm);
 
 
 

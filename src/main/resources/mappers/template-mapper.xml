@@ -14,6 +14,15 @@
 		<result property="editDate" column="EDIT_DATE"/>
 	</resultMap>
 	
+	<resultMap type="TemplateWork" id="templateWorkResultSet">
+		<id property="twNo" column="TW_NO"/>
+		<result property="tNo" column="TEMPLATE_NO"/>
+		<result property="wNo" column="WORK_NO"/>
+		<result property="wName" column="WORK_NAME"/>
+		<result property="beginDate" column="BEGIN_DATE"/>
+		<result property="completeDate" column="COMPLETE_DATE"/>
+	</resultMap>
+	
 	
 	<insert id="insertTemplate" parameterType="Template">
 		INSERT INTO PROJECT_TEMPLATE 
@@ -59,5 +68,15 @@
 		WHERE TEMPLATE_PK = #{templatePk}
 	</update>
 	
-
+	<insert id="insertExcel" parameterType="TemplateWork">
+		INSERT INTO TEMPLATE_WORK
+		VALUES('TW'|| TO_CHAR(SEQ_TEMPLATE.NEXTVAL, 'FM000'),#{tNo}, #{wNo}, #{wName}, #{beginDate}, #{completeDate})
+	</insert>
+	
+	<select id="selectTwList" parameterType="java.lang.String" resultMap="templateWorkResultSet">
+		SELECT TW_NO, TEMPLATE_NO, WORK_NO, WORK_NAME, BEGIN_DATE, COMPLETE_DATE
+		FROM TEMPLATE_WORK
+		WHERE TEMPLATE_NO = #{tm}
+	</select>
+	
 </mapper>
