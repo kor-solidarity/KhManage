@@ -15,4 +15,6 @@ public interface ReportService {
 
 	List<Member> selectPsmPm(Report re);
 
+	int updateCheckReport(Report re);
+
 }

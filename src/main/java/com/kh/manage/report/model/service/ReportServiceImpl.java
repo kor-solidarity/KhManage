@@ -41,4 +41,10 @@ public class ReportServiceImpl implements ReportService {
 		return rd.selectPsmPm(sqlSession, re);
 	}
 
+	@Override
+	public int updateCheckReport(Report re) {
+		
+		return rd.updateCheckReport(sqlSession, re);
+	}
+
 }
