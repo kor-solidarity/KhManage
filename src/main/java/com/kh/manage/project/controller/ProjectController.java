@@ -411,6 +411,8 @@ public class ProjectController {
 		List<WorkProduct> workProduct = ps.selectWorkProductList(workNo);
 		// history
 		List<WorkHistory> workHistory = ps.selectWorkHistoryList(workNo);
+		// 담당자 지정대상명단
+		List<ProjectTeam> teamList = ps.selectProjectTeamList(pid);
 		// 승인 담당 대상자 목록
 		List<ProjectTeam> grantorList = ps.selectProjectTeamGrantorList(pid);
 
@@ -420,6 +422,7 @@ public class ProjectController {
 		map.put("highWork", highWork);
 		map.put("workProduct", workProduct);
 		map.put("workHistory", workHistory);
+		map.put("teamList", teamList);
 		map.put("grantorList", grantorList);
 		map.put("highWorkList", highWorkList);
 

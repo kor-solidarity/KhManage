@@ -144,7 +144,8 @@
 						<li>
 							<div class="gantt-edit-control gantt-none-edit-mode dropdown">
 								<div id="toolbar_add" class="gantt-edit-control gantt-none-edit-mode"
-									 data-toggle="dropdown"
+								<%--data-toggle="dropdown"--%>
+									 data-toggle="modal" data-target="#workDetails" onclick="add_project_work()"
 									 style="padding:0px">
 									<i class="glyphicon glyphicon-plus"></i><br>
 									추가
@@ -367,54 +368,6 @@
 			</div>
 			<%--차트 우측: 간트차트--%>
 			<div class="gantt-div" style="">
-				<%--
-				<script type="text/javascript">
-					google.charts.load('current', { 'packages': ['gantt'] });
-					google.charts.setOnLoadCallback(drawChart);
-
-					function daysToMilliseconds (days) {
-						return days * 24 * 60 * 60 * 1000;
-					}
-
-					function drawChart () {
-
-						var data = new google.visualization.DataTable();
-						data.addColumn('string', 'Task ID');
-						data.addColumn('string', 'Task Name');
-						data.addColumn('date', 'Start Date');
-						data.addColumn('date', 'End Date');
-						data.addColumn('number', 'Duration');
-						data.addColumn('number', 'Percent Complete');
-						data.addColumn('string', 'Dependencies');
-
-						data.addRows([
-							[
-								'Research', 'Find sources',
-								new Date(2015, 0, 1), new Date(2015, 0, 5), null, 100, null],
-							[
-								'Write', 'Write paper',
-								null, new Date(2015, 0, 9), daysToMilliseconds(3), 25, 'Research,Outline'],
-							[
-								'Cite', 'Create bibliography',
-								null, new Date(2015, 0, 7), daysToMilliseconds(1), 20, 'Research'],
-							[
-								'Complete', 'Hand in paper',
-								null, new Date(2015, 0, 10), daysToMilliseconds(1), 0, 'Cite,Write'],
-							[
-								'Outline', 'Outline paper',
-								null, new Date(2015, 0, 6), daysToMilliseconds(1), 100, 'Research']
-						]);
-
-						var options = {
-							height: 275
-						};
-
-						var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
-
-						chart.draw(data, options);
-					}
-				</script>
-				--%>
 				<div id="chart-div">
 					<%--날짜 표기부분. 너비는 일수에 따라 유동적으로 움직이게끔.--%>
 					<div class="gantt-date" style="width: 2760px ;/*border: 1px orangered solid;*/">
@@ -577,41 +530,53 @@
 				<script>
                     // 작업 추가를 누르면 어떤거든간에 우선 테이블 맨위에 띄우게끔.
                     function add_project_work (location) {
-                        if (document.getElementById('projectWork') != null) {
-                            alert("우선 추가된 작업부터 처리해주세요.");
-                            return;
-                        }
-                        // todo 위치 어디로 보낼지 생각좀.
-                        // 우선은 그냥 맨위
-                        $("#chart-left-table tr:first-of-type").after(
-                            // todo 고도화, 그니까 각종 유효성. 우선은 통과.
-                            "<tr class='work_input' id='projectWork'>" +
-                            "<td></td>" +
-                            // 작업 제목
-                            "<td><input type='text' style='width: 100%' class='' id='workName' name='workName'></td>" +
-                            // 상태
-                            "<td></td>" +
-                            // 기간
-                            "<td></td>" +
-                            // 시작일
-                            "<td><input class='' type='date' name='beginDate' id='beginDate'></td>" +
-                            // 완료일
-                            "<td><input class='' type='date' name='endDate' id='endDate'></td>" +
-                            // 선행작업
-                            "<td><input class='' style='width: 60px' type='text' name='highWorkNo' id='highWorkNo' ></td>" +
-                            // 완료율
-                            "<td></td>" +
-                            // 담당자
-                            "<td  data-toggle=\"modal\" data-target=\"#workMemberModal\" " +
-                            "onclick=\"viewWorkInCharge('#projectWork')\" id='addWorkers'>" +
-                            "" +
-                            // 돋보기마크. 이 경우는 그냥 submit. 자세한건 등록 다 하고 하던가.
-                            "<td><button onclick='sendProjectWork()'>" +
-                            "<i class='far fa-save'></i>" +
-                            "</button></td>" +
-                            "</tr>"
-                        )
+                        alert('add_project_work');
+                        $("#workTitle").empty();
+                        // 제목 맞게 수정
+                        $("#workTitle").append("작업 신규등록");
+                        $('#workDetails input,textarea').attr('disabled', 'false');
+                        $('#workDetails input,textarea').removeAttr('disabled');
 
+
+                        return;
+
+                        // 기존코드는 이제 의미가 없다. 전면수정
+                        <%--
+						if (document.getElementById('projectWork') != null) {
+							alert("우선 추가된 작업부터 처리해주세요.");
+							return;
+						}
+						// todo 위치 어디로 보낼지 생각좀.
+						// 우선은 그냥 맨위
+						$("#chart-left-table tr:first-of-type").after(
+							// todo 고도화, 그니까 각종 유효성. 우선은 통과.
+							"<tr class='work_input' id='projectWork'>" +
+							"<td></td>" +
+							// 작업 제목
+							"<td><input type='text' style='width: 100%' class='' id='workName' name='workName'></td>" +
+							// 상태
+							"<td></td>" +
+							// 기간
+							"<td></td>" +
+							// 시작일
+							"<td><input class='' type='date' name='beginDate' id='beginDate'></td>" +
+							// 완료일
+							"<td><input class='' type='date' name='endDate' id='endDate'></td>" +
+							// 선행작업
+							"<td><input class='' style='width: 60px' type='text' name='highWorkNo' id='highWorkNo' ></td>" +
+							// 완료율
+							"<td></td>" +
+							// 담당자
+							"<td  data-toggle=\"modal\" data-target=\"#workMemberModal\" " +
+							"onclick=\"viewWorkInCharge('#projectWork')\" id='addWorkers'>" +
+							"" +
+							// 돋보기마크. 이 경우는 그냥 submit. 자세한건 등록 다 하고 하던가.
+							"<td><button onclick='sendProjectWork()'>" +
+							"<i class='far fa-save'></i>" +
+							"</button></td>" +
+							"</tr>"
+						)
+						--%>
                     }
 
                     // 띄워져있는 새 작업 등록한다.
@@ -885,6 +850,8 @@
                             projectWork = data['projectWork'];
                             // 승인자
                             grantorList = data.grantorList;
+                            //
+                            teamList = data.teamList;
                             // 선행작업 선택목록
                             highWorkList = data.highWorkList;
                             // 산출물
@@ -899,7 +866,17 @@
                             // startDate
                             $("#startDate").val(parseKrDate(projectWork.beginDate));
                             $("#completeDate").val(parseKrDate(projectWork.completeDate));
-                            $("#completeRate").val(projectWork.completeRate);
+                            // 담당자 목록. 우선 내용물부터 지웁시다.
+                            $("#memberNo").empty();
+                            $("#memberNo").append(
+                               "<option value='0'>담당자 없음</option>"
+							);
+                            for (let i = 0; i < teamList.length; i++) {
+                                $("#memberNo").append(
+                                    "<option value='" + teamList[i].memberPk + "'>" + teamList[i].deptName + " " +
+                                    teamList[i].memberName + " " + teamList[i].rankName + "</option>"
+                                );
+                            }
 
                             // 우선 내용을 싹 다 비우고 시작
                             $("#grantor").empty();
@@ -1051,14 +1028,17 @@
 										<input class="form-control" type="date" name="completeDate" id="completeDate">
 									</div>
 								</div>
+								<%----%>
 								<div class="row">
-									<div class="col-lg-2 text-center">완료율</div>
+									<div class="col-lg-2 text-center">담당자</div>
 									<div class="col-lg-4">
 										<div class=" col-lg-10" style="padding-left: 0; padding-right: 0">
-											<input class="form-control" type="number" max="100" min="0"
-												   name="completeRate" id="completeRate">
+											<%--<input class="form-control" type="number" max="100" min="0"
+											 name="completeRate" id="completeRate">--%>
+											<select class="form-control" name="memberNo" id="memberNo">
+												<option value="idHere">yolo</option>
+											</select>
 										</div>
-										<span>&nbsp;%</span>
 									</div>
 									<div class="col-lg-2 text-center">승인자</div>
 									<div class="col-lg-4">

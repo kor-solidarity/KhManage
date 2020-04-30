@@ -204,29 +204,32 @@
         from project_type
     </select>
 
+    <!---->
     <select id="selectProjectWorkList" resultMap="projectWorkListResultSet" parameterType="String">
-        SELECT W.WORK_NO                    AS WORK_NO,
-               W.WORK_NAME                  AS WORK_NAME,
-               W.STATUS                     AS STATUS,
-               W.PROJECT_NO                 AS PROJECT_NO,
-               W.BEGIN_DATE                 AS BEGIN_DATE,
-               W.COMPLETE_DATE              AS COMPLETE_DATE,
-               W.PRECEDE_NO                 AS PRECEDE_NO,
-               W.COMPLETE_RATE              AS COMPLETE_RATE,
-               W.WORK_LEVEL                 AS WORK_LEVEL,
-               W.HIGH_WORK_NO               AS HIGH_WORK_NO,
-               W.WORK_TYPE                  AS WORK_TYPE,
-               W.MEMBER_NO                  AS MEMBER_NO,
-               W.WORK_STATUS                AS WORK_STATUS,
-               M.MEMBER_NAME                AS MEMBER_NAME,
-               M.MEMBER_TYPE                AS MEMBER_TYPE,
-               (COMPLETE_DATE - BEGIN_DATE) AS DAYS
+        SELECT LPAD(' ', 2 * (LEVEL - 1)) || w.WORK_NAME AS WORK_NAME
+             , W.STATUS                                  AS STATUS
+             , W.PROJECT_NO                              AS PROJECT_NO
+             , W.BEGIN_DATE                              AS BEGIN_DATE
+             , W.COMPLETE_DATE                           AS COMPLETE_DATE
+             , W.PRECEDE_NO                              AS PRECEDE_NO
+             , W.COMPLETE_RATE                           AS COMPLETE_RATE
+             , W.WORK_LEVEL                              AS WORK_LEVEL
+             , W.HIGH_WORK_NO                            AS HIGH_WORK_NO
+             , W.WORK_TYPE                               AS WORK_TYPE
+             , W.MEMBER_NO                               AS MEMBER_NO
+             , W.WORK_STATUS                             AS WORK_STATUS
+             , M.MEMBER_NAME                             AS MEMBER_NAME
+             , M.MEMBER_TYPE                             AS MEMBER_TYPE
+             , (COMPLETE_DATE - BEGIN_DATE)              AS DAYS
         FROM WORK W
-                 JOIN MEMBER M ON W.MEMBER_NO = M.MEMBER_NO
-        WHERE PROJECT_NO = #{value}
-          AND WORK_TYPE = '프로젝트'
-          AND WORK_STATUS = 'Y'
-        ORDER BY BEGIN_DATE
+                 JOIN MEMBER M
+                      ON W.MEMBER_NO = M.MEMBER_NO
+        WHERE PROJECT_NO = 'P012'
+          and WORK_TYPE = '프로젝트'
+          and WORK_STATUS = 'Y'
+        START WITH HIGH_WORK_NO IS NULL
+        CONNECT BY PRIOR WORK_NO = HIGH_WORK_NO
+        ORDER SIBLINGS BY BEGIN_DATE
     </select>
 
     <!--특정 프로젝트 작업의 하위작업으로 쓸 수 있는 작업목록-->
@@ -593,18 +596,15 @@
           AND P.PROJECT_PK = #{projectPk}
         ORDER BY D.DEPT_NO
     </select>
-    
+
     <select id="selectCheckWorkMemberList" parameterType="String" resultMap="memberResultSet">
-    	SELECT COUNT(*)
-		FROM WORK W
-		JOIN MEMBER M ON(M.MEMBER_NO = W.MEMBER_NO)
-		WHERE W.MEMBER_NO = #{memberNo}
+        SELECT COUNT(*)
+        FROM WORK W
+                 JOIN MEMBER M ON (M.MEMBER_NO = W.MEMBER_NO)
+        WHERE W.MEMBER_NO = #{memberNo}
     </select>
-    
-    
-    
-    
-    
+
+
 </mapper>
 
 
