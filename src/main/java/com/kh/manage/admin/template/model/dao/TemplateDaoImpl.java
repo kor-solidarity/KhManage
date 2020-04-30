@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.manage.admin.template.model.vo.Template;
+import com.kh.manage.admin.template.model.vo.TemplateWork;
 import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
 
@@ -36,7 +37,7 @@ public class TemplateDaoImpl implements TemplateDao{
 	@Override
 	public String selectCurrval(SqlSessionTemplate sqlSession) {
 		
-		String tempNo = "TEM0" + sqlSession.selectOne("Template.selectCurrval");
+		String tempNo = "TEM" + sqlSession.selectOne("Template.selectCurrval");
 		
 		System.out.println("currval : " + tempNo);
 		
@@ -71,6 +72,18 @@ public class TemplateDaoImpl implements TemplateDao{
 	public int updateTemplate(SqlSessionTemplate sqlSession, Template tmp) {
 		
 		return sqlSession.update("Template.updateTemp", tmp);
+	}
+
+	@Override
+	public int excelInsert(SqlSessionTemplate sqlSession, TemplateWork tw) {
+
+		return sqlSession.insert("Template.insertExcel",tw);
+	}
+
+	@Override
+	public List<TemplateWork> selectTwList(SqlSessionTemplate sqlSession, String tm) {
+
+		return sqlSession.selectList("Template.selectTwList", tm);
 	}
 
 

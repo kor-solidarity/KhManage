@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.manage.admin.template.model.service.TemplateService;
 import com.kh.manage.admin.template.model.vo.Template;
+import com.kh.manage.admin.template.model.vo.TemplateWork;
 import com.kh.manage.common.Attachment;
 import com.kh.manage.common.CommonsUtils;
 import com.kh.manage.common.PageInfo;
@@ -101,169 +102,17 @@ public class TemplateController {
 	
 	
 	@RequestMapping("/templateExcel.am")
-	public String templateExcel(HttpServletRequest request) {
+	public String templateExcel(HttpServletRequest request, Model m) {
 		
 		
 		String tm = request.getParameter("tm");
 		System.out.println(tm);
 		
-//		XSSFRow row;
-//
-//		XSSFCell cell;
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//		DataFormatter formatter = new DataFormatter();
-//		
-//		
-//
-//		try {
-//
-//			FileInputStream inputStream = new FileInputStream("D:/tmp/file/test3.xlsx");
-//
-//			XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
-//
-//
-//
-//			//sheet수 취득
-//
-//			int sheetCn = workbook.getNumberOfSheets();
-//
-//			System.out.println("sheet수 : " + sheetCn);
-//
-//			
-//
-//			for(int cn = 0; cn < sheetCn; cn++){
-//
-//				System.out.println("취득하는 sheet 이름 : " + workbook.getSheetName(cn));
-//
-//				System.out.println(workbook.getSheetName(cn) + " sheet 데이터 취득 시작");
-//
-//				
-//
-//				//0번째 sheet 정보 취득
-//
-//				XSSFSheet sheet = workbook.getSheetAt(cn);
-//
-//				
-//
-//				//취득된 sheet에서 rows수 취득
-//
-//				int rows = sheet.getPhysicalNumberOfRows();
-//
-//				System.out.println(workbook.getSheetName(cn) + " sheet의 row수 : " + rows);
-//
-//				
-//
-//				//취득된 row에서 취득대상 cell수 취득
-//
-//				int cells = sheet.getRow(cn).getPhysicalNumberOfCells(); //
-//
-//				System.out.println(workbook.getSheetName(cn) + " sheet의 row에 취득대상 cell수 : " + cells);
-//				
-//				Map<String, String> map = null;
-//
-//				List<Map<String, String>> result = new ArrayList<Map<String, String>>(); 
-//
-//
-//				
-//
-//				for (int r = 0; r < rows; r++) {
-//
-//					row = sheet.getRow(r); // row 가져오기
-//
-//					if (row != null) {
-//						
-//						map = new HashMap<String, String>();
-//
-//
-//						for (int c = 0; c < cells; c++) {
-//
-//							cell = row.getCell(c);
-//
-//							if (cell != null) {
-//
-//								String value = null;
-//								
-//								if (HSSFDateUtil.isInternalDateFormat(cell.getCellStyle().getDataFormat())) {
-//									value = sdf.format(cell.getDateCellValue());
-//									
-//								}
-//								// 기타
-//								else {
-//									value = formatter.formatCellValue(cell);
-//								}
-//								
-//									
-//								
-//								 switch (cell.getCellType()) {
-//								  
-//								 case XSSFCell.CELL_TYPE_FORMULA:
-//								  
-//								  value = cell.getCellFormula();
-//								  
-//								  break;
-//								  
-//								  case XSSFCell.CELL_TYPE_NUMERIC:
-//									  
-//							      if (HSSFDateUtil.isInternalDateFormat(cell.getCellStyle().getDataFormat())) {
-//										value = sdf.format(cell.getDateCellValue());
-//											
-//							      }else {
-//							    	  
-//							    	  value = "" + cell.getNumericCellValue();
-//							      }
-//								  
-//								  
-//								  break;
-//								  
-//								  case XSSFCell.CELL_TYPE_STRING:
-//								  
-//								  value = "" + cell.getStringCellValue();
-//								  
-//								  break;
-//								 
-//								  case XSSFCell.CELL_TYPE_BLANK:
-//								  
-//								  value = "[null 아닌 공백]";
-//								  
-//								  break;
-//								  
-//								  case XSSFCell.CELL_TYPE_ERROR:
-//								  
-//								  value = "" + cell.getErrorCellValue();
-//								  
-//								  break;
-//								 
-//								  
-//								  default:
-//								 
-//								  }
-//								 
-//
-//								System.out.print(value + "\t");
-//
-//							} else {
-//
-//								System.out.print("[null]\t");
-//
-//							}
-//
-//						} // for(c) 문
-//
-//						System.out.print("새로운 줄\n");
-//
-//					}
-//
-//				} // for(r) 문
-//
-//			}
-//
-//		} catch (Exception e) {
-//
-//			e.printStackTrace();
-//
-//		}
-//
-//		
+		List<TemplateWork> list = ts.selectTwList(tm);
+		
+		System.out.println("list : " +list);
+		
+		m.addAttribute("list", list);
 		
 		return "admin/templateManage/templateExcel";
 	}
@@ -305,13 +154,15 @@ public class TemplateController {
 			System.out.println("controller : " + result);
 			upfile.transferTo(new File(filePath + "\\" +  changeName + ext));
 			
+			int result2 = ts.excelInsert(tmp,at);
+			
 		} catch (Exception e) {
 			
 			new File(filePath + "\\" + changeName + ext).delete();
 		}
 		
 		
-		return "admin/templateManage/templatePage";
+		return "redirect:/templateManage.am";
 	}
 	
 	
