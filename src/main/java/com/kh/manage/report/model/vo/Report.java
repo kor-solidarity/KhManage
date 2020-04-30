@@ -25,6 +25,7 @@ public class Report implements java.io.Serializable {
 	private String ihContent; //히스토리 조치 내용
 	private Date ihDate;//조치일자
 	private String ihStatus; //이슈 히스토리 상태
+	private String pStatus; //팝업창 알림 상태
 	
 	
 	public Report() {}
@@ -34,7 +35,7 @@ public class Report implements java.io.Serializable {
 			String issueType, String issueTitle, String issueContent, String createMemberNo, String createMemberName,
 			String workNo, String workName, String teamWorker, String teamWorkerName, Date registerDate,
 			String projectNo, String projectName, String actionDate, String ihNo, String ihContent, Date ihDate,
-			String ihStatus) {
+			String ihStatus, String pStatus) {
 		super();
 		this.reportNo = reportNo;
 		this.division = division;
@@ -58,6 +59,7 @@ public class Report implements java.io.Serializable {
 		this.ihContent = ihContent;
 		this.ihDate = ihDate;
 		this.ihStatus = ihStatus;
+		this.pStatus = pStatus;
 	}
 
 
@@ -281,6 +283,16 @@ public class Report implements java.io.Serializable {
 	}
 
 
+	public String getpStatus() {
+		return pStatus;
+	}
+
+
+	public void setpStatus(String pStatus) {
+		this.pStatus = pStatus;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Report [reportNo=" + reportNo + ", division=" + division + ", reportMemberNo=" + reportMemberNo
@@ -289,7 +301,8 @@ public class Report implements java.io.Serializable {
 				+ ", createMemberName=" + createMemberName + ", workNo=" + workNo + ", workName=" + workName
 				+ ", teamWorker=" + teamWorker + ", teamWorkerName=" + teamWorkerName + ", registerDate=" + registerDate
 				+ ", projectNo=" + projectNo + ", projectName=" + projectName + ", actionDate=" + actionDate + ", ihNo="
-				+ ihNo + ", ihContent=" + ihContent + ", ihDate=" + ihDate + ", ihStatus=" + ihStatus + "]";
+				+ ihNo + ", ihContent=" + ihContent + ", ihDate=" + ihDate + ", ihStatus=" + ihStatus + ", pStatus="
+				+ pStatus + "]";
 	}
 
 

@@ -57,4 +57,36 @@ public class ReportController {
 		}
 		
 	}
+	
+	@RequestMapping("/checkReportPopup.re")
+	public void checkReportPopup(Report re) {
+		
+		int result = rs.checkReportPopup(re);
+	}
+	
+	@RequestMapping("/checkProjectPl.re")
+	public void checkProjectPl(Report re, HttpServletRequest request, HttpServletResponse response) {
+		
+		List<Member> list = rs.selectPsmPm(re);
+		
+		request.setAttribute("list", re);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+
+		String gson = new Gson().toJson(list);
+
+		try {
+			response.getWriter().write(gson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("/updateStatus.re")
+	public String updateStatus(Report re) {
+		System.out.println("sadsdsadsadasdasdsad : " + re);
+		
+		
+		return null;
+	}
 }

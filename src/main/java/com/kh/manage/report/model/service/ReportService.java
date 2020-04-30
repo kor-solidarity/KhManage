@@ -11,4 +11,8 @@ public interface ReportService {
 
 	int checkAllReport(Member m);
 
+	int checkReportPopup(Report re);
+
+	List<Member> selectPsmPm(Report re);
+
 }
