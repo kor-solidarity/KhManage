@@ -204,4 +204,14 @@ public class ProjectServiceImpl implements ProjectService {
 	public int deleteWork(String workNo) {
 		return pd.deleteWork(sqlSession, workNo);
 	}
+	
+	@Override
+	public int checkLowerWorks(String workNo) {
+		return pd.checkLowerWorks(sqlSession, workNo);
+	}
+	
+	@Override
+	public int updateOutdatedProject(String projectPk) {
+		return pd.updateOutdatedProject(sqlSession, projectPk);
+	}
 }

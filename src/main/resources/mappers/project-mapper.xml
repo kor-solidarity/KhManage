@@ -412,7 +412,7 @@
                                 JOIN MEMBER M ON PROJECT_TEAM.MEMBER_PK = M.MEMBER_NO) T
                       ON P.PROJECT_PK = T.PROJECT_PK
         WHERE T.MEMBER_PK = #{memberNo}
-          and P.STATUS = '1'
+--           and P.STATUS = '1'
     </select>
 
     <!-- 프로젝트 전체목록 조회. -->
@@ -472,12 +472,19 @@
         where WORK_NO = #{value}
     </update>
 
+    <select id="checkLowerWorks" resultType="_int">
+        select count(*)
+        from WORK
+        where HIGH_WORK_NO = #{value}
+          and WORK_STATUS = 'Y'
+    </select>
+
     <select id="selectOutdatedProjects" resultMap="projectResultSet">
         <![CDATA[
-        select *
+        select PROJECT_PK
         from PROJECT
         where to_date(sysdate) > END_DATE
-          and (STATUS != '3' or STATUS != '4')
+          and (STATUS != '3' and STATUS != '4')
         ]]>
     </select>
     <update id="updateOutdatedProject" parameterType="String">

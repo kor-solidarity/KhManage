@@ -79,4 +79,8 @@ public interface ProjectDao {
 	List<Project> selectOutdatedProjects(SqlSessionTemplate sqlSession);
 	
 	int deleteWork(SqlSessionTemplate sqlSession, String workNo);
+	
+	int checkLowerWorks(SqlSessionTemplate sqlSession, String workNo);
+	
+	int updateOutdatedProject(SqlSessionTemplate sqlSession, String projectPk);
 }

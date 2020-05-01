@@ -77,4 +77,8 @@ public interface ProjectService {
 	List<Project> selectOutdatedProjects();
 	
 	int deleteWork(String workNo);
+	
+	int checkLowerWorks(String workNo);
+	
+	int updateOutdatedProject(String projectPk);
 }
