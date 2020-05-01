@@ -49,8 +49,8 @@ public class ProjectController {
 		// 상태변경하기 위함임.
 		// 완료일이 초과됬으면 지연으로 처리
 		List<Project> projectList = ps.selectOutdatedProjects();
-		for (Project p: projectList ) {
-		    // int result
+		for (Project p : projectList) {
+			int result = ps.updateOutdatedProject(p.getProjectPk());
 		}
 		
 		// 권한그룹에 속해있는지 확인. 속해있으면 모든 목록을 조회하는 것이고 아니면 로그인유저에 해당하는거만.
@@ -347,7 +347,7 @@ public class ProjectController {
 		System.out.println("projectWorkInsert");
 		String workName = request.getParameter("workName");
 		String memberNo = request.getParameter("memberNo");
-		if (memberNo.equals("0")){
+		if (memberNo.equals("0")) {
 			memberNo = null;
 		}
 		String grantor = request.getParameter("grantor");
@@ -472,17 +472,28 @@ public class ProjectController {
 	}
 	
 	@RequestMapping("/deleteWork.pr")
-	public void deleteWork(HttpServletResponse response, HttpServletRequest request){
+	public void deleteWork(HttpServletResponse response, HttpServletRequest request) {
 		String workNo = request.getParameter("workNo");
-		int result = ps.deleteWork(workNo);
-		// if (result > 0){
-		// 	WorkHistory workHistory =
-		// 			new WorkHistory(null, workNo, "");
-		// 	int result2 = ps.insertWorkHistory()
-		// }
+		
+		
+		
+		int check = ps.checkLowerWorks(workNo);
+		
+		int result = 0;
+		if (check == 0) {
+			result = ps.deleteWork(workNo);
+		}
+		
+		HashMap<String, String > map = new HashMap<>();
+		map.put("check", String.valueOf(check));
+		map.put("result", String.valueOf(result));
+		
+		String gson = new Gson().toJson(map);
 		
 		try {
-			response.getWriter().write(String.valueOf(true));
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(gson);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

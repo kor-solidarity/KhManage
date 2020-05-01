@@ -888,7 +888,7 @@
                             $('#menuNav3').attr('data-toggle', 'tab');
                             $('#menuNav4').attr('data-toggle', 'tab');
 
-                            $("#deleteWorkBtn").removeAttr("style");
+                            $("#deleteWorkBtn").attr("style", 'display:none;');
 
                             $('#modalWorkNo').val(workNo);
                             daata = data;
@@ -914,7 +914,9 @@
 
                             if (projectWork.status == '시작전') {
                                 $('#workDetails select').removeAttr('disabled');
+                                $("#deleteWorkBtn").removeAttr("style");
                             }
+
                             $('#memo').removeAttr('disabled');
 
                             // 작업 모달 제목창
@@ -1394,23 +1396,29 @@
 
         function deleteWork () {
             if ($("#modalWorkNo").val() == 0) {
-                alert("여기서 사용할 수 없는 기능입니다.")
-				return;
+                alert("여기서 사용할 수 없는 기능입니다.");
+                return;
             }
             $.ajax({
-				url: "deleteWork.pr",
-				type:'post',
-				data: {
+                url: "deleteWork.pr",
+                type: 'post',
+                data: {
                     workNo: $("#modalWorkNo").val(),
-				},
-				success: function (data) {
+                },
+                success: function (data) {
+                    delInfo = data;
+                    if (data.check > 0) {
+                        alert("이 프로젝트에 하위작업이 존재합니다. 삭제할 수 없습니다.");
+                        return;
+                    }
+
                     updateWorkList();
                     $("#workDetails").modal("toggle");
                 },
                 error: function (xhr, status, error) {
                     alert("ERROR!!");
                 }
-			})
+            })
         }
 	</script>
 

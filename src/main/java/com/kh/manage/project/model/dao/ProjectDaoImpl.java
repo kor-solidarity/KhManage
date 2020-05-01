@@ -191,6 +191,16 @@ public class ProjectDaoImpl implements ProjectDao {
 	public int deleteWork(SqlSessionTemplate sqlSession, String workNo) {
 		return sqlSession.update("Project.deleteWork", workNo);
 	}
+	
+	@Override
+	public int checkLowerWorks(SqlSessionTemplate sqlSession, String workNo) {
+		return sqlSession.selectOne("Project.checkLowerWorks", workNo);
+	}
+	
+	@Override
+	public int updateOutdatedProject(SqlSessionTemplate sqlSession, String projectPk) {
+		return sqlSession.update("Project.updateOutdatedProject", projectPk);
+	}
 }
 
 

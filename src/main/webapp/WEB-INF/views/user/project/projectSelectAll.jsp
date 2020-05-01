@@ -139,7 +139,21 @@
 							<td class="tdText">${pl.projectTypeName}</td>
 							<td class="tdText">${pl.projectManagerName}</td>
 							<td class="tdText">${pl.deptName}</td>
-							<td class="tdText">${pl.status}</td>
+							<td class="tdText">
+								<c:if test="${pl.status == '1'}">
+									시작전
+								</c:if>
+								<c:if test="${pl.status == '2'}">
+									진행중
+								</c:if>
+								<c:if test="${pl.status == '3'}">
+									지연
+								</c:if>
+								<c:if test="${pl.status == '4'}">
+									완료
+								</c:if>
+									<%--${pl.status}--%>
+							</td>
 							<td class="tdText">${pl.startDate}</td>
 							<td class="tdText">${pl.endDate}</td>
 								<%--실적--%>
@@ -154,7 +168,7 @@
 					<tr class="pagingArea">
 						<td colspan="12">
 							<div class="paging">
-								<a href="${path}/projectCenter.pr?currentPage=<c:out value='${pi.startPage}'/>" ><<</a>
+								<a href="${path}/projectCenter.pr?currentPage=<c:out value='${pi.startPage}'/>"><<</a>
 								<%--1페이지에서 그 이전으로 돌아가려고 하면 첫페이지로 보냄.--%>
 								<c:choose>
 									<c:when test="${pi.currentPage-1 > 1}">
@@ -176,7 +190,7 @@
 										</a>
 									</c:if>
 								</c:forEach>
-<%--								<< < 1 2 > >>--%>
+								<%--								<< < 1 2 > >>--%>
 
 
 								<c:choose>
@@ -189,7 +203,7 @@
 										<a href="${path}/projectCenter.pr.de?currentPage=<c:out value='${pi.currentPage + 1}'/>">> </a>
 									</c:otherwise>
 								</c:choose>
-								<a href="${path}/projectCenter.pr?currentPage=<c:out value='${pi.maxPage}'/>" >>> </a>
+								<a href="${path}/projectCenter.pr?currentPage=<c:out value='${pi.maxPage}'/>">>> </a>
 
 							</div>
 						</td>
