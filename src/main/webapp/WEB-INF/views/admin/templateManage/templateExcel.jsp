@@ -339,33 +339,33 @@
    	text-align:center;
    	border-bottom:2px solid white;
    }
-   .scheduler_default_corner_inner{
+   /* .scheduler_default_corner_inner{
 		display:none !important;
 	}
 	.scheduler_default_tree_image_no_children{
 		display:none !important;
-	}
-	.scheduler_default_event_inner{
+	} */
+	 .scheduler_default_event_inner{
 		background: #617E84 !important;
 		color : white !important;
 		text-align: center  !important;
 		font-weight: bold;
 		vertical-align:middle !important;
-	}
-	.scheduler_default_event_bar{
+	} 
+	  .scheduler_default_event_bar{
 		background: white !important;
 	}
 	.scheduler_default_event_bar_inner{
 		background: white !important;	
-	}
+	} 
 	.scheduler_default_rowheader_scroll,.scheduler_default_rowheader_inner,.scheduler_default_timeheadergroup_inner, .scheduler_default_timeheader_cell_inner
 	,.scheduler_default_corner{
-		background: #4F5467 !important;
-		color: white !important;
+		background: white !important;
+		color: black !important;
 	}
 	.scheduler_default_main{
 		border: 1px #4F5467 #1E2B44;
-	}
+	} 
 	/* .scheduler_default_rowheader_scroll,.scheduler_default_corner{
 		border : none !important;
 		display: none !important;
@@ -385,6 +385,46 @@
 	/* .scheduler_default_scrollable{
 		height: 2000px !important;
 	} */
+
+	.scheduler_default_columnheader_cell{
+	}
+	
+	.scheduler_default_columnheader_splitter{
+	}
+	
+	.divv1{
+		height: 59px;
+		width: 77px;
+		float: left;
+		border: 1px solid #dcdcdc;
+		text-align: center;
+	}
+	.divv2{
+		width:226px;
+		height: 59px;
+		float: left;
+		border: 1px solid #dcdcdc;
+		text-align: center;
+	}
+	.divv3{
+		width:79px;
+		height: 59px;
+		float: left;
+		border: 1px solid #dcdcdc;
+		text-align: center;
+	}
+	.divv4{
+		width:79px;
+		height: 59px;
+		float: left;
+		border: 1px solid #dcdcdc;
+		text-align: center;
+	}
+	.p{
+		font-size: 14px;
+		font-weight: bold;
+		margin-top: 24px;
+	}
 	
 </style>
 </head>
@@ -599,22 +639,22 @@
 		<%--하위 차트 판 --%>
 		<div style="width: 100%; height: 900px; float: left; /*padding: 0;*/ /*border: 1px red solid;*/">
 			<%--차트 좌측 목록--%>
-			<div style="margin-right: 0px; width: 662px; height: 898px; padding: 0px; border-left: 1px  gray solid; float: left">
+			<%-- <div style="margin-right: 0px; width: 662px; height: 898px; padding: 0px; border-left: 1px  gray solid; float: left">
 				<table border="1" style="height: 50px" class="chart-left-table" id="chart-left-table">
 					<tr class=" chart-left-top" style="height: 60px">
-						<%--ID--%>
+						ID
 						<th style="width: 60px">WBS</th>
-						<%--작업명--%>
+						작업명
 						<th style="width: 300px">작업명</th>
-						<%--기간--%>
+						기간
 						<!-- <th style="width: 70px">기간</th> -->
-						<%--시작--%>
+						시작
 						<th style="width: 160px">시작</th>
-						<%--완료--%>
+						완료
 						<th style="width: 160px">완료</th>
-						<%--선행작업--%>
+						선행작업
 						<!-- <th style="width: 100px">선행작업</th> -->
-						<%--돋보기(상세정보)--%>
+						돋보기(상세정보)
 						<th style="width: 40px"><i class="fas fa-search" data-toggle="modal"></i></th>
 					</tr>
 					
@@ -631,10 +671,8 @@
 					</c:forEach>
 										
 				</table>
-			</div>
-			<div id="chart" style="float: left">
+			</div> --%>
 			<div  id="dp"></div>
-			</div>
 			 	
 			<%--차트 우측: 간트차트--%>
 			<!-- <div class="gantt-div" style=""></div> -->
@@ -656,32 +694,33 @@
         { groupBy: "Month", format: "MMMM yyyy" },
         { groupBy: "Day", format: "d" }
     ];
-
-    dp.contextMenu = new DayPilot.Menu({items: [
-        {text:"Edit", onClick: function(args) { dp.events.edit(args.source); } },
-        {text:"Delete", onClick: function(args) { dp.events.remove(args.source); } },
-        {text:"-"},
-        {text:"Select", onClick: function(args) { dp.multiselect.add(args.source); } },
-    ]});
-
-    dp.treeEnabled = true;
-    dp.treePreventParentUsage = true;
-    dp.rowHeaderHideIconEnabled = true ;
     
+    dp.rowHeaderColumns = [
+    	  { text: 'WBS', display: "no" },
+    	  { text: '작업명', display: "name" },
+    	  { text: '시작', display: "begin" },
+    	  { text: '완료', display: "com" }
+    ];
+    
+   // dp.rowHeaderHideIconEnabled = true ;
     
      dp.resources = [
     	<% for(int i=0; i < list.size(); i++){
     		TemplateWork w = (TemplateWork)list.get(i);
     	%>
     	 	 {
+    		    "id":   "<%=w.getwName()%>",
+    		    "no":  '<%=w.getwNo()%>',
     		    "name": "<%=w.getwName()%>",
-    		    "id":   "<%=w.getwName()%>"
+    		    "begin" : "<%=w.getBeginDate()%>",
+    		    "com" : "<%=w.getCompleteDate()%>",
+    		    
     		  },
     	<%}%>
     		]
 
-    dp.heightSpec = "Max";
-    dp.height = 500;
+    //dp.heightSpec = "Max";
+    dp.height = 600;
 	var e;
      dp.events.list = [];
 	
@@ -840,9 +879,23 @@
         return colors[i % 4];
     }
     $(function(){
-    	$(".scheduler_default_corner").empty();
+    	$(".scheduler_default_corner").children().eq(3).remove();	
+    	
+    	$(".scheduler_default_corner_inner").remove();
+    	
+    	/* $(".scheduler_default_corner").children().eq(0).remove();
+    	
+    	$(".scheduler_default_divider").remove();
+    	
+    	$(".scheduler_default_columnheader_cell").remove();
+    	$(".scheduler_default_columnheader_cell_inner").remove();
+    	$(".scheduler_default_columnheader_splitter").remove(); */
+    	
+    	//$(".scheduler_default_corner").append("<div class='divv1'><p class='p'>WBS<p></div> <div class='divv2'><p class='p'>작업명</p></div>  <div class='divv3'><p class='p'>시작</p></div> <div class='divv4'><p class='p'>완료</p></div>")
+    	
+    	
     })
-   
+    
 
 </script>
 

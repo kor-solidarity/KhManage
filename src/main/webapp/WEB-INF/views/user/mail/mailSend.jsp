@@ -85,7 +85,7 @@
 	</form>
 	</div>
 	
-	<form method="post" action="sendMail.ma" id="mailForm">
+	<form method="post" action="sendMail.ma" id="mailForm" enctype="multipart/form-data">
 		<table id="mailTable" style="margin-left: 20px;">
 			<tr>
 				<td class="mailtd">받는 사람</td>
@@ -113,18 +113,18 @@
 				<td class="mailtd">제목</td>
 				<td class="mailtd2">
 				<div id="mailr" style="width: 100%;">
-					<input class="tdinput" style="width: 100%" type="text" name="mTitle">
+					<input class="tdinput" style="width: 100%" type="text" name="subject">
 				</div>
 				</td>
 				<td><div></div></td>
 			</tr>
 			<tr>
 				<td class="mailtd">파일 첨부</td>
-				<td><input  type="file" ></td>
+				<td><input  type="file" name="file" multiple="multiple"></td>
 				<td><div></div></td>
 			</tr>
 		</table><br><br>			
-	<textarea cols="80" rows="14" id="summernote" name="mContent"></textarea>
+	<textarea cols="80" rows="14" id="summernote" name="content"></textarea>
 	</form>
 	</div>
 	</div>
@@ -137,7 +137,7 @@
 		if (key.keyCode == 13) {
 			$("#mailperson").css("width", '80');
 			
-			$("#ul").append("<div id='div' style='display: inline-block; '>" + "<input id='label' name='mAddress' value='" + $("#mailperson").val() + " ' >   <input style='outline:none' class='xbtn' type='button' name='delbtn' value='x'> </div>")
+			$("#ul").append("<div id='div' style='display: inline-block; '>" + "<input id='label' name='receiver' value='" + $("#mailperson").val() + " ' >   <input style='outline:none' class='xbtn' type='button' name='delbtn' value='x'> </div>")
 			$('#mailperson').val("");
 			$('#mailperson').focus();
 		}

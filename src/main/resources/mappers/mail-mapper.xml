@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Mail">
+	<resultMap type="Mail" id="mailResultSet">
+		<id property="mailNo" column="MAIL_NO"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="subject" column="MAIL_SUBJECT"/>
+		<result property="content" column="MAIL_CONTENT"/>
+		<result property="enrollDate" column="MAIL_ENROLLDATE"/>
+		<result property="status" column="MAIL_STATUS"/>
+		<result property="from" column="MAIL_FROM"/>
+		<result property="reNo" column="RECEIVER_NO"/>
+		<result property="receiver" column="RECEIVER_EMAIL"/>
+		<result property="receiverType" column="RECEIVER_TYPE"/>
+		<result property="mbNo" column="MAILBOX_NO"/>
+		<result property="mailBoxType" column="MAILBOX_TYPE"/>
+		<collection property="atMail" resultMap="atMailResultSet" />
+	</resultMap>
+	
+	<resultMap type="AttachmentMail" id="atMailResultSet">
+		<id property="eaNo" column="EA_NO"/>
+		<result property="mailNo" column="MAIL_NO"/>
+		<result property="originName" column="ORIGIN_NAME"/>
+		<result property="changeName" column="CHANGE_NAME"/>
+		<result property="eaSize" column="EA_SIZE"/>
+		<result property="filePath" column="FILE_PATH"/>
+	</resultMap>
+	
+	
+	<insert id="insertMail" parameterType="Mail">
+		INSERT INTO MAIL
+		VALUES(SEQ_MA_NO.NEXTVAL, #{memberNo},#{subject}, #{content}, SYSDATE, 'Y' , #{from})		
+	</insert>
+	
+	<insert id="insertAt" parameterType="AttachmentMail">
+		INSERT INTO ATTACHMENT_MAIL
+		VALUES(SEQ_ATM_NO.NEXTVAL, SEQ_MA_NO.CURRVAL, #{originName}, #{changeName}, #{eaSize}, #{filePath})
+	</insert>
+	
+	<insert id="insertReceiver" parameterType="Mail">
+		INSERT INTO MAIL_RECEIVER
+		VALUES(SEQ_RE_NO.NEXTVAL, SEQ_MA_NO.CURRVAL, #{receiver}, '1')
+	</insert>
+	
+	<insert id="insertMailBox" parameterType="Mail">
+		INSERT INTO MAILBOX
+		VALUES(SEQ_MB_NO.NEXTVAL, SEQ_MA_NO.CURRVAL, #{memberNo}, 2 )
+	</insert>
+	
+	<select id="sentMailList" parameterType="Mail" resultMap="mailResultSet">
+		SELECT *
+		FROM MAIL M 
+		JOIN MAILBOX MB ON(M.MAIL_NO = MB.MAIL_NO)
+		JOIN MAIL_RECEIVER MR ON(M.MAIL_NO = MR.MAIL_NO)
+		WHERE MAILBOX_TYPE = 2
+		AND M.MEMBER_NO = #{memberNo}
+	</select>
+	
+	<select id="selectMailOne" parameterType="java.lang.String" resultMap="mailResultSet">
+		SELECT *
+		FROM MAIL M 
+		JOIN MAILBOX MB ON(M.MAIL_NO = MB.MAIL_NO)
+		JOIN MAIL_RECEIVER MR ON(M.MAIL_NO = MR.MAIL_NO)
+		JOIN ATTACHMENT_MAIL AM ON(M.MAIL_NO = AM.MAIL_NO)
+		WHERE M.MAIL_NO = #{no}
+	</select>
+	
+	<select id="downAttach" resultMap="atMailResultSet" parameterType="java.lang.String">
+		SELECT *
+		FROM ATTACHMENT_MAIL
+		WHERE EA_NO = #{no}
+	</select>
+	
+	<select id="listCount"  resultType="_int">
+		SELECT COUNT(*)
+		FROM MAIL M 
+		JOIN MAILBOX MB ON(M.MAIL_NO = MB.MAIL_NO)
+		JOIN MAIL_RECEIVER MR ON(M.MAIL_NO = MR.MAIL_NO)
+		WHERE MAILBOX_TYPE = 2
+		AND M.MEMBER_NO = #{memberNo}
+	</select> 
+	
+	<insert id="insertReciveMail" parameterType="Mail" >
+		INSERT INTO MAIL
+		VALUES(SEQ_MA_NO.NEXTVAL, #{memberNo},#{subject}, #{content}, SYSDATE, 'Y' , #{from})
+	</insert>
+	
+	<insert id="insertReciveMailBox" parameterType="Mail">
+		INSERT INTO MAILBOX
+		VALUES(SEQ_MB_NO.NEXTVAL, SEQ_MA_NO.CURRVAL, #{memberNo}, 1 )
+	</insert>
+		
+</mapper>

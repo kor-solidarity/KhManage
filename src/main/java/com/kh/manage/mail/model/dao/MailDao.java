@@ -1,5 +1,34 @@
 package com.kh.manage.mail.model.dao;
 
+import java.util.List;
+
+import org.mybatis.spring.SqlSessionTemplate;
+
+import com.kh.manage.common.Attachment;
+import com.kh.manage.common.PageInfo;
+import com.kh.manage.mail.model.vo.AttachmentMail;
+import com.kh.manage.mail.model.vo.Mail;
+
 public interface MailDao {
+
+	int insertMail(SqlSessionTemplate sqlSession, Mail m);
+
+	int insertAttachment(SqlSessionTemplate sqlSession, List<AttachmentMail> fileList);
+
+	int insertMailBox(SqlSessionTemplate sqlSession, Mail m);
+
+	int insertReceiver(SqlSessionTemplate sqlSession, Mail m);
+
+	List<Mail> sentMailList(SqlSessionTemplate sqlSession, Mail mail, PageInfo pi);
+
+	Mail selectMailOne(SqlSessionTemplate sqlSession, String no);
+
+	AttachmentMail downAttachment(SqlSessionTemplate sqlSession, String no);
+
+	int getListCount(SqlSessionTemplate sqlSession, Mail mail);
+
+	void insertReciveMail(SqlSessionTemplate sqlSession, Mail reciveMail);
+
+	void insertReciveMailBox(SqlSessionTemplate sqlSession, Mail reciveMail);
 
 }
