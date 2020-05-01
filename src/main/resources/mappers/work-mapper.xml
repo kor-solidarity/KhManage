@@ -57,14 +57,14 @@
 	</resultMap>
 	
 	<resultMap type="WorkAttachment" id="selectWorkAttachment">
-		<id property="productNo" column="PRODUCT_NO"/>
+		<id property="atNo" column="AT_NO"/>
+		<result property="productNo" column="PRODUCT_NO"/>
 		<result property="workNo" column="WORK_NO"/>
 		<result property="productType" column="PRODUCT_TYPE"/>
 		<result property="productTitle" column="PRODUCT_TITLE"/>
 		<result property="productContent" column="PRODUCT_CONTENT"/>
 		<result property="enrollDate" column="ENROLL_DATE"/>
 		<result property="modifyDate" column="MODIFY_DATE"/>
-		<result property="atNo" column="AT_NO"/>
 		<result property="originName" column="ORIGIN_NAME"/>
 		<result property="changeName" column="CHANGE_NAME"/>
 		<result property="filePath" column="FILEPATH"/>
@@ -72,7 +72,7 @@
 	</resultMap>
 	
 	<resultMap type="Work" id="workAttachResultSet">
-		<id property="workNo" column="asdf"/>
+		<id property="workNo" column="WORK_NO"/>
 		<result property="workName" column="WORK_NAME"/>
 		<result property="status" column="STATUS"/>
 		<result property="projectNo" column="PROJECT_NO"/>
@@ -108,7 +108,7 @@
 	
 	<select id="selectWork" parameterType="java.lang.String" resultMap="workAttachResultSet">
 	SELECT 
-        W.WORK_NO "asdf"
+        W.WORK_NO
       , W.WORK_NAME
       , W.STATUS
       , W.PROJECT_NO
@@ -125,8 +125,7 @@
       , W.WORK_STATUS
       , P.PROJECT_NAME
       , WP.PRODUCT_NO
-      , WP.WORK_NO
-      , WP.PRODUCT_TYPE
+      , WP.PRODUCT_TYPE 
       , WP.PRODUCT_TITLE
       , WP.PRODUCT_CONTENT
       , WP.ENROLL_DATE
@@ -138,7 +137,7 @@
       , WP.EXT
 	FROM WORK W
     JOIN PROJECT P ON (W.PROJECT_NO = P.PROJECT_PK)
-    JOIN (SELECT 
+    LEFT OUTER JOIN (SELECT 
         WP.PRODUCT_NO
       , WP.WORK_NO
       , WP.PRODUCT_TYPE

@@ -43,12 +43,14 @@
 	</bean>
 
 	<!-- ajax JsonView 파싱 -->
-   <bean id="jsonView" class="net.sf.json.spring.web.servlet.view.JsonView">
-   </bean>
+   <bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+		<property name="contentType" value="text/html;charset=UTF-8"/>
+	</bean>
    <bean id="viewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
       <property name="order" value="0"/>
    </bean>
 
+	
 
 
 	<!-- 트랜젝션 매니저 bean 등록 -->
