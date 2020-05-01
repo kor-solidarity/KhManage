@@ -641,9 +641,11 @@ body {
 					date = data;
 					curDay = date.substring(6,9);
 					infoDate = date.substring(0,8);
-					
+					console.log("날짜 : " + curDay);
+					console.log("날짜 : " + infoDate);
 					if(Number(lastDay) < Number(curDay)){
 						var text=document.getElementById("chatContent").value + "`" + "${cr.chatRoomNo}"+ "`" + "${loginUser.memberNo}" + "`" + "텍스트" + "`" + "${loginUser.memberName}" + "`" + infoDate + "`" + "Info";
+						console.log("날짜 : " + text);
 						$.ajax({
 							url:'insertInfoMessage.ct',
 							type: 'post',
@@ -652,6 +654,7 @@ body {
 						 success:function(data){
 							 $("#chatAreaTable").append("<tr height='10px;'></tr><tr><br><td colspan='2'><div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send' align='center' style='width:100%; font-size:10px; margin-right: 40px; background:orange; height:15px; padding: 0px;'>"+ date.substring(0, 8) +"<span class='msg_time_send'></span></div></div></td></tr>")
 							 var text= date.substring(0, 8) + "`" + "${cr.chatRoomNo}"+ "`" + "${loginUser.memberNo}" + "`" + "텍스트" + "`" + "${loginUser.memberName}" + "`" +"sss" + "`" + "M999";
+							 console.log("날짜 : " + text);
 							 ws.send(text);
 						 }
 						});

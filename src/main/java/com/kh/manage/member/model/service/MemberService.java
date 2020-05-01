@@ -9,6 +9,8 @@ import com.kh.manage.admin.rank.model.vo.Rank;
 import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.member.model.exception.LoginException;
+import com.kh.manage.member.model.vo.AllDashBoard;
+import com.kh.manage.member.model.vo.DeptProjectCount;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.project.model.vo.Project;
 
@@ -59,6 +61,10 @@ public interface MemberService {
 	int insertCustomerProjectTeam(Member m);
 
 	int resetPassword(Member m);
+
+	List<AllDashBoard> selectAllDashBoard(AllDashBoard ad);
+
+	List<DeptProjectCount> selectDeptProjectCount();
 
 
 

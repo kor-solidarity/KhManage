@@ -31,7 +31,9 @@ import com.kh.manage.common.Pagination;
 import com.kh.manage.infoBoard.model.vo.InfoBoard;
 import com.kh.manage.member.model.exception.LoginException;
 import com.kh.manage.member.model.service.MemberService;
+import com.kh.manage.member.model.vo.AllDashBoard;
 import com.kh.manage.member.model.vo.Customer;
+import com.kh.manage.member.model.vo.DeptProjectCount;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.project.model.vo.Project;
 
@@ -119,12 +121,40 @@ public class MemberController {
 		return "user/main/detailDashboard";
 	}
 	
+	//종합 대시보드 (성준)
 	@RequestMapping("synthesisDashboard.me")
-	public String synthesisDashboard() {
+	public String synthesisDashboard(Model model) {
+		AllDashBoard ad = new AllDashBoard();
+		ad.setStart(1);
+		ad.setEnd(5);
+		
+		List<AllDashBoard> list = ms.selectAllDashBoard(ad);
+		List<DeptProjectCount> dList = ms.selectDeptProjectCount();
+		
+		model.addAttribute("list", list);
+		model.addAttribute("dList", dList);
 		
 		return "user/main/synthesisDashboard";
 	}
 	
+	@RequestMapping("/changeAllDahboard.me")
+	public void changeAllDahboard(AllDashBoard ad, HttpServletRequest request, HttpServletResponse response) {
+		List<AllDashBoard> list = ms.selectAllDashBoard(ad);
+		
+		request.setAttribute("list", list);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		
+		String gson = new Gson().toJson(list);
+		
+		try {
+			response.getWriter().write(gson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+ 	
 	
 	//*************************************************
 

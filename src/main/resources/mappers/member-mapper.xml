@@ -50,6 +50,36 @@
 		<result property="ext" column="EXT"/>
 	</resultMap>
 	
+	<resultMap type="AllDashBoard" id="AllDashBoardResultSet">
+		<result property="projectPk" column="PROJECT_PK"/>
+		<result property="projectName" column="PROJECT_NAME"/>
+		<result property="isImportant" column="IS_IMPORTANT"/>
+		<result property="projectTypeName" column="TYPE_NAME"/>
+		<result property="projectRank" column="PROJECT_RANK"/>
+		<result property="projectManager" column="PROJECT_MANAGER"/>
+		<result property="managerName" column="MEMBER_NAME"/>
+		<result property="deptNo" column="DEPT_NO"/>
+		<result property="deptName" column="DEPT_NAME"/>
+		<result property="startDate" column="START_DATE"/>
+		<result property="endDate" column="END_DATE"/>
+		<result property="detail" column="DETAIL"/>
+		<result property="remarks" column="REMARKS"/>
+		<result property="status" column="STATUS"/>
+		<result property="workClear" column="WORKCLEAR"/>
+		<result property="allWork" column="ALLWORK"/>
+		<result property="issue" column="ISSUE"/>
+		<result property="workProduct" column="WORK_PRODUCT"/>
+	</resultMap>
+	
+	<resultMap type="DeptProjectCount" id="deptProjectCountResultSet">
+		<result property="deptNo" column="DEPT_NO"/>
+		<result property="deptName" column="DEPT_NAME"/>
+		<result property="before" column="BEFORE"/>
+		<result property="proceeding" column="PROCEEDING"/>
+		<result property="delay" column="DELAY"/>
+		<result property="complete" column="COMPLETE"/>
+	</resultMap>
+	
 	<!-- <resultMap type="Customer" id="customerResultSet">
 		<id property="customerNo" column="CUSTOMER_NO"/>
 		<result property="customerName" column="CUSTOMER_NAME"/>
@@ -299,9 +329,107 @@
 		WHERE MEMBER_NO = #{memberNo}
 	</update>
 	
+	<select id="selectAllDashBoard" parameterType="AllDashBoard" resultMap="AllDashBoardResultSet">
+		SELECT RNUM
+		     , PROJECT_PK
+		     , PROJECT_NAME
+		     , IS_IMPORTANT
+		     , TYPE_NAME
+		     , PROJECT_RANK
+		     , PROJECT_MANAGER
+		     , MEMBER_NAME
+		     , DEPT_NO
+		     , DEPT_NAME
+		     , START_DATE
+		     , END_DATE
+		     , DETAIL
+		     , REMARKS
+		     , STATUS
+		     , WORKCLEAR
+		     , ALLWORK 
+		     , ISSUE
+		     , WORK_PRODUCT
+		FROM(SELECT ROWNUM RNUM
+			     , PROJECT_PK
+			     , PROJECT_NAME
+			     , IS_IMPORTANT
+			     , TYPE_NAME
+			     , PROJECT_RANK
+			     , PROJECT_MANAGER
+			     , MEMBER_NAME
+			     , DEPT_NO
+			     , DEPT_NAME
+			     , START_DATE
+			     , END_DATE
+			     , DETAIL
+			     , REMARKS
+			     , STATUS
+			     , WORKCLEAR
+			     , ALLWORK 
+			     , ISSUE
+			     , WORK_PRODUCT
+			FROM (SELECT P.PROJECT_PK
+			     , P.PROJECT_NAME
+			     , P.IS_IMPORTANT
+			     , T.TYPE_NAME
+			     , P.PROJECT_RANK
+			     , P.PROJECT_MANAGER
+			     , M.MEMBER_NAME
+			     , P.DEPT_NO
+			     , D.DEPT_NAME
+			     , P.START_DATE
+			     , P.END_DATE
+			     , P.DETAIL
+			     , P.REMARKS
+			     , CASE WHEN P.STATUS = '1' THEN '시작전'
+			            WHEN P.STATUS = '2' THEN '진행중'
+			            WHEN P.STATUS = '3' THEN '지연'
+			            WHEN P.STATUS = '4' THEN '완료'
+			     END AS STATUS
+			     , (SELECT COUNT(*)
+			        FROM WORK
+			        WHERE PROJECT_NO = P.PROJECT_PK
+			        AND STATUS = '개발완료') AS WORKCLEAR
+			     ,  (SELECT COUNT(*)
+			        FROM WORK
+			        WHERE PROJECT_NO = P.PROJECT_PK) AS ALLWORK 
+			     , (SELECT COUNT(*)
+			        FROM ISSUE 
+			        WHERE PROJECT_NO = P.PROJECT_PK) AS ISSUE
+			     , (SELECT COUNT(*)
+			        FROM WORK_PRODUCT WP 
+			        JOIN WORK W ON (WP.WORK_NO = W.WORK_NO)
+			        WHERE W.PROJECT_NO = P.PROJECT_PK) AS WORK_PRODUCT
+			FROM PROJECT P
+			JOIN PROJECT_TYPE T ON (P.PROJECT_TYPE_PK = T.TYPE_PK)
+			JOIN MEMBER M ON(P.PROJECT_MANAGER = M.MEMBER_NO)
+			JOIN DEPT D ON(P.DEPT_NO = D.DEPT_NO)
+			ORDER BY P.START_DATE)
+			WHERE IS_IMPORTANT = 'Y')
+		WHERE RNUM BETWEEN #{start} AND #{end}
+	</select>
 	
-	
-	
+	<select id="selectDeptProjectCount" resultMap="deptProjectCountResultSet">
+		SELECT D.DEPT_NO, 
+				D.DEPT_NAME
+		     , (SELECT COUNT(*)
+		        FROM PROJECT P
+		        WHERE P.DEPT_NO = D.DEPT_NO
+		        AND STATUS = '1') AS BEFORE
+		     , (SELECT COUNT(*)
+		        FROM PROJECT P
+		        WHERE P.DEPT_NO = D.DEPT_NO
+		        AND STATUS = '2') AS PROCEEDING  
+		     , (SELECT COUNT(*)
+		        FROM PROJECT P
+		        WHERE P.DEPT_NO = D.DEPT_NO
+		        AND STATUS = '3') AS DELAY  
+		    , (SELECT COUNT(*)
+		        FROM PROJECT P
+		        WHERE P.DEPT_NO = D.DEPT_NO
+		        AND STATUS = '4') AS COMPLETE        
+		FROM DEPT D
+	</select>
 	
 </mapper>
 
