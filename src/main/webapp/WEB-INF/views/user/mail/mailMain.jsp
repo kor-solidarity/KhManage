@@ -104,7 +104,7 @@
 		<button class="wjs_btn" style="width: 50px;">답장</button>
 		<button class="wjs_btn" style="width: 50px;">삭제</button>
 		<button class="wjs_btn" style="width: 50px;">읽음</button>
-			
+		<button id="list">리스트불러오기</button>	
 	</div>
 		<form class="navbar-form navbar-left" style="float: left; margin-left: 20px;">
 					<div class="input-group">
@@ -149,6 +149,10 @@
 	 
 	});
 
+	$("#list").click(function(){
+		
+		location.href="mail/s3.ma";
+	});
 </script>
 </html>
 

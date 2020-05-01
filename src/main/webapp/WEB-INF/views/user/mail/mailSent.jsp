@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -121,14 +122,18 @@
 			<td class="titletd">제목</td>
 			<td class="datetd">날짜</td>
 		</tr>
-		<tr>
-			<td class="chktd"><input type="checkbox"></td>
-			<td class="startd"><img  src="resources/img/star.png" class="star"></td>
-			<td class="mailtd"><img  src="resources/img/mail.png" class="mail"></td>
-			<td class="sendtd">보낸사람</td>
-			<td class="titletd">제목</td>
-			<td class="datetd">날짜</td>
-		</tr>
+		
+		<c:forEach var="m" items="${list}">
+			<tr>
+				<td style="display: none;"><input type="hidden" value="${m.mailNo }"></td>
+				<td class="chktd"><input type="checkbox"></td>
+				<td class="startd"><img  src="resources/img/star.png" class="star"></td>
+				<td class="mailtd"><img  src="resources/img/mail.png" class="mail"></td>
+				<td class="sendtd">${m.receiver }</td>
+				<td class="titletd">${m.subject }</td>
+				<td class="datetd">${m.enrollDate }</td>
+			</tr>		
+		</c:forEach>
 	
 	</table>
 	
@@ -137,11 +142,13 @@
 	</div>	
 </body>
 <script>
-	$("#mainTable tr").click(function(){
-	 /* var num = $(this).parent().children("input").val(); */
+	$("#mailTable tr").click(function(){
+	 var num = $(this).children().eq(0).children().val(); 
 	 
-/* 	 location.href="mailReceived.ma";
- */	 
+	 console.log(num);
+	 
+ 	 location.href="mailDetail.ma?no=" +num;
+ 	 
 });
 
 </script>
