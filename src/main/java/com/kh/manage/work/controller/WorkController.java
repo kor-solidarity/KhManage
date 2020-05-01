@@ -76,6 +76,9 @@ public class WorkController {
 		
 		Work w = ws.selectWork(workNo);
 		System.out.println(w);
+		List<Grantor> gt = ws.selectGrantorList(w.getProjectNo());
+		
+		mv.addObject("gt", gt);
 		mv.addObject("work", w);
 		
 		mv.setViewName("jsonView");

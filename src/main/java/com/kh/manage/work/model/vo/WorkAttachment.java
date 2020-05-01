@@ -2,15 +2,19 @@ package com.kh.manage.work.model.vo;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class WorkAttachment {
+	private String atNo;
 	private String productNo;
 	private String workNo;
 	private String productType;
 	private String productTitle;
 	private String productContent;
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date enrollDate;
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date modifyDate;
-	private String atNo;
 	private String originName;
 	private String changeName;
 	private String filePath;

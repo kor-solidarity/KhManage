@@ -3,6 +3,8 @@ package com.kh.manage.work.model.vo;
 import java.sql.Date;
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 
 public class Work implements java.io.Serializable{
@@ -11,7 +13,9 @@ public class Work implements java.io.Serializable{
 	private String status;
 	private String projectNo;
 	private String projectName;
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date beginDate;
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date completeDate;
 	private String precedeNo;
 	private String completeRate;

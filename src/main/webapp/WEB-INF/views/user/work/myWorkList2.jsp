@@ -896,7 +896,7 @@
 									
 									</td>
 									<td class="modalTd" colspan="5">
-									<input type="text" name="projectName" id="projectName" class="inputMenu form-control projectName">
+									<input type="text" name="projectName" id="projectName" class="inputMenu form-control projectName" readOnly>
 									<%-- <select name="projectNo" id="projectNo" class="inputMenu form-control" required="required">
 										<option value="#" >선택하세요</option>
 									
@@ -917,11 +917,11 @@
 								<tr>
 									<td class="modalTd_T">작업명</td>
 									<td class="modalTd" colspan="2" >
-									<input type="text" name="workName" class="inputMenu form-control workName">
+									<input type="text" name="workName" class="inputMenu form-control workName" readOnly>
 									</td>
 									<td class="modalTd_T">작업유형</td>
 									<td class="modalTd" colspan="2">
-									<select name="workType" class="inputMenu form-control" required="required">
+									<select name="workType" class="inputMenu form-control workType" required="required" disabled>
 										<option value="#" >선택하세요</option>
 										<option value="개인">개인</option>
 										<option value="일반">일반</option>
@@ -940,11 +940,11 @@
 								<tr>
 									<td class="modalTd_T">시작일</td>
 									<td class="modalTd" colspan="2">
-									<input name="beginDate" type="date" class="inputMenu form-control" required="required">
+									<input name="beginDate" type="date" class="inputMenu form-control beginDate" required="required" readOnly>
 									</td>
 									<td class="modalTd_T">완료일</td>
 									<td class="modalTd" colspan="2">
-									<input name="completeDate" type="date" class="inputMenu form-control" required="required">
+									<input name="completeDate" type="date" class="inputMenu form-control completeDate" required="required" readOnly>
 									</td>
 								</tr>
 								<tr>
@@ -958,11 +958,11 @@
 								<tr>
 									<td class="modalTd_T">선행작업</td>
 									<td class="modalTd" colspan="2" >
-									<input name="precedeNo" type="text" class="inputMenu form-control" required="required">
+									<input name="precedeNo" type="text" class="inputMenu form-control precedeNo" required="required" readOnly>
 									</td>
 									<td class="modalTd_T">완료율</td>
 									<td class="modalTd" colspan="2">
-									<input name="completeRate" type="number" class="inputMenu form-control" min="0" max="100">	
+									<input name="completeRate" type="number" class="inputMenu form-control completeRate" min="0" max="100">	
 									</td>
 								</tr>
 								<tr>
@@ -976,7 +976,7 @@
 								<tr>
 									<td class="modalTd_T">작업단계</td>
 									<td class="modalTd" colspan="2" >
-										<select name="workLevel" class="inputMenu form-control" required="required">
+										<select name="workLevel" class="inputMenu form-control workLevel" required="required" disabled>
 											<option value="#" >선택하세요</option>
 											<option value="1">1</option>
 											<option value="2">2</option>
@@ -985,7 +985,7 @@
 									</td>
 									<td class="modalTd_T">작업상태</td>
 									<td class="modalTd" colspan="2">
-										<select name="status" class="inputMenu form-control" required="required">
+										<select name="status" class="inputMenu form-control status" required="required">
 											<option value="#" >선택하세요</option>
 											<option value="시작전">시작전</option>
 											<option value="개발중">개발중</option>
@@ -1008,11 +1008,11 @@
 								<tr>
 									<td class="modalTd_T">상위작업</td>
 									<td class="modalTd" colspan="2" >
-									<input type="text" name="highWorkNo" class="inputMenu form-control" required="required">
+									<input type="text" name="highWorkNo" class="inputMenu form-control highWorkNo" required="required" readOnly>
 									</td>
 									<td class="modalTd_T">승인자</td>
 									<td class="modalTd" colspan="2">
-										<select name="grantorNo" id="grantorList" class="inputMenu form-control" required="required">
+										<select name="grantorNo" id="grantorNo" class="inputMenu form-control grantorNo" required="required" disabled>
 											
 										</select>
 									</td>
@@ -1075,10 +1075,10 @@
 								</tr>
 								<tr>
 									<td class="modalTd_T">작업명
-									<input type="hidden" name="workNo" class="workNo" readOnly>
+									<input type="hidden" name="workNo" class="workNo">
 									</td>
 									<td class="modalTd" colspan="2" >
-									<input type="text" name="workName" class="inputMenu form-control workName">
+									<input type="text" name="workName" class="inputMenu form-control workName" readOnly>
 									</td>
 									<td class="modalTd_T">작업유형</td>
 									<td class="modalTd" colspan="2">
@@ -1096,7 +1096,7 @@
 								<tr>
 									<td class="modalTd_T">산출물 구분</td>
 									<td class="modalTd" colspan="5">
-									<select class="inputMenu form-control" name="productType">
+									<select class="inputMenu form-control productType" name="productType">
 										<option>--선택하세요--</option>
 										<option value="UI보고서">UI보고서</option>
 										<option value="요구사항정의서">요구사항 정의서</option>
@@ -1162,16 +1162,16 @@
 											   id="workProductTable">
 											<thead>
 											<tr>
-												<th style="text-align: center; width: 20%;">
+												<th style="text-align: center; width: 30%;">
 													산출물 구분
 												</th>
-												<th style="text-align: center; width: 40%;">
+												<th style="text-align: center; width: 35%;">
 													파일명
 												</th>
 												<th style="text-align: center; width: 20%;">
 													등록일
 												</th>
-												<th style="text-align: center; width: 7%;">
+												<th style="text-align: center; width: 15%;">
 													삭제
 												</th>
 											</tr>
@@ -1188,10 +1188,7 @@
 													2020-04-28
 												</td>
 												<td style="text-align: center;">
-													<button onclick="FileDelete('d726674b-be83-4317-8f1f-4b984fc4890c');"
-															file_uid="d726674b-be83-4317-8f1f-4b984fc4890c"
-															class="k-upload-action k-button-bare"
-															style="display: inline-block;" type="button">
+													<button style="display: inline-block; border:none;" type="button">
 														<span class="glyphicon glyphicon-trash"> </span>
 													</button>
 												</td>
@@ -1227,6 +1224,7 @@
 	<script>
 	
 	$(function(){
+		
 		$("#projectNo").change(function(){
 			var pno = $(this).val();
 			console.log(pno);
@@ -1267,8 +1265,12 @@
 			$('#workFileInsert').submit();
 		});
 	
+		
+		var btnNum;
+		
 		$("#workArea").find("div").click(function(){
 			var workNo = $(this).find("input").eq(0).val();
+			$("#workProductTable > tbody").empty();
 			$.ajax({
 				url:"selectWork.wk",
 				type:"post",
@@ -1276,92 +1278,48 @@
 				dataType:"json",
 				success:function(data){
  					console.log(data);
- 					
-					console.log(data.beginDate);
-					//시작일
-					//4월 17, 2020
-					var test = data.beginDate;
-					var beginDateTest = test.split(/월 |, /)
-					console.log(beginDateTest);
-					// 4
-					var month = beginDateTest[0];
-					// 17
-					var day = beginDateTest[1];
-					// 2020
-					var year = beginDateTest[2];
 					
-					var beginDate = 0;
-					var rDay = 0;
+					console.log(data.work.beginDate);
+					console.log(data.work.completeDate);
 					
-					if(month < 10){
-						var rMonth = "0" + month;
-						if(day < 10){
-							rDay = "0" + day;
-							beginDate = year +"-"+ rMonth + "-" + rDay;
-						}else{
-							beginDate = year +"-"+ rMonth + "-" + day;
-						}
+					console.log(data.gt[0].memberPk);
+					console.log(data.work.grantorNo);
+					console.log(data.work.workAttachment[0].productType);
+					btnNum = data.work.workAttachment.length;
+					console.log(btnNum)
+					for(var i = 0; i < data.gt.length; i++){
+						$("#grantorNo").append("<option value='" + data.gt[i]['memberPk'] + "'>" + data.gt[i]['memberName'] + "</option>");
+						
+					};
+					
+					$(".workNo").val(data.work.workNo);
+					$(".workName").val(data.work.workName);
+					$(".workType").val(data.work.workType);
+					$("#projectNoForm").val(data.work.projectNo);
+					$(".projectName").val(data.work.projectName);
+					$(".beginDate").val(data.work.beginDate);
+					$(".completeDate").val(data.work.completeDate);
+					$(".precedeNo").val(data.work.precedeNo);
+					$(".completeRate").val(data.work.completeRate);
+					$(".grantorNo").val(data.work.grantorNo);
+					$(".workLevel").val(data.work.workLevel);
+					$(".status").val(data.work.status);
+					$(".highWorkNo").val(data.work.highWorkNo);
+					$(".workStatus").val(data.work.workStatus);
+					$(".productType").val(data.work.workAttachment[0].productType);
+					
+					if(data.work.workAttachment[0].atNo != null)
+					for(var i = 0; i < data.work.workAttachment.length; i++){
+						$("#workProductTable").append("<tr>" + "<td class='hidden-xs'>" + data.work.workAttachment[i].productType + "</td>" + 
+															"<td class='highlight'>" + data.work.workAttachment[i].originName + "</td>" + 
+															"<td class='hidden-xs' style='text-align: center;'>" + data.work.workAttachment[i].enrollDate + "</td>" + 
+															"<td style='text-align: center;' id='productDeleteBtn" + i + "'> <button style='display: inline-block; border:none;' type='button'><span class='glyphicon glyphicon-trash'> </span> </button> </td>")
 					}else{
-						if(day < 10){
-							rDay = "0" + day;
-							beginDate = year +"-"+ month + "-" + rDay;
-						}else{
-							beginDate = year +"-"+ month + "-" + day;
-						}
+						$("#workProductTable").append("<tr>" + "<td class='hidden-xs'></td>" + 
+								"<td class='highlight'></td>" + 
+								"<td class='hidden-xs' style='text-align: center;'></td>" + 
+								"<td></td>")
 					}
-					//2020-04-17 출력
-					console.log(beginDate);
-					
-					
-					var ctest = data.completeDate;
-					var completeDateTest = ctest.split(/월 |, /)
-					console.log(completeDateTest);
-					
-					// 4
-					var cMonth = completeDateTest[0];
-					// 17
-					var cDay = completeDateTest[1];
-					// 2020
-					var cYear = completeDateTest[2];
-					
-					var completeDate = 0;
-					var crDay = 0;
-					
-					if(cMonth < 10){
-						var crMonth = "0" + cMonth;
-						if(cDay < 10){
-							crDay = "0" + cDay;
-							completeDate = cYear +"-"+ crMonth + "-" + crDay;
-						}else{
-							completeDate = cYear +"-"+ crMonth + "-" + cDay;
-						}
-					}else{
-						if(cDay < 10){
-							crDay = "0" + cDay;
-							completeDate = cYear +"-"+ cMonth + "-" + crDay;
-						}else{
-							completeDate = cYear +"-"+ cMonth + "-" + cDay;
-						}
-					}
-					
-					//2020-04-17 출력
-					console.log(beginDate);
-					console.log(completeDate);
-					
-					$(".workNo").val(workNo);
-					$(".workName").val(data.workName);
-					$(".workType").val(data.workType);
-					$("#projectNoForm").val(data.projectNo);
-					$(".projectName").val(data.projectName);
-					$(".beginDate").val(beginDate);
-					$(".completeDate").val(completeDate);
-					$("#precedeNo").val(data.precedeNo);
-					$("#completeRate").val(data.completeRate);
-					$("#grantorNo").val(data.grantorNo);
-					$("#workLevel").val(data.workLevel);
-					$("#status").val(data.status);
-					$("#highWorkNo").val(data.highWorkNo);
-					$("#workStatus").val(data.workStatus);
 					
 					$("#selectModal").modal('show');
 				},
@@ -1371,7 +1329,17 @@
 				}
 			});
 		});
+		
+		for(var i = 0; i < btnNum; i++){
+			$("#productDeleteBtn"+ i).click(function(){
+				console.log(i);
+			});
+		}
+		
+		
 	});
+	
+	
 	
 	</script>
 
