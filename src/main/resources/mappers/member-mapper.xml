@@ -80,6 +80,11 @@
 		<result property="complete" column="COMPLETE"/>
 	</resultMap>
 	
+	<resultMap type="ProjectDetail" id="projectTypeResultSet">
+		<result property="projectTypePk" column="TYPE_PK"/>
+		<result property="projectTypeName" column="TYPE_NAME"/>
+	</resultMap>
+	
 	<!-- <resultMap type="Customer" id="customerResultSet">
 		<id property="customerNo" column="CUSTOMER_NO"/>
 		<result property="customerName" column="CUSTOMER_NAME"/>
@@ -431,6 +436,40 @@
 		FROM DEPT D
 	</select>
 	
+	<select id="selectSysdate" resultType="java.sql.Date">
+		SELECT SYSDATE FROM DUAL
+	</select>
+	
+	<select id="selectAllProjectCount" resultType="AllDashBoard">
+	<![CDATA[
+		SELECT BEFORE, PRO, DEL, COM   
+			FROM(SELECT COUNT(*) AS BEFORE
+			       FROM PROJECT 
+			      WHERE SYSDATE < START_DATE),
+			    (SELECT COUNT(*) AS PRO
+			       FROM PROJECT 
+			      WHERE SYSDATE BETWEEN START_DATE AND END_DATE),
+			    (SELECT COUNT(*) AS DEL
+			       FROM PROJECT 
+			      WHERE SYSDATE > END_DATE),
+			    (SELECT COUNT(*) AS COM
+			       FROM PROJECT
+			      WHERE STATUS = '4'
+			        AND SYSDATE = END_DATE)  
+			  ]]>      
+	</select>
+	
+	<select id="selectAllProjectType" resultMap="projectTypeResultSet">
+		SELECT TYPE_PK, TYPE_NAME
+	    FROM PROJECT_TYPE	
+	</select>
+	
+	<select id="myWorkCount" resultType="_int">
+      SSELECT COUNT(*)
+      FROM WORK
+      WHERE MEMBER_NO = #{memberNo}
+      AND STATUS NOT LIKE 'PL검토완료'
+   </select>
 </mapper>
 
 

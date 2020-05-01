@@ -1,5 +1,6 @@
 package com.kh.manage.member.model.dao;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
@@ -17,6 +18,7 @@ import com.kh.manage.member.model.vo.AllDashBoard;
 import com.kh.manage.member.model.vo.DeptProjectCount;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.project.model.vo.Project;
+import com.kh.manage.project.model.vo.ProjectDetail;
 
 @Repository
 public class MemberDaoImpl implements MemberDao {
@@ -201,6 +203,29 @@ public class MemberDaoImpl implements MemberDao {
 		return sqlSession.selectList("Member.selectDeptProjectCount");
 	}
 
+	@Override
+	public Date selectSysdate(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectOne("Member.selectSysdate");
+	}
+
+	@Override
+	public AllDashBoard selectAllProjectCount(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectOne("Member.selectAllProjectCount");
+	}
+
+	@Override
+	public List<ProjectDetail> selectAllProjectType(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectList("Member.selectAllProjectType");
+	}
+	
+	@Override
+	   public int myWorkCount(SqlSessionTemplate sqlSession, Member m) {
+
+	      return sqlSession.selectOne("Member.myWorkCount", m);
+	}
 
 
 

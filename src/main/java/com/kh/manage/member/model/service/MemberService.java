@@ -1,5 +1,6 @@
 package com.kh.manage.member.model.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import com.kh.manage.admin.adminManage.vo.DepartMent;
@@ -13,6 +14,7 @@ import com.kh.manage.member.model.vo.AllDashBoard;
 import com.kh.manage.member.model.vo.DeptProjectCount;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.project.model.vo.Project;
+import com.kh.manage.project.model.vo.ProjectDetail;
 
 public interface MemberService {
 
@@ -65,6 +67,14 @@ public interface MemberService {
 	List<AllDashBoard> selectAllDashBoard(AllDashBoard ad);
 
 	List<DeptProjectCount> selectDeptProjectCount();
+
+	Date selectSysdate();
+
+	AllDashBoard selectAllProjectCount();
+
+	List<ProjectDetail> selectAllProjectType();
+
+	int myWorkCount(Member m);
 
 
 
