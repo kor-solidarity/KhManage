@@ -19,6 +19,8 @@ import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.member.model.dao.MemberDao;
 import com.kh.manage.member.model.exception.LoginException;
+import com.kh.manage.member.model.vo.AllDashBoard;
+import com.kh.manage.member.model.vo.DeptProjectCount;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.project.model.vo.Project;
 
@@ -237,6 +239,18 @@ public class MemberServiceImpl implements MemberService {
 		int result = md.resetPassword(sqlSession, m);
 		
 		return result;
+	}
+
+	@Override
+	public List<AllDashBoard> selectAllDashBoard(AllDashBoard ad) {
+		
+		return md.selectAllDashBoard(sqlSession, ad);
+	}
+
+	@Override
+	public List<DeptProjectCount> selectDeptProjectCount() {
+		
+		return md.selectDeptProjectCount(sqlSession);
 	}
 
 

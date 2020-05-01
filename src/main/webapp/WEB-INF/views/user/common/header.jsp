@@ -407,7 +407,6 @@
 					});
 					  
 				  }else{
-					  console.log("채팅 카운트");
 					  $.ajax({ 
 							url:'selectAllMessageCount.ct',
 							type: 'post',

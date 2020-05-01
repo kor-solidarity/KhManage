@@ -100,7 +100,7 @@
 </head>
 <body onload="$('#route1').text('대시보드'); $('#route2').text('상세대시보드')">
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
-	<jsp:include page="/WEB-INF/views/user/common/sidebar.jsp"/>
+	<jsp:include page="/WEB-INF/views/user/common/sidebar2.jsp"/>
 	
 	<div id="wrap">
 	

@@ -13,6 +13,8 @@ import com.kh.manage.admin.rank.model.vo.Rank;
 import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.member.model.exception.LoginException;
+import com.kh.manage.member.model.vo.AllDashBoard;
+import com.kh.manage.member.model.vo.DeptProjectCount;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.project.model.vo.Project;
 
@@ -185,6 +187,18 @@ public class MemberDaoImpl implements MemberDao {
 	public int resetPassword(SqlSessionTemplate sqlSession, Member m) {
 
 		return sqlSession.update("Member.resetPassword", m);
+	}
+
+	@Override
+	public List<AllDashBoard> selectAllDashBoard(SqlSessionTemplate sqlSession, AllDashBoard ad) {
+		
+		return sqlSession.selectList("Member.selectAllDashBoard", ad);
+	}
+
+	@Override
+	public List<DeptProjectCount> selectDeptProjectCount(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectList("Member.selectDeptProjectCount");
 	}
 
 
