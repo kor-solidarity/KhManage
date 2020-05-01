@@ -194,4 +194,14 @@ public class ProjectServiceImpl implements ProjectService {
 	public String selectCheckWorkMemberName(Member m) {
 		return pd.selectCheckWorkMemberName(sqlSession, m);
 	}
+	
+	@Override
+	public List<Project> selectOutdatedProjects() {
+		return pd.selectOutdatedProjects(sqlSession);
+	}
+	
+	@Override
+	public int deleteWork(String workNo) {
+		return pd.deleteWork(sqlSession, workNo);
+	}
 }

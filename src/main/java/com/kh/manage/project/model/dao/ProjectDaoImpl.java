@@ -181,6 +181,16 @@ public class ProjectDaoImpl implements ProjectDao {
 	public String selectCheckWorkMemberName(SqlSessionTemplate sqlSession, Member m) {
 		return sqlSession.selectOne("Project.selectCheckWorkMemberName", m);
 	}
+	
+	@Override
+	public List<Project> selectOutdatedProjects(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectList("Project.selectOutdatedProjects");
+	}
+	
+	@Override
+	public int deleteWork(SqlSessionTemplate sqlSession, String workNo) {
+		return sqlSession.update("Project.deleteWork", workNo);
+	}
 }
 
 

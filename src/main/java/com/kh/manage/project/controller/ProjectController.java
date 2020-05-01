@@ -45,6 +45,14 @@ public class ProjectController {
 	public String projectSelectAll(Model model, HttpServletRequest request) {
 		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
 		
+		// 시작하기 전에 모든 프로젝트 목록 확인한다.
+		// 상태변경하기 위함임.
+		// 완료일이 초과됬으면 지연으로 처리
+		List<Project> projectList = ps.selectOutdatedProjects();
+		for (Project p: projectList ) {
+		    // int result
+		}
+		
 		// 권한그룹에 속해있는지 확인. 속해있으면 모든 목록을 조회하는 것이고 아니면 로그인유저에 해당하는거만.
 		boolean isAdmin = false;
 		
@@ -133,7 +141,7 @@ public class ProjectController {
 		List<ProjectTeam> grantorList = ps.selectProjectTeamGrantorList(pid);
 		List<ProjectWork> workList = ps.selectProjectWorkList(pid);
 		
-		HashMap<String, Object > map = new HashMap<>();
+		HashMap<String, Object> map = new HashMap<>();
 		map.put("teamList", teamList);
 		map.put("grantorList", grantorList);
 		map.put("workList", workList);
@@ -284,7 +292,7 @@ public class ProjectController {
 		// 우선 해당 프로젝트의 모든 작업을 불러온다.
 		String pid = request.getParameter("pid");
 		
-		// 표면상 보일 목록: 작업 아이디, 작업명 상태 기간 시작일 완료일 선행작업 완료율 담당자이름
+		// 표면상 보일 목록: 작업 아이디, 작업명 상태 기간 시작일 완료일 상위작업 완료율 담당자이름
 		
 		// TODO: 2020-04-18 정렬은?? 우선은 시작일자 순으로 하되 추후 수정을 해야할 거.
 		List<ProjectWork> projectWorkList = ps.selectProjectWorkList(pid);
@@ -310,7 +318,7 @@ public class ProjectController {
 		// List<ProjectWork> outdatedProjectWorkList = ps.selectOutdatedWorks()
 		
 		// 목록 뽑기.
-		// 작업아이디, 작업명 상태 프로젝트번호 시작·완료일 선행작업 상위작업 완료율 담당자이름
+		// 작업아이디, 작업명 상태 프로젝트번호 시작·완료일 상위작업 상위작업 완료율 담당자이름
 		List<ProjectWork> projectWorkList = ps.selectProjectWorkList(pid);
 		
 		// 추후 고도화때 담당자가 여럿일수도 있긴 한데 지금은 고려대상이 아님.
@@ -339,7 +347,18 @@ public class ProjectController {
 		System.out.println("projectWorkInsert");
 		String workName = request.getParameter("workName");
 		String memberNo = request.getParameter("memberNo");
-		String highWorkNo = request.getParameter("highWorkNo");
+		if (memberNo.equals("0")){
+			memberNo = null;
+		}
+		String grantor = request.getParameter("grantor");
+		if (grantor.equals("0")) {
+			grantor = null;
+		}
+		String memo = request.getParameter("memo");
+		String highWorkNo = request.getParameter("highWorkSel");
+		if (highWorkNo.equals("0")) {
+			highWorkNo = null;
+		}
 		String pid = request.getParameter("pid");
 		// String  beginDate = request.getParameter("beginDate");
 		// String  endDate = request.getParameter("endDate");
@@ -349,8 +368,8 @@ public class ProjectController {
 		Date beginDate = null;
 		Date endDate = null;
 		try {
-			java.util.Date startUtilDate = format.parse(request.getParameter("beginDate"));
-			java.util.Date endUtilDate = format.parse(request.getParameter("endDate"));
+			java.util.Date startUtilDate = format.parse(request.getParameter("startDate"));
+			java.util.Date endUtilDate = format.parse(request.getParameter("completeDate"));
 			beginDate = new Date(startUtilDate.getTime());
 			endDate = new Date(endUtilDate.getTime());
 		} catch (ParseException e) {
@@ -364,7 +383,7 @@ public class ProjectController {
 		ProjectWork projectWork =
 				new ProjectWork(null, workName, "시작전", pid,
 						beginDate, endDate, null, "0",
-						null, "1", highWorkNo, null,
+						grantor, "1", highWorkNo, memo,
 						"프로젝트", memberNo, "Y");
 		int result = ps.insertProjectWork(projectWork);
 		
@@ -373,7 +392,9 @@ public class ProjectController {
 		if (result > 0) {
 			String workNo = ps.selectWorkSeq();
 			// 누가 이 작업을 배정한거임??
-			ProjectTeam team = new ProjectTeam(null, pid, loginUserMemberNo, null, null, null, null);
+			ProjectTeam team =
+					new ProjectTeam(null, pid, loginUserMemberNo,
+							null, null, null, null);
 			String teamNo = ps.selectProjectTeamNo(team);
 			// System.out.println("teamNo: " + teamNo);
 			
@@ -397,8 +418,8 @@ public class ProjectController {
 		// 여기서 뽑아와야 하는 것들:
 		/**
 		 * 작업정보:
-		 * 관리번호, 이름, 시작·종료일, 완료율, 승인자, 메모사항, 선행작업
-		 * 선행작업: 위 선행작업의 이름과 관리번호
+		 * 관리번호, 이름, 시작·종료일, 완료율, 승인자, 메모사항, 상위작업
+		 * 상위작업: 위 상위작업의 이름과 관리번호
 		 * 산출물: 구분, 파일명, 등록일, 등록자. (목록)
 		 * 히스토리: 내용, 사람이름, 변경일
 		 * 작업 승인 담당자: 멤버테이블
@@ -408,12 +429,12 @@ public class ProjectController {
 		
 		// 우선 작업정보 가자.
 		ProjectWork projectWork = ps.selectProjectWork(workNo);
-		// 다음은 선행작업.
+		// 다음은 위 작업정보에 속하는 상위작업.
 		ProjectWork highWork = null;
 		if (projectWork.getHighWorkNo() != null) {
 			highWork = ps.selectProjectWork(projectWork.getHighWorkNo());
 		}
-		// 선택할 수 있는 선행작업 목록
+		// 선택할 수 있는 상위작업 목록
 		HashMap<String, String> highWorkMap = new HashMap<>();
 		highWorkMap.put("pid", pid);
 		highWorkMap.put("workNo", workNo);
@@ -445,6 +466,23 @@ public class ProjectController {
 		
 		try {
 			response.getWriter().write(gson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("/deleteWork.pr")
+	public void deleteWork(HttpServletResponse response, HttpServletRequest request){
+		String workNo = request.getParameter("workNo");
+		int result = ps.deleteWork(workNo);
+		// if (result > 0){
+		// 	WorkHistory workHistory =
+		// 			new WorkHistory(null, workNo, "");
+		// 	int result2 = ps.insertWorkHistory()
+		// }
+		
+		try {
+			response.getWriter().write(String.valueOf(true));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -519,6 +557,7 @@ public class ProjectController {
 		// 또한 분류 후 작업 히스토리에 적용시킨다.
 		
 		List<ProjectWork> workList = ps.selectOutdatedWorks(pid);
+		
 		for (ProjectWork work : workList) {
 			String workNo = work.getWorkNo();
 			int result = ps.updateOutdatedWork(workNo);
@@ -585,6 +624,7 @@ public class ProjectController {
 		// 또한 분류 후 작업 히스토리에 적용시킨다.
 		
 		List<ProjectWork> workList = ps.selectOutdatedWorks(pid);
+		
 		for (ProjectWork work : workList) {
 			String workNo = work.getWorkNo();
 			int result = ps.updateOutdatedWork(workNo);
@@ -629,7 +669,7 @@ public class ProjectController {
 	
 	//TW 리소스, 팀프로젝트 member 추가
 	@RequestMapping("addResource.pr")
-	public String addResource(Member member, Model m, HttpServletRequest request, HttpServletResponse response) {
+	public void addResource(Member member, Model m, HttpServletRequest request, HttpServletResponse response) {
 		
 		String memberNoString = member.getMemberNo();
 		//String projectPk = request.getParameter("projectPk");
@@ -638,8 +678,8 @@ public class ProjectController {
 		//System.out.println("projectPk : " + projectPk);
 		
 		String[] memberNo = memberNoString.split(",");
-
-//      System.out.println(memberNo[0]);
+		
+		System.out.println(memberNo[0]);
 //      System.out.println(memberNo[1]);
 		
 		Member test[] = new Member[memberNo.length];
@@ -649,22 +689,29 @@ public class ProjectController {
 		int result1 = 0;
 		
 		for (int i = 0; i < memberNo.length; i++) {
-			test[i] = new Member();
+			Member me = new Member();
 			
-			test[i].setMemberNo(memberNo[i]);
-			test[i].setProjectPk(member.getProjectPk());
+			me.setMemberNo(memberNo[i]);
+			me.setProjectPk(member.getProjectPk());
 			
-			result1 = ps.insertResource(test[i]);
-			System.out.println(test[i]);
+			result1 = ps.insertResource(me);
+			System.out.println(result1);
 		}
 		
 		if (result1 > 0) {
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
 			
-			return "redirect:showResource.pr?pid=" + request.getParameter("projectPk");
+			String gson = new Gson().toJson(1);
+			
+			try {
+				response.getWriter().write(gson);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		} else {
 			
 			m.addAttribute("msg", "실패 !!");
-			return "common/errorPage";
 		}
 		
 	}
@@ -744,28 +791,28 @@ public class ProjectController {
 		}
 		
 	}
-
-
+	
+	
 	//TW 리소스삭제, 팀프로젝트 work에 있는 멤버 확인
 	@RequestMapping("memberCheck.pr")
 	public void memberCheck(Member m, Model model, HttpServletRequest request, HttpServletResponse response) {
-
+		
 		String member = ps.selectCheckWorkMemberName(m);
 		model.addAttribute("member", member);
 		
 		System.out.println("work에 있는 member : " + member);
-
+		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-
+		
 		String gson = new Gson().toJson(member);
-
+		
 		try {
 			response.getWriter().write(gson);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		
 	}
 	
 	

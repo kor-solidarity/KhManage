@@ -75,4 +75,8 @@ public interface ProjectDao {
 	int deleteProjectMember(SqlSessionTemplate sqlSession, Member m);
 
 	String selectCheckWorkMemberName(SqlSessionTemplate sqlSession, Member m);
+	
+	List<Project> selectOutdatedProjects(SqlSessionTemplate sqlSession);
+	
+	int deleteWork(SqlSessionTemplate sqlSession, String workNo);
 }

@@ -263,6 +263,8 @@
 
     <select id="selectProjectWork" parameterType="String" resultMap="projectWorkListResultSet">
         select W.WORK_NAME,
+               W.WORK_NO,
+               W.STATUS,
                W.MEMBER_NO,
                W.BEGIN_DATE,
                W.COMPLETE_DATE,
@@ -316,17 +318,18 @@
              , DEPT_NAME
              , MEMBER_NAME
         from WORK_HISTORY W
-                 join (select *
-                       from PROJECT_TEAM P
-                                join (select MEMBER_NO
-                                           , MEMBER_NAME
-                                           , DEPT_NAME
-                                           , RANK_NAME
-                                      from MEMBER m
-                                               join RANK R on m.RANK_NO = R.RANK_NO
-                                               join DEPT D on m.DEPT_NO = D.DEPT_NO) M on P.MEMBER_PK = M.MEMBER_NO) PT
-                      on W.PROJECT_TEAM_NO = PT.TEAM_PK
-        where WORK_NO = #{workNo}
+                 left outer join (select *
+                                  from PROJECT_TEAM P
+                                           join (select MEMBER_NO
+                                                      , MEMBER_NAME
+                                                      , DEPT_NAME
+                                                      , RANK_NAME
+                                                 from MEMBER m
+                                                          join RANK R on m.RANK_NO = R.RANK_NO
+                                                          join DEPT D on m.DEPT_NO = D.DEPT_NO) M
+                                                on P.MEMBER_PK = M.MEMBER_NO) PT
+                                 on W.PROJECT_TEAM_NO = PT.TEAM_PK
+        where W.WORK_NO = #{workNo}
         order by MODIFY_DATE desc
     </select>
 
@@ -463,15 +466,37 @@
         from PROJECT_TEMPLATE
     </select>
 
+    <update id="deleteWork" parameterType="String">
+        update WORK
+        set WORK_STATUS = 'N'
+        where WORK_NO = #{value}
+    </update>
+
+    <select id="selectOutdatedProjects" resultMap="projectResultSet">
+        <![CDATA[
+        select *
+        from PROJECT
+        where to_date(sysdate) > END_DATE
+          and (STATUS != '3' or STATUS != '4')
+        ]]>
+    </select>
+    <update id="updateOutdatedProject" parameterType="String">
+        update PROJECT
+        set STATUS= '3'
+        where PROJECT_PK = #{value}
+    </update>
+
+
     <select id="selectOutdatedWorks" parameterType="String" resultMap="projectWorkListResultSet">
         <![CDATA[
         select *
         from WORK
         WHERE to_date(sysdate) > COMPLETE_DATE
-          and STATUS != '개발완료'
+          and (STATUS != '개발완료' and STATUS != '개발지연')
           and PROJECT_NO = #{value}
         ]]>
     </select>
+
 
     <update id="updateOutdatedWork" parameterType="String">
         update WORK
@@ -609,17 +634,11 @@
         WHERE MEMBER_PK = #{memberNo}
           AND PROJECT_PK = #{projectPk}
     </delete>
-    
-    <select id="selectCheckWorkMemberName" resultMap="memberResultSet">
-    	SELECT W.MEMBER_NO
-		     , M.MEMBER_NAME
-		     , W.WORK_NO
-		     , W.WORK_NAME     
-		FROM WORK W
-		JOIN MEMBER M ON (M.MEMBER_NO = W.MEMBER_NO)
-		JOIN PROJECT P ON (P.PROJECT_PK = W.PROJECT_NO)
-		WHERE W.MEMBER_NO = #{memberNo}
-		  AND W.PROJECT_NO = #{projectPk}
+
+    <select id="selectCheckWorkMemberName" parameterType="Member" resultType="java.lang.String">
+        SELECT MEMBER_NAME
+        FROM MEMBER
+        WHERE MEMBER_NO = #{memberNo}
     </select>
 </mapper>
 

@@ -73,5 +73,8 @@ public interface ProjectService {
 	int deleteProjectMember(Member m);
 
 	String selectCheckWorkMemberName(Member m);
-
+	
+	List<Project> selectOutdatedProjects();
+	
+	int deleteWork(String workNo);
 }
