@@ -1,11 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.*, com.kh.manage.gwManage.model.vo.*, com.kh.manage.forum.model.vo.*"%>
+<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%
+	
+	List<Statistics> list2 = (ArrayList<Statistics>) request.getAttribute("list2");
+	/* List<Statistics> list3 = (ArrayList<Statistics>) request.getAttribute("list3");
+	List<Statistics> list4 = (ArrayList<Statistics>) request.getAttribute("list4");
+	List<Mwork> list5 = (ArrayList<Mwork>) request.getAttribute("list5"); */
+	
+%>
+    
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+
+<script src="resources/daypilot/demo/helpers/jquery-1.12.2.min.js" type="text/javascript"></script>
+<!-- daypilot libraries -->
+<script src="resources/daypilot/demo/js/daypilot-all.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js" integrity="sha256-qE/6vdSYzQu9lgosKxhFplETvWvqAAlmAuR+yPh/0SI=" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+
 
 <style>
 
@@ -127,6 +146,12 @@
 						<tr>
 							<td class="tdMid"><b>작업 진행상태</b>
 							<hr>
+								
+								<div id="task" style="margin: 0 auto; width:450px;">
+									<canvas id="myChart"></canvas>
+								</div>
+								
+								
 								<div>
 								</div>
 							</td>
@@ -199,17 +224,100 @@
 				
 			</div>
 		</div>
-			
-
-
-
-
-
-
-
-
 
 			
 	</div>
+	
+	
+	
+	
+	
+	
+	<!-- ------------------------------------------------- -->
+	<%-- <script>
+	
+	
+		$(".select").change(function(){
+			console.log("dsadsadsa");
+			console.log($(this).val());
+			var	pNo = $(this).val();
+			
+			location.href = "selectDashBoard.gwm?pNo="+pNo;
+			
+			
+		});
+		
+	</script>
+	<script>
+	<% if(list2.size() > 0){ %>
+	var ctx = document.getElementById('myChart');
+	var myChart = new Chart(ctx, {
+		type: 'doughnut',
+		data: {
+			labels: [
+			<%for(int i =0; i < list2.size(); i++){
+				 Statistics st = (Statistics)list2.get(i);
+			%> 
+			
+				'<%=st.getwStatus() %>',
+			<%
+			}
+			%>
+			],
+			datasets: [{
+				label: '# of Votes',
+				data: [
+					<%for(int i =0; i < list2.size(); i++){
+						 Statistics st = (Statistics)list2.get(i);
+					%> 
+					
+						<%=st.getCnt()%>,
+					<%
+					}
+					%>	
+				],
+				backgroundColor: [
+					'rgba(255, 99, 132, 0.2)',
+					'rgba(54, 162, 235, 0.2)',
+					'rgba(255, 206, 86, 0.2)',
+					'rgba(75, 192, 192, 0.2)',
+					'rgba(153, 102, 255, 0.2)',
+					'rgba(255, 159, 64, 0.2)'
+				],
+				borderColor: [
+					'rgba(255, 99, 132, 1)',
+					'rgba(54, 162, 235, 1)',
+					'rgba(255, 206, 86, 1)',
+					'rgba(75, 192, 192, 1)',
+					'rgba(153, 102, 255, 1)',
+					'rgba(255, 159, 64, 1)'
+				],
+				borderWidth: 1,
+				
+				hoverBorderWidth : 1
+			}]
+		},
+		options: {
+			responsive: false,
+			scales: {
+					ticks: {
+						cutoutPercentage: 60,
+						beginAtZero: true
+					}
+			},
+		}
+	});
+	<%}else {%>
+	$("#task").text("No data available");
+	<%}%>
+</script> --%>
+	
+	
+	
 </body>
 </html>
+
+
+
+
+

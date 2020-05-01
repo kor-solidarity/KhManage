@@ -241,13 +241,13 @@
    
    $("#btnResourceAdd").on('click', function() {
       
-      var memberNo = $("#memberNo").val();
+      //var memberNo = $("#memberNo").val();
       
       list = "";
       
       var z = 1;
       
-      console.log(memberNo);
+      //console.log(memberNo);
       
       $("#memberListTable tr").filter(function(){
     	  
@@ -271,14 +271,12 @@
       
       var str = list.split(",");
 
-      console.log(str);
-      
+	      
       var check = true;
       
       for(var i = 0; i < str.length; i++ ){
-    	  
+    	  console.log("i : " + i);
           $("#addedMemberTable tr").filter(function(){
-          	
              if(str[i] == $(this).find(".memberNo").val()){
                 alert("중복된 인원이 있습니다");
                 i = str.length;
@@ -292,13 +290,28 @@
              
           });
        
-       }
-       
- 		if(check) {
+
+      }
+		if(check) {
+			//리소스 멤버 추가 버튼 실행
+			//$("#formBeforeAdd").submit();
+			for(var i = 0; i < str.length; i++ ){
+				console.log("ajax : " +  str[i])
+			  $.ajax({
+	    		  url: 'addResource.pr',
+	    		  type: 'post',
+	    		  data: {
+	    			  memberNo : str[i],
+			  		   projectPk:"${pid}"},
+	    		  success: function(data){
+	    			
+	    		  }
+	    		   
+	    	   });
+			}
+			location.reload();
 			
- 			//리소스 멤버 추가 버튼 실행
- 			$("#formBeforeAdd").submit();
- 		}
+		}
       
    });
       
@@ -338,6 +351,7 @@
 			$.ajax({
 				url:'checkWorkMember.pr',
 				type:'post',
+				async: false,
 				data:{
 					
 					memberNo : str1[i],
@@ -345,8 +359,8 @@
 			
 				},
 				success:function(data){
-				
-					if(data == false){
+				console.log("결과 값 : "+ data);
+					if(data == 0){
 						
 						//for문 종료시키기
 						i = str1.length;
@@ -354,26 +368,33 @@
 						result = false;
 						
 						
-					} else {
-
-						$.ajax({
-							url:'memberCheck.pr',
-							type:'post',
-							data:{
-								
-								memberNo : str1[i]
-			    	   
-			    	   		},
-							success:function(data){
-								
-								//i = str1.length;
-								result = false;
-								alert("삭제할 수 업습니다." + "<br>" + data['memberName'] + "님에게 작업이 배정되어 있습니다.");
-								
-								
-								//location.reload();
-							}
-						});
+						//작업이 있는 member 이름 띄우기
+						for(var i = 0; i < str1.length; i++) {
+							
+							$.ajax({
+								url:'memberCheck.pr',
+								type:'post',
+								data:{
+									
+									memberNo : str1[i],
+				    			    projectPk : projectPk
+				    	   
+				    	   		},
+								success:function(data){
+									
+									i = str1.length;
+									result = false;
+									alert("삭제할 수 없습니다." + "\n" + "프로젝트내 " + data + "님에게 배정된 작업이 있습니다.");
+									
+									//location.reload();
+									
+								} 
+				    	   		
+							});
+						}
+						
+						//alert("삭제할 수 업습니다." + "\n" + data['memberName'] + "님에게 배정된 작업이 있습니다.");
+						
 					}
 				}
 			});
@@ -382,9 +403,8 @@
        
        //result == 0 일때 삭제
        if(result == true){
-
-       	   //삭제 서블릿
-       	   
+			console.log("결과 result : " + result);
+       	 //삭제 서블릿
        	   if(question) {
        		   
 	       	   for(var i = 0; i < str1.length; i++) {
@@ -411,31 +431,7 @@
        	   }
        	   
        	   
-       } /* else {
-    	   
-    	   for(var i = 0; i < str1.length; i++) {
-    		   
-	    	   $.ajax({
-					url:'memberCheck.pr',
-					type:'post',
-					data:{
-						
-						memberNo : str1[i]
-	    	   
-	    	   		},
-					success:function(data){
-						
-						//i = str1.length;
-						result = false;
-						
-						alert("삭제할 수 업습니다." + "<br>" + data['memberName'] + "님에게 작업이 배정되어 있습니다.");
-						
-						//location.reload();
-					}
-				});
-    	   }
-    	   
-       } */
+       } 
        
    });
    
