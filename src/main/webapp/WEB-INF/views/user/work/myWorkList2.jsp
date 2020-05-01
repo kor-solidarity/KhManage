@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
 	.oversort {
 		 overflow-x: auto;
@@ -1165,13 +1165,16 @@
 												<th style="text-align: center; width: 30%;">
 													산출물 구분
 												</th>
-												<th style="text-align: center; width: 35%;">
+												<th style="text-align: center; width: 20%;">
+													제목
+												</th>
+												<th style="text-align: center; width: 25%;">
 													파일명
 												</th>
-												<th style="text-align: center; width: 20%;">
+												<th style="text-align: center; width: 15%;">
 													등록일
 												</th>
-												<th style="text-align: center; width: 15%;">
+												<th style="text-align: center; width: 10%;">
 													삭제
 												</th>
 											</tr>
@@ -1180,6 +1183,9 @@
 											<tr id="d726674b-be83-4317-8f1f-4b984fc4890c">
 												<td class="hidden-xs">
 													UI보고서 
+												</td>
+												<td class="highlight">
+													login.png
 												</td>
 												<td class="highlight">
 													login.png
@@ -1262,7 +1268,41 @@
 		}); 
 		
 		$("#workFileSubmit").click(function(){
-			$('#workFileInsert').submit();
+			var file = $(".fileCss").val()
+			if(file == null){
+				swal({
+				  	title: "산출물을 첨부해주세요",
+				  	text: "",
+				    icon: "error"
+				  }).then((value) => {
+				 	$("#fileUploadArea").focus();
+				 });
+			}else{
+				swal({
+					  title: "산출물을 등록하시겠습니까?",
+					  text: "",
+					  icon: "warning",
+					  buttons: ["취소", "확인"],
+					  dangerMode: true,
+					})
+					.then((willDelete) => {
+					  if (willDelete) {
+					    swal({
+					    	title: "산출물 등록 완료!",
+					    	text: "",
+					      	icon: "success"
+					    }).then((value) => {	// 애니메이션 V 나오는 부분!
+					    	$('#workFileInsert').submit();
+					    });
+					  } else {
+						  swal({
+						  	title: "취소 하셨습니다.",
+						    icon: "error"
+						  });
+					  }
+				});
+			}
+			
 		});
 	
 		
@@ -1310,10 +1350,17 @@
 					
 					if(data.work.workAttachment[0].atNo != null)
 					for(var i = 0; i < data.work.workAttachment.length; i++){
-						$("#workProductTable").append("<tr>" + "<td class='hidden-xs'>" + data.work.workAttachment[i].productType + "</td>" + 
+						$("#workProductTable").append("<tr>" + "<td class='hidden-xs'> "+
+															"<input type='hidden' value='" + data.work.workAttachment[i].atNo + "'>" + 
+															"<input type='hidden' value='" + data.work.workNo + "'>" + 
+															"<input type='hidden' value='" + data.work.workAttachment[i].changeName + "'>" + 
+															"<input type='hidden' value='" + data.work.workAttachment[i].filePath + "'>" + 
+															"<input type='hidden' value='" + data.work.workAttachment[i].ext + "'>" + 
+															data.work.workAttachment[i].productType + "</td>" + 
+															"<td class='highlight'>" + data.work.workAttachment[i].productTitle + "</td>" + 
 															"<td class='highlight'>" + data.work.workAttachment[i].originName + "</td>" + 
 															"<td class='hidden-xs' style='text-align: center;'>" + data.work.workAttachment[i].enrollDate + "</td>" + 
-															"<td style='text-align: center;' id='productDeleteBtn" + i + "'> <button style='display: inline-block; border:none;' type='button'><span class='glyphicon glyphicon-trash'> </span> </button> </td>")
+															"<td style='text-align: center;'> <button style='display: inline-block; border:none;' id='productDeleteBtn" + i + "' type='button'><span class='glyphicon glyphicon-trash'> </span> </button> </td>")
 					}else{
 						$("#workProductTable").append("<tr>" + "<td class='hidden-xs'></td>" + 
 								"<td class='highlight'></td>" + 
@@ -1330,21 +1377,72 @@
 			});
 		});
 		
-		for(var i = 0; i < btnNum; i++){
-			$("#productDeleteBtn"+ i).click(function(){
-				console.log(i);
-			});
-		}
-		
-		
 	});
+	
+		
+			
+		$(document).on("click","[id^=productDeleteBtn]",function(){
+			var atNo = $(this).parent().parent().children().find('input[type=hidden]').eq(0).val();
+			var workNo = $(this).parent().parent().children().find('input[type=hidden]').eq(1).val();
+			var changeName = $(this).parent().parent().children().find('input[type=hidden]').eq(2).val();
+			var filePath = $(this).parent().parent().children().find('input[type=hidden]').eq(3).val();
+			var ext = $(this).parent().parent().children().find('input[type=hidden]').eq(4).val();
+			/* var id = $(this).attr("id"); 
+			var number = id.replace("productDeleteBtn", ""); */
+			
+			console.log(atNo);
+			console.log(workNo);
+			console.log(changeName);
+			console.log(filePath);
+			console.log(ext);
+			
+			$("#workProductTable > tbody").empty();
+			
+			$.ajax({
+				url:"deleteWorkProduct.wk",
+				type:"post",
+				data:{
+					  atNo:atNo,
+					  workNo:workNo,
+					  changeName:changeName,
+					  filePath:filePath,
+					  ext:ext
+					  },
+				dataType:"json",
+				success:function(data){
+					if(data.work.workAttachment[0].atNo != null)
+						for(var i = 0; i < data.work.workAttachment.length; i++){
+							$("#workProductTable").append("<tr>" + "<td class='hidden-xs'> "+
+																"<input type='hidden' value='" + data.work.workAttachment[i].atNo + "'>" + 
+																"<input type='hidden' value='" + data.work.workNo + "'>" + 
+																"<input type='hidden' value='" + data.work.workAttachment[i].changeName + "'>" + 
+																"<input type='hidden' value='" + data.work.workAttachment[i].filePath + "'>" + 
+																"<input type='hidden' value='" + data.work.workAttachment[i].ext + "'>" + 
+																data.work.workAttachment[i].productType + "</td>" + 
+																"<td class='highlight'>" + data.work.workAttachment[i].productTitle + "</td>" + 
+																"<td class='highlight'>" + data.work.workAttachment[i].originName + "</td>" + 
+																"<td class='hidden-xs' style='text-align: center;'>" + data.work.workAttachment[i].enrollDate + "</td>" + 
+																"<td style='text-align: center;'> <button style='display: inline-block; border:none;' id='productDeleteBtn" + i + "' type='button'><span class='glyphicon glyphicon-trash'> </span> </button> </td>")
+						}else{
+							$("#workProductTable").append("<tr>" + "<td class='hidden-xs'></td>" + 
+									"<td class='highlight'></td>" + 
+									"<td class='hidden-xs' style='text-align: center;'></td>" + 
+									"<td></td>")
+						}
+				},
+				error:function(error){
+					console.log(error);
+				}
+			});
+		}); 
+		
+			
 	
 	
 	
 	</script>
 
 	<script>
-
 	  
 	function send(text){
     	ws.send(text);

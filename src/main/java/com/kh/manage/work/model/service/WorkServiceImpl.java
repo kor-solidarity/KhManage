@@ -78,6 +78,11 @@ public class WorkServiceImpl implements WorkService{
 		return wd.selectWorkAttachment(sqlSession, workNo);
 	}
 
+	@Override
+	public int deleteWorkProduct(String atNo) {
+		return wd.deleteWorkProduct(sqlSession, atNo);
+	}
+
 	
 
 }

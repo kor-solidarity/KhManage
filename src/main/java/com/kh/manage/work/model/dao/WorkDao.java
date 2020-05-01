@@ -36,4 +36,6 @@ public interface WorkDao {
 
 	List<WorkAttachment> selectWorkAttachment(SqlSessionTemplate sqlSession, String workNo);
 
+	int deleteWorkProduct(SqlSessionTemplate sqlSession, String atNo);
+
 }

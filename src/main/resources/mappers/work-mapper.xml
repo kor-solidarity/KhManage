@@ -265,7 +265,7 @@
 	
 	<insert id="insertWorkProduct" parameterType="WorkProductw">
 	INSERT INTO WORK_PRODUCT
-	VALUES('WP' || TO_CHAR(SEQ_WP.NEXTVAL, 'FM000'), #{workNo}, #{productType}, #{productTitle}, #{productContent}, SYSDATE, SYSDATE)
+	VALUES('WP' || TO_CHAR(SEQ_WP.NEXTVAL, 'FM000'), #{workNo}, #{productType}, #{productTitle}, #{productContent}, SYSDATE, SYSDATE, DEFAULT)
 	</insert>
 	
 	<insert id="insertWorkAttachment" parameterType="Attachment">
@@ -273,7 +273,11 @@
 		VALUES('AT'|| TO_CHAR(SEQ_AT_NO.NEXTVAL, 'FM000'), 'WP' || TO_CHAR(SEQ_WP.CURRVAL, 'FM000'), #{originName}, #{changeName} , #{filePath}, #{ext})
 	</insert>
 	
+	<delete id="deleteWorkProduct" parameterType="java.lang.String">
+	DELETE FROM ATTACHMENT
+	WHERE AT_NO = #{atNo}
 	
+	</delete>
 </mapper>
 
 

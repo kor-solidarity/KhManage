@@ -175,4 +175,28 @@ public class WorkController {
 			return "common/errorPage";
 		}
 	}
+	
+	@RequestMapping("/deleteWorkProduct.wk")
+	public ModelAndView deleteWorkProduct(String atNo, String workNo, String changeName, String filePath, String ext, ModelAndView mv) {
+		System.out.println("출력" + atNo);
+		System.out.println("테스트" + workNo);
+		System.out.println("바뀐이름 :" + changeName);
+		System.out.println("경로 : " + filePath);
+		System.out.println("확장자 : " + ext);
+		
+		
+		int result = ws.deleteWorkProduct(atNo);
+		
+		if(result > 0) {
+			new File(filePath + "\\" + changeName + ext).delete();
+			
+			Work w = ws.selectWork(workNo);
+			
+			mv.addObject("work", w);
+			
+			mv.setViewName("jsonView");
+		}
+		
+		return mv;
+	}
 }
