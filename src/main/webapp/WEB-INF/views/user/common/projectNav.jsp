@@ -41,7 +41,7 @@
 <div class="container" id="projectNav" style="width: 100%">
 	<ul class="nav nav-tabs">
 		<li role="presentation" class=""><a href="showProjectSummary.pr?pid=${pid}&navType=0">요약정보</a></li>
-		<li role="presentation"><a href="#">기본정보</a></li>
+		<li role="presentation"><a href="viewProject.pr?pid=${pid}&navType=1">기본정보</a></li>
 		<li role="presentation"><a href="showResource.pr?pid=${pid}&navType=2">리소스</a></li>
 		<li role="presentation"><a href="${path}/projectTask.pr?pid=${pid}&navType=3">프로젝트작업</a></li>
 		<li role="presentation"><a href="showAssignment.fo?pid=${pid }&navType=4">배정현황</a></li>

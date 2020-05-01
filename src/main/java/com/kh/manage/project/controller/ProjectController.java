@@ -555,7 +555,8 @@ public class ProjectController {
 		}
 	}
 	
-	// 프로젝트 요약정보 페이지
+	// 프로젝트 기본정보 페이지
+	// 원래 요약정보 페이지였는데 껍데기 뿐이어서..
 	@RequestMapping("/viewProject.pr")
 	public String viewProject(Model model, HttpServletRequest request) {
 		
