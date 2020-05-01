@@ -531,52 +531,82 @@
                     // 작업 추가를 누르면 어떤거든간에 우선 테이블 맨위에 띄우게끔.
                     function add_project_work (location) {
                         alert('add_project_work');
+                        // 초기화
+                        $("#modalWorkNo").val("0");
+
                         $("#workTitle").empty();
                         // 제목 맞게 수정
                         $("#workTitle").append("작업 신규등록");
-                        $('#workDetails input,textarea').attr('disabled', 'false');
-                        $('#workDetails input,textarea').removeAttr('disabled');
 
+                        // 작업정보, 선행작업 외에는 조회 못하게 막는다. 모달기능 해제.
+                        $('#menuNav2').attr('data-toggle', '');
+                        $('#menuNav3').attr('data-toggle', '');
+                        $('#menuNav4').attr('data-toggle', '');
+                        // 인풋, 셀렉트 막힌거 다 푼다.
+                        $('#workDetails input,textarea,select').removeAttr('disabled');
 
-                        return;
+                        // 이제 불러와서 추가해야 할 사항들을 집어온다.
+                        // 불러와야 하는건 두가지:
+                        // 1. 작업배정시킬 프로젝트 작업자 목록
+                        // 2. 작업을 승인할 PM/PSM 목록
+                        // 3. 선행작업목록
+                        $.ajax({
+                            url: 'viewProjectTeamList.pr',
+                            type: 'post',
+                            data: {
+                                pid: "${pid}",
+                            },
+                            success: function (data) {
+                                teamList = data.teamList;
+                                grantorList = data.grantorList;
+                                workList = data.workList;
 
-                        // 기존코드는 이제 의미가 없다. 전면수정
-                        <%--
-						if (document.getElementById('projectWork') != null) {
-							alert("우선 추가된 작업부터 처리해주세요.");
-							return;
-						}
-						// todo 위치 어디로 보낼지 생각좀.
-						// 우선은 그냥 맨위
-						$("#chart-left-table tr:first-of-type").after(
-							// todo 고도화, 그니까 각종 유효성. 우선은 통과.
-							"<tr class='work_input' id='projectWork'>" +
-							"<td></td>" +
-							// 작업 제목
-							"<td><input type='text' style='width: 100%' class='' id='workName' name='workName'></td>" +
-							// 상태
-							"<td></td>" +
-							// 기간
-							"<td></td>" +
-							// 시작일
-							"<td><input class='' type='date' name='beginDate' id='beginDate'></td>" +
-							// 완료일
-							"<td><input class='' type='date' name='endDate' id='endDate'></td>" +
-							// 선행작업
-							"<td><input class='' style='width: 60px' type='text' name='highWorkNo' id='highWorkNo' ></td>" +
-							// 완료율
-							"<td></td>" +
-							// 담당자
-							"<td  data-toggle=\"modal\" data-target=\"#workMemberModal\" " +
-							"onclick=\"viewWorkInCharge('#projectWork')\" id='addWorkers'>" +
-							"" +
-							// 돋보기마크. 이 경우는 그냥 submit. 자세한건 등록 다 하고 하던가.
-							"<td><button onclick='sendProjectWork()'>" +
-							"<i class='far fa-save'></i>" +
-							"</button></td>" +
-							"</tr>"
-						)
-						--%>
+                                // 인원목록에 넣어준다.
+                                // 우선 일반 팀원들 목록 초기화
+                                $("#memberNo").empty();
+                                $("#memberNo").append(
+                                    "<option value='0'>담당자 없음</option>"
+                                );
+                                for (let i = 0; i < teamList.length; i++) {
+                                    $("#memberNo").append(
+                                        "<option value='" + teamList[i].memberPk + "'>" + teamList[i].deptName + " " +
+                                        teamList[i].memberName + " " + teamList[i].rankName + "</option>"
+                                    );
+                                }
+
+                                // 다 됬으면 바로 승인자 추가
+                                $("#grantor").empty();
+                                $("#grantor").append(
+                                    "<option value='0'>승인자 없음</option>"
+                                );
+                                for (let i = 0; i < grantorList.length; i++) {
+                                    $("#grantor").append(
+                                        "<option value='" + grantorList[i].memberPk + "'>" + grantorList[i].deptName +
+                                        " " +
+                                        grantorList[i].memberName + " " + grantorList[i].rankName + "</option>"
+                                    );
+                                }
+
+                                // 그다음은 하위작업을 위한 목록
+                                $('#highWorkSel').empty();
+                                $('#highWorkSel').append(
+                                    "<option value='0'>하위작업 없음</option>"
+                                );
+
+                                for (let i = 0; i < workList.length; i++) {
+                                    $("#highWorkSel").append(
+                                        "<option value='" + workList[i].workNo + "'>" +
+                                        workList[i].workName + "</option>"
+                                    );
+                                }
+
+                                alert("done!");
+                            },
+                            error: function (xhr, status, error) {
+                                alert("wut");
+                            }
+                        })
+
                     }
 
                     // 띄워져있는 새 작업 등록한다.
@@ -841,6 +871,14 @@
                             pid: "${pid}",
                         },
                         success: function (data) {
+                            // 산출물, 가이드, 히스토리 항목 활성화. 새작업 등록할땐 다시 지움.
+                            $("")
+
+                            // 이 창에서 수정이 가능한건 인원뿐. 그것도 시작전일때만.
+                            console.log("이 창에서 수정이 가능한건 인원뿐. 그것도 시작전일때만.")
+                            $('#workDetails input,textarea,select').attr('disabled', 'true');
+                            // $('#workDetails select').attr('disabled', 'true');
+
                             $('#modalWorkNo').val(workNo);
                             daata = data;
                             // alert("done!");
@@ -869,8 +907,8 @@
                             // 담당자 목록. 우선 내용물부터 지웁시다.
                             $("#memberNo").empty();
                             $("#memberNo").append(
-                               "<option value='0'>담당자 없음</option>"
-							);
+                                "<option value='0'>담당자 없음</option>"
+                            );
                             for (let i = 0; i < teamList.length; i++) {
                                 $("#memberNo").append(
                                     "<option value='" + teamList[i].memberPk + "'>" + teamList[i].deptName + " " +
@@ -878,8 +916,8 @@
                                 );
                             }
                             // 다 넣고 이미 선택된 담당자가 있는지 확인한다.
-							console.log('다 넣고 이미 선택된 담당자가 있는지 확인: '+ projectWork.memberNo);
-                            if (projectWork.memberNo != undefined){
+                            console.log('다 넣고 이미 선택된 담당자가 있는지 확인: ' + projectWork.memberNo);
+                            if (projectWork.memberNo != undefined) {
                                 $("#memberNo option[value=" + projectWork.memberNo + "]").
                                     prop('selected', true);
                             }
@@ -896,12 +934,12 @@
                                 );
                             }
                             // todo 200430 해야하는 작업:
-							//  수정은 완료
-							//  이제 인서트문을 여기에 다 맞게 넣기.
+                            //  수정은 완료
+                            //  이제 인서트문을 여기에 다 맞게 넣기.
 
                             // 다 넣고 이미 선택된 grantor 가 있는지 확인한다.
-                            console.log('다 넣고 이미 선택된 grantor 있는지 확인: '+ projectWork.grantorNo);
-                            if (projectWork.grantorNo != undefined){
+                            console.log('다 넣고 이미 선택된 grantor 있는지 확인: ' + projectWork.grantorNo);
+                            if (projectWork.grantorNo != undefined) {
                                 $("#grantor option[value=" + projectWork.grantorNo + "]").
                                     prop('selected', true);
                             }
@@ -1020,11 +1058,11 @@
 				<div class="modal-body" id="workDetailContent">
 					<div class="container-fluid">
 						<ul class="nav nav-tabs">
-							<li class="active"><a data-toggle="tab" href="#home">작업정보</a></li>
-							<li><a data-toggle="tab" href="#menu1">선행작업</a></li>
-							<li><a data-toggle="tab" href="#menu2">산출물</a></li>
-							<li><a data-toggle="tab" href="#menu3">가이드</a></li>
-							<li><a data-toggle="tab" href="#menu4">히스토리</a></li>
+							<li class="active"><a data-toggle="tab" href="#home" id="menuNav0">작업정보</a></li>
+							<li><a data-toggle="tab" href="#menu1" id="menuNav1">선행작업</a></li>
+							<li><a data-toggle="tab" href="#menu2" id="menuNav2">산출물</a></li>
+							<li><a data-toggle="tab" href="#menu3" id="menuNav3">가이드</a></li>
+							<li><a data-toggle="tab" href="#menu4" id="menuNav4">히스토리</a></li>
 						</ul>
 						<div class="tab-content"><br>
 							<%--작업정보--%>
@@ -1286,6 +1324,11 @@
 	<script>
         // 위에 작업 세부정보 수정
         function editWork () {
+            ajaxUrl = 'updateWork.pr';
+            // 값이 0이면 수정이 아니라 신규등록임
+            if ($("#modalWorkNo").val() == 0){
+                ajaxUrl = 'projectWorkInsert.pr'
+			}
             alert("editWork")
             // 값을 통째로 다 업데이트 해버린다.
             $.ajax({
