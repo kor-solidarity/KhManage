@@ -343,8 +343,8 @@
 						<th style="width: 110px">시작</th>
 						<%--완료--%>
 						<th style="width: 110px">완료</th>
-						<%--선행작업--%>
-						<th style="width: 60px">선행작업</th>
+						<%--상위작업--%>
+						<th style="width: 60px">상위작업</th>
 						<%--완료율--%>
 						<th style="width: 60px">완료율</th>
 						<%--담당자--%>
@@ -528,9 +528,10 @@
 					</div>
 				</div>
 				<script>
+
                     // 작업 추가를 누르면 어떤거든간에 우선 테이블 맨위에 띄우게끔.
                     function add_project_work (location) {
-                        alert('add_project_work');
+                        // alert('add_project_work');
                         // 초기화
                         $("#modalWorkNo").val("0");
 
@@ -538,18 +539,26 @@
                         // 제목 맞게 수정
                         $("#workTitle").append("작업 신규등록");
 
-                        // 작업정보, 선행작업 외에는 조회 못하게 막는다. 모달기능 해제.
+                        $("#deleteWorkBtn").attr("style", 'display:none;');
+
+                        // 작업정보, 상위작업 외에는 조회 못하게 막는다. 모달기능 해제.
                         $('#menuNav2').attr('data-toggle', '');
                         $('#menuNav3').attr('data-toggle', '');
                         $('#menuNav4').attr('data-toggle', '');
                         // 인풋, 셀렉트 막힌거 다 푼다.
                         $('#workDetails input,textarea,select').removeAttr('disabled');
 
+                        // 모달 내용물 다 초기화
+                        $("#workName").val("");
+                        $("#startDate").val("");
+                        $("#completeDate").val("");
+                        $("#memo").val("");
+
                         // 이제 불러와서 추가해야 할 사항들을 집어온다.
                         // 불러와야 하는건 두가지:
                         // 1. 작업배정시킬 프로젝트 작업자 목록
                         // 2. 작업을 승인할 PM/PSM 목록
-                        // 3. 선행작업목록
+                        // 3. 상위작업목록
                         $.ajax({
                             url: 'viewProjectTeamList.pr',
                             type: 'post',
@@ -600,7 +609,7 @@
                                     );
                                 }
 
-                                alert("done!");
+                                // alert("done!");
                             },
                             error: function (xhr, status, error) {
                                 alert("wut");
@@ -813,7 +822,7 @@
                             // 돌아가면서 넘긴다.
                             for (key in data) {
                                 target_id = "#" + data[key]['workNo'];
-                                // 선행작업 값
+                                // 상위작업 값
                                 highWorkNo = data[key]['highWorkNo'];
                                 if (highWorkNo == undefined) {
                                     highWorkNo = "";
@@ -821,9 +830,9 @@
                                 // 단계에 따른 상하위작업 들여쓰기
                                 workLevelTab = '&nbsp;'
                                 if (data[key].workLevel == 2) {
-                                    workLevelTab = '&nbsp;&nbsp;&nbsp;&nbsp;';
+                                    workLevelTab = '&nbsp;&nbsp;&nbsp;&nbsp;└&nbsp;';
                                 } else if (data[key].workLevel == 3) {
-                                    workLevelTab = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                                    workLevelTab = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└&nbsp;';
                                 }
                                 // 상태값 관련
 
@@ -840,7 +849,7 @@
                                     '<td>' + data[key]['days'] + '</td>' +
                                     '<td>' + data[key]['beginDate'] + '</td>' +
                                     '<td>' + data[key]['completeDate'] + '</td>' +
-                                    // 선행작업
+                                    // 상위작업
                                     '<td>' + highWorkNo + '</td>' +
                                     '<td>' + data[key]['completeRate'] + '%' + '</td>' +
                                     // 작업에 배정된 인원
@@ -872,12 +881,14 @@
                         },
                         success: function (data) {
                             // 산출물, 가이드, 히스토리 항목 활성화. 새작업 등록할땐 다시 지움.
-                            $("")
+                            // $("")
 
-                            // 이 창에서 수정이 가능한건 인원뿐. 그것도 시작전일때만.
-                            console.log("이 창에서 수정이 가능한건 인원뿐. 그것도 시작전일때만.")
-                            $('#workDetails input,textarea,select').attr('disabled', 'true');
-                            // $('#workDetails select').attr('disabled', 'true');
+                            // 신규등록으로 없어졌을수도 있으니.
+                            $('#menuNav2').attr('data-toggle', 'tab');
+                            $('#menuNav3').attr('data-toggle', 'tab');
+                            $('#menuNav4').attr('data-toggle', 'tab');
+
+                            $("#deleteWorkBtn").removeAttr("style");
 
                             $('#modalWorkNo').val(workNo);
                             daata = data;
@@ -890,12 +901,21 @@
                             grantorList = data.grantorList;
                             //
                             teamList = data.teamList;
-                            // 선행작업 선택목록
+                            // 상위작업 선택목록
                             highWorkList = data.highWorkList;
                             // 산출물
                             workProduct = data.workProduct;
                             // history
                             workHistory = data.workHistory;
+
+                            // 이 창에서 수정이 가능한건 인원뿐. 그것도 시작전일때만.
+                            console.log("이 창에서 수정이 가능한건 인원뿐. 그것도 시작전일때만.")
+                            $('#workDetails input,textarea,select').attr('disabled', 'true');
+
+                            if (projectWork.status == '시작전') {
+                                $('#workDetails select').removeAttr('disabled');
+                            }
+                            $('#memo').removeAttr('disabled');
 
                             // 작업 모달 제목창
                             $("#workTitle").text(projectWork.workName);
@@ -950,10 +970,10 @@
                             );
                             // 여기까지 작업정보 항목 끝.
 
-                            // 다음은 선행작업
+                            // 다음은 상위작업
                             $("#highWorkSel").empty();
                             $("#highWorkSel").append(
-                                "<option value='0'>선행작업 없음</option>"
+                                "<option value='0'>상위작업 없음</option>"
                             );
 
                             for (let i = 0; i < highWorkList.length; i++) {
@@ -962,15 +982,14 @@
                                     highWorkList[i].workName +
                                     "</option>"
                                 );
-                                if (projectWork.higherWorkNo != undefined &&
-                                    projectWork.higherWorkNo == highWorkList[i].workNo) {
-                                    $("#highWorkSel option[value=" + projectWork.higherWorkNo + "]").
-                                        prop('selected', true);
-                                    $("#oriVal").val(projectWork.higherWorkNo)
-                                }
-                                if (projectWork.higherWorkNo != undefined) {
-                                    $("#oriVal").val('0')
-                                }
+                            }
+                            if (projectWork.highWorkNo != undefined) {
+                                $("#highWorkSel option[value=" + projectWork.highWorkNo + "]").
+                                    prop('selected', true);
+                                $("#oriVal").val(projectWork.highWorkNo)
+                            }
+                            if (projectWork.highWorkNo == undefined) {
+                                $("#oriVal").val('0')
                             }
 
                             // 여기서부터 산출물
@@ -1003,11 +1022,15 @@
                                 "</tr>"
                             );
                             for (let i = 0; i < workHistory.length; i++) {
+                                inCharge = "";
+                                if (workHistory[i].memberName != undefined) {
+                                    inCharge = workHistory[i].deptName + " " + workHistory[i].memberName + " " +
+                                        workHistory[i].rankName;
+                                }
                                 $("#historyTable").append(
                                     "<tr>" +
                                     "<td>" + workHistory[i].memo + "</td>" +
-                                    "<td>" + workHistory[i].deptName + " " + workHistory[i].memberName + " " +
-                                    workHistory[i].rankName + "</td>" +
+                                    "<td>" + inCharge + "</td>" +
                                     "<td>" + workHistory[i].modifyDate + "</td>" +
                                     "</tr>"
                                 );
@@ -1059,7 +1082,7 @@
 					<div class="container-fluid">
 						<ul class="nav nav-tabs">
 							<li class="active"><a data-toggle="tab" href="#home" id="menuNav0">작업정보</a></li>
-							<li><a data-toggle="tab" href="#menu1" id="menuNav1">선행작업</a></li>
+							<li><a data-toggle="tab" href="#menu1" id="menuNav1">상위작업</a></li>
 							<li><a data-toggle="tab" href="#menu2" id="menuNav2">산출물</a></li>
 							<li><a data-toggle="tab" href="#menu3" id="menuNav3">가이드</a></li>
 							<li><a data-toggle="tab" href="#menu4" id="menuNav4">히스토리</a></li>
@@ -1127,7 +1150,7 @@
 									</div>
 								</div>
 							</div>
-							<%--선행작업--%>
+							<%--상위작업--%>
 							<div id="menu1" class="tab-pane fade">
 								<table class="table table-striped table-bordered table-hover">
 									<thead>
@@ -1139,7 +1162,7 @@
 											작업
 										</th>
 										<th style="text-align: center; width: 150px; display:none;">
-											선행작업 타입
+											상위작업 타입
 										</th>
 										<th style="text-align: center">
 
@@ -1312,6 +1335,7 @@
 					</div>
 				</div>
 				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" onclick="deleteWork()" id="deleteWorkBtn">삭제</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 					<button type="button" id="workDetailSubmitBtn" class="btn btn-primary"
 							style="background: #1E2B44; outline: none; border: none;"
@@ -1326,13 +1350,23 @@
         function editWork () {
             ajaxUrl = 'updateWork.pr';
             // 값이 0이면 수정이 아니라 신규등록임
-            if ($("#modalWorkNo").val() == 0){
+            if ($("#modalWorkNo").val() == 0) {
                 ajaxUrl = 'projectWorkInsert.pr'
-			}
-            alert("editWork")
+            }
+            // alert("ajaxUrl: " + ajaxUrl);
+            console.log('$("#modalWorkNo").val: ' + $("#modalWorkNo").val() + "\n" +
+                '$("#workName").val: ' + $("#workName").val() + "\n" +
+                '$("#startDate").val: ' + $("#startDate").val() + "\n" +
+                '$("#completeDate").val: ' + $("#completeDate").val() + "\n" +
+                '$("#memberNo").val: ' + $("#memberNo").val() + "\n" +
+                '$("#grantor").val: ' + $("#grantor").val() + "\n" +
+                '$("#memo").val: ' + $("#memo").val() + "\n" +
+                '$("#highWorkSel").val: ' + $("#highWorkSel").val() + "\n"
+            );
+            // return;
             // 값을 통째로 다 업데이트 해버린다.
             $.ajax({
-                url: 'updateWork.pr',
+                url: ajaxUrl,
                 type: 'post',
                 data: {
                     workNo: $("#modalWorkNo").val(),
@@ -1346,15 +1380,37 @@
                     pid: "${pid}",
                 },
                 success: function (data) {
-                    alert("done!");
+                    // alert("done!");
                     console.log(data);
                     updateWorkList();
+                    $("#workDetails").modal("toggle");
                 },
                 error: function (xhr, status, error) {
-                    alert("wut");
+                    alert("ERROR!!");
                 }
 
             })
+        }
+
+        function deleteWork () {
+            if ($("#modalWorkNo").val() == 0) {
+                alert("여기서 사용할 수 없는 기능입니다.")
+				return;
+            }
+            $.ajax({
+				url: "deleteWork.pr",
+				type:'post',
+				data: {
+                    workNo: $("#modalWorkNo").val(),
+				},
+				success: function (data) {
+                    updateWorkList();
+                    $("#workDetails").modal("toggle");
+                },
+                error: function (xhr, status, error) {
+                    alert("ERROR!!");
+                }
+			})
         }
 	</script>
 
