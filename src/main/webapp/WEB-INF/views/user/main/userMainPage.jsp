@@ -4,7 +4,7 @@
 
 <%
 	
-	List<Statistics> list2 = (ArrayList<Statistics>) request.getAttribute("list2");
+	//List<Statistics> list2 = (ArrayList<Statistics>) request.getAttribute("list2");
 	/* List<Statistics> list3 = (ArrayList<Statistics>) request.getAttribute("list3");
 	List<Statistics> list4 = (ArrayList<Statistics>) request.getAttribute("list4");
 	List<Mwork> list5 = (ArrayList<Mwork>) request.getAttribute("list5"); */
@@ -24,6 +24,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+
 
 
 <style>
@@ -73,7 +74,7 @@
 					<table class="topTable">
 						<tr>
 							<td class="tdTop mywork">
-								<div class="cellMenu1" style="font-weight:normal; font-size: 35px; margin-right: 10px; color:#5c9bd1">3</div>
+								<!-- <div class="cellMenu1" style="font-weight:normal; font-size: 35px; margin-right: 10px; color:#5c9bd1">3</div> -->
 								<div style="margin-right: 10px; font-size: 13px; color:#AAB5BC">내 작업</div>
 								<div style="width: 100%">
 									<a href="myWorkList.wk" style="background:#F1F1F1; width: 100%">더 보기
@@ -137,6 +138,36 @@
 				</div>
 			</div>
 		</div>
+		
+		
+		<script>
+								
+		var memberNo = "${loginUser.memberNo}";
+		console.log("멤버No : " + memberNo);
+		
+		//1. 내작업 count
+		 $.ajax({
+    		  url: 'myWorkCount.me',
+    		  type: 'post',
+    		  data: {
+    			  memberNo : memberNo
+    		  },
+    		  success: function(data){
+    			  
+    			  $(".mywork").prepend(     
+    					  
+    					  "<div class='cellMenu1' style='font-weight:normal; font-size: 35px; margin-right: 10px; color:#5c9bd1'>" + data + "</div>"
+    			  );
+    		  }
+    		   
+    	   });
+		
+		
+		
+		
+		</script>
+		
+		
 				
 		<div class="">
 			<div class="panel-heading">
@@ -147,9 +178,82 @@
 							<td class="tdMid"><b>작업 진행상태</b>
 							<hr>
 								
-								<div id="task" style="margin: 0 auto; width:450px;">
-									<canvas id="myChart"></canvas>
+								<div id="workStatus" style="width: 350px; margin:0 auto;">
+									<canvas id="workStatusCanvas" width="280px;" height="280px;"></canvas>
 								</div>
+								
+								<script>
+
+								var ctx = document.getElementById('workStatusCanvas');
+								var myChart = new Chart(ctx, {
+									type: 'doughnut',
+									data: {
+										labels: [
+											
+											//'시작전', '개발중', '개발완료', '테스트완료', 'PL검토중', 'PL검토완료', '개발지연')
+											
+									        '시작 전',
+									        '개발중',
+									        '개발완료',
+									        'PL검토중',
+									        'PL검토완료',
+											'개발지연',
+									        '테스트완료'
+											
+										],
+										datasets: [{
+											label: '# of Votes',
+											data: [
+
+												7, 3, 9, 1, 1, 1, 1, 1
+												
+											],
+											backgroundColor: [
+												'rgba(243, 106, 90, 1)',
+												'rgba(54, 162, 235, 1)',
+												'rgba(64, 174, 223, 0.2)',
+												'rgba(64, 174, 223, 0.2)',
+												'rgba(64, 174, 223, 0.2)',
+												'rgba(64, 174, 223, 0.2)',
+												'rgba(64, 174, 223, 0.2)',
+												'rgba(64, 174, 223, 0.2)',
+												'rgba(64, 174, 223, 0.2)'
+											],
+											borderColor: [
+												/* 'rgba(255, 99, 132, 1)',
+												'rgba(255, 206, 86, 1)',
+												'rgba(54, 162, 235, 1)',
+												'rgba(54, 162, 235, 1)',
+												'rgba(54, 162, 235, 1)',
+												'rgba(54, 162, 235, 1)',
+												'rgba(54, 162, 235, 1)',
+												'rgba(54, 162, 235, 1)' */
+											],
+											borderWidth: 1,
+											hoverBorderWidth : 1
+										}]
+									},
+									options: {
+										
+										/* legend:{
+									          position: 'bottom',
+									          labels:{
+									            fontColor: "white"
+									          }
+								        }, */
+										cutoutPercentage: 45,
+										responsive: true,
+										scales: {
+												ticks: {
+													//cutoutPercentage: 30,
+													//percentageInnerCutout: 30,
+													beginAtZero: true
+												}
+										},
+									}
+								});
+								
+								</script>
 								
 								
 								<div>
@@ -158,6 +262,62 @@
 							<td class="td2"></td>
 							<td class="tdMid"><b>이슈 현황</b>
 							<hr>
+							
+							<div id="issue" style="width:280px; margin:0 auto;">
+								<canvas id="issueCanvas" width="280px;" height="280px;"></canvas>
+							</div>
+							
+							<script>
+								
+								var ctx = document.getElementById('issueCanvas');
+								var myChart = new Chart(ctx, {
+									type: 'doughnut',
+									data: {
+										labels: [
+											
+											'Red',
+									        'Yellow',
+									        'Blue'
+											
+										],
+										datasets: [{
+											label: '# of Votes',
+											data: [
+
+												10, 20, 30
+												
+											],
+											backgroundColor: [
+												'rgba(255, 99, 132, 0.2)',
+												'rgba(255, 206, 86, 0.2)',
+												'rgba(54, 162, 235, 0.2)'
+											],
+											borderColor: [
+												'rgba(255, 99, 132, 1)',
+												'rgba(255, 206, 86, 1)',
+												'rgba(54, 162, 235, 1)'
+											],
+											borderWidth: 1,
+											
+											hoverBorderWidth : 1
+										}]
+									},
+									options: {
+										responsive: false,
+										scales: {
+												ticks: {
+													cutoutPercentage: 60,
+													beginAtZero: true
+												}
+										},
+									}
+								});
+								
+								
+								
+								</script>	
+							
+							
 								<div>
 								</div>
 							</td>
