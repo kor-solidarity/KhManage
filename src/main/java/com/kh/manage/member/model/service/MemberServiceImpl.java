@@ -1,5 +1,6 @@
 package com.kh.manage.member.model.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -23,6 +24,7 @@ import com.kh.manage.member.model.vo.AllDashBoard;
 import com.kh.manage.member.model.vo.DeptProjectCount;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.project.model.vo.Project;
+import com.kh.manage.project.model.vo.ProjectDetail;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -253,6 +255,29 @@ public class MemberServiceImpl implements MemberService {
 		return md.selectDeptProjectCount(sqlSession);
 	}
 
+	@Override
+	public Date selectSysdate() {
+		
+		return md.selectSysdate(sqlSession);
+	}
+
+	@Override
+	public AllDashBoard selectAllProjectCount() {
+		
+		return md.selectAllProjectCount(sqlSession);
+	}
+
+	@Override
+	public List<ProjectDetail> selectAllProjectType() {
+		
+		return md.selectAllProjectType(sqlSession);
+	}
+
+	@Override
+	   public int myWorkCount(Member m) {
+	      
+	      return md.myWorkCount(sqlSession, m);
+	   }
 
 	
 	

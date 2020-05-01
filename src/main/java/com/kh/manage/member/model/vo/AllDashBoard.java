@@ -24,13 +24,17 @@ public class AllDashBoard {
 	 private String workProduct;
 	 private int start;
 	 private int end;
+	 private int before;
+	 private int pro;
+	 private int com;
+	 private int del;
 	 
 	 public AllDashBoard() {}
 
 	public AllDashBoard(String projectPk, String projectName, String isImportant, String projectTypePk,
 			String projectTypeName, String projectRank, String projectManager, String managerName, String deptNo,
 			String deptName, Date startDate, Date endDate, String detail, String remarks, String status, int workClear,
-			int allWork, String issue, String workProduct, int start, int end) {
+			int allWork, String issue, String workProduct, int start, int end, int before, int pro, int com, int del) {
 		super();
 		this.projectPk = projectPk;
 		this.projectName = projectName;
@@ -53,6 +57,10 @@ public class AllDashBoard {
 		this.workProduct = workProduct;
 		this.start = start;
 		this.end = end;
+		this.before = before;
+		this.pro = pro;
+		this.com = com;
+		this.del = del;
 	}
 
 	public String getProjectPk() {
@@ -223,6 +231,38 @@ public class AllDashBoard {
 		this.end = end;
 	}
 
+	public int getBefore() {
+		return before;
+	}
+
+	public void setBefore(int before) {
+		this.before = before;
+	}
+
+	public int getPro() {
+		return pro;
+	}
+
+	public void setPro(int pro) {
+		this.pro = pro;
+	}
+
+	public int getCom() {
+		return com;
+	}
+
+	public void setCom(int com) {
+		this.com = com;
+	}
+
+	public int getDel() {
+		return del;
+	}
+
+	public void setDel(int del) {
+		this.del = del;
+	}
+
 	@Override
 	public String toString() {
 		return "AllDashBoard [projectPk=" + projectPk + ", projectName=" + projectName + ", isImportant=" + isImportant
@@ -231,9 +271,8 @@ public class AllDashBoard {
 				+ deptNo + ", deptName=" + deptName + ", startDate=" + startDate + ", endDate=" + endDate + ", detail="
 				+ detail + ", remarks=" + remarks + ", status=" + status + ", workClear=" + workClear + ", allWork="
 				+ allWork + ", issue=" + issue + ", workProduct=" + workProduct + ", start=" + start + ", end=" + end
-				+ "]";
+				+ ", before=" + before + ", pro=" + pro + ", com=" + com + ", del=" + del + "]";
 	}
 
 	
-	 
 }

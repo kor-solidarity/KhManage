@@ -1,5 +1,6 @@
 package com.kh.manage.member.model.dao;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -15,6 +16,7 @@ import com.kh.manage.member.model.vo.AllDashBoard;
 import com.kh.manage.member.model.vo.DeptProjectCount;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.project.model.vo.Project;
+import com.kh.manage.project.model.vo.ProjectDetail;
 
 
 public interface MemberDao {
@@ -74,6 +76,14 @@ public interface MemberDao {
 	List<AllDashBoard> selectAllDashBoard(SqlSessionTemplate sqlSession, AllDashBoard ad);
 
 	List<DeptProjectCount> selectDeptProjectCount(SqlSessionTemplate sqlSession);
+
+	Date selectSysdate(SqlSessionTemplate sqlSession);
+
+	AllDashBoard selectAllProjectCount(SqlSessionTemplate sqlSession);
+
+	List<ProjectDetail> selectAllProjectType(SqlSessionTemplate sqlSession);
+
+	int myWorkCount(SqlSessionTemplate sqlSession, Member m);
 
 
 }

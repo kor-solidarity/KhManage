@@ -1,13 +1,17 @@
 package com.kh.manage.member.controller;
 
 import java.io.File;
+
 import java.io.IOException;
+import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -36,6 +40,7 @@ import com.kh.manage.member.model.vo.Customer;
 import com.kh.manage.member.model.vo.DeptProjectCount;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.project.model.vo.Project;
+import com.kh.manage.project.model.vo.ProjectDetail;
 
 
 @Controller
@@ -130,11 +135,40 @@ public class MemberController {
 		
 		List<AllDashBoard> list = ms.selectAllDashBoard(ad);
 		List<DeptProjectCount> dList = ms.selectDeptProjectCount();
+		Date sysdate = ms.selectSysdate();
+		List<ProjectDetail> pList = ms.selectAllProjectType();
+		
 		
 		model.addAttribute("list", list);
 		model.addAttribute("dList", dList);
+		model.addAttribute("sysdate", sysdate);
+		model.addAttribute("pList", pList);
+		
+		AllDashBoard aList = ms.selectAllProjectCount();
+		
+		model.addAttribute("aList", aList);
 		
 		return "user/main/synthesisDashboard";
+	}
+	
+	@RequestMapping("/searchChartStatus.me")
+	public void searchChartStatus(Date date, HttpServletRequest request, HttpServletResponse response) {
+		List<ProjectDetail> pList = ms.selectAllProjectType();
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("pList", pList);
+		request.setAttribute("map", map);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		
+		String gson = new Gson().toJson(map);
+		
+		try {
+			response.getWriter().write(gson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@RequestMapping("/changeAllDahboard.me")
@@ -155,6 +189,26 @@ public class MemberController {
 		
 	}
  	
+	//멤버 메인페이지 내 작업 Count
+	   @RequestMapping("myWorkCount.me")
+	   public void myWorkCount(Member m, Model model, HttpServletRequest request, HttpServletResponse response) {
+	      
+	      int result = ms.myWorkCount(m);
+	      System.out.println("내 작업 갯수 result : " + result);
+	      
+	      response.setContentType("application/json");
+	      response.setCharacterEncoding("UTF-8");
+	      
+	      String gson = new Gson().toJson(result);
+	      
+	      try {
+	         response.getWriter().write(gson);
+	      } catch (IOException e) {
+	         e.printStackTrace();
+	      }
+	      
+	      
+	   }
 	
 	//*************************************************
 

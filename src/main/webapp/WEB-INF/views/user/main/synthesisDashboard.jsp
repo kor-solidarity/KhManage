@@ -1,15 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.*, com.kh.manage.gwManage.model.vo.*, com.kh.manage.project.model.vo.*"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<% 
+	List<ProjectDetail> pList = (ArrayList<ProjectDetail>)request.getAttribute("pList");
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
 <style>
-
+#myChart, #myChart2{
+	margin: 0 auto;
+	height: 270px;
+}
+#myChart2{
+	margin-left: 27%;
+}
 .midTable{width:100%;}
 .tdMid {width: 49%; height: 380px; padding: 20px; border: 1px solid lightgray; vertical-align:top; background: white;}
 .thmidTable{border: 1px solid lightgray; height: 38px; text-align: center; font-size:15px; center; border:none}
@@ -59,8 +69,23 @@
     color: #ffb822;
     background: rgba(234, 234, 234, 0.3);
 }
-    
-
+#datepicker{
+	width:100px;
+	border-radius: 5px;
+	border: 1px solid lightgray;
+	margin-left: 20px;
+}    
+#searchProjectBtn{
+	border-radius: 5px;
+	background:#1E2B44;
+	color:white;
+	border:none;
+	font-size: 12px;
+	width:40px;
+	height: 20px;
+	line-height: 10px;
+	border: 1px solid #1E2B44;
+}
 </style>
 
 </head>
@@ -157,10 +182,10 @@
             <thead>
                 <tr>
                     <th style="text-align: center;">부서</th>
-                    <th style="text-align: center;">전체</th>
                     <th style="text-align: center;">시작전</th>
-                    <th style="text-align: center;">정상</th>
+                    <th style="text-align: center;">진행</th>
                     <th style="text-align: center;">지연</th>
+                    <th style="text-align: center;">완료</th>
 
                 </tr>
             </thead>
@@ -186,18 +211,36 @@
                                 <span class="kt-badge kt-badge--unified-danger kt-badge--lg kt-badge--bold">${d.complete}</span>
                             </td>
                            
-                        </tr>
-               </c:forEach>         
-            </tbody>
-        </table>
-
-    </div>
+			                  </tr>
+			               </c:forEach>         
+			            </tbody>
+			        </table>
+			
+			    </div>
 								</div>
 							</td>
 							<td class="td2"></td>
-							<td class="tdMid"><b>프로젝트 현황</b>
-							<hr>
-								<div>
+							<td class="tdMid">
+							<div class="kt-portlet__head-toolbar">
+					            <ul class="nav nav-tabs nav-tabs-line nav-tabs-bold nav-tabs-line-brand" role="tablist" style="margin-bottom: 30px;">
+					            <li><b>프로젝트 현황</b>
+							<input type="text" id="datepicker" value="${sysdate }">
+							<button type="button" id="searchProjectBtn" style="margin-left: 5px;">검색</button></li>
+					                <li class="nav-item" id="chartStatus"  style="float: right;">
+					                    <a class="nav-link" data-toggle="tab" href="#tabStatusChart" role="tab" aria-selected="false">
+					                        상태별
+					                    </a>
+					                </li>
+					                <li class="nav-item active" id="chartKind" style="float: right;">
+					                    <a class="nav-link active" data-toggle="tab" href="#tabTypeChart" role="tab" aria-selected="false" aria-expanded="true">
+					                        유형별
+					                    </a>
+					                </li>
+					            </ul>
+					        </div>	
+								<div id="chartArea">
+								<canvas id="myChart" width="400" height="400"></canvas>
+								<canvas id="myChart2" width="400" height="400"></canvas>
 								</div>
 							</td>
 						</tr>
@@ -261,6 +304,136 @@
 			</div>
 		</div>
 	</div>
+	<script>
+	$.datepicker.setDefaults({
+		showOn : "button",
+		buttonImage : "/manage/resources/img/calendar.png",
+		buttonImageOnly : true,
+		dateFormat : 'yy-mm-dd'
+
+	});
+	$(function() {
+		$("#datepicker").datepicker({});
+		/* 달력버튼 */
+		$("img.ui-datepicker-trigger")
+				.attr("style","margin-left:2px; margin-bottom:2px; vertical-align:middle; line-height:23px; cursor: Pointer; width:25px; height:25px");
+
+	});
+	
+	$("#myChart2").hide();
+		
+	var ctx = document.getElementById('myChart');
+	var myChart = new Chart(ctx, {
+		type: 'doughnut',
+		data: {
+			labels: ['시작전', '진행중', '지연', '완료'],
+			datasets: [{
+				label: '# of Votes',
+				data: ['${aList.before}', '${aList.pro}', '${aList.del}', '${aList.com}'],
+				backgroundColor: [
+					'#1E2B44',
+					'rgba(54, 162, 235, 0.2)',
+					'rgba(255, 206, 86, 0.2)',
+					'rgba(75, 192, 192, 0.2)',
+					'rgba(153, 102, 255, 0.2)',
+					'rgba(255, 159, 64, 0.2)'
+				],
+				borderColor: [
+					'#1E2B44',
+					'rgba(54, 162, 235, 1)',
+					'rgba(255, 206, 86, 1)',
+					'rgba(75, 192, 192, 1)',
+					'rgba(153, 102, 255, 1)',
+					'rgba(255, 159, 64, 1)'
+				],
+				borderWidth: 1,
+				
+				hoverBorderWidth : 1
+			}]
+		},
+		options: {
+			responsive: false,
+			scales: {
+					ticks: {
+						cutoutPercentage: 60,
+						beginAtZero: true
+					}
+			},
+		}
+	});
+	
+	</script>
+	
+	
+	<script>
+		$("#chartStatus").click(function(){
+			$("#myChart").hide();
+			var date = $("#datepicker").val();
+			$.ajax({ 
+				url:'searchChartStatus.me',
+				type: 'post',
+				async: false,
+				data:{date:date},
+			 success:function(data){
+				 console.log(data['pList'][3]);
+				 var ctx = document.getElementById('myChart2');
+					var myChart = new Chart(ctx, {
+						type: 'doughnut',
+						data: {
+							labels: [
+								<% for(int i = 0; i < pList.size(); i ++) {%>
+								data['pList'][<%=i%>]['projectTypeName'],
+								<% }%> 
+							],
+							datasets: [{
+								label: '# of Votes',
+								data: [5, 2, 7, 3, 1],
+								backgroundColor: [
+									'orange',
+									'skyblue',
+									'rgba(255, 206, 86, 0.2)',
+									'rgba(75, 192, 192, 0.2)',
+									'rgba(153, 102, 255, 0.2)',
+									'rgba(255, 159, 64, 0.2)'
+								],
+								borderColor: [
+									'orange',
+									'rgba(54, 162, 235, 1)',
+									'rgba(255, 206, 86, 1)',
+									'rgba(75, 192, 192, 1)',
+									'rgba(153, 102, 255, 1)',
+									'rgba(255, 159, 64, 1)'
+								],
+								borderWidth: 1,
+								
+								hoverBorderWidth : 1
+							}]
+						},
+						options: {
+							responsive: false,
+							scales: {
+									ticks: {
+										cutoutPercentage: 60,
+										beginAtZero: true
+									}
+							},
+						}
+					});
+					
+
+					$("#myChart2").show();
+				 
+			 }
+			});
+			
+		});
+		
+		$("#chartKind").click(function(){
+			$("#myChart").show();
+			$("#myChart2").hide();
+		});
+	</script>
+	
 	
 	<script>
 	 var start = 6;
