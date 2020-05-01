@@ -88,4 +88,9 @@ public class WorkDaoImpl implements WorkDao{
 		return sqlSession.selectList("Work.selectWorkAttachment", workNo);
 	}
 
+	@Override
+	public int deleteWorkProduct(SqlSessionTemplate sqlSession, String atNo) {
+		return sqlSession.delete("Work.deleteWorkProduct", atNo);
+	}
+
 }

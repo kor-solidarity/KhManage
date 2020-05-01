@@ -34,6 +34,8 @@ public interface WorkService {
 
 	List<WorkAttachment> selectWorkAttachment(String workNo);
 
+	int deleteWorkProduct(String atNo);
+
 	
 
 }
