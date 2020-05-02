@@ -383,7 +383,7 @@ public class ProjectController {
 		ProjectWork projectWork =
 				new ProjectWork(null, workName, "시작전", pid,
 						beginDate, endDate, null, "0",
-						grantor, "1", highWorkNo, memo,
+						grantor, "1", highWorkNo, null,
 						"프로젝트", memberNo, "Y");
 		int result = ps.insertProjectWork(projectWork);
 		
@@ -404,6 +404,7 @@ public class ProjectController {
 							null, null, null);
 			int result2 = ps.insertWorkHistory(workHistory);
 		}
+		
 		try {
 			response.getWriter().print(true);
 		} catch (IOException e) {
@@ -476,7 +477,6 @@ public class ProjectController {
 		String workNo = request.getParameter("workNo");
 		
 		
-		
 		int check = ps.checkLowerWorks(workNo);
 		
 		int result = 0;
@@ -484,7 +484,7 @@ public class ProjectController {
 			result = ps.deleteWork(workNo);
 		}
 		
-		HashMap<String, String > map = new HashMap<>();
+		HashMap<String, String> map = new HashMap<>();
 		map.put("check", String.valueOf(check));
 		map.put("result", String.valueOf(result));
 		
@@ -556,33 +556,24 @@ public class ProjectController {
 	}
 	
 	// 프로젝트 기본정보 페이지
-	// 원래 요약정보 페이지였는데 껍데기 뿐이어서..
 	@RequestMapping("/viewProject.pr")
 	public String viewProject(Model model, HttpServletRequest request) {
 		
 		System.out.println("viewProject");
 		
-		String pid = (String) request.getParameter("pid");
+		String pid = request.getParameter("pid");
+		ProjectDetail project = ps.selectOneProject(pid);
 		
-		// 본격적으로 조회하기 전에 한번 필터 거친다.
-		// 작업 status 가 '개발완료'로 뜨기 전에 종료일자를 넘기면 전부 '개발지연'으로 분류시킨다.
-		// 또한 분류 후 작업 히스토리에 적용시킨다.
+		// 수정해야함
+		ProjectTeam team = null;
 		
-		List<ProjectWork> workList = ps.selectOutdatedWorks(pid);
-		
-		for (ProjectWork work : workList) {
-			String workNo = work.getWorkNo();
-			int result = ps.updateOutdatedWork(workNo);
-			WorkHistory workHistory =
-					new WorkHistory(null, workNo, "개발지연",
-							"기한 초과로 인한 자동조치", null, null,
-							null, null, null);
-			if (result > 0) {
-				int result2 = ps.insertWorkHistory(workHistory);
-			}
-		}
+		// 프로젝트 관리자 - 소속부서만 뽑고 실제 사원목록은 부서를 눌렀을때 추가하면서 넣는걸로.
+		List<Dept> deptList = ps.selectDeptList();
+		System.out.println("deptList: " + deptList);
 		
 		model.addAttribute("pid", pid);
+		model.addAttribute("project", project);
+		model.addAttribute("deptList", deptList);
 		return "user/project/projectView";
 	}
 	
@@ -639,10 +630,20 @@ public class ProjectController {
 		
 		for (ProjectWork work : workList) {
 			String workNo = work.getWorkNo();
+			String workMember = work.getMemberNo();
+			String teamPk = null;
+			// 작업에 담당자가 배정돼있으면 넣고, 아니면 널처리
+			if (workMember != null) {
+				ProjectTeam team =
+						new ProjectTeam(null, workNo, workMember,
+								null, null, null, null);
+				teamPk = ps.selectProjectTeamNo(team);
+			}
+			
 			int result = ps.updateOutdatedWork(workNo);
 			WorkHistory workHistory =
 					new WorkHistory(null, workNo, "개발지연",
-							"기한 초과로 인한 자동조치", null, null,
+							"기한 초과로 인한 자동조치", null, teamPk,
 							null, null, null);
 			if (result > 0) {
 				int result2 = ps.insertWorkHistory(workHistory);

@@ -100,6 +100,7 @@
         <result property="memberName" column="MEMBER_NAME"/>
         <result property="deptName" column="DEPT_NAME"/>
         <result property="rankName" column="RANK_NAME"/>
+        <result property="deptNo" column="DEPT_NO"/>
     </resultMap>
 
     <resultMap type="ProjectDetail" id="projectDetailResultSet">
@@ -278,12 +279,20 @@
 
     <!--프로젝트 담당자 명단뽑기.-->
     <select id="selectProjectTeamList" parameterType="String" resultMap="projectTeamResultSet">
-        SELECT T.TEAM_PK, PROJECT_PK, MEMBER_PK, ROLE, MEMBER_NAME, DEPT_NAME, RANK_NAME
+        SELECT T.TEAM_PK
+             , PROJECT_PK
+             , MEMBER_PK
+             , ROLE
+             , MEMBER_NAME
+             , DEPT_NAME
+             , RANK_NAME
+             , M.DEPT_NO
         FROM PROJECT_TEAM T
                  JOIN (SELECT *
                        FROM MEMBER M
                                 JOIN DEPT D ON M.DEPT_NO = D.DEPT_NO
-                                JOIN RANK R2 ON M.RANK_NO = R2.RANK_NO) M ON T.MEMBER_PK = M.MEMBER_NO
+                                JOIN RANK R2 ON M.RANK_NO = R2.RANK_NO) M
+                      ON T.MEMBER_PK = M.MEMBER_NO
         WHERE PROJECT_PK = #{value}
     </select>
 
@@ -462,7 +471,13 @@
     </select>
 
     <select id="selectTemplateList" resultMap="templateResultSet">
-        select *
+        select template_pk
+             , project_type_pk
+             , member_pk
+             , template_name
+             , detail
+             , create_date
+             , edit_date
         from PROJECT_TEMPLATE
     </select>
 
@@ -496,7 +511,21 @@
 
     <select id="selectOutdatedWorks" parameterType="String" resultMap="projectWorkListResultSet">
         <![CDATA[
-        select *
+        select work_no
+             , work_name
+             , status
+             , project_no
+             , begin_date
+             , complete_date
+             , precede_no
+             , complete_rate
+             , grantor_no
+             , work_level
+             , high_work_no
+             , memo
+             , work_type
+             , member_no
+             , work_status
         from WORK
         WHERE to_date(sysdate) > COMPLETE_DATE
           and (STATUS != '개발완료' and STATUS != '개발지연')
@@ -536,7 +565,7 @@
         insert into PROJECT
         values ('P' || to_char(SEQ_PROJ.nextval, 'FM000'), #{projectName},
                 #{isImportant}, #{projectTypePk}, #{projectRank}, #{projectManager}, #{deptNo},
-                #{startDate}, #{endDate}, #{detail}, #{remarks}, #{status}, #{templatePk})
+                #{startDate}, #{endDate}, #{detail}, #{remarks}, #{status}, #{templatePk}, to_date(sysdate))
     </insert>
     <insert id="insertProjectTeam" parameterType="ProjectTeam">
         insert into PROJECT_TEAM

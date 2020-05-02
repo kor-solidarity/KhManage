@@ -3,29 +3,31 @@ package com.kh.manage.project.model.vo;
 import java.sql.Date;
 
 public class ProjectDetail {
-     private String projectPk;
-	 private String projectName;
-	 private String isImportant;
-	 private String projectTypePk;
-	 private String projectTypeName;
-	 private String projectRank;
-	 private String projectManager;
-	 private String managerName;
-	 private String deptNo;
-	 private String deptName;
-	 private Date startDate;
-	 private Date endDate;
-	 private String detail;
-	 private String remarks;
-	 private String status;
-	 private String teamplatePk;
-	 
-	 public ProjectDetail() {}
+	private String projectPk;
+	private String projectName;
+	private String isImportant;
+	private String projectTypePk;
+	private String projectTypeName;
+	private String projectRank;
+	private String projectManager;
+	private String managerName;
+	private String deptNo;
+	private String deptName;
+	private Date startDate;
+	private Date endDate;
+	private Date enrollDate;
+	private String detail;
+	private String remarks;
+	private String status;
+	private String teamplatePk;
+
+	public ProjectDetail() {
+	}
 
 	public ProjectDetail(String projectPk, String projectName, String isImportant, String projectTypePk,
-			String projectTypeName, String projectRank, String projectManager, String managerName, String deptNo,
-			String deptName, Date startDate, Date endDate, String detail, String remarks, String status,
-			String teamplatePk) {
+						 String projectTypeName, String projectRank, String projectManager, String managerName, String deptNo,
+						 String deptName, Date startDate, Date endDate, String detail, String remarks, String status,
+						 String teamplatePk) {
 		super();
 		this.projectPk = projectPk;
 		this.projectName = projectName;
@@ -182,6 +184,5 @@ public class ProjectDetail {
 				+ detail + ", remarks=" + remarks + ", status=" + status + ", teamplatePk=" + teamplatePk + "]";
 	}
 
-	 
 
 }

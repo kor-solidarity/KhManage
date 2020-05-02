@@ -82,7 +82,8 @@
 				<tr>
 					<td style="padding-bottom: 10px;">프로젝트 등록 정보</td>
 				</tr>
-			</table> -->
+			</table>
+			-->
 			<div class="row">
 				<div class="col-md-12">
 					<div class="col-md-2 ">프로젝트 등록 정보</div>
