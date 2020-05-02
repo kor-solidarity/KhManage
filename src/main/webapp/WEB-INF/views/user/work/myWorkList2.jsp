@@ -112,7 +112,7 @@
 		color: white;
 	}
 	
-	::-webkit-scrollbar {
+	.sortable::-webkit-scrollbar {
 
 		display:none;
 
@@ -148,6 +148,20 @@
 	.workLabel5{
 		min-width:10px;
 		background:#009900;
+		color:white;
+		float:right;
+	}
+	
+	.workLabel6{
+		min-width:10px;
+		background:#54ff57;
+		color:white;
+		float:right;
+	}
+	
+	.workLabel7{
+		min-width:10px;
+		background:#FD3A0F;
 		color:white;
 		float:right;
 	}
@@ -234,6 +248,9 @@
 					<c:if test="${l1.workType == '일반' }">
 					<label class="typeLabel3"><c:out value="${l1.workType }"/></label>
 					</c:if>
+					<c:if test="${l1.status == '시작전' }">
+					<label class="workLabel6"><c:out value="${l1.status }"/></label>
+					</c:if>
 					<c:if test="${l1.status == '개발중' }">
 					<label class="workLabel1"><c:out value="${l1.status }"/></label>
 					</c:if>
@@ -246,8 +263,11 @@
 					<c:if test="${l1.status == 'PL검토중' }">
 					<label class="workLabel4"><c:out value="${l1.status }"/></label>
 					</c:if>
-					<c:if test="${l1.status == 'PL검토완료' }">
+					<c:if test="${l1.status == 'PL승인완료' }">
 					<label class="workLabel5"><c:out value="${l1.status }"/></label>
+					</c:if>
+					<c:if test="${l1.status == '개발지연' }">
+					<label class="workLabel7"><c:out value="${l1.status }"/></label>
 					</c:if>
 					<br>
 					<div class="clear"></div>
@@ -258,6 +278,35 @@
 					</div>
 					</c:forEach>
 					
+				</div>
+				
+				<div class="sortable ui-sortable" style="overflow-y:auto; overflow-x:hidden; -ms-overflow-style: none;">
+					<h5 class="nodrag header">시작전/개발지연</h5>
+					<c:forEach var="l7" items="${map.list7 }">
+					<div class="workDiv"><input type="hidden" value="${l7.workNo }">
+					<c:if test="${l7.workType == '프로젝트' }">
+					<label class="typeLabel1"><c:out value="${l7.workType }"/></label>
+					</c:if>
+					<c:if test="${l7.workType == '개인' }">
+					<label class="typeLabel2"><c:out value="${l7.workType }"/></label>
+					</c:if>
+					<c:if test="${l7.workType == '일반' }">
+					<label class="typeLabel3"><c:out value="${l7.workType }"/></label>
+					</c:if>
+					<c:if test="${l7.status == '시작전' }">
+					<label class="workLabel6"><c:out value="${l7.status }"/></label>
+					</c:if>
+					<c:if test="${l7.status == '개발지연' }">
+					<label class="workLabel7"><c:out value="${l7.status }"/></label>
+					</c:if>
+					<br>
+					<div class="clear"></div>
+					<label style="font-size:17px; line-height:280%;"><c:out value="${l7.workName }"/></label>
+					<br>
+					<c:out value="${l7.projectName }"/>
+					<label class="rate"><c:out value="${l7.completeRate }"/>%</label>
+					</div>
+					</c:forEach>
 				</div>
 				
 				<div class="sortable ui-sortable" style="overflow-y:auto; overflow-x:hidden; -ms-overflow-style: none;">
@@ -355,7 +404,7 @@
 					</c:forEach>
 				</div>
 				<div class="sortable ui-sortable" style="overflow-y:auto; overflow-x:hidden; -ms-overflow-style: none;">
-					<h5 class="nodrag header ">PL검토완료</h5>
+					<h5 class="nodrag header ">PL승인완료</h5>
 					<c:forEach var="l6" items="${map.list6 }">
 					<div class="workDiv"><input type="hidden" value="${l6.workNo }">
 					<c:if test="${l6.workType == '프로젝트' }">
@@ -499,7 +548,7 @@
 									<option value="개발완료">개발완료</option>
 									<option value="테스트완료">테스트완료</option>
 									<option value="PL검토중">PL검토중</option>
-									<option value="PL검토완료">PL검토완료</option>
+									<option value="PL승인완료">PL승인완료</option>
 							</select>
 							</td>
 						</tr>
@@ -549,7 +598,7 @@
 						<ul class="nav nav-tabs">
 							<li class="active">
 								<a data-toggle="tab" href="#home">작업정보</a></li>
-							<li><a data-toggle="tab" href="#menu1">선행작업</a></li>
+							<li><a data-toggle="tab" href="#menu1">상위작업</a></li>
 							<li><a data-toggle="tab" href="#menu2">산출물</a></li>
 							<li><a data-toggle="tab" href="#menu3">가이드</a></li>
 							<li><a data-toggle="tab" href="#menu3">히스토리</a></li>
@@ -600,7 +649,6 @@
 									<select name="workType" class="inputMenu form-control" required="required">
 										<option value="#" >선택하세요</option>
 										<option value="개인">개인</option>
-										<option value="일반">일반</option>
 										<option value="프로젝트">프로젝트</option>
 									</select>
 									</td>
@@ -668,7 +716,7 @@
 											<option value="개발완료">개발완료</option>
 											<option value="테스트완료">테스트완료</option>
 											<option value="PL검토중">PL검토중</option>
-											<option value="PL검토완료">PL검토완료</option>
+											<option value="PL승인완료">PL승인완료</option>
 											<option value="개발지연">개발지연</option>
 										</select>
 									</td>
@@ -688,7 +736,7 @@
 									</td>
 									<td class="modalTd_T">승인자</td>
 									<td class="modalTd" colspan="2">
-										<select name="grantorNo" id="grantorList" class="inputMenu form-control" required="required">
+										<select name="grantorNo" id="grantorList" style="padding-left:0px;" class="inputMenu form-control" required="required">
 											
 										</select>
 									</td>
@@ -871,7 +919,7 @@
 						<ul class="nav nav-tabs">
 							<li class="active">
 								<a data-toggle="tab" href="#homeInfo">작업정보</a></li>
-							<li><a data-toggle="tab" href="#menuInfo1">선행작업</a></li>
+							<li><a data-toggle="tab" href="#menuInfo1">상위작업</a></li>
 							<li><a data-toggle="tab" href="#menuInfo2">산출물</a></li>
 							<li><a data-toggle="tab" href="#menuInfo3">가이드</a></li>
 							<li><a data-toggle="tab" href="#menuInfo4">히스토리</a></li>
@@ -893,6 +941,8 @@
 								<tr>
 									<td class="modalTd_T">프로젝트명
 									<input type="hidden" name="memberNo" value="${sessionScope.loginUser.memberNo }">
+									<input type="hidden" name="workNo" class="workNo">
+									<input type="hidden" name="projectNo" class="projectNo">
 									
 									</td>
 									<td class="modalTd" colspan="5">
@@ -921,10 +971,10 @@
 									</td>
 									<td class="modalTd_T">작업유형</td>
 									<td class="modalTd" colspan="2">
-									<select name="workType" class="inputMenu form-control workType" required="required" disabled>
+									<select name="workType" class="inputMenu form-control workType" required="required" readOnly
+									onFocus="this.initialSelect = this.selectedIndex;" onChange="this.selectedIndex = this.initialSelect;">
 										<option value="#" >선택하세요</option>
 										<option value="개인">개인</option>
-										<option value="일반">일반</option>
 										<option value="프로젝트">프로젝트</option>
 									</select>
 									</td>
@@ -962,7 +1012,7 @@
 									</td>
 									<td class="modalTd_T">완료율</td>
 									<td class="modalTd" colspan="2">
-									<input name="completeRate" type="number" class="inputMenu form-control completeRate" min="0" max="100">	
+									<input name="completeRate" type="number" class="inputMenu form-control completeRate" step="5" min="0" max="100">	
 									</td>
 								</tr>
 								<tr>
@@ -976,7 +1026,8 @@
 								<tr>
 									<td class="modalTd_T">작업단계</td>
 									<td class="modalTd" colspan="2" >
-										<select name="workLevel" class="inputMenu form-control workLevel" required="required" disabled>
+										<select name="workLevel" class="inputMenu form-control workLevel" readOnly required="required" 
+										onFocus="this.initialSelect = this.selectedIndex;" onChange="this.selectedIndex = this.initialSelect;">
 											<option value="#" >선택하세요</option>
 											<option value="1">1</option>
 											<option value="2">2</option>
@@ -985,14 +1036,14 @@
 									</td>
 									<td class="modalTd_T">작업상태</td>
 									<td class="modalTd" colspan="2">
-										<select name="status" class="inputMenu form-control status" required="required">
+										<select name="status" id="statusSelect" class="inputMenu form-control status" required="required">
 											<option value="#" >선택하세요</option>
 											<option value="시작전">시작전</option>
 											<option value="개발중">개발중</option>
 											<option value="개발완료">개발완료</option>
 											<option value="테스트완료">테스트완료</option>
 											<option value="PL검토중">PL검토중</option>
-											<option value="PL검토완료">PL검토완료</option>
+											<option value="PL승인완료">PL승인완료</option>
 											<option value="개발지연">개발지연</option>
 										</select>
 									</td>
@@ -1012,12 +1063,13 @@
 									</td>
 									<td class="modalTd_T">승인자</td>
 									<td class="modalTd" colspan="2">
-										<select name="grantorNo" id="grantorNo" class="inputMenu form-control grantorNo" required="required" disabled>
+										<select name="grantorNo" id="grantorNo" style="padding-left:0px;" class="inputMenu form-control grantorNo" required="required" readOnly
+										onFocus="this.initialSelect = this.selectedIndex;" onChange="this.selectedIndex = this.initialSelect;">
 											
 										</select>
 									</td>
 								</tr>
-								<tr>
+								<tr id="lastTr">
 									<td class="modalTd"></td>
 									<td class="modalTd"></td>
 									<td class="modalTd"></td>
@@ -1026,11 +1078,12 @@
 									<td class="modalTd"></td>
 								</tr>
 								
+								
 					 		</table>
 					 		<hr style="border:solid 1px lightgray;">
 					 		<div id="buttonArea1">
 					 		<button type="button" id="workRegCancel" class="btn btn-default" data-dismiss="modal">취소</button>
-							<button type="button" id="workRegSubmit" class="btn btn-primary"
+							<button type="button" id="workChangeSubmit" class="btn btn-primary"
 									style="background: #1E2B44; outline: none; border: none;">저장
 							</button>
 							</div>
@@ -1165,9 +1218,6 @@
 												<th style="text-align: center; width: 30%;">
 													산출물 구분
 												</th>
-												<th style="text-align: center; width: 20%;">
-													제목
-												</th>
 												<th style="text-align: center; width: 25%;">
 													파일명
 												</th>
@@ -1183,9 +1233,6 @@
 											<tr id="d726674b-be83-4317-8f1f-4b984fc4890c">
 												<td class="hidden-xs">
 													UI보고서 
-												</td>
-												<td class="highlight">
-													login.png
 												</td>
 												<td class="highlight">
 													login.png
@@ -1243,7 +1290,7 @@
 				success:function(data){
 					console.log(data);
 					for(var i = 0; i < data.gt.length; i++){
-						$("#grantorList").append("<option value='" + data.gt[i]['memberPk'] + "'>" + data.gt[i]['memberName'] + "</option>");
+						$("#grantorList").append("<option value='" + data.gt[i]['memberPk'] + "'>" +data.gt[i]['deptName'] + " " + data.gt[i]['rankName'] + " " + data.gt[i]['memberName']  + "</option>");
 						
 					}
 					
@@ -1310,7 +1357,9 @@
 		
 		$("#workArea").find("div").click(function(){
 			var workNo = $(this).find("input").eq(0).val();
-			$("#workProductTable > tbody").empty();
+			$("#workProductTable > tbody").remove();
+			$("#memoTr").remove();
+			$("#grantorNo").empty();
 			$.ajax({
 				url:"selectWork.wk",
 				type:"post",
@@ -1321,21 +1370,16 @@
 					
 					console.log(data.work.beginDate);
 					console.log(data.work.completeDate);
-					
-					console.log(data.gt[0].memberPk);
-					console.log(data.work.grantorNo);
-					console.log(data.work.workAttachment[0].productType);
+					console.log(data.work.status);
 					btnNum = data.work.workAttachment.length;
-					console.log(btnNum)
 					for(var i = 0; i < data.gt.length; i++){
-						$("#grantorNo").append("<option value='" + data.gt[i]['memberPk'] + "'>" + data.gt[i]['memberName'] + "</option>");
-						
+						$("#grantorNo").append("<option value='" + data.gt[i]['memberPk'] + "'>" +data.gt[i]['deptName'] + " " + data.gt[i]['rankName'] + " " + data.gt[i]['memberName']  + "</option>");
 					};
 					
 					$(".workNo").val(data.work.workNo);
 					$(".workName").val(data.work.workName);
 					$(".workType").val(data.work.workType);
-					$("#projectNoForm").val(data.work.projectNo);
+					$(".projectNo").val(data.work.projectNo);
 					$(".projectName").val(data.work.projectName);
 					$(".beginDate").val(data.work.beginDate);
 					$(".completeDate").val(data.work.completeDate);
@@ -1348,24 +1392,49 @@
 					$(".workStatus").val(data.work.workStatus);
 					$(".productType").val(data.work.workAttachment[0].productType);
 					
-					if(data.work.workAttachment[0].atNo != null)
-					for(var i = 0; i < data.work.workAttachment.length; i++){
-						$("#workProductTable").append("<tr>" + "<td class='hidden-xs'> "+
-															"<input type='hidden' value='" + data.work.workAttachment[i].atNo + "'>" + 
-															"<input type='hidden' value='" + data.work.workNo + "'>" + 
-															"<input type='hidden' value='" + data.work.workAttachment[i].changeName + "'>" + 
-															"<input type='hidden' value='" + data.work.workAttachment[i].filePath + "'>" + 
-															"<input type='hidden' value='" + data.work.workAttachment[i].ext + "'>" + 
-															data.work.workAttachment[i].productType + "</td>" + 
-															"<td class='highlight'>" + data.work.workAttachment[i].productTitle + "</td>" + 
-															"<td class='highlight'>" + data.work.workAttachment[i].originName + "</td>" + 
-															"<td class='hidden-xs' style='text-align: center;'>" + data.work.workAttachment[i].enrollDate + "</td>" + 
-															"<td style='text-align: center;'> <button style='display: inline-block; border:none;' id='productDeleteBtn" + i + "' type='button'><span class='glyphicon glyphicon-trash'> </span> </button> </td>")
+					if(data.work.workAttachment[0].atNo != null){
+						for(var i = 0; i < data.work.workAttachment.length; i++){
+							$("#workProductTable").append("<tr>" + "<td class='hidden-xs'> "+
+																"<input type='hidden' value='" + data.work.workAttachment[i].atNo + "'>" + 
+																"<input type='hidden' value='" + data.work.workNo + "'>" + 
+																"<input type='hidden' value='" + data.work.workAttachment[i].changeName + "'>" + 
+																"<input type='hidden' value='" + data.work.workAttachment[i].filePath + "'>" + 
+																"<input type='hidden' value='" + data.work.workAttachment[i].ext + "'>" + 
+																data.work.workAttachment[i].productType + "</td>" + 
+																"<td class='highlight'>" + data.work.workAttachment[i].originName + "</td>" + 
+																"<td class='hidden-xs' style='text-align: center;'>" + data.work.workAttachment[i].enrollDate + "</td>" + 
+																"<td style='text-align: center;'> <button style='display: inline-block; border:none;' id='productDeleteBtn" + i + "' type='button'><span class='glyphicon glyphicon-trash'> </span> </button> </td>")
+						}
 					}else{
 						$("#workProductTable").append("<tr>" + "<td class='hidden-xs'></td>" + 
 								"<td class='highlight'></td>" + 
 								"<td class='hidden-xs' style='text-align: center;'></td>" + 
 								"<td></td>")
+					}
+					
+					if(data.work.status == '테스트완료'){
+						$("#lastTr").after("<tr id='memoTr'><td class='modalTd_T'>검토요청</td><td class='modalTd' colspan='5' rowspan='3'>" + 
+								"<textarea name='memo' class='inputMenu form-control' style='resize:none;'></textarea>"+
+								"</td></tr>"
+								)
+						
+					}
+					if(data.work.memo != null){
+						if(data.work.status == 'PL검토중' || data.work.status == 'PL승인완료' ){
+							$("#lastTr").after("<tr id='memoTr'><td class='modalTd_T'>검토요청</td><td class='modalTd' colspan='5' rowspan='3'>" + 
+									"<textarea name='memo' class='inputMenu form-control' style='resize:none;' readOnly>" + data.work.memo + "</textarea>" +
+									"</td></tr>"
+									)
+							
+						}
+					}else{
+						if(data.work.status == 'PL검토중' || data.work.status == 'PL승인완료' ){
+							$("#lastTr").after("<tr id='memoTr'><td class='modalTd_T'>검토요청</td><td class='modalTd' colspan='5' rowspan='3'>" + 
+									"<textarea name='memo' class='inputMenu form-control' style='resize:none;' readOnly></textarea>" +
+									"</td></tr>"
+									)
+							
+						}
 					}
 					
 					$("#selectModal").modal('show');

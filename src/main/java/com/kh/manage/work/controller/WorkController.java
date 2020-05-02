@@ -64,6 +64,13 @@ public class WorkController {
 		
 		
 		if(result > 0) {
+			WorkProjectTeam wp = ws.selectWorkProjectTeam(work);
+			
+			HashMap<String, Object> map = new HashMap();
+			map.put("work", work);
+			map.put("wp", wp);
+			
+			int result1 = ws.insertWorkHistory(map);
 			
 			return "redirect:myWorkList.wk";
 		}else {
@@ -95,6 +102,12 @@ public class WorkController {
 		
 		
 		if(result > 0) {
+			WorkProjectTeam wp = ws.selectWorkProjectTeam(work);
+			HashMap<String, Object> map = new HashMap();
+			map.put("work", work);
+			map.put("wp", wp);
+			
+			int result1 = ws.insertWorkHistory2(map);
 			
 			return "redirect:myWorkList.wk";
 		}else {
