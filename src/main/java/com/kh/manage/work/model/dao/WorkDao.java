@@ -38,4 +38,10 @@ public interface WorkDao {
 
 	int deleteWorkProduct(SqlSessionTemplate sqlSession, String atNo);
 
+	int insertWorkHistory(SqlSessionTemplate sqlSession, HashMap<String, Object> map);
+
+	WorkProjectTeam selectWorkProjectTeam(SqlSessionTemplate sqlSession, Work work);
+
+	int insertWorkHistory2(SqlSessionTemplate sqlSession, HashMap<String, Object> map);
+
 }

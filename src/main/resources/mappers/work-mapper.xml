@@ -54,6 +54,8 @@
 	<resultMap type="Grantor" id="selectGrantorList">
 		<id property="memberPk" column="MEMBER_PK"/>
 		<result property="memberName" column="MEMBER_NAME"/>
+		<result property="deptName" column="DEPT_NAME"/>
+		<result property="rankName" column="RANK_NAME"/>
 	</resultMap>
 	
 	<resultMap type="WorkAttachment" id="selectWorkAttachment">
@@ -98,6 +100,15 @@
 			   #{highWorkNo}, #{memo}, #{workType}, #{memberNo}, DEFAULT) 
 	</insert>
 	
+	<insert id="insertWorkHistory" parameterType="hashmap">
+		INSERT INTO WORK_HISTORY
+		VALUES('WH' || TO_CHAR(SEQ_WH.NEXTVAL, 'FM000'), 'W' || TO_CHAR(SEQ_WNO.CURRVAL, 'FM000'), #{work.status}, NULL, SYSDATE, #{wp.teamPk})
+	</insert>
+	
+	<insert id="insertWorkHistory2" parameterType="hashmap">
+		INSERT INTO WORK_HISTORY
+		VALUES('WH' || TO_CHAR(SEQ_WH.NEXTVAL, 'FM000'), #{work.workNo}, #{work.status}, #{work.memo}, SYSDATE, #{wp.teamPk})
+	</insert>
 
 	<select id="selectWorkList" parameterType="Member" resultMap="workResultSet">
 	SELECT *
@@ -168,10 +179,10 @@
                    WHEN '개발완료' THEN 3
                    WHEN '테스트완료' THEN 4
                    WHEN 'PL검토중' THEN 5
-                   WHEN 'PL검토완료' THEN 6
+                   WHEN 'PL승인완료' THEN 6
                    ELSE 7
               END),
-              W.WORK_NO ASC
+              WORK_NO ASC
 	</select>
 	
 	<select id="selectWorkList2" parameterType="Member" resultMap="workResultSet2">
@@ -182,7 +193,7 @@
 	WHERE W.MEMBER_NO = #{memberNo}
 	AND W.WORK_STATUS = 'Y'
 	AND W.STATUS = '개발중'
-	ORDER BY W.WORK_NO ASC
+	ORDER BY WORK_NO ASC
 	</select>
 	
 	<select id="selectWorkList3" parameterType="Member" resultMap="workResultSet2">
@@ -193,7 +204,7 @@
 	WHERE W.MEMBER_NO = #{memberNo}
 	AND W.WORK_STATUS = 'Y'
 	AND W.STATUS = '개발완료'
-	ORDER BY W.WORK_NO ASC
+	ORDER BY WORK_NO ASC
 	</select>
 	
 	<select id="selectWorkList4" parameterType="Member" resultMap="workResultSet2">
@@ -204,7 +215,7 @@
 	WHERE W.MEMBER_NO = #{memberNo}
 	AND W.WORK_STATUS = 'Y'
 	AND W.STATUS = '테스트완료'
-	ORDER BY W.WORK_NO ASC
+	ORDER BY WORK_NO ASC
 	</select>
 	
 	<select id="selectWorkList5" parameterType="Member" resultMap="workResultSet2">
@@ -215,7 +226,7 @@
 	WHERE W.MEMBER_NO = #{memberNo}
 	AND W.WORK_STATUS = 'Y'
 	AND W.STATUS = 'PL검토중'
-	ORDER BY W.WORK_NO ASC
+	ORDER BY WORK_NO ASC
 	</select>
 	
 	<select id="selectWorkList6" parameterType="Member" resultMap="workResultSet2">
@@ -225,8 +236,23 @@
 	JOIN PROJECT P ON (W.PROJECT_NO = P.PROJECT_PK)
 	WHERE W.MEMBER_NO = #{memberNo}
 	AND W.WORK_STATUS = 'Y'
-	AND W.STATUS = 'PL검토완료'
-	ORDER BY W.WORK_NO ASC
+	AND W.STATUS = 'PL승인완료'
+	ORDER BY WORK_NO ASC
+	</select>
+	
+	<select id="selectWorkList7" parameterType="Member" resultMap="workResultSet2">
+	SELECT W.WORK_NO, W.WORK_NAME, W.STATUS, W.PROJECT_NO, W.BEGIN_DATE, W.COMPLETE_DATE, W.PRECEDE_NO, W.COMPLETE_RATE,
+		   W.GRANTOR_NO, W.WORK_LEVEL, W.HIGH_WORK_NO, W.MEMO, W.WORK_TYPE, W.MEMBER_NO, W.WORK_STATUS, P.PROJECT_NAME
+	FROM WORK W
+	JOIN PROJECT P ON (W.PROJECT_NO = P.PROJECT_PK)
+	WHERE W.MEMBER_NO = #{memberNo}
+	AND W.WORK_STATUS = 'Y'
+	AND W.STATUS IN ('시작전', '개발지연')
+	ORDER BY (CASE STATUS
+				   WHEN '시작전' THEN 1
+                   ELSE 2
+              END),
+              WORK_NO ASC
 	</select>
 	
 	<select id="selectTeamWork" parameterType="Member" resultMap="selectTeamWorkResult">
@@ -234,6 +260,13 @@
 	FROM PROJECT_TEAM PT
 	JOIN PROJECT P ON (P.PROJECT_PK = PT.PROJECT_PK)
 	WHERE PT.MEMBER_PK = #{memberNo}
+	</select>
+	
+	<select id="selectWorkProjectTeam" parameterType="Work" resultMap="selectTeamWorkResult">
+	SELECT TEAM_PK, PROJECT_PK, MEMBER_PK, ROLE
+	FROM PROJECT_TEAM
+	WHERE MEMBER_PK = #{memberNo}
+    AND PROJECT_PK = #{projectNo}
 	</select>
 
 	<update id="updateMyWork" parameterType="Work">
@@ -251,16 +284,18 @@
 		MEMO = #{memo},
 		WORK_TYPE = #{workType},
 		MEMBER_NO = #{memberNo},
-		WORK_STATUS = #{workStatus}
+		WORK_STATUS = 'Y'
 	WHERE WORK_NO = #{workNo}
 	</update>
 	
 	<select id="selectGrantorList" parameterType="java.lang.String" resultMap="selectGrantorList">
-	SELECT PT.MEMBER_PK, M.MEMBER_NAME
-	FROM PROJECT_TEAM PT
-	JOIN MEMBER M ON (PT.MEMBER_PK = M.MEMBER_NO)
-	WHERE PROJECT_PK = #{pk}
-	AND ROLE IN ('PM', 'PSM')
+		SELECT PT.MEMBER_PK, M.MEMBER_NAME, D.DEPT_NAME, R.RANK_NAME
+		FROM PROJECT_TEAM PT
+		JOIN MEMBER M ON (PT.MEMBER_PK = M.MEMBER_NO)
+	    JOIN DEPT D ON (M.DEPT_NO = D.DEPT_NO)
+	    JOIN RANK R ON (M.RANK_NO = R.RANK_NO)
+		WHERE PROJECT_PK = #{pk}
+		AND ROLE IN ('PM', 'PSM')
 	</select>
 	
 	<insert id="insertWorkProduct" parameterType="WorkProductw">

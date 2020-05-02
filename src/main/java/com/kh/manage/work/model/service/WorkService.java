@@ -36,6 +36,12 @@ public interface WorkService {
 
 	int deleteWorkProduct(String atNo);
 
+	int insertWorkHistory(HashMap<String, Object> map);
+
+	WorkProjectTeam selectWorkProjectTeam(Work work);
+
+	int insertWorkHistory2(HashMap<String, Object> map);
+
 	
 
 }

@@ -83,6 +83,24 @@ public class WorkServiceImpl implements WorkService{
 		return wd.deleteWorkProduct(sqlSession, atNo);
 	}
 
+
+	@Override
+	public WorkProjectTeam selectWorkProjectTeam(Work work) {
+		return wd.selectWorkProjectTeam(sqlSession, work);
+	}
+
+	@Override
+	public int insertWorkHistory(HashMap<String, Object> map) {
+		return wd.insertWorkHistory(sqlSession, map);
+	}
+
+	@Override
+	public int insertWorkHistory2(HashMap<String, Object> map) {
+		return wd.insertWorkHistory2(sqlSession, map);
+	}
+
+	
+
 	
 
 }

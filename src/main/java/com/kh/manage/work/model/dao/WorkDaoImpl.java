@@ -46,6 +46,7 @@ public class WorkDaoImpl implements WorkDao{
 		List<WorkProjectName> list4 = sqlSession.selectList("Work.selectWorkList4", member);
 		List<WorkProjectName> list5 = sqlSession.selectList("Work.selectWorkList5", member);
 		List<WorkProjectName> list6 = sqlSession.selectList("Work.selectWorkList6", member);
+		List<WorkProjectName> list7 = sqlSession.selectList("Work.selectWorkList7", member);
 		
 		map.put("list1", list1);
 		map.put("list2", list2);
@@ -53,6 +54,8 @@ public class WorkDaoImpl implements WorkDao{
 		map.put("list4", list4);
 		map.put("list5", list5);
 		map.put("list6", list6);
+		map.put("list7", list7);
+		
 		
 		return map;
 	}
@@ -92,5 +95,22 @@ public class WorkDaoImpl implements WorkDao{
 	public int deleteWorkProduct(SqlSessionTemplate sqlSession, String atNo) {
 		return sqlSession.delete("Work.deleteWorkProduct", atNo);
 	}
+
+	@Override
+	public WorkProjectTeam selectWorkProjectTeam(SqlSessionTemplate sqlSession, Work work) {
+		return sqlSession.selectOne("Work.selectWorkProjectTeam", work);
+	}
+
+	@Override
+	public int insertWorkHistory(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		return sqlSession.insert("Work.insertWorkHistory", map);
+	}
+
+	@Override
+	public int insertWorkHistory2(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		return sqlSession.insert("Work.insertWorkHistory2", map);
+	}
+
+	
 
 }
