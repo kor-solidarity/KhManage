@@ -1,6 +1,7 @@
 package com.kh.manage.member.model.service;
 
 import java.sql.Date;
+
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -23,6 +24,7 @@ import com.kh.manage.member.model.exception.LoginException;
 import com.kh.manage.member.model.vo.AllDashBoard;
 import com.kh.manage.member.model.vo.DeptProjectCount;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.member.model.vo.MyStatic;
 import com.kh.manage.project.model.vo.Project;
 import com.kh.manage.project.model.vo.ProjectDetail;
 
@@ -279,6 +281,47 @@ public class MemberServiceImpl implements MemberService {
 	      return md.myWorkCount(sqlSession, m);
 	   }
 
+	@Override
+	public List<AllDashBoard> selectAllType(Date date) {
+		
+		return md.selectAllType(sqlSession, date);
+	}
+
+	@Override
+	public AllDashBoard searchChartKind(Date date) {
+		
+		return md.searchChartKind(sqlSession, date);
+	}
+
+	@Override
+	public AllDashBoard selectStatusIssue() {
+		
+		return md.selectStatusIssue(sqlSession);
+	}
+
+	@Override
+	public AllDashBoard selectIssueTypeCount() {
+		
+		return md.selectIssueTypeCount(sqlSession);
+	}
+	
+	@Override
+	public int myProjectCount(Member m) {
+
+		return md.myProjectCount(sqlSession, m);
+	}
+
+	@Override
+	public int myIssueCount(Member m) {
+
+		return md.myIssueCount(sqlSession, m);
+	}
+
+	@Override
+	public MyStatic selectMyStatic(Member member) {
+
+		return md.selectMyStatic(sqlSession, member);
+	}
 	
 	
 	

@@ -13,13 +13,18 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
 <style>
-#myChart, #myChart2{
+#myChart, #myChart3, #myChart4{
 	margin: 0 auto;
-	height: 270px;
+	height: 300px !important;
+	width: 300px !important;
+	font-size:14px;
 }
 #myChart2{
-	margin-left: 27%;
+	margin: 0 auto;
+	height: 270px !important;
+	width: 270px !important;
 }
+
 .midTable{width:100%;}
 .tdMid {width: 49%; height: 380px; padding: 20px; border: 1px solid lightgray; vertical-align:top; background: white;}
 .thmidTable{border: 1px solid lightgray; height: 38px; text-align: center; font-size:15px; center; border:none}
@@ -165,11 +170,10 @@
 					<table class="midTable">
 						<tr>
 							<td class="tdMid"><b>프로젝트 진행현황</b>
-							<hr>
 								<div class="tableDiv">
 									<div class="kt-portlet__body" style="overflow-y: auto; height:320px; max-height:320px;">
 
-        <table id="deptProjectCount" class="table table-light table-light--info">
+        <table id="deptProjectCount" class="table table-light table-light--info" style="margin-top: 10px;">
             <colgroup>
                 <col class="col-md-2" style="width:34%;">
                 <col class="col-md-2" style="width:11%;">
@@ -225,22 +229,21 @@
 					            <ul class="nav nav-tabs nav-tabs-line nav-tabs-bold nav-tabs-line-brand" role="tablist" style="margin-bottom: 30px;">
 					            <li><b>프로젝트 현황</b>
 							<input type="text" id="datepicker" value="${sysdate }">
-							<button type="button" id="searchProjectBtn" style="margin-left: 5px;">검색</button></li>
+							</li>
 					                <li class="nav-item" id="chartStatus"  style="float: right;">
 					                    <a class="nav-link" data-toggle="tab" href="#tabStatusChart" role="tab" aria-selected="false">
-					                        상태별
+					                       유형별
 					                    </a>
 					                </li>
 					                <li class="nav-item active" id="chartKind" style="float: right;">
 					                    <a class="nav-link active" data-toggle="tab" href="#tabTypeChart" role="tab" aria-selected="false" aria-expanded="true">
-					                        유형별
+					                        상태별
 					                    </a>
 					                </li>
 					            </ul>
 					        </div>	
 								<div id="chartArea">
-								<canvas id="myChart" width="400" height="400"></canvas>
-								<canvas id="myChart2" width="400" height="400"></canvas>
+								<canvas id="myChart" width="300" height="300"></canvas>
 								</div>
 							</td>
 						</tr>
@@ -255,47 +258,41 @@
 				<div class="middle">
 					<table class="midTable">
 						<tr>
-							<td class="tdMid"><b>이슈 현황</b>
-							<hr>
-								<div class="tableDiv">
-									<table border="1" class="projectInfoTable">
-										<tr>
-											<td class="pjtTd td">프로젝트 명</td>
-											<td class="pjtTd2 td">프로젝트X</td>
-											<td class="pjtTd3 td"></td>
-											<td class="pjtTd4 td"></td>
-										</tr>
-										<tr>
-											<td class="pjtTd td">프로젝트 번호</td>
-											<td class="pjtTd2 td"></td>
-											<td class="pjtTd3 td"></td>
-											<td class="pjtTd4 td"></td>
-										</tr>
-										<tr>
-											<td class="pjtTd td">개발 형태</td>
-											<td class="pjtTd2 td">양산개발</td>
-											<td class="pjtTd3 td">개발 등급</td>
-											<td class="pjtTd4 td">SS</td>
-										</tr>
-										<tr>
-											<td class="pjtTd td">PMO</td>
-											<td class="pjtTd2 td">데모사용자</td>
-											<td class="pjtTd3 td">제품유형</td>
-											<td class="pjtTd4 td">-</td>
-										</tr>
-										<tr>
-											<td colspan="4" class="pjtTd td">제품기능(설명)</td>
-										</tr>
-										<tr>
-									 		<td colspan="4" class="pjtTd td">설명입니다.</td>
-										</tr>
-									</table>
+							<td class="tdMid">
+							   <ul class="nav nav-tabs nav-tabs-line nav-tabs-bold nav-tabs-line-brand" role="tablist" style="margin-bottom: 30px;">
+					            <li><b>이슈 현황</b></li>
+					                <li class="nav-item" id="issueStatus"  style="float: right;">
+					                    <a class="nav-link" data-toggle="tab" href="#tabStatusChart" role="tab" aria-selected="false">
+					                      구분별
+					                    </a>
+					                </li>
+					                <li class="nav-item active" id="issueKind" style="float: right;">
+					                    <a class="nav-link active" data-toggle="tab" href="#tabTypeChart" role="tab" aria-selected="false" aria-expanded="true">
+					                        상태별
+					                    </a>
+					                </li>
+					            </ul>
+								<div class="chartArea2">
+									<canvas id="myChart3" width="300" height="300"></canvas>
 								</div>
 							</td>
 							<td class="td2"></td>
-							<td class="tdMid"><b>월별 프로젝트</b>
-							<hr>
-								<div>
+							<td class="tdMid">
+							<ul class="nav nav-tabs nav-tabs-line nav-tabs-bold nav-tabs-line-brand" role="tablist" style="margin-bottom: 30px;">
+					            <li><b>월별 프로젝트</b></li>
+					                <li class="nav-item" id="issueKind"  style="float: right;">
+					                    <a class="nav-link" data-toggle="tab" href="#tabStatusChart" role="tab" aria-selected="false">
+					                     지연중
+					                    </a>
+					                </li>
+					                <li class="nav-item active" id="issueStatus" style="float: right;">
+					                    <a class="nav-link active" data-toggle="tab" href="#tabTypeChart" role="tab" aria-selected="false" aria-expanded="true">
+					                        상태별
+					                    </a>
+					                </li>
+					            </ul>
+								<div class="tableDiv">
+									
 								</div>
 							</td>
 						</tr>
@@ -364,30 +361,134 @@
 	
 	</script>
 	
+	<script>
+	//이슈 구분별 상태
+	$("#issueStatus").click(function(){
+		$("#myChart3").hide();
+		$("#myChart4").remove();
+		$(".chartArea2").append("<canvas id='myChart4' style='width:300px; height:300px;'></canvas>");
+		
+		var ctx = document.getElementById('myChart4');
+		var myChart = new Chart(ctx, {
+			type: 'doughnut',
+			data: {
+				labels: ['새기능', '버그발생', '개선사항'],
+				datasets: [{
+					label: '# of Votes',
+					data: ['${iType.pro}', '${iType.before}', '${iType.com}'],
+					backgroundColor: [
+						'rgba(75, 192, 192, 0.2)',
+						'rgba(153, 102, 255, 0.2)',
+						'rgba(255, 159, 64, 0.2)'
+					],
+					borderColor: [
+						'rgba(75, 192, 192, 1)',
+						'rgba(153, 102, 255, 1)',
+						'rgba(255, 159, 64, 1)'
+					],
+					borderWidth: 1,
+					
+					hoverBorderWidth : 1
+				}]
+			},
+			options: {
+				responsive: false,
+				scales: {
+						ticks: {
+							cutoutPercentage: 60,
+							beginAtZero: true
+						}
+				},
+			}
+		});
+	});
+	
+	$("#issueKind").click(function(){
+		$("#myChart4").remove();
+		$("#myChart3").show();
+	});
+	
+	
+	//이슈상태 차트
+	if('${iList.before}'>0 || '${iList.pro}'>0 || '${iList.del}'>0|| '${iList.com}'>0){
+	var ctx = document.getElementById('myChart3');
+	var myChart = new Chart(ctx, {
+		type: 'doughnut',
+		data: {
+			labels: ['확인중', '조치중', '조치완료', '취소'],
+			datasets: [{
+				label: '# of Votes',
+				data: ['${iList.before}', '${iList.pro}', '${iList.del}', '${iList.com}'],
+				backgroundColor: [
+					'#1E2B44',
+					'rgba(54, 162, 235, 0.2)',
+					'green',
+					'skyblue'
+				],
+				borderColor: [
+					'#1E2B44',
+					'rgba(54, 162, 235, 1)',
+					'rgba(255, 206, 86, 1)',
+					'rgba(75, 192, 192, 1)',
+				],
+				borderWidth: 1,
+				
+				hoverBorderWidth : 1
+			}]
+		},
+		options: {
+			responsive: false,
+			scales: {
+					ticks: {
+						cutoutPercentage: 60,
+						beginAtZero: true
+					}
+			},
+		}
+	});
+	}else{
+		$(".chartArea2").text("데이터가 없습니다.");
+	}
+	
+	
+	</script>
 	
 	<script>
 		$("#chartStatus").click(function(){
 			$("#myChart").hide();
+			$("#myChart2").remove();
+			$("#chartArea").empty();
 			var date = $("#datepicker").val();
+			var check = true;
+			var sum = 0;
+			$("#chartArea").append("<canvas id='myChart2' style='width:370px; height:370px;'></canvas>");
+			
 			$.ajax({ 
 				url:'searchChartStatus.me',
 				type: 'post',
-				async: false,
 				data:{date:date},
 			 success:function(data){
-				 console.log(data['pList'][3]);
-				 var ctx = document.getElementById('myChart2');
-					var myChart = new Chart(ctx, {
+				 <% for(int i = 0; i < pList.size(); i ++) {%>
+					var a = data['tList'][<%=i%>]['allWork'];
+					console.log(a);
+					sum += a;
+				<% }%>  
+				if(sum >0){
+				var ctx = document.getElementById('myChart2');
+ 					var myChart = new Chart(ctx, {
 						type: 'doughnut',
 						data: {
 							labels: [
 								<% for(int i = 0; i < pList.size(); i ++) {%>
-								data['pList'][<%=i%>]['projectTypeName'],
-								<% }%> 
+									data['pList'][<%=i%>]['projectTypeName'],
+								<% }%>  
 							],
 							datasets: [{
-								label: '# of Votes',
-								data: [5, 2, 7, 3, 1],
+								data: [
+									<% for(int i = 0; i < pList.size(); i ++) {%>
+										data['tList'][<%=i%>]['allWork'],
+									<% }%>  
+									],
 								backgroundColor: [
 									'orange',
 									'skyblue',
@@ -410,6 +511,71 @@
 							}]
 						},
 						options: {
+							legend: { display: false },
+							responsive: false,
+							scales: {
+									ticks: {
+										cutoutPercentage: 60,
+										beginAtZero: true,
+									}
+							},
+						}
+					});
+				}else{
+					$("#chartArea").text("데이터가 없습니다");
+				}
+			 }
+			});
+		});
+		
+		//상태별 실시간 통계 조회
+		$("#chartKind").click(function(){
+			$("#chartArea").empty();
+			$("#chartArea").append("<canvas id='myChart' style='width:300px; height:300px;'></canvas>");
+			var date = $("#datepicker").val();
+			var sum = 0;
+			$.ajax({ 
+				url:'searchChartKind.me',
+				type: 'post',
+				data:{date:date},
+			 success:function(data){
+				console.log("시작전 : " + data['before']);		
+				var before = data['before'];
+				var pro = data['pro'];
+				var com = data['com'];
+				var del = data['del'];
+				
+				if(del > 0 || com >0 || pro >0 || before >0){
+					var ctx = document.getElementById('myChart');
+					var myChart = new Chart(ctx, {
+						type: 'doughnut',
+						data: {
+							labels: ['시작전', '진행중', '지연', '완료'],
+							datasets: [{
+								label: '# of Votes',
+								data: [before, pro, del, com],
+								backgroundColor: [
+									'#1E2B44',
+									'rgba(54, 162, 235, 0.2)',
+									'rgba(255, 206, 86, 0.2)',
+									'rgba(75, 192, 192, 0.2)',
+									'rgba(153, 102, 255, 0.2)',
+									'rgba(255, 159, 64, 0.2)'
+								],
+								borderColor: [
+									'#1E2B44',
+									'rgba(54, 162, 235, 1)',
+									'rgba(255, 206, 86, 1)',
+									'rgba(75, 192, 192, 1)',
+									'rgba(153, 102, 255, 1)',
+									'rgba(255, 159, 64, 1)'
+								],
+								borderWidth: 1,
+								
+								hoverBorderWidth : 1
+							}]
+						},
+						options: {
 							responsive: false,
 							scales: {
 									ticks: {
@@ -419,21 +585,30 @@
 							},
 						}
 					});
-					
-
-					$("#myChart2").show();
+				}else{
+					$("#chartArea").text("데이터가 없습니다");
+				}
 				 
-			 }
+			 	}
 			});
 			
-		});
-		
-		$("#chartKind").click(function(){
 			$("#myChart").show();
-			$("#myChart2").hide();
+			
+			
+			
 		});
 	</script>
 	
+	<script>
+		$("#datepicker").on("change", function(){
+			var text = $(".nav-item.active").text();
+			if($.trim(text) == '유형별'){
+				$("#chartStatus").trigger("click");
+			}else{
+				$("#chartKind").trigger("click");
+			}
+		});
+	</script>
 	
 	<script>
 	 var start = 6;

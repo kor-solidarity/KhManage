@@ -69,6 +69,10 @@
 		<result property="allWork" column="ALLWORK"/>
 		<result property="issue" column="ISSUE"/>
 		<result property="workProduct" column="WORK_PRODUCT"/>
+		<result property="before" column="BEFORE"/>
+		<result property="pro" column="PRO"/>
+		<result property="com" column="COM"/>
+		<result property="del" column="DEL"/>
 	</resultMap>
 	
 	<resultMap type="DeptProjectCount" id="deptProjectCountResultSet">
@@ -394,10 +398,12 @@
 			     , (SELECT COUNT(*)
 			        FROM WORK
 			        WHERE PROJECT_NO = P.PROJECT_PK
-			        AND STATUS = '개발완료') AS WORKCLEAR
+			        AND STATUS = 'PL승인완료'
+                    AND WORK_TYPE = '프로젝트') AS WORKCLEAR
 			     ,  (SELECT COUNT(*)
 			        FROM WORK
-			        WHERE PROJECT_NO = P.PROJECT_PK) AS ALLWORK 
+			        WHERE PROJECT_NO = P.PROJECT_PK
+                    AND WORK_TYPE = '프로젝트') AS ALLWORK 
 			     , (SELECT COUNT(*)
 			        FROM ISSUE 
 			        WHERE PROJECT_NO = P.PROJECT_PK) AS ISSUE
@@ -440,12 +446,24 @@
 		SELECT SYSDATE FROM DUAL
 	</select>
 	
+	<select id="selectAllType" parameterType="java.sql.Date" resultMap="AllDashBoardResultSet">
+	<![CDATA[
+		SELECT  T.TYPE_NAME 
+		       ,(SELECT COUNT(*)
+		           FROM PROJECT P
+		           WHERE P.PROJECT_TYPE_PK = T.TYPE_PK
+		           AND #{date} BETWEEN P.START_DATE AND END_DATE 
+		           AND P.STATUS != '4') AS ALLWORK
+		FROM PROJECT_TYPE T
+		]]>   
+	</select>
+	
 	<select id="selectAllProjectCount" resultType="AllDashBoard">
 	<![CDATA[
 		SELECT BEFORE, PRO, DEL, COM   
 			FROM(SELECT COUNT(*) AS BEFORE
 			       FROM PROJECT 
-			      WHERE SYSDATE < START_DATE),
+			      WHERE SYSDATE BETWEEN ENROLL_DATE AND START_DATE),
 			    (SELECT COUNT(*) AS PRO
 			       FROM PROJECT 
 			      WHERE SYSDATE BETWEEN START_DATE AND END_DATE),
@@ -459,17 +477,129 @@
 			  ]]>      
 	</select>
 	
+	<select id="searchChartKind" parameterType="java.sql.Date" resultType="AllDashBoard">
+		<![CDATA[
+		SELECT BEFORE, PRO, DEL, COM   
+			FROM(SELECT COUNT(*) AS BEFORE
+			       FROM PROJECT 
+			      WHERE #{date} BETWEEN ENROLL_DATE AND START_DATE),
+			    (SELECT COUNT(*) AS PRO
+			       FROM PROJECT 
+			      WHERE #{date} BETWEEN START_DATE AND END_DATE),
+			    (SELECT COUNT(*) AS DEL
+			       FROM PROJECT 
+			      WHERE #{date} > END_DATE),
+			    (SELECT COUNT(*) AS COM
+			       FROM PROJECT
+			      WHERE STATUS = '4'
+			        AND #{date} = END_DATE)  
+			  ]]>      
+	</select>
+	
 	<select id="selectAllProjectType" resultMap="projectTypeResultSet">
 		SELECT TYPE_PK, TYPE_NAME
 	    FROM PROJECT_TYPE	
 	</select>
 	
 	<select id="myWorkCount" resultType="_int">
-      SSELECT COUNT(*)
+      SELECT COUNT(*)
       FROM WORK
       WHERE MEMBER_NO = #{memberNo}
       AND STATUS NOT LIKE 'PL검토완료'
    </select>
+   
+   <select id="selectStatusIssue" resultMap="AllDashBoardResultSet">
+	SELECT BEFORE, PRO, COM, DEL
+	FROM(SELECT COUNT(*) AS BEFORE
+	      FROM ISSUE_HISTORY
+	     WHERE (IH_NO, IH_DATE) IN (SELECT IH_NO, MAX(IH_DATE)
+	                                FROM ISSUE_HISTORY
+	                                GROUP BY IH_NO)
+	      AND STATUS = '확인중'
+	      AND TO_CHAR(IH_DATE,'YY/MM/DD') = TO_CHAR(SYSDATE,'YY/MM/DD')),
+	    (SELECT COUNT(*) AS PRO
+	      FROM ISSUE_HISTORY
+	     WHERE (IH_NO, IH_DATE) IN (SELECT IH_NO, MAX(IH_DATE)
+	                                FROM ISSUE_HISTORY
+	                                GROUP BY IH_NO)
+	      AND STATUS = '조치중'
+	      AND TO_CHAR(IH_DATE,'YY/MM/DD') = TO_CHAR(SYSDATE,'YY/MM/DD')),
+	    (SELECT COUNT(*) AS COM
+	      FROM ISSUE_HISTORY
+	     WHERE (IH_NO, IH_DATE) IN (SELECT IH_NO, MAX(IH_DATE)
+	                                FROM ISSUE_HISTORY
+	                                GROUP BY IH_NO)
+	      AND STATUS = '조치완료'
+	      AND TO_CHAR(IH_DATE,'YY/MM/DD') = TO_CHAR(SYSDATE,'YY/MM/DD')),
+	    (SELECT COUNT(*) AS DEL
+	      FROM ISSUE_HISTORY
+	     WHERE (IH_NO, IH_DATE) IN (SELECT IH_NO, MAX(IH_DATE)
+	                                FROM ISSUE_HISTORY
+	                                GROUP BY IH_NO)
+	      AND STATUS = '취소'
+	      AND TO_CHAR(IH_DATE,'YY/MM/DD') = TO_CHAR(SYSDATE,'YY/MM/DD'))
+   </select>
+   
+   <select id="selectIssueTypeCount" resultMap="AllDashBoardResultSet">
+   		SELECT BEFORE, PRO, COM
+		FROM(SELECT COUNT(*) AS BEFORE
+		       FROM ISSUE
+		      WHERE TO_CHAR(REGISTER_DATE ,'YY/MM/DD') = TO_CHAR(SYSDATE,'YY/MM/DD')
+		        AND ISSUE_TYPE = '버그발생'),
+		     (SELECT COUNT(*) AS PRO
+		        FROM ISSUE
+		        WHERE TO_CHAR(REGISTER_DATE ,'YY/MM/DD') = TO_CHAR(SYSDATE,'YY/MM/DD')
+		        AND ISSUE_TYPE = '새기능'),
+		      (SELECT COUNT(*) AS COM
+		        FROM ISSUE
+		        WHERE TO_CHAR(REGISTER_DATE ,'YY/MM/DD') = TO_CHAR(SYSDATE,'YY/MM/DD')
+		        AND ISSUE_TYPE = '개선사항')
+   </select>
+   
+   <select id="myProjectCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM PROJECT_TEAM
+		WHERE MEMBER_PK = #{memberNo}
+   </select>
+   
+   <select id="myIssueCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM ISSUE
+		WHERE TEAMWORKER = #{memberNo}
+   </select>
+   
+   <select id="selectMyStatic" resultType="MyStatic">
+		SELECT BEFORE, DEVELOPING, COMPLETED, TESTCOMPLETED, PLCHECKING, PLCHECKED, DELAYED
+		FROM (SELECT COUNT(*) AS BEFORE
+			  FROM WORK
+			  WHERE STATUS LIKE '시작전'
+			      AND MEMBER_NO = #{memberNo}),
+			   (SELECT COUNT(*) AS DEVELOPING
+			    FROM WORK
+			    WHERE STATUS LIKE '개발중'
+			      AND MEMBER_NO = #{memberNo}),
+			   (SELECT COUNT(*) AS COMPLETED
+			    FROM WORK
+			    WHERE STATUS LIKE '개발완료'
+			      AND MEMBER_NO = #{memberNo}),
+			   (SELECT COUNT(*) AS TESTCOMPLETED
+			    FROM WORK
+			    WHERE STATUS LIKE '테스트완료'
+			      AND MEMBER_NO = #{memberNo}),
+			   (SELECT COUNT(*) AS PLCHECKING
+			    FROM WORK
+			    WHERE STATUS LIKE 'PL검토중'
+			      AND MEMBER_NO = #{memberNo}),
+			   (SELECT COUNT(*) AS PLCHECKED
+			    FROM WORK
+			    WHERE STATUS LIKE 'PL승인완료'
+			      AND MEMBER_NO = #{memberNo}),
+			   (SELECT COUNT(*) AS DELAYED
+			    FROM WORK
+			    WHERE STATUS LIKE '개발지연'
+			      AND MEMBER_NO = #{memberNo})
+   </select>
+   
 </mapper>
 
 

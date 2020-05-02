@@ -17,6 +17,7 @@ import com.kh.manage.member.model.exception.LoginException;
 import com.kh.manage.member.model.vo.AllDashBoard;
 import com.kh.manage.member.model.vo.DeptProjectCount;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.member.model.vo.MyStatic;
 import com.kh.manage.project.model.vo.Project;
 import com.kh.manage.project.model.vo.ProjectDetail;
 
@@ -227,6 +228,47 @@ public class MemberDaoImpl implements MemberDao {
 	      return sqlSession.selectOne("Member.myWorkCount", m);
 	}
 
+	@Override
+	public List<AllDashBoard> selectAllType(SqlSessionTemplate sqlSession, Date date) {
+		
+		return sqlSession.selectList("Member.selectAllType", date);
+	}
+
+	@Override
+	public AllDashBoard searchChartKind(SqlSessionTemplate sqlSession, Date date) {
+		
+		return sqlSession.selectOne("Member.searchChartKind", date);
+	}
+
+	@Override
+	public AllDashBoard selectStatusIssue(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectOne("Member.selectStatusIssue");
+	}
+
+	@Override
+	public AllDashBoard selectIssueTypeCount(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectOne("Member.selectIssueTypeCount");
+	}
+	
+	@Override
+	public int myProjectCount(SqlSessionTemplate sqlSession, Member m) {
+
+		return sqlSession.selectOne("Member.myProjectCount", m);
+	}
+
+	@Override
+	public int myIssueCount(SqlSessionTemplate sqlSession, Member m) {
+
+		return sqlSession.selectOne("Member.myIssueCount", m);
+	}
+	
+	@Override
+	public MyStatic selectMyStatic(SqlSessionTemplate sqlSession, Member member) {
+
+		return sqlSession.selectOne("Member.selectMyStatic", member);
+	}
 
 
 	
