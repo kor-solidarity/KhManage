@@ -20,4 +20,23 @@ public interface MailService {
 
 	void insertReciveMail(Mail reciveMail);
 
+	int getListCount2(Mail m);
+
+	List<Mail> selectReciveMail(Mail m, PageInfo pi);
+
+	Mail reciveMailOne(String mNo);
+
+	int updateImportant(Mail mail);
+
+	int updateTrash(String mNo);
+
+	int getListCount3(Mail mail);
+
+	List<Mail> selectImportList(Mail mail, PageInfo pi);
+
+	int getListCount4(Mail mail);
+
+	List<Mail> selectTrashList(Mail mail, PageInfo pi);
+
+
 }

@@ -16,6 +16,10 @@
 		<result property="receiverType" column="RECEIVER_TYPE"/>
 		<result property="mbNo" column="MAILBOX_NO"/>
 		<result property="mailBoxType" column="MAILBOX_TYPE"/>
+		<result property="important" column="IMPORTANT"/>
+		<result property="temp" column="TEMP"/>
+		<result property="spam" column="SPAM"/>
+		<result property="trash" column="TRASH"/>
 		<collection property="atMail" resultMap="atMailResultSet" />
 	</resultMap>
 	
@@ -46,7 +50,7 @@
 	
 	<insert id="insertMailBox" parameterType="Mail">
 		INSERT INTO MAILBOX
-		VALUES(SEQ_MB_NO.NEXTVAL, SEQ_MA_NO.CURRVAL, #{memberNo}, 2 )
+		VALUES(SEQ_MB_NO.NEXTVAL, SEQ_MA_NO.CURRVAL, #{memberNo}, 2 ,DEFAULT, DEFAULT, DEFAULT, DEFAULT)
 	</insert>
 	
 	<select id="sentMailList" parameterType="Mail" resultMap="mailResultSet">
@@ -56,6 +60,8 @@
 		JOIN MAIL_RECEIVER MR ON(M.MAIL_NO = MR.MAIL_NO)
 		WHERE MAILBOX_TYPE = 2
 		AND M.MEMBER_NO = #{memberNo}
+		AND MB.TRASH = 'N'
+		AND M.MAIL_STATUS = 'Y'
 	</select>
 	
 	<select id="selectMailOne" parameterType="java.lang.String" resultMap="mailResultSet">
@@ -80,7 +86,41 @@
 		JOIN MAIL_RECEIVER MR ON(M.MAIL_NO = MR.MAIL_NO)
 		WHERE MAILBOX_TYPE = 2
 		AND M.MEMBER_NO = #{memberNo}
+		AND MB.TRASH = 'N'
+		AND M.MAIL_STATUS = 'Y'
 	</select> 
+	
+	<select id="listCount2"  resultType="_int">
+		SELECT COUNT(*)
+		FROM MAIL M 
+		JOIN MAILBOX MB ON(M.MAIL_NO = MB.MAIL_NO)
+		JOIN MAIL_RECEIVER MR ON(M.MAIL_NO = MR.MAIL_NO)
+		WHERE MAILBOX_TYPE = 1
+		AND M.MEMBER_NO = #{memberNo}
+		AND MB.TRASH = 'N'
+		AND M.MAIL_STATUS = 'Y'
+	</select>
+	
+	<select id="getListCount3"  resultType="_int">
+		SELECT COUNT(*)
+		FROM MAIL M 
+		JOIN MAILBOX MB ON(M.MAIL_NO = MB.MAIL_NO)
+		JOIN MAIL_RECEIVER MR ON(M.MAIL_NO = MR.MAIL_NO)
+		WHERE M.MEMBER_NO = #{memberNo}
+		AND MB.TRASH = 'N'
+		AND MB.IMPORTANT = 'Y'
+		AND M.MAIL_STATUS = 'Y'
+	</select>
+	
+	<select id="getListCount4"  resultType="_int">
+		SELECT COUNT(*)
+		FROM MAIL M 
+		JOIN MAILBOX MB ON(M.MAIL_NO = MB.MAIL_NO)
+		JOIN MAIL_RECEIVER MR ON(M.MAIL_NO = MR.MAIL_NO)
+		WHERE M.MEMBER_NO = #{memberNo}
+		AND MB.TRASH = 'Y'
+		AND M.MAIL_STATUS = 'Y'
+	</select>
 	
 	<insert id="insertReciveMail" parameterType="Mail" >
 		INSERT INTO MAIL
@@ -89,7 +129,67 @@
 	
 	<insert id="insertReciveMailBox" parameterType="Mail">
 		INSERT INTO MAILBOX
-		VALUES(SEQ_MB_NO.NEXTVAL, SEQ_MA_NO.CURRVAL, #{memberNo}, 1 )
+		VALUES(SEQ_MB_NO.NEXTVAL, SEQ_MA_NO.CURRVAL, #{memberNo}, 1 , DEFAULT, DEFAULT, DEFAULT, DEFAULT )
 	</insert>
+	
+	<select id="reciveMailList" parameterType="Mail" resultMap="mailResultSet">
+		SELECT *
+		FROM MAIL M 
+		JOIN MAILBOX MB ON(M.MAIL_NO = MB.MAIL_NO)
+		JOIN MAIL_RECEIVER MR ON(M.MAIL_NO = MR.MAIL_NO)
+		WHERE MAILBOX_TYPE = 1
+		AND M.MEMBER_NO = #{memberNo}
+		AND MB.TRASH = 'N'
+		AND M.MAIL_STATUS = 'Y'
+	</select>
+	
+	<select id="impMailList" parameterType="Mail" resultMap="mailResultSet">
+		SELECT *
+		FROM MAIL M 
+		JOIN MAILBOX MB ON(M.MAIL_NO = MB.MAIL_NO)
+		JOIN MAIL_RECEIVER MR ON(M.MAIL_NO = MR.MAIL_NO)
+		WHERE M.MEMBER_NO = #{memberNo}
+		AND MB.IMPORTANT = 'Y'
+		AND MB.TRASH = 'N'
+		AND M.MAIL_STATUS = 'Y'
+	</select>
+	
+	<select id="trashMailList" parameterType="Mail" resultMap="mailResultSet">
+		SELECT *
+		FROM MAIL M 
+		JOIN MAILBOX MB ON(M.MAIL_NO = MB.MAIL_NO)
+		JOIN MAIL_RECEIVER MR ON(M.MAIL_NO = MR.MAIL_NO)
+		WHERE M.MEMBER_NO = #{memberNo}
+		AND MB.TRASH = 'Y'
+		AND M.MAIL_STATUS = 'Y'
+	</select>
+	
+	<select id="reciveMailOne" parameterType="java.lang.String" resultMap="mailResultSet">
+		SELECT *
+		FROM MAIL M 
+		JOIN MAILBOX MB ON(M.MAIL_NO = MB.MAIL_NO)
+		JOIN MAIL_RECEIVER MR ON(M.MAIL_NO = MR.MAIL_NO)
+		JOIN ATTACHMENT_MAIL AM ON(M.MAIL_NO = AM.MAIL_NO)
+		WHERE M.MAIL_NO = #{mNo}
+	</select>
+	
+	<update id="updateImportant" parameterType="Mail">
+		UPDATE MAILBOX 
+		SET IMPORTANT = 'N'
+		WHERE MAIL_NO = #{mailNo}		 
+	</update>
+	
+	<update id="updateImportant2" parameterType="Mail">
+		UPDATE MAILBOX 
+		SET IMPORTANT = 'Y'
+		WHERE MAIL_NO = #{mailNo}		 
+	</update>
+	
+	<update id="updateTrash" parameterType="java.lang.String">
+		UPDATE MAILBOX 
+		SET TRASH = 'Y'
+		WHERE MAIL_NO = #{mNO}	
+	</update>
+	
 		
 </mapper>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,6 +47,7 @@
 		width:100%;
 		text-align:left;
 		margin-top: 100px;
+		height: 500px;
 	}
 	.star{
 		width: 18px;
@@ -85,6 +87,9 @@
 		text-align: center;
 		width: 350px;
 	}
+	.paging{
+		text-align: center;
+	}
 </style>
 <body>
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
@@ -93,7 +98,7 @@
 		<div class="panel-heading">
 	<div>
 	<img src="resources/img/star2.png" style="width: 30px; height: 30px; float: left; margin-top: 6px; margin-right: 15px; margin-left: 10px;">
-	<p style="font-weight: bold; font-size: 32px; margin-top: 10px; margin-left: 10px;">임시 보관함</p>
+	<p style="font-weight: bold; font-size: 32px; margin-top: 10px; margin-left: 10px;">중요 메일함</p>
 	</div>
 	
 	<div id= "btn"style="width: 1620px;">
@@ -122,31 +127,124 @@
 			<td class="titletd">제목</td>
 			<td class="datetd">날짜</td>
 		</tr>
-		<tr>
-			<td class="chktd"><input type="checkbox"></td>
-			<td class="startd"><img  src="resources/img/star.png" class="star"></td>
-			<td class="mailtd"><img  src="resources/img/mail.png" class="mail"></td>
-			<td class="sendtd">보낸사람</td>
-			<td class="titletd">제목</td>
-			<td class="datetd">날짜</td>
-		</tr>
-	
+		
+		<c:forEach var="m" items="${list}">
+			<tr class="tr">
+				<td style="display: none;"><input type="hidden" value="${m.mailNo }"></td>
+				<td class="chktd"><input type="checkbox"></td>
+				<td class="startd"><img  class="star ${m.mailNo }"></td>
+				<td class="mailtd"><img  src="resources/img/mail.png" class="mail"></td>
+				<td class="sendtd">${m.receiver }</td>
+				<td class="titletd">${m.subject }</td>
+				<td class="datetd">${m.enrollDate }</td>
+			</tr>		
+		</c:forEach>
+		
+		<tr class="pagingArea">
+								<td colspan="6">
+									<div class="paging">
+										<c:if test="${pi.currentPage <= 1 }">
+												[이전] &nbsp;
+												</c:if>
+												<c:if test="${ pi.currentPage > 1 }">
+												<c:url var="alistBack" value="mailSent.ma">
+													<c:param name="currentPage" value="${pi.currentPage - 1 }"/>
+												</c:url>
+													<a href="${ alistBack }">[이전]</a>&nbsp;
+												</c:if>
+												<c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage }">
+													<c:if test="${p eq pi.currentPage }">
+														<font color="red" size="4"><b>[${p }]</b></font>
+													</c:if>
+													<c:if test="${p ne pi.currentPage }">
+														<c:url var="alistCheck" value="accessManage.am">
+															<c:param name="currentPage" value="${p }"/>
+														</c:url>
+														
+														<a href="${alistCheck }"> ${p}</a>
+													</c:if>
+												</c:forEach>
+												
+												<c:if test="${pi.currentPage >= pi.endPage }">
+													[다음] &nbsp;
+												</c:if>
+												<c:if test="${pi.currentPage < pi.endPage }">
+												<c:url var="alistEnd" value="mailSent.ma">
+													<c:param name="currentPage" value="${pi.currentPage + 1 }"/>
+												</c:url>
+													<a href="${alistEnd}">[다음]</a>
+												</c:if>									
+									</div>
+								</td>
+							</tr>
+		
+		
 	</table>
-	
-	
 	
 	
 	</div>
 	</div>	
 </body>
 <script>
-	$("#mainTable tr").click(function(){
-	 /* var num = $(this).parent().children("input").val(); */
-	 
-/* 	 location.href="mailReceived.ma";
- */	 
-});
 
+ 	 $(function(){
+	 	 for(var i= 0; i < ${list.size()}; i++){
+	 		 
+	 		 if( '${list.get(i).important}' == 'Y'){
+	 			$(".${list.get(i).mailNo}").prop("src", "resources/img/star3.png");
+	 		 }else{
+	 			$(".${list.get(i).mailNo}").prop("src", "resources/img/star.png"); 
+	 		 }
+	 		 
+	 	 }
+ 		
+ 		 
+ 	 });
+ 	 
+	$("#mailTable tr").click(function(){
+	 var num = $(this).children().eq(0).children().val(); 
+	 
+	 console.log(num);
+	 
+ 	 location.href="mailDetail.ma?no=" +num;
+ 	 
+		
+	}); 
+	
+	/* $(function(){
+		
+			 $.ajax({
+			        type:'GET',
+			        url : "important.ma",
+			        dataType : "json",
+			        data:{
+			        	mNo : mNo,
+			        	imp : imp
+			        },
+			        contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
+			        success : function(data){
+			            
+			        	console.log(data);
+			        
+			        	console.log(data);
+			        	
+			        	if(data.important == 'Y' ){
+			        		$(".star").prop("src", "resources/img/star3.png" );
+			        		imp = 'Y';
+			        	}else{
+			        		$(".star").prop("src", "resources/img/star.png" );
+			        		imp = 'N';
+			        	} 
+			        },
+			        error:function(request,status,error){
+			            
+			       }
+			    });
+		
+ 	 
+ 	 
+		});
+ */
 </script>
 </html>
 

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,7 +60,7 @@
 	
 	<div style="width: 100%; height: 50px;">
 		<button class="wjs_btn" style="width: 50px;">답장</button>
-		<button class="wjs_btn" style="width: 50px;">삭제</button>
+		<button id="delete" class="wjs_btn" style="width: 50px;">삭제</button>
 		<button class="wjs_btn" style="width: 50px;">읽음</button>
 		<button class="wjs_btn" style="width: 100px;">스팸 신고</button>
 	</div>
@@ -68,16 +69,18 @@
 	<hr align="left" style="border: solid 1px #C7C5C5; width:90%;  ">
 		<table id="mailTable">
 			<tr>
-				<td class="mailtd"><img class="star" src="resources/img/star.png"></td>
-				<td class="mailtd2">메일 제목</td>
+				<td class="mailtd">
+					<img class="star">
+				</td>
+				<td class="mailtd2">${mail.subject}</td>
 			</tr>
 			<tr>
 				<td class="mailtd">보낸 사람</td>
-				<td class="mailtd2">보낸 사람</td>
+				<td class="mailtd2">${mail.from }</td>
 			</tr>
 			<tr>
 				<td class="mailtd">받는 사람</td>
-				<td class="mailtd2">받는 사람</td>
+				<td class="mailtd2">${mail.receiver}</td>
 			</tr>
 		</table>
 		
@@ -87,6 +90,7 @@
 	<tr>
 		<td>
 		<div id="mailtext">
+			${mail.content }
 		</div>
 		
 		</td>
@@ -101,6 +105,61 @@
 	</div>
 </body>
 
+<script>
+	var imp = '${mail.important}';
+	var mNo = '${mail.mailNo}';
+	
+	$(function(){
+		
+		console.log(imp);
+		
+		if(imp == 'Y'){
+			$(".star").prop("src", "resources/img/star3.png" );
+		}else{
+			$(".star").prop("src", "resources/img/star.png" );
+		}
+		
+		$(".star").click(function(){
+			
+			 $.ajax({
+			        type:'GET',
+			        url : "important.ma",
+			        dataType : "json",
+			        data:{
+			        	mNo : mNo,
+			        	imp : imp
+			        },
+			        contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
+			        success : function(data){
+			            
+			        	console.log(data);
+			        	
+			        	if(data.important == 'Y' ){
+			        		$(".star").prop("src", "resources/img/star3.png" );
+			        		imp = 'Y';
+			        	}else{
+			        		$(".star").prop("src", "resources/img/star.png" );
+			        		imp = 'N';
+			        	}
+			        	
+			            
+			        },
+			        error:function(request,status,error){
+			            
+			       }
+			    });
+			
+		});
+		
+	});
+	
+	$("#delete").click(function(){
+		
+		location.href = "trash.ma?mNo="+mNo;
+		
+	});
+	
+</script>
 
 
 </html>

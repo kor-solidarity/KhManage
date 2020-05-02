@@ -17,13 +17,17 @@ public class Mail implements java.io.Serializable{
 	private String receiverType;
 	private String mbNo;
 	private int mailBoxType;
+	private String important;
+	private String temp;
+	private String spam;
+	private String trash;
 	private List<AttachmentMail> atMail;
 	
 	public Mail() {}
 
 	public Mail(String mailNo, String memberNo, String subject, String content, Date enrollDate, String status,
 			String from, String reNo, String receiver, String receiverType, String mbNo, int mailBoxType,
-			List<AttachmentMail> atMail) {
+			String important, String temp, String spam, String trash, List<AttachmentMail> atMail) {
 		super();
 		this.mailNo = mailNo;
 		this.memberNo = memberNo;
@@ -37,6 +41,10 @@ public class Mail implements java.io.Serializable{
 		this.receiverType = receiverType;
 		this.mbNo = mbNo;
 		this.mailBoxType = mailBoxType;
+		this.important = important;
+		this.temp = temp;
+		this.spam = spam;
+		this.trash = trash;
 		this.atMail = atMail;
 	}
 
@@ -136,6 +144,38 @@ public class Mail implements java.io.Serializable{
 		this.mailBoxType = mailBoxType;
 	}
 
+	public String getImportant() {
+		return important;
+	}
+
+	public void setImportant(String important) {
+		this.important = important;
+	}
+
+	public String getTemp() {
+		return temp;
+	}
+
+	public void setTemp(String temp) {
+		this.temp = temp;
+	}
+
+	public String getSpam() {
+		return spam;
+	}
+
+	public void setSpam(String spam) {
+		this.spam = spam;
+	}
+
+	public String getTrash() {
+		return trash;
+	}
+
+	public void setTrash(String trash) {
+		this.trash = trash;
+	}
+
 	public List<AttachmentMail> getAtMail() {
 		return atMail;
 	}
@@ -149,9 +189,11 @@ public class Mail implements java.io.Serializable{
 		return "Mail [mailNo=" + mailNo + ", memberNo=" + memberNo + ", subject=" + subject + ", content=" + content
 				+ ", enrollDate=" + enrollDate + ", status=" + status + ", from=" + from + ", reNo=" + reNo
 				+ ", receiver=" + receiver + ", receiverType=" + receiverType + ", mbNo=" + mbNo + ", mailBoxType="
-				+ mailBoxType + ", atMail=" + atMail + "]";
+				+ mailBoxType + ", important=" + important + ", temp=" + temp + ", spam=" + spam + ", trash=" + trash
+				+ ", atMail=" + atMail + "]";
 	}
 
+	
 
 	
 	

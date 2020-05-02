@@ -31,4 +31,25 @@ public interface MailDao {
 
 	void insertReciveMailBox(SqlSessionTemplate sqlSession, Mail reciveMail);
 
+	int getListCount2(SqlSessionTemplate sqlSession, Mail m);
+
+	List<Mail> selectReciveMail(SqlSessionTemplate sqlSession, Mail m, PageInfo pi);
+
+	Mail reciveMailOne(SqlSessionTemplate sqlSession, String mNo);
+
+	int updateImportant(SqlSessionTemplate sqlSession, Mail mail);
+
+	int updateImportant2(SqlSessionTemplate sqlSession, Mail mail);
+
+	int updateTrash(SqlSessionTemplate sqlSession, String mNo);
+
+	int getListCount3(SqlSessionTemplate sqlSession, Mail mail);
+
+	List<Mail> selectImportList(SqlSessionTemplate sqlSession, Mail mail, PageInfo pi);
+
+	int getListCount4(SqlSessionTemplate sqlSession, Mail mail);
+
+	List<Mail> selectTrashList(SqlSessionTemplate sqlSession, Mail mail, PageInfo pi);
+
+
 }
