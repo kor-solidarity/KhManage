@@ -25,8 +25,6 @@ public class MailServiceImpl implements MailService{
 		
 		int result = 0;
 		
-			
-			
 		int	result1 = md.insertMail(sqlSession, m);
 			
 		int	result2 = md.insertAttachment(sqlSession, fileList);
@@ -75,6 +73,73 @@ public class MailServiceImpl implements MailService{
 		
 		md.insertReciveMailBox(sqlSession, reciveMail);
 	}
+
+	@Override
+	public int getListCount2(Mail m) {
+
+		return md.getListCount2(sqlSession, m);
+	}
+
+	@Override
+	public List<Mail> selectReciveMail(Mail m, PageInfo pi) {
+
+		return md.selectReciveMail(sqlSession, m, pi);
+	}
+
+	@Override
+	public Mail reciveMailOne(String mNo) {
+
+		return md.reciveMailOne(sqlSession, mNo);
+	}
+
+	@Override
+	public int updateImportant(Mail mail) {
+
+		int result = 0;
+		
+		if(mail.getImportant().equals("Y")) {
+			
+			result = md.updateImportant(sqlSession, mail);
+			
+		}else {
+			
+			result = md.updateImportant2(sqlSession, mail);
+			
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int updateTrash(String mNo) {
+
+		return md.updateTrash(sqlSession, mNo);
+	}
+
+	@Override
+	public int getListCount3(Mail mail) {
+
+		return md.getListCount3(sqlSession, mail);
+	}
+
+	@Override
+	public List<Mail> selectImportList(Mail mail, PageInfo pi) {
+
+		return md.selectImportList(sqlSession, mail ,pi);
+	}
+
+	@Override
+	public int getListCount4(Mail mail) {
+
+		return md.getListCount4(sqlSession, mail);
+	}
+
+	@Override
+	public List<Mail> selectTrashList(Mail mail, PageInfo pi) {
+
+		return md.selectTrashList(sqlSession, mail ,pi);
+	}
+
 	
 	
 

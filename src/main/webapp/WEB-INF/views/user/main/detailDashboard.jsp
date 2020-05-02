@@ -65,8 +65,8 @@
 .pjtTd4{width: 30%;}
 .td{padding-left: 5px;}
 #myChart,#myChart2,#myChart3{
-	margin-left: 250px;
 	height: 250px;
+	margin: 0 auto;
 }
 .scheduler_default_corner_inner{
 		display:none !important;
@@ -164,7 +164,9 @@
 							<td class="tdMid"><b>프로젝트 태스크 진행상태</b>
 							<hr>
 								<div id="task">
+								<div style="margin: 0 auto;">
 								<canvas id="myChart" width="400" height="400"></canvas>
+								</div>
 								</div>
 							</td>
 						</tr>
@@ -183,7 +185,9 @@
 							<hr>
 								<div class="chart-none-data">
 									<div id="issue"><!-- No data available -->
-									<canvas id="myChart2" width="400" height="400"></canvas>	
+									<div style="margin: 0 auto;">
+									<canvas id="myChart2" width="400" height="400" ></canvas>
+									</div>	
 									</div>
 								</div>
 							</td>
@@ -191,7 +195,9 @@
 							<td class="tdMid"><b>변경요청</b>
 							<hr>
 								<div id="change">
+								<div style="margin: 0 auto;">
 								<canvas id="myChart3" width="400" height="400"></canvas>
+								</div>
 								</div>
 							</td>
 						</tr>
@@ -234,12 +240,6 @@
         { groupBy: "Day", format: "d" }
     ];
 
-    dp.contextMenu = new DayPilot.Menu({items: [
-        {text:"Edit", onClick: function(args) { dp.events.edit(args.source); } },
-        {text:"Delete", onClick: function(args) { dp.events.remove(args.source); } },
-        {text:"-"},
-        {text:"Select", onClick: function(args) { dp.multiselect.add(args.source); } },
-    ]});
 
     dp.treeEnabled = true;
     dp.treePreventParentUsage = true;

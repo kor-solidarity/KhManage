@@ -86,4 +86,77 @@ public class MailDaoImpl implements MailDao{
 		sqlSession.insert("Mail.insertReciveMailBox", reciveMail);
 	}
 
+	@Override
+	public int getListCount2(SqlSessionTemplate sqlSession, Mail m) {
+
+		return sqlSession.selectOne("Mail.listCount2",m);
+	}
+
+	@Override
+	public List<Mail> selectReciveMail(SqlSessionTemplate sqlSession, Mail m, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage()-1) * pi.getLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+
+		return sqlSession.selectList("Mail.reciveMailList",m, rowBounds);
+	}
+
+	@Override
+	public Mail reciveMailOne(SqlSessionTemplate sqlSession, String mNo) {
+
+		return sqlSession.selectOne("Mail.reciveMailOne",mNo);
+	}
+
+	@Override
+	public int updateImportant(SqlSessionTemplate sqlSession, Mail mail) {
+
+		return sqlSession.update("Mail.updateImportant", mail);
+	}
+
+	@Override
+	public int updateImportant2(SqlSessionTemplate sqlSession, Mail mail) {
+
+		return sqlSession.update("Mail.updateImportant2", mail);
+	}
+
+	@Override
+	public int updateTrash(SqlSessionTemplate sqlSession, String mNo) {
+
+		return sqlSession.update("Mail.updateTrash" , mNo);
+	}
+
+	@Override
+	public int getListCount3(SqlSessionTemplate sqlSession, Mail mail) {
+
+		return sqlSession.selectOne("Mail.getListCount3", mail);
+	}
+
+	@Override
+	public List<Mail> selectImportList(SqlSessionTemplate sqlSession, Mail mail, PageInfo pi) {
+
+		int offset = (pi.getCurrentPage()-1) * pi.getLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+
+		return sqlSession.selectList("Mail.impMailList", mail, rowBounds);
+	}
+
+	@Override
+	public int getListCount4(SqlSessionTemplate sqlSession, Mail mail) {
+
+		return sqlSession.selectOne("Mail.getListCount4", mail);
+	}
+
+	@Override
+	public List<Mail> selectTrashList(SqlSessionTemplate sqlSession, Mail mail, PageInfo pi) {
+
+		int offset = (pi.getCurrentPage()-1) * pi.getLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+
+		return sqlSession.selectList("Mail.trashMailList", mail, rowBounds);
+	}
+
+
 }

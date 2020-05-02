@@ -1,40 +1,9 @@
 package com.kh.manage.mail.controller;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.GetObjectRequest;
-import com.amazonaws.services.s3.model.S3Object;
-import com.amazonaws.services.s3.model.S3ObjectSummary;
-import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
-import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClientBuilder;
-import com.amazonaws.services.simpleemail.model.RawMessage;
-import com.amazonaws.services.simpleemail.model.SendRawEmailRequest;
-import com.kh.manage.common.Attachment;
-import com.kh.manage.common.CommonsUtils;
-import com.kh.manage.common.PageInfo;
-import com.kh.manage.common.Pagination;
-import com.kh.manage.mail.model.service.MailService;
-import com.kh.manage.mail.model.vo.AttachmentMail;
-import com.kh.manage.mail.model.vo.Mail;
-import com.kh.manage.member.model.vo.Member;
-
 import java.io.BufferedInputStream;
+
+
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -54,49 +23,75 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.amazonaws.services.s3.model.S3ObjectSummary;
+import com.google.gson.Gson;
+import com.kh.manage.common.CommonsUtils;
+import com.kh.manage.common.PageInfo;
+import com.kh.manage.common.Pagination;
+import com.kh.manage.mail.model.service.MailService;
+import com.kh.manage.mail.model.vo.AttachmentMail;
+import com.kh.manage.mail.model.vo.Mail;
+import com.kh.manage.member.model.vo.Member;
 @Controller 
 public class MailController {
 	
 	@Autowired
 	private MailService ms;
+	
+	private AwsS3 s3;
 
+	
+	//메일 메인페이지 받은 메일함
 	@RequestMapping("/mailMain.ma")
-	public String mailMain() {
+	public String mailMain(HttpServletRequest request, Model m) {
 		
-		 
-//	      String bucket_name = "manageee";
-//	      String key_name= "4hjljcbtgl9jbkqr2g2l2pt3s81ktt8p7cuqv481";
-//	      
-//	      final AmazonS3 s3 = AmazonS3ClientBuilder.standard().withRegion("us-east-1").build();
-//	      
-//	      
-//	      S3Object object = s3.getObject(new GetObjectRequest(bucket_name,key_name));
-//	      InputStream objectData = object.getObjectContent();
-//	      
-//	      try {
-//	      
-//	      BufferedReader reader = new BufferedReader(new InputStreamReader(object.getObjectContent()));
-//	      
-//	      String line;
-//	      
-//	      
-//	      while((line = reader.readLine()) != null) {
-//	         System.out.println(line);
-//	      }
-//	      objectData.close();
-//	      } catch (IOException e) {
-//	         e.printStackTrace();
-//	      }
-//		
+		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
 		
+		Mail mail = new Mail();
+		mail.setMemberNo(loginUser.getMemberNo());
 		
+		int currentPage = 1;
 
+		if(request.getParameter("currentPage") != null) {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+
+		int listCount = ms.getListCount2(mail);
+		
+		System.out.println(listCount);
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		
+		List<Mail> list = ms.selectReciveMail(mail,pi);
+
+		m.addAttribute("list", list);
+		m.addAttribute("pi", pi);
+		
 		return "user/mail/mailMain";
 	}
 
+	//받은 메일함 상세보기
 	@RequestMapping("/mailReceived.ma")
-	public String mailReceived() {
+	public String mailReceived(HttpServletRequest request, Model m) {
+		
+		String mNo = request.getParameter("no");
+		
+		System.out.println(mNo);
+		
+		Mail mail = ms.reciveMailOne(mNo);
+		
+		m.addAttribute("mail", mail);
 
 		return "user/mail/mailReceived";
 	}
@@ -113,14 +108,62 @@ public class MailController {
 		return "user/mail/mailStorage";
 	}
 
+	//중요 메일함 조회
 	@RequestMapping("/mailImportant.ma")
-	public String mailImportant() {
+	public String mailImportant(Model m, HttpServletRequest request) {
+		
+		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
+
+		Mail mail = new Mail();
+		mail.setMemberNo(loginUser.getMemberNo());
+		
+		int currentPage = 1;
+
+		if(request.getParameter("currentPage") != null) {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+
+		int listCount = ms.getListCount3(mail);
+		
+		System.out.println(listCount);
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		
+		
+		List<Mail> list = ms.selectImportList(mail,pi);
+		
+		m.addAttribute("list", list);
+		m.addAttribute("pi", pi);
 
 		return "user/mail//mailImportant";
 	}
 
+	//휴지통 리스트 조회
 	@RequestMapping("/mailTrash.ma")
-	public String mailTrash() {
+	public String mailTrash(HttpServletRequest request, Model m) {
+		
+		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
+
+		Mail mail = new Mail();
+		mail.setMemberNo(loginUser.getMemberNo());
+		
+		int currentPage = 1;
+
+		if(request.getParameter("currentPage") != null) {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+
+		int listCount = ms.getListCount4(mail);
+		
+		System.out.println(listCount);
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		
+		
+		List<Mail> list = ms.selectTrashList(mail,pi);
+		
+		m.addAttribute("list", list);
+		m.addAttribute("pi", pi);
 
 		return "user/mail//mailTrash";
 	}
@@ -147,6 +190,7 @@ public class MailController {
 		List<Mail> list = ms.sentMailList(mail,pi);
 		
 		m.addAttribute("list", list);
+		m.addAttribute("pi", pi);
 		
 		System.out.println(list);
 
@@ -164,6 +208,8 @@ public class MailController {
 	}
 	@RequestMapping("/mailComplete.ma")
 	public String mailComplete() {
+		
+		
 
 		return "user/mail//mailComplete";
 	}
@@ -400,7 +446,7 @@ public class MailController {
 		ServletOutputStream downOut = response.getOutputStream();
 		
 		//스트림으로 전송할 파일 객체 생성
-		File downFile = new File(file.getFilePath() +"\\"+ file.getChangeName());
+		File downFile = new File(file.getFilePath());
 		
 		//응당 헤더 설정
 		response.setContentType("text/plain; charset=UTF-8");
@@ -424,82 +470,160 @@ public class MailController {
 	// s3 버킷으로 들어오 메시지를 DB에 넣어주는 메소드
 		@RequestMapping("mail/s3.ma")
 		public String runS3Method(HttpServletRequest request) {
-		AwsS3 s3 = new AwsS3();
-			// **** 프로세스  **** 
-			// 리스트를 조회할때 버킷을 조회해서 받은 파일이 존재하면 -> eml파일로 복사후 삭제과정
-			// eml파일로 복사후 eml형식을 받아와 메시지 객체에 저장한다. 
-			List<S3ObjectSummary> objects = s3.getObjects("managee");
-			System.out.println("버킷 객체 리스트 가져오기 : " + objects);
-			
-			if(objects.size() <= 0) {
-				System.out.println("버킷에 객체가 존재하지 않습니다.");
-				return "redirect:/mailMain.ma";
-			}
-			
-			for(S3ObjectSummary object : objects) {
-				// 객체의 내용을 출력
-				s3.downloadObject(object.getBucketName(), object.getKey());
-				
-				// eml파일로 복사 
-				s3.updateObjectForEmlExt(object.getKey());
-				
-				// 확인을 완료하면 버킷에서 삭제한다. 
-				s3.deleteObject(object.getBucketName(), object.getKey());
-			}
-			
-			List<S3ObjectSummary> emlObjects = s3.getObjects("managee-eml");
-			System.out.println("eml 리스트 가져오기 : " + emlObjects);
-			
-			for(S3ObjectSummary object : emlObjects) {
-				// 객체의 내용을 출력
-				s3.downloadObject(object.getBucketName(), object.getKey());
-				
-				// eml파일 처리하는 메소드 
-				Message message= s3.getEmlFile(object.getKey());
-				// System.out.println("\n\n\n\n\n메시지 객체 분석해보자 medssage:  " + message.toString() + "\n\n\n\n");
-				
-				Mail reciveMail = new Mail();
-				Member loginUser = (Member) request.getSession().getAttribute("loginUser");
-				reciveMail.setMemberNo(loginUser.getMemberNo());
-				try {
-					MimeMultipart mm = (MimeMultipart) message.getContent();
-					MimeBodyPart mb = (MimeBodyPart) mm.getBodyPart(1);
-					//System.out.println(mb.getFileName());
-//					for(int i = 0; i < message.getReplyTo().length; i++) {
-//						System.out.println(i + "번째 : " + message.getReplyTo()[i]);
-//					}
-//					System.out.println();
-//					for(int i = 0; i < message.getFrom().length; i++) {
-//						System.out.println(i + "번째 : " + message.getFrom()[i]);
-//					}
-					
-					String from = String.valueOf(message.getFrom()[0]);
-					System.out.println("String 변환 후 : " + from );
-					from = from.substring(from.indexOf('<') + 1, from.indexOf('>'));
-					System.out.println("자른 후 from : " + from);
-					
-					reciveMail.setContent((String) mb.getContent());
-					reciveMail.setSubject(message.getSubject());
-					reciveMail.setEnrollDate((Date) message.getSentDate());
-					reciveMail.setFrom(from);
-					reciveMail.setReceiver(message.getAllRecipients()[0].toString());
-				} catch (IOException  e) {
-					System.out.println("eml을 DB에 저장하기 실패!");
-					System.out.println("에러 메시지 : " + e.getMessage());
-				} catch (MessagingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			  s3 = new AwsS3();
+	             // **** 프로세스  **** 
+	             // 리스트를 조회할때 버킷을 조회해서 받은 파일이 존재하면 -> eml파일로 복사후 삭제과정
+	             // eml파일로 복사후 eml형식을 받아와 메시지 객체에 저장한다. 
+	             List<S3ObjectSummary> objects = s3.getObjects("manageee");
+	             System.out.println("버킷 객체 리스트 가져오기 : " + objects);
+	             
+	             if(objects.size() <= 0) {
+	                System.out.println("버킷에 객체가 존재하지 않습니다.");
+	                return "redirect:/mailMain.ma";
+	             }
+	             
+	             for(S3ObjectSummary object : objects) {
+	                // 객체의 내용을 출력
+	                s3.downloadObject(object.getBucketName(), object.getKey());
+	                
+	                // eml파일로 복사 
+	                s3.updateObjectForEmlExt(object.getKey());
+	                
+	                // 확인을 완료하면 버킷에서 삭제한다. 
+	                s3.deleteObject(object.getBucketName(), object.getKey());
+	             }
+	             
+	             List<S3ObjectSummary> emlObjects = s3.getObjects("manageee-eml");
+	             System.out.println("eml 리스트 가져오기 : " + emlObjects);
+	             
+	             for(S3ObjectSummary object : emlObjects) {
+	                // 객체의 내용을 출력
+	                s3.downloadObject(object.getBucketName(), object.getKey());
+	                
+	                // eml파일 처리하는 메소드 
+	                Message message= s3.getEmlFile(object.getKey());
+	                // System.out.println("\n\n\n\n\n메시지 객체 분석해보자 medssage:  " + message.toString() + "\n\n\n\n");
+	                
+	                Mail m = new Mail();
+	                  try {
+	                     
+	                     //System.out.println(mb.getFileName());
+//	                   for(int i = 0; i < message.getReplyTo().length; i++) {
+//	                      System.out.println(i + "번째 : " + message.getReplyTo()[i]);
+//	                   }
+//	                   System.out.println();
+//	                   for(int i = 0; i < message.getFrom().length; i++) {
+//	                      System.out.println(i + "번째 : " + message.getFrom()[i]);
+//	                   }
+	                	  System.out.println("message : " + message.getContent());
+	                     
+	                     MimeMultipart mm =  (MimeMultipart) message.getContent();
+	                     System.out.println("카운트가 달라지나 ? : " + mm.getCount());
+	                     //MimeBodyPart mb = (MimeBodyPart) mm.getBodyPart(1);
+	                     //System.out.println("mb : " + mb.getContent());
+	                     //System.out.println("내용 : " + mb.getContent());
+	                     //m.setMailContent((String) mb.getContent());
+	                     for(int i = 0; i < mm.getCount(); i++) {
+	                        System.out.println(i + " 번째인덱스 : " + mm.getBodyPart(i).getContent());
+	                     }
 
-				// 메시지 객체에 저장해서 데이터를 불러온 후에 데이터베이스에 맞춰서 저장
-				ms.insertReciveMail(reciveMail);
-				
-				// eml파일 삭제
-				s3.deleteObject(object.getBucketName(), object.getKey());
+	                     System.out.println("중요한 부분!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+	                     
+	                     String from;
+	                     from = String.valueOf(message.getFrom()[0]);
+	                     
+	                     System.out.println("String 변환 후 : " + from );
+	                     from = from.substring(from.indexOf('<') + 1, from.indexOf('>'));
+	                     
+	                     System.out.println("자른 후 from 보낸 사람: " + from);
+
+	                     //첨부파일은 내용이 잘 나오지 않는다!
+	                     System.out.println("제목 : " + message.getSubject());
+	                     System.out.println("받은 날짜 : " + message.getSentDate());
+	                     System.out.println("받은 사람(나) : " + message.getAllRecipients()[0].toString());
+	                     
+	                     
+	                     //2군데 에다가 넣을꺼야 일단 첨부파일 없는 받은 메일 부터 
+	                     //EMAIL_MAIL에 MAIL_SUBJECT,MAIL_CONTENT
+	                     //EMAIL_MAILBOX에 
+	                     m.setSubject(message.getSubject());
+	                     m.setReceiver(message.getAllRecipients()[0].toString());
+	                     m.setEnrollDate((Date) message.getSentDate());
+	                     m.setFrom(from);
+
+	                     request.setAttribute("m", m);
+	                     
+	                     ms.insertReciveMail(m);
+	                  } catch (MessagingException e) {
+	                     // TODO Auto-generated catch block
+	                     e.printStackTrace();
+	                  }
+	                  catch (IOException e) {
+	                     // TODO Auto-generated catch block
+	                     e.printStackTrace();
+	                  }
+	                 
+
+	                // 메시지 객체에 저장해서 데이터를 불러온 후에 데이터베이스에 맞춰서 저장
+	                
+	                // eml파일 삭제
+	                s3.deleteObject(object.getBucketName(), object.getKey());
+
+	                System.out.println("성공 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+	      }
+	       
+	                return "redirect:mailMain.ma";
+	    }
+		
+		
+		//중요 메일함  
+		@RequestMapping("important.ma")
+		public void importantMail(HttpServletRequest request, HttpServletResponse response) {
+			
+			String imp = request.getParameter("imp");
+			String mNo = request.getParameter("mNo");
+			
+			System.out.println(imp);
+			System.out.println(mNo);
+			
+			Mail mail = new Mail();
+			mail.setMailNo(mNo);
+			mail.setImportant(imp);
+			
+			int result = ms.updateImportant(mail);
+			
+			System.out.println(result);
+			
+			mail = ms.selectMailOne(mNo);
+			
+			request.setAttribute("mail", mail);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			
+			String gson = new Gson().toJson(mail);
+
+			try {
+				response.getWriter().write(gson);
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 			
-			// 리스트 조회
-			return "redirect:/mailMain.ma";
+		}
+		
+		
+		//휴지통
+		@RequestMapping("trash.ma")
+		public String trashMail(HttpServletRequest request, Model m) {
+			
+			String mNo = request.getParameter("mNo");
+			
+			System.out.println(mNo);
+			
+			int result = ms.updateTrash(mNo);
+			
+			System.out.println(result);
+			
+			return "redirect:mailMain.ma";
 		}
 
 

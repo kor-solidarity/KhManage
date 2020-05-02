@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +9,16 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <style>
+	.pagingArea{
+		margin: 0 auto;
+	}
+	.paging{
+		text-align: center;
+	}
+	#mailTable .tr:hover{
+		background: #FDF5E6;
+		
+	}  
 	/* .wjs_btn{
 		border-radius: 5px;
 		border: 1px solid #D4D4D4;
@@ -46,6 +57,7 @@
 		width:100%;
 		text-align:left;
 		margin-top: 100px;
+		height: 700px;
 	}
 	.star{
 		width: 18px;
@@ -125,30 +137,73 @@
 			<td class="titletd">제목</td>
 			<td class="datetd">날짜</td>
 		</tr>
-		<tr>
-			<td class="chktd"><input type="checkbox"></td>
-			<td class="startd"><img  src="resources/img/star.png" class="star"></td>
-			<td class="mailtd"><img  src="resources/img/mail.png" class="mail"></td>
-			<td class="sendtd">보낸사람</td>
-			<td class="titletd">제목</td>
-			<td class="datetd">날짜</td>
-		</tr>
-	
+		<c:forEach var="m" items="${list }">
+			<tr class="tr">
+				<td style="display: none;"><input type="hidden" value="${m.mailNo }"></td>
+				<td class="chktd"><input type="checkbox"></td>
+				<td class="startd"><img  src="resources/img/star.png" class="star"></td>
+				<td class="mailtd"><img  src="resources/img/mail.png" class="mail"></td>
+				<td class="sendtd">${m.receiver }</td>
+				<td class="titletd">${m.subject }</td>
+				<td class="datetd">${m.enrollDate }</td>
+			</tr>
+		</c:forEach>
+		
+		<tr class="pagingArea">
+								<td colspan="6">
+									<div class="paging">
+										<c:if test="${pi.currentPage <= 1 }">
+												[이전] &nbsp;
+												</c:if>
+												<c:if test="${ pi.currentPage > 1 }">
+												<c:url var="alistBack" value="mailSent.ma">
+													<c:param name="currentPage" value="${pi.currentPage - 1 }"/>
+												</c:url>
+													<a href="${ alistBack }">[이전]</a>&nbsp;
+												</c:if>
+												<c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage }">
+													<c:if test="${p eq pi.currentPage }">
+														<font color="red" size="4"><b>[${p }]</b></font>
+													</c:if>
+													<c:if test="${p ne pi.currentPage }">
+														<c:url var="alistCheck" value="accessManage.am">
+															<c:param name="currentPage" value="${p }"/>
+														</c:url>
+														
+														<a href="${alistCheck }"> ${p}</a>
+													</c:if>
+												</c:forEach>
+												
+												<c:if test="${pi.currentPage >= pi.endPage }">
+													[다음] &nbsp;
+												</c:if>
+												<c:if test="${pi.currentPage < pi.endPage }">
+												<c:url var="alistEnd" value="mailSent.ma">
+													<c:param name="currentPage" value="${pi.currentPage + 1 }"/>
+												</c:url>
+													<a href="${alistEnd}">[다음]</a>
+												</c:if>									
+									</div>
+								</td>
+							</tr>
 	</table>
 	
 	</div>
 	</div>	
 </body>
 <script>
-	$("tr").click(function(){
-	 var num = $(this).children("td").eq(3).text(); 
+	$("#mailTable tr").click(function(){
+	 var num = $(this).children().eq(0).children().val(); 
 	 
 	 console.log(num);
 	 
-	 location.href="mailReceived.ma";
+	 location.href="mailReceived.ma?no="+num;
 	 
 	});
 
+	
+	
+	
 	$("#list").click(function(){
 		
 		location.href="mail/s3.ma";

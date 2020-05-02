@@ -115,7 +115,8 @@
 	#content{
 		width: 80%;
 		height: 350px;
-		border: 1px solid black;
+		border-top: 1px solid #c8c8c8;
+		border-bottom: 1px solid #c8c8c8;
 	}
 	.container{
 		float: left;
