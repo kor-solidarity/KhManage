@@ -6,11 +6,15 @@ public class ProjectTeam {
 	private String memberPk;
 	private String role;
 	// 이하 프로젝트 팀 테이블에 존재하진 않음.
+	
 	private String memberName;
 	// 소속부서명
 	private String deptName;
 	// 직책
 	private String rankName;
+	// 부서번호
+	private String deptNo;
+	
 	// 작업에 팀 목록을 불러오고 있는 경우 쓰임. 해당 작업에 배정됬는지에 대한 여부.
 	private int checked = 0;
 	
@@ -26,6 +30,19 @@ public class ProjectTeam {
 		this.memberName = memberName;
 		this.deptName = deptName;
 		this.rankName = rankName;
+	}
+	
+	public ProjectTeam(String teamPk, String projectPk, String memberPk,
+					   String role, String memberName, String deptName,
+					   String rankName, String deptNo) {
+		this.teamPk = teamPk;
+		this.projectPk = projectPk;
+		this.memberPk = memberPk;
+		this.role = role;
+		this.memberName = memberName;
+		this.deptName = deptName;
+		this.rankName = rankName;
+		this.deptNo = deptNo;
 	}
 	
 	@Override
@@ -95,6 +112,14 @@ public class ProjectTeam {
 	
 	public void setRankName(String rankName) {
 		this.rankName = rankName;
+	}
+	
+	public String getDeptNo() {
+		return deptNo;
+	}
+	
+	public void setDeptNo(String deptNo) {
+		this.deptNo = deptNo;
 	}
 	
 	public int getChecked() {

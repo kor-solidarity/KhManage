@@ -547,6 +547,7 @@
                         $('#menuNav4').attr('data-toggle', '');
                         // 인풋, 셀렉트 막힌거 다 푼다.
                         $('#workDetails input,textarea,select').removeAttr('disabled');
+                        $('#memo').attr('disabled', 'true');
 
                         // 모달 내용물 다 초기화
                         $("#workName").val("");
@@ -917,7 +918,8 @@
                                 $("#deleteWorkBtn").removeAttr("style");
                             }
 
-                            $('#memo').removeAttr('disabled');
+                            // 메모는 여기서 아예 건들여선 안됨.
+                            // $('#memo').removeAttr('disabled');
 
                             // 작업 모달 제목창
                             $("#workTitle").text(projectWork.workName);
@@ -955,9 +957,6 @@
                                     grantorList[i].memberName + " " + grantorList[i].rankName + "</option>"
                                 );
                             }
-                            // todo 200430 해야하는 작업:
-                            //  수정은 완료
-                            //  이제 인서트문을 여기에 다 맞게 넣기.
 
                             // 다 넣고 이미 선택된 grantor 가 있는지 확인한다.
                             console.log('다 넣고 이미 선택된 grantor 있는지 확인: ' + projectWork.grantorNo);
