@@ -85,7 +85,7 @@
 							
 							<td class="td"></td>
 							<td class="tdTop requestModify">
-								<div class="cellMenu1" style="font-weight:normal; font-size: 35px; margin-right: 10px; color:#4DB3A2">6</div>
+								<div class="cellMenu1" style="font-weight:normal; font-size: 35px; margin-right: 10px; color:#4DB3A2">6!</div>
 								<div style="margin-right: 10px; font-size: 13px; color:#AAB5BC">변경요청</div>
 								<div style="width: 100%">
 									<a href="changeRequestList.iu" style="background:#F1F1F1; width: 100%">더 보기
@@ -95,7 +95,7 @@
 							</td>
 							<td class="td"></td>
 							<td class="tdTop issue">
-								<div class="cellMenu1" style="font-weight:normal; font-size: 35px; margin-right: 10px; color:#8877A9">7</div>
+								<!-- <div class="cellMenu1" style="font-weight:normal; font-size: 35px; margin-right: 10px; color:#8877A9">7!</div> -->
 								<div style="margin-right: 10px; font-size: 13px; color:#AAB5BC">이슈</div>
 								<div style="width: 100%">
 									<a href="issueList.iu" style="background:#F1F1F1; width: 100%">view more
@@ -105,7 +105,7 @@
 							</td>
 							<td class="td"></td>
 							<td class="tdTop requestApproval">
-								<div class="cellMenu1" style="font-weight:normal; font-size: 35px; margin-right: 10px; color:#F36A5A">16</div>
+								<div class="cellMenu1" style="font-weight:normal; font-size: 35px; margin-right: 10px; color:#F36A5A">16!</div>
 								<div style="margin-right: 10px; font-size: 13px; color:#AAB5BC">승인요청</div>
 								<div style="width: 100%">
 									<a href="#" style="background:#F1F1F1; width: 100%">view more
@@ -115,7 +115,7 @@
 							</td>
 							<td class="td"></td>
 							<td class="tdTop object">
-								<div class="cellMenu1" style="font-weight:normal; font-size: 35px; margin-right: 10px; color:#1BA39C">19</div>
+								<div class="cellMenu1" style="font-weight:normal; font-size: 35px; margin-right: 10px; color:#1BA39C">19!</div>
 								<div style="margin-right: 10px; font-size: 13px; color:#AAB5BC">산출물</div>
 								<div style="width: 100%">
 									<a href="#" style="background:#F1F1F1; width: 100%">view more
@@ -125,7 +125,7 @@
 							</td>
 							<td class="td"></td>
 							<td class="tdTop project">
-								<div class="cellMenu1" style="font-weight:normal; font-size: 35px; margin-right: 10px; color:#5E738B">19</div>
+								<!-- <div class="cellMenu1" style="font-weight:normal; font-size: 35px; margin-right: 10px; color:#5E738B">19</div> -->
 								<div style="margin-right: 10px; font-size: 13px; color:#AAB5BC">프로젝트</div>
 								<div style="width: 100%">
 									<a href="projectCenter.pr" style="background:#F1F1F1; width: 100%">view more
@@ -143,29 +143,63 @@
 		<script>
 								
 		var memberNo = "${loginUser.memberNo}";
-		console.log("멤버No : " + memberNo);
+		console.log("memberNo : " + memberNo);
 		
+		//상단 내 프로젝트 관련 count 불러오기
+
 		//1. 내작업 count
-		 $.ajax({
-    		  url: 'myWorkCount.me',
-    		  type: 'post',
-    		  data: {
-    			  memberNo : memberNo
-    		  },
-    		  success: function(data){
-    			  
-    			  $(".mywork").prepend(     
-    					  
-    					  "<div class='cellMenu1' style='font-weight:normal; font-size: 35px; margin-right: 10px; color:#5c9bd1'>" + data + "</div>"
-    			  );
-    		  }
-    		   
-    	   });
+		$.ajax({
+			url: 'myWorkCount.me',
+			type: 'post',
+			data: {
+			 memberNo : memberNo
+			},
+			success: function(data){
+				$(".mywork").prepend(     
+					  "<div class='cellMenu1' style='font-weight:normal; font-size: 35px; margin-right: 10px; color:#5c9bd1'>" + data + "</div>"
+				);
+			}
+		});
+				
+		//2. 변경요청 count
+		//3. 이슈 count
+		$.ajax({
+			url: 'myIssueCount.me',
+			type: 'post',
+			data: {
+			 memberNo : memberNo
+			},
+			success: function(data){
+				$(".issue").prepend(     
+					  "<div class='cellMenu1' style='font-weight:normal; font-size: 35px; margin-right: 10px; color:#8877A9'>" + data + "</div>"
+				);
+			}
+		});
+		
+		//4. 승인요청 count
+		//5. 산춞물 count
+
+		//6. 프로젝트 count
+		$.ajax({
+			url: 'myProjectCount.me',
+			type: 'post',
+			data: {
+			 memberNo : memberNo
+			},
+			success: function(data){
+			 
+			 $(".project").prepend(     
+				  "<div class='cellMenu1' style='font-weight:normal; font-size: 35px; margin-right: 10px; color:#5E738B'>" + data + "</div>"
+			 );
+			}
+		});
 		
 		
-		
-		
-		</script>
+
+
+
+
+</script>
 		
 		
 				
@@ -178,8 +212,8 @@
 							<td class="tdMid"><b>작업 진행상태</b>
 							<hr>
 								
-								<div id="workStatus" style="width: 350px; margin:0 auto;">
-									<canvas id="workStatusCanvas" width="280px;" height="280px;"></canvas>
+								<div id="workStatus" style="width: 400px; padding-left: 10px; margin: 0 auto;">
+									<canvas id="workStatusCanvas" width="350px;" height="350px;"></canvas>
 								</div>
 								
 								<script>
@@ -190,34 +224,42 @@
 									data: {
 										labels: [
 											
-											//'시작전', '개발중', '개발완료', '테스트완료', 'PL검토중', 'PL검토완료', '개발지연')
+											//'시작전', '개발중', '개발완료', '테스트완료', 'PL검토중', 'PL검토완료', '개발지연'
 											
 									        '시작 전',
 									        '개발중',
 									        '개발완료',
 									        'PL검토중',
-									        'PL검토완료',
-											'개발지연',
-									        '테스트완료'
+									        '테스트완료',
+									        'PL승인완료',
+											'개발지연'
 											
 										],
 										datasets: [{
 											label: '# of Votes',
 											data: [
 
-												7, 3, 9, 1, 1, 1, 1, 1
+												//MyStatic 객체
+												//before, developing, completed, testCompleted, plChecking, plChecked, delayed
+												'${myStatic.before}',	 		//시작 전
+												'${myStatic.developing}',		//개발중
+												'${myStatic.completed}',		//개발완료
+												'${myStatic.plChecking}',		//PL검토중
+												'${myStatic.testCompleted}',	//테스트완료
+												'${myStatic.plChecked}',		//PL승인완료
+												'${myStatic.delayed}'			//개발지연
 												
 											],
+											
+											
 											backgroundColor: [
-												'rgba(243, 106, 90, 1)',
-												'rgba(54, 162, 235, 1)',
-												'rgba(64, 174, 223, 0.2)',
-												'rgba(64, 174, 223, 0.2)',
-												'rgba(64, 174, 223, 0.2)',
-												'rgba(64, 174, 223, 0.2)',
-												'rgba(64, 174, 223, 0.2)',
-												'rgba(64, 174, 223, 0.2)',
-												'rgba(64, 174, 223, 0.2)'
+												'rgba(219, 219, 219, 0.5)',		//시작 전
+												'rgba(0, 128, 255, 0.2)',		//개발중
+												'rgba(0, 128, 255, 0.6)',		//개발완료
+												'rgba(0, 128, 255, 0.8)',		//PL검토중
+												'rgba(0, 255, 115, 0.3)',		//테스트완료
+												'rgba(0, 255, 115, 1.2)',		//PL승인완료
+												'rgba(243, 106, 90, 1)'			//개발지연
 											],
 											borderColor: [
 												/* 'rgba(255, 99, 132, 1)',
@@ -235,12 +277,13 @@
 									},
 									options: {
 										
-										/* legend:{
-									          position: 'bottom',
-									          labels:{
-									            fontColor: "white"
-									          }
-								        }, */
+										legend:{
+								          position: 'right',
+								          labels:{
+								            fontColor: "gray",
+								            weight: "bold"
+								          }
+								        },
 										cutoutPercentage: 45,
 										responsive: true,
 										scales: {
@@ -250,6 +293,12 @@
 													beginAtZero: true
 												}
 										},
+										/* animation {
+											animation.animateRotate	: true
+										}, */
+										
+										
+										
 									}
 								});
 								
@@ -263,8 +312,8 @@
 							<td class="tdMid"><b>이슈 현황</b>
 							<hr>
 							
-							<div id="issue" style="width:280px; margin:0 auto;">
-								<canvas id="issueCanvas" width="280px;" height="280px;"></canvas>
+							<div id="issue" style="width: 400px; margin: 0 auto;">
+								<canvas id="issueCanvas" width="350px;" height="350px;"></canvas>
 							</div>
 							
 							<script>
@@ -303,10 +352,21 @@
 										}]
 									},
 									options: {
+										
+										legend:{
+									          position: 'right',
+									          labels:{
+									            fontColor: "gray",
+									            weight: "bold"
+									          }
+								        },
 										responsive: false,
+										cutoutPercentage: 45,
+										responsive: true,
 										scales: {
 												ticks: {
-													cutoutPercentage: 60,
+													//cutoutPercentage: 30,
+													//percentageInnerCutout: 30,
 													beginAtZero: true
 												}
 										},
