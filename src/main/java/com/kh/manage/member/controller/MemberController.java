@@ -39,6 +39,7 @@ import com.kh.manage.member.model.vo.AllDashBoard;
 import com.kh.manage.member.model.vo.Customer;
 import com.kh.manage.member.model.vo.DeptProjectCount;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.member.model.vo.MyStatic;
 import com.kh.manage.project.model.vo.Project;
 import com.kh.manage.project.model.vo.ProjectDetail;
 
@@ -112,9 +113,18 @@ public class MemberController {
 	}
 
 	
-	//개인 대시보드 이동
+	//개인 대시보드 이동(태원)
 	@RequestMapping("/goHome.me")
-	public String goHome() {
+	public String goHome(Model model, HttpSession session) {
+		
+		Member member = (Member) session.getAttribute("loginUser");
+		
+		MyStatic mst = new MyStatic();
+		
+		MyStatic myStatic = ms.selectMyStatic(member);
+		System.out.println("개인작업 통계 : " + myStatic);
+
+		model.addAttribute("myStatic", myStatic);
 		
 		return "user/main/userMainPage";
 	}
@@ -137,8 +147,12 @@ public class MemberController {
 		List<DeptProjectCount> dList = ms.selectDeptProjectCount();
 		Date sysdate = ms.selectSysdate();
 		List<ProjectDetail> pList = ms.selectAllProjectType();
+		AllDashBoard iList = ms.selectStatusIssue(); 
+		AllDashBoard iType = ms.selectIssueTypeCount();
 		
 		
+		model.addAttribute("iList", iList);
+		model.addAttribute("iType", iType);
 		model.addAttribute("list", list);
 		model.addAttribute("dList", dList);
 		model.addAttribute("sysdate", sysdate);
@@ -154,15 +168,34 @@ public class MemberController {
 	@RequestMapping("/searchChartStatus.me")
 	public void searchChartStatus(Date date, HttpServletRequest request, HttpServletResponse response) {
 		List<ProjectDetail> pList = ms.selectAllProjectType();
-		
+		List<AllDashBoard> tList = ms.selectAllType(date);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
+		map.put("tList", tList);
 		map.put("pList", pList);
 		request.setAttribute("map", map);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		
 		String gson = new Gson().toJson(map);
+		
+		try {
+			response.getWriter().write(gson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("/searchChartKind.me")
+	public void searchChartKind(Date date, HttpServletRequest request, HttpServletResponse response) {
+		
+		AllDashBoard ad = ms.searchChartKind(date);
+		
+		request.setAttribute("ad", ad);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		
+		String gson = new Gson().toJson(ad);
 		
 		try {
 			response.getWriter().write(gson);
@@ -209,6 +242,46 @@ public class MemberController {
 	      
 	      
 	   }
+	   
+	 //멤버 메인페이지 내 프로젝트 Count
+	    @RequestMapping("myProjectCount.me")
+	    public void myProjectCount(Member m, Model model, HttpServletRequest request, HttpServletResponse response) {
+	      
+	    	int myProject = ms.myProjectCount(m);
+	    	System.out.println("내 프로젝트 갯수 result : " + myProject);
+
+	    	response.setContentType("application/json");
+	    	response.setCharacterEncoding("UTF-8");
+
+	    	String gson = new Gson().toJson(myProject);
+
+	    	try {
+	    		response.getWriter().write(gson);
+	    	} catch (IOException e) {
+	    		e.printStackTrace();
+	    	}
+
+	    }
+	    
+	  //멤버 메인페이지 내 이슈 Count
+	    @RequestMapping("myIssueCount.me")
+	    public void myIssueCount(Member m, Model model, HttpServletRequest request, HttpServletResponse response) {
+	      
+	    	int myIssue = ms.myIssueCount(m);
+	    	System.out.println("내 프로젝트 갯수 result : " + myIssue);
+
+	    	response.setContentType("application/json");
+	    	response.setCharacterEncoding("UTF-8");
+
+	    	String gson = new Gson().toJson(myIssue);
+
+	    	try {
+	    		response.getWriter().write(gson);
+	    	} catch (IOException e) {
+	    		e.printStackTrace();
+	    	}
+
+	    }
 	
 	//*************************************************
 
@@ -240,7 +313,7 @@ public class MemberController {
 			
 			model.addAttribute("loginUser", loginUser);
 			
-			return "user/main/userMainPage";
+			return "redirect:goHome.me";
 		} catch (LoginException e) {
 			model.addAttribute("msg", e.getMessage());
 			

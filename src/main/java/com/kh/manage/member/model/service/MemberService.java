@@ -1,6 +1,7 @@
 package com.kh.manage.member.model.service;
 
 import java.sql.Date;
+
 import java.util.List;
 
 import com.kh.manage.admin.adminManage.vo.DepartMent;
@@ -13,6 +14,7 @@ import com.kh.manage.member.model.exception.LoginException;
 import com.kh.manage.member.model.vo.AllDashBoard;
 import com.kh.manage.member.model.vo.DeptProjectCount;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.member.model.vo.MyStatic;
 import com.kh.manage.project.model.vo.Project;
 import com.kh.manage.project.model.vo.ProjectDetail;
 
@@ -75,6 +77,20 @@ public interface MemberService {
 	List<ProjectDetail> selectAllProjectType();
 
 	int myWorkCount(Member m);
+
+	List<AllDashBoard> selectAllType(Date date);
+
+	AllDashBoard searchChartKind(Date date);
+
+	AllDashBoard selectStatusIssue();
+
+	AllDashBoard selectIssueTypeCount();
+
+	MyStatic selectMyStatic(Member member);
+
+	int myProjectCount(Member m);
+
+	int myIssueCount(Member m);
 
 
 

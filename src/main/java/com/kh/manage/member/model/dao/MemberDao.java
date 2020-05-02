@@ -1,6 +1,7 @@
 package com.kh.manage.member.model.dao;
 
 import java.sql.Date;
+
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -15,6 +16,7 @@ import com.kh.manage.member.model.exception.LoginException;
 import com.kh.manage.member.model.vo.AllDashBoard;
 import com.kh.manage.member.model.vo.DeptProjectCount;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.member.model.vo.MyStatic;
 import com.kh.manage.project.model.vo.Project;
 import com.kh.manage.project.model.vo.ProjectDetail;
 
@@ -84,6 +86,20 @@ public interface MemberDao {
 	List<ProjectDetail> selectAllProjectType(SqlSessionTemplate sqlSession);
 
 	int myWorkCount(SqlSessionTemplate sqlSession, Member m);
+
+	List<AllDashBoard> selectAllType(SqlSessionTemplate sqlSession, Date date);
+
+	AllDashBoard searchChartKind(SqlSessionTemplate sqlSession, Date date);
+
+	AllDashBoard selectStatusIssue(SqlSessionTemplate sqlSession);
+
+	AllDashBoard selectIssueTypeCount(SqlSessionTemplate sqlSession);
+
+	int myProjectCount(SqlSessionTemplate sqlSession, Member m);
+
+	int myIssueCount(SqlSessionTemplate sqlSession, Member m);
+
+	MyStatic selectMyStatic(SqlSessionTemplate sqlSession, Member member);
 
 
 }
