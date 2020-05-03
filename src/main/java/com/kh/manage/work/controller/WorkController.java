@@ -79,14 +79,15 @@ public class WorkController {
 	}
 	
 	@RequestMapping("/selectWork.wk")
-	public ModelAndView selectWork(String workNo, ModelAndView mv) {
-		
+	public ModelAndView selectWork(String workNo, ModelAndView mv, HttpSession session) {
+		Member member = (Member) session.getAttribute("loginUser");
 		Work w = ws.selectWork(workNo);
 		System.out.println(w);
 		List<Grantor> gt = ws.selectGrantorList(w.getProjectNo());
 		
 		mv.addObject("gt", gt);
 		mv.addObject("work", w);
+		mv.addObject("loginUser", member);
 		
 		mv.setViewName("jsonView");
 		

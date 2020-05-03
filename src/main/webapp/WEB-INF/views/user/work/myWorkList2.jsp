@@ -1352,7 +1352,6 @@
 			
 		});
 	
-		
 		var btnNum;
 		
 		$("#workArea").find("div").click(function(){
@@ -1435,6 +1434,10 @@
 									)
 							
 						}
+					}
+					
+					if(data.loginUser.memberNo == data.work.memberNo){
+						$("#workChangeSubmit").attr('disabled', false);
 					}
 					
 					$("#selectModal").modal('show');
