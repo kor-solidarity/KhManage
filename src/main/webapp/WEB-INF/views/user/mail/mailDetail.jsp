@@ -118,19 +118,59 @@
 
 
 <script>
+	var imp = '${mail.important}';
+	var mNo = '${mail.mailNo}';
+	
 	$(function(){
 		
-		var nn = ${mail};
+		console.log(imp);
 		
-		var dff = ${mail.atMail.size()}
+		if(imp == 'Y'){
+			$(".star").prop("src", "resources/img/star3.png" );
+		}else{
+			$(".star").prop("src", "resources/img/star.png" );
+		}
 		
-		//var dd = ${mail.atMail};
-		console.log(dd);
+		$(".star").click(function(){
+			
+			 $.ajax({
+			        type:'GET',
+			        url : "important.ma",
+			        dataType : "json",
+			        data:{
+			        	mNo : mNo,
+			        	imp : imp
+			        },
+			        contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
+			        success : function(data){
+			            
+			        	console.log(data);
+			        	
+			        	if(data.important == 'Y' ){
+			        		$(".star").prop("src", "resources/img/star3.png" );
+			        		imp = 'Y';
+			        	}else{
+			        		$(".star").prop("src", "resources/img/star.png" );
+			        		imp = 'N';
+			        	}
+			        	
+			            
+			        },
+			        error:function(request,status,error){
+			            
+			       }
+			    });
+			
+		});
 		
-		console.log(nn);
-		console.log("asdsadsad");
+	});
+	
+	$("#delete").click(function(){
 		
-	})
+		location.href = "trash.ma?mNo="+mNo;
+		
+	});
+	
 </script>
 
 

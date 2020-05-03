@@ -167,5 +167,11 @@ public class ForumServiceImpl implements ForumService{
 		return fd.selectListWork(sqlSession, w);
 	}
 
+	@Override
+	public int noticeInser2(Notice n) {
+		int result1 = fd.noticeInsert(sqlSession,n);
+		return result1;
+	}
+
 
 }

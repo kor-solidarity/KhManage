@@ -121,12 +121,11 @@
 			<td class="titletd">제목</td>
 			<td class="datetd">날짜</td>
 		</tr>
-		
 		<c:forEach var="m" items="${list}">
 			<tr class="tr">
 				<td style="display: none;"><input type="hidden" value="${m.mailNo }"></td>
 				<td class="chktd"><input type="checkbox"></td>
-				<td class="startd"><img  src="resources/img/star.png" class="star"></td>
+				<td class="startd"><img  class="star ${m.mailNo }" src="resources/img/star.png"></td>
 				<td class="mailtd"><img  src="resources/img/mail.png" class="mail"></td>
 				<td class="sendtd">${m.receiver }</td>
 				<td class="titletd">${m.subject }</td>
@@ -180,6 +179,39 @@
 	</div>	
 </body>
 <script>
+
+ $(function(){
+	 for(var i= 0; i < ${list.size()}; i++){
+		 
+		 console.log(i)
+		 
+		 var no = i;
+		 
+		 
+		 
+		 console.log(no)
+		 
+		 if( '${list.get(i).important}' == 'Y'){
+			 
+			$(".${list.get(i).mailNo}").prop("src", "resources/img/star3.png");
+			
+		 } 
+		 
+		 
+		 
+		 
+		 
+		 /* if(${list.get(i).important} == N){
+			 $(".${list.get(i).mailNo}").prop("src", "resources/img/star.png"); 
+		 }
+		  */
+		 
+	 }
+	
+	 
+ });
+
+
 	$("#mailTable tr").click(function(){
 	 var num = $(this).children().eq(0).children().val(); 
 	 

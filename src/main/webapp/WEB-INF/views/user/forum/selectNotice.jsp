@@ -10,6 +10,43 @@
 <jsp:include page="/WEB-INF/views/user/common/sidebar2.jsp" />
 <style>
 
+.update{
+	width: 70px;
+		height: 30px;
+		border: none;
+		background: #1E2B44;
+		color: white;
+		font-weight: 400;
+		border-radius: 5px;
+		font-size: 14px;
+}
+.delete{
+
+	background: #C6C6C6;
+		float: right;
+		margin-right: 10px;
+	width: 70px;
+		height: 30px;
+		border: none;
+		color: white;
+		font-weight: 400;
+		border-radius: 5px;
+		font-size: 14px;
+		
+}
+
+#btnReply{
+		color: white;
+		background: #1E2B44;
+		width: 70px;
+		height: 30px;
+		border: none;
+		font-weight: 400;
+		border-radius: 5px;
+		font-size: 14px;
+
+}
+
 .projectBtn {
 	width: 130px;
 	height: 27px;
@@ -203,7 +240,9 @@
 		                            <textarea style="width: 1200px" rows="3" cols="30" id="comment" name="comment" placeholder="댓글을 입력하세요"></textarea>
 		                            <br>
 		                            <div>
-		                               <button class="btn btn-default" type="button" name="commentInsertBtn" id="btnReply">등록</button>
+		                               <button class="btn btn-default" type="button" name="commentInsertBtn" id="btnReply">
+		                               <i class='fas fa-check'></i>&nbsp;등록
+		                               </button>
 		                            </div>
 		                        </td>
 		                    </tr>
@@ -318,7 +357,7 @@
 	                    html += "<div>";
 	                    html += "<div><table class='table'><h6><strong>"+data[i].memberNo+"</strong></h6></div><div class='updiv'>";
 	                    	if(data[i].memberNo == memberNo){
-	                    		 html += data[i].replyContent + "<button class='update' id="+data[i].replyNo+">수정 <input type='hidden' value=" +data[i].replyNo + "></button> <button id="+data[i].replyNo+" class='redelete'>삭제 <input type='hidden' value= "+data[i].replyNo + "></button> <tr><td></td></tr>";
+	                    		 html += data[i].replyContent + "<button class='update' id="+data[i].replyNo+">수정 <input type='hidden' value=" +data[i].replyNo + "></button> <button id="+data[i].replyNo+" class='delete'>삭제 <input type='hidden' value= "+data[i].replyNo + "></button> <tr><td></td></tr>";
 	                    	}else{	
 	                    		 html += data[i].replyContent + "<tr><td></td></tr>"
 	                    	}
@@ -367,7 +406,7 @@
 	});
 	
 	
-	$(document).on('click', '.redelete', function(){
+	$(document).on('click', '.delete', function(){
 		console.log($(this).children().val());
 		
 		var nNo = $(this).children().val();
@@ -457,7 +496,7 @@
 			                    html += "<div>";
 			                    html += "<div><table class='table'><h6><strong>"+data[i].memberNo+"</strong></h6>";
 			                    	if(data[i].memberNo == memberNo){
-			                    		 html += data[i].replyContent + "<button class='update' id=u"+data[i].replyNo+">수정 <input type='hidden' value=" +data[i].replyNo + "></button> <button id="+data[i].replyNo+" class='redelete'>삭제 <input type='hidden' value= "+data[i].replyNo + "></button> <tr><td></td></tr>";
+			                    		 html += data[i].replyContent + "<button class='update' id=u"+data[i].replyNo+">수정 <input type='hidden' value=" +data[i].replyNo + "></button> <button id="+data[i].replyNo+" class='delete'>삭제 <input type='hidden' value= "+data[i].replyNo + "></button> <tr><td></td></tr>";
 			                    	}else{	
 			                    		 html += data[i].replyContent + "<tr><td></td></tr>"
 			                    	}

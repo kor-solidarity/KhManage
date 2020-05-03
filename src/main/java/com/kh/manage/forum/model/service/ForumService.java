@@ -41,4 +41,6 @@ public interface ForumService {
 
 	List<Mwork> selectListWork(Mwork w);
 
+	int noticeInser2(Notice n);
+
 }

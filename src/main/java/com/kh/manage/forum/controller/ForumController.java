@@ -78,38 +78,48 @@ public class ForumController {
 	@RequestMapping("insertNotice.fo")
 	public String insertNotice(Notice n, Model m, @RequestParam MultipartFile upfile , HttpServletRequest request) {
 		
+		System.out.println(upfile.getSize());
+		System.out.println(upfile.getName());
+		
 		String root = request.getSession().getServletContext().getRealPath("resources");//web밑에있는 resources이다.
 
 		System.out.println("root : " + root);
 		
-		String filePath = root + "\\uploadFiles"; 
-		
-		String originFileName = upfile.getOriginalFilename();//원본 파일 이름
-		String ext = originFileName.substring(originFileName.lastIndexOf("."));//.png , .jpg 
-		String changeName = CommonsUtils.getRandomString();
-		
-		Attachment at = new Attachment();
-		at.setChangeName(changeName);
-		at.setOriginName(originFileName);
-		at.setFilePath(filePath);
-		at.setExt(ext);
+		String filePath = root + "\\uploadFiles";
 		
 		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
-		
-		System.out.println(loginUser);
-		
 		n.setMemberNo(loginUser.getMemberNo());
 		
-		
-		try {
-			int result = fs.noticeInsert(n,at);
-			System.out.println("controller : " + result);
-			upfile.transferTo(new File(filePath + "\\" +  changeName + ext));
+		System.out.println(loginUser);
+		if(upfile.getSize() > 0) {
 			
-		} catch (Exception e) {
+			String originFileName = upfile.getOriginalFilename();//원본 파일 이름
+			String ext = originFileName.substring(originFileName.lastIndexOf("."));//.png , .jpg 
+			String changeName = CommonsUtils.getRandomString();
 			
-			new File(filePath + "\\" + changeName + ext).delete();
+			Attachment at = new Attachment();
+			at.setChangeName(changeName);
+			at.setOriginName(originFileName);
+			at.setFilePath(filePath);
+			at.setExt(ext);
+			
+			
+			
+			try {
+				int result = fs.noticeInsert(n,at);
+				System.out.println("controller : " + result);
+				upfile.transferTo(new File(filePath + "\\" +  changeName + ext));
+				
+			} catch (Exception e) {
+				
+				new File(filePath + "\\" + changeName + ext).delete();
+			}
+		}else {
+			
+			int result = fs.noticeInser2(n);
+			
 		}
+		
 		
 		return "redirect:noticeMain.fo";
 	}
@@ -278,7 +288,7 @@ public class ForumController {
 	
 	
 	@RequestMapping("replyUpdate.fo")
-	public void replyUpdate(HttpServletRequest request) {
+	public void replyUpdate(HttpServletRequest request,HttpServletResponse response) {
 		
 		String nNo = request.getParameter("nNo");
 		String comment = request.getParameter("comment");
@@ -292,6 +302,19 @@ public class ForumController {
 		int result = fs.replyUpdate(rp);
 		
 		System.out.println("댓글 수정 완료");
+		
+		request.setAttribute("result", result);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		
+		
+		String gson = new Gson().toJson(result);
+
+		try {
+			response.getWriter().write(gson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		
 	}
