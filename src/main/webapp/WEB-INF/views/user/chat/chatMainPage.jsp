@@ -184,7 +184,7 @@ body {
 				<td style="width: 110px; border-bottom: 4px solid white; background:#EEEEEE; color:white;">
 					<div class="box" style="background:white;">
 						<img class="profile"
-							src="<c:url value="/resources/uploadFiles/${loginUser.changeName}"/>.png">
+							src="<c:url value="/resources/uploadFiles/${loginUser.changeName}"/>">
 					</div>
 				</td>
 				<td align="center"

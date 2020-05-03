@@ -25,6 +25,7 @@ import com.kh.manage.member.model.vo.AllDashBoard;
 import com.kh.manage.member.model.vo.DeptProjectCount;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.member.model.vo.MyStatic;
+import com.kh.manage.member.model.vo.ProjectRank;
 import com.kh.manage.project.model.vo.Project;
 import com.kh.manage.project.model.vo.ProjectDetail;
 
@@ -321,6 +322,12 @@ public class MemberServiceImpl implements MemberService {
 	public MyStatic selectMyStatic(Member member) {
 
 		return md.selectMyStatic(sqlSession, member);
+	}
+
+	@Override
+	public ProjectRank selectAllRankCount(ProjectRank pr) {
+		
+		return md.selectAllRankCount(sqlSession, pr);
 	}
 	
 	

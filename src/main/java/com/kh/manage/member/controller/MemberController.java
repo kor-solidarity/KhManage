@@ -4,6 +4,7 @@ import java.io.File;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -40,6 +41,7 @@ import com.kh.manage.member.model.vo.Customer;
 import com.kh.manage.member.model.vo.DeptProjectCount;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.member.model.vo.MyStatic;
+import com.kh.manage.member.model.vo.ProjectRank;
 import com.kh.manage.project.model.vo.Project;
 import com.kh.manage.project.model.vo.ProjectDetail;
 
@@ -149,9 +151,19 @@ public class MemberController {
 		List<ProjectDetail> pList = ms.selectAllProjectType();
 		AllDashBoard iList = ms.selectStatusIssue(); 
 		AllDashBoard iType = ms.selectIssueTypeCount();
+		List<ProjectRank> rList = new ArrayList<ProjectRank>();
 		
-		
+		for(int i =1 ; i <=12; i++) {
+			ProjectRank pr = new ProjectRank();
+			pr.setMonth(i);
+			
+			pr = ms.selectAllRankCount(pr);
+			
+			rList.add(pr);
+		}
+		System.out.println("프로젝트 등급 : " + rList);
 		model.addAttribute("iList", iList);
+		model.addAttribute("rList", rList);
 		model.addAttribute("iType", iType);
 		model.addAttribute("list", list);
 		model.addAttribute("dList", dList);
