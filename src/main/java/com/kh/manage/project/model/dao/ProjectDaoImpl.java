@@ -176,7 +176,7 @@ public class ProjectDaoImpl implements ProjectDao {
 	public int deleteProjectMember(SqlSessionTemplate sqlSession, Member m) {
 		return sqlSession.delete("Project.deleteProjectMember", m);
 	}
-
+	
 	@Override
 	public String selectCheckWorkMemberName(SqlSessionTemplate sqlSession, Member m) {
 		return sqlSession.selectOne("Project.selectCheckWorkMemberName", m);
@@ -200,6 +200,30 @@ public class ProjectDaoImpl implements ProjectDao {
 	@Override
 	public int updateOutdatedProject(SqlSessionTemplate sqlSession, String projectPk) {
 		return sqlSession.update("Project.updateOutdatedProject", projectPk);
+	}
+	
+	@Override
+	public List<TemplateWorkRead> selectAllTemplateWork(SqlSessionTemplate sqlSession, String project_template) {
+		
+		return sqlSession.selectList("Project.selectAllTemplateWork", project_template);
+	}
+	
+	@Override
+	public int insertHighWork(SqlSessionTemplate sqlSession, TemplateWorkRead templateWorkRead) {
+		
+		return sqlSession.insert("Project.insertHighWork", templateWorkRead);
+	}
+	
+	@Override
+	public String selectCurrval(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectOne("Project.selectCurrval");
+	}
+	
+	@Override
+	public int insertDownWork(SqlSessionTemplate sqlSession, TemplateWorkRead templateWorkRead) {
+		
+		return sqlSession.insert("Project.insertDownWork", templateWorkRead);
 	}
 }
 

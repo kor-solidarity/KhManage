@@ -214,4 +214,33 @@ public class ProjectServiceImpl implements ProjectService {
 	public int updateOutdatedProject(String projectPk) {
 		return pd.updateOutdatedProject(sqlSession, projectPk);
 	}
+	@Override
+	public List<TemplateWorkRead> selectAllTemplateWork(String project_template) {
+		
+		return pd.selectAllTemplateWork(sqlSession, project_template);
+	}
+	
+	@Override
+	public int insertHighWork(TemplateWorkRead templateWorkRead) {
+		
+		return pd.insertHighWork(sqlSession, templateWorkRead);
+	}
+	
+	@Override
+	public String selectCurrval() {
+		
+		return pd.selectCurrval(sqlSession);
+	}
+	
+	@Override
+	public int insertDownWork(TemplateWorkRead templateWorkRead) {
+		
+		return pd.insertDownWork(sqlSession, templateWorkRead);
+	}
+	
+	@Override
+	public String selectProjectCurrval() {
+		
+		return "P" + pd.getSeq(sqlSession);
+	}
 }

@@ -392,7 +392,7 @@
             // 첨부파일 관련
             var proExcel = $("#project_excel");
             // 서브프로젝트 관리자 명단
-            var subList = [];
+            subList = [];
             for (let i = 0; i < $('.memberTd input').length; i++) {
                 console.log($('.memberTd input')[i].value);
                 subList.push($('.memberTd input')[i].value);
@@ -481,12 +481,17 @@
                             }
                             $(".mainFront").
                                 after(
-                                    "<tr class='trRange1'> <td class='td1'><input type='checkbox' id='idCheckMain' name='idCheck' class='inputCss' style='width: 30px;'></td> <td class='td1'>" +
-                                    list[key]['deptName'] + "</td> <td class='tdText'>" + list[key]['memberName'] +
-                                    "</td> <td class='tdText memberTd'>" + list[key]['rankNo'] +
+                                    "<tr class='trRange1'> " +
+                                    "<td class='td1'>" +
+                                    "<input type='checkbox' id='idCheckMain' name='idCheck' class='inputCss' style='width: 30px;'>" +
+                                    "</td> " +
+                                    "<td class='td1'>" + list[key]['deptName'] + "</td> " +
+                                    "<td class='tdText'>" + list[key]['memberName'] + "</td>" +
+                                    "<td class='tdText memberTd'>" + list[key]['rankNo'] +
                                     "<input type='hidden' id='memberNo' name='memberNo' class='memberNo' value='" +
-                                    list[key]['memberNo'] + "'></td> <td class='tdText'>" + list[key]['email'] +
-                                    "</td> </tr>");
+                                    list[key]['memberNo'] + "'></td>" +
+                                    "<td class='tdText'>" + list[key]['email'] + "</td>" +
+                                    "</tr>");
                             memberList = list[key]['memberNo'];
                         }
                     }

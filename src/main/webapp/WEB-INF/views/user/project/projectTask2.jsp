@@ -836,6 +836,10 @@
                                     workLevelTab = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└&nbsp;';
                                 }
                                 // 상태값 관련
+                                memberName = data[key]['memberName'];
+                                if (memberName == undefined) {
+                                    memberName = "";
+                                }
 
                                 $("#chart-left-table tr:last-of-type").after(
                                     // ' + data[key][''] + '
@@ -854,7 +858,7 @@
                                     '<td>' + highWorkNo + '</td>' +
                                     '<td>' + data[key]['completeRate'] + '%' + '</td>' +
                                     // 작업에 배정된 인원
-                                    '<td>' + data[key]['memberName'] + '</td>' +
+                                    '<td>' + memberName + '</td>' +
                                     '<td><i class="fas fa-search" data-toggle="modal" ' +
                                     'data-target="#workDetails" ' +
                                     "onclick='clickedWorkDetails(\"" + data[key]['workNo'] + "\")' ></i></td>" +
