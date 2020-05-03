@@ -147,25 +147,31 @@
                     </div><br><br>
 
                     <div class="user-btm-box" style="height: 300px">
-                        <div class="col-md-4 col-sm-4 text-center" style="height: 300px">
+                        <div class="col-md-4 col-sm-4 text-center" style="height: 200px">
                             <p class="text-purple">
-                                <i class="linea-icon linea-basic fa-fw" data-icon=""></i> 내작업
+                                <i class="linea-icon linea-basic fa-fw" data-icon=""></i><b>내작업</b>
                             </p>
                             <h1>3</h1>
                         </div>
-                        <div class="col-md-4 col-sm-4 text-center" style="height: 300px">
+                        <div class="col-md-4 col-sm-4 text-center" style="height: 200px">
                             <p class="text-blue">
-                                <i class="icon-note" style="padding-right: 7px;"></i> 변경요청
+                                <i class="icon-note" style="padding-right: 7px;"></i><b>변경요청</b>
                             </p>
                             <h1>0</h1>
                         </div>
-                        <div class="col-md-4 col-sm-4 text-center" style="height: 300px">
+                        <div class="col-md-4 col-sm-4 text-center" style="height: 200px">
                             <p class="text-danger">
-                                <i class="linea-icon linea-elaborate fa-fw" data-icon="A"></i> 이슈
+                                <i class="linea-icon linea-elaborate fa-fw" data-icon="A"></i><b>이슈</b>
                             </p>
                             <h1>17</h1>
                         </div>
                     </div>
+                    
+                    <script>
+					//작업, 변경요청, 이슈  갯수 뽑아오기
+                    
+                    
+                    </script>
 
                 </div>
             </div>
@@ -223,14 +229,14 @@
                                 <div class="form-group">
                                     <label class="col-md-12 required">이메일</label>
                                     <div class="col-md-12">
-                                        <input id="RES_EMAIL" name="email" value="${loginUser.email}" type="email" class="form-control form-control-line" placeholder="이름을 입력하세요" data-error="이름을 입력하세요" required="">
+                                        <input id="RES_EMAIL" name="email" value="${loginUser.email}" type="email" class="form-control form-control-line" placeholder="변경하실 이메일을 입력하세요" data-error="이름을 입력하세요" required="">
                                         <span class="help-block with-errors"></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12 required">전화번호</label>
                                     <div class="col-md-12">
-                                        <input id="RES_OFFICE_PHONE" name="phone" value="${loginUser.phone}" type="text" class="form-control form-control-line" placeholder="이름을 입력하세요" data-error="이름을 입력하세요" maxlength="11" required="">
+                                        <input id="RES_OFFICE_PHONE" name="phone" value="${loginUser.phone}" type="text" class="form-control form-control-line" placeholder="변경하실 전화번호를 입력하세요" data-error="이름을 입력하세요" maxlength="11" required="">
                                         <span class="help-block with-errors"></span>
                                     </div>
                                 </div>

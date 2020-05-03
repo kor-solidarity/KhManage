@@ -97,6 +97,13 @@
 		<result property="projectTypeName" column="TYPE_NAME"/>
 	</resultMap>
 	
+	<resultMap type="MemberWorkProduct" id="memberWorkProductResultSet">
+		<result property="projectName" column="PROJECT_NAME"/>
+		<result property="workName" column="WORK_NAME"/>
+		<result property="originName" column="ORIGIN_NAME"/>
+		<result property="enrollDate" column="ENROLL_DATE"/>
+	</resultMap>
+	
 	<!-- <resultMap type="Customer" id="customerResultSet">
 		<id property="customerNo" column="CUSTOMER_NO"/>
 		<result property="customerName" column="CUSTOMER_NAME"/>
@@ -209,7 +216,7 @@
 	<!-- 회원정보 수정 : 프로필 이미지 수정 -->
 	<update id="updateProfileImage" parameterType="Attachment">
 		UPDATE ATTACHMENT 
-		SET ORIGIN_NAME = #{originName}, CHANGE_NAME = #{changeName}, FILEPATH = #{filePath}, NULL
+		SET ORIGIN_NAME = #{originName}, CHANGE_NAME = #{changeName}, FILEPATH = #{filePath}
 		WHERE DIVISION = #{division}
 	</update>
 	
@@ -508,13 +515,6 @@
 		SELECT TYPE_PK, TYPE_NAME
 	    FROM PROJECT_TYPE	
 	</select>
-	
-	<select id="myWorkCount" resultType="_int">
-      SELECT COUNT(*)
-      FROM WORK
-      WHERE MEMBER_NO = #{memberNo}
-      AND STATUS NOT LIKE 'PL검토완료'
-   </select>
    
    <select id="selectStatusIssue" resultMap="AllDashBoardResultSet">
 	SELECT BEFORE, PRO, COM, DEL
@@ -593,6 +593,13 @@
 		        AND EXTRACT(YEAR FROM SYSDATE) = EXTRACT(YEAR FROM ENROLL_DATE))	
    </select>
    
+	<select id="myWorkCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM WORK
+		WHERE MEMBER_NO = #{memberNo}
+		AND STATUS NOT LIKE 'PL검토완료'
+	</select>
+   
    <select id="myProjectCount" resultType="_int">
 		SELECT COUNT(*)
 		FROM PROJECT_TEAM
@@ -603,6 +610,22 @@
 		SELECT COUNT(*)
 		FROM ISSUE
 		WHERE TEAMWORKER = #{memberNo}
+   </select>
+   
+   <select id="myChangeCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM CHANGE_REQUEST C
+		JOIN WORK W ON(W.WORK_NO = C.WORK_NO)
+		JOIN MEMBER M ON(M.MEMBER_NO = W.MEMBER_NO)
+		WHERE W.MEMBER_NO = #{memberNo}
+	</select>
+   
+   <select id="myWorkProductCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM WORK_PRODUCT WP
+		JOIN WORK W ON(W.WORK_NO = WP.WORK_NO)
+		JOIN MEMBER M ON(M.MEMBER_NO = W.MEMBER_NO)
+		WHERE W.MEMBER_NO = #{memberNo}
    </select>
    
    <select id="selectMyStatic" resultType="MyStatic">
@@ -635,6 +658,87 @@
 			    FROM WORK
 			    WHERE STATUS LIKE '개발지연'
 			      AND MEMBER_NO = #{memberNo})
+   </select>
+   
+   <!-- 200503_태원 -->
+   <select id="selectIssueStatus" resultMap="AllDashBoardResultSet">
+	SELECT BEFORE, PRO, COM, DEL
+	FROM(SELECT COUNT(*) AS BEFORE
+	     FROM ISSUE_HISTORY IH
+         JOIN ISSUE I ON(I.ISSUE_NO = IH.ISSUE_NO)
+         JOIN MEMBER M ON(M.MEMBER_NO = I.TEAMWORKER)
+	     WHERE (IH_NO, IH_DATE) IN (SELECT IH_NO, MAX(IH_DATE)
+	                                FROM ISSUE_HISTORY
+	                                GROUP BY IH_NO)
+	      AND IH.STATUS = '확인중'
+	      AND TO_CHAR(IH_DATE,'YY/MM/DD') = TO_CHAR(SYSDATE,'YY/MM/DD')
+          AND M.MEMBER_NO = #{memberNo}),
+          
+         (SELECT COUNT(*) AS PRO
+	     FROM ISSUE_HISTORY IH
+         JOIN ISSUE I ON(I.ISSUE_NO = IH.ISSUE_NO)
+         JOIN MEMBER M ON(M.MEMBER_NO = I.TEAMWORKER)
+	     WHERE (IH_NO, IH_DATE) IN (SELECT IH_NO, MAX(IH_DATE)
+	                                FROM ISSUE_HISTORY
+	                                GROUP BY IH_NO)
+	     AND IH.STATUS = '조치중'
+	     AND TO_CHAR(IH_DATE,'YY/MM/DD') = TO_CHAR(SYSDATE,'YY/MM/DD')
+         AND M.MEMBER_NO = #{memberNo}),
+          
+         (SELECT COUNT(*) AS COM
+	     FROM ISSUE_HISTORY IH
+         JOIN ISSUE I ON(I.ISSUE_NO = IH.ISSUE_NO)
+         JOIN MEMBER M ON(M.MEMBER_NO = I.TEAMWORKER)
+	     WHERE (IH_NO, IH_DATE) IN (SELECT IH_NO, MAX(IH_DATE)
+	                                FROM ISSUE_HISTORY
+	                                GROUP BY IH_NO)
+	      AND IH.STATUS = '조치완료'
+	      AND TO_CHAR(IH_DATE,'YY/MM/DD') = TO_CHAR(SYSDATE,'YY/MM/DD')
+          AND M.MEMBER_NO = #{memberNo}),
+         
+         (SELECT COUNT(*) AS DEL
+	     FROM ISSUE_HISTORY IH
+         JOIN ISSUE I ON(I.ISSUE_NO = IH.ISSUE_NO)
+         JOIN MEMBER M ON(M.MEMBER_NO = I.TEAMWORKER)
+	     WHERE (IH_NO, IH_DATE) IN (SELECT IH_NO, MAX(IH_DATE)
+	                                FROM ISSUE_HISTORY
+	                                GROUP BY IH_NO)
+	      AND IH.STATUS = '취소'
+	      AND TO_CHAR(IH_DATE,'YY/MM/DD') = TO_CHAR(SYSDATE,'YY/MM/DD')
+          AND M.MEMBER_NO = #{memberNo})
+          
+   </select>
+   
+   <select id="selectIssueType" resultMap="AllDashBoardResultSet">
+   		SELECT BEFORE, PRO, COM
+		FROM(SELECT COUNT(*) AS BEFORE
+		       FROM ISSUE I
+               JOIN MEMBER M ON(M.MEMBER_NO = I.TEAMWORKER)
+		      WHERE 
+		        I.ISSUE_TYPE = '버그발생'
+                AND M.MEMBER_NO = 'M007'),
+            (SELECT COUNT(*) AS PRO
+		       FROM ISSUE I
+               JOIN MEMBER M ON(M.MEMBER_NO = I.TEAMWORKER)
+		      WHERE
+		        I.ISSUE_TYPE = '새기능'
+                AND M.MEMBER_NO = 'M007'),
+            (SELECT COUNT(*) AS COM
+		       FROM ISSUE I
+               JOIN MEMBER M ON(M.MEMBER_NO = I.TEAMWORKER)
+		      WHERE
+		        I.ISSUE_TYPE = '개선사항'
+                AND M.MEMBER_NO = 'M007')
+   </select>
+   
+   <select id="myWorkProductList" resultMap="memberWorkProductResultSet">
+		SELECT P.PROJECT_NAME, W.WORK_NAME, A.ORIGIN_NAME, WP.ENROLL_DATE
+		FROM WORK_PRODUCT WP
+		JOIN WORK W ON(W.WORK_NO = WP.WORK_NO)
+		JOIN PROJECT P ON(P.PROJECT_PK = W.PROJECT_NO)
+		JOIN ATTACHMENT A ON(A.DIVISION = WP.PRODUCT_NO)
+		JOIN MEMBER M ON(M.MEMBER_NO = W.MEMBER_NO)
+		WHERE M.MEMBER_NO = #{memberNo}
    </select>
    
 </mapper>

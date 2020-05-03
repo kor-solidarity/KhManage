@@ -40,6 +40,7 @@ import com.kh.manage.member.model.vo.AllDashBoard;
 import com.kh.manage.member.model.vo.Customer;
 import com.kh.manage.member.model.vo.DeptProjectCount;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.member.model.vo.MemberWorkProduct;
 import com.kh.manage.member.model.vo.MyStatic;
 import com.kh.manage.member.model.vo.ProjectRank;
 import com.kh.manage.project.model.vo.Project;
@@ -123,10 +124,27 @@ public class MemberController {
 		
 		MyStatic mst = new MyStatic();
 		
+		//작업 차트  : 차트1
 		MyStatic myStatic = ms.selectMyStatic(member);
 		System.out.println("개인작업 통계 : " + myStatic);
 
 		model.addAttribute("myStatic", myStatic);
+		
+		
+		//이슈 차트 1 : 
+		AllDashBoard issueList = ms.selectIssueStatus(member);
+		model.addAttribute("issueList", issueList);
+		
+		//이슈 차트 2
+		AllDashBoard issueTypeList = ms.selectIssueType(member);
+		model.addAttribute("issueTypeList", issueTypeList);
+		
+		
+		//산출물 목록 리스트
+		List<MemberWorkProduct> wpList = ms.myWorkProductList(member);
+		model.addAttribute("wpList", wpList);
+		
+		
 		
 		return "user/main/userMainPage";
 	}
@@ -233,67 +251,110 @@ public class MemberController {
 		}
 		
 	}
- 	
+	
 	//멤버 메인페이지 내 작업 Count
-	   @RequestMapping("myWorkCount.me")
-	   public void myWorkCount(Member m, Model model, HttpServletRequest request, HttpServletResponse response) {
-	      
-	      int result = ms.myWorkCount(m);
-	      System.out.println("내 작업 갯수 result : " + result);
-	      
-	      response.setContentType("application/json");
-	      response.setCharacterEncoding("UTF-8");
-	      
-	      String gson = new Gson().toJson(result);
-	      
-	      try {
-	         response.getWriter().write(gson);
-	      } catch (IOException e) {
-	         e.printStackTrace();
-	      }
-	      
-	      
-	   }
-	   
-	 //멤버 메인페이지 내 프로젝트 Count
-	    @RequestMapping("myProjectCount.me")
-	    public void myProjectCount(Member m, Model model, HttpServletRequest request, HttpServletResponse response) {
-	      
-	    	int myProject = ms.myProjectCount(m);
-	    	System.out.println("내 프로젝트 갯수 result : " + myProject);
+   @RequestMapping("myWorkCount.me")
+   public void myWorkCount(Member m, Model model, HttpServletRequest request, HttpServletResponse response) {
+      
+      int result = ms.myWorkCount(m);
+      System.out.println("내 작업 갯수 result : " + result);
+      
+      response.setContentType("application/json");
+      response.setCharacterEncoding("UTF-8");
+      
+      String gson = new Gson().toJson(result);
+      
+      try {
+         response.getWriter().write(gson);
+      } catch (IOException e) {
+         e.printStackTrace();
+      }
+      
+      
+   }
+ 	
+	//멤버 메인페이지 내 프로젝트 Count
+    @RequestMapping("myProjectCount.me")
+    public void myProjectCount(Member m, Model model, HttpServletRequest request, HttpServletResponse response) {
+      
+    	int myProject = ms.myProjectCount(m);
+    	System.out.println("내 프로젝트 갯수 result : " + myProject);
 
-	    	response.setContentType("application/json");
-	    	response.setCharacterEncoding("UTF-8");
+    	response.setContentType("application/json");
+    	response.setCharacterEncoding("UTF-8");
 
-	    	String gson = new Gson().toJson(myProject);
+    	String gson = new Gson().toJson(myProject);
 
-	    	try {
-	    		response.getWriter().write(gson);
-	    	} catch (IOException e) {
-	    		e.printStackTrace();
-	    	}
+    	try {
+    		response.getWriter().write(gson);
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
 
-	    }
-	    
-	  //멤버 메인페이지 내 이슈 Count
-	    @RequestMapping("myIssueCount.me")
-	    public void myIssueCount(Member m, Model model, HttpServletRequest request, HttpServletResponse response) {
-	      
-	    	int myIssue = ms.myIssueCount(m);
-	    	System.out.println("내 프로젝트 갯수 result : " + myIssue);
+    }
+    
+  //멤버 메인페이지 내 이슈 Count
+    @RequestMapping("myIssueCount.me")
+    public void myIssueCount(Member m, Model model, HttpServletRequest request, HttpServletResponse response) {
+      
+    	int myIssue = ms.myIssueCount(m);
+    	System.out.println("내 이슈 갯수 result : " + myIssue);
 
-	    	response.setContentType("application/json");
-	    	response.setCharacterEncoding("UTF-8");
+    	response.setContentType("application/json");
+    	response.setCharacterEncoding("UTF-8");
 
-	    	String gson = new Gson().toJson(myIssue);
+    	String gson = new Gson().toJson(myIssue);
 
-	    	try {
-	    		response.getWriter().write(gson);
-	    	} catch (IOException e) {
-	    		e.printStackTrace();
-	    	}
+    	try {
+    		response.getWriter().write(gson);
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
 
-	    }
+    }
+    
+    //멤버 메인페이지 내 변경요쳥 Count *
+    @RequestMapping("myChangeCount.me")
+    public void myChangeCount(Member m, Model model, HttpServletRequest request, HttpServletResponse response) {
+    	
+    	System.out.println("member 뜬다? : " + m);
+    	
+    	int myChange = ms.myChangeCount(m);
+    	System.out.println("내 변경요청 갯수 result : " + myChange);
+
+    	response.setContentType("application/json");
+    	response.setCharacterEncoding("UTF-8");
+
+    	String gson = new Gson().toJson(myChange);
+
+    	try {
+    		response.getWriter().write(gson);
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
+    }
+    
+    
+    //멤버 메인페이지 내 산출물 Count *
+    @RequestMapping("myWorkProductCount.me")
+    public void myWorkProductCount(Member m, Model model, HttpServletRequest request, HttpServletResponse response) {
+    	
+    	System.out.println("member 뜬다?ㅈ : " + m);
+    	
+    	int myWorkProduct = ms.myWorkProductCount(m);
+    	System.out.println("내 변경요청 갯수 result : " + myWorkProduct);
+
+    	response.setContentType("application/json");
+    	response.setCharacterEncoding("UTF-8");
+
+    	String gson = new Gson().toJson(myWorkProduct);
+
+    	try {
+    		response.getWriter().write(gson);
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
+    }
 	
 	//*************************************************
 

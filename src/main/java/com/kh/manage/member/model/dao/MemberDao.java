@@ -16,6 +16,7 @@ import com.kh.manage.member.model.exception.LoginException;
 import com.kh.manage.member.model.vo.AllDashBoard;
 import com.kh.manage.member.model.vo.DeptProjectCount;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.member.model.vo.MemberWorkProduct;
 import com.kh.manage.member.model.vo.MyStatic;
 import com.kh.manage.member.model.vo.ProjectRank;
 import com.kh.manage.project.model.vo.Project;
@@ -101,8 +102,20 @@ public interface MemberDao {
 	int myIssueCount(SqlSessionTemplate sqlSession, Member m);
 
 	MyStatic selectMyStatic(SqlSessionTemplate sqlSession, Member member);
+	
+	AllDashBoard selectIssueStatus(SqlSessionTemplate sqlSession, Member member);
+
+	int myChangeCount(SqlSessionTemplate sqlSession, Member m);
+
+	int myWorkProductCount(SqlSessionTemplate sqlSession, Member m);
+
+	AllDashBoard selectIssueType(SqlSessionTemplate sqlSession, Member member);
 
 	ProjectRank selectAllRankCount(SqlSessionTemplate sqlSession, ProjectRank pr);
+
+	List<MemberWorkProduct> myWorkProductList(SqlSessionTemplate sqlSession, Member member);
+	
+	
 
 
 }

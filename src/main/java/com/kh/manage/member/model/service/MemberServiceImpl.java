@@ -24,6 +24,7 @@ import com.kh.manage.member.model.exception.LoginException;
 import com.kh.manage.member.model.vo.AllDashBoard;
 import com.kh.manage.member.model.vo.DeptProjectCount;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.member.model.vo.MemberWorkProduct;
 import com.kh.manage.member.model.vo.MyStatic;
 import com.kh.manage.member.model.vo.ProjectRank;
 import com.kh.manage.project.model.vo.Project;
@@ -323,11 +324,41 @@ public class MemberServiceImpl implements MemberService {
 
 		return md.selectMyStatic(sqlSession, member);
 	}
+	
+	@Override
+	public AllDashBoard selectIssueStatus(Member member) {
+
+		return md.selectIssueStatus(sqlSession, member);
+	}
+
+	@Override
+	public int myChangeCount(Member m) {
+		
+		return md.myChangeCount(sqlSession, m);
+	}
+
+	@Override
+	public int myWorkProductCount(Member m) {
+
+		return md.myWorkProductCount(sqlSession, m);
+	}
+
+	@Override
+	public AllDashBoard selectIssueType(Member member) {
+
+		return md.selectIssueType(sqlSession, member);
+	}
 
 	@Override
 	public ProjectRank selectAllRankCount(ProjectRank pr) {
 		
 		return md.selectAllRankCount(sqlSession, pr);
+	}
+
+	@Override
+	public List<MemberWorkProduct> myWorkProductList(Member member) {
+
+		return md.myWorkProductList(sqlSession, member);
 	}
 	
 	
