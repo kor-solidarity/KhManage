@@ -328,7 +328,7 @@
 		<%--하위 차트 판 --%>
 		<div style="width: 100%; height: 900px; /*padding: 0;*/float: left; /*border: 1px red solid;*/">
 			<%--차트 좌측 목록--%>
-			<div style="margin-right: 0px; width: 862px; height: 898px; padding: 0px; border-left: 1px  gray solid; display: inline-block">
+			<div style="margin-right: 0px; width: 862px; min-height: 898px; padding: 0px; border-left: 1px  gray solid; display: inline-block">
 				<table border="1" style="height: 50px" class="chart-left-table" id="chart-left-table">
 					<tr class=" chart-left-top" style="height: 60px">
 						<%--ID--%>
@@ -370,7 +370,7 @@
 			<div class="gantt-div" style="">
 				<div id="chart-div">
 					<%--날짜 표기부분. 너비는 일수에 따라 유동적으로 움직이게끔.--%>
-					<div class="gantt-date" style="width: 2760px ;/*border: 1px orangered solid;*/">
+					<div class="gantt-date" style="width: 2760px ; min-height: 898px;">
 						<style>
 							.gantt-table tr {
 								height: 30px;
@@ -920,6 +920,8 @@
                             if (projectWork.status == '시작전') {
                                 $('#workDetails select').removeAttr('disabled');
                                 $("#deleteWorkBtn").removeAttr("style");
+                                $("#startDate").removeAttr("style");
+                                $("#completeDate").removeAttr("style");
                             }
 
                             // 메모는 여기서 아예 건들여선 안됨.

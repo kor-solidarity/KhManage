@@ -101,6 +101,7 @@
         <result property="deptName" column="DEPT_NAME"/>
         <result property="rankName" column="RANK_NAME"/>
         <result property="deptNo" column="DEPT_NO"/>
+        <result property="email" column="email"/>
     </resultMap>
 
     <resultMap type="ProjectDetail" id="projectDetailResultSet">
@@ -294,6 +295,7 @@
              , DEPT_NAME
              , RANK_NAME
              , DEPT_NO
+             , EMAIL
         FROM PROJECT_TEAM T
                  JOIN (SELECT M.MEMBER_NO
                             , M.MEMBER_ID

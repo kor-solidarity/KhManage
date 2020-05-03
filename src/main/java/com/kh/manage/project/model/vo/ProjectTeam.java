@@ -14,6 +14,8 @@ public class ProjectTeam {
 	private String rankName;
 	// 부서번호
 	private String deptNo;
+	// email
+	private String email;
 	
 	// 작업에 팀 목록을 불러오고 있는 경우 쓰임. 해당 작업에 배정됬는지에 대한 여부.
 	private int checked = 0;
@@ -34,7 +36,7 @@ public class ProjectTeam {
 	
 	public ProjectTeam(String teamPk, String projectPk, String memberPk,
 					   String role, String memberName, String deptName,
-					   String rankName, String deptNo) {
+					   String rankName, String deptNo, String email) {
 		this.teamPk = teamPk;
 		this.projectPk = projectPk;
 		this.memberPk = memberPk;
@@ -43,6 +45,7 @@ public class ProjectTeam {
 		this.deptName = deptName;
 		this.rankName = rankName;
 		this.deptNo = deptNo;
+		this.email = email;
 	}
 	
 	@Override
@@ -120,6 +123,14 @@ public class ProjectTeam {
 	
 	public void setDeptNo(String deptNo) {
 		this.deptNo = deptNo;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	public int getChecked() {
