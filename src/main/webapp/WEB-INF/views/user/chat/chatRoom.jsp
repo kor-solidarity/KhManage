@@ -261,7 +261,7 @@ body {
 					<tr>
 						<td style="width:50px;">
 						<c:if test="${a.changeName != null }">
-						<div class='box' style='background:white;'><img class='profile' src="<c:url value="/resources/uploadFiles/${a.changeName}"/>.png"></div>
+						<div class='box' style='background:white;'><img class='profile' src="<c:url value="/resources/uploadFiles/${a.changeName}"/>"></div>
 						</c:if>
 						<c:if test="${a.changeName == null }">
 						<div class='box' style='background:white;'><img class='profile' src="<c:url value="/resources/img/people.png"/>"></div>

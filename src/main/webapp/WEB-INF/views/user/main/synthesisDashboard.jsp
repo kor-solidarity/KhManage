@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.*, com.kh.manage.gwManage.model.vo.*, com.kh.manage.project.model.vo.*"%>
+    pageEncoding="UTF-8" import="java.util.*, com.kh.manage.gwManage.model.vo.*, com.kh.manage.project.model.vo.*,com.kh.manage.member.model.vo.*"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <% 
 	List<ProjectDetail> pList = (ArrayList<ProjectDetail>)request.getAttribute("pList");
+	List<ProjectRank> rList = (ArrayList<ProjectRank>)request.getAttribute("rList");
 %>
 <!DOCTYPE html>
 <html>
@@ -18,6 +19,10 @@
 	height: 300px !important;
 	width: 300px !important;
 	font-size:14px;
+}
+#myChart5{
+	margin: 0 auto;
+	widows: 500px;
 }
 #myChart2{
 	margin: 0 auto;
@@ -224,7 +229,7 @@
 								</div>
 							</td>
 							<td class="td2"></td>
-							<td class="tdMid">
+							<td class="tdMid" style="height:430px;">
 							<div class="kt-portlet__head-toolbar">
 					            <ul class="nav nav-tabs nav-tabs-line nav-tabs-bold nav-tabs-line-brand" role="tablist" style="margin-bottom: 30px;">
 					            <li><b>프로젝트 현황</b>
@@ -276,23 +281,19 @@
 									<canvas id="myChart3" width="300" height="300"></canvas>
 								</div>
 							</td>
+							
 							<td class="td2"></td>
 							<td class="tdMid">
 							<ul class="nav nav-tabs nav-tabs-line nav-tabs-bold nav-tabs-line-brand" role="tablist" style="margin-bottom: 30px;">
 					            <li><b>월별 프로젝트</b></li>
-					                <li class="nav-item" id="issueKind"  style="float: right;">
-					                    <a class="nav-link" data-toggle="tab" href="#tabStatusChart" role="tab" aria-selected="false">
-					                     지연중
-					                    </a>
-					                </li>
 					                <li class="nav-item active" id="issueStatus" style="float: right;">
 					                    <a class="nav-link active" data-toggle="tab" href="#tabTypeChart" role="tab" aria-selected="false" aria-expanded="true">
-					                        상태별
+					                        등급별
 					                    </a>
 					                </li>
 					            </ul>
 								<div class="tableDiv">
-									
+									<canvas id="myChart5" width="300" height="300"></canvas>
 								</div>
 							</td>
 						</tr>
@@ -359,6 +360,76 @@
 		}
 	});
 	
+	//월별 프로젝트 차트
+	var ctx = document.getElementById('myChart5');
+	var myChart = new Chart(ctx, {
+	    type: 'bar',
+	    data: {
+	        labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	        datasets: [{
+	            label: 'SS',
+	            backgroundColor: "#caf270",
+	            data: [${rList.get(0).getSsCount()}, ${rList.get(1).getSsCount()}, ${rList.get(2).getSsCount()},
+	            	${rList.get(3).getSsCount()}, ${rList.get(4).getSsCount()}, ${rList.get(5).getSsCount()},
+	            	${rList.get(6).getSsCount()}, ${rList.get(7).getSsCount()}, ${rList.get(8).getSsCount()}, ${rList.get(9).getSsCount()},
+	            	${rList.get(10).getSsCount()}, ${rList.get(11).getSsCount()}],
+	        }, {
+	            label: 'S',
+	            backgroundColor: "#45c490",
+	            data: [${rList.get(0).getsCount()}, ${rList.get(1).getsCount()}, ${rList.get(2).getsCount()},
+	            	${rList.get(3).getsCount()}, ${rList.get(4).getsCount()}, ${rList.get(5).getsCount()},
+	            	${rList.get(6).getsCount()}, ${rList.get(7).getsCount()}, ${rList.get(8).getsCount()}, ${rList.get(9).getsCount()},
+	            	${rList.get(10).getsCount()}, ${rList.get(11).getsCount()}],
+	        }, {
+	            label: 'A',
+	            backgroundColor: "#008d93",
+	            data: [${rList.get(0).getaCount()}, ${rList.get(1).getaCount()}, ${rList.get(2).getaCount()},
+	            	${rList.get(3).getaCount()}, ${rList.get(4).getaCount()}, ${rList.get(5).getaCount()},
+	            	${rList.get(6).getaCount()}, ${rList.get(7).getaCount()}, ${rList.get(8).getaCount()}, ${rList.get(9).getaCount()},
+	            	${rList.get(10).getaCount()}, ${rList.get(11).getaCount()}], 
+	        }, {
+	            label: 'B',
+	            backgroundColor: "#2e5468",
+	            data: [${rList.get(0).getbCount()}, ${rList.get(1).getbCount()}, ${rList.get(2).getbCount()},
+	            	${rList.get(3).getbCount()}, ${rList.get(4).getbCount()}, ${rList.get(5).getbCount()},
+	            	${rList.get(6).getbCount()}, ${rList.get(7).getbCount()}, ${rList.get(8).getbCount()}, ${rList.get(9).getbCount()},
+	            	${rList.get(10).getbCount()}, ${rList.get(11).getbCount()}],
+	        }, {
+	            label: 'C',
+	            backgroundColor: "#2e5468",
+	            data: [${rList.get(0).getcCount()}, ${rList.get(1).getcCount()}, ${rList.get(2).getcCount()},
+	            	${rList.get(3).getcCount()}, ${rList.get(4).getcCount()}, ${rList.get(5).getcCount()},
+	            	${rList.get(6).getcCount()}, ${rList.get(7).getcCount()}, ${rList.get(8).getcCount()}, ${rList.get(9).getcCount()},
+	            	${rList.get(10).getcCount()}, ${rList.get(11).getcCount()}],     
+	        }],
+	    },
+	options: {
+	    tooltips: {
+	      displayColors: true,
+	      callbacks:{
+	        mode: 'x',
+	      },
+	    },
+	    scales: {
+	      xAxes: [{
+	        stacked: true,
+	        gridLines: {
+	          display: false,
+	        }
+	      }],
+	      yAxes: [{
+	        stacked: true,
+	        ticks: {
+	          beginAtZero: true,
+	        },
+	        type: 'linear',
+	      }]
+	    },
+	        responsive: true,
+	        maintainAspectRatio: false,
+	        legend: { position: 'bottom' },
+	    }
+	});
 	</script>
 	
 	<script>
@@ -366,8 +437,8 @@
 	$("#issueStatus").click(function(){
 		$("#myChart3").hide();
 		$("#myChart4").remove();
+		if('${iType.pro}'> 0 || '${iType.before}'>0 || '${iType.com}' > 0){
 		$(".chartArea2").append("<canvas id='myChart4' style='width:300px; height:300px;'></canvas>");
-		
 		var ctx = document.getElementById('myChart4');
 		var myChart = new Chart(ctx, {
 			type: 'doughnut',
@@ -401,6 +472,9 @@
 				},
 			}
 		});
+		}else{
+			$(".chartArea2").text("데이터가 없습니다.");
+		}
 	});
 	
 	$("#issueKind").click(function(){
@@ -487,7 +561,7 @@
 								data: [
 									<% for(int i = 0; i < pList.size(); i ++) {%>
 										data['tList'][<%=i%>]['allWork'],
-									<% }%>  
+									<% }%>   
 									],
 								backgroundColor: [
 									'orange',
@@ -603,9 +677,9 @@
 		$("#datepicker").on("change", function(){
 			var text = $(".nav-item.active").text();
 			if($.trim(text) == '유형별'){
-				$("#chartStatus").trigger("click");
-			}else{
 				$("#chartKind").trigger("click");
+			}else{
+				$("#chartStatus").trigger("click");
 			}
 		});
 	</script>

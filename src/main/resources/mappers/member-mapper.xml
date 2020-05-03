@@ -75,6 +75,14 @@
 		<result property="del" column="DEL"/>
 	</resultMap>
 	
+	<resultMap type="ProjectRank" id="projectRankCountResultSet">
+		<result property="ssCount" column="SS"/>
+		<result property="sCount" column="S"/>
+		<result property="aCount" column="A"/>
+		<result property="bCount" column="B"/>
+		<result property="cCount" column="C"/>
+	</resultMap>
+	
 	<resultMap type="DeptProjectCount" id="deptProjectCountResultSet">
 		<result property="deptNo" column="DEPT_NO"/>
 		<result property="deptName" column="DEPT_NAME"/>
@@ -554,6 +562,35 @@
 		        FROM ISSUE
 		        WHERE TO_CHAR(REGISTER_DATE ,'YY/MM/DD') = TO_CHAR(SYSDATE,'YY/MM/DD')
 		        AND ISSUE_TYPE = '개선사항')
+   </select>
+   
+   <select id="selectAllRankCount" parameterType="ProjectRank" resultMap="projectRankCountResultSet">
+   		SELECT SS, S, A, B, C
+		FROM(SELECT COUNT(*) AS SS
+		       FROM PROJECT
+		      WHERE PROJECT_RANK = 'SS'
+		        AND EXTRACT(MONTH FROM ENROLL_DATE) = #{month}
+		        AND EXTRACT(YEAR FROM SYSDATE) = EXTRACT(YEAR FROM ENROLL_DATE)),
+		     (SELECT COUNT(*) AS S
+		        FROM PROJECT
+		        WHERE PROJECT_RANK = 'S'
+		        AND EXTRACT(MONTH FROM ENROLL_DATE) = #{month}
+		        AND EXTRACT(YEAR FROM SYSDATE) = EXTRACT(YEAR FROM ENROLL_DATE)),
+		     (SELECT COUNT(*) AS A
+		        FROM PROJECT
+		        WHERE PROJECT_RANK = 'A'
+		        AND EXTRACT(MONTH FROM ENROLL_DATE) = #{month}
+		        AND EXTRACT(YEAR FROM SYSDATE) = EXTRACT(YEAR FROM ENROLL_DATE)),
+		     (SELECT COUNT(*) AS B
+		        FROM PROJECT
+		        WHERE PROJECT_RANK = 'B'
+		        AND EXTRACT(MONTH FROM ENROLL_DATE) = #{month}
+		        AND EXTRACT(YEAR FROM SYSDATE) = EXTRACT(YEAR FROM ENROLL_DATE)),
+		     (SELECT COUNT(*) AS C
+		        FROM PROJECT
+		        WHERE PROJECT_RANK = 'C'
+		        AND EXTRACT(MONTH FROM ENROLL_DATE) = #{month}
+		        AND EXTRACT(YEAR FROM SYSDATE) = EXTRACT(YEAR FROM ENROLL_DATE))	
    </select>
    
    <select id="myProjectCount" resultType="_int">

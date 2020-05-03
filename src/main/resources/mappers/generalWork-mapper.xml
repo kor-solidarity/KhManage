@@ -25,7 +25,7 @@
 	</resultMap>
 	
 	<insert id="insertGeneralWork" parameterType="GeneralWork">
-		INSERT INTO GENERAL_WORK VALUES('GW'|| TO_CHAR(SEQ_GWNO.NEXTVAL, 'FM000'), #{gwName}, #{beginDate}, #{endDate}, SYSDATE, #{gwMemo}, #{gwType}, #{memberNo}, DEFAULT)
+		INSERT INTO GENERAL_WORK VALUES('GW'|| TO_CHAR(SEQ_GWNO.NEXTVAL, 'FM000'), #{gwName}, #{beginDate}, #{endDate}, SYSDATE, #{gwMemo}, #{gwType}, #{memberNo}, DEFAULT, 'N')
 	</insert>
 	
 	<select id="selectInsertGeneralWork" parameterType="GeneralWork" resultMap="generalWorkResultSet">

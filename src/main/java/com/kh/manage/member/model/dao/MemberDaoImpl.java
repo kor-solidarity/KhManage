@@ -18,6 +18,7 @@ import com.kh.manage.member.model.vo.AllDashBoard;
 import com.kh.manage.member.model.vo.DeptProjectCount;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.member.model.vo.MyStatic;
+import com.kh.manage.member.model.vo.ProjectRank;
 import com.kh.manage.project.model.vo.Project;
 import com.kh.manage.project.model.vo.ProjectDetail;
 
@@ -268,6 +269,12 @@ public class MemberDaoImpl implements MemberDao {
 	public MyStatic selectMyStatic(SqlSessionTemplate sqlSession, Member member) {
 
 		return sqlSession.selectOne("Member.selectMyStatic", member);
+	}
+
+	@Override
+	public ProjectRank selectAllRankCount(SqlSessionTemplate sqlSession, ProjectRank pr) {
+		
+		return sqlSession.selectOne("Member.selectAllRankCount", pr);
 	}
 
 

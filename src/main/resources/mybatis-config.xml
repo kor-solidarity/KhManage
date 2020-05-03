@@ -9,6 +9,7 @@
   	</settings>
   	<typeAliases>
   		<typeAlias type="com.kh.manage.member.model.vo.Member" alias="Member"/>
+  		<typeAlias type="com.kh.manage.member.model.vo.ProjectRank" alias="ProjectRank"/>
   		<typeAlias type="com.kh.manage.admin.adminManage.vo.Access" alias="Access"/>
 		<typeAlias type="com.kh.manage.admin.adminManage.vo.DepartMent" alias="DepartMent"/>
   		<typeAlias type="com.kh.manage.admin.department.model.vo.Dept" alias="Dept"/>
@@ -17,6 +18,7 @@
   		<typeAlias type="com.kh.manage.admin.adminManage.vo.SelectAccessMember" alias="SelectAccessMember"/>
   		<typeAlias type="com.kh.manage.admin.rank.model.vo.Rank" alias="Rank"/>
   		<typeAlias type="com.kh.manage.project.model.vo.Project" alias="Project"/>
+  		<typeAlias type="com.kh.manage.project.model.vo.TemplateWorkRead" alias="TemplateWorkRead"/>
         <typeAlias type="com.kh.manage.project.model.vo.ProjectType" alias="ProjectType"/>
         <typeAlias type="com.kh.manage.admin.template.model.vo.Template" alias="Template"/>
         <typeAlias type="com.kh.manage.common.Attachment" alias="Attachment"/>
