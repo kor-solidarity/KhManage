@@ -227,6 +227,28 @@ public class ProjectController {
 		String projectInsertResult = ps.insertProject(project);
 		System.out.println("projectInsertResult: " + projectInsertResult);
 		
+		if(project_template != null) {
+			//성준 템플릿 읽고 작업 넣기
+			List<TemplateWorkRead> tList = ps.selectAllTemplateWork(project_template);
+			System.out.println("템플릿 작업 목록 : " + tList);
+			String currval = "";
+			String projectCurrval = ps.selectProjectCurrval();
+			
+			for(int i = 0; i < tList.size(); i++) {
+				String work = tList.get(i).getTemplateWorkNo().split("[.]")[1];
+				tList.get(i).setProjectCurrval(projectCurrval);
+				if(work.equals("0")) {
+					System.out.println("상위작업 : " + tList.get(i).getTemplateWorkNo());
+					int highWork = ps.insertHighWork(tList.get(i));
+					currval = ps.selectCurrval();
+				}else  {
+					System.out.println("하위작업 : " + tList.get(i).getTemplateWorkNo());
+					tList.get(i).setCurrval1(currval);
+					int downWork = ps.insertDownWork(tList.get(i));
+				}
+			}
+		}
+		
 		
 		int memberInsertResult = 0;
 		if (projectInsertResult != null) {
@@ -564,14 +586,15 @@ public class ProjectController {
 		String pid = request.getParameter("pid");
 		ProjectDetail project = ps.selectOneProject(pid);
 		
-		// 수정해야함
-		ProjectTeam team = null;
+		// 플젝에 소속된 인원목록
+		List<ProjectTeam> team = ps.selectProjectTeamList(pid);
 		
 		// 프로젝트 관리자 - 소속부서만 뽑고 실제 사원목록은 부서를 눌렀을때 추가하면서 넣는걸로.
 		List<Dept> deptList = ps.selectDeptList();
 		System.out.println("deptList: " + deptList);
 		
 		model.addAttribute("pid", pid);
+		model.addAttribute("team", team);
 		model.addAttribute("project", project);
 		model.addAttribute("deptList", deptList);
 		return "user/project/projectView";

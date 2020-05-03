@@ -44,10 +44,10 @@
 							<div class="col-md-1 text-align-right">주요 여부</div>
 							<div class="col-md-10">
 								<c:if test="${project.isImportant eq 'Y'}">
-									<label for="true">주요함</label>
+									<label>주요함</label>
 								</c:if>
 								<c:if test="${project.isImportant eq 'N'}">
-									<label for="true">주요하지 않음</label>
+									<label>주요하지 않음</label>
 								</c:if>
 								<%--								<input id="true" name="IS_IMPORTANT" type="radio" value="Y">--%>
 								<%--								<label for="true">주요함</label> <span>&nbsp;</span>--%>
@@ -105,6 +105,15 @@
 							<div class="col-md-1 text-align-right">프로젝트 관리자</div>
 							<div class="col-md-5">
 								<div class="col-md-6 short-padding">
+									<%--초기값--%>
+									<c:forEach var="i" items="${team}">
+										<c:if test="${i.role eq 'PM'}">
+											<input style="display: none" type="text" name="project_dept_ori"
+												   id="project_dept_ori" value="${i.deptNo}">
+											<input style="display: none" type="text" name="project_manager_ori"
+												   id="project_manager_ori" value="${i.memberPk}">
+										</c:if>
+									</c:forEach>
 									<%--부서 --%>
 									<select onchange="changeDeptMemberList(this)" class="form-control"
 											name="project_dept"
@@ -166,6 +175,23 @@
 										<th class="col-md-3" style="text-align: center;">직급</th>
 										<th class="col-md-3" style="text-align: center;">이메일</th>
 									</tr>
+									<c:forEach var="i" items="${team}">
+<%--										<c:if test="${i.role != }"--%>
+									</c:forEach>
+									<%--
+									"<tr class='trRange1'> " +
+									"<td class='td1'>" +
+										"<input type='checkbox' id='idCheckMain' name='idCheck' class='inputCss' style='width: 30px;'>" +
+										"</td> " +
+									"<td class='td1'>" + list[key]['deptName'] + "</td> " +
+									"<td class='tdText'>" + list[key]['memberName'] + "</td>" +
+									"<td class='tdText memberTd'>" + list[key]['rankNo'] +
+										"<input type='hidden' id='memberNo' name='memberNo' class='memberNo' value='" +
+                                    list[key]['memberNo'] + "'></td>" +
+									"<td class='tdText'>" + list[key]['email'] + "</td>" +
+									"</tr>"
+									--%>
+
 									<%--<tr id="0a6e9b5d-4201-4fef-b382-5cfefe22d92e">
 										<td class="highlight" style="text-align: center;">
 											<input type="checkbox">
@@ -291,6 +317,7 @@
 									<tr class="front">
 										<td class="thRange th1" align="center"><input type="checkbox"></td>
 										<td class="thRange th1">
+
 											<select id="searchDept" class="inputCss">
 												<option>선택</option>
 												<c:forEach var="d" items="${deptList}">
@@ -346,7 +373,15 @@
 		<!-- /.modal -->
 
 	</div>
+	<script onload="true">
+
+	</script>
 	<script>
+        // $(document).ready();
+
+        // 첫로딩때 프로젝트 관리자를 원위치에 맞게끔...
+        $(document).ready(changeDeptMemberList($("#project_dept"), true));
+        //
 
         // 서브매니저 모달창 목록
         var memberList = new Array();
@@ -390,12 +425,17 @@
                             }
                             $(".mainFront").
                                 after(
-                                    "<tr class='trRange1'> <td class='td1'><input type='checkbox' id='idCheckMain' name='idCheck' class='inputCss' style='width: 30px;'></td> <td class='td1'>" +
-                                    list[key]['deptName'] + "</td> <td class='tdText'>" + list[key]['memberName'] +
-                                    "</td> <td class='tdText memberTd'>" + list[key]['rankNo'] +
+                                    "<tr class='trRange1'> " +
+                                    "<td class='td1'>" +
+                                    "<input type='checkbox' id='idCheckMain' name='idCheck' class='inputCss' style='width: 30px;'>" +
+                                    "</td> " +
+                                    "<td class='td1'>" + list[key]['deptName'] + "</td> " +
+                                    "<td class='tdText'>" + list[key]['memberName'] + "</td>" +
+                                    "<td class='tdText memberTd'>" + list[key]['rankNo'] +
                                     "<input type='hidden' id='memberNo' name='memberNo' class='memberNo' value='" +
-                                    list[key]['memberNo'] + "'></td> <td class='tdText'>" + list[key]['email'] +
-                                    "</td> </tr>");
+                                    list[key]['memberNo'] + "'></td>" +
+                                    "<td class='tdText'>" + list[key]['email'] + "</td>" +
+                                    "</tr>");
                             memberList = list[key]['memberNo'];
                         }
                     }
@@ -442,10 +482,19 @@
                 }
             });
         });
-        function changeDeptMemberList (val) {
+
+        function changeDeptMemberList (val, bool) {
             console.log(val);
+            console.log("bool is " + bool);
             // 우선 다 초기화
             $("#project_manager option:not([value='0'])").remove();
+
+            // 최초로딩때 실시.
+            if (bool) {
+                deptOriVal = $("#project_dept_ori").val()
+                $('#project_dept option[value=' + deptOriVal + ']').prop('selected', true)
+            }
+
             // 부서의 값이 몇인지 확인한다.
             // 0이면 아무것도 선택된게 아님
             if ($("#project_dept option:selected").val() !== '0') {
@@ -462,37 +511,37 @@
                             $("#project_manager").
                                 append("<option value=" + data[m]['memberNo'] + ">" +
                                     data[m]['memberName'] + "</option>");
+                        }
+
+                        // 초기화한 경우.
+                        if (bool) {
+                            memberOriVal = $("#project_manager_ori").val();
+                            deptOriVal = $("#project_dept_ori").val();
+
+                            $("#project_manager option[value=" + memberOriVal + "]").prop('selected', true);
+                            $("#pmo option[value=" + deptOriVal + "]").prop("selected", true);
                         }
                     }
                 });
             }
         }
 
-        // 위와 동일한 역할을 하지만 초기에
-        function changeDeptMemberListInit (val) {
-            console.log(val);
-            // 우선 다 초기화
-            $("#project_manager option:not([value='0'])").remove();
-            // 부서의 값이 몇인지 확인한다.
-            // 0이면 아무것도 선택된게 아님
-            if ($("#project_dept option:selected").val() !== '0') {
-                console.log('$("#project_dept option:selected").val(): '
-                    + $("#project_dept option:selected").val());
-                $.ajax({
-                    url: '${path}/getMemberFromDept.pr',
-                    type: 'post',
-                    data: { deptNo: $("#project_dept option:selected").val() },
-                    success: function (data) {
-                        list = data;
+        // 0월 00, 0000 인 날짜를 인풋에 드갈수 있게끔
+        // 0000-00-00 로 변경
+        function parseKrDate (krDate) {
+            var dateArray = krDate.split(/월 |, /);
+            let month = dateArray[0];
+            let day = dateArray[1];
+            let year = dateArray[2];
 
-                        for (m in data) {
-                            $("#project_manager").
-                                append("<option value=" + data[m]['memberNo'] + ">" +
-                                    data[m]['memberName'] + "</option>");
-                        }
-                    }
-                });
+            if (month < 10) {
+                month = '0' + month
             }
+            if (day < 10) {
+                day = '0' + day;
+            }
+
+            return year + '-' + month + '-' + day;
         }
 	</script>
 </body>

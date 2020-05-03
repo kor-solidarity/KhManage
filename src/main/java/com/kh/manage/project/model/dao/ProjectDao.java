@@ -73,7 +73,7 @@ public interface ProjectDao {
 	int selectCheckWorkMemberList(SqlSessionTemplate sqlSession, Member m);
 	
 	int deleteProjectMember(SqlSessionTemplate sqlSession, Member m);
-
+	
 	String selectCheckWorkMemberName(SqlSessionTemplate sqlSession, Member m);
 	
 	List<Project> selectOutdatedProjects(SqlSessionTemplate sqlSession);
@@ -83,4 +83,12 @@ public interface ProjectDao {
 	int checkLowerWorks(SqlSessionTemplate sqlSession, String workNo);
 	
 	int updateOutdatedProject(SqlSessionTemplate sqlSession, String projectPk);
+	
+	List<TemplateWorkRead> selectAllTemplateWork(SqlSessionTemplate sqlSession, String project_template);
+	
+	int insertHighWork(SqlSessionTemplate sqlSession, TemplateWorkRead templateWorkRead);
+	
+	String selectCurrval(SqlSessionTemplate sqlSession);
+	
+	int insertDownWork(SqlSessionTemplate sqlSession, TemplateWorkRead templateWorkRead);
 }

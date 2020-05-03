@@ -168,6 +168,12 @@
         <result property="deptName" column="DEPT_NAME"/>
         <result property="memberName" column="MEMBER_NAME"/>
     </resultMap>
+    <resultMap type="TemplateWorkRead" id="templateWorkResultSet">
+        <result property="templateWorkNo" column="WORK_NO"/>
+        <result property="workName" column="WORK_NAME"/>
+        <result property="beginDate" column="BEGIN_DATE"/>
+        <result property="completeDate" column="COMPLETE_DATE"/>
+    </resultMap>
 
     <!--부서목록-->
     <select id="selectDeptList" resultMap="deptResultSet">
@@ -224,9 +230,9 @@
              , M.MEMBER_TYPE                             AS MEMBER_TYPE
              , (COMPLETE_DATE - BEGIN_DATE)              AS DAYS
         FROM WORK W
-                 JOIN MEMBER M
-                      ON W.MEMBER_NO = M.MEMBER_NO
-        WHERE PROJECT_NO = 'P012'
+                 left join MEMBER M
+                           ON W.MEMBER_NO = M.MEMBER_NO
+        WHERE PROJECT_NO = #{value}
           and WORK_TYPE = '프로젝트'
           and WORK_STATUS = 'Y'
         START WITH HIGH_WORK_NO IS NULL
@@ -254,10 +260,11 @@
                M.MEMBER_TYPE                AS MEMBER_TYPE,
                (COMPLETE_DATE - BEGIN_DATE) AS DAYS
         FROM WORK W
-                 JOIN MEMBER M ON W.MEMBER_NO = M.MEMBER_NO
+                 LEFT JOIN MEMBER M ON W.MEMBER_NO = M.MEMBER_NO
         WHERE PROJECT_NO = #{pid}
           AND WORK_TYPE = '프로젝트'
           AND WORK_STATUS = 'Y'
+          AND WORK_LEVEL = '1'
           and WORK_NO != #{workNo}
         ORDER BY BEGIN_DATE
     </select>
@@ -286,9 +293,24 @@
              , MEMBER_NAME
              , DEPT_NAME
              , RANK_NAME
-             , M.DEPT_NO
+             , DEPT_NO
         FROM PROJECT_TEAM T
-                 JOIN (SELECT *
+                 JOIN (SELECT M.MEMBER_NO
+                            , M.MEMBER_ID
+                            , M.PASSWORD
+                            , M.MEMBER_NAME
+                            , M.PHONE
+                            , M.EMAIL
+                            , M.MEMBER_TYPE
+                            , M.RANK_NO
+                            , M.DEPT_NO
+                            , ENROLL_DATE
+                            , MODIFY_DATE
+                            , m.STATUS
+                            , DEPT_NAME
+                            , HIGH_DEPT
+                            , DEPT_LEVEL
+                            , RANK_NAME
                        FROM MEMBER M
                                 JOIN DEPT D ON M.DEPT_NO = D.DEPT_NO
                                 JOIN RANK R2 ON M.RANK_NO = R2.RANK_NO) M
@@ -675,6 +697,34 @@
         SELECT MEMBER_NAME
         FROM MEMBER
         WHERE MEMBER_NO = #{memberNo}
+    </select>
+
+    <select id="selectAllTemplateWork" parameterType="java.lang.String" resultMap="templateWorkResultSet">
+        SELECT WORK_NO
+             , WORK_NAME
+             , BEGIN_DATE
+             , COMPLETE_DATE
+        FROM TEMPLATE_WORK
+        WHERE TEMPLATE_NO = #{project_template}
+    </select>
+
+    <insert id="insertHighWork" parameterType="TemplateWorkRead">
+        INSERT INTO WORK
+        VALUES ('W' || TO_CHAR(SEQ_WNO.NEXTVAL, 'FM000'), #{workName}, '시작전', #{projectCurrval},
+                #{beginDate}, #{completeDate}, null, 0, null, 1,
+                null, null, '프로젝트', null, DEFAULT)
+    </insert>
+
+    <insert id="insertDownWork" parameterType="TemplateWorkRead">
+        INSERT INTO WORK
+        VALUES ('W' || TO_CHAR(SEQ_WNO.NEXTVAL, 'FM000'), #{workName}, '시작전', #{projectCurrval},
+                #{beginDate}, #{completeDate}, null, 0, null, 2,
+                #{currval1}, null, '프로젝트', null, DEFAULT)
+    </insert>
+
+    <select id="selectCurrval" resultType="java.lang.String">
+        SELECT 'W' || TO_CHAR(SEQ_WNO.CURRVAL, 'FM000')
+        FROM DUAL
     </select>
 </mapper>
 

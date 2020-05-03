@@ -81,4 +81,13 @@ public interface ProjectService {
 	int checkLowerWorks(String workNo);
 	
 	int updateOutdatedProject(String projectPk);
+	List<TemplateWorkRead> selectAllTemplateWork(String project_template);
+	
+	int insertHighWork(TemplateWorkRead templateWorkRead);
+	
+	String selectCurrval();
+	
+	int insertDownWork(TemplateWorkRead templateWorkRead);
+	
+	String selectProjectCurrval();
 }
