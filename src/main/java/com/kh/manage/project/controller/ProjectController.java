@@ -160,7 +160,9 @@ public class ProjectController {
 	
 	// 프로젝트 등록 실시
 	@RequestMapping(value = "/registerProject.pr", method = RequestMethod.POST)
-	public String registerProject(MultipartHttpServletRequest request, HttpServletResponse response, @RequestParam MultipartFile project_excel) {
+	public String registerProject(MultipartHttpServletRequest request,
+								  HttpServletResponse response,
+								  @RequestParam MultipartFile project_excel) {
 		System.out.println("registerProject");
 		try {
 			request.setCharacterEncoding("utf-8");
@@ -618,6 +620,34 @@ public class ProjectController {
 		
 		return "user/project/resource";
 	}
+	
+	
+	// 기본정보 페이지에서 정보변경
+	@RequestMapping("/updateProject.pr")
+	public String updateProject( HttpServletRequest request,
+								 @RequestParam MultipartFile[] project_excel){
+		
+		// 변경대상:
+		// 관리자 / PMO / 서브관리자 / 시작·종료일 / 첨부파일 / 설명
+		
+		String pid  = request.getParameter("pid");
+		String project_manager  = request.getParameter("project_manager");
+		String pmo  = request.getParameter("pmo");
+		// 서브관리자
+		String memberNo  = request.getParameter("memberNo");
+		String startDate  = request.getParameter("startDate");
+		String endDate  = request.getParameter("endDate");
+		// 설명
+		String project_details  = request.getParameter("project_details");
+		if (project_details.equals("")) {
+			project_details = null;
+		}
+		
+		String lul = null;
+		
+		return "";
+	}
+	
 	
 	@RequestMapping("/projectIssue.pr")
 	public String projectIssue() {

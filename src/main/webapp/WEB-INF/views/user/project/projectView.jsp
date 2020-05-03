@@ -37,7 +37,7 @@
 					<div class="col-md-2 ">프로젝트 기본 정보</div>
 				</div>
 				<hr>
-				<form enctype="multipart/form-data" id="aktivate" method="post" action="registerProject.pr">
+				<form enctype="multipart/form-data" id="aktivate" method="post" action="updateProject.pr">
 					<!-- 주요여부 -->
 					<div class="row">
 						<div class="col-md-12">
@@ -49,12 +49,14 @@
 								<c:if test="${project.isImportant eq 'N'}">
 									<label>주요하지 않음</label>
 								</c:if>
-								<%--								<input id="true" name="IS_IMPORTANT" type="radio" value="Y">--%>
-								<%--								<label for="true">주요함</label> <span>&nbsp;</span>--%>
-								<%--								<input checked="checked" id="false" name="IS_IMPORTANT"--%>
-								<%--									   type="radio" value="N">--%>
-								<%--								<label for="false">주요하지 않음</label>--%>
-								<%--								<span>&nbsp;</span>--%>
+								<%--
+								<input id="true" name="IS_IMPORTANT" type="radio" value="Y">
+								<label for="true">주요함</label> <span>&nbsp;</span>
+								<input checked="checked" id="false" name="IS_IMPORTANT"
+									   type="radio" value="N">
+								<label for="false">주요하지 않음</label>
+								<span>&nbsp;</span>
+								--%>
 							</div>
 						</div>
 					</div>
@@ -65,6 +67,8 @@
 							<div class="col-md-11">
 								<%--<input class="form-control" type="text" name="project_name" id="project_name">--%>
 								${project.projectName}
+								<input type="text" name="pid" id="pid" value="${project.projectPk}"
+									   style="display: none">
 							</div>
 						</div>
 					</div>
@@ -176,21 +180,24 @@
 										<th class="col-md-3" style="text-align: center;">이메일</th>
 									</tr>
 									<c:forEach var="i" items="${team}">
-<%--										<c:if test="${i.role != }"--%>
+										<c:if test="${i.role eq 'PSM'}">
+											<tr class='trRange1'>
+												<td class='td1'>
+														<%--...뭐지이게?--%>
+													<input type='checkbox' id='idCheckMain' name='idCheck'
+														   class='inputCss'
+														   style='width: 30px; display: none' value="${i.memberPk}">
+												</td>
+												<td class='td1'> ${i.deptName}</td>
+												<td class='tdText'>${i.memberName}</td>
+												<td class='tdText memberTd'>${i.rankName}
+													<input type='hidden' id='memberNo' name='memberNo' class='memberNo'
+														   value='${i.memberPk}'>
+												</td>
+												<td class='tdText'>${i.email}</td>
+											</tr>
+										</c:if>
 									</c:forEach>
-									<%--
-									"<tr class='trRange1'> " +
-									"<td class='td1'>" +
-										"<input type='checkbox' id='idCheckMain' name='idCheck' class='inputCss' style='width: 30px;'>" +
-										"</td> " +
-									"<td class='td1'>" + list[key]['deptName'] + "</td> " +
-									"<td class='tdText'>" + list[key]['memberName'] + "</td>" +
-									"<td class='tdText memberTd'>" + list[key]['rankNo'] +
-										"<input type='hidden' id='memberNo' name='memberNo' class='memberNo' value='" +
-                                    list[key]['memberNo'] + "'></td>" +
-									"<td class='tdText'>" + list[key]['email'] + "</td>" +
-									"</tr>"
-									--%>
 
 									<%--<tr id="0a6e9b5d-4201-4fef-b382-5cfefe22d92e">
 										<td class="highlight" style="text-align: center;">
@@ -217,26 +224,22 @@
 					<%--project template and date--%>
 					<div class="row">
 						<div class="col-md-12">
-							<div class="col-md-1 text-align-right">프로젝트 템플릿</div>
-							<div class="col-md-5">
+							<%--템플릿은 여기선 뽑을 이유가 없다--%>
+							<%--<div class="col-md-1 text-align-right">프로젝트 템플릿</div>--%>
+							<div class="col-md-6">
+								<%--
 								<select class="form-control" name="project_template" id="project_template">
 									<option value="0">선택하세요</option>
 									<c:forEach var="t" items="${templateList}">
 										<option value="${t.templatePk}">${t.templateName}</option>
 									</c:forEach>
 								</select>
+								--%>
 							</div>
 							<div class="col-md-1 text-align-right">프로젝트 시작일</div>
 							<div class="col-md-2 text-align-right">
 								<%--<input type="date" class="" name="" id="">--%>
 								<div class="form-group">
-									<%--								<div class='input-group date' id='datetimepicker1'>--%>
-									<%--									<input type='text' class="form-control"/>--%>
-									<%--									<span class="input-group-addon">--%>
-									<%--										<span class="glyphicon glyphicon-calendar"></span>--%>
-									<%--									</span>--%>
-									<%--								</div>--%>
-									<%--							</div>--%>
 									<input type="date" name="startDate" id="startDate">
 								</div>
 							</div>
@@ -252,12 +255,17 @@
 					<%--project excel--%>
 					<div class="row">
 						<div class="col-md-12">
-							<div class="col-md-1 text-align-right">프로젝트 엑셀</div>
-							<div class="col-md-5">
-								<input type="file" name="project_excel" id="project_excel">
-								<span style="padding-top: 10px">Excel, Xml 파일 업로드 가능</span>
+							<div class="col-md-1 text-align-right">첨부파일</div>
+							<div class="col-md-5" id="file_table">
+								<input type="file" name="project_excel" id="project_excel_0">
+								<br>
+
 							</div>
-							<div class="col-md-1 text-align-right">엑셀 템플릿</div>
+							<div class="col-md-1 ">
+								<div class="btn btn-primary" style="background: #1E2B44;"
+									 onclick="add_file_inp()">추가
+								</div>
+							</div>
 						</div>
 					</div>
 					<%--project details--%>
@@ -266,7 +274,7 @@
 							<div class="col-md-1 text-align-right">프로젝트 설명</div>
 							<div class="col-md-11">
 							<textarea class="form-control" type="text" name="project_details" id="project_details"
-									  rows="5"></textarea>
+									  rows="5">${project.detail}</textarea>
 							</div>
 						</div>
 					</div>
@@ -277,7 +285,8 @@
 								<i class="fas fa-check"></i>
 								프로젝트 저장
 							</div>
-							<div class="btn" style="background: #E5E5E5;">
+							<%--취소 누르면 그대로 페이지 새로고침함.--%>
+							<div class="btn" style="background: #E5E5E5;" onclick="location.reload(true)">
 								<i class="fas fa-undo"></i>
 								취소
 							</div>
@@ -373,15 +382,44 @@
 		<!-- /.modal -->
 
 	</div>
-	<script onload="true">
-
-	</script>
 	<script>
         // $(document).ready();
 
         // 첫로딩때 프로젝트 관리자를 원위치에 맞게끔...
         $(document).ready(changeDeptMemberList($("#project_dept"), true));
-        //
+        $(document).ready($("#startDate").val('${project.startDate}'));
+        $(document).ready($("#endDate").val('${project.endDate}'));
+
+        counter = 1
+
+        // 파일추가
+        function add_file_inp () {
+            $('#file_table').append(
+                "<input type=\"file\" name=\"project_excel\" id=\"project_excel_" + counter + "\">" +
+                "<button id='inputBtn_" + counter + "' onclick='deleteFileInp(" + counter + ")'> 삭제 </button>" +
+                "<br id='br_" + counter + "'>"
+            );
+            counter++;
+        }
+
+        function deleteFileInp (val) {
+            $("#project_excel_" + val).remove();
+            $("#inputBtn_" + val).remove();
+            $("#br_" + val).remove();
+        }
+
+        function submitForm () {
+            var startDate = Date.parse($("#startDate").val());
+            var endDate = Date.parse($("#endDate").val());
+
+
+            if (($("#startDate").val() === "" || $("#endDate").val() === "") ||
+                (endDate < startDate)) {
+                /*날짜값이 없거나 종료일이 시작일보다 빠르면 에러*/
+                alert("시작·종료일자를 제대로 써주세요. 종료일자는 시작일자와 같거나 이후여야 합니다.");
+                return;
+            $("#aktivate").submit();
+        }
 
         // 서브매니저 모달창 목록
         var memberList = new Array();
