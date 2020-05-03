@@ -315,13 +315,12 @@
 						<tr>
 							<td class="titleId" style="padding-left:90px;">템플릿 설명</td>
 							<td colspan="3">
-								<textarea name="detail" class="inputMenu"rows="" cols="" style="width:100%; height:150px; margin-top:15px; resize: none; text-align: left;">
-									<c:out value="${tem.detail}"/>
+								<textarea id="textarea" name="detail" rows="" cols="" style="width:100%; height:150px; margin-top:15px; resize: none;">
 								</textarea>
 								<input type="hidden" name="templatePk" value="${tem.templatePk}">
 							</td>
 						</tr>
-						<tr height="10pxdj;"></tr>
+						<tr height="10px;"></tr>
 						
 						<tr height="10px;"></tr>
 						
@@ -361,10 +360,14 @@
 		
 		var tm2= '${tem.templatePk}';
 		var tm = "templateExcel.am?tm="+tm2
+		var detail = '${tem.detail}';
 		
 		
-		
-		console.log(tm);
+		$(function(){
+			
+			$("#textarea").text(detail);
+		});
+				
 		
 		/* $("#select").childenren().val() == ${tem.projectTypePk} */
 		 $("select option").each(function(){

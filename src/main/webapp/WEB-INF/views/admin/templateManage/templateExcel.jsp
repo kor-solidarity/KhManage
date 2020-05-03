@@ -687,7 +687,7 @@
 
     var dp = new DayPilot.Scheduler("dp");
 
-    dp.startDate = "2015-02-01";
+    dp.startDate = "2020-02-01";
     dp.days = 366;
     dp.scale = "Day";
     dp.timeHeaders = [
