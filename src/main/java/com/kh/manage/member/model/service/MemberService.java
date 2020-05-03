@@ -14,6 +14,7 @@ import com.kh.manage.member.model.exception.LoginException;
 import com.kh.manage.member.model.vo.AllDashBoard;
 import com.kh.manage.member.model.vo.DeptProjectCount;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.member.model.vo.MemberWorkProduct;
 import com.kh.manage.member.model.vo.MyStatic;
 import com.kh.manage.member.model.vo.ProjectRank;
 import com.kh.manage.project.model.vo.Project;
@@ -93,7 +94,17 @@ public interface MemberService {
 
 	int myIssueCount(Member m);
 
+	AllDashBoard selectIssueStatus(Member member);
+
+	AllDashBoard selectIssueType(Member member);
+	
+	int myChangeCount(Member m);
+
+	int myWorkProductCount(Member m);
+
 	ProjectRank selectAllRankCount(ProjectRank pr);
+
+	List<MemberWorkProduct> myWorkProductList(Member member);
 
 
 

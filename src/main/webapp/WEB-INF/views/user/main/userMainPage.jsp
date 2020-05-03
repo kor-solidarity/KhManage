@@ -30,7 +30,7 @@
 <style>
 
 .topTable {width: 100%;}
-.midTable {width: 40%;}
+.midTable {width: 40%; border-left: 1px solid #EAEAEA; border-right: 1px solid #EAEAEA;}
 .tdTop {width: 15%; text-align: right; height: 100px; 
 		/* vertical-align:top; */ border: 1px solid lightgray; background: white; border-spacing: 0px;}
 .midTable{width:100%;}
@@ -42,8 +42,8 @@
 		 
 .bottom1{background: white;}
 .thmidTable{border: 1px solid lightgray; height: 38px; text-align: center; font-size:15px; center; border:none}
-.tdmidTable{font-size: 14px;}
-.midTable2{text-align: center;}
+.tdmidTable{font-size: 14px; height: 35px; border-bottom: 1px solid #EAEAEA;}
+.midTable2{text-align: center; border-left: 1px solid #EAEAEA; border-right: 1px solid #EAEAEA;}
 .thmidTable2{border: 1px solid lightgray; height: 38px; text-align: center; border:none}
 /* .cellMenu1{font-family: open sands; margin: 2px; font-weight:normal; font-size: 35px; margin-right: 5px; color:#5c9bd1;} */
 .mywork{background-image: url("resources/assets/img/main_mywork.png"); background-repeat: no-repeat; 
@@ -58,6 +58,50 @@
 		background-position:-130% -5%; background-size: 80% 80%;}
 .project{background-image: url("resources/assets/img/main_project.png"); background-repeat: no-repeat; 
 		background-position:-130% -5%; background-size: 80% 80%;}
+		
+.progress-sm.progress {
+    height: 7px;
+    background-color: #f5f5f5;
+    box-shadow: inset 0px 1px 2px rgba(0,0,0,0.1);
+}
+
+.k-grouping-row td {
+    text-align: left !important;
+    padding: 8px;
+}
+.progressTag{
+	width:70px;
+}
+
+.kt-badge.kt-badge--unified-brand {
+	color: #5d78ff;
+	background: rgba(234, 234, 234, 0.3);
+}
+
+.kt-badge.kt-badge--unified-nonestart {
+    color: #bbbbbb;
+    background: rgba(234, 234, 234, 0.3);
+}
+
+.kt-badge.kt-badge--unified-success {
+    color: #0abb87;
+    background: rgba(234, 234, 234, 0.3);
+}
+
+.kt-badge.kt-badge--unified-danger {
+    color: #fd397a;
+    background: rgba(234, 234, 234, 0.3);
+}
+
+.kt-badge.kt-badge--unified-complete {
+    color: #428bca;
+    background: rgba(234, 234, 234, 0.3);
+}
+
+.kt-badge.kt-badge--unified-warning {
+    color: #ffb822;
+    background: rgba(234, 234, 234, 0.3);
+}
 		 
 </style>
 
@@ -85,7 +129,7 @@
 							
 							<td class="td"></td>
 							<td class="tdTop requestModify">
-								<div class="cellMenu1" style="font-weight:normal; font-size: 35px; margin-right: 10px; color:#4DB3A2">6!</div>
+								<!-- <div class="cellMenu1" style="font-weight:normal; font-size: 35px; margin-right: 10px; color:#4DB3A2">6!</div> -->
 								<div style="margin-right: 10px; font-size: 13px; color:#AAB5BC">변경요청</div>
 								<div style="width: 100%">
 									<a href="changeRequestList.iu" style="background:#F1F1F1; width: 100%">더 보기
@@ -115,7 +159,7 @@
 							</td>
 							<td class="td"></td>
 							<td class="tdTop object">
-								<div class="cellMenu1" style="font-weight:normal; font-size: 35px; margin-right: 10px; color:#1BA39C">19!</div>
+								<!-- <div class="cellMenu1" style="font-weight:normal; font-size: 35px; margin-right: 10px; color:#1BA39C">19!</div> -->
 								<div style="margin-right: 10px; font-size: 13px; color:#AAB5BC">산출물</div>
 								<div style="width: 100%">
 									<a href="#" style="background:#F1F1F1; width: 100%">view more
@@ -162,6 +206,28 @@
 		});
 				
 		//2. 변경요청 count
+		$.ajax({
+			url: 'myChangeCount.me',
+			type: 'post',
+			data: {
+			 memberNo : memberNo
+			},
+			success: function(data){
+				
+				console.log("변경요청 : " + data);
+				
+				if(data > 0) {
+					$(".requestModify").prepend(     
+						  "<div class='cellMenu1' style='font-weight:normal; font-size: 35px; margin-right: 10px; color:#4DB3A2'>" + data + "</div>"
+					);
+				} else {
+					$(".requestModify").prepend(     
+						  "<div class='cellMenu1' style='font-weight:normal; font-size: 35px; margin-right: 10px; color:#4DB3A2'>" + 0 + "</div>"
+					);
+				}
+			}
+		});
+		
 		//3. 이슈 count
 		$.ajax({
 			url: 'myIssueCount.me',
@@ -177,7 +243,20 @@
 		});
 		
 		//4. 승인요청 count
+
 		//5. 산춞물 count
+		$.ajax({
+			url: 'myWorkProductCount.me',
+			type: 'post',
+			data: {
+			 memberNo : memberNo
+			},
+			success: function(data){
+				$(".object").prepend(     
+					  "<div class='cellMenu1' style='font-weight:normal; font-size: 35px; margin-right: 10px; color:#1BA39C'>" + data + "</div>"
+				);
+			}
+		});
 
 		//6. 프로젝트 count
 		$.ajax({
@@ -193,10 +272,6 @@
 			 );
 			}
 		});
-		
-		
-
-
 
 
 </script>
@@ -223,9 +298,7 @@
 									type: 'doughnut',
 									data: {
 										labels: [
-											
 											//'시작전', '개발중', '개발완료', '테스트완료', 'PL검토중', 'PL검토완료', '개발지연'
-											
 									        '시작 전',
 									        '개발중',
 									        '개발완료',
@@ -233,12 +306,10 @@
 									        '테스트완료',
 									        'PL승인완료',
 											'개발지연'
-											
 										],
 										datasets: [{
 											label: '# of Votes',
 											data: [
-
 												//MyStatic 객체
 												//before, developing, completed, testCompleted, plChecking, plChecked, delayed
 												'${myStatic.before}',	 		//시작 전
@@ -248,9 +319,7 @@
 												'${myStatic.testCompleted}',	//테스트완료
 												'${myStatic.plChecked}',		//PL승인완료
 												'${myStatic.delayed}'			//개발지연
-												
 											],
-											
 											
 											backgroundColor: [
 												'rgba(219, 219, 219, 0.5)',		//시작 전
@@ -297,54 +366,71 @@
 											animation.animateRotate	: true
 										}, */
 										
-										
-										
 									}
 								});
 								
 								</script>
 								
-								
-								<div>
-								</div>
 							</td>
 							<td class="td2"></td>
-							<td class="tdMid"><b>이슈 현황</b>
-							<hr>
-							
-							<div id="issue" style="width: 400px; margin: 0 auto;">
-								<canvas id="issueCanvas" width="350px;" height="350px;"></canvas>
-							</div>
-							
-							<script>
+							<td class="tdMid">
+							   <ul class="nav nav-tabs nav-tabs-line nav-tabs-bold nav-tabs-line-brand" role="tablist" style="margin-bottom: 30px;">
+					            <li><b>이슈 현황</b></li>
+					                <li class="nav-item" id="issueStatus"  style="float: right;">
+					                    <a class="nav-link" data-toggle="tab" href="#tabStatusChart" role="tab" aria-selected="false"><b>구분별</b>
+					                    </a>
+					                </li>
+					                <li class="nav-item active" id="issueKind" style="float: right;">
+					                    <a class="nav-link active" data-toggle="tab" href="#tabTypeChart" role="tab" aria-selected="false" aria-expanded="true"><b>상태별</b>
+					                    </a>
+					                </li>
+					            </ul>
+								<div class="chartArea2" style="width: 400px; padding-left: 50px; margin: 0 auto;">
+									<canvas id="myChart3" width="350px;" height="350px;"></canvas>
+								</div>
 								
-								var ctx = document.getElementById('issueCanvas');
+								<script>
+								$("#issueKind").click(function(){
+									$("#myChart4").remove();
+									$("#myChart3").show();
+								});
+								
+								//이슈상태 차트
+								if('${issueList.before}' > 0 || '${issueList.pro}' > 0 || '${issueList.del}' > 0 || '${issueList.com}' > 0) {
+								var ctx = document.getElementById('myChart3');
 								var myChart = new Chart(ctx, {
 									type: 'doughnut',
 									data: {
-										labels: [
-											
-											'Red',
-									        'Yellow',
-									        'Blue'
-											
-										],
+										labels: ['확인중', '조치중', '조치완료', '취소'],
 										datasets: [{
 											label: '# of Votes',
 											data: [
-
-												10, 20, 30
 												
+												'${issueList.before}',
+												'${issueList.pro}',
+												'${issueList.del}',
+												'${issueList.com}'
 											],
 											backgroundColor: [
-												'rgba(255, 99, 132, 0.2)',
-												'rgba(255, 206, 86, 0.2)',
-												'rgba(54, 162, 235, 0.2)'
+												'rgba(0, 128, 255, 0.6)',
+												'rgba(0, 128, 255, 0.8)',
+												'rgba(0, 255, 115, 1.2)',
+												'rgba(243, 106, 90, 1)'	
+												
+												/* 'rgba(219, 219, 219, 0.5)',		//시작 전
+												'rgba(0, 128, 255, 0.2)',		//개발중
+												'rgba(0, 128, 255, 0.6)',		//개발완료
+												'rgba(0, 128, 255, 0.8)',		//PL검토중
+												'rgba(0, 255, 115, 0.3)',		//테스트완료
+												'rgba(0, 255, 115, 1.2)',		//PL승인완료
+												'rgba(243, 106, 90, 1)'			//개발지연 */
+												
 											],
 											borderColor: [
-												'rgba(255, 99, 132, 1)',
+												/* '#1E2B44',
+												'rgba(54, 162, 235, 1)',
 												'rgba(255, 206, 86, 1)',
-												'rgba(54, 162, 235, 1)'
+												'rgba(75, 192, 192, 1)', */
 											],
 											borderWidth: 1,
 											
@@ -359,27 +445,83 @@
 									            fontColor: "gray",
 									            weight: "bold"
 									          }
-								        },
+									        },
+								        cutoutPercentage: 45,
 										responsive: false,
-										cutoutPercentage: 45,
-										responsive: true,
 										scales: {
 												ticks: {
-													//cutoutPercentage: 30,
-													//percentageInnerCutout: 30,
+													//cutoutPercentage: 60,
 													beginAtZero: true
 												}
 										},
 									}
 								});
 								
+								} else {
+									$(".chartArea2").text("데이터가 없습니다.");
+								}
 								
 								
-								</script>	
-							
-							
-								<div>
-								</div>
+								//이슈 구분별 상태
+								$("#issueStatus").click(function(){
+									$("#myChart3").hide();
+									$("#myChart4").remove();
+									$(".chartArea2").append("<canvas id='myChart4' width='350px;' height='350px;'></canvas>");
+									
+									var ctx = document.getElementById('myChart4');
+									var myChart = new Chart(ctx, {
+										type: 'doughnut',
+										data: {
+											labels: ['새기능', '버그발생', '개선사항'],
+											datasets: [{
+												label: '# of Votes',
+												data: [
+													'${issueTypeList.pro}',
+													'${issueTypeList.before}',
+													'${issueTypeList.com}'
+													
+												],
+												backgroundColor: [
+													'rgba(75, 192, 192, 0.2)',
+													'rgba(153, 102, 255, 0.2)',
+													'rgba(255, 159, 64, 0.2)'
+												],
+												borderColor: [
+												/* 	'rgba(75, 192, 192, 1)',
+													'rgba(153, 102, 255, 1)',
+													'rgba(255, 159, 64, 1)' */
+												],
+												borderWidth: 1,
+												
+												hoverBorderWidth : 1
+											}]
+										},
+										options: {
+											
+											legend:{
+										          position: 'right',
+										          labels:{
+										            fontColor: "gray",
+										            weight: "bold"
+										          }
+										        },
+									        cutoutPercentage: 45,
+											responsive: false,
+											scales: {
+													ticks: {
+														//cutoutPercentage: 60,
+														beginAtZero: true
+													}
+											},
+										}
+									});
+								});
+								
+								
+									
+									
+								</script>
+								
 							</td>
 						</tr>
 					</table>
@@ -437,6 +579,14 @@
 								<td class="tdmidTable td"><a href="#">프로젝트 개발 개요</a></td>
 								<td class="tdmidTable td">2020-03-30</td>
 							</tr>
+							<c:forEach var="w" items="${wpList}">
+							<tr>
+								<td class="tdmidTable td">${w.projectName}</td>
+								<td class="tdmidTable td">${w.workName}</td>
+								<td class="tdmidTable td"><a href="#">${w.originName}</a></td>
+								<td class="tdmidTable td">${w.enrollDate}</td>
+							</tr>
+							</c:forEach>
 						</table>
 					</div>
 				</div>

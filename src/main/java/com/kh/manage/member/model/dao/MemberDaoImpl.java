@@ -17,6 +17,7 @@ import com.kh.manage.member.model.exception.LoginException;
 import com.kh.manage.member.model.vo.AllDashBoard;
 import com.kh.manage.member.model.vo.DeptProjectCount;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.member.model.vo.MemberWorkProduct;
 import com.kh.manage.member.model.vo.MyStatic;
 import com.kh.manage.member.model.vo.ProjectRank;
 import com.kh.manage.project.model.vo.Project;
@@ -270,11 +271,41 @@ public class MemberDaoImpl implements MemberDao {
 
 		return sqlSession.selectOne("Member.selectMyStatic", member);
 	}
+	
+	@Override
+	public AllDashBoard selectIssueStatus(SqlSessionTemplate sqlSession, Member member) {
+
+		return sqlSession.selectOne("Member.selectIssueStatus", member);
+	}
+
+	@Override
+	public int myChangeCount(SqlSessionTemplate sqlSession, Member m) {
+
+		return sqlSession.selectOne("Member.myChangeCount", m);
+	}
+
+	@Override
+	public int myWorkProductCount(SqlSessionTemplate sqlSession, Member m) {
+
+		return sqlSession.selectOne("Member.myWorkProductCount", m);
+	}
+
+	@Override
+	public AllDashBoard selectIssueType(SqlSessionTemplate sqlSession, Member member) {
+
+		return sqlSession.selectOne("Member.selectIssueType", member);
+	}
 
 	@Override
 	public ProjectRank selectAllRankCount(SqlSessionTemplate sqlSession, ProjectRank pr) {
 		
 		return sqlSession.selectOne("Member.selectAllRankCount", pr);
+	}
+
+	@Override
+	public List<MemberWorkProduct> myWorkProductList(SqlSessionTemplate sqlSession, Member member) {
+
+		return sqlSession.selectList("Member.myWorkProductList", member);
 	}
 
 
