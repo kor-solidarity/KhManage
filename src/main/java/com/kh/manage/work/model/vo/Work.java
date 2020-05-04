@@ -22,6 +22,7 @@ public class Work implements java.io.Serializable{
 	private String grantorNo;
 	private String workLevel;
 	private String highWorkNo;
+	private String highWorkName;
 	private String memo;
 	private String workType;
 	private String memberNo;
@@ -32,7 +33,7 @@ public class Work implements java.io.Serializable{
 
 	public Work(String workNo, String workName, String status, String projectNo, String projectName, Date beginDate,
 			Date completeDate, String precedeNo, String completeRate, String grantorNo, String workLevel,
-			String highWorkNo, String memo, String workType, String memberNo, String workStatus,
+			String highWorkNo, String highWorkName, String memo, String workType, String memberNo, String workStatus,
 			ArrayList<WorkAttachment> workAttachment) {
 		super();
 		this.workNo = workNo;
@@ -47,6 +48,7 @@ public class Work implements java.io.Serializable{
 		this.grantorNo = grantorNo;
 		this.workLevel = workLevel;
 		this.highWorkNo = highWorkNo;
+		this.highWorkName = highWorkName;
 		this.memo = memo;
 		this.workType = workType;
 		this.memberNo = memberNo;
@@ -150,6 +152,14 @@ public class Work implements java.io.Serializable{
 		this.highWorkNo = highWorkNo;
 	}
 
+	public String getHighWorkName() {
+		return highWorkName;
+	}
+
+	public void setHighWorkName(String highWorkName) {
+		this.highWorkName = highWorkName;
+	}
+
 	public String getMemo() {
 		return memo;
 	}
@@ -195,10 +205,12 @@ public class Work implements java.io.Serializable{
 		return "Work [workNo=" + workNo + ", workName=" + workName + ", status=" + status + ", projectNo=" + projectNo
 				+ ", projectName=" + projectName + ", beginDate=" + beginDate + ", completeDate=" + completeDate
 				+ ", precedeNo=" + precedeNo + ", completeRate=" + completeRate + ", grantorNo=" + grantorNo
-				+ ", workLevel=" + workLevel + ", highWorkNo=" + highWorkNo + ", memo=" + memo + ", workType="
-				+ workType + ", memberNo=" + memberNo + ", workStatus=" + workStatus + ", workAttachment="
-				+ workAttachment + "]";
+				+ ", workLevel=" + workLevel + ", highWorkNo=" + highWorkNo + ", highWorkName=" + highWorkName
+				+ ", memo=" + memo + ", workType=" + workType + ", memberNo=" + memberNo + ", workStatus=" + workStatus
+				+ ", workAttachment=" + workAttachment + "]";
 	}
+
+	
 
 	
 }

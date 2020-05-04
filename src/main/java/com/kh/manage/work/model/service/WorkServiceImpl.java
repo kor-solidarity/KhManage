@@ -15,6 +15,7 @@ import com.kh.manage.work.model.vo.Grantor;
 import com.kh.manage.work.model.vo.Work;
 import com.kh.manage.work.model.vo.WorkAttachment;
 import com.kh.manage.work.model.vo.WorkProductw;
+import com.kh.manage.work.model.vo.WorkProjectName;
 import com.kh.manage.work.model.vo.WorkProjectTeam;
 
 @Service
@@ -97,6 +98,16 @@ public class WorkServiceImpl implements WorkService{
 	@Override
 	public int insertWorkHistory2(HashMap<String, Object> map) {
 		return wd.insertWorkHistory2(sqlSession, map);
+	}
+
+	@Override
+	public List<WorkProjectName> selectWorkGrantorList(Member member) {
+		return wd.selectWorkGrantorList(sqlSession, member);
+	}
+
+	@Override
+	public List<Work> selectHighWorkNoList(HashMap<String, String> map) {
+		return wd.selectHighWorkNoList(sqlSession, map);
 	}
 
 	

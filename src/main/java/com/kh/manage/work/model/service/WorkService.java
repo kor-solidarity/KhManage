@@ -10,6 +10,7 @@ import com.kh.manage.work.model.vo.Grantor;
 import com.kh.manage.work.model.vo.Work;
 import com.kh.manage.work.model.vo.WorkAttachment;
 import com.kh.manage.work.model.vo.WorkProductw;
+import com.kh.manage.work.model.vo.WorkProjectName;
 import com.kh.manage.work.model.vo.WorkProjectTeam;
 
 public interface WorkService {
@@ -41,6 +42,10 @@ public interface WorkService {
 	WorkProjectTeam selectWorkProjectTeam(Work work);
 
 	int insertWorkHistory2(HashMap<String, Object> map);
+
+	List<WorkProjectName> selectWorkGrantorList(Member member);
+
+	List<Work> selectHighWorkNoList(HashMap<String, String> map);
 
 	
 

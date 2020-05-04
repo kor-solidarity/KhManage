@@ -89,10 +89,12 @@
 	</select>
 	
 	
-	<select id="selectWorkList" parameterType="java.lang.String" resultMap="selectIssueWorkList">
+	<select id="selectWorkList" parameterType="hashmap" resultMap="selectIssueWorkList">
 		SELECT *
 		FROM WORK
 		WHERE PROJECT_NO = #{pno}
+		AND MEMBER_NO = #{memberNo}
+		AND STATUS != 'PL승인완료'
 	</select>
 	
 	<select id="selectProjectTeamList" parameterType="java.lang.String" resultMap="selectIssueTeamList">

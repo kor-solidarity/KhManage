@@ -86,6 +86,7 @@
 		<result property="grantorNo" column="GRANTOR_NO"/>
 		<result property="workLevel" column="WORK_LEVEL"/>
 		<result property="highWorkNo" column="HIGH_WORK_NO"/>
+		<result property="highWorkName" column="HIGH_WORK_NAME"/>
 		<result property="memo" column="MEMO"/>
 		<result property="workType" column="WORK_TYPE"/>
 		<result property="memberNo" column="MEMBER_NO"/>
@@ -134,6 +135,7 @@
       , W.WORK_TYPE
       , W.MEMBER_NO
       , W.WORK_STATUS
+      , W2.WORK_NAME HIGH_WORK_NAME
       , P.PROJECT_NAME
       , WP.PRODUCT_NO
       , WP.PRODUCT_TYPE 
@@ -163,6 +165,7 @@
       , AT.EXT
         FROM WORK_PRODUCT WP
         JOIN ATTACHMENT AT ON (WP.PRODUCT_NO = AT.DIVISION)) WP ON (WP.WORK_NO = W.WORK_NO)
+    LEFT OUTER JOIN WORK W2 ON (W.HIGH_WORK_NO = W2.WORK_NO)
 	WHERE W.WORK_NO = #{workNo}
 	</select>
 	
@@ -255,6 +258,18 @@
               WORK_NO ASC
 	</select>
 	
+	<select id="selectWorkGrantorList" parameterType="Member" resultMap="workResultSet2">
+		SELECT W.WORK_NO, W.WORK_NAME, W.STATUS, W.PROJECT_NO, W.BEGIN_DATE, W.COMPLETE_DATE, W.PRECEDE_NO, W.COMPLETE_RATE,
+		   W.GRANTOR_NO, W.WORK_LEVEL, W.HIGH_WORK_NO, W.MEMO, W.WORK_TYPE, W.MEMBER_NO, W.WORK_STATUS, P.PROJECT_NAME
+		FROM WORK W
+		JOIN PROJECT P ON (W.PROJECT_NO = P.PROJECT_PK)
+		WHERE W.GRANTOR_NO = #{memberNo}
+		AND W.WORK_STATUS = 'Y'
+		AND W.STATUS IN ('PL검토중')
+		AND W.WORK_TYPE != '개인'
+		ORDER BY WORK_NO ASC
+	</select>
+	
 	<select id="selectTeamWork" parameterType="Member" resultMap="selectTeamWorkResult">
 	SELECT PT.TEAM_PK, PT.PROJECT_PK, PT.MEMBER_PK, PT.ROLE, P.PROJECT_NAME
 	FROM PROJECT_TEAM PT
@@ -296,6 +311,21 @@
 	    JOIN RANK R ON (M.RANK_NO = R.RANK_NO)
 		WHERE PROJECT_PK = #{pk}
 		AND ROLE IN ('PM', 'PSM')
+	</select>
+	
+	<select id="selectHighWorkNoList" parameterType="hashmap" resultMap="workResultSet">
+		SELECT 
+				WORK_NO
+			  , WORK_NAME
+			  , STATUS
+			  , PROJECT_NO
+			  , HIGH_WORK_NO
+			  , WORK_LEVEL
+			FROM WORK
+			WHERE WORK_LEVEL = #{workLevel}
+    		AND PROJECT_NO = #{pno}
+    		AND WORK_TYPE != '개인'
+			ORDER BY WORK_NO ASC
 	</select>
 	
 	<insert id="insertWorkProduct" parameterType="WorkProductw">

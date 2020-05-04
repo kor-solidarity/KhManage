@@ -111,6 +111,16 @@ public class WorkDaoImpl implements WorkDao{
 		return sqlSession.insert("Work.insertWorkHistory2", map);
 	}
 
+	@Override
+	public List<WorkProjectName> selectWorkGrantorList(SqlSessionTemplate sqlSession, Member member) {
+		return sqlSession.selectList("Work.selectWorkGrantorList", member);
+	}
+
+	@Override
+	public List<Work> selectHighWorkNoList(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectList("Work.selectHighWorkNoList", map);
+	}
+
 	
 
 }

@@ -1,5 +1,6 @@
 package com.kh.manage.issue.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -18,7 +19,7 @@ public interface IssueDao {
 
 	List<IssueWPT> selectProjectName(SqlSessionTemplate sqlSession, Member member);
 
-	List<IssueWork> selectWorkList(SqlSessionTemplate sqlSession, String pno);
+	List<IssueWork> selectWorkList(SqlSessionTemplate sqlSession, HashMap<String, String> map);
 
 	List<IssueProjectTeam> selectProjectTeamList(SqlSessionTemplate sqlSession, String pno);
 

@@ -1,5 +1,6 @@
 package com.kh.manage.issue.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.kh.manage.common.Attachment;
@@ -16,7 +17,7 @@ public interface IssueService {
 
 	List<IssueWPT> selectProjectName(Member member);
 
-	List<IssueWork> selectWorkList(String pno);
+	List<IssueWork> selectWorkList(HashMap<String, String> map);
 
 	List<IssueProjectTeam> selectProjectTeamList(String pno);
 
