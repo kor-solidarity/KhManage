@@ -5,6 +5,7 @@ import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.template.model.vo.Template;
 import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
+import com.kh.manage.member.model.vo.AllDashBoard;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.project.model.vo.*;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -95,4 +96,9 @@ public interface ProjectDao {
 	int updateProject(SqlSessionTemplate sqlSession, Project project);
 	
 	List<Attachment> selectAttachmentList(SqlSessionTemplate sqlSession, String pid);
+	
+	Attachment selectAttachment(SqlSessionTemplate sqlSession, String atNo);
+	
+	int deleteAttachment(SqlSessionTemplate sqlSession, String atNo);
+	AllDashBoard selectOneProjectDetail(SqlSessionTemplate sqlSession, String pid);
 }

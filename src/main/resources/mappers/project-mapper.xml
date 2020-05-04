@@ -195,6 +195,7 @@
              , status
         FROM DEPT
         where status = 'Y'
+          and DEPT_NAME != '미지정'
     </select>
 
     <!--현역 사원목록-->
@@ -230,6 +231,22 @@
              , EXT
         from ATTACHMENT
         where DIVISION = #{value}
+    </select>
+
+    <select id="selectAttachment" parameterType="String" resultMap="attachmentResultSet">
+        select AT_NO
+             , ORIGIN_NAME
+             , CHANGE_NAME
+             , FILEPATH
+             , EXT
+        from ATTACHMENT
+        where AT_NO = #{value}
+    </select>
+
+    <select id="deleteAttachment" parameterType="String">
+        delete
+        from ATTACHMENT
+        where AT_NO = #{value}
     </select>
 
     <!--프로젝트 센터에 프로젝트 작업 목록 조회 -->
@@ -586,7 +603,7 @@
              , work_status
         from WORK
         WHERE to_date(sysdate) > COMPLETE_DATE
-          and (STATUS != '개발완료' and STATUS != '개발지연')
+          and (STATUS in ('PL승인완료', '개발지연'))
           and PROJECT_NO = #{value}
         ]]>
     </select>
@@ -625,6 +642,7 @@
                 #{isImportant}, #{projectTypePk}, #{projectRank}, #{projectManager}, #{deptNo},
                 #{startDate}, #{endDate}, #{detail}, #{remarks}, #{status}, #{templatePk}, to_date(sysdate))
     </insert>
+
     <insert id="insertProjectTeam" parameterType="ProjectTeam">
         insert into PROJECT_TEAM
         values ('PT' || to_char(SEQ_TEAM.nextval, 'FM000'), #{projectPk},

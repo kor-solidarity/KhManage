@@ -5,6 +5,7 @@ import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.template.model.vo.Template;
 import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
+import com.kh.manage.member.model.vo.AllDashBoard;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.project.model.vo.*;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -179,7 +180,7 @@ public class ProjectServiceImpl implements ProjectService {
 	public int updateWork(ProjectWork work) {
 		return pd.updateWork(sqlSession, work);
 	}
-
+	
 	@Override
 	public int selectCheckWorkMemberList(Member m) {
 		return pd.selectCheckWorkMemberList(sqlSession, m);
@@ -189,7 +190,7 @@ public class ProjectServiceImpl implements ProjectService {
 	public int deleteProjectMember(Member m) {
 		return pd.deleteProjectMember(sqlSession, m);
 	}
-
+	
 	@Override
 	public String selectCheckWorkMemberName(Member m) {
 		return pd.selectCheckWorkMemberName(sqlSession, m);
@@ -214,6 +215,7 @@ public class ProjectServiceImpl implements ProjectService {
 	public int updateOutdatedProject(String projectPk) {
 		return pd.updateOutdatedProject(sqlSession, projectPk);
 	}
+	
 	@Override
 	public List<TemplateWorkRead> selectAllTemplateWork(String project_template) {
 		
@@ -252,5 +254,21 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public List<Attachment> selectAttachmentList(String pid) {
 		return pd.selectAttachmentList(sqlSession, pid);
+	}
+	
+	@Override
+	public Attachment selectAttachment(String atNo) {
+		return pd.selectAttachment(sqlSession, atNo);
+	}
+	
+	@Override
+	public int deleteAttachment(String atNo) {
+		return pd.deleteAttachment(sqlSession, atNo);
+	}
+	
+	@Override
+	public AllDashBoard selectOneProjectDetail(String pid) {
+		
+		return pd.selectOneProjectDetail(sqlSession, pid);
 	}
 }

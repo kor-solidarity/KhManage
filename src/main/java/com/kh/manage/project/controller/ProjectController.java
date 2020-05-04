@@ -8,6 +8,7 @@ import com.kh.manage.common.Attachment;
 import com.kh.manage.common.CommonsUtils;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.common.Pagination;
+import com.kh.manage.member.model.vo.AllDashBoard;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.project.model.vo.*;
 
@@ -30,6 +31,7 @@ import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -226,6 +228,8 @@ public class ProjectController {
 				project_template);
 		String projectInsertResult = ps.insertProject(project);
 		System.out.println("projectInsertResult: " + projectInsertResult);
+		
+		// int projInsertResult = ps.insertProjectHistory()
 		
 		if (project_template != null) {
 			//성준 템플릿 읽고 작업 넣기
@@ -626,8 +630,13 @@ public class ProjectController {
 		String pid = request.getParameter("pid");
 		String project_manager = request.getParameter("project_manager");
 		String pmo = request.getParameter("pmo");
+		if (pmo.equals("0")) {
+			pmo = null;
+		}
 		// 서브관리자
-		String memberNo = request.getParameter("memberNo");
+		String[] memberNo = request.getParameterValues("memberNo");
+		// 삭제할 파일들
+		String[] delFile = request.getParameterValues("delFile");
 		
 		// 설명
 		String project_details = request.getParameter("project_details");
@@ -653,10 +662,85 @@ public class ProjectController {
 				pmo, startDate, endDate,
 				project_details, null, null, null);
 		
+		
+		// PSM 추가·삭제
+		// 삭제대상 목록을 불러온다. 여기선 정확히는 모든 배정인원
+		List<ProjectTeam> delPsmList = ps.selectProjectTeamList(pid);
+		// 제외인원 목록
+		List<String> psmExcList = new ArrayList<>();
+		
+		// 먼저 삭제부터.
+		for (ProjectTeam p : delPsmList) {
+			// PSM 을 따지는 거기 때문에 PSM 만 집는다
+			if (!p.getRole().equals("PSM")) {
+				continue;
+			}
+			// 중복?
+			boolean overlap = false;
+			// 포문 돌려서 중복이 있는지 확인. 중복이 없으면 삭제대상.
+			if (memberNo != null) {
+				for (String m : memberNo) {
+					if (m.equals(p.getMemberPk())) {
+						overlap = true;
+						psmExcList.add(m);
+						break;
+					}
+				}
+			}
+			
+			// 중복이 아니면 삭제처리
+			if (!overlap) {
+				Member member = new Member();
+				member.setMemberNo(p.getMemberPk());
+				member.setProjectPk(pid);
+				ps.deleteProjectMember(member);
+			}
+		}
+		
+		// 이제 추가
+		if (memberNo != null) {
+			for (String m : memberNo) {
+				boolean overlap = false;
+				// 포문에 안겹치면 추기대상
+				for (String exc : psmExcList) {
+					if (m.equals(exc)) {
+						overlap = true;
+						break;
+					}
+				}
+				if (!overlap) {
+					ProjectTeam team = new ProjectTeam();
+					team.setProjectPk(pid);
+					team.setMemberPk(m);
+					team.setRole("PSM");
+					ps.insertProjectTeam(team);
+				}
+			}
+		}
+		
+		// 프로젝트 수정
 		int result = ps.updateProject(project);
 		
 		// 업뎃 다됬으면 파일도 업로드
 		if (result > 0) {
+			// 우선 파일 삭제부터 합시다.
+			if (delFile != null) {
+				for (String atNo : delFile) {
+					Attachment attachment = ps.selectAttachment(atNo);
+					
+					File file1 = new File(attachment.getFilePath() + "\\" + attachment.getChangeName() + attachment.getExt());
+					// 삭제 확인 후 디비에서도 삭제
+					if (file1.exists()) {
+						System.out.println("file1.exists()");
+						if (file1.delete()) {
+							System.out.println("file1.delete()");
+							int fileResult = ps.deleteAttachment(atNo);
+						}
+					}
+					
+				}
+			}
+			
 			for (MultipartFile f : file) {
 				if (f.getSize() > 0) {
 					
@@ -747,11 +831,21 @@ public class ProjectController {
 			}
 		}
 		
+		AllDashBoard ad = ps.selectOneProjectDetail(pid);
 		
-		//프로젝트 디테일 정보 조회
-		ProjectDetail pd = ps.selectOneProject(pid);
+		model.addAttribute("project", ad);
+		model.addAttribute("pid", pid);
 		
-		model.addAttribute("project", pd);
+		return "user/project/projectSummary";
+	}
+	
+	@RequestMapping("/projectComplete.pr")
+	public String projectComplete(Model model, HttpServletRequest request) {
+		String pid = request.getParameter("pid");
+		
+		AllDashBoard  ad = ps.selectOneProjectDetail(pid);
+		
+		model.addAttribute("project", ad);
 		model.addAttribute("pid", pid);
 		
 		return "user/project/projectSummary";
