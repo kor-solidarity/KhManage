@@ -116,6 +116,9 @@ public interface MemberDao {
 	List<MemberWorkProduct> myWorkProductList(SqlSessionTemplate sqlSession, Member member);
 
 	List<MemberWorkProduct> myWorkList(SqlSessionTemplate sqlSession, Member member);
+
+//	ProjectRank selectMonthlyProjectCount(SqlSessionTemplate sqlSession, ProjectRank pr);
+
 	
 	
 

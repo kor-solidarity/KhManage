@@ -63,10 +63,31 @@ public class MemberController {
 //	}
 	
 	@RequestMapping("/adminShowMain.me")
-	public String showAdminPage() {
+	public String showAdminPage(Model model) {
+		
+		//관리자 메인 차트1
+		//ProjectRank monthlyProject = ms.monthlyProjectCount();
+//		List<ProjectRank> pList = new ArrayList<ProjectRank>();
+//		
+//		for(int i = 0; i <= 12; i++) {
+//			ProjectRank pr = new ProjectRank();
+//			pr.setMonth(i);
+//			
+//			pr = ms.selectMonthlyProjectCount(pr);
+//			
+//			pList.add(pr);
+//		}
+//		
+//		model.addAttribute("pList", pList);
+		
+		
+		//관리자 메인 차트2
+		
+		
 		
 		return "admin/main/adminMainPage";
 	}
+	
 	
 	//member리스트 조회	
 	@RequestMapping("/userManagement.me")

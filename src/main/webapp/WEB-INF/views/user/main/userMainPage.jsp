@@ -203,6 +203,8 @@
 			},
 			success: function(data){
 				
+				console.log("변경요청 : " + data);
+				
 				if(data > 0) {
 					$(".requestModify").prepend(     
 						  "<div class='cellMenu1' style='font-weight:normal; font-size: 35px; margin-right: 10px; color:#4DB3A2'>" + data + "</div>"
@@ -383,10 +385,8 @@
 								
 								//이슈 구분별 상태
 								$("#issueStatus").click(function(){
-									$("#myChart3").hide();
-									$("#myChart4").remove();
-									
-									$(".chartArea2").text("");
+									$(".chartArea2").empty();
+
 									if('${issueTypeList.pro}' > 0 || '${issueTypeList.before}' > 0 || '${issueTypeList.com}' > 0) {
 										$(".chartArea2").append("<canvas id='myChart4' width='350px;' height='350px;'></canvas>");
 										var ctx = document.getElementById('myChart4');
@@ -442,8 +442,64 @@
 
 								
 								$("#issueKind").click(function(){
-									$("#myChart4").remove();
-									$("#myChart3").show();
+									$(".chartArea2").empty();
+
+									$(".chartArea2").append("<canvas id='myChart3' width='350px;' height='350px;'></canvas>");
+									if('${issueList.before}' > 0 || '${issueList.pro}' > 0 || '${issueList.del}' > 0 || '${issueList.com}' > 0) {
+										var ctx = document.getElementById('myChart3');
+										var myChart = new Chart(ctx, {
+											type: 'doughnut',
+											data: {
+												labels: ['확인중', '조치중', '조치완료', '취소'],
+												datasets: [{
+													label: '# of Votes',
+													data: [
+														
+														'${issueList.before}',
+														'${issueList.pro}',
+														'${issueList.del}',
+														'${issueList.com}'
+													],
+													backgroundColor: [
+														'rgba(0, 128, 255, 0.6)',
+														'rgba(0, 128, 255, 0.8)',
+														'rgba(0, 255, 115, 1.2)',
+														'rgba(243, 106, 90, 1)'	
+													],
+													borderColor: [
+														/* '#1E2B44',
+														'rgba(54, 162, 235, 1)',
+														'rgba(255, 206, 86, 1)',
+														'rgba(75, 192, 192, 1)', */
+													],
+													borderWidth: 1,
+													
+													hoverBorderWidth : 1
+												}]
+											},
+											options: {
+												
+												legend:{
+											          position: 'right',
+											          labels:{
+											            fontColor: "gray",
+											            weight: "bold"
+											          }
+										        },
+										        cutoutPercentage: 45,
+												responsive: false,
+												scales: {
+														ticks: {
+															//cutoutPercentage: 60,
+															beginAtZero: true
+														}
+												},
+											}
+										});
+									
+								} else {
+									$(".chartArea2").text("데이터가 없습니다.");
+								}
 								});
 								
 								

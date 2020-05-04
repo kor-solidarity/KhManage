@@ -7,10 +7,11 @@ public class ProjectRank {
 	private int aCount;
 	private int bCount;
 	private int cCount;
+	private int count;
 	
 	public ProjectRank() {}
 
-	public ProjectRank(int month, int ssCount, int sCount, int aCount, int bCount, int cCount) {
+	public ProjectRank(int month, int ssCount, int sCount, int aCount, int bCount, int cCount, int count) {
 		super();
 		this.month = month;
 		this.ssCount = ssCount;
@@ -18,6 +19,7 @@ public class ProjectRank {
 		this.aCount = aCount;
 		this.bCount = bCount;
 		this.cCount = cCount;
+		this.count = count;
 	}
 
 	public int getMonth() {
@@ -68,11 +70,20 @@ public class ProjectRank {
 		this.cCount = cCount;
 	}
 
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
 	@Override
 	public String toString() {
 		return "ProjectRank [month=" + month + ", ssCount=" + ssCount + ", sCount=" + sCount + ", aCount=" + aCount
-				+ ", bCount=" + bCount + ", cCount=" + cCount + "]";
+				+ ", bCount=" + bCount + ", cCount=" + cCount + ", count=" + count + "]";
 	}
+
 	
 	
 

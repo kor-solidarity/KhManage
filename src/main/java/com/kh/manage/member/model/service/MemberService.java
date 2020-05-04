@@ -108,6 +108,10 @@ public interface MemberService {
 
 	List<MemberWorkProduct> myWorkList(Member member);
 
+	//ProjectRank selectMonthlyProjectCount(ProjectRank pr);
+
+
+
 
 
 	
