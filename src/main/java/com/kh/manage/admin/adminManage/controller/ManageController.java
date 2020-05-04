@@ -26,12 +26,15 @@ import com.kh.manage.admin.adminManage.vo.DeptHistory;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.admin.adminManage.vo.Menu;
 import com.kh.manage.admin.adminManage.vo.MenuAccess;
+import com.kh.manage.admin.adminManage.vo.ProjectHistory;
 import com.kh.manage.admin.adminManage.vo.SelectAccessMember;
 import com.kh.manage.admin.rank.model.vo.Rank;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.common.Pagination;
 import com.kh.manage.member.model.service.MemberService;
+import com.kh.manage.member.model.vo.AllDashBoard;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.project.model.vo.ProjectDetail;
 
 
 @Controller
@@ -405,5 +408,40 @@ public class ManageController {
 			}
 		}
 		
+	}
+	
+	//관리자 페이지 프로젝트 현황 
+	@RequestMapping("/projectList.am")
+	public String showProjectList(Model model, HttpServletRequest request) {
+		int currentPage = 1;
+
+		if(request.getParameter("currentPage") != null) {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+
+		int listCount = as.getProjectListCount();
+
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		
+		List<AllDashBoard> list = as.selectAllProjectList(pi);
+		model.addAttribute("list", list);
+		model.addAttribute("pi",pi);
+		
+		return "admin/projectManage/projectManageList";
+	}
+	
+	@RequestMapping("/projectDetail.am")
+	public String projectDetail(Model model, String pid) {
+		//프로젝트 디테일 정보 조회
+		AllDashBoard  pd = as.selectOneProject(pid);
+		List<ProjectHistory> list = as.selectHistory(pid);
+		String enrollDate = as.selectEnrollDate(pid);
+		
+		model.addAttribute("project", pd);
+		model.addAttribute("list", list);
+		model.addAttribute("enrollDate", enrollDate);
+		model.addAttribute("pid", pid);
+		
+		return "admin/projectManage/projectDetail";
 	}
 }

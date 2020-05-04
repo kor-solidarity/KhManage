@@ -78,7 +78,7 @@
 		}
 	</style>
 </head>
-<body onload="$('#route1').text('프로젝트')">
+<body onload="$('#route1').text('프로젝트 센터')">
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
 	<jsp:include page="/WEB-INF/views/user/common/sidebar2.jsp"/>
 	<div class="panel panel-headline">
@@ -87,15 +87,15 @@
 				<table align="left" style="margin-bottom:10px;">
 					<tr>
 						<td>
-							<button class="projectBtn"
+							<%-- <button class="projectBtn"
 									onclick="location.href = '${ path }/projectRegister.pr'">
 								<i class="fas fa-edit"></i> &nbsp;프로젝트 등록
-							</button>
+							</button> --%>
 						<td>
 							<button class="projectBtn"><i class="fas fa-download"></i> &nbsp;액셀 다운로드</button>
 						<td colspan="6"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<label style="color:#626262">수행부서 </label>&nbsp;&nbsp;
-							<select class="buseoSelect">
+							<select class="buseoSelect"> 
 								<option>선택하세요</option>
 							</select>
 						</td>

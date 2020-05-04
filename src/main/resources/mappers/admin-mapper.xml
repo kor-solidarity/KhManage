@@ -78,7 +78,40 @@
 		<result property="iAddress" column="I_ADDRESS"/>
 		<result property="status" column="STATUS"/>
 	</resultMap>
-
+	
+	<resultMap type="AllDashBoard" id="AllDashBoardResultSet">
+		<result property="projectPk" column="PROJECT_PK"/>
+		<result property="projectName" column="PROJECT_NAME"/>
+		<result property="isImportant" column="IS_IMPORTANT"/>
+		<result property="projectTypeName" column="TYPE_NAME"/>
+		<result property="projectRank" column="PROJECT_RANK"/>
+		<result property="projectManager" column="PROJECT_MANAGER"/>
+		<result property="managerName" column="MEMBER_NAME"/>
+		<result property="deptNo" column="DEPT_NO"/>
+		<result property="deptName" column="DEPT_NAME"/>
+		<result property="startDate" column="START_DATE"/>
+		<result property="endDate" column="END_DATE"/>
+		<result property="dDay" column="D_DAY"/>
+		<result property="detail" column="DETAIL"/>
+		<result property="remarks" column="REMARKS"/>
+		<result property="status" column="STATUS"/>
+		<result property="workClear" column="WORKCLEAR"/>
+		<result property="allWork" column="ALLWORK"/>
+		<result property="issue" column="ISSUE"/>
+		<result property="workProduct" column="WORK_PRODUCT"/>
+		<result property="before" column="BEFORE"/>
+		<result property="pro" column="PRO"/>
+		<result property="com" column="COM"/>
+		<result property="del" column="DEL"/>
+	</resultMap>
+	
+	<resultMap type="ProjectHistory" id="projectHistoryResultSet">
+		<result property="type" column="ISSUE_TYPE"/>
+		<result property="historyName" column="WORK_NAME"/>
+		<result property="name" column="ISSUE_NO"/>
+		<result property="status" column="STATUS"/>
+		<result property="date" column="IH_DATE"/>
+	</resultMap>
 	<insert id="insertAccessGroup" parameterType="Access">
 		INSERT INTO
 		ACCESSGROUP
@@ -168,6 +201,7 @@
 		,DEPT_LEVEL
 		FROM DEPT
 		WHERE HIGH_DEPT = #{deptNo}
+		AND STATUS = 'Y'
 	</select>
 
 	<select id="accessSelectOne" parameterType="Access" resultMap="accessResultSet">
@@ -461,6 +495,261 @@
 		UPDATE MENU SET MENU_NAME = #{menuName}, STATUS = #{status}
 		WHERE MENU_NO = #{menuNo}
 	</update>
+	
+	<select id="getProjectListCount" resultType="_int">
+		<![CDATA[
+		 SELECT COUNT(*)
+		 FROM(SELECT ROWNUM RNUM
+			     , PROJECT_PK
+			     , PROJECT_NAME
+			     , IS_IMPORTANT
+			     , TYPE_NAME
+			     , PROJECT_RANK
+			     , PROJECT_MANAGER
+			     , MEMBER_NAME
+			     , DEPT_NO
+			     , DEPT_NAME
+			     , START_DATE
+			     , END_DATE
+			     , DETAIL
+			     , REMARKS
+			     , STATUS
+			     , WORKCLEAR
+			     , ALLWORK 
+			     , ISSUE
+			     , WORK_PRODUCT
+			FROM (SELECT P.PROJECT_PK
+			     , P.PROJECT_NAME
+			     , P.IS_IMPORTANT
+			     , T.TYPE_NAME
+			     , P.PROJECT_RANK
+			     , P.PROJECT_MANAGER
+			     , M.MEMBER_NAME
+			     , P.DEPT_NO
+			     , D.DEPT_NAME
+			     , P.START_DATE
+			     , P.END_DATE
+			     , P.DETAIL
+			     , P.REMARKS
+			     , CASE WHEN START_DATE >= SYSDATE THEN '진행중'
+			            WHEN P.STATUS != '4' AND END_DATE < SYSDATE THEN '지연중'
+			            WHEN START_DATE < SYSDATE THEN '시작전'
+			            WHEN P.STATUS = '4' THEN '완료'
+			     END AS STATUS
+			     , (SELECT COUNT(*)
+			        FROM WORK
+			        WHERE PROJECT_NO = P.PROJECT_PK
+			        AND STATUS = 'PL승인완료'
+                    AND WORK_TYPE = '프로젝트') AS WORKCLEAR
+			     ,  (SELECT COUNT(*)
+			        FROM WORK
+			        WHERE PROJECT_NO = P.PROJECT_PK
+                    AND WORK_TYPE = '프로젝트') AS ALLWORK 
+			     , (SELECT COUNT(*)
+			        FROM ISSUE 
+			        WHERE PROJECT_NO = P.PROJECT_PK) AS ISSUE
+			     , (SELECT COUNT(*)
+			        FROM WORK_PRODUCT WP 
+			        JOIN WORK W ON (WP.WORK_NO = W.WORK_NO)
+			        WHERE W.PROJECT_NO = P.PROJECT_PK) AS WORK_PRODUCT
+			FROM PROJECT P
+			JOIN PROJECT_TYPE T ON (P.PROJECT_TYPE_PK = T.TYPE_PK)
+			JOIN MEMBER M ON(P.PROJECT_MANAGER = M.MEMBER_NO)
+			JOIN DEPT D ON(P.DEPT_NO = D.DEPT_NO)
+			ORDER BY P.END_DATE))
+			]]>
+	</select>
+	
+	<select id="selectAllProjectList" resultMap="AllDashBoardResultSet">
+		<![CDATA[
+			SELECT RNUM
+		     , PROJECT_PK
+		     , PROJECT_NAME
+		     , IS_IMPORTANT
+		     , TYPE_NAME
+		     , PROJECT_RANK
+		     , PROJECT_MANAGER
+		     , MEMBER_NAME
+		     , DEPT_NO
+		     , DEPT_NAME
+		     , START_DATE
+		     , END_DATE
+             , TRUNC(SYSDATE -END_DATE) AS D_DAY
+		     , DETAIL
+		     , REMARKS
+		     , STATUS
+		     , WORKCLEAR
+		     , ALLWORK 
+		     , ISSUE
+		     , WORK_PRODUCT
+		FROM(SELECT ROWNUM RNUM
+			     , PROJECT_PK
+			     , PROJECT_NAME
+			     , IS_IMPORTANT
+			     , TYPE_NAME
+			     , PROJECT_RANK
+			     , PROJECT_MANAGER
+			     , MEMBER_NAME
+			     , DEPT_NO
+			     , DEPT_NAME
+			     , START_DATE
+			     , END_DATE
+			     , DETAIL
+			     , REMARKS
+			     , STATUS
+			     , WORKCLEAR
+			     , ALLWORK 
+			     , ISSUE
+			     , WORK_PRODUCT
+			FROM (SELECT P.PROJECT_PK
+			     , P.PROJECT_NAME
+			     , P.IS_IMPORTANT
+			     , T.TYPE_NAME
+			     , P.PROJECT_RANK
+			     , P.PROJECT_MANAGER
+			     , M.MEMBER_NAME
+			     , P.DEPT_NO
+			     , D.DEPT_NAME
+			     , P.START_DATE
+			     , P.END_DATE
+			     , P.DETAIL
+			     , P.REMARKS
+			     , CASE WHEN START_DATE <= SYSDATE AND END_DATE > SYSDATE THEN '진행중'
+			            WHEN P.STATUS != '4' AND END_DATE < SYSDATE THEN '지연중'
+			            WHEN START_DATE > SYSDATE THEN '시작전'
+			            WHEN P.STATUS = '4' THEN '완료'
+			     END AS STATUS
+			     , (SELECT COUNT(*)
+			        FROM WORK
+			        WHERE PROJECT_NO = P.PROJECT_PK
+			        AND STATUS = 'PL승인완료'
+                    AND WORK_TYPE = '프로젝트') AS WORKCLEAR
+			     ,  (SELECT COUNT(*)
+			        FROM WORK
+			        WHERE PROJECT_NO = P.PROJECT_PK
+                    AND WORK_TYPE = '프로젝트') AS ALLWORK 
+			     , (SELECT COUNT(*)
+			        FROM ISSUE 
+			        WHERE PROJECT_NO = P.PROJECT_PK) AS ISSUE
+			     , (SELECT COUNT(*)
+			        FROM WORK_PRODUCT WP 
+			        JOIN WORK W ON (WP.WORK_NO = W.WORK_NO)
+			        WHERE W.PROJECT_NO = P.PROJECT_PK) AS WORK_PRODUCT
+			FROM PROJECT P
+			JOIN PROJECT_TYPE T ON (P.PROJECT_TYPE_PK = T.TYPE_PK)
+			JOIN MEMBER M ON(P.PROJECT_MANAGER = M.MEMBER_NO)
+			JOIN DEPT D ON(P.DEPT_NO = D.DEPT_NO)
+			ORDER BY P.END_DATE))
+            ORDER BY D_DAY DESC
+            ]]>
+	</select>
+	
+	<select id="selectOneProject" parameterType="java.lang.String" resultMap="AllDashBoardResultSet">
+		<![CDATA[
+			SELECT RNUM
+		     , PROJECT_PK
+		     , PROJECT_NAME
+		     , IS_IMPORTANT
+		     , TYPE_NAME
+		     , PROJECT_RANK
+		     , PROJECT_MANAGER
+		     , MEMBER_NAME
+		     , DEPT_NO
+		     , DEPT_NAME
+		     , START_DATE
+		     , END_DATE
+             , TRUNC(SYSDATE -END_DATE) AS D_DAY
+		     , DETAIL
+		     , REMARKS
+		     , STATUS
+		     , WORKCLEAR
+		     , ALLWORK 
+		     , ISSUE
+		     , WORK_PRODUCT
+		FROM(SELECT ROWNUM RNUM
+			     , PROJECT_PK
+			     , PROJECT_NAME
+			     , IS_IMPORTANT
+			     , TYPE_NAME
+			     , PROJECT_RANK
+			     , PROJECT_MANAGER
+			     , MEMBER_NAME
+			     , DEPT_NO
+			     , DEPT_NAME
+			     , START_DATE
+			     , END_DATE
+			     , DETAIL
+			     , REMARKS
+			     , STATUS
+			     , WORKCLEAR
+			     , ALLWORK 
+			     , ISSUE
+			     , WORK_PRODUCT
+			FROM (SELECT P.PROJECT_PK
+			     , P.PROJECT_NAME
+			     , P.IS_IMPORTANT
+			     , T.TYPE_NAME
+			     , P.PROJECT_RANK
+			     , P.PROJECT_MANAGER
+			     , M.MEMBER_NAME
+			     , P.DEPT_NO
+			     , D.DEPT_NAME
+			     , P.START_DATE
+			     , P.END_DATE
+			     , P.DETAIL
+			     , P.REMARKS
+			     , CASE WHEN START_DATE <= SYSDATE AND END_DATE > SYSDATE THEN '진행중'
+			            WHEN P.STATUS != '4' AND END_DATE < SYSDATE THEN '지연중'
+			            WHEN START_DATE > SYSDATE THEN '시작전'
+			            WHEN P.STATUS = '4' THEN '개발완료'
+			     END AS STATUS
+			     , (SELECT COUNT(*)
+			        FROM WORK
+			        WHERE PROJECT_NO = P.PROJECT_PK
+			        AND STATUS = 'PL승인완료'
+                    AND WORK_TYPE = '프로젝트') AS WORKCLEAR
+			     ,  (SELECT COUNT(*)
+			        FROM WORK
+			        WHERE PROJECT_NO = P.PROJECT_PK
+                    AND WORK_TYPE = '프로젝트') AS ALLWORK 
+			     , (SELECT COUNT(*)
+			        FROM ISSUE 
+			        WHERE PROJECT_NO = P.PROJECT_PK) AS ISSUE
+			     , (SELECT COUNT(*)
+			        FROM WORK_PRODUCT WP 
+			        JOIN WORK W ON (WP.WORK_NO = W.WORK_NO)
+			        WHERE W.PROJECT_NO = P.PROJECT_PK) AS WORK_PRODUCT
+			FROM PROJECT P
+			JOIN PROJECT_TYPE T ON (P.PROJECT_TYPE_PK = T.TYPE_PK)
+			JOIN MEMBER M ON(P.PROJECT_MANAGER = M.MEMBER_NO)
+			JOIN DEPT D ON(P.DEPT_NO = D.DEPT_NO)
+			ORDER BY P.END_DATE))
+			WHERE PROJECT_PK = #{pid}
+            ORDER BY D_DAY DESC
+            ]]>	
+	</select>
+	
+	<select id="selectHistory" parameterType="java.lang.String" resultMap="projectHistoryResultSet">
+		SELECT I.ISSUE_TYPE, W.WORK_NAME, I.ISSUE_NO, IH.STATUS, TO_CHAR(IH.IH_DATE,'YY-MM-DD HH24:MI') AS IH_DATE
+			FROM ISSUE I
+			JOIN WORK W ON (I.WORK_NO = W.WORK_NO)
+			JOIN ISSUE_HISTORY IH ON (I.ISSUE_NO = IH.ISSUE_NO)
+			WHERE I.PROJECT_NO = #{pid}
+			UNION
+			(SELECT W.WORK_TYPE, W.WORK_NAME, M.MEMBER_NAME, WH.STATUS, TO_CHAR(WH.MODIFY_DATE,'YY-MM-DD HH24:MI') AS IH_DATE
+			FROM WORK W
+			JOIN WORK_HISTORY WH ON (W.WORK_NO = WH.WORK_NO)
+			JOIN PROJECT_TEAM PK ON (WH.PROJECT_TEAM_NO = PK.TEAM_PK)
+			JOIN MEMBER M ON(PK.MEMBER_PK = M.MEMBER_NO)
+			WHERE W.PROJECT_NO = #{pid})
+			ORDER BY IH_DATE DESC
+	</select>
+	
+	<select id="selectEnrollDate" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT TO_CHAR(ENROLL_DATE ,'YY-MM-DD HH24:MI') AS ENROLL_DATE
+		FROM PROJECT
+		WHERE PROJECT_PK = #{pid}
+	</select>
 </mapper>
 
 

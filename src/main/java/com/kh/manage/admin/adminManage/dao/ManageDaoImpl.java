@@ -14,10 +14,13 @@ import com.kh.manage.admin.adminManage.vo.DeptHistory;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.admin.adminManage.vo.Menu;
 import com.kh.manage.admin.adminManage.vo.MenuAccess;
+import com.kh.manage.admin.adminManage.vo.ProjectHistory;
 import com.kh.manage.admin.adminManage.vo.SelectAccessMember;
 import com.kh.manage.admin.rank.model.vo.Rank;
 import com.kh.manage.common.PageInfo;
+import com.kh.manage.member.model.vo.AllDashBoard;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.project.model.vo.ProjectDetail;
 
 @Repository
 public class ManageDaoImpl implements ManageDao {
@@ -223,6 +226,39 @@ public class ManageDaoImpl implements ManageDao {
 	public int updateMenuInfo(SqlSessionTemplate sqlSession, MenuAccess ma) {
 		
 		return sqlSession.update("Admin.updateMenuInfo", ma);
+	}
+
+	@Override
+	public List<AllDashBoard> selectAllProjectList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int offset = (pi.getCurrentPage()-1) * pi.getLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+
+		return sqlSession.selectList("Admin.selectAllProjectList", null, rowBounds);
+	}
+
+	@Override
+	public int getProjectListCount(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectOne("Admin.getProjectListCount");
+	}
+
+	@Override
+	public AllDashBoard selectOneProject(SqlSessionTemplate sqlSession, String pid) {
+	
+		return sqlSession.selectOne("Admin.selectOneProject", pid);
+	}
+
+	@Override
+	public List<ProjectHistory> selectHistory(SqlSessionTemplate sqlSession, String pid) {
+		
+		return sqlSession.selectList("Admin.selectHistory", pid);
+	}
+
+	@Override
+	public String selectEnrollDate(SqlSessionTemplate sqlSession, String pid) {
+		
+		return sqlSession.selectOne("Admin.selectEnrollDate", pid);
 	}
 
 }

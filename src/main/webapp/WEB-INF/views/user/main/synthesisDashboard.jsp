@@ -12,7 +12,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
 <style>
 #myChart, #myChart3, #myChart4{
 	margin: 0 auto;
@@ -435,6 +435,7 @@
 	<script>
 	//이슈 구분별 상태
 	$("#issueStatus").click(function(){
+		
 		$("#myChart3").hide();
 		$("#myChart4").remove();
 		if('${iType.pro}'> 0 || '${iType.before}'>0 || '${iType.com}' > 0){
@@ -529,6 +530,8 @@
 	
 	<script>
 		$("#chartStatus").click(function(){
+			$(this).addClass("active");
+			$("#chartKind").removeClass("active");
 			$("#myChart").hide();
 			$("#myChart2").remove();
 			$("#chartArea").empty();
@@ -604,6 +607,8 @@
 		
 		//상태별 실시간 통계 조회
 		$("#chartKind").click(function(){
+			$(this).addClass("active");
+			$("#chartStatus").removeClass("active");
 			$("#chartArea").empty();
 			$("#chartArea").append("<canvas id='myChart' style='width:300px; height:300px;'></canvas>");
 			var date = $("#datepicker").val();
@@ -675,11 +680,12 @@
 	
 	<script>
 		$("#datepicker").on("change", function(){
-			var text = $(".nav-item.active").text();
+			var text = $(".nav-item.active").eq(0).text();
+			console.log(text);
 			if($.trim(text) == '유형별'){
-				$("#chartKind").trigger("click");
-			}else{
 				$("#chartStatus").trigger("click");
+			}else{
+				$("#chartKind").trigger("click");
 			}
 		});
 	</script>

@@ -13,6 +13,7 @@ public class AllDashBoard {
 	 private String managerName;
 	 private String deptNo;
 	 private String deptName;
+	 private int dDay;
 	 private Date startDate;
 	 private Date endDate;
 	 private String detail;
@@ -33,8 +34,9 @@ public class AllDashBoard {
 
 	public AllDashBoard(String projectPk, String projectName, String isImportant, String projectTypePk,
 			String projectTypeName, String projectRank, String projectManager, String managerName, String deptNo,
-			String deptName, Date startDate, Date endDate, String detail, String remarks, String status, int workClear,
-			int allWork, String issue, String workProduct, int start, int end, int before, int pro, int com, int del) {
+			String deptName, int dDay, Date startDate, Date endDate, String detail, String remarks, String status,
+			int workClear, int allWork, String issue, String workProduct, int start, int end, int before, int pro,
+			int com, int del) {
 		super();
 		this.projectPk = projectPk;
 		this.projectName = projectName;
@@ -46,6 +48,7 @@ public class AllDashBoard {
 		this.managerName = managerName;
 		this.deptNo = deptNo;
 		this.deptName = deptName;
+		this.dDay = dDay;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.detail = detail;
@@ -61,6 +64,18 @@ public class AllDashBoard {
 		this.pro = pro;
 		this.com = com;
 		this.del = del;
+	}
+
+	@Override
+	public String toString() {
+		return "AllDashBoard [projectPk=" + projectPk + ", projectName=" + projectName + ", isImportant=" + isImportant
+				+ ", projectTypePk=" + projectTypePk + ", projectTypeName=" + projectTypeName + ", projectRank="
+				+ projectRank + ", projectManager=" + projectManager + ", managerName=" + managerName + ", deptNo="
+				+ deptNo + ", deptName=" + deptName + ", dDay=" + dDay + ", startDate=" + startDate + ", endDate="
+				+ endDate + ", detail=" + detail + ", remarks=" + remarks + ", status=" + status + ", workClear="
+				+ workClear + ", allWork=" + allWork + ", issue=" + issue + ", workProduct=" + workProduct + ", start="
+				+ start + ", end=" + end + ", before=" + before + ", pro=" + pro + ", com=" + com + ", del=" + del
+				+ "]";
 	}
 
 	public String getProjectPk() {
@@ -141,6 +156,14 @@ public class AllDashBoard {
 
 	public void setDeptName(String deptName) {
 		this.deptName = deptName;
+	}
+
+	public int getdDay() {
+		return dDay;
+	}
+
+	public void setdDay(int dDay) {
+		this.dDay = dDay;
 	}
 
 	public Date getStartDate() {
@@ -263,16 +286,5 @@ public class AllDashBoard {
 		this.del = del;
 	}
 
-	@Override
-	public String toString() {
-		return "AllDashBoard [projectPk=" + projectPk + ", projectName=" + projectName + ", isImportant=" + isImportant
-				+ ", projectTypePk=" + projectTypePk + ", projectTypeName=" + projectTypeName + ", projectRank="
-				+ projectRank + ", projectManager=" + projectManager + ", managerName=" + managerName + ", deptNo="
-				+ deptNo + ", deptName=" + deptName + ", startDate=" + startDate + ", endDate=" + endDate + ", detail="
-				+ detail + ", remarks=" + remarks + ", status=" + status + ", workClear=" + workClear + ", allWork="
-				+ allWork + ", issue=" + issue + ", workProduct=" + workProduct + ", start=" + start + ", end=" + end
-				+ ", before=" + before + ", pro=" + pro + ", com=" + com + ", del=" + del + "]";
-	}
-
-	
+	 	
 }

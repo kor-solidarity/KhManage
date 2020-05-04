@@ -12,10 +12,13 @@ import com.kh.manage.admin.adminManage.vo.DeptHistory;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.admin.adminManage.vo.Menu;
 import com.kh.manage.admin.adminManage.vo.MenuAccess;
+import com.kh.manage.admin.adminManage.vo.ProjectHistory;
 import com.kh.manage.admin.adminManage.vo.SelectAccessMember;
 import com.kh.manage.admin.rank.model.vo.Rank;
 import com.kh.manage.common.PageInfo;
+import com.kh.manage.member.model.vo.AllDashBoard;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.project.model.vo.ProjectDetail;
 
 public interface ManageDao {
 	int insertAccessGroup(SqlSessionTemplate sqlSession, Access ac);
@@ -83,4 +86,14 @@ public interface ManageDao {
 	List<Menu> checkMenuAccessMember(SqlSessionTemplate sqlSession, MenuAccess menu);
 
 	int updateMenuInfo(SqlSessionTemplate sqlSession, MenuAccess ma);
+
+	List<AllDashBoard> selectAllProjectList(SqlSessionTemplate sqlSession, PageInfo pi);
+
+	int getProjectListCount(SqlSessionTemplate sqlSession);
+
+	AllDashBoard  selectOneProject(SqlSessionTemplate sqlSession, String pid);
+
+	List<ProjectHistory> selectHistory(SqlSessionTemplate sqlSession, String pid);
+
+	String selectEnrollDate(SqlSessionTemplate sqlSession, String pid);
 }
