@@ -17,6 +17,7 @@ import com.kh.manage.issue.model.vo.IssueProjectTeam;
 import com.kh.manage.issue.model.vo.IssueWPT;
 import com.kh.manage.issue.model.vo.IssueWork;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.work.model.vo.WorkProjectTeam;
 
 @Service
 public class IssueServiceImpl implements IssueService{
@@ -100,6 +101,16 @@ public class IssueServiceImpl implements IssueService{
 	@Override
 	public List<Attachment> selectAttachment(Attachment at) {
 		return id.selectAttachment(sqlSession, at);
+	}
+
+	@Override
+	public List<WorkProjectTeam> selectTeamWork(Member member) {
+		return id.selectTeamWork(sqlSession, member);
+	}
+
+	@Override
+	public List<IssueWork> selectWorkTMList(HashMap<String, String> map) {
+		return id.selectWorkTMList(sqlSession, map);
 	}
 
 	

@@ -79,6 +79,14 @@
 		<result property="filePath" column="FILEPATH"/>
 		<result property="ext" column="EXT"/>
 	</resultMap>
+	
+	<resultMap type="WorkProjectTeam" id="selectTeamWorkResult">
+		<id property="teamPk" column="TEAM_PK"/>
+		<result property="projectPk" column="PROJECT_PK"/>
+		<result property="memberPk" column="MEMBER_PK"/>
+		<result property="role" column="ROLE"/>
+		<result property="projectName" column="PROJECT_NAME"/>
+	</resultMap>
 
 
 	<select id="selectProjectName" parameterType="Member" resultMap="selectIssueTeamProject">
@@ -95,6 +103,16 @@
 		WHERE PROJECT_NO = #{pno}
 		AND MEMBER_NO = #{memberNo}
 		AND STATUS != 'PL승인완료'
+		AND WORK_TYPE != '개인'
+	</select>
+	
+	<select id="selectWorkTmList" parameterType="hashmap" resultMap="selectIssueWorkList">
+		SELECT *
+		FROM WORK
+		WHERE PROJECT_NO = #{pno}
+		AND MEMBER_NO = #{memberNo}
+		AND STATUS NOT IN ('PL검토중', 'PL승인완료')
+		AND WORK_TYPE != '개인'
 	</select>
 	
 	<select id="selectProjectTeamList" parameterType="java.lang.String" resultMap="selectIssueTeamList">
@@ -219,6 +237,14 @@
 		SELECT *
 		FROM ATTACHMENT
 		WHERE DIVISION = #{division}
+	</select>
+	
+	
+	<select id="selectTeamWork" parameterType="Member" resultMap="selectTeamWorkResult">
+	SELECT PT.TEAM_PK, PT.PROJECT_PK, PT.MEMBER_PK, PT.ROLE, P.PROJECT_NAME
+	FROM PROJECT_TEAM PT
+	JOIN PROJECT P ON (P.PROJECT_PK = PT.PROJECT_PK)
+	WHERE PT.MEMBER_PK = #{memberNo}
 	</select>
 </mapper>
 

@@ -66,6 +66,7 @@
         <typeAlias type="com.kh.manage.mail.model.vo.AttachmentMail" alias="AttachmentMail"/>
         <typeAlias type="com.kh.manage.member.model.vo.MyStatic" alias="MyStatic"/>
         <typeAlias type="com.kh.manage.member.model.vo.MemberWorkProduct" alias="MemberWorkProduct"/>
+        <typeAlias type="com.kh.manage.admin.adminManage.vo.ProjectHistory" alias="ProjectHistory"/>
   	</typeAliases>
   
   
