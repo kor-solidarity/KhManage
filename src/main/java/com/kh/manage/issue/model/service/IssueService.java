@@ -12,6 +12,7 @@ import com.kh.manage.issue.model.vo.IssueProjectTeam;
 import com.kh.manage.issue.model.vo.IssueWPT;
 import com.kh.manage.issue.model.vo.IssueWork;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.work.model.vo.WorkProjectTeam;
 
 public interface IssueService {
 
@@ -44,6 +45,10 @@ public interface IssueService {
 	int insertIssueComplete(IssueHistory ih);
 
 	List<Attachment> selectAttachment(Attachment at);
+
+	List<WorkProjectTeam> selectTeamWork(Member member);
+
+	List<IssueWork> selectWorkTMList(HashMap<String, String> map);
 
 
 }

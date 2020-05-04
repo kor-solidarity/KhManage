@@ -16,6 +16,7 @@ import com.kh.manage.issue.model.vo.IssueProjectTeam;
 import com.kh.manage.issue.model.vo.IssueWPT;
 import com.kh.manage.issue.model.vo.IssueWork;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.work.model.vo.WorkProjectTeam;
 
 @Repository
 public class IssueDaoImpl implements IssueDao{
@@ -97,6 +98,16 @@ public class IssueDaoImpl implements IssueDao{
 	@Override
 	public List<Attachment> selectAttachment(SqlSessionTemplate sqlSession, Attachment at) {
 		return sqlSession.selectList("Issue.selectAttachment", at);
+	}
+
+	@Override
+	public List<WorkProjectTeam> selectTeamWork(SqlSessionTemplate sqlSession, Member member) {
+		return sqlSession.selectList("Issue.selectTeamWork", member);
+	}
+
+	@Override
+	public List<IssueWork> selectWorkTMList(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectList("Issue.selectWorkTmList", map);
 	}
 
 }

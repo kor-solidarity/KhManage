@@ -32,6 +32,7 @@ import com.kh.manage.issue.model.vo.IssueProjectTeam;
 import com.kh.manage.issue.model.vo.IssueWPT;
 import com.kh.manage.issue.model.vo.IssueWork;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.work.model.vo.WorkProjectTeam;
 
 @Controller
 public class IssueController {
@@ -112,14 +113,25 @@ public class IssueController {
 		System.out.println(pno);
 		Member member = (Member) session.getAttribute("loginUser");
 		
-		
+		List<WorkProjectTeam> wp = is.selectTeamWork(member);
 		HashMap<String, String> map = new HashMap();
 		
 		map.put("pno", pno);
 		map.put("memberNo", member.getMemberNo());
 		
+		List<IssueWork> iw = null;
 		
-		List<IssueWork> iw = is.selectWorkList(map);
+		for(int i = 0; i < wp.size(); i++) {
+			if(wp.get(i).getRole().equals("PM") || wp.get(i).getRole().equals("PSM")) {
+				iw = is.selectWorkList(map);
+			}else {
+				iw = is.selectWorkTMList(map);
+			}
+		}
+			
+		
+		
+		
 		
 		List<IssueProjectTeam> ipt = is.selectProjectTeamList(pno);
 		

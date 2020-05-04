@@ -14,6 +14,7 @@ import com.kh.manage.issue.model.vo.IssueProjectTeam;
 import com.kh.manage.issue.model.vo.IssueWPT;
 import com.kh.manage.issue.model.vo.IssueWork;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.work.model.vo.WorkProjectTeam;
 
 public interface IssueDao {
 
@@ -46,5 +47,9 @@ public interface IssueDao {
 	int insertIssueComplete(SqlSessionTemplate sqlSession, IssueHistory ih);
 
 	List<Attachment> selectAttachment(SqlSessionTemplate sqlSession, Attachment at);
+
+	List<WorkProjectTeam> selectTeamWork(SqlSessionTemplate sqlSession, Member member);
+
+	List<IssueWork> selectWorkTMList(SqlSessionTemplate sqlSession, HashMap<String, String> map);
 
 }
