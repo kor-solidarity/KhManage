@@ -139,12 +139,14 @@ public class MemberController {
 		AllDashBoard issueTypeList = ms.selectIssueType(member);
 		model.addAttribute("issueTypeList", issueTypeList);
 		
+
+		//예정작업, 금주/차주
+		List<MemberWorkProduct> myWorkList = ms.myWorkList(member);
+		model.addAttribute("myWorkList", myWorkList);
 		
 		//산출물 목록 리스트
 		List<MemberWorkProduct> wpList = ms.myWorkProductList(member);
 		model.addAttribute("wpList", wpList);
-		
-		
 		
 		return "user/main/userMainPage";
 	}
@@ -439,7 +441,7 @@ public class MemberController {
 
 			if(result > 0) {
 
-				return "redirect:index.jsp";
+				return "redirect:userManagement.me";
 			} else {
 				model.addAttribute("msg", "회원가입 실패!");
 
@@ -461,7 +463,7 @@ public class MemberController {
 				
 				if (result1 > 0 || result2 > 0 || result3 > 0) {
 
-					return "redirect:index.jsp";
+					return "redirect:userManagement.me";
 				} else {
 
 					model.addAttribute("msg", "고객사리스트 삽입 실패!");
@@ -473,7 +475,7 @@ public class MemberController {
 		}
 		
 		
-		return "redirect:index.jsp";
+		return "redirect:userManagement.me";
 	}
 	
 	

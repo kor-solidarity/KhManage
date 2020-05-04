@@ -92,7 +92,6 @@
 	border-radius: 70%;
 	overflow: hidden;
 	margin-bottom: 50px;
-	/* margin-left: 60px; */
 	margin: 0 auto;
 }
 
@@ -139,7 +138,7 @@
                                 </div>
                                 
                                 <div class="" style="margin-top: 40px;">
-	                                <h4 class="text-white" style="text-align: center">${loginUser.memberName}</h4>
+	                                <h3 class="text-white" style="text-align: center"><b>${loginUser.memberName}</b></h3>
 	                                <h5 class="text-white" style="margin-left: 25%">${loginUser.email}</h5>
                                 </div>
                             </div>
@@ -147,29 +146,73 @@
                     </div><br><br>
 
                     <div class="user-btm-box" style="height: 300px">
-                        <div class="col-md-4 col-sm-4 text-center" style="height: 200px">
+                        <div class="col-md-4 col-sm-4 text-center myWork" style="height: 200px">
                             <p class="text-purple">
                                 <i class="linea-icon linea-basic fa-fw" data-icon=""></i><b>내작업</b>
                             </p>
-                            <h1>3</h1>
+                            <!-- <h1>3</h1> -->
                         </div>
-                        <div class="col-md-4 col-sm-4 text-center" style="height: 200px">
+                        <div class="col-md-4 col-sm-4 text-center myChange" style="height: 200px">
                             <p class="text-blue">
                                 <i class="icon-note" style="padding-right: 7px;"></i><b>변경요청</b>
                             </p>
-                            <h1>0</h1>
+                            <!-- <h1>0</h1> -->
                         </div>
-                        <div class="col-md-4 col-sm-4 text-center" style="height: 200px">
+                        <div class="col-md-4 col-sm-4 text-center myIssue" style="height: 200px">
                             <p class="text-danger">
                                 <i class="linea-icon linea-elaborate fa-fw" data-icon="A"></i><b>이슈</b>
                             </p>
-                            <h1>17</h1>
+                            <!-- <h1>17</h1> -->
                         </div>
                     </div>
                     
                     <script>
 					//작업, 변경요청, 이슈  갯수 뽑아오기
+					var memberNo = "${loginUser.memberNo}";
+					console.log("memberNo : " + memberNo);
+					
+					//1. 내작업 count
+					$.ajax({
+						url: 'myWorkCount.me',
+						type: 'post',
+						data: {
+						 memberNo : memberNo
+						},
+						success: function(data){
+							$(".myWork").append("<h1>" + data + "</h1>");
+						}
+					});
                     
+					//2. 변경요청 count
+					$.ajax({
+						url: 'myChangeCount.me',
+						type: 'post',
+						data: {
+						 memberNo : memberNo
+						},
+						success: function(data){
+							
+							if(data > 0) {
+								$(".myChange").append("<h1>" + data + "</h1>");
+							} else {
+								$(".myChange").append("<h1>" + data + "</h1>");
+							}
+						}
+					});
+					
+					//3. 이슈 count
+					$.ajax({
+						url: 'myIssueCount.me',
+						type: 'post',
+						data: {
+						 memberNo : memberNo
+						},
+						success: function(data){
+							$(".myIssue").append("<h1 style='color:#a94442;'>" + data + "</h1>");
+						}
+					});
+					
+					
                     
                     </script>
 
@@ -184,17 +227,17 @@
                 <div class="portlet-body">
 
                     <ul class="nav customtab nav-tabs" role="tablist">
-                        <li role="presentation" class="nav-item active">
+                        <li role="presentation" class="nav-item active" style="width: 160px; text-align: center">
                             <a href="#profile" class="nav-link active" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="true">
                                 <span class="visible-xs"><i class="fa fa-cog"></i></span> <span class="hidden-xs"><b>프로필</b></span>
                             </a>
                         </li>
-                        <li role="presentation" class="nav-item">
+                        <li role="presentation" class="nav-item" style="width: 160px; text-align: center">
                             <a href="#changePassword" class="nav-link" aria-controls="changePassword" role="tab" data-toggle="tab" aria-expanded="false">
                                 <span class="visible-xs"><i class="fa fa-envelope-o"></i></span> <span class="hidden-xs"><b>패스워드 변경</b></span>
                             </a>
                         </li>
-                        <li role="presentation" class="nav-item">
+                        <li role="presentation" class="nav-item" style="width: 160px; text-align: center">
                             <a href="#changeProfileImage" class="nav-link" aria-controls="changeProfileImage" role="tab" data-toggle="tab" aria-expanded="false">
                                 <span class="visible-xs"><i class="fa fa-envelope-o"></i></span> <span class="hidden-xs"><b>프로필 이미지 변경</b></span>
                             </a>

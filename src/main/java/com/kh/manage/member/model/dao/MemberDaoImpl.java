@@ -308,6 +308,12 @@ public class MemberDaoImpl implements MemberDao {
 		return sqlSession.selectList("Member.myWorkProductList", member);
 	}
 
+	@Override
+	public List<MemberWorkProduct> myWorkList(SqlSessionTemplate sqlSession, Member member) {
+
+		return sqlSession.selectList("Member.myWorkList", member);
+	}
+
 
 	
 

@@ -1,17 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.*, com.kh.manage.gwManage.model.vo.*, com.kh.manage.forum.model.vo.*"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
-
-<%
-	
-	//List<Statistics> list2 = (ArrayList<Statistics>) request.getAttribute("list2");
-	/* List<Statistics> list3 = (ArrayList<Statistics>) request.getAttribute("list3");
-	List<Statistics> list4 = (ArrayList<Statistics>) request.getAttribute("list4");
-	List<Mwork> list5 = (ArrayList<Mwork>) request.getAttribute("list5"); */
-	
-%>
-    
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -214,8 +203,6 @@
 			},
 			success: function(data){
 				
-				console.log("변경요청 : " + data);
-				
 				if(data > 0) {
 					$(".requestModify").prepend(     
 						  "<div class='cellMenu1' style='font-weight:normal; font-size: 35px; margin-right: 10px; color:#4DB3A2'>" + data + "</div>"
@@ -292,82 +279,86 @@
 								</div>
 								
 								<script>
-
-								var ctx = document.getElementById('workStatusCanvas');
-								var myChart = new Chart(ctx, {
-									type: 'doughnut',
-									data: {
-										labels: [
-											//'시작전', '개발중', '개발완료', '테스트완료', 'PL검토중', 'PL검토완료', '개발지연'
-									        '시작 전',
-									        '개발중',
-									        '개발완료',
-									        'PL검토중',
-									        '테스트완료',
-									        'PL승인완료',
-											'개발지연'
-										],
-										datasets: [{
-											label: '# of Votes',
-											data: [
-												//MyStatic 객체
-												//before, developing, completed, testCompleted, plChecking, plChecked, delayed
-												'${myStatic.before}',	 		//시작 전
-												'${myStatic.developing}',		//개발중
-												'${myStatic.completed}',		//개발완료
-												'${myStatic.plChecking}',		//PL검토중
-												'${myStatic.testCompleted}',	//테스트완료
-												'${myStatic.plChecked}',		//PL승인완료
-												'${myStatic.delayed}'			//개발지연
+								if('${myStatic.before}' > 0 || '${myStatic.developing}' > 0 || '${myStatic.completed}' > 0 || '${myStatic.plChecking}' > 0 || '${myStatic.testCompleted}' > 0 || '${myStatic.plChecked}' > 0 || '${myStatic.delayed}' > 0 ) {
+									var ctx = document.getElementById('workStatusCanvas');
+									var myChart = new Chart(ctx, {
+										type: 'doughnut',
+										data: {
+											labels: [
+												//'시작전', '개발중', '개발완료', '테스트완료', 'PL검토중', 'PL검토완료', '개발지연'
+										        '시작 전',
+										        '개발중',
+										        '개발완료',
+										        'PL검토중',
+										        '테스트완료',
+										        'PL승인완료',
+												'개발지연'
 											],
-											
-											backgroundColor: [
-												'rgba(219, 219, 219, 0.5)',		//시작 전
-												'rgba(0, 128, 255, 0.2)',		//개발중
-												'rgba(0, 128, 255, 0.6)',		//개발완료
-												'rgba(0, 128, 255, 0.8)',		//PL검토중
-												'rgba(0, 255, 115, 0.3)',		//테스트완료
-												'rgba(0, 255, 115, 1.2)',		//PL승인완료
-												'rgba(243, 106, 90, 1)'			//개발지연
-											],
-											borderColor: [
-												/* 'rgba(255, 99, 132, 1)',
-												'rgba(255, 206, 86, 1)',
-												'rgba(54, 162, 235, 1)',
-												'rgba(54, 162, 235, 1)',
-												'rgba(54, 162, 235, 1)',
-												'rgba(54, 162, 235, 1)',
-												'rgba(54, 162, 235, 1)',
-												'rgba(54, 162, 235, 1)' */
-											],
-											borderWidth: 1,
-											hoverBorderWidth : 1
-										}]
-									},
-									options: {
-										
-										legend:{
-								          position: 'right',
-								          labels:{
-								            fontColor: "gray",
-								            weight: "bold"
-								          }
-								        },
-										cutoutPercentage: 45,
-										responsive: true,
-										scales: {
-												ticks: {
-													//cutoutPercentage: 30,
-													//percentageInnerCutout: 30,
-													beginAtZero: true
-												}
+											datasets: [{
+												label: '# of Votes',
+												data: [
+													//MyStatic 객체
+													//before, developing, completed, testCompleted, plChecking, plChecked, delayed
+													'${myStatic.before}',	 		//시작 전
+													'${myStatic.developing}',		//개발중
+													'${myStatic.completed}',		//개발완료
+													'${myStatic.plChecking}',		//PL검토중
+													'${myStatic.testCompleted}',	//테스트완료
+													'${myStatic.plChecked}',		//PL승인완료
+													'${myStatic.delayed}'			//개발지연
+												],
+												
+												backgroundColor: [
+													'rgba(219, 219, 219, 0.5)',		//시작 전
+													'rgba(0, 128, 255, 0.2)',		//개발중
+													'rgba(0, 128, 255, 0.6)',		//개발완료
+													'rgba(0, 128, 255, 0.8)',		//PL검토중
+													'rgba(0, 255, 115, 0.3)',		//테스트완료
+													'rgba(0, 255, 115, 1.2)',		//PL승인완료
+													'rgba(243, 106, 90, 1)'			//개발지연
+												],
+												borderColor: [
+													/* 'rgba(255, 99, 132, 1)',
+													'rgba(255, 206, 86, 1)',
+													'rgba(54, 162, 235, 1)',
+													'rgba(54, 162, 235, 1)',
+													'rgba(54, 162, 235, 1)',
+													'rgba(54, 162, 235, 1)',
+													'rgba(54, 162, 235, 1)',
+													'rgba(54, 162, 235, 1)' */
+												],
+												borderWidth: 1,
+												hoverBorderWidth : 1
+											}]
 										},
-										/* animation {
-											animation.animateRotate	: true
-										}, */
-										
-									}
-								});
+										options: {
+											
+											legend:{
+									          position: 'right',
+									          labels:{
+									            fontColor: "gray",
+									            weight: "bold"
+									          }
+									        },
+											cutoutPercentage: 45,
+											responsive: true,
+											scales: {
+													ticks: {
+														//cutoutPercentage: 30,
+														//percentageInnerCutout: 30,
+														beginAtZero: true
+													}
+											},
+											/* animation {
+												animation.animateRotate	: true
+											}, */
+											
+										}
+									});
+									
+								} else {
+									$("#workStatus").text("데이터가 없습니다.");
+								}
 								
 								</script>
 								
@@ -377,148 +368,141 @@
 							   <ul class="nav nav-tabs nav-tabs-line nav-tabs-bold nav-tabs-line-brand" role="tablist" style="margin-bottom: 30px;">
 					            <li><b>이슈 현황</b></li>
 					                <li class="nav-item" id="issueStatus"  style="float: right;">
-					                    <a class="nav-link" data-toggle="tab" href="#tabStatusChart" role="tab" aria-selected="false"><b>구분별</b>
-					                    </a>
+					                    <a class="nav-link" data-toggle="tab" href="#tabStatusChart" role="tab" aria-selected="false"><b>구분별</b></a>
 					                </li>
 					                <li class="nav-item active" id="issueKind" style="float: right;">
-					                    <a class="nav-link active" data-toggle="tab" href="#tabTypeChart" role="tab" aria-selected="false" aria-expanded="true"><b>상태별</b>
-					                    </a>
+					                    <a class="nav-link active" data-toggle="tab" href="#tabTypeChart" role="tab" aria-selected="false" aria-expanded="true"><b>상태별</b></a>
 					                </li>
 					            </ul>
 								<div class="chartArea2" style="width: 400px; padding-left: 50px; margin: 0 auto;">
 									<canvas id="myChart3" width="350px;" height="350px;"></canvas>
 								</div>
 								
+								
 								<script>
-								$("#issueKind").click(function(){
-									$("#myChart4").remove();
-									$("#myChart3").show();
-								});
-								
-								//이슈상태 차트
-								if('${issueList.before}' > 0 || '${issueList.pro}' > 0 || '${issueList.del}' > 0 || '${issueList.com}' > 0) {
-								var ctx = document.getElementById('myChart3');
-								var myChart = new Chart(ctx, {
-									type: 'doughnut',
-									data: {
-										labels: ['확인중', '조치중', '조치완료', '취소'],
-										datasets: [{
-											label: '# of Votes',
-											data: [
-												
-												'${issueList.before}',
-												'${issueList.pro}',
-												'${issueList.del}',
-												'${issueList.com}'
-											],
-											backgroundColor: [
-												'rgba(0, 128, 255, 0.6)',
-												'rgba(0, 128, 255, 0.8)',
-												'rgba(0, 255, 115, 1.2)',
-												'rgba(243, 106, 90, 1)'	
-												
-												/* 'rgba(219, 219, 219, 0.5)',		//시작 전
-												'rgba(0, 128, 255, 0.2)',		//개발중
-												'rgba(0, 128, 255, 0.6)',		//개발완료
-												'rgba(0, 128, 255, 0.8)',		//PL검토중
-												'rgba(0, 255, 115, 0.3)',		//테스트완료
-												'rgba(0, 255, 115, 1.2)',		//PL승인완료
-												'rgba(243, 106, 90, 1)'			//개발지연 */
-												
-											],
-											borderColor: [
-												/* '#1E2B44',
-												'rgba(54, 162, 235, 1)',
-												'rgba(255, 206, 86, 1)',
-												'rgba(75, 192, 192, 1)', */
-											],
-											borderWidth: 1,
-											
-											hoverBorderWidth : 1
-										}]
-									},
-									options: {
-										
-										legend:{
-									          position: 'right',
-									          labels:{
-									            fontColor: "gray",
-									            weight: "bold"
-									          }
-									        },
-								        cutoutPercentage: 45,
-										responsive: false,
-										scales: {
-												ticks: {
-													//cutoutPercentage: 60,
-													beginAtZero: true
-												}
-										},
-									}
-								});
-								
-								} else {
-									$(".chartArea2").text("데이터가 없습니다.");
-								}
-								
 								
 								//이슈 구분별 상태
 								$("#issueStatus").click(function(){
 									$("#myChart3").hide();
 									$("#myChart4").remove();
-									$(".chartArea2").append("<canvas id='myChart4' width='350px;' height='350px;'></canvas>");
 									
-									var ctx = document.getElementById('myChart4');
-									var myChart = new Chart(ctx, {
-										type: 'doughnut',
-										data: {
-											labels: ['새기능', '버그발생', '개선사항'],
-											datasets: [{
-												label: '# of Votes',
-												data: [
-													'${issueTypeList.pro}',
-													'${issueTypeList.before}',
-													'${issueTypeList.com}'
+									$(".chartArea2").text("");
+									if('${issueTypeList.pro}' > 0 || '${issueTypeList.before}' > 0 || '${issueTypeList.com}' > 0) {
+										$(".chartArea2").append("<canvas id='myChart4' width='350px;' height='350px;'></canvas>");
+										var ctx = document.getElementById('myChart4');
+										var myChart = new Chart(ctx, {
+											type: 'doughnut',
+											data: {
+												labels: ['새기능', '버그발생', '개선사항'],
+												datasets: [{
+													label: '# of Votes',
+													data: [
+														'${issueTypeList.pro}',
+														'${issueTypeList.before}',
+														'${issueTypeList.com}'
+													],
+													backgroundColor: [
+														'rgba(75, 192, 192, 0.2)',
+														'rgba(153, 102, 255, 0.2)',
+														'rgba(255, 159, 64, 0.2)'
+													],
+													borderColor: [
+													/* 	'rgba(75, 192, 192, 1)',
+														'rgba(153, 102, 255, 1)',
+														'rgba(255, 159, 64, 1)' */
+													],
+													borderWidth: 1,
 													
-												],
-												backgroundColor: [
-													'rgba(75, 192, 192, 0.2)',
-													'rgba(153, 102, 255, 0.2)',
-													'rgba(255, 159, 64, 0.2)'
-												],
-												borderColor: [
-												/* 	'rgba(75, 192, 192, 1)',
-													'rgba(153, 102, 255, 1)',
-													'rgba(255, 159, 64, 1)' */
-												],
-												borderWidth: 1,
-												
-												hoverBorderWidth : 1
-											}]
-										},
-										options: {
-											
-											legend:{
-										          position: 'right',
-										          labels:{
-										            fontColor: "gray",
-										            weight: "bold"
-										          }
-										        },
-									        cutoutPercentage: 45,
-											responsive: false,
-											scales: {
-													ticks: {
-														//cutoutPercentage: 60,
-														beginAtZero: true
-													}
+													hoverBorderWidth : 1
+												}]
 											},
-										}
-									});
+											options: {
+												
+												legend:{
+											          position: 'right',
+											          labels:{
+											            fontColor: "gray",
+											            weight: "bold"
+											          }
+											        },
+										        cutoutPercentage: 45,
+												responsive: false,
+												scales: {
+														ticks: {
+															//cutoutPercentage: 60,
+															beginAtZero: true
+														}
+												},
+											}
+										});
+									} else {
+										$(".chartArea2").text("데이터가 없습니다.");
+									}
+								});
+
+								
+								$("#issueKind").click(function(){
+									$("#myChart4").remove();
+									$("#myChart3").show();
 								});
 								
 								
+								//이슈상태 차트
+								if('${issueList.before}' > 0 || '${issueList.pro}' > 0 || '${issueList.del}' > 0 || '${issueList.com}' > 0) {
+										var ctx = document.getElementById('myChart3');
+										var myChart = new Chart(ctx, {
+											type: 'doughnut',
+											data: {
+												labels: ['확인중', '조치중', '조치완료', '취소'],
+												datasets: [{
+													label: '# of Votes',
+													data: [
+														
+														'${issueList.before}',
+														'${issueList.pro}',
+														'${issueList.del}',
+														'${issueList.com}'
+													],
+													backgroundColor: [
+														'rgba(0, 128, 255, 0.6)',
+														'rgba(0, 128, 255, 0.8)',
+														'rgba(0, 255, 115, 1.2)',
+														'rgba(243, 106, 90, 1)'	
+													],
+													borderColor: [
+														/* '#1E2B44',
+														'rgba(54, 162, 235, 1)',
+														'rgba(255, 206, 86, 1)',
+														'rgba(75, 192, 192, 1)', */
+													],
+													borderWidth: 1,
+													
+													hoverBorderWidth : 1
+												}]
+											},
+											options: {
+												
+												legend:{
+											          position: 'right',
+											          labels:{
+											            fontColor: "gray",
+											            weight: "bold"
+											          }
+										        },
+										        cutoutPercentage: 45,
+												responsive: false,
+												scales: {
+														ticks: {
+															//cutoutPercentage: 60,
+															beginAtZero: true
+														}
+												},
+											}
+										});
 									
+								} else {
+									$(".chartArea2").text("데이터가 없습니다.");
+								}
 									
 								</script>
 								
@@ -553,6 +537,16 @@
 								<td class="tdmidTable td">2020-04-01</td>
 								<td class="tdmidTable td">97%</td>
 							</tr>
+							<c:forEach var="ww" items="${myWorkList}">
+							<tr>
+								<td class="tdmidTable td"><a href="#">${ww.projectName}</a></td>
+								<td class="tdmidTable td">${ww.workName}</td>
+								<td class="tdmidTable td">${ww.grantorName}</td>
+								<td class="tdmidTable td">${ww.beginDate}</td>
+								<td class="tdmidTable td">${ww.completeDate}</td>
+								<td class="tdmidTable td">${ww.completeRate}%</td>
+							</tr>
+							</c:forEach>
 						</table>
 					</div>
 				</div>

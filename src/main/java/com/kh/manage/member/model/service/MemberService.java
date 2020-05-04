@@ -106,6 +106,8 @@ public interface MemberService {
 
 	List<MemberWorkProduct> myWorkProductList(Member member);
 
+	List<MemberWorkProduct> myWorkList(Member member);
+
 
 
 	
