@@ -1,5 +1,6 @@
 package com.kh.manage.issue.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
@@ -25,9 +26,9 @@ public class IssueDaoImpl implements IssueDao{
 	}
 
 	@Override
-	public List<IssueWork> selectWorkList(SqlSessionTemplate sqlSession, String pno) {
+	public List<IssueWork> selectWorkList(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		
-		return sqlSession.selectList("Issue.selectWorkList", pno);
+		return sqlSession.selectList("Issue.selectWorkList", map);
 	}
 
 	@Override

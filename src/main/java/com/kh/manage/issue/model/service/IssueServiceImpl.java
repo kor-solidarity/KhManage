@@ -1,5 +1,6 @@
 package com.kh.manage.issue.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -32,8 +33,8 @@ public class IssueServiceImpl implements IssueService{
 	}
 
 	@Override
-	public List<IssueWork> selectWorkList(String pno) {
-		return id.selectWorkList(sqlSession, pno);
+	public List<IssueWork> selectWorkList(HashMap<String, String> map) {
+		return id.selectWorkList(sqlSession, map);
 	}
 
 	@Override

@@ -233,7 +233,7 @@
 		<div class="panel-heading">
 			<div style="width:100%; height:700px; margin:0 auto; overflow:auto;">
 			<div class="oversort ui-sortable">
-				<div class="sortable ui-sortable" id="workArea"  style="overflow-y:auto; overflow-x:hidden; -ms-overflow-style: none;">
+				<div class="sortable ui-sortable workArea" style="overflow-y:auto; overflow-x:hidden; -ms-overflow-style: none;">
 					<h5 class="nodrag header">내 할일</h5>
 					<button id="newWork1">+ 새 작업 추가</button>
 					<c:forEach var="l1" items="${map.list1 }">
@@ -280,6 +280,32 @@
 					
 				</div>
 				
+				<c:if test="${map.list8 != null }">
+				<div class="sortable ui-sortable workArea" style="overflow-y:auto; overflow-x:hidden; -ms-overflow-style: none;">
+					<h5 class="nodrag header">검토요청</h5>
+					<c:forEach var="l8" items="${map.list8 }">
+					<div class="workDiv"><input type="hidden" value="${l8.workNo }">
+					<c:if test="${l8.workType == '프로젝트' }">
+					<label class="typeLabel1"><c:out value="${l8.workType }"/></label>
+					</c:if>
+					<c:if test="${l8.workType == '개인' }">
+					<label class="typeLabel2"><c:out value="${l8.workType }"/></label>
+					</c:if>
+					<c:if test="${l8.workType == '일반' }">
+					<label class="typeLabel3"><c:out value="${l8.workType }"/></label>
+					</c:if>
+					<label class="workLabel7"><c:out value="${l8.status }"/></label>
+					<br>
+					<div class="clear"></div>
+					<label style="font-size:17px; line-height:280%;"><c:out value="${l8.workName }"/></label>
+					<br>
+					<c:out value="${l8.projectName }"/>
+					<label class="rate"><c:out value="${l8.completeRate }"/>%</label>
+					</div>
+					</c:forEach>
+				</div>
+				</c:if>
+				
 				<div class="sortable ui-sortable" style="overflow-y:auto; overflow-x:hidden; -ms-overflow-style: none;">
 					<h5 class="nodrag header">시작전/개발지연</h5>
 					<c:forEach var="l7" items="${map.list7 }">
@@ -308,6 +334,8 @@
 					</div>
 					</c:forEach>
 				</div>
+				
+				
 				
 				<div class="sortable ui-sortable" style="overflow-y:auto; overflow-x:hidden; -ms-overflow-style: none;">
 					<h5 class="nodrag header">개발중</h5>
@@ -680,14 +708,14 @@
 									<td class="modalTd2"></td>
 								</tr>
 								<tr>
-									<td class="modalTd_T">선행작업</td>
-									<td class="modalTd" colspan="2" >
-									<input name="precedeNo" type="text" class="inputMenu form-control" required="required">
-									</td>
+									
 									<td class="modalTd_T">완료율</td>
 									<td class="modalTd" colspan="2">
 									<input name="completeRate" type="number" class="inputMenu form-control" min="0" max="100">	
 									</td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
 								</tr>
 								<tr>
 									<td class="modalTd2"></td>
@@ -700,7 +728,7 @@
 								<tr>
 									<td class="modalTd_T">작업단계</td>
 									<td class="modalTd" colspan="2" >
-										<select name="workLevel" class="inputMenu form-control" required="required">
+										<select name="workLevel" id="workLevel" class="inputMenu form-control" required="required">
 											<option value="#" >선택하세요</option>
 											<option value="1">1</option>
 											<option value="2">2</option>
@@ -712,12 +740,12 @@
 										<select name="status" class="inputMenu form-control" required="required">
 											<option value="#" >선택하세요</option>
 											<option value="시작전">시작전</option>
-											<option value="개발중">개발중</option>
-											<option value="개발완료">개발완료</option>
-											<option value="테스트완료">테스트완료</option>
-											<option value="PL검토중">PL검토중</option>
-											<option value="PL승인완료">PL승인완료</option>
-											<option value="개발지연">개발지연</option>
+											<option value="개발중" disabled>개발중</option>
+											<option value="개발완료" disabled>개발완료</option>
+											<option value="테스트완료" disabled>테스트완료</option>
+											<option value="PL검토중" disabled>PL검토중</option>
+											<option value="PL승인완료" disabled>PL승인완료</option>
+											<option value="개발지연" disabled>개발지연</option>
 										</select>
 									</td>
 								</tr>
@@ -732,7 +760,10 @@
 								<tr>
 									<td class="modalTd_T">상위작업</td>
 									<td class="modalTd" colspan="2" >
-									<input type="text" name="highWorkNo" class="inputMenu form-control" required="required">
+									<select name="highWorkNo" id="highWorkNo" class="inputMenu form-control" required="required">
+											
+									</select>
+									
 									</td>
 									<td class="modalTd_T">승인자</td>
 									<td class="modalTd" colspan="2">
@@ -940,7 +971,7 @@
 								</tr>
 								<tr>
 									<td class="modalTd_T">프로젝트명
-									<input type="hidden" name="memberNo" value="${sessionScope.loginUser.memberNo }">
+									<input type="hidden" name="memberNo" class="memberNo">
 									<input type="hidden" name="workNo" class="workNo">
 									<input type="hidden" name="projectNo" class="projectNo">
 									
@@ -1006,14 +1037,13 @@
 									<td class="modalTd2"></td>
 								</tr>
 								<tr>
-									<td class="modalTd_T">선행작업</td>
-									<td class="modalTd" colspan="2" >
-									<input name="precedeNo" type="text" class="inputMenu form-control precedeNo" required="required" readOnly>
-									</td>
 									<td class="modalTd_T">완료율</td>
 									<td class="modalTd" colspan="2">
 									<input name="completeRate" type="number" class="inputMenu form-control completeRate" step="5" min="0" max="100">	
 									</td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
+									<td class="modalTd2"></td>
 								</tr>
 								<tr>
 									<td class="modalTd2"></td>
@@ -1059,7 +1089,8 @@
 								<tr>
 									<td class="modalTd_T">상위작업</td>
 									<td class="modalTd" colspan="2" >
-									<input type="text" name="highWorkNo" class="inputMenu form-control highWorkNo" required="required" readOnly>
+									<input type="hidden" name="highWorkNo" class="highWorkNo">
+									<input type="text" name="highWorkName" class="inputMenu form-control highWorkName" required="required" readOnly>
 									</td>
 									<td class="modalTd_T">승인자</td>
 									<td class="modalTd" colspan="2">
@@ -1300,6 +1331,38 @@
 				}
 			});
 		});
+		
+		$("#workLevel").change(function(){
+			var workLevel = $(this).val();
+			var pno = $("#projectNo").val();
+			$("#highWorkNo").empty();
+			$("#highWorkNo").attr('disabled', false);
+			
+			if(workLevel == '1'){
+				$("#highWorkNo").attr('disabled', true);
+			}else{
+				$.ajax({
+					type:"post",
+					url:"highWorkNoList.wk",
+					data: {
+							workLevel:workLevel,
+							pno:pno
+						  },
+					dataType:"json",
+					success:function(data){
+						for(var i = 0; i < data.hw.length; i++){
+							$("#highWorkNo").append("<option value='" + data.hw[i]['workNo'] + "'>"+ data.hw[i]['workName'] + "</option>")
+						}
+					},
+					error:function(error){
+						
+					}
+				});	
+			}
+			
+			
+			
+		});
 	
 	//모달
 		$("#newWork1").click(function(){
@@ -1354,11 +1417,12 @@
 	
 		var btnNum;
 		
-		$("#workArea").find("div").click(function(){
+		$(".workArea").find("div").click(function(){
 			var workNo = $(this).find("input").eq(0).val();
 			$("#workProductTable > tbody").remove();
 			$("#memoTr").remove();
 			$("#grantorNo").empty();
+			$("#statusSelect").attr("readOnly", false);
 			$.ajax({
 				url:"selectWork.wk",
 				type:"post",
@@ -1385,9 +1449,11 @@
 					$(".precedeNo").val(data.work.precedeNo);
 					$(".completeRate").val(data.work.completeRate);
 					$(".grantorNo").val(data.work.grantorNo);
+					$(".memberNo").val(data.work.memberNo);
 					$(".workLevel").val(data.work.workLevel);
 					$(".status").val(data.work.status);
 					$(".highWorkNo").val(data.work.highWorkNo);
+					$(".highWorkName").val(data.work.highWorkName);
 					$(".workStatus").val(data.work.workStatus);
 					$(".productType").val(data.work.workAttachment[0].productType);
 					
@@ -1437,9 +1503,51 @@
 					}
 					
 					if(data.loginUser.memberNo == data.work.memberNo){
-						$("#workChangeSubmit").attr('disabled', false);
+						if(data.loginUser.memberNo == data.work.grantorNo){
+							if(data.work.status == "PL검토중" || data.work.status == "PL승인완료"){
+								$("#workChangeSubmit").attr('disabled', false);
+							}else{
+								$("#workChangeSubmit").attr('disabled', false);
+							}
+						}else{
+							$("#statusSelect > option[value='PL검토중']").attr('disabled', false);
+							$("#statusSelect > option[value='PL승인완료']").attr('disabled', true);
+							if(data.work.status == "PL검토중" || data.work.status == "PL승인완료"){
+								$("#statusSelect").attr("readOnly", true);
+								$("#workChangeSubmit").attr('disabled', true);
+							}else{
+								$("#workChangeSubmit").attr('disabled', false);
+							}
+						}
+						
+					}else{
+						if(data.loginUser.memberNo == data.work.grantorNo){
+							if(data.work.status == "PL검토중" || data.work.status == "PL승인완료"){
+								$("#workChangeSubmit").attr('disabled', false);
+							}else{
+								$("#workChangeSubmit").attr('disabled', false);
+							}
+						}else{
+							$("#statusSelect > option[value='PL검토중']").attr('disabled', false);
+							$("#statusSelect > option[value='PL승인완료']").attr('disabled', true);
+							if(data.work.status == "PL검토중" || data.work.status == "PL승인완료"){
+								$("#statusSelect").attr("readOnly", true);
+								$("#workChangeSubmit").attr('disabled', true);
+							}else{
+								$("#statusSelect").attr("readOnly", true);
+								$("#workChangeSubmit").attr('disabled', true);
+							}
+						}
 					}
+					/* else if(data.loginUser.memberNo == data.work.grantorNo){
+						if(data.work.status == "PL검토중" || data.work.status == "PL승인완료"){
+							$("#workChangeSubmit").attr('disabled', false);
+						}else{
+							$("#workChangeSubmit").attr('disabled', true);
+						}
+					} */
 					
+				
 					$("#selectModal").modal('show');
 				},
 				error:function(request,status,error){

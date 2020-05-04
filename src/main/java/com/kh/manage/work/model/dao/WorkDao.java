@@ -12,6 +12,7 @@ import com.kh.manage.work.model.vo.Grantor;
 import com.kh.manage.work.model.vo.Work;
 import com.kh.manage.work.model.vo.WorkAttachment;
 import com.kh.manage.work.model.vo.WorkProductw;
+import com.kh.manage.work.model.vo.WorkProjectName;
 import com.kh.manage.work.model.vo.WorkProjectTeam;
 
 public interface WorkDao {
@@ -43,5 +44,9 @@ public interface WorkDao {
 	WorkProjectTeam selectWorkProjectTeam(SqlSessionTemplate sqlSession, Work work);
 
 	int insertWorkHistory2(SqlSessionTemplate sqlSession, HashMap<String, Object> map);
+
+	List<WorkProjectName> selectWorkGrantorList(SqlSessionTemplate sqlSession, Member member);
+
+	List<Work> selectHighWorkNoList(SqlSessionTemplate sqlSession, HashMap<String, String> map);
 
 }

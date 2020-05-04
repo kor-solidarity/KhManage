@@ -25,6 +25,7 @@ import com.kh.manage.work.model.vo.Grantor;
 import com.kh.manage.work.model.vo.Work;
 import com.kh.manage.work.model.vo.WorkAttachment;
 import com.kh.manage.work.model.vo.WorkProductw;
+import com.kh.manage.work.model.vo.WorkProjectName;
 import com.kh.manage.work.model.vo.WorkProjectTeam;
 
 @Controller
@@ -43,6 +44,17 @@ public class WorkController {
 		HashMap<String, List> map = ws.selectWorkMap(member);
 		
 		List<WorkProjectTeam> wp = ws.selectTeamWork(member);
+		
+		List<WorkProjectName> list8 = null;
+		System.out.println("작업출력확인" + wp);
+		for(int i = 0; i < wp.size(); i++) {
+			if(wp.get(i).getRole().equals("PM") || wp.get(i).getRole().equals("PSM")) {
+				list8 = ws.selectWorkGrantorList(member);
+			}
+		}
+		
+		map.put("list8", list8);
+		
 		
 		if(map != null || wp != null) {
 			request.setAttribute("map", map);
@@ -70,7 +82,9 @@ public class WorkController {
 			map.put("work", work);
 			map.put("wp", wp);
 			
-			int result1 = ws.insertWorkHistory(map);
+			if(work.getWorkType().equals("프로젝트")) {
+				int result1 = ws.insertWorkHistory(map);
+			}
 			
 			return "redirect:myWorkList.wk";
 		}else {
@@ -108,7 +122,9 @@ public class WorkController {
 			map.put("work", work);
 			map.put("wp", wp);
 			
-			int result1 = ws.insertWorkHistory2(map);
+			if(work.getWorkType().equals("프로젝트")) {
+				int result1 = ws.insertWorkHistory2(map);
+			}
 			
 			return "redirect:myWorkList.wk";
 		}else {
@@ -126,6 +142,25 @@ public class WorkController {
 		
 		mv.addObject("gt", gt);
 		
+		mv.setViewName("jsonView");
+		
+		return mv;
+	}
+	
+	@RequestMapping("/highWorkNoList.wk")
+	public ModelAndView highWorkNoList(String workLevel, String pno, ModelAndView mv) {
+		HashMap<String, String> map = new HashMap();
+		int wL = Integer.parseInt(workLevel);
+		
+		String workLevel1 = String.valueOf(wL - 1);
+		
+		map.put("workLevel", workLevel1);
+		map.put("pno", pno);
+		
+		
+		List<Work> hw = ws.selectHighWorkNoList(map);
+		
+		mv.addObject("hw", hw);
 		mv.setViewName("jsonView");
 		
 		return mv;

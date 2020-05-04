@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -107,14 +108,22 @@ public class IssueController {
 	}
 	
 	@RequestMapping("/projectWorkList.iu")
-	public ModelAndView projectWorkList(@RequestParam String pno, ModelAndView mv) {
+	public ModelAndView projectWorkList(@RequestParam String pno, ModelAndView mv, HttpSession session) {
 		System.out.println(pno);
+		Member member = (Member) session.getAttribute("loginUser");
 		
-		List<IssueWork> iw = is.selectWorkList(pno);
+		
+		HashMap<String, String> map = new HashMap();
+		
+		map.put("pno", pno);
+		map.put("memberNo", member.getMemberNo());
+		
+		
+		List<IssueWork> iw = is.selectWorkList(map);
 		
 		List<IssueProjectTeam> ipt = is.selectProjectTeamList(pno);
 		
-		System.out.println(iw);
+		System.out.println("출력확인 : " + ipt);
 		mv.addObject("iw", iw);
 		mv.addObject("ipt", ipt);
 		mv.setViewName("jsonView");
