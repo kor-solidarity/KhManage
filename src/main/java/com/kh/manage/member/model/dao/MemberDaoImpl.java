@@ -314,6 +314,12 @@ public class MemberDaoImpl implements MemberDao {
 		return sqlSession.selectList("Member.myWorkList", member);
 	}
 
+//	@Override
+//	public ProjectRank selectMonthlyProjectCount(SqlSessionTemplate sqlSession, ProjectRank pr) {
+//
+//		return sqlSession.selectOne("Member.selectMonthlyProjectCount", pr);
+//	}
+
 
 	
 

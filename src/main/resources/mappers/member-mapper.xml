@@ -81,6 +81,9 @@
 		<result property="aCount" column="A"/>
 		<result property="bCount" column="B"/>
 		<result property="cCount" column="C"/>
+		<result property="month" column="MONTH"/>
+		<result property="count" column="COUNT"/>
+		
 	</resultMap>
 	
 	<resultMap type="DeptProjectCount" id="deptProjectCountResultSet">
@@ -785,6 +788,22 @@
 		AND W.WORK_STATUS = 'Y'
 		ORDER BY BEGIN_DATE ASC
    </select>
+   
+  <!--  <select id="selectMonthlyProjectCount" parameterType="ProjectRank" resultMap="projectRankCountResultSet">
+   		SELECT TO_CHAR(START_DATE, 'YYYYMM') as MONTH
+	    	 , COUNT(*) as COUNT
+		 FROM  PROJECT
+		WHERE  START_DATE >= '20200101'
+		GROUP BY
+		       TO_CHAR(START_DATE, 'YYYYMM')
+		       
+		SELECT TO_CHAR(START_DATE, 'YYYYMM') as MONTH
+	    	 , COUNT(*) as COUNT
+		 FROM  PROJECT
+		WHERE  START_DATE >= '20200101'
+		GROUP BY
+		       TO_CHAR(START_DATE, 'YYYYMM')
+   </select> -->
    
 </mapper>
 

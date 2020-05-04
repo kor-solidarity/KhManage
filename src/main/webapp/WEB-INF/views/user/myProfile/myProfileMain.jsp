@@ -109,7 +109,7 @@
 
 
 </head>
-<body onload="$('#route1').text('프로필')">
+<body onload="$('#route1').text('프로필'); $('#route2').text('프로필 수정')">
 	
 	<c:set var="contextPath" value="${ pageContext.servletContext.contextPath }" scope="application"/>
 
