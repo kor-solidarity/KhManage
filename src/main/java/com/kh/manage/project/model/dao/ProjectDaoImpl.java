@@ -225,6 +225,16 @@ public class ProjectDaoImpl implements ProjectDao {
 		
 		return sqlSession.insert("Project.insertDownWork", templateWorkRead);
 	}
+	
+	@Override
+	public int updateProject(SqlSessionTemplate sqlSession, Project project) {
+		return sqlSession.update("Project.updateProject", project);
+	}
+	
+	@Override
+	public List<Attachment> selectAttachmentList(SqlSessionTemplate sqlSession, String pid) {
+		return sqlSession.selectList("Project.selectAttachmentList", pid);
+	}
 }
 
 

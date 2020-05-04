@@ -1,6 +1,5 @@
 package com.kh.manage.project.controller;
 
-import com.amazonaws.Request;
 import com.google.gson.Gson;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.admin.department.model.vo.Dept;
@@ -12,7 +11,6 @@ import com.kh.manage.common.Pagination;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.project.model.vo.*;
 
-import org.aspectj.apache.bcel.generic.RET;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -229,21 +227,21 @@ public class ProjectController {
 		String projectInsertResult = ps.insertProject(project);
 		System.out.println("projectInsertResult: " + projectInsertResult);
 		
-		if(project_template != null) {
+		if (project_template != null) {
 			//성준 템플릿 읽고 작업 넣기
 			List<TemplateWorkRead> tList = ps.selectAllTemplateWork(project_template);
 			System.out.println("템플릿 작업 목록 : " + tList);
 			String currval = "";
 			String projectCurrval = ps.selectProjectCurrval();
 			
-			for(int i = 0; i < tList.size(); i++) {
+			for (int i = 0; i < tList.size(); i++) {
 				String work = tList.get(i).getTemplateWorkNo().split("[.]")[1];
 				tList.get(i).setProjectCurrval(projectCurrval);
-				if(work.equals("0")) {
+				if (work.equals("0")) {
 					System.out.println("상위작업 : " + tList.get(i).getTemplateWorkNo());
 					int highWork = ps.insertHighWork(tList.get(i));
 					currval = ps.selectCurrval();
-				}else  {
+				} else {
 					System.out.println("하위작업 : " + tList.get(i).getTemplateWorkNo());
 					tList.get(i).setCurrval1(currval);
 					int downWork = ps.insertDownWork(tList.get(i));
@@ -549,19 +547,12 @@ public class ProjectController {
 			e.printStackTrace();
 		}
 		
-		// ProjectWork work =
-		// 		new ProjectWork(workNo, workName, null,
-		// 				pid, startDate, completeDate,
-		// 				null, null, grantor,
-		// 				null, highWorkSel, memo,
-		// 				null, memberNo, null);
-		
-		// 승인자  담당자 변경  , 그 외 전부 수정 불허,
+		// 승인자  담당자, 날짜, 상위작업 변경, 그 외 전부 수정 불허,
 		ProjectWork work =
 				new ProjectWork(workNo, null, null,
-						null, null, null,
+						null, startDate, completeDate,
 						null, null, grantor,
-						null, null, null,
+						null, highWorkSel, null,
 						null, memberNo, null);
 		int result = ps.updateWork(work);
 		System.out.println("res: " + result);
@@ -594,11 +585,13 @@ public class ProjectController {
 		// 프로젝트 관리자 - 소속부서만 뽑고 실제 사원목록은 부서를 눌렀을때 추가하면서 넣는걸로.
 		List<Dept> deptList = ps.selectDeptList();
 		System.out.println("deptList: " + deptList);
+		List<Attachment> attachmentList = ps.selectAttachmentList(pid);
 		
 		model.addAttribute("pid", pid);
 		model.addAttribute("team", team);
 		model.addAttribute("project", project);
 		model.addAttribute("deptList", deptList);
+		model.addAttribute("attachmentList", attachmentList);
 		return "user/project/projectView";
 	}
 	
@@ -624,28 +617,79 @@ public class ProjectController {
 	
 	// 기본정보 페이지에서 정보변경
 	@RequestMapping("/updateProject.pr")
-	public String updateProject( HttpServletRequest request,
-								 @RequestParam MultipartFile[] project_excel){
+	public String updateProject(HttpServletRequest request,
+								@RequestParam MultipartFile[] file) {
 		
 		// 변경대상:
 		// 관리자 / PMO / 서브관리자 / 시작·종료일 / 첨부파일 / 설명
 		
-		String pid  = request.getParameter("pid");
-		String project_manager  = request.getParameter("project_manager");
-		String pmo  = request.getParameter("pmo");
+		String pid = request.getParameter("pid");
+		String project_manager = request.getParameter("project_manager");
+		String pmo = request.getParameter("pmo");
 		// 서브관리자
-		String memberNo  = request.getParameter("memberNo");
-		String startDate  = request.getParameter("startDate");
-		String endDate  = request.getParameter("endDate");
+		String memberNo = request.getParameter("memberNo");
+		
 		// 설명
-		String project_details  = request.getParameter("project_details");
+		String project_details = request.getParameter("project_details");
 		if (project_details.equals("")) {
 			project_details = null;
 		}
 		
-		String lul = null;
+		// 시간 파싱
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Date startDate = null;
+		Date endDate = null;
+		try {
+			java.util.Date startUtilDate = format.parse(request.getParameter("startDate"));
+			java.util.Date endUtilDate = format.parse(request.getParameter("endDate"));
+			startDate = new Date(startUtilDate.getTime());
+			endDate = new Date(endUtilDate.getTime());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		
-		return "";
+		Project project = new Project(pid, null, null,
+				null, null, project_manager,
+				pmo, startDate, endDate,
+				project_details, null, null, null);
+		
+		int result = ps.updateProject(project);
+		
+		// 업뎃 다됬으면 파일도 업로드
+		if (result > 0) {
+			for (MultipartFile f : file) {
+				if (f.getSize() > 0) {
+					
+					System.out.println("file exists");
+					String root = request.getSession().getServletContext().getRealPath("resources");
+					String filePath = root + "\\uploadfiles";
+					String originFileName = f.getOriginalFilename();
+					String ext = originFileName.substring(originFileName.lastIndexOf("."));
+					String changeName = CommonsUtils.getRandomString();
+					
+					try {
+						f.transferTo(new File(filePath + "\\" + changeName + ext));
+					} catch (IllegalStateException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
+					Attachment at = new Attachment();
+					at.setChangeName(changeName);
+					at.setOriginName(originFileName);
+					at.setFilePath(filePath);
+					at.setExt(ext);
+					at.setDivision(pid);
+					int result2 = ps.insertAttachment(at);
+					System.out.println(result2);
+				}
+			}
+		}
+		
+		// String lul = null;
+		
+		return "redirect:projectCenter.pr";
 	}
 	
 	

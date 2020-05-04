@@ -920,8 +920,8 @@
                             if (projectWork.status == '시작전') {
                                 $('#workDetails select').removeAttr('disabled');
                                 $("#deleteWorkBtn").removeAttr("style");
-                                $("#startDate").removeAttr("style");
-                                $("#completeDate").removeAttr("style");
+                                $("#startDate").removeAttr("disabled");
+                                $("#completeDate").removeAttr("disabled");
                             }
 
                             // 메모는 여기서 아예 건들여선 안됨.
@@ -1031,12 +1031,13 @@
                             for (let i = 0; i < workHistory.length; i++) {
                                 inCharge = "";
                                 if (workHistory[i].memberName != undefined) {
-                                    inCharge = workHistory[i].deptName + " " + workHistory[i].memberName + " " +
+                                    inCharge = workHistory[i].deptName +
+                                        " " + workHistory[i].memberName + " " +
                                         workHistory[i].rankName;
                                 }
                                 $("#historyTable").append(
                                     "<tr>" +
-                                    "<td>" + workHistory[i].memo + "</td>" +
+                                    "<td>" + workHistory[i].status + "</td>" +
                                     "<td>" + inCharge + "</td>" +
                                     "<td>" + workHistory[i].modifyDate + "</td>" +
                                     "</tr>"

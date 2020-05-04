@@ -91,4 +91,8 @@ public interface ProjectDao {
 	String selectCurrval(SqlSessionTemplate sqlSession);
 	
 	int insertDownWork(SqlSessionTemplate sqlSession, TemplateWorkRead templateWorkRead);
+	
+	int updateProject(SqlSessionTemplate sqlSession, Project project);
+	
+	List<Attachment> selectAttachmentList(SqlSessionTemplate sqlSession, String pid);
 }

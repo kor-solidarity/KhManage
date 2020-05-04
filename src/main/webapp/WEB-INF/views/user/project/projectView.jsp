@@ -257,15 +257,52 @@
 						<div class="col-md-12">
 							<div class="col-md-1 text-align-right">첨부파일</div>
 							<div class="col-md-5" id="file_table">
+								<%--
 								<input type="file" name="project_excel" id="project_excel_0">
 								<br>
+								--%>
 
+								<table style="width:100%;">
+									<tr style="border:1px solid lightgray;">
+										<th class="titleTd" style="font-size:14px; height:30px; background: #EEEEEE;">
+											&nbsp;&nbsp;등록된 첨부 파일
+										</th>
+									</tr>
+									<tr style="border:1px solid lightgray; height:auto;">
+										<td>
+											<div id="fileArea" class="inputMenu"
+												 style="width:100%; height:auto;  border:1px solid lightgray;">
+												<a href="#this" id="add" class="btn" style="padding-bottom: 0px;">파일
+													추가하기</a>
+												<c:if test="${attachmentList != null }">
+													<c:forEach var="a" items="${attachmentList }">
+														<div >
+															<div class="exist" style="margin-top: 0px; margin-left: 10px; margin-bottom: 0px;">
+																<span class="tdF">
+																	<i class="fas fa-file-upload"></i>
+																&nbsp;&nbsp;<c:out value="${a.originName}"/>
+																<input id="hiddenAtNo" name="atNo" class="hiddenAtNo"
+																	   type="hidden" value="${a.atNo}">
+																	</span>
+																<a href='#this' name='delete' class='btn'>
+																	<i class='fas fa-minus-square'></i>
+																</a>
+															</div>
+														</div>
+													</c:forEach>
+												</c:if>
+											</div>
+										</td>
+									</tr>
+								</table>
 							</div>
+							<%--
 							<div class="col-md-1 ">
 								<div class="btn btn-primary" style="background: #1E2B44;"
 									 onclick="add_file_inp()">추가
 								</div>
 							</div>
+							--%>
 						</div>
 					</div>
 					<%--project details--%>
@@ -390,6 +427,29 @@
         $(document).ready($("#startDate").val('${project.startDate}'));
         $(document).ready($("#endDate").val('${project.endDate}'));
 
+        // 파일 업로드용
+        $(document).ready(function () {
+            $("a[name='delete']").on("click",function(e){
+                if ($(this).parent().hasClass('exist')){
+
+				}
+                e.preventDefault();
+                fn_fileDelete($(this));
+            })
+            $("#add").on("click",function(e){
+                e.preventDefault();
+                fn_fileAdd();
+            })
+        });
+
+        $(function(){
+            $(document).on('click', '.tdF', function(){
+                alert('boo');
+                var downNo =  $(this).find(".hiddenAtNo").val();
+                location.href = "download.fo?no="+downNo;
+            });
+        });
+
         counter = 1
 
         // 파일추가
@@ -412,13 +472,13 @@
             var startDate = Date.parse($("#startDate").val());
             var endDate = Date.parse($("#endDate").val());
 
-
             if (($("#startDate").val() === "" || $("#endDate").val() === "") ||
                 (endDate < startDate)) {
                 /*날짜값이 없거나 종료일이 시작일보다 빠르면 에러*/
                 alert("시작·종료일자를 제대로 써주세요. 종료일자는 시작일자와 같거나 이후여야 합니다.");
-                return;
-            $("#aktivate").submit();
+            } else {
+                $("#aktivate").submit();
+            }
         }
 
         // 서브매니저 모달창 목록
@@ -580,6 +640,30 @@
             }
 
             return year + '-' + month + '-' + day;
+        }
+
+        // user/general/generalWorkUpdateForm 에서 뽑아온거
+
+        function fn_fileDelete (obj) {
+            obj.parent().parent().remove();
+        }
+
+        function fn_fileAdd () {
+            var str =
+                "<div class='filePlus'>" +
+                "<div style='display: inline-flex;'>" +
+                "<input type='file' class='fileCss' name='file' style='padding-left:10px;'>" +
+                "</div>" +
+                "<div style='display: inline-flex;'>" +
+                "<a href='#this' name='delete' class='btn'><i class='fas fa-minus-square'></i></a>" +
+                "</div>" +
+                "</div>";
+            $("#fileArea").append(str);
+
+            $("a[name='delete']").on("click", function (e) {
+                e.preventDefault();
+                fn_fileDelete($(this));
+            })
         }
 	</script>
 </body>

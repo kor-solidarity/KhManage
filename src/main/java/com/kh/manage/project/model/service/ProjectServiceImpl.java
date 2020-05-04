@@ -243,4 +243,14 @@ public class ProjectServiceImpl implements ProjectService {
 		
 		return "P" + pd.getSeq(sqlSession);
 	}
+	
+	@Override
+	public int updateProject(Project project) {
+		return pd.updateProject(sqlSession, project);
+	}
+	
+	@Override
+	public List<Attachment> selectAttachmentList(String pid) {
+		return pd.selectAttachmentList(sqlSession, pid);
+	}
 }

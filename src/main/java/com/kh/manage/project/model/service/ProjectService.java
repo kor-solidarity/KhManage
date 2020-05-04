@@ -90,4 +90,8 @@ public interface ProjectService {
 	int insertDownWork(TemplateWorkRead templateWorkRead);
 	
 	String selectProjectCurrval();
+	
+	int updateProject(Project project);
+	
+	List<Attachment> selectAttachmentList(String pid);
 }
