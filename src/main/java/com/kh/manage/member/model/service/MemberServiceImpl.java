@@ -360,6 +360,12 @@ public class MemberServiceImpl implements MemberService {
 
 		return md.myWorkProductList(sqlSession, member);
 	}
+
+	@Override
+	public List<MemberWorkProduct> myWorkList(Member member) {
+
+		return md.myWorkList(sqlSession, member);
+	}
 	
 	
 	

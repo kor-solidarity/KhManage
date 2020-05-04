@@ -102,7 +102,23 @@
 		<result property="workName" column="WORK_NAME"/>
 		<result property="originName" column="ORIGIN_NAME"/>
 		<result property="enrollDate" column="ENROLL_DATE"/>
+		<result property="grantorName" column="MEMBER_NAME"/>
+		<result property="beginDate" column="BEGIN_DATE"/>
+		<result property="completeDate" column="COMPLETE_DATE"/>
+		<result property="completeRate" column="COMPLETE_RATE"/>
 	</resultMap>
+	
+	<!-- private String projectPk;
+		private String projectName;
+		private String workNo;
+		private String workName;
+		private String originName;
+		private Date enrollDate;		
+		private String grantorName;			//승인자
+		private Date beginDate;				//작업 시작일
+		private Date completeDate;			//작업 완료일
+		private String completeRate;		//작업 완료율 -->
+	
 	
 	<!-- <resultMap type="Customer" id="customerResultSet">
 		<id property="customerNo" column="CUSTOMER_NO"/>
@@ -739,6 +755,35 @@
 		JOIN ATTACHMENT A ON(A.DIVISION = WP.PRODUCT_NO)
 		JOIN MEMBER M ON(M.MEMBER_NO = W.MEMBER_NO)
 		WHERE M.MEMBER_NO = #{memberNo}
+   </select>
+   
+   <select id="myWorkList" resultMap="memberWorkProductResultSet">
+		SELECT P.PROJECT_NAME, W.WORK_NAME, W.BEGIN_DATE, W.COMPLETE_DATE, W.COMPLETE_RATE, M.MEMBER_NAME
+		FROM WORK W
+		JOIN PROJECT P ON (W.PROJECT_NO = P.PROJECT_PK)
+		JOIN MEMBER M ON(M.MEMBER_NO = W.GRANTOR_NO)
+		WHERE BEGIN_DATE BETWEEN (SELECT DECODE(TO_CHAR(SYSDATE, 'D'), 2, TO_CHAR(SYSDATE, 'YY/MM/DD'),
+		       TO_DATE(TO_CHAR(SYSDATE - TO_CHAR(SYSDATE, 'D')-7, 'YY/MM/DD')))
+		FROM DUAL) AND (SELECT DECODE(TO_CHAR(SYSDATE, 'D'), 2, TO_CHAR(SYSDATE + 7, 'YY/MM/DD'),
+		       TO_DATE(TO_CHAR(SYSDATE - TO_CHAR(SYSDATE, 'D')+2, 'YY/MM/DD')))
+		FROM DUAL)
+		AND COMPLETE_DATE > SYSDATE
+		AND W.MEMBER_NO = #{memberNo}
+		AND W.WORK_STATUS = 'Y'
+		UNION
+		SELECT P.PROJECT_NAME, W.WORK_NAME, W.BEGIN_DATE, W.COMPLETE_DATE, W.COMPLETE_RATE, M.MEMBER_NAME
+		FROM WORK W
+		JOIN PROJECT P ON (W.PROJECT_NO = P.PROJECT_PK)
+		JOIN MEMBER M ON(M.MEMBER_NO = W.GRANTOR_NO)
+		WHERE BEGIN_DATE BETWEEN (SELECT DECODE(TO_CHAR(SYSDATE, 'D'), 2, TO_CHAR(SYSDATE+7, 'YY/MM/DD'),
+		       TO_DATE(TO_CHAR(SYSDATE - TO_CHAR(SYSDATE, 'D')-7, 'YY/MM/DD')))
+		FROM DUAL) AND (SELECT DECODE(TO_CHAR(SYSDATE, 'D'), 2, TO_CHAR(SYSDATE + 14, 'YY/MM/DD'),
+		       TO_DATE(TO_CHAR(SYSDATE - TO_CHAR(SYSDATE, 'D')+2, 'YY/MM/DD')))
+		FROM DUAL)
+		AND COMPLETE_DATE > SYSDATE
+		AND W.MEMBER_NO = #{memberNo}
+		AND W.WORK_STATUS = 'Y'
+		ORDER BY BEGIN_DATE ASC
    </select>
    
 </mapper>
