@@ -5,6 +5,7 @@ import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.template.model.vo.Template;
 import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
+import com.kh.manage.member.model.vo.AllDashBoard;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.project.model.vo.*;
 import org.apache.ibatis.session.RowBounds;
@@ -234,6 +235,21 @@ public class ProjectDaoImpl implements ProjectDao {
 	@Override
 	public List<Attachment> selectAttachmentList(SqlSessionTemplate sqlSession, String pid) {
 		return sqlSession.selectList("Project.selectAttachmentList", pid);
+	}
+	
+	@Override
+	public Attachment selectAttachment(SqlSessionTemplate sqlSession, String atNo) {
+		return sqlSession.selectOne("Project.selectAttachment", atNo);
+	}
+	
+	@Override
+	public int deleteAttachment(SqlSessionTemplate sqlSession, String atNo) {
+		return sqlSession.delete("Project.deleteAttachment", atNo);
+	}
+	@Override
+	public AllDashBoard selectOneProjectDetail(SqlSessionTemplate sqlSession, String pid) {
+		
+		return sqlSession.selectOne("Admin.selectOneProject", pid);
 	}
 }
 

@@ -276,8 +276,9 @@
 													추가하기</a>
 												<c:if test="${attachmentList != null }">
 													<c:forEach var="a" items="${attachmentList }">
-														<div >
-															<div class="exist" style="margin-top: 0px; margin-left: 10px; margin-bottom: 0px;">
+														<div>
+															<div class="exist"
+																 style="margin-top: 0px; margin-left: 10px; margin-bottom: 0px;">
 																<span class="tdF">
 																	<i class="fas fa-file-upload"></i>
 																&nbsp;&nbsp;<c:out value="${a.originName}"/>
@@ -429,24 +430,28 @@
 
         // 파일 업로드용
         $(document).ready(function () {
-            $("a[name='delete']").on("click",function(e){
-                if ($(this).parent().hasClass('exist')){
-
-				}
+            $("a[name='delete']").on("click", function (e) {
+                if ($(this).parent().hasClass('exist')) {
+                    // 이미 존재하고 있는걸 삭제하는거면 별도로 자료 보관해둔다.
+                    delFileId = $(this).parent().find('.hiddenAtNo').val()
+                    $('#fileArea').append(
+                        "<input  name='delFile' value='" + delFileId + "' style='display: none'>"
+                    );
+                }
                 e.preventDefault();
                 fn_fileDelete($(this));
             })
-            $("#add").on("click",function(e){
+            $("#add").on("click", function (e) {
                 e.preventDefault();
                 fn_fileAdd();
             })
         });
 
-        $(function(){
-            $(document).on('click', '.tdF', function(){
+        $(function () {
+            $(document).on('click', '.tdF', function () {
                 alert('boo');
-                var downNo =  $(this).find(".hiddenAtNo").val();
-                location.href = "download.fo?no="+downNo;
+                var downNo = $(this).find(".hiddenAtNo").val();
+                location.href = "download.fo?no=" + downNo;
             });
         });
 

@@ -5,6 +5,7 @@ import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.template.model.vo.Template;
 import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
+import com.kh.manage.member.model.vo.AllDashBoard;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.project.model.vo.*;
 
@@ -94,4 +95,9 @@ public interface ProjectService {
 	int updateProject(Project project);
 	
 	List<Attachment> selectAttachmentList(String pid);
+	
+	Attachment selectAttachment(String atNo);
+	
+	int deleteAttachment(String atNo);
+	AllDashBoard selectOneProjectDetail(String pid);
 }
