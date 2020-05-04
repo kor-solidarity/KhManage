@@ -10,10 +10,13 @@ import com.kh.manage.admin.adminManage.vo.DeptHistory;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.admin.adminManage.vo.Menu;
 import com.kh.manage.admin.adminManage.vo.MenuAccess;
+import com.kh.manage.admin.adminManage.vo.ProjectHistory;
 import com.kh.manage.admin.adminManage.vo.SelectAccessMember;
 import com.kh.manage.admin.rank.model.vo.Rank;
 import com.kh.manage.common.PageInfo;
+import com.kh.manage.member.model.vo.AllDashBoard;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.project.model.vo.ProjectDetail;
 
 public interface ManageService {
 	 int insertAccessGroup(Access ac);
@@ -76,5 +79,15 @@ public interface ManageService {
 
 	List<Menu> checkMenuAccessMember(MenuAccess menu);
 
-	int updateMenuInfo(MenuAccess ma); 
+	int updateMenuInfo(MenuAccess ma);
+
+	List<AllDashBoard> selectAllProjectList(PageInfo pi);
+
+	int getProjectListCount();
+
+	AllDashBoard selectOneProject(String pid);
+
+	List<ProjectHistory> selectHistory(String pid);
+
+	String selectEnrollDate(String pid); 
 }

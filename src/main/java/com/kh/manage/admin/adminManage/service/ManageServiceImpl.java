@@ -15,10 +15,13 @@ import com.kh.manage.admin.adminManage.vo.DeptHistory;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
 import com.kh.manage.admin.adminManage.vo.Menu;
 import com.kh.manage.admin.adminManage.vo.MenuAccess;
+import com.kh.manage.admin.adminManage.vo.ProjectHistory;
 import com.kh.manage.admin.adminManage.vo.SelectAccessMember;
 import com.kh.manage.admin.rank.model.vo.Rank;
 import com.kh.manage.common.PageInfo;
+import com.kh.manage.member.model.vo.AllDashBoard;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.project.model.vo.ProjectDetail;
 
 @Service
 public class ManageServiceImpl implements ManageService{
@@ -226,6 +229,36 @@ public class ManageServiceImpl implements ManageService{
 	public int updateMenuInfo(MenuAccess ma) {
 		
 		return ad.updateMenuInfo(sqlSession, ma);
+	}
+
+	@Override
+	public List<AllDashBoard> selectAllProjectList(PageInfo pi) {
+		
+		return ad.selectAllProjectList(sqlSession, pi);
+	}
+
+	@Override
+	public int getProjectListCount() {
+		
+		return ad.getProjectListCount(sqlSession);
+	}
+
+	@Override
+	public AllDashBoard  selectOneProject(String pid) {
+	
+		return ad.selectOneProject(sqlSession, pid);
+	}
+
+	@Override
+	public List<ProjectHistory> selectHistory(String pid) {
+		
+		return ad.selectHistory(sqlSession, pid);
+	}
+
+	@Override
+	public String selectEnrollDate(String pid) {
+		
+		return ad.selectEnrollDate(sqlSession, pid);
 	}
 	
 }
