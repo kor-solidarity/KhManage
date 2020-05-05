@@ -367,11 +367,18 @@ public class MemberServiceImpl implements MemberService {
 		return md.myWorkList(sqlSession, member);
 	}
 
-//	@Override
-//	public ProjectRank selectMonthlyProjectCount(ProjectRank pr) {
-//
-//		return md.selectMonthlyProjectCount(sqlSession, pr);
-//	}
+	@Override
+	public MyStatic selectMonthlyProjectCount() {
+
+		return md.selectMonthlyProjectCount(sqlSession);
+	}
+
+	@Override
+	public List<Dept> selectDeptListChart() {
+
+		return md.selectDeptListChart(sqlSession);
+	}
+
 
 	
 	

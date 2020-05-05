@@ -63,12 +63,8 @@ public class MemberController {
 //	}
 	
 	@RequestMapping("/adminShowMain.me")
-	public String showAdminPage(Model model) {
+	public String showAdminPage(Model model, HttpServletRequest request) {
 		
-		//관리자 메인 차트1
-		//ProjectRank monthlyProject = ms.monthlyProjectCount();
-//		List<ProjectRank> pList = new ArrayList<ProjectRank>();
-//		
 //		for(int i = 0; i <= 12; i++) {
 //			ProjectRank pr = new ProjectRank();
 //			pr.setMonth(i);
@@ -77,12 +73,17 @@ public class MemberController {
 //			
 //			pList.add(pr);
 //		}
-//		
-//		model.addAttribute("pList", pList);
+
+		//관리자 메인페이지 차트1
+		MyStatic monthlyProject = ms.selectMonthlyProjectCount();
 		
+		model.addAttribute("monthlyProject", monthlyProject);
 		
-		//관리자 메인 차트2
+		System.out.println("관리자 메인 차트1 : " + monthlyProject);
 		
+		//관리자 메인페이지 차트2
+		List<Dept> dlist = ms.selectDeptListChart();
+		request.setAttribute("dlist", dlist);
 		
 		
 		return "admin/main/adminMainPage";

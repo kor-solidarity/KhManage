@@ -35,14 +35,28 @@ public class MyStatic implements java.io.Serializable{
 	private int plChecking;
 	private int plChecked;
 	private int delayed;
-
+	//JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC
+	private int jan;
+	private int feb;
+	private int mar;
+	private int apr;
+	private int may;
+	private int jun;
+	private int jul;
+	private int aug;
+	private int sep;
+	private int oct;
+	private int nov;
+	private int dec;
+	
 	public MyStatic() {}
 
 	public MyStatic(String workNo, String workName, String status, String projectNo, String projectName, Date beginDate,
 			Date completeDate, String precedeNo, String completeRate, String grantorNo, String workLevel,
 			String highWorkNo, String memo, String workType, String memberNo, String workStatus,
 			ArrayList<WorkAttachment> workAttachment, int before, int developing, int completed, int testCompleted,
-			int plChecking, int plChecked, int delayed) {
+			int plChecking, int plChecked, int delayed, int jan, int feb, int mar, int apr, int may, int jun, int jul,
+			int aug, int sep, int oct, int nov, int dec) {
 		super();
 		this.workNo = workNo;
 		this.workName = workName;
@@ -68,6 +82,18 @@ public class MyStatic implements java.io.Serializable{
 		this.plChecking = plChecking;
 		this.plChecked = plChecked;
 		this.delayed = delayed;
+		this.jan = jan;
+		this.feb = feb;
+		this.mar = mar;
+		this.apr = apr;
+		this.may = may;
+		this.jun = jun;
+		this.jul = jul;
+		this.aug = aug;
+		this.sep = sep;
+		this.oct = oct;
+		this.nov = nov;
+		this.dec = dec;
 	}
 
 	public String getWorkNo() {
@@ -262,6 +288,102 @@ public class MyStatic implements java.io.Serializable{
 		this.delayed = delayed;
 	}
 
+	public int getJan() {
+		return jan;
+	}
+
+	public void setJan(int jan) {
+		this.jan = jan;
+	}
+
+	public int getFeb() {
+		return feb;
+	}
+
+	public void setFeb(int feb) {
+		this.feb = feb;
+	}
+
+	public int getMar() {
+		return mar;
+	}
+
+	public void setMar(int mar) {
+		this.mar = mar;
+	}
+
+	public int getApr() {
+		return apr;
+	}
+
+	public void setApr(int apr) {
+		this.apr = apr;
+	}
+
+	public int getMay() {
+		return may;
+	}
+
+	public void setMay(int may) {
+		this.may = may;
+	}
+
+	public int getJun() {
+		return jun;
+	}
+
+	public void setJun(int jun) {
+		this.jun = jun;
+	}
+
+	public int getJul() {
+		return jul;
+	}
+
+	public void setJul(int jul) {
+		this.jul = jul;
+	}
+
+	public int getAug() {
+		return aug;
+	}
+
+	public void setAug(int aug) {
+		this.aug = aug;
+	}
+
+	public int getSep() {
+		return sep;
+	}
+
+	public void setSep(int sep) {
+		this.sep = sep;
+	}
+
+	public int getOct() {
+		return oct;
+	}
+
+	public void setOct(int oct) {
+		this.oct = oct;
+	}
+
+	public int getNov() {
+		return nov;
+	}
+
+	public void setNov(int nov) {
+		this.nov = nov;
+	}
+
+	public int getDec() {
+		return dec;
+	}
+
+	public void setDec(int dec) {
+		this.dec = dec;
+	}
+
 	@Override
 	public String toString() {
 		return "MyStatic [workNo=" + workNo + ", workName=" + workName + ", status=" + status + ", projectNo="
@@ -271,9 +393,11 @@ public class MyStatic implements java.io.Serializable{
 				+ ", workType=" + workType + ", memberNo=" + memberNo + ", workStatus=" + workStatus
 				+ ", workAttachment=" + workAttachment + ", before=" + before + ", developing=" + developing
 				+ ", completed=" + completed + ", testCompleted=" + testCompleted + ", plChecking=" + plChecking
-				+ ", plChecked=" + plChecked + ", delayed=" + delayed + "]";
+				+ ", plChecked=" + plChecked + ", delayed=" + delayed + ", jan=" + jan + ", feb=" + feb + ", mar=" + mar
+				+ ", apr=" + apr + ", may=" + may + ", jun=" + jun + ", jul=" + jul + ", aug=" + aug + ", sep=" + sep
+				+ ", oct=" + oct + ", nov=" + nov + ", dec=" + dec + "]";
 	}
-	
+
 
 
 }
