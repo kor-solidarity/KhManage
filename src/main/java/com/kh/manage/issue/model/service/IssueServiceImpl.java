@@ -17,6 +17,8 @@ import com.kh.manage.issue.model.vo.IssueProjectTeam;
 import com.kh.manage.issue.model.vo.IssueWPT;
 import com.kh.manage.issue.model.vo.IssueWork;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.work.model.vo.Grantor;
+import com.kh.manage.work.model.vo.Work;
 import com.kh.manage.work.model.vo.WorkProjectTeam;
 
 @Service
@@ -111,6 +113,21 @@ public class IssueServiceImpl implements IssueService{
 	@Override
 	public List<IssueWork> selectWorkTMList(HashMap<String, String> map) {
 		return id.selectWorkTMList(sqlSession, map);
+	}
+
+	@Override
+	public Work selectWork(String workNo) {
+		return id.selectWork(sqlSession, workNo);
+	}
+
+	@Override
+	public List<Grantor> selectGrantorList(String projectNo) {
+		return id.selectGrantorList(sqlSession, projectNo);
+	}
+
+	@Override
+	public List<Work> selectHighWorkNoList(Work w) {
+		return id.selectHighWorkNoList(sqlSession, w);
 	}
 
 	

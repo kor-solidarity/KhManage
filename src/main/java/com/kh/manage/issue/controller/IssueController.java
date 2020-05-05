@@ -32,6 +32,8 @@ import com.kh.manage.issue.model.vo.IssueProjectTeam;
 import com.kh.manage.issue.model.vo.IssueWPT;
 import com.kh.manage.issue.model.vo.IssueWork;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.work.model.vo.Grantor;
+import com.kh.manage.work.model.vo.Work;
 import com.kh.manage.work.model.vo.WorkProjectTeam;
 
 @Controller
@@ -154,8 +156,21 @@ public class IssueController {
 	}
 	
 	@RequestMapping("/changeRequestPage.iu")
-	public String changeRequestPage() {
-		return "user/issue/changeRequestPage";
+	public String changeRequestPage(Model m, HttpServletRequest request) {
+		
+		Member member = (Member) request.getSession().getAttribute("loginUser");
+		
+		List<WorkProjectTeam> wp = is.selectTeamWork(member);
+		
+		if(wp != null) {
+			request.setAttribute("wp", wp);
+			return "user/issue/changeRequestPage";
+		}else {
+			request.setAttribute("msg", "이슈 입력 페이지 오류");
+			return "common/errorPage";
+		}
+		
+		
 	}
 	
 	
@@ -309,6 +324,36 @@ public class IssueController {
 			return "common/errorPage";
 		}
 		
+	}
+	
+	
+	@RequestMapping("/selectWork.iu")
+	public ModelAndView selectWork(String workNo, ModelAndView mv, HttpSession session) {
+		
+		Work w = is.selectWork(workNo);
+		//System.out.println("작업정보 출력 " + w);
+		
+		List<Grantor> gt = is.selectGrantorList(w.getProjectNo());
+//		System.out.println("리스트 출력 : " + gt);
+		
+		List<Work> hw = is.selectHighWorkNoList(w);
+//		System.out.println("작업리스트 출력 : "+ hw);
+		
+		HashMap<String, Object> map = new HashMap();
+		
+		//map.put("Work", w);
+		map.put("gt", gt);
+		map.put("hw", hw);
+		
+		
+		mv.addObject("map", map);
+//		mv.addObject("gt", gt);
+//		//mv.addObject("w", w);
+//		mv.addObject("hw", hw);
+		
+		mv.setViewName("jsonView");
+		
+		return mv;
 	}
 	
 }
