@@ -76,6 +76,14 @@ public class ProjectController {
 		
 		List<ProjectList> teamList = ps.selectProjectList(pi, loginUser);
 		
+		for (ProjectList p : teamList) {
+			double clear = Double.parseDouble(p.getWorkClear());
+			double all = Double.parseDouble(p.getAllWork());
+			double res = clear / all;
+			int perc = (int) Math.round(res * 100);
+		    p.setPercentage(String.valueOf(perc));
+		}
+		
 		System.out.println("teamList: " + teamList);
 		
 		model.addAttribute("list", teamList);
@@ -841,7 +849,7 @@ public class ProjectController {
 		
 		model.addAttribute("hList", hList);
 		model.addAttribute("project", ad);
-		
+		model.addAttribute("list3", list3);
 		model.addAttribute("project", ad);
 		model.addAttribute("pid", pid);
 		

@@ -22,6 +22,8 @@ public class ProjectList {
 	private String issueCount;
 	private String workClear;
 	private String allWork;
+	// 바로위에꺼 계산용도
+	private String percentage;
 	
 	
 	public ProjectList(String projectPk, String projectName, String isImportant,
@@ -223,5 +225,13 @@ public class ProjectList {
 	
 	public void setAllWork(String allWork) {
 		this.allWork = allWork;
+	}
+	
+	public String getPercentage() {
+		return percentage;
+	}
+	
+	public void setPercentage(String percentage) {
+		this.percentage = percentage;
 	}
 }
