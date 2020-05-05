@@ -128,17 +128,17 @@
 			<td class="datetd">날짜</td>
 		</tr>
 		
-		<c:forEach var="m" items="${list}">
-			<tr class="tr">
-				<td style="display: none;"><input type="hidden" value="${m.mailNo }"></td>
-				<td class="chktd"><input type="checkbox"></td>
-				<td class="startd"><img  class="star ${m.mailNo }"></td>
-				<td class="mailtd"><img  src="resources/img/mail.png" class="mail"></td>
-				<td class="sendtd">${m.receiver }</td>
-				<td class="titletd">${m.subject }</td>
-				<td class="datetd">${m.enrollDate }</td>
-			</tr>		
-		</c:forEach>
+			<c:forEach var="m" items="${list}">
+				<tr class="tr">
+					<td style="display: none;"><input type="hidden" value="${m.mailNo }"></td>
+					<td class="chktd"><input type="checkbox"></td>
+					<td class="startd"><img  class="star ${m.mailNo }"></td>
+					<td class="mailtd"><img  src="resources/img/mail.png" class="mail"></td>
+					<td class="sendtd">${m.receiver }</td>
+					<td class="titletd">${m.subject }</td>
+					<td class="datetd">${m.enrollDate }</td>
+				</tr>		
+			</c:forEach>
 		
 		<tr class="pagingArea">
 								<td colspan="6">
@@ -186,65 +186,26 @@
 	</div>	
 </body>
 <script>
+$(function(){
+	
 
- 	 $(function(){
-	 	 for(var i= 0; i < ${list.size()}; i++){
-	 		 
-	 		 if( '${list.get(i).important}' == 'Y'){
-	 			$(".${list.get(i).mailNo}").prop("src", "resources/img/star3.png");
-	 		 }else{
-	 			$(".${list.get(i).mailNo}").prop("src", "resources/img/star.png"); 
-	 		 }
-	 		 
-	 	 }
- 		
- 		 
- 	 });
- 	 
 	$("#mailTable tr").click(function(){
 	 var num = $(this).children().eq(0).children().val(); 
 	 
 	 console.log(num);
 	 
  	 location.href="mailDetail.ma?no=" +num;
- 	 
 		
 	}); 
 	
-	/* $(function(){
-		
-			 $.ajax({
-			        type:'GET',
-			        url : "important.ma",
-			        dataType : "json",
-			        data:{
-			        	mNo : mNo,
-			        	imp : imp
-			        },
-			        contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
-			        success : function(data){
-			            
-			        	console.log(data);
-			        
-			        	console.log(data);
-			        	
-			        	if(data.important == 'Y' ){
-			        		$(".star").prop("src", "resources/img/star3.png" );
-			        		imp = 'Y';
-			        	}else{
-			        		$(".star").prop("src", "resources/img/star.png" );
-			        		imp = 'N';
-			        	} 
-			        },
-			        error:function(request,status,error){
-			            
-			       }
-			    });
-		
+	
+	console.log(${list})
+	
+	
+	
  	 
- 	 
-		});
- */
+	});
+
 </script>
 </html>
 

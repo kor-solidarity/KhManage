@@ -65,8 +65,7 @@
 .pjtTd4{width: 30%;}
 .td{padding-left: 5px;}
 #myChart,#myChart2,#myChart3{
-	margin-left: 250px;
-	height: 250px;
+	margin: 0 auto;
 }
 .scheduler_default_corner_inner{
 		display:none !important;
@@ -100,7 +99,7 @@
 </head>
 <body onload="$('#route1').text('대시보드'); $('#route2').text('상세대시보드')">
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
-	<jsp:include page="/WEB-INF/views/user/common/sidebar.jsp"/>
+	<jsp:include page="/WEB-INF/views/user/common/sidebar2.jsp"/>
 	
 	<div id="wrap">
 	
@@ -164,7 +163,7 @@
 							<td class="tdMid"><b>프로젝트 태스크 진행상태</b>
 							<hr>
 								<div id="task">
-								<canvas id="myChart" width="400" height="400"></canvas>
+								<canvas id="myChart" width="300" height="300"></canvas>
 								</div>
 							</td>
 						</tr>
@@ -183,7 +182,7 @@
 							<hr>
 								<div class="chart-none-data">
 									<div id="issue"><!-- No data available -->
-									<canvas id="myChart2" width="400" height="400"></canvas>	
+									<canvas id="myChart2" width="300" height="300"></canvas>	
 									</div>
 								</div>
 							</td>
@@ -191,7 +190,7 @@
 							<td class="tdMid"><b>변경요청</b>
 							<hr>
 								<div id="change">
-								<canvas id="myChart3" width="400" height="400"></canvas>
+								<canvas id="myChart3" width="300" height="300"></canvas>
 								</div>
 							</td>
 						</tr>

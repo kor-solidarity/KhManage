@@ -382,6 +382,7 @@ public class ForumController {
 		System.out.println("list :" +list);
 		
 		m.addAttribute("list", list);
+		m.addAttribute("pid", pid);
 		
 		return "user/project/workAssignment";
 	}

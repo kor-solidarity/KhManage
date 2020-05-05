@@ -168,7 +168,7 @@
 							<td class="titletd2">${n.noticeTitle}</td>
 							<td class="sendtd2">${n.viewCount}</td>
 							<td class="sendtd2">${n.createDate}</td>
-							<td class="datetd2">${n.memberNo}</td>
+							<td class="datetd2">${n.memberName}</td>
 							<td class="td"><input type="hidden"  value="${n.noticeNo}"></td>
 						</tr>
 					</c:forEach>

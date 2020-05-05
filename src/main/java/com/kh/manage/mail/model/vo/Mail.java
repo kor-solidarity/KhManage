@@ -21,13 +21,14 @@ public class Mail implements java.io.Serializable{
 	private String temp;
 	private String spam;
 	private String trash;
+	private String read;
 	private List<AttachmentMail> atMail;
 	
 	public Mail() {}
 
 	public Mail(String mailNo, String memberNo, String subject, String content, Date enrollDate, String status,
 			String from, String reNo, String receiver, String receiverType, String mbNo, int mailBoxType,
-			String important, String temp, String spam, String trash, List<AttachmentMail> atMail) {
+			String important, String temp, String spam, String trash, String read, List<AttachmentMail> atMail) {
 		super();
 		this.mailNo = mailNo;
 		this.memberNo = memberNo;
@@ -45,6 +46,7 @@ public class Mail implements java.io.Serializable{
 		this.temp = temp;
 		this.spam = spam;
 		this.trash = trash;
+		this.read = read;
 		this.atMail = atMail;
 	}
 
@@ -176,6 +178,14 @@ public class Mail implements java.io.Serializable{
 		this.trash = trash;
 	}
 
+	public String getRead() {
+		return read;
+	}
+
+	public void setRead(String read) {
+		this.read = read;
+	}
+
 	public List<AttachmentMail> getAtMail() {
 		return atMail;
 	}
@@ -190,10 +200,8 @@ public class Mail implements java.io.Serializable{
 				+ ", enrollDate=" + enrollDate + ", status=" + status + ", from=" + from + ", reNo=" + reNo
 				+ ", receiver=" + receiver + ", receiverType=" + receiverType + ", mbNo=" + mbNo + ", mailBoxType="
 				+ mailBoxType + ", important=" + important + ", temp=" + temp + ", spam=" + spam + ", trash=" + trash
-				+ ", atMail=" + atMail + "]";
+				+ ", read=" + read + ", atMail=" + atMail + "]";
 	}
-
-	
 
 	
 	

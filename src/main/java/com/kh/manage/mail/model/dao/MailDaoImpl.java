@@ -158,5 +158,23 @@ public class MailDaoImpl implements MailDao{
 		return sqlSession.selectList("Mail.trashMailList", mail, rowBounds);
 	}
 
+	@Override
+	public int insertMailBox2(SqlSessionTemplate sqlSession, Mail m) {
+
+		return sqlSession.insert("Mail.insertMailBox2", m);
+	}
+
+	@Override
+	public int insertMailBox3(SqlSessionTemplate sqlSession, Mail m) {
+
+		return sqlSession.insert("Mail.insertMailBox3" , m);
+	}
+
+	@Override
+	public int updateRead(SqlSessionTemplate sqlSession, Mail mail) {
+
+		return sqlSession.update("Mail.updateRead",mail);
+	}
+
 
 }

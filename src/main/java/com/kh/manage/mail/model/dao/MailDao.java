@@ -51,5 +51,11 @@ public interface MailDao {
 
 	List<Mail> selectTrashList(SqlSessionTemplate sqlSession, Mail mail, PageInfo pi);
 
+	int insertMailBox2(SqlSessionTemplate sqlSession, Mail m);
+
+	int insertMailBox3(SqlSessionTemplate sqlSession, Mail m);
+
+	int updateRead(SqlSessionTemplate sqlSession, Mail mail);
+
 
 }

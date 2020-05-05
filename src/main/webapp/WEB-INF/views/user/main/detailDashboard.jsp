@@ -67,6 +67,7 @@
 #myChart,#myChart2,#myChart3{
 	height: 250px;
 	margin: 0 auto;
+	width: 100px;
 }
 .scheduler_default_corner_inner{
 		display:none !important;
@@ -165,7 +166,7 @@
 							<hr>
 								<div id="task">
 								<div style="margin: 0 auto;">
-								<canvas id="myChart" width="400" height="400"></canvas>
+								<canvas id="myChart" width="300" height="300"></canvas>
 								</div>
 								</div>
 							</td>
@@ -186,7 +187,7 @@
 								<div class="chart-none-data">
 									<div id="issue"><!-- No data available -->
 									<div style="margin: 0 auto;">
-									<canvas id="myChart2" width="400" height="400" ></canvas>
+									<canvas id="myChart2" width="300" height="300" ></canvas>
 									</div>	
 									</div>
 								</div>
@@ -196,7 +197,7 @@
 							<hr>
 								<div id="change">
 								<div style="margin: 0 auto;">
-								<canvas id="myChart3" width="400" height="400"></canvas>
+								<canvas id="myChart3" width="300" height="300"></canvas>
 								</div>
 								</div>
 							</td>

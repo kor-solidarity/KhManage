@@ -15,11 +15,12 @@ public class Notice {
 	private int viewCount;
 	private String memberNo;
 	private String status;
+	private String memberName;
 	
 	public Notice() {}
 
 	public Notice(String noticeNo, String noticeTitle, String noticeContent, Date createDate, Date modifyDate,
-			int viewCount, String memberNo, String status) {
+			int viewCount, String memberNo, String status, String memberName) {
 		super();
 		this.noticeNo = noticeNo;
 		this.noticeTitle = noticeTitle;
@@ -29,6 +30,7 @@ public class Notice {
 		this.viewCount = viewCount;
 		this.memberNo = memberNo;
 		this.status = status;
+		this.memberName = memberName;
 	}
 
 	public String getNoticeNo() {
@@ -95,12 +97,21 @@ public class Notice {
 		this.status = status;
 	}
 
+	public String getMemberName() {
+		return memberName;
+	}
+
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
+
 	@Override
 	public String toString() {
 		return "Notice [noticeNo=" + noticeNo + ", noticeTitle=" + noticeTitle + ", noticeContent=" + noticeContent
 				+ ", createDate=" + createDate + ", modifyDate=" + modifyDate + ", viewCount=" + viewCount
-				+ ", memberNo=" + memberNo + ", status=" + status + "]";
+				+ ", memberNo=" + memberNo + ", status=" + status + ", memberName=" + memberName + "]";
 	}
+
 
 	
 	

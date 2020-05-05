@@ -12,6 +12,7 @@
 		<result property="modifyDate" column="MODIFY_DATE"/>
 		<result property="viewCount" column="VIEW_COUNT"/>
 		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="memberName" column="MEMBER_NAME"/>
 	</resultMap>
 	
 	<resultMap type="Mwork" id="mWorkResultSet">
@@ -50,29 +51,32 @@
 	</select>
 	
 	<select id="selectAll" resultMap="noticeResultSet" >
-		SELECT NOTICE_NO
-			  ,NOTICE_TITLE
-			  ,NOTICE_CONTENT
-			  ,CREATE_DATE
-			  ,MODIFY_DATE
-			  ,CREATE_DATE
-			  ,VIEW_COUNT
-			  ,MEMBER_NO
-		FROM NOTICE	 
-		WHERE STATUS = 'Y' 
+		SELECT N.NOTICE_NO
+			  ,N.NOTICE_TITLE
+			  ,N.NOTICE_CONTENT
+			  ,N.CREATE_DATE
+			  ,N.MODIFY_DATE
+			  ,N.CREATE_DATE
+			  ,N.VIEW_COUNT
+			  ,M.MEMBER_NAME
+		FROM NOTICE	 N
+        JOIN MEMBER M ON(N.MEMBER_NO = M.MEMBER_NO)
+		WHERE N.STATUS = 'Y'
+		ORDER BY NOTICE_NO DESC
 	</select>
 	
 	<select id="selectNotice" resultMap="noticeResultSet" parameterType="Notice">
-		SELECT NOTICE_NO
-			  ,NOTICE_TITLE
-			  ,NOTICE_CONTENT
-			  ,CREATE_DATE
-			  ,MODIFY_DATE
-			  ,CREATE_DATE
-			  ,VIEW_COUNT
-			  ,MEMBER_NO
-		FROM NOTICE
-		WHERE NOTICE_NO = #{noticeNo}
+		SELECT N.NOTICE_NO
+			  ,N.NOTICE_TITLE
+			  ,N.NOTICE_CONTENT
+			  ,N.CREATE_DATE
+			  ,N.MODIFY_DATE
+			  ,N.VIEW_COUNT
+			  ,M.MEMBER_NAME
+		FROM NOTICE	 N
+        JOIN MEMBER M ON(N.MEMBER_NO = M.MEMBER_NO)
+		WHERE N.STATUS = 'Y'
+		AND NOTICE_NO = #{noticeNo}
 	</select>
 	
 	<update id="countPlus" parameterType="Notice">

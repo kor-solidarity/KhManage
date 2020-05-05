@@ -1,24 +1,38 @@
 package com.kh.manage.mail.controller;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.Part;
 import javax.mail.Session;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.SdkClientException;
+import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.Bucket;
@@ -37,64 +51,72 @@ import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.amazonaws.services.s3.model.UploadPartRequest;
 import com.amazonaws.services.s3.model.UploadPartResult;
 import com.amazonaws.util.StringUtils;
+import com.kh.manage.mail.controller.MailController;
+import com.kh.manage.mail.model.service.MailService;
+import com.kh.manage.mail.model.vo.AttachmentMail;
+import com.kh.manage.mail.model.vo.Mail;
+import com.kh.manage.member.model.vo.Member;
 
 // 메일 수신을 위한 s3 버킷 접근 
-// @Component
+@Component
 public class AwsS3 {
+	
+	@Autowired
+	private MailService ms;
+   
    private AmazonS3 conn;
    private AmazonS3 s3Client;
    
+   protected String accessKey = "AKIAJ4XHPYTYIUMZ5JWQ";
+   protected String secretKey = "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";
+   protected String bucketName = "manageee";
+   
+   protected String receiving_attachments ="src/main/webapp/resources/mailFiles";
    public AwsS3() {
       // 생성자가 작동하면 기본적으로 빌드를 한다.
       buildS3();
       this.s3Client = this.conn;
    }
-   
+
    // 빌드하기 
    public void buildS3() {
 
       // 자격 증명 가져오기 // SES에서는 Exception을 내줌
-	   BasicAWSCredentials awsCreds = new BasicAWSCredentials("AKIAJJDLXCV6PMEPLKEQ", "c0WavFIUCVaqRINkRijrBwFADs+FfmHqk2bl27fa");
-	   //BasicAWSCredentials awsCreds = new BasicAWSCredentials("AKIAJAXVZ4R54QFKZSKA", "dNKQOsJzzxfu5XD2+VTsA3B21mnbuMEGfBsahz3D");
-      
-         this.conn = AmazonS3ClientBuilder.standard()
-               .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
-               .withRegion("us-east-1")
-               .build();
-      
+      BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKey, secretKey);
+
+      this.conn = AmazonS3ClientBuilder.standard()
+            .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
+            .withRegion("us-east-1")
+            .build();
+
       System.out.println("커넥션 빌드 성공");
 
    }
-   
+
    // 버킷 가져오기
    public Bucket getBucket(String bucket_name) {
-      // System.out.println("찾는 버킷 : " + bucket_name);
-      
+      System.out.println("찾는 버킷 : " + bucket_name);
+
       List<Bucket> buckets = conn.listBuckets();
-      // System.out.println("버킷 리스트 : " + buckets);
+      System.out.println("버킷 리스트 : " + buckets);
       for (Bucket bucket : buckets) {
-              System.out.println(bucket.getName() + "\t" + StringUtils.fromDate(bucket.getCreationDate()));
+         System.out.println(bucket.getName() + "\t" + StringUtils.fromDate(bucket.getCreationDate()));
       }      
-        
-        Bucket named_bucket = null;
-        for (Bucket b : buckets) {
-            if (b.getName().equals(bucket_name)) {
-                named_bucket = b;
-            }
-        }
-        
-        if(named_bucket == null) {
-           System.out.println("현재 찾는 버킷 " + bucket_name + "이 존재하지 않습니다.");
-        }
-        
-        return named_bucket;
-    }
-   
-   // S3 스토리지에 파일 업로드 하는 메소드
-   public void putObject(String bucket_name, String file_name, File uploadFiles) {
-      conn.putObject(bucket_name, file_name, uploadFiles);
+
+      Bucket named_bucket = null;
+      for (Bucket b : buckets) {
+         if (b.getName().equals(bucket_name)) {
+            named_bucket = b;
+         }
+      }
+
+      if(named_bucket == null) {
+         System.out.println("현재 찾는 버킷 " + bucket_name + "이 존재하지 않습니다.");
+      }
+
+      return named_bucket;
    }
-   
+
    // 버킷 내부 객체 리스트 가져오기 
    public List<S3ObjectSummary> getObjects(String bucket_name) {
       // S3Object o = conn.getObject(bucket_name, objKey);  // 객체 정보를 반환해주는 메소드 
@@ -103,220 +125,299 @@ public class AwsS3 {
 
       System.out.println("***" + bucket_name + " 내에 존재하는 객체 리스트 ***");
       for (S3ObjectSummary os: objects) {
-          System.out.println("* " + os.getKey());
+         System.out.println("* " + os.getKey());
       }
-      
+
       return objects; // 객체가 들어있는 리스트 
    }
-   
-   // 객체 리스트에서 객체를 찾아주는 메소드 
-   public S3Object getObjectFromObjects(List<S3ObjectSummary> objects, String objKey)/* throws Exception */ {
-      // 버킷 이름 가져오기
-      String bucketName = "";
-      if(objects.get(0) != null) {
-         bucketName = objects.get(0).getBucketName();
-      }else {
-         // throw new Exception("리스트에 객체가 존재하지 않습니다.");
-         System.out.println("리스트에 객체가 존재하지 않습니다.");
-         return null;
+
+   // s3에 있는 객체를 불러 읽어줌
+   public void downloadObject(String bucketName, String key, Member loginUser) {
+      S3Object fullObject = null, objectPortion = null, headerOverrideObject = null;
+      try {
+         AmazonS3 s3Client = conn;
+
+         fullObject = s3Client.getObject(new GetObjectRequest(bucketName, key));
+         Properties props = System.getProperties();
+
+         Session mailSession = Session.getDefaultInstance(props, null);
+         // parse eml file
+         InputStream inputStream;
+         try {
+            inputStream = fullObject.getObjectContent();
+            MimeMessage message = new MimeMessage(mailSession, inputStream);
+
+            try {
+               System.out.println("-----------------");
+               doEMailDownload(message, loginUser);;
+               //new MailController().doEMailDownload(message);
+               
+            } catch (Exception e) {
+               // TODO Auto-generated catch block
+               e.printStackTrace();
+            }
+         } catch (MessagingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+         }
+
+
+      } catch(AmazonServiceException e) {
+         e.printStackTrace();
+      } catch(SdkClientException e) {
+         e.printStackTrace();
+      } finally {
+         try{
+            if(fullObject != null) {
+               fullObject.close();
+            }
+            if(objectPortion != null) {
+               objectPortion.close();
+            }
+            if(headerOverrideObject != null) {
+               headerOverrideObject.close();
+            }
+         }catch (IOException e) {
+            e.printStackTrace();
+         }
       }
-      
-      // 객체 가져오기 
-      S3Object object = s3Client.getObject(bucketName, objKey);  // 객체 정보를 반환해주는 메소드
-      
-      return object; // 객체가 들어있는 리스트 
    }
    
-   // 버킷 객체를 받아와 이메일 파싱을 해주는 메소드
-   public void parseEmailMessage(ListObjectsV2Result listObject) {
-      
-      return;
-   }
    
-   // 객체를 다운로드 해주는 메소드 -> 그냥 내용 출력메소드
-   // 내부 내용을 출력할 수 있게 도와준다. -> 첨부파일 분리를 먼저 작업한 후에 다시한번 시도한다.
-   public void downloadObject(String bucketName, String key) {
-       S3Object fullObject = null, objectPortion = null, headerOverrideObject = null;
-       // System.out.println("\n\n\n\nDownloadObject / bucket : " + bucketName + ", key : " + key);
+   public int saveFile(File saveFile, Part part) throws Exception {
+
+        BufferedOutputStream bos = new BufferedOutputStream( new FileOutputStream(saveFile) );
+
+        byte[] buff = new byte[2048];
+        InputStream is = part.getInputStream();
+        int ret = 0, count = 0;
+        while( (ret = is.read(buff)) > 0 ){
+            bos.write(buff, 0, ret);
+            count += ret;
+        }
+        bos.close();
+        is.close();
+        return count;
+    }
+
+    public String decodeName( String name ) throws Exception {
+        if(name == null || name.length() == 0){
+            return "unknown";
+        }
+        String ret = java.net.URLDecoder.decode( name, "UTF-8" );
+
+        // also check for a few other things in the string:
+        ret = ret.replaceAll("=\\?", "");
+        ret = ret.replaceAll("utf-8\\?B\\?", "");
+        ret = ret.replaceAll("\\?=", "");
+        ret = ret.replaceAll("=20", " ");
+        ret = java.net.URLDecoder.decode( ret, "UTF-8" );
+        
+        
+        return ret;
+    }
+   
+ // 버킷 내부에 존재하는 객체 삭제 메소드
+    public void deleteObject(String bucketName, String keyName) {
+       try {
+          s3Client.deleteObject(new DeleteObjectRequest(bucketName, keyName));
+          System.out.println(bucketName + "내에 존재하는 " + keyName + " 객체 삭제 완료");
+        }
+        catch(AmazonServiceException e) {
+            // The call was transmitted successfully, but Amazon S3 couldn't process 
+            // it, so it returned an error response.
+            e.printStackTrace();
+        }
+        catch(SdkClientException e) {
+            // Amazon S3 couldn't be contacted for a response, or the client
+            // couldn't parse the response from Amazon S3.
+            e.printStackTrace();
+        }
+    }
+    public void doEMailDownload(Message message, Member loginUser) throws Exception {
+
         try {
-            AmazonS3 s3Client = conn;
-   
-            // Get an object and print its contents.
-            // System.out.println("Downloading an object");
-            fullObject = s3Client.getObject(new GetObjectRequest(bucketName, key));
-            // System.out.println("***   Content-Type: " + fullObject.getObjectMetadata().getContentType());
-            // System.out.println("***   Content: ");
-            displayTextInputStream(fullObject.getObjectContent()); // 객체의 content 내용 출력! 
+
+            Message messages = message;//folder.getMessages();
             
-            // Get a range of bytes from an object and print the bytes.
-            GetObjectRequest rangeObjectRequest = new GetObjectRequest(bucketName, key)
-                                                        .withRange(0,9);
-            objectPortion = s3Client.getObject(rangeObjectRequest);
-            
-            // System.out.println("\n***    objectPrtion 내용 출력");
-            // displayTextInputStream(objectPortion.getObjectContent());
-            
-            // Get an entire object, overriding the specified response headers, and print the object's content.
-            ResponseHeaderOverrides headerOverrides = new ResponseHeaderOverrides()
-                                                            .withCacheControl("No-cache")
-                                                            .withContentDisposition("attachment; filename=example.txt");
-            GetObjectRequest getObjectRequestHeaderOverride = new GetObjectRequest(bucketName, key)
-                                                            .withResponseHeaders(headerOverrides);
-            headerOverrideObject = s3Client.getObject(getObjectRequestHeaderOverride);
-            // System.out.println("\n***   헤더 내용 출력 ");
-            // displayTextInputStream(headerOverrideObject.getObjectContent());
-        } catch(AmazonServiceException e) {
-            e.printStackTrace();
-        } catch(SdkClientException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-         e.printStackTrace();
-        } finally {
-           try{
-              if(fullObject != null) {
-                fullObject.close();
+                Mail mr =  new Mail();
+                ArrayList<AttachmentMail> maList = new ArrayList<AttachmentMail>();
+                
+                System.out.println(messages.getFrom()[0].toString());
+                String from = decodeName(messages.getFrom()[0].toString());
+                mr.setFrom(from.substring(from.indexOf("<")+1, from.lastIndexOf(">")));
+                
+                
+                Address[] to = messages.getRecipients(Message.RecipientType.TO);
+               String toaddr = "";
+                for(int j = 0; j < to.length; j++){
+                    toaddr += to[j].toString();
                 }
-                if(objectPortion != null) {
-                    objectPortion.close();
+                mr.setReceiver(toaddr);
+                
+                
+                Address[] ccArr;
+                try {
+                    ccArr = messages.getRecipients(Message.RecipientType.CC);
+                } catch (Exception e){
+                    ccArr = null;
                 }
-                if(headerOverrideObject != null) {
-                    headerOverrideObject.close();
+                if(ccArr != null){
+                   String cc = "";
+                    for(int j = 0; j < ccArr.length; j++){
+                       cc += ccArr[j].toString();
+                    }
+                    mr.setReceiver(mr.getReceiver()+cc);
                 }
-           }catch (IOException e) {
-            e.printStackTrace();
-         }
+                
+                mr.setSubject((messages.getSubject()));
+                
+                if(messages.getReceivedDate() != null){
+                    mr.setEnrollDate(new Date(messages.getReceivedDate().getTime()));
+                } else {
+                    mr.setEnrollDate((new Date( (new java.util.Date()).getTime())));
+                }
+                
+                
+                
+                System.out.println("----------------------Body------------------------------");
+                //email.body = "";
+                Object content = messages.getContent();
+                if(content instanceof java.lang.String){
+                   System.out.println("String Content입니다.");
+                    mr.setContent((((String)content)));
+                    
+                } else if(content instanceof Multipart){
+                   System.out.println("Multipart Content입니다.");
+                   
+                   Multipart mp = (Multipart)content;
+                    
+                    System.out.println("이 메일의 bodyPart는 총  " + mp.getCount() +"개의 파트로 구성되어 있습니다.");
+                    
+                    for (int j=0; j < mp.getCount(); j++) {
+                       System.out.println("현재 " +j+"번째 파트를 처리중입니다.");
+                        Part part = mp.getBodyPart(j);
+                        
+                        String disposition = part.getDisposition();
+                        
+                        System.out.println("--------------------------"+j+"파트의 정보입니다.----------------------");
+                        MimeBodyPart mbp = (MimeBodyPart)part;
+                        System.out.println("mbp : " + mbp);
+                        System.out.println("part : " + part);
+                        System.out.println("content : " + mbp.getContent());
+                        System.out.println("contentType : " + mbp.getContentType());
+                        System.out.println("fileName : " + decodeName(mbp.getFileName()));
+                        System.out.println("-----------------------------------------------------------------");
+                        
+                        System.out.println("disposition이 null인지 확인합니다.");
+                        if (disposition == null) {
+                           System.out.println(j+"번째 파트는 disposition이 null입니다.");
+                            // Check if plain
+                            
+                            
+                            if (mbp.isMimeType("text/plain")) {
+                               String bodyArr = "";
+                                bodyArr += (String)mbp.getContent();
+                                
+                                mr.setContent((bodyArr));
+                                System.out.println(j+"번째 bodyArr를 출력합니다. ");
+                                System.out.println(bodyArr);
+                                
+                            } else if(mbp.isMimeType("multipart/alternative")){
+                               //mbp = (MimeBodyPart) mbp.getContent();
+                               System.out.println("추가 파트@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                               Multipart mp2 = (Multipart)mbp.getContent();
+                               System.out.println("이 메일의 multipart/alternative 파트는 총  " + mp2.getCount() +"개의 파트로 구성되어 있습니다.");
+                               
+                               for (int k=0; k < mp2.getCount(); k++) {
+                                   System.out.println("현재 " +j+"-"+k+"번째 파트를 처리중입니다.");
+                                    Part part2 = mp2.getBodyPart(k);
+                                    
+                                    String disposition2 = part2.getDisposition();
+                                    
+                                    System.out.println("--------------------------" +j+"-"+k+"파트의 정보입니다.----------------------");
+                                    MimeBodyPart mbp2 = (MimeBodyPart)part2;
+                                    System.out.println(j+"-"+k+"content : " + mbp2.getContent());
+                                    System.out.println(j+"-"+k+"contentType : " + mbp2.getContentType());
+                                    System.out.println(j+"-"+k+"description : " + mbp2.getDescription());
+                                    System.out.println(j+"-"+k+"disposition : " + mbp2.getDisposition());
+                                    System.out.println(j+"-"+k+"fileName : " + decodeName(mbp2.getFileName()));
+                                    System.out.println("-----------------------------------------------------------------");
+                                    
+                                    System.out.println("disposition이 null인지 확인합니다.");
+                                    if (disposition2 == null) {
+                                       System.out.println(j+"-"+k+"번째 파트는 disposition이 null입니다.");
+                                        // Check if plain
+                                        
+                                        
+                                        if (mbp2.isMimeType("text/plain")) {
+                                           String bodyArr = "";
+                                            bodyArr += (String)mbp2.getContent();
+                                            
+                                            mr.setContent((bodyArr));
+                                            System.out.println(j+"-"+k+"번째 bodyArr를 출력합니다. ");
+                                            System.out.println("emailBody : " + bodyArr);
+                                            
+                                        }else {
+                                           String bodyArr = "";
+                                            bodyArr += (String)mbp2.getContent();
+                                            
+                                            mr.setContent((bodyArr));
+                                            System.out.println(j+"-"+k+"번째 bodyArr를 출력합니다. ");
+                                            System.out.println("emailBody2 : " + bodyArr);
+                                        }
+                                    }
+                                    
+                                }
+                               System.out.println("추가파트 끝@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                            }else {
+                                System.out.println(j+"번째 파트는 Attachment가 아니므로 파일을 생성하지 않습니다.");
+                            }
+                            
+                          ///// ATTACHMENT파트로 파일을 분리해주는 구간
+                        } else if ((disposition != null)&&(disposition.equals(Part.ATTACHMENT) || disposition.equals(Part.INLINE) )){
+                           String whatIsDisposition = "";
+                           if(disposition.equals(Part.ATTACHMENT)) {
+                              whatIsDisposition = "ATTACHMENT입니다.";
+                           }else if(disposition.equals(Part.INLINE)){
+                              whatIsDisposition = "INLINE입니다.";
+                           }
+                           System.out.println(j+"번째 파트는 " +whatIsDisposition);
+                           
+                           String ext = "";
+                            if (mbp.isMimeType("text/plain")) {
+                               ext=".text";
+                            }else if (mbp.isMimeType("image/png")) {
+                               ext=".png";
+                            }
+                            AttachmentMail ma = new AttachmentMail();
+                            ma.setOriginName(decodeName(mbp.getFileName()));
+                            File savedir = new File(receiving_attachments);
+                            savedir.mkdirs();
+                            File savefile = File.createTempFile("emailattach", ext, savedir );
+                            ma.setFilePath(savefile.getAbsolutePath());
+                            ma.setEaSize(part.getSize()+"");
+                            ma.setEaSize(saveFile( savefile, part)+"");
+                            ma.setOriginName(decodeName(mbp.getFileName()));
+                            ma.setChangeName(savefile.getName());
+                            maList.add(ma);
+                        }
+                    }
+                }
+                
+                mr.setMemberNo(loginUser.getMemberNo());
+                
+                //외부에서 전송된 메일 인설트
+                ms.insertOutMail(mr,maList);
+                System.out.println("er : " + mr);
+                System.out.println("maList : " + maList);
+                
+                
+        } catch (Exception e){
+           // folder.close(true); // true tells the mail server to expunge deleted messages.
+            throw e;
         }
+
     }
 
-   // 불러온 inputStream 자료형의 파일의 내용을 출력해주는 메소드 
-   // 파일 내용을 읽어서 출력해주는 메소드 
-    private static void displayTextInputStream(InputStream input) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-        String line = null;
-        while ((line = reader.readLine()) != null) {
-            System.out.println(line);
-        }
-        System.out.println();
-    }
-   
-    // 파일 업로드 
-   public void fileUpload(String filePath) {
-      String bucketName = "manageee";
-      String keyName = "보낸메일-" ;//+ getServerTime();
-      // 확장자가 없는 파일인 경우 에러가 발생하니 주의할것!
-      // System.out.println("파일 이름 추출" + filePath.substring(filePath.lastIndexOf("/"), filePath.lastIndexOf(".")));
-
-      File file = new File(filePath);
-      long contentLength = file.length();
-      long partSize = 5 * 1024 * 1024; // Set part size to 5 MB.
-
-      try {
-         // Create a list of ETag objects. You retrieve ETags for each object part
-         // uploaded,
-         // then, after each individual part has been uploaded, pass the list of ETags to
-         // the request to complete the upload.
-         List<PartETag> partETags = new ArrayList<PartETag>();
-
-         // Initiate the multipart upload.
-         InitiateMultipartUploadRequest initRequest = new InitiateMultipartUploadRequest(bucketName, keyName);
-         InitiateMultipartUploadResult initResponse = conn.initiateMultipartUpload(initRequest);
-
-         // Upload the file parts.
-         long filePosition = 0;
-         for (int i = 1; filePosition < contentLength; i++) {
-            // Because the last part could be less than 5 MB, adjust the part size as
-            // needed.
-            partSize = Math.min(partSize, (contentLength - filePosition));
-
-            // Create the request to upload a part.
-            UploadPartRequest uploadRequest = new UploadPartRequest().withBucketName(bucketName).withKey(keyName)
-                  .withUploadId(initResponse.getUploadId()).withPartNumber(i).withFileOffset(filePosition)
-                  .withFile(file).withPartSize(partSize);
-
-            // Upload the part and add the response's ETag to our list.
-            UploadPartResult uploadResult = conn.uploadPart(uploadRequest);
-            partETags.add(uploadResult.getPartETag());
-
-            filePosition += partSize;
-         }
-
-         // Complete the multipart upload.
-         CompleteMultipartUploadRequest compRequest = new CompleteMultipartUploadRequest(bucketName, keyName,
-               initResponse.getUploadId(), partETags);
-         conn.completeMultipartUpload(compRequest);
-      } catch (AmazonServiceException e) {
-         // The call was transmitted successfully, but Amazon S3 couldn't process
-         // it, so it returned an error response.
-         e.printStackTrace();
-      } catch (SdkClientException e) {
-         // Amazon S3 couldn't be contacted for a response, or the client
-         // couldn't parse the response from Amazon S3.
-         e.printStackTrace();
-      }
-   }
-   
-   // 버킷 내부에 존재하는 객체 삭제 메소드
-   public void deleteObject(String bucketName, String keyName) {
-      try {
-         s3Client.deleteObject(new DeleteObjectRequest(bucketName, keyName));
-         System.out.println(bucketName + "내에 존재하는 " + keyName + " 객체 삭제 완료");
-       }
-       catch(AmazonServiceException e) {
-           // The call was transmitted successfully, but Amazon S3 couldn't process 
-           // it, so it returned an error response.
-           e.printStackTrace();
-       }
-       catch(SdkClientException e) {
-           // Amazon S3 couldn't be contacted for a response, or the client
-           // couldn't parse the response from Amazon S3.
-           e.printStackTrace();
-       }
-   }
-   
-   // SES에서 받은 메일을 eml파일형식으로 바꿔서 새로운 버킷에 저장
-   // 리턴값으로 eml이름을 보내준다. 
-   public String updateObjectForEmlExt(String sourceKey) { 
-      // sourceKey : 기존에 버킷에 존재하는 파일명
-      String sourceBucketName = "manageee";             // 기존에 존재하는 버킷이름
-      String destinationBucketName = "manageee-eml";      // 새로 옮길 버킷
-      String destinationKey = sourceKey + ".eml";       // 새로 옮길 버킷에서의 이름
-      
-      // 복사 객체 생성
-      CopyObjectRequest copyObjRequest = new CopyObjectRequest(sourceBucketName, sourceKey, destinationBucketName, destinationKey);
-      System.out.println("copyObjectRequest : " + copyObjRequest);
-      s3Client.copyObject(copyObjRequest);
-      System.out.println("복사완료 ");
-      
-      return destinationKey;
-   }
-   
-   // eml파일을 받아서 자바 mail API 메시지 객체에 담는다.
-   public Message getEmlFile(String emlKey) {
-      String bucketName = "manageee-eml";
-   
-      // download에서 가져온 fullObject방식대로 객체를 불러온다.
-      S3Object object = s3Client.getObject(new GetObjectRequest(bucketName, emlKey));
-      
-      System.out.println("메타 데이터 : " + object.getObjectMetadata());
-      ObjectMetadata omd = object.getObjectMetadata();
-      System.out.println("contentType : " + omd.getContentType());
-      System.out.println(omd.getRawMetadata());
-      
-      // System.out.println("getEmlFile 내에서 objectContent출력 ");
-      // 출력은 일반 파일이랑 동일하게 된다. 
-      // displayTextInputStream(object.getObjectContent());
-      InputStream s3is = object.getObjectContent();
-      
-      Properties props = new Properties();
-      Session mailSession = Session.getDefaultInstance(props);
-      Message message = null;
-      try {
-         message = new MimeMessage(mailSession, s3is);
-      } catch (MessagingException e) {
-         e.printStackTrace();
-      }
-      
-      return message;
-   }
 }
-

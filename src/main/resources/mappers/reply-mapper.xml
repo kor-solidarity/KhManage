@@ -13,6 +13,7 @@
 		<result property="status" column="STATUS"/>
 		<result property="memberNo" column="MEMBER_NO"/>
 		<result property="forumNo" column="FORUM_NO"/>
+		<result property="memberName" column="MEMBER_NAME"/>		
 	</resultMap>
 	
 	<insert id="replyInsert" parameterType="Reply">
@@ -21,10 +22,12 @@
 	</insert>
 	
 	<select id="replySelectAll" resultMap="replyResultSet" parameterType="java.lang.String">
-		SELECT * 
-		FROM REPLY
+		SELECT REPLY_NO, REPLY_CONTENT, R.CREATE_DATE, R.MODIFY_DATE,R.STATUS, R.MEMBER_NO, FORUM_NO , MEMBER_NAME 
+		FROM REPLY R
+		JOIN MEMBER M ON(R.MEMBER_NO = M.MEMBER_NO)
 		WHERE FORUM_NO = #{no}
-		AND STATUS = 'Y'
+		AND R.STATUS = 'Y'
+		ORDER BY REPLY_NO DESC   
 	</select>
 	
 	<update id="deleteReply"  parameterType="java.lang.String">
