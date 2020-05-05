@@ -14,6 +14,8 @@ import com.kh.manage.issue.model.vo.IssueProjectTeam;
 import com.kh.manage.issue.model.vo.IssueWPT;
 import com.kh.manage.issue.model.vo.IssueWork;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.work.model.vo.Grantor;
+import com.kh.manage.work.model.vo.Work;
 import com.kh.manage.work.model.vo.WorkProjectTeam;
 
 public interface IssueDao {
@@ -51,5 +53,11 @@ public interface IssueDao {
 	List<WorkProjectTeam> selectTeamWork(SqlSessionTemplate sqlSession, Member member);
 
 	List<IssueWork> selectWorkTMList(SqlSessionTemplate sqlSession, HashMap<String, String> map);
+
+	Work selectWork(SqlSessionTemplate sqlSession, String workNo);
+
+	List<Grantor> selectGrantorList(SqlSessionTemplate sqlSession, String projectNo);
+
+	List<Work> selectHighWorkNoList(SqlSessionTemplate sqlSession, Work w);
 
 }

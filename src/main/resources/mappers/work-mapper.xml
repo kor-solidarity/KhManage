@@ -103,12 +103,12 @@
 	
 	<insert id="insertWorkHistory" parameterType="hashmap">
 		INSERT INTO WORK_HISTORY
-		VALUES('WH' || TO_CHAR(SEQ_WH.NEXTVAL, 'FM000'), 'W' || TO_CHAR(SEQ_WNO.CURRVAL, 'FM000'), #{work.status}, NULL, SYSDATE, #{wp.teamPk})
+		VALUES('WH' || TO_CHAR(SEQ_WH.NEXTVAL, 'FM0000'), 'W' || TO_CHAR(SEQ_WNO.CURRVAL, 'FM000'), #{work.status}, NULL, SYSDATE, #{wp.teamPk})
 	</insert>
 	
 	<insert id="insertWorkHistory2" parameterType="hashmap">
 		INSERT INTO WORK_HISTORY
-		VALUES('WH' || TO_CHAR(SEQ_WH.NEXTVAL, 'FM000'), #{work.workNo}, #{work.status}, #{work.memo}, SYSDATE, #{wp.teamPk})
+		VALUES('WH' || TO_CHAR(SEQ_WH.NEXTVAL, 'FM0000'), #{work.workNo}, #{work.status}, #{work.memo}, SYSDATE, #{wp.teamPk})
 	</insert>
 
 	<select id="selectWorkList" parameterType="Member" resultMap="workResultSet">

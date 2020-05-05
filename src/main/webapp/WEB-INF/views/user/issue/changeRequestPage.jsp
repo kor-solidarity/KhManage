@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,7 +21,7 @@
 	}
 	
 	#taskList{
-		width:550px;
+		width:545px;
 		height:30px;
 		border:1px solid #EBCCD1;
 		border-radius: 5px;
@@ -105,45 +106,38 @@
 			<hr>
 			<form>
 			<table id="issueTable">	
+				
 				<tr>
-					<td class="thRange" align="center" colspan="2">변경요청 번호</td>
-					<td class="thRange" colspan="16"><input type="text" id="taskTitle" value="수강-0002"></td>
-				</tr>
-				<tr>
-					<td class="thRange"></td>
-					<td class="thRange">프로젝트</td>
+					<td class="thRange" colspan="2">프로젝트
+					<input type="hidden" name="memberNo" class="memberNo">
+					</td>
 					<td class="thRange" colspan="9">
-						<select class="projectList">
-							<option>선택하세요</option>
-							<option>KH대학교 학사시스템 개발</option>
-							<option>KH대학교 학사시스템 유지보수</option>
-							<option>KH대학교 학사시스템 고도화</option>
+						<select name="projectNo" id="projectNo" class="projectList" required="required">
+							<option value="#" >선택하세요</option>
+								<c:forEach var="wp" items="${wp }">
+									<option value="${wp.projectPk }"><c:out value="${wp.projectName }"/></option> 
+								</c:forEach>
 						</select>
+						
 					</td>
 					<td class="thRange" align="left">작업</td>
 					<td class="thRange" colspan="6">
 						<select id="taskList">
 							<option>작업을 선택하세요</option>
-							<option>로그인 작업</option>
-							<option>수강신청 작업</option>
-							<option>KH대학교 학사시스템 고도화</option>
+							<option>---------</option>
+							<option>---------</option>
+							<option>---------</option>
 						</select>
 					</td>
 				</tr>
 				<tr>
-					<td class="thRange"></td>
 					<td class="thRange">제목</td>
-					<td class="thRange" colspan="16"><input type="text" id="taskTitle" placeholder="제목을 입력해주세요"></td>
+					<td class="thRange"></td>
+					<td class="thRange" colspan="16"><input type="text" id="taskTitle" name="requestTitle" placeholder="제목을 입력해주세요"></td>
 				</tr>
 				<tr>
-					<td class="thRange"></td>
-					<td class="thRange">이슈 내용</td>
-					<td class="thRange" rowspan="5" colspan="16"><input type="text" id="taskContent"></td>
-					
-				</tr>
-				<tr>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
+					<td class="thRange" colspan="2">변경요청내용</td>
+					<td class="thRange" rowspan="5" colspan="16"><input type="text" name="requestContent" id="taskContent"></td>
 				</tr>
 				<tr>
 					<td class="thRange"></td>
@@ -159,14 +153,131 @@
 				</tr>
 				<tr>
 					<td class="thRange"></td>
-					<td class="thRange">첨부파일</td>
-					<td class="thRange" colspan="16">
-						<div id="fileUploadArea">
-							<input type="file" id="fileUpload" name="fileUpload">
-						</div>
+					<td class="thRange"></td>
+				</tr>
+				<tr>
+					<td class="thRange" colspan="18">
+					<hr>
 					</td>
 				</tr>
 				<tr>
+					<td class="thRange" colspan="6"></td>
+					<td class="thRange">작업명</td>
+					<td class="thRange" colspan="2" >
+					<input type="text" name="workName" class="inputMenu form-control workName">
+					</td>
+					<td class="thRange">작업유형</td>
+					<td class="thRange" colspan="2">
+					<input type="text" name="workType" class="inputMenu form-control workType" required="required">
+					</td>
+					<td class="thRange" colspan="6"></td>
+				</tr>
+				<tr>
+					<td class="thRange" colspan="6"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange" colspan="6"></td>
+				</tr>
+				<tr>
+					<td class="thRange" colspan="6"></td>
+					<td class="thRange">시작일</td>
+					<td class="thRange" colspan="2">
+					<input name="beginDate" type="date" class="inputMenu form-control beginDate" required="required">
+					</td>
+					<td class="thRange">완료일</td>
+					<td class="thRange" colspan="2">
+					<input name="completeDate" type="date" class="inputMenu form-control completeDate" required="required">
+					</td>
+					<td class="thRange" colspan="6"></td>
+				</tr>
+				<tr>
+				<td class="thRange" colspan="6"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange" colspan="6"></td>
+				</tr>
+				<tr>
+				<td class="thRange" colspan="6"></td>
+					<td class="thRange">완료율</td>
+					<td class="thRange" colspan="2">
+					<input name="completeRate" type="number" class="inputMenu form-control completeRate" step="5" min="0" max="100">	
+					</td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange" colspan="6"></td>
+				</tr>
+				<tr>
+				<td class="thRange" colspan="6"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+				<td class="thRange" colspan="6"></td>
+				</tr>
+				<tr>
+				<td class="thRange" colspan="6"></td>
+					<td class="thRange">작업단계</td>
+					<td class="thRange" colspan="2" >
+					<select name="workLevel" id="workLevel" class="inputMenu form-control workLevel" required="required">
+						<option value="#" >선택하세요</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+					</select>
+					</td>
+					<td class="thRange">작업상태</td>
+					<td class="thRange" colspan="2">
+					<select name="status" id="statusSelect" class="inputMenu form-control status" required="required">
+						<option value="#" >선택하세요</option>
+						<option value="시작전">시작전</option>
+						<option value="개발중">개발중</option>
+						<option value="개발완료">개발완료</option>
+						<option value="테스트완료">테스트완료</option>
+						<option value="PL검토중">PL검토중</option>
+						<option value="PL승인완료">PL승인완료</option>
+						<option value="개발지연">개발지연</option>
+					</select>
+					</td>
+					<td class="thRange" colspan="6"></td>
+				</tr>
+				<tr>
+				<td class="thRange" colspan="6"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange" colspan="6"></td>
+				</tr>
+				<tr>
+				<td class="thRange" colspan="6"></td>
+					<td class="thRange">상위작업</td>
+					<td class="thRange" colspan="2" >
+						<select name="highWorkNo" id="highWorkNo" class="inputMenu form-control" required="required">
+											
+						</select>
+					</td>
+					<td class="thRange">승인자</td>
+					<td class="thRange" colspan="2">
+						<select name="grantorNo" id="grantorNo" style="padding-left:0px;" class="inputMenu form-control grantorNo" required="required">
+											
+						</select>
+					</td>
+					<td class="thRange" colspan="6"></td>
+				</tr>
+				<tr>
 					<td class="thRange"></td>
 					<td class="thRange"></td>
 					<td class="thRange"></td>
@@ -185,6 +296,12 @@
 					<td class="thRange"></td>
 					<td class="thRange"></td>
 					<td class="thRange"></td>
+				</tr>
+				
+				<tr>
+					<td class="thRange" colspan="18">
+					<hr>
+					</td>
 				</tr>
 				<tr>
 					<td class="thRange"></td>
@@ -316,5 +433,126 @@
 			</div>
 		</div>
 	</div>
+
+<script>
+	$(function(){
+		$("#projectNo").change(function(){
+			var pno = $(this).val();
+			console.log(pno);
+			$("#taskList").empty();
+			$("#projectTeam").empty();
+			$.ajax({
+				type:"post",
+				url:"projectWorkList.iu",
+				data:{pno:pno},
+				dataType:"json",
+				success:function(data){
+					console.log(data);
+					$("#taskList").append("<option>" + '작업을 선택하세요' + "</option>");
+					for(var i = 0; i < data.iw.length; i++){
+						$("#taskList").append("<option value='" + data.iw[i]['workNo'] + "'>" + data.iw[i]['workName'] + "</option>");
+					}
+					
+					/* for(var i = 0; i < data.ipt.length; i++){
+						$("#projectTeam").append("<option value='" + data.ipt[i]['memberPk'] + "'>" + data.ipt[i]['memberName'] + "</option>");
+						
+					} */
+				},
+				error:function(error){
+					
+				}
+			});
+		});
+		
+		
+		
+		$("#taskList").change(function(){
+			var workNo = $(this).val();
+			$("#grantorNo").empty();
+			$("#highWorkNo").empty();
+			$.ajax({
+				url:"selectWork.iu",
+				type:"post",
+				data:{workNo:workNo},
+				dataType:"json",
+				success:function(data){
+ 					console.log(data);
+					/* 
+					console.log(data.work.beginDate);
+					console.log(data.work.completeDate);
+					console.log(data.work.status);
+					btnNum = data.work.workAttachment.length;
+					for(var i = 0; i < data.gt.length; i++){
+						$("#grantorNo").append("<option value='" + data.gt[i]['memberPk'] + "'>" +data.gt[i]['deptName'] + " " + data.gt[i]['rankName'] + " " + data.gt[i]['memberName']  + "</option>");
+					};
+					
+					for(var j= 0; j < data.hw.length; j++){
+						$("#highWorkNo").append("<option value='" + data.hw[j]['workNo'] + "'>"+ data.hw[j]['workName'] + "</option>")
+					}
+					
+					$(".workNo").val(data.work.workNo);
+					$(".workName").val(data.work.workName);
+					$(".workType").val(data.work.workType);
+					$(".projectNo").val(data.work.projectNo);
+					$(".projectName").val(data.work.projectName);
+					$(".beginDate").val(data.work.beginDate);
+					$(".completeDate").val(data.work.completeDate);
+					$(".precedeNo").val(data.work.precedeNo);
+					$(".completeRate").val(data.work.completeRate);
+					$(".grantorNo").val(data.work.grantorNo);
+					$(".memberNo").val(data.work.memberNo);
+					$(".workLevel").val(data.work.workLevel);
+					$(".status").val(data.work.status);
+					$(".highWorkNo").val(data.work.highWorkNo);
+					$(".workStatus").val(data.work.workStatus);
+					$(".productType").val(data.work.workAttachment[0].productType);
+					
+					 */
+				},
+				error:function(error){
+					alert(error);
+
+				}
+			});
+		});
+		
+		
+		$("#workLevel").change(function(){
+			var workLevel = $(this).val();
+			var pno = $("#projectNo").val();
+			$("#highWorkNo").empty();
+			$("#highWorkNo").attr('disabled', false);
+			
+			if(workLevel == '1'){
+				$("#highWorkNo").attr('disabled', true);
+			}else{
+				$.ajax({
+					type:"post",
+					url:"highWorkNoList.wk",
+					data: {
+							workLevel:workLevel,
+							pno:pno
+						  },
+					dataType:"json",
+					success:function(data){
+						for(var i = 0; i < data.hw.length; i++){
+							$("#highWorkNo").append("<option value='" + data.hw[i]['workNo'] + "'>"+ data.hw[i]['workName'] + "</option>")
+						}
+					},
+					error:function(error){
+						
+					}
+				});	
+			}
+			
+		});
+		
+		
+	});
+	
+
+
+
+</script>
 </body>
 </html>

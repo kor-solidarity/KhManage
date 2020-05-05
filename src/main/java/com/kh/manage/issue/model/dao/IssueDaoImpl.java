@@ -16,6 +16,8 @@ import com.kh.manage.issue.model.vo.IssueProjectTeam;
 import com.kh.manage.issue.model.vo.IssueWPT;
 import com.kh.manage.issue.model.vo.IssueWork;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.work.model.vo.Grantor;
+import com.kh.manage.work.model.vo.Work;
 import com.kh.manage.work.model.vo.WorkProjectTeam;
 
 @Repository
@@ -108,6 +110,21 @@ public class IssueDaoImpl implements IssueDao{
 	@Override
 	public List<IssueWork> selectWorkTMList(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return sqlSession.selectList("Issue.selectWorkTmList", map);
+	}
+
+	@Override
+	public Work selectWork(SqlSessionTemplate sqlSession, String workNo) {
+		return sqlSession.selectOne("Issue.selectWork", workNo);
+	}
+
+	@Override
+	public List<Grantor> selectGrantorList(SqlSessionTemplate sqlSession, String projectNo) {
+		return sqlSession.selectList("Issue.selectGrantorList", projectNo);
+	}
+
+	@Override
+	public List<Work> selectHighWorkNoList(SqlSessionTemplate sqlSession, Work w) {
+		return sqlSession.selectList("Issue.selectHighWorkNoList", w);
 	}
 
 }
