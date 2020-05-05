@@ -111,18 +111,6 @@
 		<result property="completeRate" column="COMPLETE_RATE"/>
 	</resultMap>
 	
-	<!-- private String projectPk;
-		private String projectName;
-		private String workNo;
-		private String workName;
-		private String originName;
-		private Date enrollDate;		
-		private String grantorName;			//승인자
-		private Date beginDate;				//작업 시작일
-		private Date completeDate;			//작업 완료일
-		private String completeRate;		//작업 완료율 -->
-	
-	
 	<!-- <resultMap type="Customer" id="customerResultSet">
 		<id property="customerNo" column="CUSTOMER_NO"/>
 		<result property="customerName" column="CUSTOMER_NAME"/>
@@ -373,108 +361,110 @@
 	</update>
 	
 	<select id="selectAllDashBoard" parameterType="AllDashBoard" resultMap="AllDashBoardResultSet">
-		SELECT RNUM
-		     , PROJECT_PK
-		     , PROJECT_NAME
-		     , IS_IMPORTANT
-		     , TYPE_NAME
-		     , PROJECT_RANK
-		     , PROJECT_MANAGER
-		     , MEMBER_NAME
-		     , DEPT_NO
-		     , DEPT_NAME
-		     , START_DATE
-		     , END_DATE
-		     , DETAIL
-		     , REMARKS
-		     , STATUS
-		     , WORKCLEAR
-		     , ALLWORK 
-		     , ISSUE
-		     , WORK_PRODUCT
-		FROM(SELECT ROWNUM RNUM
-			     , PROJECT_PK
-			     , PROJECT_NAME
-			     , IS_IMPORTANT
-			     , TYPE_NAME
-			     , PROJECT_RANK
-			     , PROJECT_MANAGER
-			     , MEMBER_NAME
-			     , DEPT_NO
-			     , DEPT_NAME
-			     , START_DATE
-			     , END_DATE
-			     , DETAIL
-			     , REMARKS
-			     , STATUS
-			     , WORKCLEAR
-			     , ALLWORK 
-			     , ISSUE
-			     , WORK_PRODUCT
-			FROM (SELECT P.PROJECT_PK
-			     , P.PROJECT_NAME
-			     , P.IS_IMPORTANT
-			     , T.TYPE_NAME
-			     , P.PROJECT_RANK
-			     , P.PROJECT_MANAGER
-			     , M.MEMBER_NAME
-			     , P.DEPT_NO
-			     , D.DEPT_NAME
-			     , P.START_DATE
-			     , P.END_DATE
-			     , P.DETAIL
-			     , P.REMARKS
-			     , CASE WHEN P.STATUS = '1' THEN '시작전'
-			            WHEN P.STATUS = '2' THEN '진행중'
-			            WHEN P.STATUS = '3' THEN '지연'
-			            WHEN P.STATUS = '4' THEN '완료'
-			     END AS STATUS
-			     , (SELECT COUNT(*)
-			        FROM WORK
-			        WHERE PROJECT_NO = P.PROJECT_PK
-			        AND STATUS = 'PL승인완료'
+      SELECT RNUM
+           , PROJECT_PK
+           , PROJECT_NAME
+           , IS_IMPORTANT
+           , TYPE_NAME
+           , PROJECT_RANK
+           , PROJECT_MANAGER
+           , MEMBER_NAME
+           , DEPT_NO
+           , DEPT_NAME
+           , START_DATE
+           , END_DATE
+           , DETAIL
+           , REMARKS
+           , STATUS
+           , WORKCLEAR
+           , ALLWORK 
+           , ISSUE
+           , WORK_PRODUCT
+      FROM(SELECT ROWNUM RNUM
+              , PROJECT_PK
+              , PROJECT_NAME
+              , IS_IMPORTANT
+              , TYPE_NAME
+              , PROJECT_RANK
+              , PROJECT_MANAGER
+              , MEMBER_NAME
+              , DEPT_NO
+              , DEPT_NAME
+              , START_DATE
+              , END_DATE
+              , DETAIL
+              , REMARKS
+              , STATUS
+              , WORKCLEAR
+              , ALLWORK 
+              , ISSUE
+              , WORK_PRODUCT
+         FROM (SELECT P.PROJECT_PK
+              , P.PROJECT_NAME
+              , P.IS_IMPORTANT
+              , T.TYPE_NAME
+              , P.PROJECT_RANK
+              , P.PROJECT_MANAGER
+              , M.MEMBER_NAME
+              , P.DEPT_NO
+              , D.DEPT_NAME
+              , P.START_DATE
+              , P.END_DATE
+              , P.DETAIL
+              , P.REMARKS
+              , CASE WHEN P.STATUS = '1' THEN '시작전'
+                     WHEN P.STATUS = '2' THEN '진행중'
+                     WHEN P.STATUS = '3' THEN '지연'
+                     WHEN P.STATUS = '4' THEN '개발완료'
+                     WHEN P.STATUS = '5' THEN '납품완료'
+              END AS STATUS
+              , (SELECT COUNT(*)
+                 FROM WORK
+                 WHERE PROJECT_NO = P.PROJECT_PK
+                 AND STATUS = 'PL승인완료'
                     AND WORK_TYPE = '프로젝트') AS WORKCLEAR
-			     ,  (SELECT COUNT(*)
-			        FROM WORK
-			        WHERE PROJECT_NO = P.PROJECT_PK
+              ,  (SELECT COUNT(*)
+                 FROM WORK
+                 WHERE PROJECT_NO = P.PROJECT_PK
                     AND WORK_TYPE = '프로젝트') AS ALLWORK 
-			     , (SELECT COUNT(*)
-			        FROM ISSUE 
-			        WHERE PROJECT_NO = P.PROJECT_PK) AS ISSUE
-			     , (SELECT COUNT(*)
-			        FROM WORK_PRODUCT WP 
-			        JOIN WORK W ON (WP.WORK_NO = W.WORK_NO)
-			        WHERE W.PROJECT_NO = P.PROJECT_PK) AS WORK_PRODUCT
-			FROM PROJECT P
-			JOIN PROJECT_TYPE T ON (P.PROJECT_TYPE_PK = T.TYPE_PK)
-			JOIN MEMBER M ON(P.PROJECT_MANAGER = M.MEMBER_NO)
-			JOIN DEPT D ON(P.DEPT_NO = D.DEPT_NO)
-			ORDER BY P.START_DATE)
-			WHERE IS_IMPORTANT = 'Y')
-		WHERE RNUM BETWEEN #{start} AND #{end}
-	</select>
+              , (SELECT COUNT(*)
+                 FROM ISSUE 
+                 WHERE PROJECT_NO = P.PROJECT_PK) AS ISSUE
+              , (SELECT COUNT(*)
+                 FROM WORK_PRODUCT WP 
+                 JOIN WORK W ON (WP.WORK_NO = W.WORK_NO)
+                 WHERE W.PROJECT_NO = P.PROJECT_PK) AS WORK_PRODUCT
+         FROM PROJECT P
+         JOIN PROJECT_TYPE T ON (P.PROJECT_TYPE_PK = T.TYPE_PK)
+         JOIN MEMBER M ON(P.PROJECT_MANAGER = M.MEMBER_NO)
+         JOIN DEPT D ON(P.DEPT_NO = D.DEPT_NO)
+         ORDER BY P.START_DATE)
+         WHERE IS_IMPORTANT = 'Y')
+      WHERE RNUM BETWEEN #{start} AND #{end}
+   </select>
 	
 	<select id="selectDeptProjectCount" resultMap="deptProjectCountResultSet">
-		SELECT D.DEPT_NO, 
-				D.DEPT_NAME
-		     , (SELECT COUNT(*)
-		        FROM PROJECT P
-		        WHERE P.DEPT_NO = D.DEPT_NO
-		        AND STATUS = '1') AS BEFORE
-		     , (SELECT COUNT(*)
-		        FROM PROJECT P
-		        WHERE P.DEPT_NO = D.DEPT_NO
-		        AND STATUS = '2') AS PROCEEDING  
-		     , (SELECT COUNT(*)
-		        FROM PROJECT P
-		        WHERE P.DEPT_NO = D.DEPT_NO
-		        AND STATUS = '3') AS DELAY  
-		    , (SELECT COUNT(*)
-		        FROM PROJECT P
-		        WHERE P.DEPT_NO = D.DEPT_NO
-		        AND STATUS = '4') AS COMPLETE        
-		FROM DEPT D
-	</select>
+      SELECT D.DEPT_NO, 
+            D.DEPT_NAME
+           , (SELECT COUNT(*)
+              FROM PROJECT P
+              WHERE P.DEPT_NO = D.DEPT_NO
+              AND STATUS = '1') AS BEFORE
+           , (SELECT COUNT(*)
+              FROM PROJECT P
+              WHERE P.DEPT_NO = D.DEPT_NO
+              AND STATUS = '2') AS PROCEEDING  
+           , (SELECT COUNT(*)
+              FROM PROJECT P
+              WHERE P.DEPT_NO = D.DEPT_NO
+              AND STATUS = '3') AS DELAY  
+          , (SELECT COUNT(*)
+              FROM PROJECT P
+              WHERE P.DEPT_NO = D.DEPT_NO
+              AND STATUS = '5') AS COMPLETE        
+      FROM DEPT D
+      WHERE D.DEPT_NAME != '미지정' 
+   </select>
 	
 	<select id="selectSysdate" resultType="java.sql.Date">
 		SELECT SYSDATE FROM DUAL
@@ -789,21 +779,47 @@
 		ORDER BY BEGIN_DATE ASC
    </select>
    
-  <!--  <select id="selectMonthlyProjectCount" parameterType="ProjectRank" resultMap="projectRankCountResultSet">
-   		SELECT TO_CHAR(START_DATE, 'YYYYMM') as MONTH
-	    	 , COUNT(*) as COUNT
-		 FROM  PROJECT
-		WHERE  START_DATE >= '20200101'
-		GROUP BY
-		       TO_CHAR(START_DATE, 'YYYYMM')
-		       
-		SELECT TO_CHAR(START_DATE, 'YYYYMM') as MONTH
-	    	 , COUNT(*) as COUNT
-		 FROM  PROJECT
-		WHERE  START_DATE >= '20200101'
-		GROUP BY
-		       TO_CHAR(START_DATE, 'YYYYMM')
-   </select> -->
+  <select id="selectMonthlyProjectCount" resultType="MyStatic">
+	SELECT JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV
+	FROM 
+	       (SELECT COUNT(*) AS JAN
+	          FROM   PROJECT
+	         WHERE   START_DATE BETWEEN TO_DATE('20200101') AND TO_DATE('20200131')),
+	       (SELECT COUNT(*) AS FEB
+	          FROM   PROJECT
+	         WHERE   START_DATE BETWEEN TO_DATE('20200201') AND TO_DATE('20200229')),
+	       (SELECT COUNT(*) AS MAR
+	          FROM   PROJECT
+	         WHERE   START_DATE BETWEEN TO_DATE('20200301') AND TO_DATE('20200331')),
+	        (SELECT COUNT(*) AS APR
+	          FROM   PROJECT
+	         WHERE   START_DATE BETWEEN TO_DATE('20200401') AND TO_DATE('20200430')),
+	        (SELECT COUNT(*) AS MAY
+	          FROM   PROJECT
+	         WHERE   START_DATE BETWEEN TO_DATE('20200501') AND TO_DATE('20200531')),
+	       (SELECT COUNT(*) AS JUN
+	          FROM   PROJECT
+	         WHERE   START_DATE BETWEEN TO_DATE('20200601') AND TO_DATE('20200630')),
+	        (SELECT COUNT(*) AS JUL
+	          FROM   PROJECT
+	         WHERE   START_DATE BETWEEN TO_DATE('20200701') AND TO_DATE('20200731')),
+	        (SELECT COUNT(*) AS AUG
+	          FROM   PROJECT
+	         WHERE   START_DATE BETWEEN TO_DATE('20200801') AND TO_DATE('20200831')),
+	        (SELECT COUNT(*) AS SEP
+	          FROM   PROJECT
+	         WHERE   START_DATE BETWEEN TO_DATE('20200901') AND TO_DATE('20200930')),
+	        (SELECT COUNT(*) AS OCT
+	          FROM   PROJECT
+	         WHERE   START_DATE BETWEEN TO_DATE('20201001') AND TO_DATE('20201031')),
+	        (SELECT COUNT(*) AS NOV
+	          FROM   PROJECT
+	         WHERE   START_DATE BETWEEN TO_DATE('20201101') AND TO_DATE('20201130')),
+	        (SELECT COUNT(*) AS DEC
+	          FROM   PROJECT
+	         WHERE   START_DATE BETWEEN TO_DATE('20201201') AND TO_DATE('20201231'))
+  
+   </select>
    
 </mapper>
 

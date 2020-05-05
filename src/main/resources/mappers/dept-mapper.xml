@@ -24,7 +24,14 @@
 		WHERE DEPT_LEVEL = '2'
 		AND STATUS = 'Y'
 	</select>
-
+	
+	<select id="selectDeptListChart" resultMap="deptResultSet">
+		SELECT *
+		FROM DEPT
+		WHERE STATUS = 'Y'
+		AND DEPT_NAME NOT LIKE '미지정'
+	</select>
+	
 </mapper>
 
 
