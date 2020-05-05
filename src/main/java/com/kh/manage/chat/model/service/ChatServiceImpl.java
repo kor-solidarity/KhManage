@@ -208,8 +208,14 @@ public class ChatServiceImpl implements ChatService {
 
 	@Override
 	public Attachment selectChatAtt(ChatMessageList chatMessageList) {
-		// TODO Auto-generated method stub
+		
 		return cd.selectChatAtt(sqlSession, chatMessageList);
+	}
+
+	@Override
+	public List<Member> selectAllMember() {
+	
+		return cd.selectAllMember(sqlSession);
 	}
 
 

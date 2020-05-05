@@ -93,7 +93,13 @@
 							<i class="fas fa-comment-dots" style="font-size: 25px; color: #1E2B44;"></i>
 								<span id="chatCount" class="badge bg-danger" style="background:red; padding-left:0px; padding-right:0px; left:32px; top:20px; font-size:12px; width:auto; height:18px;"></span>
 						</a></li>
-							
+						
+						<li class="dropdown"><a id="chat" href="showTimeLine.ct" class="dropdown-toggle icon-menu" >
+							<i class="fas fa-hourglass-end" style="font-size: 25px; color: #1E2B44;"></i>
+							<span id="chatCount" class="badge bg-danger" style="background:white; padding-left:0px; padding-right:0px; left:32px; top:20px; font-size:14px; width:auto; height:18px;">
+								<i class="fas fa-exclamation-triangle" style="color:orange;"></i>
+							</span>
+						</a></li>
 
 						<!-- 메일 -->
 						<li class="dropdown"><a href="mailMain.ma" class="dropdown-toggle"> <i class="fas fa-envelope"
@@ -110,7 +116,6 @@
 								<!-- <li><a href="adminShowMain.me"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li> -->
 								<li><a href="logout.me"><i class="lnr lnr-exit"></i> <span>로그아웃</span></a></li>
 							</ul></li>
-
 					</ul>
 				</div>
 			</div>

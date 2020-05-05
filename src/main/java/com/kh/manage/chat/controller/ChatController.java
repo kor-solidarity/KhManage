@@ -53,6 +53,15 @@ public class ChatController {
 		
 		return "user/chat/chatMainPage";
 	}
+	@RequestMapping("/showTimeLine.ct")
+	public String showTimeLine(Model model) {
+		
+		List<Member> mList = cs.selectAllMember();
+		
+		model.addAttribute("mList", mList);
+		
+		return "user/chat/timeLine";
+	}
 	
 	@RequestMapping("/selectAllMessageCount.ct")
 	public void selectAllMessageCount(HttpSession session, HttpServletRequest request, HttpServletResponse response) {

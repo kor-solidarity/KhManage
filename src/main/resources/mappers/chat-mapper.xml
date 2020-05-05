@@ -75,6 +75,26 @@
 		<result property="changeName" column="CHANGE_NAME"/>
 		<result property="filePath" column=" SAVE_PATH"/>
 	</resultMap>
+	
+	<resultMap type="Member" id="memberResultSet">
+		<id property="memberNo" column="MEMBER_NO"/>
+		<result property="memberId" column="MEMBER_ID"/>
+		<result property="memberPwd" column="PASSWORD"/>
+		<result property="memberName" column="MEMBER_NAME"/>
+		<result property="phone" column="PHONE"/>
+		<result property="email" column="EMAIL"/>
+		<result property="memberType" column="MEMBER_TYPE"/>
+		<result property="rankNo" column="RANK_NO"/>
+		<result property="rankName" column="RANK_NAME"/>
+		<result property="deptNo" column="DEPT_NO"/>
+		<result property="deptName" column="DEPT_NAME"/>
+		<result property="projectPk" column="PROJECT_PK"/>
+		<result property="projectName" column="PROJECT_NAME"/>
+		<result property="enrollDate" column="ENROLL_DATE"/>
+		<result property="changeName" column="CHANGE_NAME"/>
+		<result property="ext" column="EXT"/>
+		<result property="status" column="STATUS"/>
+	</resultMap>
 
 	
 	<select id="selectAllDeptList" resultMap="departResultSet">
@@ -387,6 +407,29 @@
 		SELECT *
 		FROM MESSAGE_ATTACHMENT
 		WHERE MESSAGE_ATTACHMENT = #{content}     
+	</select>
+	
+	<select id="selectAllMember" resultMap="memberResultSet">
+		SELECT M.MEMBER_NO
+            ,M.MEMBER_ID
+            ,M.PASSWORD
+            ,M.MEMBER_NAME
+            ,M.PHONE
+            ,M.EMAIL
+            ,M.MEMBER_TYPE
+            ,M.RANK_NO
+            ,R.RANK_NAME
+            ,M.DEPT_NO
+            ,D.DEPT_NAME
+            ,M.ENROLL_DATE
+            ,M.MODIFY_DATE
+            ,M.STATUS
+            ,A.CHANGE_NAME
+            ,A.EXT
+        FROM MEMBER M
+        JOIN RANK R ON(M.RANK_NO = R.RANK_NO)
+        JOIN DEPT D ON(D.DEPT_NO = M.DEPT_NO)
+        LEFT JOIN ATTACHMENT A ON(M.MEMBER_NO = A.DIVISION)
 	</select>
 </mapper>
 
