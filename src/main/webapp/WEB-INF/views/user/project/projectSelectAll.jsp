@@ -157,11 +157,11 @@
 							<td class="tdText">${pl.startDate}</td>
 							<td class="tdText">${pl.endDate}</td>
 								<%--실적--%>
-							<td class="tdText">10%</td>
+							<td class="tdText">${pl.allWork}개 중 ${pl.workClear} 완료</td>
 								<%--산출물--%>
-							<td class="tdText">0</td>
+							<td class="tdText">${pl.productCount}</td>
 								<%--이슈--%>
-							<td class="tdText">0</td>
+							<td class="tdText">${pl.issueCount}</td>
 						</tr>
 					</c:forEach>
 

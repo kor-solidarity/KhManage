@@ -1,10 +1,12 @@
 package com.kh.manage.project.model.dao;
 
 import com.kh.manage.admin.adminManage.vo.DeptMember;
+import com.kh.manage.admin.adminManage.vo.ProjectHistory;
 import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.template.model.vo.Template;
 import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
+import com.kh.manage.gwManage.model.vo.Statistics;
 import com.kh.manage.member.model.vo.AllDashBoard;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.project.model.vo.*;
@@ -246,10 +248,35 @@ public class ProjectDaoImpl implements ProjectDao {
 	public int deleteAttachment(SqlSessionTemplate sqlSession, String atNo) {
 		return sqlSession.delete("Project.deleteAttachment", atNo);
 	}
+	
 	@Override
 	public AllDashBoard selectOneProjectDetail(SqlSessionTemplate sqlSession, String pid) {
 		
 		return sqlSession.selectOne("Admin.selectOneProject", pid);
+	}
+	
+	@Override
+	public int updateProjectStatus(SqlSessionTemplate sqlSession, String pid) {
+		
+		return sqlSession.update("Project.updateProjectStatus", pid);
+	}
+	
+	@Override
+	public List<Statistics> statisticsList2(SqlSessionTemplate sqlSession, String pid) {
+		
+		return sqlSession.selectList("GWork.statisticList2", pid);
+	}
+	
+	@Override
+	public int insertPeojectHistory(SqlSessionTemplate sqlSession, Member m) {
+		
+		return sqlSession.insert("Project.insertProjectHistory", m);
+	}
+	
+	@Override
+	public List<ProjectHistory> selectHistory(SqlSessionTemplate sqlSession, String pid) {
+		
+		return sqlSession.selectList("Admin.selectHistory", pid);
 	}
 }
 

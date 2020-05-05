@@ -2,12 +2,14 @@ package com.kh.manage.project.controller;
 
 import com.google.gson.Gson;
 import com.kh.manage.admin.adminManage.vo.DeptMember;
+import com.kh.manage.admin.adminManage.vo.ProjectHistory;
 import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.template.model.vo.Template;
 import com.kh.manage.common.Attachment;
 import com.kh.manage.common.CommonsUtils;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.common.Pagination;
+import com.kh.manage.gwManage.model.vo.Statistics;
 import com.kh.manage.member.model.vo.AllDashBoard;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.project.model.vo.*;
@@ -25,6 +27,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -833,6 +836,12 @@ public class ProjectController {
 		
 		AllDashBoard ad = ps.selectOneProjectDetail(pid);
 		
+		List<Statistics> list3 = ps.statisticsList2(pid);
+		List<ProjectHistory> hList = ps.selectHistory(pid);
+		
+		model.addAttribute("hList", hList);
+		model.addAttribute("project", ad);
+		
 		model.addAttribute("project", ad);
 		model.addAttribute("pid", pid);
 		
@@ -840,15 +849,19 @@ public class ProjectController {
 	}
 	
 	@RequestMapping("/projectComplete.pr")
-	public String projectComplete(Model model, HttpServletRequest request) {
+	public String projectComplete(Model model, HttpServletRequest request, HttpSession session) {
 		String pid = request.getParameter("pid");
-		
+		Member m = (Member) session.getAttribute("loginUser");
+		m.setProjectPk(pid);
 		AllDashBoard  ad = ps.selectOneProjectDetail(pid);
+		
+		int result = ps.updateProjectStatus(pid);
+		int result2 = ps.insertProjectHistory(m);
 		
 		model.addAttribute("project", ad);
 		model.addAttribute("pid", pid);
 		
-		return "user/project/projectSummary";
+		return "redirect:showProjectSummary.pr?="+pid;
 	}
 	
 	//TW
