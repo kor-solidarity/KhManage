@@ -444,4 +444,15 @@ public class ManageController {
 		
 		return "admin/projectManage/projectDetail";
 	}
+	
+	@RequestMapping("/projectComplete.am")
+	public String projectComplete(String pid, HttpSession session) {
+		Member m = (Member) session.getAttribute("loginUser");
+		m.setProjectPk(pid);
+		
+		int result = as.updateCompleteProject(pid);
+		int result1 = as.insertCompleteProjectHistory(m);
+		
+		return "redirect:projectList.am";
+	}
 }

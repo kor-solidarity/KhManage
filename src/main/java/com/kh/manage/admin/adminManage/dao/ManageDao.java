@@ -96,4 +96,8 @@ public interface ManageDao {
 	List<ProjectHistory> selectHistory(SqlSessionTemplate sqlSession, String pid);
 
 	String selectEnrollDate(SqlSessionTemplate sqlSession, String pid);
+
+	int updateCompleteProject(SqlSessionTemplate sqlSession, String pid);
+
+	int insertCompleteProjectHistory(SqlSessionTemplate sqlSession, Member m);
 }

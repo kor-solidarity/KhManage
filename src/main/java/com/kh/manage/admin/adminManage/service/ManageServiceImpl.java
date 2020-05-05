@@ -260,5 +260,17 @@ public class ManageServiceImpl implements ManageService{
 		
 		return ad.selectEnrollDate(sqlSession, pid);
 	}
+
+	@Override
+	public int updateCompleteProject(String pid) {
+		
+		return ad.updateCompleteProject(sqlSession, pid);
+	}
+
+	@Override
+	public int insertCompleteProjectHistory(Member m) {
+		
+		return ad.insertCompleteProjectHistory(sqlSession, m);
+	}
 	
 }

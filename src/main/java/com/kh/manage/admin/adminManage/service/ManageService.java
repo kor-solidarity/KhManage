@@ -89,5 +89,9 @@ public interface ManageService {
 
 	List<ProjectHistory> selectHistory(String pid);
 
-	String selectEnrollDate(String pid); 
+	String selectEnrollDate(String pid);
+
+	int updateCompleteProject(String pid);
+
+	int insertCompleteProjectHistory(Member m); 
 }

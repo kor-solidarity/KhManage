@@ -261,4 +261,16 @@ public class ManageDaoImpl implements ManageDao {
 		return sqlSession.selectOne("Admin.selectEnrollDate", pid);
 	}
 
+	@Override
+	public int updateCompleteProject(SqlSessionTemplate sqlSession, String pid) {
+		
+		return sqlSession.update("Admin.updateCompleteProject", pid);
+	}
+
+	@Override
+	public int insertCompleteProjectHistory(SqlSessionTemplate sqlSession, Member m) {
+		
+		return sqlSession.insert("Admin.insertCompleteProjectHistory", m);
+	}
+
 }

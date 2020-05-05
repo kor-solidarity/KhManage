@@ -359,7 +359,7 @@ body {
 			</c:if>
 			<c:if test="${m.changeName != null }">
         	<tr>
-        		<td><div class='box' style='background:white;'><img class='profile' src="<c:url value="/resources/uploadFiles/${m.changeName}"/>.png"></div></td>
+        		<td><div class='box' style='background:white;'><img class='profile' src="<c:url value="/resources/uploadFiles/${m.changeName}"/>"></div></td>
         		<td style="padding-top: 14px; padding-left: 10px;">${m.memberName } / ${m.deptName} / ${m.rankName }
         			<input type="hidden" class="hideMemberNo" value="${m.memberNo}">
         		</td>

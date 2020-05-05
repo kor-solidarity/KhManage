@@ -29,10 +29,22 @@
 		font-size: 14px;
 		text-align: center;
 	}
+	.cancleBtn {
+		width: 50px;
+		height: 23px;
+		border: none;
+		background: #F3565D;
+		color: white;
+		margin-right:10px;
+		font-weight: 400;
+		border-radius: 5px;
+		font-size: 11px;
+	}
 </style>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body onload="$('#route1').text('관리자'); $('#route2').text('프로젝트 관리');">
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp" />
@@ -44,7 +56,7 @@
 			<div style="width: 47%; height: 360px; margin: 0 auto; background:white; overflow: auto; display: inline-block;">
 				<table class="menuTable" style="width: 100%;">
 						<tr>
-							<td class="titleText" colspan="2">프로젝트 정보</td>
+							<td class="titleText" colspan="2">프로젝트 정보 <button type="button" class="cancleBtn" onclick="location.href='projectList.am'" style="float:right;"><i class="fas fa-arrow-left"></i>&nbsp;뒤로</button></td>
 						</tr>
 						<tr style="height: 5px;"></tr>
 						<tr>
@@ -55,7 +67,7 @@
 					</table>
 					<table class="menuTable" align="center" style="width:90%;">
 						<tr>
-							<td class="tdValue" colspan="3" style="font-size:20px; text-align: left;">${project.projectName}</td>
+							<td class="tdValue" colspan="3" style="font-size:20px; font-weight:700; text-align: left;">${project.projectName}</td>
 						</tr>
 						<tr height="30px;"></tr>
 						<tr>
@@ -82,10 +94,10 @@
 							</td>
 						</tr>
 						<tr>
-							<c:if test="${sum+(1-(sum%1))%1 eq 100 and project.status == '개발완료' }">
-								<td class="tdValue" colspan="4" ><button type="button" id="projectComplete" style="float:right; background:skyblue; border-radius: 5px; border:2px solid #1E2B44; outline:none; color:#1E2B44; ">완료</button></td>
+							<c:if test="${sum+(1-(sum%1))%1 eq 100 and project.status == '개발완료' and project.status != '납품완료' }">
+								<td class="tdValue" colspan="4" ><button type="button" id="projectComplete" style="float:right; background:skyblue; border-radius: 5px; border:2px solid #1E2B44; outline:none; color:#1E2B44; ">납품완료</button></td>
 							</c:if>
-							<c:if test="${sum+(1-(sum%1))%1 eq 100 }">
+							<c:if test="${sum+(1-(sum%1))%1 eq 100 and project.status != '개발완료' and project.status != '납품완료' }">
 								<td class="tdValue" colspan="4" style="text-align: right; color:#1E2B44;" ><i class="fas fa-exclamation-circle"></i> &nbsp;개발 완료되지 않았습니다.</td>
 							</c:if>
 							<c:if test="${sum+(1-(sum%1))%1 < 100  and project.status != '완료' }">
@@ -93,6 +105,9 @@
 							</c:if>
 							<c:if test="${project.status == '완료' }">
 								<td class="tdValue" colspan="4" style="text-align: right; color:#1E2B44;"><i class="fas fa-exclamation-circle"></i> &nbsp;완료 된 프로젝트입니다</td>
+							</c:if>
+							<c:if test="${project.status == '납품완료' }">
+								<td class="tdValue" colspan="4" style="text-align: right; color:#1E2B44;"><i class="fas fa-exclamation-circle"></i> &nbsp;납품완료 된 프로젝트입니다</td>
 							</c:if>
 						</tr>
 						<tr height="50px;"></tr>
@@ -109,6 +124,7 @@
 							<td></td>
 							<td class="tdValue" style="width: 200px;">${project.deptName }</td>
 						</tr>
+						<tr height="30px;"></tr>
 					</table>
 					
 			</div>
@@ -142,6 +158,18 @@
 						
 						 <c:forEach var="h" items="${list}">
 							<c:if test="${h.type != '프로젝트'}">
+								<c:if test="${h.type == '납품완료'}">
+								<tr>
+									<td style="text-align: left;  color:#1E2B44; padding-left: 40px; color:purple;"><label>『${project.projectName}』</label>프로젝트를 『${loginUser.memberName}』(PMS관리팀)님께서 납품완료 처리 하셨습니다. - ${h.date}</td> 
+								</tr>	
+								<tr height="8px;"></tr>	
+								</c:if>
+								<c:if test="${h.type == '개발완료'}">
+								<tr>
+									<td style="text-align: left;  color:#1E2B44; padding-left: 40px; color:purple;"><label>『${project.projectName}』</label>프로젝트를 『${project.managerName}』PM님께서 개발완료 처리 하셨습니다. - ${h.date}</td> 
+								</tr>	
+								<tr height="8px;"></tr>	
+								</c:if>
 								<c:if test="${h.status == '조치완료'}">
 								<tr>
 									<td style="text-align: left;  color:#1E2B44; padding-left: 40px; color:green;"><label>『${h.historyName}』</label>작업에 대한 『${h.type}』이슈가 조치 완료 되었습니다. - ${h.date}</td> 
@@ -228,6 +256,27 @@
 	
 	<script>
 		$("#projectComplete").click(function(){
+			swal({
+				  title: "납품 완료 하시겠습니까?",
+				  icon: "warning",
+				  buttons: ["취소", "완료"],
+				  dangerMode: true,
+				})
+				.then((willDelete) => {
+				  if (willDelete) {
+				    swal({
+				    	title: "처리 완료!",
+				      	icon: "success"
+				    }).then((value) => {	// 애니메이션 V 나오는 부분!
+				    	location.href='projectComplete.am?pid='+'${pid}';			
+				    });
+				  } else {
+					  swal({
+					  	title: "취소 하셨습니다.",
+					    icon: "error"
+					  });
+				  }
+			});
 			
 		});
 	</script>
