@@ -1,10 +1,12 @@
 package com.kh.manage.project.model.service;
 
 import com.kh.manage.admin.adminManage.vo.DeptMember;
+import com.kh.manage.admin.adminManage.vo.ProjectHistory;
 import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.template.model.vo.Template;
 import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
+import com.kh.manage.gwManage.model.vo.Statistics;
 import com.kh.manage.member.model.vo.AllDashBoard;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.project.model.vo.*;
@@ -270,5 +272,29 @@ public class ProjectServiceImpl implements ProjectService {
 	public AllDashBoard selectOneProjectDetail(String pid) {
 		
 		return pd.selectOneProjectDetail(sqlSession, pid);
+	}
+	
+	@Override
+	public int updateProjectStatus(String pid) {
+		
+		return pd.updateProjectStatus(sqlSession, pid);
+	}
+	
+	@Override
+	public List<Statistics> statisticsList2(String pid) {
+		
+		return pd.statisticsList2(sqlSession, pid);
+	}
+	
+	@Override
+	public int insertProjectHistory(Member m) {
+		
+		return pd.insertPeojectHistory(sqlSession, m);
+	}
+	
+	@Override
+	public List<ProjectHistory> selectHistory(String pid) {
+		
+		return pd.selectHistory(sqlSession, pid);
 	}
 }

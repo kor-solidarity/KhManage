@@ -18,7 +18,16 @@ public class ProjectList {
 	private Date endDate;
 	private String status;
 	
-	public ProjectList(String projectPk, String projectName, String isImportant, String projectTypePk, String projectTypeName, String projectRank, String projectManager, String projectManagerName, String deptNo, String deptName, Date startDate, Date endDate, String status) {
+	private String productCount;
+	private String issueCount;
+	private String workClear;
+	private String allWork;
+	
+	
+	public ProjectList(String projectPk, String projectName, String isImportant,
+					   String projectTypePk, String projectTypeName, String projectRank,
+					   String projectManager, String projectManagerName, String deptNo,
+					   String deptName, Date startDate, Date endDate, String status) {
 		this.projectPk = projectPk;
 		this.projectName = projectName;
 		this.isImportant = isImportant;
@@ -32,6 +41,30 @@ public class ProjectList {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.status = status;
+	}
+	
+	public ProjectList(String projectPk, String projectName, String isImportant,
+					   String projectTypePk, String projectTypeName, String projectRank,
+					   String projectManager, String projectManagerName, String deptNo,
+					   String deptName, Date startDate, Date endDate, String status,
+					   String productCount, String issueCount, String workClear, String allWork) {
+		this.projectPk = projectPk;
+		this.projectName = projectName;
+		this.isImportant = isImportant;
+		this.projectTypePk = projectTypePk;
+		this.projectTypeName = projectTypeName;
+		this.projectRank = projectRank;
+		this.projectManager = projectManager;
+		this.projectManagerName = projectManagerName;
+		this.deptNo = deptNo;
+		this.deptName = deptName;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.status = status;
+		this.productCount = productCount;
+		this.issueCount = issueCount;
+		this.workClear = workClear;
+		this.allWork = allWork;
 	}
 	
 	public ProjectList() {
@@ -158,5 +191,37 @@ public class ProjectList {
 	
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	public String getProductCount() {
+		return productCount;
+	}
+	
+	public void setProductCount(String productCount) {
+		this.productCount = productCount;
+	}
+	
+	public String getIssueCount() {
+		return issueCount;
+	}
+	
+	public void setIssueCount(String issueCount) {
+		this.issueCount = issueCount;
+	}
+	
+	public String getWorkClear() {
+		return workClear;
+	}
+	
+	public void setWorkClear(String workClear) {
+		this.workClear = workClear;
+	}
+	
+	public String getAllWork() {
+		return allWork;
+	}
+	
+	public void setAllWork(String allWork) {
+		this.allWork = allWork;
 	}
 }

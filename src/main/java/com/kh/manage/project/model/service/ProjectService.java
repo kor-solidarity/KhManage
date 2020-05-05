@@ -1,10 +1,12 @@
 package com.kh.manage.project.model.service;
 
 import com.kh.manage.admin.adminManage.vo.DeptMember;
+import com.kh.manage.admin.adminManage.vo.ProjectHistory;
 import com.kh.manage.admin.department.model.vo.Dept;
 import com.kh.manage.admin.template.model.vo.Template;
 import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
+import com.kh.manage.gwManage.model.vo.Statistics;
 import com.kh.manage.member.model.vo.AllDashBoard;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.project.model.vo.*;
@@ -72,7 +74,7 @@ public interface ProjectService {
 	int selectCheckWorkMemberList(Member m);
 	
 	int deleteProjectMember(Member m);
-
+	
 	String selectCheckWorkMemberName(Member m);
 	
 	List<Project> selectOutdatedProjects();
@@ -82,6 +84,7 @@ public interface ProjectService {
 	int checkLowerWorks(String workNo);
 	
 	int updateOutdatedProject(String projectPk);
+	
 	List<TemplateWorkRead> selectAllTemplateWork(String project_template);
 	
 	int insertHighWork(TemplateWorkRead templateWorkRead);
@@ -99,5 +102,14 @@ public interface ProjectService {
 	Attachment selectAttachment(String atNo);
 	
 	int deleteAttachment(String atNo);
+	
 	AllDashBoard selectOneProjectDetail(String pid);
+	
+	int updateProjectStatus(String pid);
+	
+	List<Statistics> statisticsList2(String pid);
+	
+	int insertProjectHistory(Member m);
+	
+	List<ProjectHistory> selectHistory(String pid);
 }
