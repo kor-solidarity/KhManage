@@ -170,23 +170,23 @@
 	</select>
 	
 	<insert id="insertMainMessage" parameterType="Message">
-		INSERT INTO MESSAGE VALUES('ME'|| TO_CHAR(SEQ_MSG_NO.NEXTVAL, 'FM000'), #{chatRoomNo}, #{sender}, 'Y', #{contentType}, SYSDATE)
+		INSERT INTO MESSAGE VALUES('ME'|| TO_CHAR(SEQ_MSG_NO.NEXTVAL, 'FM0000'), #{chatRoomNo}, #{sender}, 'Y', #{contentType}, SYSDATE)
 	</insert>
 	
 	<insert id="insertAttMessage" parameterType="Message">
-		INSERT INTO MESSAGE VALUES('ME'|| TO_CHAR(SEQ_MSG_NO.NEXTVAL, 'FM000'), #{chatRoomNo}, #{sender}, 'Y', #{contentType}, SYSDATE)
+		INSERT INTO MESSAGE VALUES('ME'|| TO_CHAR(SEQ_MSG_NO.NEXTVAL, 'FM0000'), #{chatRoomNo}, #{sender}, 'Y', #{contentType}, SYSDATE)
 	</insert>
 	
 	<insert id="insertMessageContent" parameterType="Message">
-		INSERT INTO MESSAGE_CONTENT VALUES('ME'|| TO_CHAR(SEQ_MSG_NO.CURRVAL, 'FM000'), #{content})
+		INSERT INTO MESSAGE_CONTENT VALUES('ME'|| TO_CHAR(SEQ_MSG_NO.CURRVAL, 'FM0000'), #{content})
 	</insert>
 	
 	<insert id="insertAttChat" parameterType="Attachment">
-		INSERT INTO MESSAGE_ATTACHMENT VALUES('MSG'|| TO_CHAR(SEQ_MSG_AT.NEXTVAL, 'FM000'), 'ME'|| TO_CHAR(SEQ_MSG_NO.CURRVAL, 'FM000'), #{originName}, #{changeName}, #{filePath})
+		INSERT INTO MESSAGE_ATTACHMENT VALUES('MSG'|| TO_CHAR(SEQ_MSG_AT.NEXTVAL, 'FM0000'), 'ME'|| TO_CHAR(SEQ_MSG_NO.CURRVAL, 'FM0000'), #{originName}, #{changeName}, #{filePath})
 	</insert>
 	
 	<update id="updateRecentMessage" parameterType="Message">
-		UPDATE CHATROOM SET RECENT_MESSAGE = 'ME'|| TO_CHAR(SEQ_MSG_NO.CURRVAL, 'FM000'), ENROLL_DATE = SYSDATE
+		UPDATE CHATROOM SET RECENT_MESSAGE = 'ME'|| TO_CHAR(SEQ_MSG_NO.CURRVAL, 'FM0000'), ENROLL_DATE = SYSDATE
 		WHERE CHATROOM_NO = #{chatRoomNo}
 	</update>
 	
@@ -298,7 +298,7 @@
 	</update>
 	
 	<insert id="insertInfoMessage" parameterType="Message">
-		INSERT INTO MESSAGE VALUES('ME'|| TO_CHAR(SEQ_MSG_NO.NEXTVAL, 'FM000'), #{chatRoomNo}, #{sender}, 'Y', #{contentType}, SYSDATE)
+		INSERT INTO MESSAGE VALUES('ME'|| TO_CHAR(SEQ_MSG_NO.NEXTVAL, 'FM0000'), #{chatRoomNo}, #{sender}, 'Y', #{contentType}, SYSDATE)
 	</insert>
 	
 	<update id="deleteChatMember" parameterType="ChatRoom">

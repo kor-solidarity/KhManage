@@ -71,6 +71,15 @@
 		margin-left:200px;
 		width:50%;
 	}
+	#projectStatus{
+		width:150px;
+		height:30px;
+		border-radius: 5px;
+		border:1px solid lightgray;
+		text-align: center;
+		outline: none;
+	}
+
 	.thmidTable{border: 1px solid lightgray; height: 38px; text-align: center; font-size:15px; center; border:none}
 	.tdmidTable{height: 38px; text-align: center; font-size: 14px;}
 </style>
@@ -87,6 +96,15 @@
 								<td><a href="projectRegister.pr"><button class="projectBtn"><i class="far fa-plus-square"></i> &nbsp;프로젝트 등록</button></a>
 								<td>
 								<td colspan="6"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<label>구분</label>&nbsp;&nbsp;
+									<select  id="projectStatus">
+										<option>선택</option>
+										<option>전체</option>
+										<option>납품완료</option>
+										<option>개발완료</option>
+										<option>개발중</option>
+										<option>지연중</option>
+									</select>
 								</td>
 							</tr>	
 							</table>
