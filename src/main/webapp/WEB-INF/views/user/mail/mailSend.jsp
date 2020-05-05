@@ -137,7 +137,7 @@
 		if (key.keyCode == 13) {
 			$("#mailperson").css("width", '80');
 			
-			$("#ul").append("<div id='div' style='display: inline-block; '>" + "<input id='label' name='receiver' value='" + $("#mailperson").val() + " ' >   <input style='outline:none' class='xbtn' type='button' name='delbtn' value='x'> </div>")
+			$("#ul").append("<div id='div' style='display: inline-block; '>" + "<input id='label' name='receiver' value='" + $("#mailperson").val() + "' >   <input style='outline:none' class='xbtn' type='button' name='delbtn' value='x'> </div>")
 			$('#mailperson').val("");
 			$('#mailperson').focus();
 		}

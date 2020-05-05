@@ -20,6 +20,7 @@
 		<result property="temp" column="TEMP"/>
 		<result property="spam" column="SPAM"/>
 		<result property="trash" column="TRASH"/>
+		<result property="read" column="READ"/>
 		<collection property="atMail" resultMap="atMailResultSet" />
 	</resultMap>
 	
@@ -53,6 +54,16 @@
 		VALUES(SEQ_MB_NO.NEXTVAL, SEQ_MA_NO.CURRVAL, #{memberNo}, 2 ,DEFAULT, DEFAULT, DEFAULT, DEFAULT)
 	</insert>
 	
+	<insert id="insertMailBox2" parameterType="Mail">
+		INSERT INTO MAILBOX
+		VALUES(SEQ_MB_NO.NEXTVAL, SEQ_MA_NO.CURRVAL, #{memberNo}, 1 ,DEFAULT, DEFAULT, DEFAULT, DEFAULT)
+	</insert>
+	
+	<insert id="insertMailBox3" parameterType="Mail">
+		INSERT INTO MAILBOX
+		VALUES(SEQ_MB_NO.NEXTVAL, SEQ_MA_NO.CURRVAL, #{memberNo}, 2 ,DEFAULT, DEFAULT, DEFAULT, DEFAULT)
+	</insert>
+	
 	<select id="sentMailList" parameterType="Mail" resultMap="mailResultSet">
 		SELECT *
 		FROM MAIL M 
@@ -67,9 +78,9 @@
 	<select id="selectMailOne" parameterType="java.lang.String" resultMap="mailResultSet">
 		SELECT *
 		FROM MAIL M 
-		JOIN MAILBOX MB ON(M.MAIL_NO = MB.MAIL_NO)
-		JOIN MAIL_RECEIVER MR ON(M.MAIL_NO = MR.MAIL_NO)
-		JOIN ATTACHMENT_MAIL AM ON(M.MAIL_NO = AM.MAIL_NO)
+		LEFT JOIN MAILBOX MB ON(M.MAIL_NO = MB.MAIL_NO)
+		LEFT JOIN MAIL_RECEIVER MR ON(M.MAIL_NO = MR.MAIL_NO)
+		LEFT JOIN ATTACHMENT_MAIL AM ON(M.MAIL_NO = AM.MAIL_NO)
 		WHERE M.MAIL_NO = #{no}
 	</select>
 	
@@ -135,11 +146,12 @@
 	<select id="reciveMailList" parameterType="Mail" resultMap="mailResultSet">
 		SELECT *
 		FROM MAIL M 
-		JOIN MAILBOX MB ON(M.MAIL_NO = MB.MAIL_NO)
-		JOIN MAIL_RECEIVER MR ON(M.MAIL_NO = MR.MAIL_NO)
+        JOIN MEMBER MEM ON(M.MEMBER_NO = MEM.MEMBER_NO)
+		LEFT JOIN MAILBOX MB ON(M.MAIL_NO = MB.MAIL_NO)
+		LEFT JOIN MAIL_RECEIVER MR ON(M.MAIL_NO = MR.MAIL_NO)
 		WHERE MAILBOX_TYPE = 1
-		AND M.MEMBER_NO = #{memberNo}
 		AND MB.TRASH = 'N'
+        AND RECEIVER_EMAIL = #{receiver}
 		AND M.MAIL_STATUS = 'Y'
 	</select>
 	
@@ -167,9 +179,9 @@
 	<select id="reciveMailOne" parameterType="java.lang.String" resultMap="mailResultSet">
 		SELECT *
 		FROM MAIL M 
-		JOIN MAILBOX MB ON(M.MAIL_NO = MB.MAIL_NO)
-		JOIN MAIL_RECEIVER MR ON(M.MAIL_NO = MR.MAIL_NO)
-		JOIN ATTACHMENT_MAIL AM ON(M.MAIL_NO = AM.MAIL_NO)
+		LEFT JOIN MAILBOX MB ON(M.MAIL_NO = MB.MAIL_NO)
+		LEFT JOIN MAIL_RECEIVER MR ON(M.MAIL_NO = MR.MAIL_NO)
+		LEFT JOIN ATTACHMENT_MAIL AM ON(M.MAIL_NO = AM.MAIL_NO)
 		WHERE M.MAIL_NO = #{mNo}
 	</select>
 	
@@ -189,6 +201,12 @@
 		UPDATE MAILBOX 
 		SET TRASH = 'Y'
 		WHERE MAIL_NO = #{mNO}	
+	</update>
+	
+	<update id="updateRead" parameterType="Mail">
+		UPDATE MAILBOX 
+		SET READ = 'Y'
+		WHERE MAIL_NO = #{mailNo}	
 	</update>
 	
 		

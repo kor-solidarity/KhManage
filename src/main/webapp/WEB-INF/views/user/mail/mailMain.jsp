@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.*, com.kh.manage.mail.model.vo.*, com.kh.manage.forum.model.vo.*"%>
+<%
+	List<Mail> list = (ArrayList<Mail>) request.getAttribute("list");
+%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -97,7 +100,11 @@
 		text-align: center;
 		width: 350px;
 	}
-	
+	.p{
+		margin: 0 auto;
+		color : #1478FF;
+		
+	}
 </style>
 <body>
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
@@ -116,7 +123,6 @@
 		<button class="wjs_btn" style="width: 50px;">답장</button>
 		<button class="wjs_btn" style="width: 50px;">삭제</button>
 		<button class="wjs_btn" style="width: 50px;">읽음</button>
-		<button id="list">리스트불러오기</button>	
 	</div>
 		<form class="navbar-form navbar-left" style="float: left; margin-left: 20px;">
 					<div class="input-group">
@@ -141,10 +147,10 @@
 			<tr class="tr">
 				<td style="display: none;"><input type="hidden" value="${m.mailNo }"></td>
 				<td class="chktd"><input type="checkbox"></td>
-				<td class="startd"><img  src="resources/img/star.png" class="star"></td>
-				<td class="mailtd"><img  src="resources/img/mail.png" class="mail"></td>
-				<td class="sendtd">${m.receiver }</td>
-				<td class="titletd">${m.subject }</td>
+				<td class="startd"><img  src="resources/img/star.png" class="star ${m.mailNo} }"></td>
+				<td class="mailtd"><img  src="resources/img/ma.png" class="mail" id="${m.mailNo}"></td>
+				<td class="sendtd"><p class="p p${m.mailNo}">${m.from }</p></td>
+				<td class="titletd"><p class="p p${m.mailNo}">${m.subject }</p></td>
 				<td class="datetd">${m.enrollDate }</td>
 			</tr>
 		</c:forEach>
@@ -202,12 +208,31 @@
 	});
 
 	
-	
-	
-	$("#list").click(function(){
+	$(function(){
 		
-		location.href="mail/s3.ma";
+		<%for(int i = 0 ; i < list.size(); i ++ ){
+		 	Mail m = (Mail)list.get(i);
+		%>
+			if("<%=m.getImportant()%>" ==  'Y'){
+				$(".<%=m.getMailNo()%>").prop("src" , "resources/img/star3.png");
+			}else{
+				$(".<%=m.getMailNo()%>").prop("src" , "resources/img/star.png");
+			}		
+			
+			if("<%=m.getRead()%>" ==  'Y'){
+				$("#<%=m.getMailNo()%>").prop("src" , "resources/img/op.png");
+				$(".p<%=m.getMailNo()%>").css("color","black");
+			}else{
+				$("#<%=m.getMailNo()%>").prop("src" , "resources/img/ma.png");
+			}	
+			
+		<%}%>
+		
+		
+		
+		
 	});
+	
 </script>
 </html>
 

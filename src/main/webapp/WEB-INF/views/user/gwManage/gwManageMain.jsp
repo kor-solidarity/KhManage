@@ -386,14 +386,6 @@
 							</td>
 						</tr>
 						<tr>
-							<td class="titleId">참석자</td>
-							<td>
-							<select name="memberNo" id="memberNo2" class="inputMenu form-control" style="width: 280px;" >
-								<option></option>
-							</select>
-							</td>
-						</tr>
-						<tr>
 							<td><input type="hidden" id="bDate" name="bDate"></td>
 							<td><input type="hidden" id="bTime" name="bTime"></td>
 							<td><input type="hidden" id="eDate" name="eDate"></td>
@@ -477,12 +469,6 @@
 									<option value="일반작업" >일반작업</option>
 									<option value="출장" >출장</option>
 							</select>
-							</td>
-						</tr>
-						<tr>
-							<td class="titleId">참석자</td>
-							<td>
-							<input type="text" id="memberNo" name="memberNo" class="inputMenu form-control" style="width: 280px;"  required="required">
 							</td>
 						</tr>
 						<tr>

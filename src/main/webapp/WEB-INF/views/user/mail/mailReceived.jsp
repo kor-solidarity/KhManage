@@ -82,6 +82,18 @@
 				<td class="mailtd">받는 사람</td>
 				<td class="mailtd2">${mail.receiver}</td>
 			</tr>
+			<c:if test="${mail.atMail != null }">
+			<tr>
+				<td class="mailtd" >첨부파일</td>
+				<td><a href="download.ma?no=${mail.atMail.get(0).eaNo}">${mail.atMail.get(0).originName} </a><input type="hidden" value="${mail.atMail.get(0).eaNo }" ></td>
+			</tr>
+			<c:forEach var="a" begin="1" items="${mail.atMail}">
+			<tr>
+				<td class="mailtd"></td>
+				<td><a>${a.originName } </a><input type="hidden" value="${a.eaNo }" ></td>
+			</tr>
+			</c:forEach>
+			</c:if>
 		</table>
 		
 	<hr align="left" style="border: solid 1px #C7C5C5; width:90%;  ">	

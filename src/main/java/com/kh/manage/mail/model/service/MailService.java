@@ -1,5 +1,6 @@
 package com.kh.manage.mail.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.kh.manage.common.PageInfo;
@@ -37,6 +38,12 @@ public interface MailService {
 	int getListCount4(Mail mail);
 
 	List<Mail> selectTrashList(Mail mail, PageInfo pi);
+
+	int insertRecive(Mail m, List<AttachmentMail> fileList);
+
+	void insertOutMail(Mail mr, ArrayList<AttachmentMail> maList);
+
+	int updateRead(Mail mail);
 
 
 }

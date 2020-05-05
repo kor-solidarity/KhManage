@@ -9,7 +9,32 @@
 <jsp:include page="/WEB-INF/views/user/common/header.jsp" />
 <jsp:include page="/WEB-INF/views/user/common/sidebar2.jsp" />
 <style>
+.rupdate{
+		width: 70px;
+		height: 30px;
+		border: none;
+		background: #1E2B44;
+		color: white;
+		font-weight: 400;
+		border-radius: 5px;
+		font-size: 14px;
+		float: left;
+		margin-right: 20px;
 
+}
+.no{
+	background: #C6C6C6;
+		float: right;
+		margin-right: 10px;
+	width: 70px;
+		height: 30px;
+		border: none;
+		color: white;
+		font-weight: 400;
+		border-radius: 5px;
+		font-size: 14px;
+		float: left;
+}
 .update{
 	width: 70px;
 		height: 30px;
@@ -355,7 +380,7 @@
 	                for(i=0; i<data.length; i++){
 	                	console.log(data[i].replyNo);
 	                    html += "<div>";
-	                    html += "<div><table class='table'><h6><strong>"+data[i].memberNo+"</strong></h6></div><div class='updiv'>";
+	                    html += "<div><table class='table'><h6><strong>"+data[i].memberName+"</strong></h6></div><div class='updiv'>";
 	                    	if(data[i].memberNo == memberNo){
 	                    		 html += data[i].replyContent + "<button class='update' id="+data[i].replyNo+">수정 <input type='hidden' value=" +data[i].replyNo + "></button> <button id="+data[i].replyNo+" class='delete'>삭제 <input type='hidden' value= "+data[i].replyNo + "></button> <tr><td></td></tr>";
 	                    	}else{	
@@ -432,7 +457,7 @@
 				
 				var nNo = $(this).children().val();
 				
-				$(this).parent().html("<div style='width:100%'><textarea style='width: 1200px' rows='3' cols='30' id='comment' name='comment' placeholder='댓글을 입력하세요'></textarea></div><button class='rupdate'>수정<input type='hidden' value='"+nNo+"'></button>&nbsp;&nbsp;<button>취소</button>");
+				$(this).parent().html("<div style='width:100%'><textarea style='width: 1200px' rows='3' cols='30' id='comment' name='comment' placeholder='댓글을 입력하세요'></textarea></div><button class='rupdate'>수정<input type='hidden' value='"+nNo+"'></button>&nbsp;&nbsp;<button class='no'>취소</button>");
 				
 		 });
 		 

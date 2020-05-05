@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.*, com.kh.manage.mail.model.vo.*, com.kh.manage.forum.model.vo.*"%>
+<%
+	List<Mail> list = (ArrayList<Mail>) request.getAttribute("list");
+%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -126,7 +129,7 @@
 				<td style="display: none;"><input type="hidden" value="${m.mailNo }"></td>
 				<td class="chktd"><input type="checkbox"></td>
 				<td class="startd"><img  class="star ${m.mailNo }" src="resources/img/star.png"></td>
-				<td class="mailtd"><img  src="resources/img/mail.png" class="mail"></td>
+				<td class="mailtd"><img  src="resources/img/op.png" class="mail"></td>
 				<td class="sendtd">${m.receiver }</td>
 				<td class="titletd">${m.subject }</td>
 				<td class="datetd">${m.enrollDate }</td>
@@ -181,35 +184,19 @@
 <script>
 
  $(function(){
-	 for(var i= 0; i < ${list.size()}; i++){
-		 
-		 console.log(i)
-		 
-		 var no = i;
-		 
-		 
-		 
-		 console.log(no)
-		 
-		 if( '${list.get(i).important}' == 'Y'){
-			 
-			$(".${list.get(i).mailNo}").prop("src", "resources/img/star3.png");
-			
-		 } 
-		 
-		 
-		 
-		 
-		 
-		 /* if(${list.get(i).important} == N){
-			 $(".${list.get(i).mailNo}").prop("src", "resources/img/star.png"); 
-		 }
-		  */
-		 
-	 }
-	
 	 
- });
+	
+	<%for(int i = 0 ; i < list.size(); i ++ ){
+	 	Mail m = (Mail)list.get(i);
+	%>
+		if("<%=m.getImportant()%>" ==  'Y'){
+			$(".<%=m.getMailNo()%>").prop("src" , "resources/img/star3.png");
+		}else{
+			$(".<%=m.getMailNo()%>").prop("src" , "resources/img/star.png");
+		}		
+		
+	<%}%>
+	
 
 
 	$("#mailTable tr").click(function(){
@@ -218,6 +205,8 @@
 	 console.log(num);
 	 
  	 location.href="mailDetail.ma?no=" +num;
+	});
+	
  	 
 });
 
