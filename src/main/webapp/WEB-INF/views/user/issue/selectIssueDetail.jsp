@@ -326,6 +326,45 @@
 					</td>
 				</tr>
 				<c:choose>
+				<c:when test="${issue.status eq '확인중'}">
+				<tr>
+					<td class="thRange"></td>
+					<td class="thRange">조치완료일</td>
+					<td class="thRange2" colspan="16"><input type="date" name="ihDate" style="border:none;"></td>
+				</tr>
+				<tr>
+					<td class="thRange"></td>
+					<td class="thRange">조치내용</td>
+					<td class="thRange2" rowspan="3" colspan="16">
+					<textarea class="requestContent" name="ihContent"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+				</tr>
+				<tr>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+				</tr>
+				<tr>
+					<td class="thRange"></td>
+					<td class="thRange">첨부파일</td>
+					<td class="thRange3" colspan="8">파일명</td>
+					<td class="thRange3" colspan="2">버전</td>
+					<td class="thRange3" colspan="2">등록자</td>
+					<td class="thRange3" colspan="2">등록일</td>
+					<td class="thRange3" colspan="2">삭제</td>
+				</tr>
+				<tr>
+					<td class="thRange" colspan="18"></td>
+				</tr>
+				<tr>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange2" colspan="16"></td>
+				</tr>
+				</c:when>
 				<c:when test="${issue.status eq '조치중' && issue.teamWorker eq loginUser.memberNo}">
 				<tr>
 					<td class="thRange"></td>
@@ -361,7 +400,7 @@
 				</tr>
 				<tr>
 					<td class="thRange"></td>
-					<td class="thRange">종료일</td>
+					<td class="thRange"></td>
 					<td class="thRange2" colspan="16"></td>
 				</tr>
 				</c:when>
@@ -400,7 +439,7 @@
 				</tr>
 				<tr>
 					<td class="thRange"></td>
-					<td class="thRange">종료일</td>
+					<td class="thRange"></td>
 					<td class="thRange2" colspan="16"></td>
 				</tr>
 				</c:otherwise>
