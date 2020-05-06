@@ -99,11 +99,11 @@
 						</tr>
 						<c:if test="${loginUser.memberNo eq project.projectManager }">
 						<tr>
-							<c:if test="${sum+(1-(sum%1))%1 eq 100 and project.status != '개발완료' and project.status != '납품완료' } }">
-								<td class="tdValue" colspan="4" ><button type="button" id="projectComplete" style="float:right; background:skyblue; border-radius: 5px; border:2px solid #1E2B44; outline:none; color:#1E2B44; ">완료</button></td>
-							</c:if>
-							<c:if test="${sum+(1-(sum%1))%1 < 100  and project.status != '개발완료' and project.status != '납품완료' } }">
+							<c:if test="${sum+(1-(sum%1))%1 < 100  and project.status != '개발완료' and project.status != '납품완료' }">
 								<td class="tdValue" colspan="4" ><button type="button" style="float:right; background:lightgray; border-radius: 5px; border:1px solid lightgray; outline:none; color:white;">완료</button></td>
+							</c:if>
+							<c:if test="${sum+(1-(sum%1))%1 eq 100 and project.status != '개발완료' and project.status != '납품완료' }">
+								<td class="tdValue" colspan="4" ><button type="button" id="projectComplete" style="float:right; background:skyblue; border-radius: 5px; border:2px solid #1E2B44; outline:none; color:#1E2B44; ">완료</button></td>
 							</c:if>
 							<c:if test="${project.status == '개발완료' }">
 								<td class="tdValue" colspan="4" style="text-align: right; color:#1E2B44;"><i class="fas fa-exclamation-circle"></i> &nbsp;납품 대기 중 입니다</td>

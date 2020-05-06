@@ -112,4 +112,6 @@ public interface ProjectDao {
 	int insertPeojectHistory(SqlSessionTemplate sqlSession, Member m);
 	
 	List<ProjectHistory> selectHistory(SqlSessionTemplate sqlSession, String pid);
+
+	String selectEnrollDate(SqlSessionTemplate sqlSession, String pid);
 }
