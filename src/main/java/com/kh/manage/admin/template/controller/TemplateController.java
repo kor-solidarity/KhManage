@@ -182,11 +182,11 @@ public class TemplateController {
 	@RequestMapping("templateDelete.am")
 	public String templateDelete(HttpServletRequest request) {
 		
+		System.out.println("들어옴");
 		String tNo = request.getParameter("tNo");
 		
 		ts.temDelete(tNo);
 		
-		System.out.println("DSadsadsadsad");
 		
 		return "redirect:/templateManage.am";
 	}

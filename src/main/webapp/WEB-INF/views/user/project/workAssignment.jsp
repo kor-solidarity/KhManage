@@ -105,7 +105,7 @@
 <jsp:include page="/WEB-INF/views/user/common/sidebar2.jsp" />
 <jsp:include page="/WEB-INF/views/user/common/projectNav.jsp" />
 	<div class="panel panel-headline">
-		<div class="panel-heading">
+		<div class="panel-heading" style="margin-top: 30px;">
 			<div style="width: 100%; height: 600px; margin: 0 auto; overflow: auto;">
 				<div id="dp"></div>
 
@@ -136,14 +136,27 @@
     
     
     dp.resources = [
-    	<% for(int i=0; i < list.size(); i++){
+    	
+    	<% 
+    		for(int i=0; i < list.size(); i++){
     		 Mwork w = (Mwork)list.get(i);
+    		 if(i >=1){
+    		 	if(!list.get(i).getMemberName().equals(list.get(i-1).getMemberName())){
     	%>
     	 	 {
     		    "name": "<%=w.getMemberName()%>",
     		    "id":   "<%=w.getMemberName()%>"
     		  },
-    	<%}%>
+    	<%
+    		 	}
+    		 	
+    		 }else{ %>
+    		 {
+     		    "name": "<%=w.getMemberName()%>",
+     		    "id":   "<%=w.getMemberName()%>"
+     		  }, 
+    	<%	 }
+    		 	}%>
     		]
 
     dp.heightSpec = "Max";

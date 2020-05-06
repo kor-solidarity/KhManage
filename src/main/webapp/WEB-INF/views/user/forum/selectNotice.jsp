@@ -519,7 +519,7 @@
 			                for(i=0; i<data.length; i++){
 			                	console.log(data[i].replyNo);
 			                    html += "<div>";
-			                    html += "<div><table class='table'><h6><strong>"+data[i].memberNo+"</strong></h6>";
+			                    html += "<div><table class='table'><h6><strong>"+data[i].memberName+"</strong></h6> ";
 			                    	if(data[i].memberNo == memberNo){
 			                    		 html += data[i].replyContent + "<button class='update' id=u"+data[i].replyNo+">수정 <input type='hidden' value=" +data[i].replyNo + "></button> <button id="+data[i].replyNo+" class='delete'>삭제 <input type='hidden' value= "+data[i].replyNo + "></button> <tr><td></td></tr>";
 			                    	}else{	

@@ -245,17 +245,29 @@
     
     
     
-    dp.resources = [
-    	<% for(int i=0; i < list5.size(); i++){
+dp.resources = [
+    	
+    	<% 
+    		for(int i=0; i < list5.size(); i++){
     		 Mwork w = (Mwork)list5.get(i);
+    		 if(i >=1){
+    		 	if(!list5.get(i).getMemberName().equals(list5.get(i-1).getMemberName())){
     	%>
     	 	 {
     		    "name": "<%=w.getMemberName()%>",
     		    "id":   "<%=w.getMemberName()%>"
     		  },
-    	<%}%>
+    	<%
+    		 	}
+    		 	
+    		 }else{ %>
+    		 {
+     		    "name": "<%=w.getMemberName()%>",
+     		    "id":   "<%=w.getMemberName()%>"
+     		  }, 
+    	<%	 }
+    		 	}%>
     		]
-
     dp.heightSpec = "Max";
     dp.height = 500;
 	var e;

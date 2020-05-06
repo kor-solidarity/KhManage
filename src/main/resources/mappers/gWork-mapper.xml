@@ -152,6 +152,7 @@
 		SELECT STATUS, COUNT(*) AS CNT 
 		FROM WORK 
 		WHERE PROJECT_NO = #{pNo}
+        AND WORK_TYPE = '프로젝트'
 		GROUP BY STATUS
 	</select>
 	

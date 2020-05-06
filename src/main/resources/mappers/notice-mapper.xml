@@ -123,6 +123,7 @@
          		  FROM WORK
           		 WHERE PROJECT_NO=#{projectNo}) W ON(W.MEMBER_NO = PT.MEMBER_PK)
 		WHERE P.PROJECT_PK = #{projectNo}
+		ORDER BY M.MEMBER_NAME
 	</select>
 		
 </mapper>

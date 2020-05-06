@@ -426,6 +426,7 @@ public class MailController {
 		System.out.println(list);
 
 		return "user/mail//mailSent";
+		
 	}
 	@RequestMapping("/mailSpam.ma")
 	public String mailSpam() {
@@ -543,7 +544,7 @@ public class MailController {
 		      
 		      System.out.println(fileList);
 		      
-		      return "user/mail/mailMain";
+		      return "redirect:mailComplete.ma";
 	    	  
 	      }else {
 	    	  
@@ -656,7 +657,7 @@ public class MailController {
 	            
 
 	            //여기 추가했음
-	            BasicAWSCredentials awsCreds = new BasicAWSCredentials("AKIAJMXCQSJZUL7LHUZQ", "EqemHP/wp2TKxTs/Ajf1WsecgGJydUmX6hWm5mE0");
+	            BasicAWSCredentials awsCreds = new BasicAWSCredentials("AKIAJ4XHPYTYIUMZ5JWQ", "Fg/ddGvdK/e/LS0SAy3iIZ0BKFLDbPSiJCB35/si");
 	            // Instantiate an Amazon SES client, which will make the service 
 	            // call with the supplied AWS credentials.
 	            AmazonSimpleEmailService client = 
@@ -698,7 +699,7 @@ public class MailController {
 	      
 	      System.out.println(fileList);
 	      
-		return "user/mail/mailMain";
+		return "redirect:mailComplete.ma";
 		
 	   }//else 끝
 	      

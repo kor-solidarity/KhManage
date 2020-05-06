@@ -66,6 +66,16 @@
 		margin-left:200px;
 		width:50%;
 	}
+	.delete{
+	width: 70px;
+	height: 20px;
+	border: none;
+	background: #F3565D;
+	color: white;
+	font-weight: 400;
+	border-radius: 5px;
+	font-size: 14px;
+	}
 </style>
 
 </head>
@@ -109,7 +119,7 @@
 								<td class="tdText"><c:out value="${t.projectTypePk}"/></td>
 								<td class="tdText"><c:out value="${t.createDate}"/></td>
 								<td class="tdText"><c:out value="${t.editDate}"/></td>
-								<td class="tdText"><button class="delete">delete</button></td>
+								<td class="tdText"><button class="delete">삭제</button></td>
 							</tr>
 					 	</c:forEach>				
 							<tr class="pagingArea">
