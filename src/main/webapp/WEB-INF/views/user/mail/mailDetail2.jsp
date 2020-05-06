@@ -44,6 +44,7 @@
 		width: 100%;
 		height: 300px;
 	}
+	
 </style>
 </head>
 <body>
@@ -54,7 +55,7 @@
 		
 	<div>
 	<img src="resources/img/mail.png" style="width: 30px; height: 30px; float: left; margin-top: 6px; margin-right: 15px; margin-left: 10px;">
-	<p style="font-weight: bold; font-size: 32px; margin-top: 10px; margin-left: 10px;">받은 메일함</p>
+	<p style="font-weight: bold; font-size: 32px; margin-top: 10px; margin-left: 10px;">메일함</p>
 	</div>	
 	
 	
@@ -69,10 +70,8 @@
 	<hr align="left" style="border: solid 1px #C7C5C5; width:90%;  ">
 		<table id="mailTable">
 			<tr>
-				<td class="mailtd">
-					<img class="star">
-				</td>
-				<td class="mailtd2">${mail.subject}</td>
+				<td class="mailtd"><img class="star" src="resources/img/star.png"></td>
+				<td class="mailtd2">${mail.subject }</td>
 			</tr>
 			<tr>
 				<td class="mailtd">보낸 사람</td>
@@ -80,7 +79,7 @@
 			</tr>
 			<tr>
 				<td class="mailtd">받는 사람</td>
-				<td class="mailtd2">${mail.receiver}</td>
+				<td class="mailtd2">${mail.receiver }</td>
 			</tr>
 			<c:if test="${mail.atMail != null }">
 			<tr>
@@ -102,7 +101,7 @@
 	<tr>
 		<td>
 		<div id="mailtext">
-			${mail.content }
+			${mail.content}
 		</div>
 		
 		</td>
@@ -116,6 +115,7 @@
 	</div>
 	</div>
 </body>
+
 
 <script>
 	var imp = '${mail.important}';
@@ -167,7 +167,16 @@
 	
 	$("#delete").click(function(){
 		
-		location.href = "trash.ma?mNo="+mNo;
+		var result = confirm('휴지통의 메일을 지우면 지워진 메일들은 복구할 수 없습니다\n메일을 삭제하시겠습니까?'); 
+		if(result) { //yes 
+				location.href = "deleteMail.ma?mNo="+mNo;
+		} else {
+			//no 
+		}
+
+		
+		//alert("휴지통의 메일을 지우면 지워진 메일들은 복구할 수 없습니다\n메일을 삭제하시겠습니까?")
+		//location.href = "trash.ma?mNo="+mNo;
 		
 	});
 	

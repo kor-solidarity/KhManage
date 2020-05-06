@@ -162,17 +162,22 @@
 			</div>
 </body>
 <script>
+
 	$("#projectTable tr").click(function(){
+	var tm = $(this).children().eq(0).text();
 		
-		var tm = $(this).children().eq(0).text();
 		
 		location.href = "selectOneTemplate.am?tm=" + tm;
 	}); 
 	
 	
 	$(".delete").click(function(){
-		var delList = $(this).parent().parent().remove();
-    	console.log(delList);
+		//var delList = $(this).parent().parent().remove();
+    	
+		var tm2 = $(this).eq(0).text();
+		
+		console.log(tm2)
+		location.href = "templateDelete.am?tNo="+tm2;
 	});
 </script>
 

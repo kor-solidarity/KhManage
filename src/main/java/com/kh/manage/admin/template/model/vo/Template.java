@@ -12,11 +12,12 @@ public class Template {
 	private String detail;
 	private Date createDate;
 	private Date editDate;
+	private String status;
 	
 	public Template() {}
 
 	public Template(String templatePk, String projectTypePk, String memberPk, String templateName, String detail,
-			Date createDate, Date editDate) {
+			Date createDate, Date editDate, String status) {
 		super();
 		this.templatePk = templatePk;
 		this.projectTypePk = projectTypePk;
@@ -25,6 +26,7 @@ public class Template {
 		this.detail = detail;
 		this.createDate = createDate;
 		this.editDate = editDate;
+		this.status = status;
 	}
 
 	public String getTemplatePk() {
@@ -83,11 +85,19 @@ public class Template {
 		this.editDate = editDate;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
 		return "Template [templatePk=" + templatePk + ", projectTypePk=" + projectTypePk + ", memberPk=" + memberPk
 				+ ", templateName=" + templateName + ", detail=" + detail + ", createDate=" + createDate + ", editDate="
-				+ editDate + "]";
+				+ editDate + ", status=" + status + "]";
 	}
 
 	

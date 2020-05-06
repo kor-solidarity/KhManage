@@ -18,6 +18,12 @@
 	.paging{
 		text-align: center;
 	}
+	#mailTable{
+		width:100%;
+		text-align:left;
+		margin-top: 100px;
+		height: 700px;
+	}
 	#mailTable .tr:hover{
 		background: #FDF5E6;
 		
@@ -56,12 +62,6 @@
       border-radius: 5px;
       font-size:14px;
 	}    */
-	#mailTable{
-		width:100%;
-		text-align:left;
-		margin-top: 100px;
-		height: 700px;
-	}
 	.star{
 		width: 18px;
 		height: 18px;
@@ -119,10 +119,11 @@
 	</div>
 	
 	<div id= "btn"style="width: 1620px;">
-		<button class="wjs_btn" style="width: 100px;">전체 선택</button>
-		<button class="wjs_btn" style="width: 50px;">답장</button>
-		<button class="wjs_btn" style="width: 50px;">삭제</button>
-		<button class="wjs_btn" style="width: 50px;">읽음</button>
+		<button class="wjs_btn" style="width: 110px;"><i class="fas fa-check" style="margin-right: 7px;"></i>  전체 선택</button>
+		<button class="wjs_btn" style="width: 90px;"><i class="fas fa-edit" style="margin-right: 7px;"></i>답장</button>
+		<button class="wjs_btn" style="width: 90px;"><i class="fas fa-trash-alt" style="margin-right: 7px;"></i>삭제</button>
+		<button class="wjs_btn" style="width: 90px;"><i class="fas fa-envelope-open" style="margin-right: 7px;"></i>읽음</button>
+			
 	</div>
 		<form class="navbar-form navbar-left" style="float: left; margin-left: 20px;">
 					<div class="input-group">

@@ -46,19 +46,24 @@
 	height:auto;
    }
    #div{
-   	background: aqua;
    	margin-left: 3px;
    	margin-right: 5px;
+   	margin-top : 3px;
    	float: left;
    }
    #label{
-   	margin: 0; 
    	float: left;
-   	background: #B9FFFF;
-   	outline:none;
+   	background: #f1d898;
+   	color: #d5703d;
+   	height: 32px;
    }
    .xbtn{
    	outline:none;
+   	height: 32spx;
+   	background: #f1d898;
+   	margin-left:-28px;
+   	margin-top: 2px;
+   	
    }
 </style>
 </head>
@@ -137,7 +142,7 @@
 		if (key.keyCode == 13) {
 			$("#mailperson").css("width", '80');
 			
-			$("#ul").append("<div id='div' style='display: inline-block; '>" + "<input id='label' name='receiver' value='" + $("#mailperson").val() + "' >   <input style='outline:none' class='xbtn' type='button' name='delbtn' value='x'> </div>")
+			$("#ul").append("<div id='div' style='display: inline-block; '>" + "<input id='label' name='receiver' value='" + $("#mailperson").val() + "' >  <button class='xbtn'  type='button' name='delbtn'><i class='fas fa-times'></i> </button> </div>")
 			$('#mailperson').val("");
 			$('#mailperson').focus();
 		}

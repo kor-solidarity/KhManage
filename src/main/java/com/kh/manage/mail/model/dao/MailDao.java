@@ -57,5 +57,11 @@ public interface MailDao {
 
 	int updateRead(SqlSessionTemplate sqlSession, Mail mail);
 
+	void deleteMail(SqlSessionTemplate sqlSession, String mNo);
+
+	int getListCount5(SqlSessionTemplate sqlSession, Mail mail);
+
+	List<Mail> nReadMailList(SqlSessionTemplate sqlSession, Mail mail, PageInfo pi);
+
 
 }

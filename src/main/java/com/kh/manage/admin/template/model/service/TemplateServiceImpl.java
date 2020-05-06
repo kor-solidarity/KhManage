@@ -237,5 +237,11 @@ public class TemplateServiceImpl implements TemplateService{
 		return td.selectTwList(sqlSession, tm);
 	}
 
+	@Override
+	public void temDelete(String tNo) {
+		
+		td.temDelete(sqlSession, tNo);
+	}
+
 	
 }

@@ -51,27 +51,27 @@
 	
 	<insert id="insertMailBox" parameterType="Mail">
 		INSERT INTO MAILBOX
-		VALUES(SEQ_MB_NO.NEXTVAL, SEQ_MA_NO.CURRVAL, #{memberNo}, 2 ,DEFAULT, DEFAULT, DEFAULT, DEFAULT)
+		VALUES(SEQ_MB_NO.NEXTVAL, SEQ_MA_NO.CURRVAL, #{memberNo}, 2 ,DEFAULT, DEFAULT, DEFAULT, DEFAULT, 'Y')
 	</insert>
 	
 	<insert id="insertMailBox2" parameterType="Mail">
 		INSERT INTO MAILBOX
-		VALUES(SEQ_MB_NO.NEXTVAL, SEQ_MA_NO.CURRVAL, #{memberNo}, 1 ,DEFAULT, DEFAULT, DEFAULT, DEFAULT)
+		VALUES(SEQ_MB_NO.NEXTVAL, SEQ_MA_NO.CURRVAL, #{memberNo}, 1 ,DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
 	</insert>
 	
 	<insert id="insertMailBox3" parameterType="Mail">
 		INSERT INTO MAILBOX
-		VALUES(SEQ_MB_NO.NEXTVAL, SEQ_MA_NO.CURRVAL, #{memberNo}, 2 ,DEFAULT, DEFAULT, DEFAULT, DEFAULT)
+		VALUES(SEQ_MB_NO.NEXTVAL, SEQ_MA_NO.CURRVAL, #{memberNo}, 2 ,DEFAULT, DEFAULT, DEFAULT, DEFAULT ,'Y')
 	</insert>
 	
 	<select id="sentMailList" parameterType="Mail" resultMap="mailResultSet">
 		SELECT *
 		FROM MAIL M 
-		JOIN MAILBOX MB ON(M.MAIL_NO = MB.MAIL_NO)
-		JOIN MAIL_RECEIVER MR ON(M.MAIL_NO = MR.MAIL_NO)
+		LEFT JOIN MAILBOX MB ON(M.MAIL_NO = MB.MAIL_NO)
+		LEFT JOIN MAIL_RECEIVER MR ON(M.MAIL_NO = MR.MAIL_NO)
 		WHERE MAILBOX_TYPE = 2
-		AND M.MEMBER_NO = #{memberNo}
 		AND MB.TRASH = 'N'
+        AND MAIL_FROM = #{from}
 		AND M.MAIL_STATUS = 'Y'
 	</select>
 	
@@ -133,6 +133,17 @@
 		AND M.MAIL_STATUS = 'Y'
 	</select>
 	
+	<select id="listCount5"  resultType="_int">
+		SELECT COUNT(*)
+		FROM MAIL M 
+		JOIN MAILBOX MB ON(M.MAIL_NO = MB.MAIL_NO)
+		JOIN MAIL_RECEIVER MR ON(M.MAIL_NO = MR.MAIL_NO)
+		WHERE M.MEMBER_NO = #{memberNo}
+		AND MB.TRASH = 'Y'
+		AND M.MAIL_STATUS = 'Y'
+		AND READ = 'N'
+	</select>
+	
 	<insert id="insertReciveMail" parameterType="Mail" >
 		INSERT INTO MAIL
 		VALUES(SEQ_MA_NO.NEXTVAL, #{memberNo},#{subject}, #{content}, SYSDATE, 'Y' , #{from})
@@ -176,6 +187,17 @@
 		AND M.MAIL_STATUS = 'Y'
 	</select>
 	
+	<select id="nReadMailList" parameterType="Mail" resultMap="mailResultSet">
+		SELECT *
+		FROM MAIL M 
+		JOIN MAILBOX MB ON(M.MAIL_NO = MB.MAIL_NO)
+		JOIN MAIL_RECEIVER MR ON(M.MAIL_NO = MR.MAIL_NO)
+		WHERE M.MEMBER_NO = #{memberNo}
+		AND MB.TRASH = 'Y'
+		AND M.MAIL_STATUS = 'Y'
+		AND READ = 'N'
+	</select>
+	
 	<select id="reciveMailOne" parameterType="java.lang.String" resultMap="mailResultSet">
 		SELECT *
 		FROM MAIL M 
@@ -209,5 +231,10 @@
 		WHERE MAIL_NO = #{mailNo}	
 	</update>
 	
+	<update id="deleteMail" parameterType="java.lang.String">
+		UPDATE MAIL
+		SET MAIL_STATUS = 'N'
+		WHERE MAIL_NO = #{mNo}
+	</update>
 		
 </mapper>

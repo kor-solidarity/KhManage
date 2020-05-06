@@ -178,6 +178,25 @@ public class MailServiceImpl implements MailService{
 		return md.updateRead(sqlSession, mail);
 	}
 
+	@Override
+	public void deleteMail(String mNo) {
+
+		md.deleteMail(sqlSession, mNo);
+	}
+
+	@Override
+	public int getListCount5(Mail mail) {
+
+		return md.getListCount5(sqlSession, mail);
+	}
+
+	@Override
+	public List<Mail> nReadMailList(Mail mail, PageInfo pi) {
+		
+		return md.nReadMailList(sqlSession, mail, pi);
+		
+	}
+
 	
 	
 

@@ -262,7 +262,7 @@
 		                <table class="table" >                    
 		                    <tr>
 		                        <td>
-		                            <textarea style="width: 1200px" rows="3" cols="30" id="comment" name="comment" placeholder="댓글을 입력하세요"></textarea>
+		                            <textarea style="resize:none;  width: 1350px" rows="3" cols="30"  id="comment" name="comment" placeholder="댓글을 입력하세요"></textarea>
 		                            <br>
 		                            <div>
 		                               <button class="btn btn-default" type="button" name="commentInsertBtn" id="btnReply">

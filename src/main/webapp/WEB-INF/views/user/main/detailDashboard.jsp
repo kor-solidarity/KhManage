@@ -65,9 +65,7 @@
 .pjtTd4{width: 30%;}
 .td{padding-left: 5px;}
 #myChart,#myChart2,#myChart3{
-	height: 250px;
 	margin: 0 auto;
-	width: 100px;
 }
 .scheduler_default_corner_inner{
 		display:none !important;
@@ -565,7 +563,7 @@
 		}
 	});
 	<%}else {%>
-	$("#task").text("No data available");
+	$("#task").text("데이터가 존재하지않습니다.");
 	<%}%>
 </script>
 <script>
@@ -631,7 +629,7 @@
 	});
 	<%}else {%>
 	
-		$("#issue").text("No data available");
+		$("#issue").text("데이터가 존재하지않습니다.");
 	<%}%>
 </script>
 <script>
@@ -693,7 +691,7 @@
 	});
 	<%}else {%>
 	
-	$("#change").text("No data available");
+	$("#change").text("데이터가 존재하지않습니다.");
 	<%}%>
 </script>	
 </body>

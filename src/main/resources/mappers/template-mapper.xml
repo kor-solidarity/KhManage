@@ -12,6 +12,7 @@
 		<result property="detail" column="DETAIL"/>
 		<result property="createDate" column="CREATE_DATE"/>
 		<result property="editDate" column="EDIT_DATE"/>
+		<result property="status" column="STATUS"/>
 	</resultMap>
 	
 	<resultMap type="TemplateWork" id="templateWorkResultSet">
@@ -26,7 +27,7 @@
 	
 	<insert id="insertTemplate" parameterType="Template">
 		INSERT INTO PROJECT_TEMPLATE 
-		VALUES('TEM'|| TO_CHAR(SEQ_TEMPLATE.NEXTVAL, 'FM000'), #{projectTypePk}, #{memberPk}, #{templateName} , #{detail}, SYSDATE , SYSDATE)
+		VALUES('TEM'|| TO_CHAR(SEQ_TEMPLATE.NEXTVAL, 'FM000'), #{projectTypePk}, #{memberPk}, #{templateName} , #{detail}, SYSDATE , SYSDATE,DEFAULT)
 	</insert>
 	
 		
@@ -48,7 +49,10 @@
 			  ,DETAIL
 			  ,CREATE_DATE
 			  ,EDIT_DATE
-		FROM PROJECT_TEMPLATE	  
+			  ,STATUS
+		FROM PROJECT_TEMPLATE
+		WHERE STATUS = 'Y'
+		ORDER BY TEMPLATE_PK DESC	  
 	</select>
 	
 	<select id="selectOne" resultMap="templateResultSet" parameterType="Template">
@@ -61,6 +65,7 @@
 			  ,EDIT_DATE
 		FROM PROJECT_TEMPLATE
 		WHERE TEMPLATE_PK = #{templatePk}
+		AND STATUS = 'Y'
 	</select>
 	
 	<update id="updateTemp" parameterType="Template">
@@ -78,5 +83,11 @@
 		FROM TEMPLATE_WORK
 		WHERE TEMPLATE_NO = #{tm}
 	</select>
+	
+	<update id="deleteTem">
+		UPDATE PROJECT_TEMPLATE
+		SET STATUS = 'N'
+		WHERE TEMPLATE_PK = #{tNo}
+	</update>
 	
 </mapper>

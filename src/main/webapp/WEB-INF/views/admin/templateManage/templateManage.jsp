@@ -327,21 +327,21 @@
 						
 						<tr>
 							<td colspan="4">
-								<button class="okBtn" id="save">
+								<button class="okBtn" id="save" type="button">
 									<i class="fas fa-check"></i>&nbsp;저장
 								</button>
 								<a href="accessManage.am">
 								&nbsp;
-								<button class="delBtn">
+								<button class="delBtn" id="delTem" type="button">
 									<i class="fas fa-ban"></i>&nbsp;삭제
 								</button>
 								</a>
-								<button class="copy" id="copy">
+								<button class="copy" id="copy" type="button">
 									<i class="fas fa-check"></i>&nbsp;템플릿 복사
 								</button>
 								<a href="accessManage.am">
 								&nbsp;
-								<button class="cancleBtn">
+								<button class="cancleBtn" type="button">
 									<i class="fas fa-ban"></i>&nbsp;취소
 								</button>
 								</a>
@@ -386,9 +386,15 @@
 		
 	});
 	
-	$("#okBtn").click(function(){
+	$("#save").click(function(){
 		
 		$("#tempForm").submit();
+	});
+	
+	$("#delTem").click(function(){
+		
+		location.href = "templateDelete.am?tNo="+tm2;
+		
 	});
 	
 	

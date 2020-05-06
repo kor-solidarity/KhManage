@@ -436,7 +436,7 @@
 		
 			<br><br>
 			<ul class="changeList">
-				<li id="approveLi"><a href="templateManagePage.am">등록정보</a>
+				<li id="approveLi"><a href="templateManagePage.am" id="manage">등록정보</a>
 				</li>
 				<li id="requestLi"><a href="templateExcel.am">WBS</a>
 				</li>
@@ -896,6 +896,13 @@
     	
     })
     
+    var tm2= '${tm}';
+	var tm = "selectOneTemplate.am?tm="+tm2
+			
+	$("#manage").click(function(){
+		
+		$("#manage").prop("href",tm);
+	});
 
 </script>
 

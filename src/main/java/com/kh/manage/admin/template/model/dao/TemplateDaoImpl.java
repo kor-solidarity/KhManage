@@ -86,6 +86,12 @@ public class TemplateDaoImpl implements TemplateDao{
 		return sqlSession.selectList("Template.selectTwList", tm);
 	}
 
+	@Override
+	public void temDelete(SqlSessionTemplate sqlSession, String tNo) {
+
+		sqlSession.update("Template.deleteTem",tNo);
+	}
+
 
 
 }
