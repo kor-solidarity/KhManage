@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
-   List<Dept> list = (ArrayList<Dept>) request.getAttribute("dlist");
+   List<Dept> dlist = (ArrayList<Dept>) request.getAttribute("dlist");
 %>
 
 
@@ -34,6 +34,11 @@
 		
 		<script>
 			
+			if('${monthlyProject.jan}' > 0 || '${monthlyProject.feb}' > 0 || '${monthlyProject.mar}' > 0 ||
+			   '${monthlyProject.apr}' > 0 || '${monthlyProject.may}' > 0 || '${monthlyProject.jun}' > 0 ||
+			   '${monthlyProject.jul}' > 0 || '${monthlyProject.may}' > 0 || '${monthlyProject.jun}' > 0 ||
+			   '${monthlyProject.apr}' > 0 || '${monthlyProject.may}' > 0 || '${monthlyProject.jun}' > 0) {
+				
 			var ctx = document.getElementById('myBarChart1').getContext('2d');
 			var myBarChart1 = new Chart(ctx, {
 				type : 'bar',
@@ -42,13 +47,6 @@
 					datasets : [ {
 						label : '',
 						data : [ 
-							
-							/* 1, 5, 35, 34, 11, 55, 66, 23, 53, 22, 44, 55, 55 */
-							
-							/* ${pList.get(0).getCount()}, ${pList.get(1).getCount()}, ${pList.get(2).getCount()}, 
-							${pList.get(3).getCount()}, ${pList.get(4).getCount()}, ${pList.get(5).getCount()},
-							${pList.get(6).getCount()}, ${pList.get(7).getCount()}, ${pList.get(8).getCount()},
-							${pList.get(9).getCount()}, ${pList.get(10).getCount()}, ${pList.get(11).getCount()} */
 							
 							'${monthlyProject.jan}',
 							'${monthlyProject.feb}',
@@ -129,6 +127,11 @@
 				        legend: { position: 'bottom' },
 				    }
 				});
+			
+			} else {
+				$(".myBarChart1").text("데이터가 없습니다.");
+			}
+			
 		</script>
 		
 		
@@ -142,7 +145,7 @@
 				<br><b>주요 프로젝트 현황</b>&nbsp; (부서/팀별 프로젝트)
 				<hr>
 				<div class="container" style="width:95%; padding-bottom: 30px; margin-top: 30px;">
-					<canvas id="myBarChart2" width="600px" height="320px"></canvas>				
+					<canvas id="myBarChart2" width="600px" height="260px"></canvas>				
 				</div>
 			</div>
 			
@@ -153,24 +156,22 @@
 		
 		<script>
 			/* var deptName = $("#deptName").val(); */	
-		
+			<% if(dlist.size() > 0) { %>
 			var ctx = document.getElementById('myBarChart2').getContext('2d');
 			var myBarChart2 = new Chart(ctx, {
 				type : 'bar',
 				data : {
-					<%-- labels: [
-						<%for(int i =0; i < list2.size(); i++){
-							 Statistics st = (Statistics)list2.get(i);
+					
+					labels : [ 
+						
+						<%for(int i =0; i < dlist.size(); i++){
+							 Dept dept = (Dept)dlist.get(i);
 						%> 
 						
-							'<%=st.getwStatus() %>',
+							'<%= dept.getDeptName() %>',
 						<%
 						}
 						%>
-						], --%>
-					labels : [ 
-						
-						'${dlist.get(0).deptName}'
 						
 						
 					],
@@ -178,23 +179,23 @@
 						label : '',
 						data : [ 
 							
-							22, 5, 35, 34, 11, 55, 33, 23, 21, 22, 44, 12, 22
+							22, 13, 35, 34, 11, 56, 33, 23, 21, 22, 44, 12, 22
 							
 						],
 						backgroundColor : [ 
-								'rgba(255, 99, 132, 0.2)',
-								'rgba(54, 162, 235, 0.2)',
-								'rgba(255, 206, 86, 0.2)',
-								'rgba(75, 192, 192, 0.2)',
-								'rgba(153, 102, 255, 0.2)',
-								'rgba(153, 102, 255, 0.2)',
-								'rgba(153, 102, 255, 0.2)',
-								'rgba(153, 102, 255, 0.2)',
-								'rgba(153, 102, 255, 0.2)',
-								'rgba(153, 102, 255, 0.2)',
-								'rgba(153, 102, 255, 0.2)',
-								'rgba(255, 159, 64, 0.2)'
-						],
+							'rgba(255, 99, 132, 0.2)',
+							'rgba(54, 162, 235, 0.2)',
+							'rgba(255, 206, 86, 0.2)',
+							'rgba(75, 192, 192, 0.2)',
+							'rgba(153, 102, 255, 0.2)',
+							'rgba(153, 102, 255, 0.2)',
+							'rgba(153, 102, 255, 0.2)',
+							'rgba(153, 102, 255, 0.2)',
+							'rgba(153, 102, 255, 0.2)',
+							'rgba(153, 102, 255, 0.2)',
+							'rgba(153, 102, 255, 0.2)',
+							'rgba(255, 159, 64, 0.2)'
+					],
 						borderColor : [ 
 								/* 'rgba(255, 99, 132, 1)',
 								'rgba(54, 162, 235, 1)',
@@ -250,6 +251,11 @@
 				        legend: { position: 'bottom' }, */
 				    }
 				});
+			<%}else {%>
+				$(".myBarChart2").text("데이터가 없습니다.");
+			<% } %>
+			
+			
 		</script>
 		
 		
