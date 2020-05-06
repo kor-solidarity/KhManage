@@ -52,25 +52,6 @@
 		<result property="ihDate" column="IH_DATE"/>
 	</resultMap>
 	
-	<resultMap type="Work" id="workResultSet">
-		<id property="workNo" column="WORK_NO"/>
-		<result property="workName" column="WORK_NAME"/>
-		<result property="status" column="STATUS"/>
-		<result property="projectNo" column="PROJECT_NO"/>
-		<result property="projectName" column="PROJECT_Name"/>
-		<result property="beginDate" column="BEGIN_DATE"/>
-		<result property="completeDate" column="COMPLETE_DATE"/>
-		<result property="precedeNo" column="PRECEDE_NO"/>
-		<result property="completeRate" column="COMPLETE_RATE"/>
-		<result property="grantorNo" column="GRANTOR_NO"/>
-		<result property="workLevel" column="WORK_LEVEL"/>
-		<result property="highWorkNo" column="HIGH_WORK_NO"/>
-		<result property="memo" column="MEMO"/>
-		<result property="workType" column="WORK_TYPE"/>
-		<result property="memberNo" column="MEMBER_NO"/>
-		<result property="workStatus" column="WORK_STATUS"/>
-	</resultMap>
-	
 	<resultMap type="IssueList" id="selectIssueOne">
 		<id property="issueNo" column="ISSUE_NO"/>
 		<result property="projectNo" column="PROJECT_NO"/>
@@ -106,34 +87,9 @@
 		<result property="role" column="ROLE"/>
 		<result property="projectName" column="PROJECT_NAME"/>
 	</resultMap>
+
 	
-	<resultMap type="Grantor" id="selectGrantorList">
-		<id property="memberPk" column="MEMBER_PK"/>
-		<result property="memberName" column="MEMBER_NAME"/>
-		<result property="deptName" column="DEPT_NAME"/>
-		<result property="rankName" column="RANK_NAME"/>
-	</resultMap>
-	
-	<resultMap type="Work" id="workAttachResultSet">
-		<id property="workNo" column="WORK_NO"/>
-		<result property="workName" column="WORK_NAME"/>
-		<result property="status" column="STATUS"/>
-		<result property="projectNo" column="PROJECT_NO"/>
-		<result property="projectName" column="PROJECT_Name"/>
-		<result property="beginDate" column="BEGIN_DATE"/>
-		<result property="completeDate" column="COMPLETE_DATE"/>
-		<result property="precedeNo" column="PRECEDE_NO"/>
-		<result property="completeRate" column="COMPLETE_RATE"/>
-		<result property="grantorNo" column="GRANTOR_NO"/>
-		<result property="workLevel" column="WORK_LEVEL"/>
-		<result property="highWorkNo" column="HIGH_WORK_NO"/>
-		<result property="highWorkName" column="HIGH_WORK_NAME"/>
-		<result property="memo" column="MEMO"/>
-		<result property="workType" column="WORK_TYPE"/>
-		<result property="memberNo" column="MEMBER_NO"/>
-		<result property="workStatus" column="WORK_STATUS"/>
-		<collection property="workAttachment" javaType="java.util.ArrayList" resultMap="selectWorkAttachment"></collection>
-	</resultMap>
+
 	
 	<resultMap type="WorkAttachment" id="selectWorkAttachment">
 		<id property="atNo" column="AT_NO"/>
@@ -310,68 +266,9 @@
 	WHERE PT.MEMBER_PK = #{memberNo}
 	</select>
 	
-	<select id="selectGrantorList" parameterType="java.lang.String" resultMap="selectGrantorList">
-		SELECT PT.MEMBER_PK, M.MEMBER_NAME, D.DEPT_NAME, R.RANK_NAME
-		FROM PROJECT_TEAM PT
-		JOIN MEMBER M ON (PT.MEMBER_PK = M.MEMBER_NO)
-	    JOIN DEPT D ON (M.DEPT_NO = D.DEPT_NO)
-	    JOIN RANK R ON (M.RANK_NO = R.RANK_NO)
-		WHERE PROJECT_PK = #{projectNo}
-		AND ROLE IN ('PM', 'PSM')
-	</select>
 	
-	<select id="selectWork" parameterType="java.lang.String" resultMap="workAttachResultSet">
-	SELECT 
-        W.WORK_NO
-      , W.WORK_NAME
-      , W.STATUS
-      , W.PROJECT_NO
-      , W.BEGIN_DATE
-      , W.COMPLETE_DATE
-      , W.PRECEDE_NO
-      , W.COMPLETE_RATE
-      , W.GRANTOR_NO
-      , W.WORK_LEVEL
-      , W.HIGH_WORK_NO
-      , W.MEMO
-      , W.WORK_TYPE
-      , W.MEMBER_NO
-      , W.WORK_STATUS
-      , W2.WORK_NAME HIGH_WORK_NAME
-      , P.PROJECT_NAME
-      , WP.PRODUCT_NO
-      , WP.PRODUCT_TYPE 
-      , WP.PRODUCT_TITLE
-      , WP.PRODUCT_CONTENT
-      , WP.ENROLL_DATE
-      , WP.MODIFY_DATE
-      , WP.AT_NO
-      , WP.ORIGIN_NAME
-      , WP.CHANGE_NAME
-      , WP.FILEPATH
-      , WP.EXT
-	FROM WORK W
-    JOIN PROJECT P ON (W.PROJECT_NO = P.PROJECT_PK)
-    LEFT OUTER JOIN (SELECT 
-        WP.PRODUCT_NO
-      , WP.WORK_NO
-      , WP.PRODUCT_TYPE
-      , WP.PRODUCT_TITLE
-      , WP.PRODUCT_CONTENT
-      , WP.ENROLL_DATE
-      , WP.MODIFY_DATE
-      , AT.AT_NO
-      , AT.ORIGIN_NAME
-      , AT.CHANGE_NAME
-      , AT.FILEPATH
-      , AT.EXT
-        FROM WORK_PRODUCT WP
-        JOIN ATTACHMENT AT ON (WP.PRODUCT_NO = AT.DIVISION)) WP ON (WP.WORK_NO = W.WORK_NO)
-    LEFT OUTER JOIN WORK W2 ON (W.HIGH_WORK_NO = W2.WORK_NO)
-	WHERE W.WORK_NO = #{workNo}
-	</select>
 	
-	<select id="selectHighWorkNoList" parameterType="Work" resultMap="workResultSet">
+<!-- 	<select id="selectHighWorkNoList" parameterType="Work" resultMap="workResultSet">
 		SELECT 
 				WORK_NO
 			  , WORK_NAME
@@ -384,7 +281,7 @@
     		AND PROJECT_NO = #{projectNo}
     		AND WORK_TYPE != '개인'
 			ORDER BY WORK_NO ASC
-	</select>
+	</select> -->
 	
 </mapper>
 

@@ -47,6 +47,8 @@ public interface WorkService {
 
 	List<Work> selectHighWorkNoList(HashMap<String, String> map);
 
+	List<Work> selectHighWorkNoList2(Work w);
+
 	
 
 }

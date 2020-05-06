@@ -121,6 +121,11 @@ public class WorkDaoImpl implements WorkDao{
 		return sqlSession.selectList("Work.selectHighWorkNoList", map);
 	}
 
+	@Override
+	public List<Work> selectHighWorkNoList2(SqlSessionTemplate sqlSession, Work w) {
+		return sqlSession.selectList("Work.selectHighWorkNoList2", w);
+	}
+
 	
 
 }
