@@ -24,6 +24,9 @@ public class ProjectWork {
 	// 작업 취소/종료여부 -
 	private String workStatus;
 	// 여기서부턴 테이블은 아님.
+	
+	// highWorkNo 이름
+	private String highWorkName;
 	// 이 작업에 배정된 인원.
 	private String memberName;
 	// 총 몇일짜리 프로젝트?: completeDate - beginDate + 1
@@ -177,6 +180,14 @@ public class ProjectWork {
 	
 	public void setHighWorkNo(String highWorkNo) {
 		this.highWorkNo = highWorkNo;
+	}
+	
+	public String getHighWorkName() {
+		return highWorkName;
+	}
+	
+	public void setHighWorkName(String highWorkName) {
+		this.highWorkName = highWorkName;
 	}
 	
 	public String getMemo() {

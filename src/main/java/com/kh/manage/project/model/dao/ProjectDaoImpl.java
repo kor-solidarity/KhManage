@@ -286,7 +286,7 @@ public class ProjectDaoImpl implements ProjectDao {
 	
 	@Override
 	public int updateWorkLevel(SqlSessionTemplate sqlSession, ProjectWork work) {
-		return sqlSession.selectOne("Project.updateWorkLevel", work);
+		return sqlSession.update("Project.updateWorkLevel", work);
 	}
 
 	@Override

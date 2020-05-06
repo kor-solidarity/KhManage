@@ -184,9 +184,8 @@
 											<tr class='trRange1'>
 												<td class='td1'>
 														<%--...뭐지이게?--%>
-													<input type='text' id='idCheckMain' name='idCheck'
-														   class='inputCss'
-														   style='width: 30px; display: none' value="${i.memberPk}">
+													<input type='checkbox' id='idCheckMain' name='idCheck'
+														   class='inputCss' value="${i.memberPk}">
 												</td>
 												<td class='td1'> ${i.deptName}</td>
 												<td class='tdText'>${i.memberName}</td>

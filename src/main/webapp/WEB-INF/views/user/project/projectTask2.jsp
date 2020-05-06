@@ -334,17 +334,17 @@
 						<%--ID--%>
 						<th style="width: 30px">ID</th>
 						<%--작업명--%>
-						<th style="width: 240px">작업명</th>
+						<th style="width: 220px">작업명</th>
 						<%--상태--%>
 						<th style="width: 70px">상태</th>
 						<%--기간--%>
 						<th style="width: 40px">기간</th>
 						<%--시작--%>
-						<th style="width: 110px">시작</th>
+						<th style="width: 90px">시작</th>
 						<%--완료--%>
-						<th style="width: 110px">완료</th>
+						<th style="width: 90px">완료</th>
 						<%--상위작업--%>
-						<th style="width: 60px">상위작업</th>
+						<th style="width: 120px">상위작업</th>
 						<%--완료율--%>
 						<th style="width: 60px">완료율</th>
 						<%--담당자--%>
@@ -823,10 +823,10 @@
                             // 돌아가면서 넘긴다.
                             for (key in data) {
                                 target_id = "#" + data[key]['workNo'];
-                                // 상위작업 값
-                                highWorkNo = data[key]['highWorkNo'];
-                                if (highWorkNo == undefined) {
-                                    highWorkNo = "";
+                                // 상위작업 이름
+                                highWorkName = data[key]['highWorkName'];
+                                if (highWorkName == undefined) {
+                                    highWorkName = "";
                                 }
                                 // 단계에 따른 상하위작업 들여쓰기
                                 workLevelTab = '&nbsp;'
@@ -854,8 +854,8 @@
                                     '<td>' + data[key]['days'] + '</td>' +
                                     '<td>' + data[key]['beginDate'] + '</td>' +
                                     '<td>' + data[key]['completeDate'] + '</td>' +
-                                    // 상위작업
-                                    '<td>' + highWorkNo + '</td>' +
+                                    // 상위작업 이름
+                                    '<td>' + highWorkName + '</td>' +
                                     '<td>' + data[key]['completeRate'] + '%' + '</td>' +
                                     // 작업에 배정된 인원
                                     '<td>' + memberName + '</td>' +
