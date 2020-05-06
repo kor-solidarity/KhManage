@@ -278,6 +278,12 @@ public class ProjectDaoImpl implements ProjectDao {
 		
 		return sqlSession.selectList("Admin.selectHistory", pid);
 	}
+
+	@Override
+	public String selectEnrollDate(SqlSessionTemplate sqlSession, String pid) {
+		
+		return sqlSession.selectOne("Project.selectEnrollDate", pid);
+	}
 }
 
 

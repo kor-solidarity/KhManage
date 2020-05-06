@@ -297,4 +297,10 @@ public class ProjectServiceImpl implements ProjectService {
 		
 		return pd.selectHistory(sqlSession, pid);
 	}
+
+	@Override
+	public String selectEnrollDate(String pid) {
+		
+		return pd.selectEnrollDate(sqlSession, pid);
+	}
 }

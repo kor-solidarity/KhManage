@@ -112,4 +112,6 @@ public interface ProjectService {
 	int insertProjectHistory(Member m);
 	
 	List<ProjectHistory> selectHistory(String pid);
+
+	String selectEnrollDate(String pid);
 }
