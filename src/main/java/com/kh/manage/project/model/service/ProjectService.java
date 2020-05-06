@@ -112,4 +112,8 @@ public interface ProjectService {
 	int insertProjectHistory(Member m);
 	
 	List<ProjectHistory> selectHistory(String pid);
+	
+	int selectProjectListNumCount(Member member);
+	
+	int updateWorkLevel(ProjectWork work);
 }

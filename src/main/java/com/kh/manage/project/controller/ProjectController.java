@@ -65,13 +65,13 @@ public class ProjectController {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 		
-		int listCount = ps.getProjectListCount();
+		int listCount = ps.selectProjectListNumCount(loginUser);
 		
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 		// 프로젝트 목록에서 집어와야 하는 것들:
 		// 프로젝트명 개발형태 담당자 담당부서 시작일 완료일
 		// 	실적 산출물 과 이슈 수
-		// TODO: 2020-04-15  산출물과 이슈는 아직 안만들었으니 0 처리한다
+		
 		// 우선 프로젝트명 뽑는다...
 		
 		List<ProjectList> teamList = ps.selectProjectList(pi, loginUser);
@@ -541,7 +541,13 @@ public class ProjectController {
 		String workNo = request.getParameter("workNo");
 		String workName = request.getParameter("workName");
 		String memberNo = request.getParameter("memberNo");
+		if (memberNo.equals("0")) {
+			memberNo = null;
+		}
 		String grantor = request.getParameter("grantor");
+		if (grantor.equals("0")) {
+			grantor = null;
+		}
 		String memo = request.getParameter("memo");
 		String highWorkSel = request.getParameter("highWorkSel");
 		if (highWorkSel.equals("0")) {
@@ -570,6 +576,7 @@ public class ProjectController {
 						null, highWorkSel, null,
 						null, memberNo, null);
 		int result = ps.updateWork(work);
+		int result2 = ps.updateWorkLevel(work);
 		System.out.println("res: " + result);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");

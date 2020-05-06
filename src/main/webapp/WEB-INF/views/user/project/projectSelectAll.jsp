@@ -172,10 +172,10 @@
 								<%--1페이지에서 그 이전으로 돌아가려고 하면 첫페이지로 보냄.--%>
 								<c:choose>
 									<c:when test="${pi.currentPage-1 > 1}">
-										<a href="${path}/projectCenter.pr.de?currentPage=<c:out value='${pi.currentPage-1}'/>"><</a>
+										<a href="${path}/projectCenter.pr?currentPage=<c:out value='${pi.currentPage-1}'/>"><</a>
 									</c:when>
 									<c:otherwise>
-										<a href="${path}/projectCenter.pr.de?currentPage=1"><</a>
+										<a href="${path}/projectCenter.pr?currentPage=1"><</a>
 									</c:otherwise>
 								</c:choose>
 
@@ -185,7 +185,7 @@
 										<span style="color: red ; font-weight: bold">${i}</span>
 									</c:if>
 									<c:if test="${i != pi.currentPage}">
-										<a href="${path}/projectCenter.pr.de?currentPage=${i}">
+										<a href="${path}/projectCenter.pr?currentPage=${i}">
 												${i}
 										</a>
 									</c:if>
@@ -197,10 +197,10 @@
 									<%--마지막 페이지에서 앞으로 가려고 하면 그냥 마지막으로 보낸다.--%>
 									<%--현 페이지 + 1이 마지막 페이지보다 크다 == 지금이 마지막 페이지다.--%>
 									<c:when test="${pi.currentPage+1 > pi.maxPage}">
-										<a href="${path}/projectCenter.pr.de?currentPage=<c:out value='${pi.maxPage}'/>">> </a>
+										<a href="${path}/projectCenter.pr?currentPage=<c:out value='${pi.maxPage}'/>">> </a>
 									</c:when>
 									<c:otherwise>
-										<a href="${path}/projectCenter.pr.de?currentPage=<c:out value='${pi.currentPage + 1}'/>">> </a>
+										<a href="${path}/projectCenter.pr?currentPage=<c:out value='${pi.currentPage + 1}'/>">> </a>
 									</c:otherwise>
 								</c:choose>
 								<a href="${path}/projectCenter.pr?currentPage=<c:out value='${pi.maxPage}'/>">>> </a>

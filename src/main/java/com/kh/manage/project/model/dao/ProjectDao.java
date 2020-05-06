@@ -112,4 +112,8 @@ public interface ProjectDao {
 	int insertPeojectHistory(SqlSessionTemplate sqlSession, Member m);
 	
 	List<ProjectHistory> selectHistory(SqlSessionTemplate sqlSession, String pid);
+	
+	int selectProjectListNumCount(SqlSessionTemplate sqlSession, Member member);
+	
+	int updateWorkLevel(SqlSessionTemplate sqlSession, ProjectWork work);
 }
