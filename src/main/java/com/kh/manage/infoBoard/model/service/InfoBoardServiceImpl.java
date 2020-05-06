@@ -29,12 +29,31 @@ public class InfoBoardServiceImpl implements InfoBoardService {
 		int result1 = id.insertBoard(sqlSession,ib);
 		System.out.println("result1 : " + result1);
 		
+		String infoBoard1 = id.selectCurrval(sqlSession);
+		String infoBoard2 = "";
+		int no = Integer.parseInt(infoBoard1);
 		
+		if(no < 10) {
+			infoBoard2 = "BO00" + infoBoard1;
+		} else {
+			infoBoard2 = "BO0" + infoBoard1;
+		}
+		
+		at.setDivision(infoBoard2);
+		
+		int result2 = id.insertAttach(sqlSession, at);
+		
+		System.out.println("result2 : " + result2);
+		
+		if(result1 > 0 && result2 > 0) {
+			
+			result = 1;
+		}
 		
 		return result;
 	}
 
-
+	
 
 	@Override
 	public int boardListCount() {
@@ -56,7 +75,7 @@ public class InfoBoardServiceImpl implements InfoBoardService {
 	public InfoBoard selectOneBoard(InfoBoard ib) {
 
 		InfoBoard board = id.selectOneBoard(sqlSession, ib);
-		id.countPlus(sqlSession, ib);
+		id.countPlus(sqlSession, board);
 		
 		return board;
 	}
@@ -108,6 +127,10 @@ public class InfoBoardServiceImpl implements InfoBoardService {
 
 		return id.updateReply(sqlSession, rp);
 	}
+
+
+
+	
 
 
 
