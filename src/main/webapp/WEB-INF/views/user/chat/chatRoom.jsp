@@ -210,8 +210,7 @@ body {
 		<table align="center">
 			<tr height="15px;"></tr>
 			<tr align="center">
-				<td id="chatMain"><i class="far fa-comment-dots"
-					onclick="location.href='showChatPage.ct'"
+				<td id="chatMain"><i class="far fa-comment-dots" id="showChatMain"
 					style="color: white; font-size: 34px;"></i></td>
 			</tr>
 			<tr height="15px;"></tr>
@@ -232,6 +231,11 @@ body {
 					style="color: white; font-size: 34px;"></i></td>
 			</tr>
 		</table>
+		<script>
+			$("#showChatMain").click(function(){
+				location.href='showChatPage.ct';
+			});
+		</script>
 	</div>
 	<div id="section"
 		style="background: #EEEEEE; width: 430px; height: 598px; float: left;">
@@ -541,15 +545,15 @@ body {
 							  text:text
 							},
 					 success:function(data){   
-						 var text= data['memberName']+ "님이 초대되었습니다" + "`" + "${cr.chatRoomNo}"+ "`" + "${loginUser.memberNo}" + "`" + "텍스트" + "`" + "${loginUser.memberName}" + "`" +"sss" + "`" + "M999";				
-						 
+						 var text= data['memberName']+ "님이 초대되었습니다" + "`" + "${cr.chatRoomNo}"+ "`" + "${loginUser.memberNo}" + "`" + "텍스트" + "`" + "${loginUser.memberName}" + "`" +"초대" + "`" + "M999";				
+						 console.log(data);
 						 $("#chatAreaTable").append("<tr height='10px;'></tr><tr><br><td colspan='2'><div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send' align='center' style='width:100%; font-size:10px; margin-right: 60px; background:purple; height:15px; padding: 0px;'>"+data['memberName']+"님이 초대되었습니다<span class='msg_time_send'></span></div></div></td></tr>");
 						 $("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);	
 				    	 $(".chatRoomMember").append("<tr><td><div class='box' style='background:white;'><img class='profile' src='<c:url value='/resources/img/people.png'/>'></div></td><td style='padding-top: 14px; padding-left: 10px;'>"+data['memberName']+" / "+data['deptName']+" /"+data['rankName']+"<input type='hidden' class='hideMemberNo' value='"+data['memberNo']+"'></td></tr>");
 				    	 $("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
 						 
 				    	 var c =  $("#memberCount").text();	
-				    	 console.log(c);
+				    	 
 				    	 $("#memberCount").text((Number(c) + Number(1)));
 				    	
 				    	 ws.send(text);
@@ -709,7 +713,7 @@ body {
         	var memberName = text1[4];
         	var date = text1[5];
         	var changeName = text1[6];
-        	
+        	console.log("초대값 : " + date);
         	
         	//지금 내가 들어와 있는 방 번호
         	var chatNo2 = "${cr.chatRoomNo}";
@@ -738,9 +742,17 @@ body {
     					$(this).parent().parent().remove(); 
     				}
     			});
-     			 var c =  Number($("#memberCount").text());	
-     			 console.log(c);
-		    	 $("#memberCount").text((Number(c) - Number(1)));
+     			if(date == '초대'){
+	     			 var c =  Number($("#memberCount").text());	
+	     			 console.log(c);
+			    	 $("#memberCount").text((Number(c) + Number(1)));
+	     				
+     			}else{
+     				 var c =  Number($("#memberCount").text());	
+         			 console.log(c);
+    		    	 $("#memberCount").text((Number(c) - Number(1)));
+         					
+     			}
      			 $("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
      		}
         }
