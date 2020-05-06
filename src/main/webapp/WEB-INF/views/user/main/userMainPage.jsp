@@ -91,6 +91,10 @@
     color: #ffb822;
     background: rgba(234, 234, 234, 0.3);
 }
+
+/* tr:nth-child(even) {
+   		background: #F9F9F9;
+ } */
 		 
 </style>
 
@@ -585,14 +589,6 @@
 								<th class="thmidTable">완료일</th>
 								<th class="thmidTable">완료율</th>
 							</tr>
-							<tr>
-								<td class="tdmidTable td"><a href="#">서포트 금형제작</a></td>
-								<td class="tdmidTable td">내 작업</td>
-								<td class="tdmidTable td">김태원</td>
-								<td class="tdmidTable td">2020-04-01</td>
-								<td class="tdmidTable td">2020-04-01</td>
-								<td class="tdmidTable td">97%</td>
-							</tr>
 							<c:forEach var="ww" items="${myWorkList}">
 							<tr>
 								<td class="tdmidTable td"><a href="#">${ww.projectName}</a></td>
@@ -622,12 +618,6 @@
 								<th class="thmidTable2" style="width:20%">작업</th>
 								<th class="thmidTable2" style="width:25%">파일이름</th>
 								<th class="thmidTable2" style="width:20%">등록일자</th>
-							</tr>
-							<tr>
-								<td class="tdmidTable td">서포트 금형제작</td>
-								<td class="tdmidTable td">제작회의1</td>
-								<td class="tdmidTable td"><a href="#">프로젝트 개발 개요</a></td>
-								<td class="tdmidTable td">2020-03-30</td>
 							</tr>
 							<c:forEach var="w" items="${wpList}">
 							<tr>
