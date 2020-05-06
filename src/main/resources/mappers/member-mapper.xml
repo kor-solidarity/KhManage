@@ -606,7 +606,8 @@
 		SELECT COUNT(*)
 		FROM WORK
 		WHERE MEMBER_NO = #{memberNo}
-		AND STATUS NOT LIKE 'PL검토완료'
+		AND STATUS NOT LIKE 'PL승인완료'
+		AND WORK_STATUS = 'Y'
 	</select>
    
    <select id="myProjectCount" resultType="_int">
@@ -617,7 +618,7 @@
    
    <select id="myIssueCount" resultType="_int">
 		SELECT COUNT(*)
-		FROM ISSUE
+		FROM 
 		WHERE TEAMWORKER = #{memberNo}
    </select>
    
