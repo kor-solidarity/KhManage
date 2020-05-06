@@ -618,7 +618,7 @@
    
    <select id="myIssueCount" resultType="_int">
 		SELECT COUNT(*)
-		FROM 
+		FROM ISSUE
 		WHERE TEAMWORKER = #{memberNo}
    </select>
    
@@ -733,19 +733,19 @@
                JOIN MEMBER M ON(M.MEMBER_NO = I.TEAMWORKER)
 		      WHERE 
 		        I.ISSUE_TYPE = '버그발생'
-                AND M.MEMBER_NO = 'M007'),
+                AND M.MEMBER_NO = #{memberNo}),
             (SELECT COUNT(*) AS PRO
 		       FROM ISSUE I
                JOIN MEMBER M ON(M.MEMBER_NO = I.TEAMWORKER)
 		      WHERE
 		        I.ISSUE_TYPE = '새기능'
-                AND M.MEMBER_NO = 'M007'),
+                AND M.MEMBER_NO = #{memberNo}),
             (SELECT COUNT(*) AS COM
 		       FROM ISSUE I
                JOIN MEMBER M ON(M.MEMBER_NO = I.TEAMWORKER)
 		      WHERE
 		        I.ISSUE_TYPE = '개선사항'
-                AND M.MEMBER_NO = 'M007')
+                AND M.MEMBER_NO = #{memberNo})
    </select>
    
    <select id="myWorkProductList" resultMap="memberWorkProductResultSet">

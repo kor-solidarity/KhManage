@@ -107,18 +107,28 @@
 }
 
 .replyTextArea {
-	width: 80%;
+	width: 90%;
 	height: 120px;
 	border-radius: 5px;
 	padding: 10px;
-	display: inline-block; 
+	display: inline-block;
+	resize: none;
 	
 }
 
 .replyBtn {
-	height:100%;
-	width: 45px;
+	width: 100px;
+	height:120px;
 	display: inline-block;
+	
+	border:none;
+	background:#1E2B44;
+	color:white;
+	font-weight:600;
+	border-radius: 5px;
+	font-size:14px;
+	/* margin-left: 10px; */
+	margin-top: 0px;
 }
 
 .content {
@@ -251,7 +261,7 @@
 
 .replyBtnDiv {
 	float: right;
-	width: 20%;
+	/* width: 20%; */
 	margin-right: -100px;
 	margin-top: 10px;
 }
@@ -295,7 +305,13 @@
 			
 			<div id="" class="contentArea">
 				<div id="" class="content" style="">${board.boardContent}</div>
-			</div>
+			</div><br>
+			
+			<%-- <div class="" style="padding-left: 20px;">
+				<b>첨부파일</b>
+				<div id="download">${at.originName} dsd</div>
+				<input type="hidden" value="${at.atNo}">
+			</div> --%>			
 			
 			
 			<div id="" class="replyDivArea">
@@ -304,7 +320,7 @@
 			
 			<c:forEach var="r" items="${rlist}">
 			
-			<c:if test="${rlist.size() > 0}">
+			<%-- <c:if test="${rlist.size() eq 0}"> --%>
 			<div id="" class="replyArea">
 				<table id="replyTable" class="" style="width: 100%;">
 					<tr style="">
@@ -328,14 +344,14 @@
 					</tr>
 				</table>
 			</div>			
-			</c:if>
+			<%-- </c:if> --%>
 			
 			
-			<c:if test="${rlist.size() <= 0}">
-			<div id="" class="replyAreaa">
-				댓글이 없습니다.ssssssssssssssss
-			</div>
-			</c:if>
+				<%-- <c:if test="${rlist.size() eq 0}">
+					<div id="" class="replyAreaa">
+						댓글이 없습니다.ssssssssssssssss
+					</div>
+				</c:if> --%>
 			
 			</c:forEach>
 			
@@ -357,8 +373,8 @@
 			
 			<div id="" class="replyInsert">
 				<form action="" id="commentForm" name="commentForm" method="post">
-					<div class="">
-						<textarea rows="" cols="" class="replyTextArea form-control" id="replyTextArea" class="replyTextArea form-control" name="replyContent" placeholder="댓글을 입력하세요."></textarea>
+					<div class="" style="width: 90%; float:left">
+						<textarea rows="" cols="" class="replyTextArea " id="replyTextArea" class="replyTextArea form-control" name="replyContent" placeholder="댓글을 입력하세요." ></textarea>
 						<input type="hidden" id="" class="" name="">
 						<input type="hidden" id="" class="" name="">
 						<input type="hidden" id="" class="" name="">

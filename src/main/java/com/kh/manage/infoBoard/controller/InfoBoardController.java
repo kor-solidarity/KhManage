@@ -68,50 +68,49 @@ public class InfoBoardController {
 	}
 	
 	
-//	//게시글 등록
-//	@RequestMapping("/insertBoard.ib")
-//	public String insertBoard(InfoBoard ib, HttpSession session, Model model, HttpServletRequest request,
-//			@RequestParam MultipartFile[] attachmentFile) {
-//		
-//		int result = 0;
-//		
-//		for(int i = 0; i < attachmentFile.length; i++) {
-//			System.out.println(attachmentFile[i]);
-//		}
-//
-//		List<Attachment> alist = new ArrayList<Attachment>();
-//		
-//		if(attachmentFile.length > 0) { 
-//			
-//			for(int i = 0; i < attachmentFile.length; i++) {
-//				
-//				if(attachmentFile[i].getSize() > 0) {
-//					
-//					String root = request.getSession().getServletContext().getRealPath("resources");
-//					System.out.println("root : " + root);
-//					
-//					String filePath = root + "\\uploadFiles";
-//					
-//					String originFileName = attachmentFile[i].getOriginalFilename();
-//					String ext = originFileName.substring(originFileName.lastIndexOf("."));
-//					String changeName = CommonsUtils.getRandomString();
-//					
-//					Attachment at = new Attachment();
-//					at.setChangeName(changeName);
-//					at.setOriginName(originFileName);
-//					at.setFilePath(filePath);
-//					at.setExt(ext);
-//					
-//					alist.add(at);
-//					
-//				}
-//			}
-//			
-//			
-//			
-//			
-//			
-//			
+	//게시글 등록
+	@RequestMapping("/insertBoard.ib")
+	public String insertBoard(InfoBoard ib, HttpSession session, Model model, HttpServletRequest request,
+			@RequestParam MultipartFile attachmentFile) {
+		
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		System.out.println("root : " + root);
+		
+		String filePath = root + "\\uploadFiles";
+		
+		String originFileName = attachmentFile.getOriginalFilename();//원본 파일 이름
+		String ext = originFileName.substring(originFileName.lastIndexOf("."));//.png , .jpg 
+		String changeName = CommonsUtils.getRandomString();
+		
+		Attachment at = new Attachment();
+		at.setChangeName(changeName);
+		at.setOriginName(originFileName);
+		at.setFilePath(filePath);
+		at.setExt(ext);
+		
+		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
+		System.out.println("loginUser : " + loginUser);
+
+		ib.setMemberNo(loginUser.getMemberNo());
+			
+		try {
+			int result = is.insertBoard(ib, at);
+			System.out.println("controller : " + result);
+			attachmentFile.transferTo(new File(filePath + "\\" +  changeName + ext));
+			
+		} catch (Exception e) {
+			
+			new File(filePath + "\\" + changeName + ext).delete();
+		}
+				
+		return "redirect:infoBoard.ib"; 
+	}
+			
+			
+			
+			
+			
+			
 //		}
 //		
 //		Member loginUser = (Member) session.getAttribute("loginUser");

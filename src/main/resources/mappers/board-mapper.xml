@@ -45,6 +45,11 @@
 		INSERT INTO INFO_TABLE
 		VALUES('BO'|| TO_CHAR(SEQ_INFO.NEXTVAL, 'FM000'), #{boardTitle}, #{boardContent}, SYSDATE, SYSDATE, #{memberNo}, 'Y', 0)
 	</insert>
+	
+	<select id="selectCurrval" resultType="java.lang.String" parameterType="java.lang.String">
+		SELECT SEQ_INFO.CURRVAL
+		FROM DUAL
+	</select>
 
 	<select id="boardListCount" resultType="_int">
 		SELECT COUNT(*)

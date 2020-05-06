@@ -6,6 +6,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.infoBoard.model.vo.BoReply;
 import com.kh.manage.infoBoard.model.vo.InfoBoard;
@@ -17,6 +18,18 @@ public class InfoBoardDaoImpl implements InfoBoardDao {
 	public int insertBoard(SqlSessionTemplate sqlSession, InfoBoard ib) {
 		
 		return sqlSession.insert("InfoBoard.insertBoard", ib);
+	}
+	
+	@Override
+	public String selectCurrval(SqlSessionTemplate sqlSession) {
+
+		return sqlSession.selectOne("InfoBoard.selectCurrval");
+	}
+
+	@Override
+	public int insertAttach(SqlSessionTemplate sqlSession, Attachment at) {
+	
+		return sqlSession.insert("Attachment.insertAttach", at);
 	}
 
 	@Override
@@ -83,6 +96,8 @@ public class InfoBoardDaoImpl implements InfoBoardDao {
 
 		return sqlSession.update("InfoBoard.updateReply", rp);
 	}
+
+
 
 
 

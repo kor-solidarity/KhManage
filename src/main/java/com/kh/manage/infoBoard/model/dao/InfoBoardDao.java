@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.infoBoard.model.vo.BoReply;
 import com.kh.manage.infoBoard.model.vo.InfoBoard;
@@ -11,6 +12,10 @@ import com.kh.manage.infoBoard.model.vo.InfoBoard;
 public interface InfoBoardDao {
 
 	int insertBoard(SqlSessionTemplate sqlSession, InfoBoard ib);
+
+	String selectCurrval(SqlSessionTemplate sqlSession);
+	
+	int insertAttach(SqlSessionTemplate sqlSession, Attachment at);
 
 	int boardListCount(SqlSessionTemplate sqlSession);
 
@@ -31,6 +36,8 @@ public interface InfoBoardDao {
 	int deleteReply(SqlSessionTemplate sqlSession, String replyNo);
 
 	int updateReply(SqlSessionTemplate sqlSession, BoReply rp);
+
+
 
 
 
