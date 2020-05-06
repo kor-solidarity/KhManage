@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8" import="java.util.*, com.kh.manage.gwManage.model.vo.*, com.kh.manage.forum.model.vo.*"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>  	
 <%
-	List<Statistics> list3 = (ArrayList<Statistics>) request.getAttribute("list3");
+	List<Statistics> list3 = (ArrayList<Statistics>) request.getAttribute("list3"); 
 %>
 <!DOCTYPE html>
 <html>
@@ -390,7 +390,7 @@
 	<% }else {%>  
 		$("#chartArea1").text("데이터가 없습니다.");
 	
-	<%}%>	
+	<%}%>	 
 	</script>
 	
 	<script>

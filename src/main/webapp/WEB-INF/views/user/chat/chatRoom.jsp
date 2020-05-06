@@ -290,10 +290,10 @@ body {
 					</c:if>
 					<c:if test="${a.memberNo eq 'M999'}">
 					<c:if test="${fn:length(a.content)<11}">
-					<tr height='10px;'></tr><tr><td colspan='2'><div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send' align='center' style='width:100%; font-size:10px; margin-right: 60px; background:orange; height:15px; padding: 0px;'>${fn:substring(a.content,0,8)} &nbsp; ${fn:substring(a.content,8,10)}요일<span class='msg_time_send'></span></div></div></td></tr>
-					</c:if>
-					<c:if test="${fn:length(a.content)>=11}">
-					<tr height='10px;'></tr><tr><td colspan='2'><div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send' align='center' style='width:100%; font-size:10px; margin-right: 60px; background:skyblue; height:15px; padding: 0px;'>${a.content}<span class='msg_time_send'></span></div></div></td></tr>
+					<tr height='10px;'></tr><tr><td colspan='2'><div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send' align='center' style='width:100%; font-size:10px; margin-right: 60px; background:orange; color:black; font-weight:600; font-size:13px; height:15px; padding: 0px;'>${fn:substring(a.content,0,8)} &nbsp; ${fn:substring(a.content,8,10)}요일<span class='msg_time_send'></span></div></div></td></tr>
+					</c:if> 
+					<c:if test="${fn:length(a.content)>=11}"> 
+					<tr height='10px;'></tr><tr><td colspan='2'><div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send' align='center' style='width:100%; font-size:10px; margin-right: 60px; background:purple; height:15px; padding: 0px;'>${a.content}<span class='msg_time_send'></span></div></div></td></tr>
 					</c:if>
 				</c:if>	
 			</c:forEach>
@@ -543,7 +543,7 @@ body {
 					 success:function(data){   
 						 var text= data['memberName']+ "님이 초대되었습니다" + "`" + "${cr.chatRoomNo}"+ "`" + "${loginUser.memberNo}" + "`" + "텍스트" + "`" + "${loginUser.memberName}" + "`" +"sss" + "`" + "M999";				
 						 
-						 $("#chatAreaTable").append("<tr height='10px;'></tr><tr><br><td colspan='2'><div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send' align='center' style='width:100%; font-size:10px; margin-right: 70px; background:#1E2B44; height:15px; padding: 0px;'>"+data['memberName']+"님이 초대되었습니다<span class='msg_time_send'></span></div></div></td></tr>");
+						 $("#chatAreaTable").append("<tr height='10px;'></tr><tr><br><td colspan='2'><div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send' align='center' style='width:100%; font-size:10px; margin-right: 60px; background:purple; height:15px; padding: 0px;'>"+data['memberName']+"님이 초대되었습니다<span class='msg_time_send'></span></div></div></td></tr>");
 						 $("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);	
 				    	 $(".chatRoomMember").append("<tr><td><div class='box' style='background:white;'><img class='profile' src='<c:url value='/resources/img/people.png'/>'></div></td><td style='padding-top: 14px; padding-left: 10px;'>"+data['memberName']+" / "+data['deptName']+" /"+data['rankName']+"<input type='hidden' class='hideMemberNo' value='"+data['memberNo']+"'></td></tr>");
 				    	 $("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
@@ -652,7 +652,7 @@ body {
 							async: false,
 							data:{message:text},
 						 success:function(data){
-							 $("#chatAreaTable").append("<tr height='10px;'></tr><tr><br><td colspan='2'><div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send' align='center' style='width:100%; font-size:10px; margin-right: 40px; background:orange; height:15px; padding: 0px;'>"+ date.substring(0, 8) +"<span class='msg_time_send'></span></div></div></td></tr>")
+							 $("#chatAreaTable").append("<tr height='10px;'></tr><tr><br><td colspan='2'><div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send' align='center' style='width:100%; font-size:10px; margin-right: 40px; background:orange; color:black; font-weight:600; font-size:13px; height:15px; padding: 0px;'>"+ date.substring(0, 8) +"<span class='msg_time_send'></span></div></div></td></tr>")
 							 var text= date.substring(0, 8) + "`" + "${cr.chatRoomNo}"+ "`" + "${loginUser.memberNo}" + "`" + "텍스트" + "`" + "${loginUser.memberName}" + "`" +"sss" + "`" + "M999";
 							 console.log("날짜 : " + text);
 							 ws.send(text);
@@ -715,13 +715,13 @@ body {
         	var chatNo2 = "${cr.chatRoomNo}";
         	console.log(root);
         	if(chatNo2 == chatNo && root=="첨부파일"){
-        		 $("#chatAreaTable").append("<tr><td style='width:50px;'><div class='box' style='background:white;'><img class='profile' src='/manage/resources/uploadFiles/"+changeName+".png'></div></td><td><div style='display: inline-flex; font-weight:600; font-size:12px;'>"+memberName+"</div></td></tr><tr><td colspan='2'><div class='card-body msg_card_body' style='padding-left: 20px; padding-top:0px; padding-bottom: 0px;'><div class='d-flex justify-content-start mb-4'><div class='msg_cotainer'><img class='profile' src='/manage/resources/uploadFiles/"+content+"'><br><span class='msg_time'>"+date.substring(8,14)+"</span></div></div></div></td></tr>");
+        		 $("#chatAreaTable").append("<tr><td style='width:50px;'><div class='box' style='background:white;'><img class='profile' src='/manage/resources/uploadFiles/"+changeName+"'></div></td><td><div style='display: inline-flex; font-weight:600; font-size:12px;'>"+memberName+"</div></td></tr><tr><td colspan='2'><div class='card-body msg_card_body' style='padding-left: 20px; padding-top:0px; padding-bottom: 0px;'><div class='d-flex justify-content-start mb-4'><div class='msg_cotainer'><img class='profile' src='/manage/resources/uploadFiles/"+content+"'><br><span class='msg_time'>"+date.substring(8,14)+"</span></div></div></div></td></tr>");
         		 $("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
         	}
         	
      		if(chatNo2 == chatNo && changeName != "M999" && root!="첨부파일"){
      			if(changeName != ""){
-		        	$("#chatAreaTable").append("<tr><td style='width:50px;'><div class='box' style='background:white;'><img class='profile' src='/manage/resources/uploadFiles/"+changeName+".png'></div></td><td><div style='display: inline-flex; font-weight:600; font-size:12px;'>"+memberName+"</div></td></tr><tr><td colspan='2'><div class='card-body msg_card_body' style='padding-left: 20px; padding-top:0px; padding-bottom: 0px;'><div class='d-flex justify-content-start mb-4'><div class='msg_cotainer'>"+content+"<br><span class='msg_time'>"+date.substring(8,14)+"</span></div></div></div></td></tr>");
+		        	$("#chatAreaTable").append("<tr><td style='width:50px;'><div class='box' style='background:white;'><img class='profile' src='/manage/resources/uploadFiles/"+changeName+"'></div></td><td><div style='display: inline-flex; font-weight:600; font-size:12px;'>"+memberName+"</div></td></tr><tr><td colspan='2'><div class='card-body msg_card_body' style='padding-left: 20px; padding-top:0px; padding-bottom: 0px;'><div class='d-flex justify-content-start mb-4'><div class='msg_cotainer'>"+content+"<br><span class='msg_time'>"+date.substring(8,14)+"</span></div></div></div></td></tr>");
 		        	$("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
      			}else{
      				$("#chatAreaTable").append("<tr><td style='width:50px;'><div class='box' style='background:white;'><img class='profile' src='/manage/resources/img/people.png'></div></td><td><div style='display: inline-flex; font-weight:600; font-size:12px;'>"+memberName+"</div></td></tr><tr><td colspan='2'><div class='card-body msg_card_body' style='padding-left: 20px; padding-top:0px; padding-bottom: 0px;'><div class='d-flex justify-content-start mb-4'><div class='msg_cotainer'>"+content+"<br><span class='msg_time'>"+date.substring(8,14)+"</span></div></div></div></td></tr>");
@@ -730,7 +730,7 @@ body {
      			 $("#chatArea").scrollTop($("#chatArea")[0].scrollHeight);
      		
      		}else if(changeName == "M999" && root!="첨부파일"){
-     			 $("#chatAreaTable").append("<tr height='10px;'></tr><tr><br><td colspan='2'><div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send' align='center' style='width:100%; font-size:10px; margin-right: 70px; background:orange; height:15px; padding: 0px;'>"+content+"<span class='msg_time_send'>${a.sendDate}</span></div></div></td></tr>")
+     			 $("#chatAreaTable").append("<tr height='10px;'></tr><tr><br><td colspan='2'><div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send' align='center' style='width:100%; font-size:10px; margin-right: 60px; background:purple; height:15px; padding: 0px;'>"+content+"<span class='msg_time_send'>${a.sendDate}</span></div></div></td></tr>")
      			 var text =  $("#memberCount").text().substring(0,1);
      			 
      			$("#modalTable").find(".hideMemberNo").filter(function(){

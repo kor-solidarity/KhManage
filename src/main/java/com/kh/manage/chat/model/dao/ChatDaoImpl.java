@@ -205,4 +205,10 @@ public class ChatDaoImpl implements ChatDao {
 		return sqlSession.selectOne("Chat.selectChatAtt", message);
 	}
 
+	@Override
+	public List<Member> selectAllMember(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectList("Chat.selectAllMember");
+	}
+
 }

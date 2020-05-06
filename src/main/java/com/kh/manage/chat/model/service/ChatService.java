@@ -64,5 +64,7 @@ public interface ChatService {
 
 	Attachment selectChatAtt(ChatMessageList chatMessageList);
 
+	List<Member> selectAllMember();
+
 
 }

@@ -78,6 +78,8 @@ public interface ChatDao {
 
 	Attachment selectChatAtt(SqlSessionTemplate sqlSession, ChatMessageList chatMessageList);
 
+	List<Member> selectAllMember(SqlSessionTemplate sqlSession);
+
 
 
 }
