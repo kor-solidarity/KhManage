@@ -297,6 +297,16 @@ public class ProjectServiceImpl implements ProjectService {
 		
 		return pd.selectHistory(sqlSession, pid);
 	}
+	
+	@Override
+	public int selectProjectListNumCount(Member member) {
+		return pd.selectProjectListNumCount(sqlSession, member);
+	}
+	
+	@Override
+	public int updateWorkLevel(ProjectWork work) {
+		return pd.updateWorkLevel(sqlSession, work);
+	}
 
 	@Override
 	public String selectEnrollDate(String pid) {

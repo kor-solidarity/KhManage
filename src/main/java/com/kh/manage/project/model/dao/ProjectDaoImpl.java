@@ -278,6 +278,16 @@ public class ProjectDaoImpl implements ProjectDao {
 		
 		return sqlSession.selectList("Admin.selectHistory", pid);
 	}
+	
+	@Override
+	public int selectProjectListNumCount(SqlSessionTemplate sqlSession, Member member) {
+		return sqlSession.selectOne("Project.selectProjectListNumCount", member);
+	}
+	
+	@Override
+	public int updateWorkLevel(SqlSessionTemplate sqlSession, ProjectWork work) {
+		return sqlSession.selectOne("Project.updateWorkLevel", work);
+	}
 
 	@Override
 	public String selectEnrollDate(SqlSessionTemplate sqlSession, String pid) {
