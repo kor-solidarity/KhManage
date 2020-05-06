@@ -265,7 +265,7 @@
 				<td class="thRange" colspan="6"></td>
 					<td class="thRange">상위작업</td>
 					<td class="thRange" colspan="2" >
-						<select name="highWorkNo" id="highWorkNo" class="inputMenu form-control" required="required">
+						<select name="highWorkNo" id="highWorkNo" class="inputMenu form-control highWorkNo" required="required">
 											
 						</select>
 					</td>
@@ -471,13 +471,13 @@
 			$("#grantorNo").empty();
 			$("#highWorkNo").empty();
 			$.ajax({
-				url:"selectWork.iu",
+				url:"selectWork.wk",
 				type:"post",
 				data:{workNo:workNo},
 				dataType:"json",
 				success:function(data){
  					console.log(data);
-					/* 
+					
 					console.log(data.work.beginDate);
 					console.log(data.work.completeDate);
 					console.log(data.work.status);
@@ -507,7 +507,7 @@
 					$(".workStatus").val(data.work.workStatus);
 					$(".productType").val(data.work.workAttachment[0].productType);
 					
-					 */
+					
 				},
 				error:function(error){
 					alert(error);

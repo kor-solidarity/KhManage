@@ -110,6 +110,11 @@ public class WorkServiceImpl implements WorkService{
 		return wd.selectHighWorkNoList(sqlSession, map);
 	}
 
+	@Override
+	public List<Work> selectHighWorkNoList2(Work w) {
+		return wd.selectHighWorkNoList2(sqlSession, w);
+	}
+
 	
 
 	

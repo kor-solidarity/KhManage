@@ -49,4 +49,6 @@ public interface WorkDao {
 
 	List<Work> selectHighWorkNoList(SqlSessionTemplate sqlSession, HashMap<String, String> map);
 
+	List<Work> selectHighWorkNoList2(SqlSessionTemplate sqlSession, Work w);
+
 }

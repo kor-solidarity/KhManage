@@ -1,8 +1,5 @@
 package com.kh.manage.issue.model.vo;
 
-import java.sql.Date;
-
-
 
 
 public class IssueWork implements java.io.Serializable{

@@ -328,6 +328,21 @@
 			ORDER BY WORK_NO ASC
 	</select>
 	
+	<select id="selectHighWorkNoList2" parameterType="Work" resultMap="workResultSet">
+		SELECT 
+				WORK_NO
+			  , WORK_NAME
+			  , STATUS
+			  , PROJECT_NO
+			  , HIGH_WORK_NO
+			  , WORK_LEVEL
+			FROM WORK
+			WHERE WORK_LEVEL = #{workLevel}
+    		AND PROJECT_NO = #{projectNo}
+    		AND WORK_TYPE != '개인'
+			ORDER BY WORK_NO ASC
+	</select>
+	
 	<insert id="insertWorkProduct" parameterType="WorkProductw">
 	INSERT INTO WORK_PRODUCT
 	VALUES('WP' || TO_CHAR(SEQ_WP.NEXTVAL, 'FM000'), #{workNo}, #{productType}, #{productTitle}, #{productContent}, SYSDATE, SYSDATE, DEFAULT)
@@ -341,7 +356,6 @@
 	<delete id="deleteWorkProduct" parameterType="java.lang.String">
 	DELETE FROM ATTACHMENT
 	WHERE AT_NO = #{atNo}
-	
 	</delete>
 </mapper>
 

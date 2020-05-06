@@ -97,11 +97,25 @@ public class WorkController {
 		Member member = (Member) session.getAttribute("loginUser");
 		Work w = ws.selectWork(workNo);
 		System.out.println(w);
+		
+		HashMap<String, String> map = new HashMap();
+		int wL = Integer.parseInt(w.getWorkLevel());
+		
+		String workLevel1 = String.valueOf(wL - 1);
+		
+		map.put("workLevel", workLevel1);
+		map.put("pno", w.getProjectNo());
+		
+		
 		List<Grantor> gt = ws.selectGrantorList(w.getProjectNo());
+		List<Work> hw = ws.selectHighWorkNoList(map);
+		
+		
 		
 		mv.addObject("gt", gt);
 		mv.addObject("work", w);
 		mv.addObject("loginUser", member);
+		mv.addObject("hw", hw);
 		
 		mv.setViewName("jsonView");
 		
