@@ -9,7 +9,24 @@
 		<result property="deptName" column="DEPT_NAME"/>
 		<result property="highDept" column="HIGH_DEPT"/>
 		<result property="deptLevel" column="DEPT_LEVEL"/>
+		<result property="count" column="COUNT"/>
 	</resultMap>
+	
+	<resultMap id="projectResultSet" type="Project">
+        <id property="projectPk" column="project_pk"/>
+        <result property="projectName" column="project_name"/>
+        <result property="isImportant" column="is_important"/>
+        <result property="projectTypePk" column="project_type_pk"/>
+        <result property="projectRank" column="project_rank"/>
+        <result property="projectManager" column="project_manager"/>
+        <result property="deptNo" column="dept_no"/>
+        <result property="startDate" column="start_date"/>
+        <result property="endDate" column="end_date"/>
+        <result property="detail" column="detail"/>
+        <result property="remarks" column="remarks"/>
+        <result property="status" column="status"/>
+        <result property="templatePk" column="template_pk"/>
+    </resultMap>
 	
 	<select id="selectDeptList" resultMap="deptResultSet">
 		SELECT *
@@ -25,12 +42,23 @@
 		AND STATUS = 'Y'
 	</select>
 	
-	<select id="selectDeptListChart" resultMap="deptResultSet">
+	<!-- <select id="selectDeptListChart" resultMap="deptResultSet">
 		SELECT *
 		FROM DEPT
 		WHERE STATUS = 'Y'
 		AND DEPT_NAME NOT LIKE '미지정'
+	</select> -->
+	
+	<select id="selectDeptListChart" resultMap="deptResultSet">
+		SELECT COUNT(P.DEPT_NO) AS COUNT, D.DEPT_NAME
+		FROM PROJECT P
+		RIGHT JOIN DEPT D ON(P.DEPT_NO = D.DEPT_NO)
+		WHERE D.DEPT_NAME != '미지정'
+		  AND D.STATUS = 'Y'
+		GROUP BY D.DEPT_NAME
+		ORDER BY D.DEPT_NAME DESC
 	</select>
+	
 	
 </mapper>
 

@@ -6,15 +6,17 @@ public class Dept {
 	private String deptName;
 	private String highDept;
 	private String deptLevel;
+	private int count;
 	
 	public Dept() {}
 
-	public Dept(String deptNo, String deptName, String highDept, String deptLevel) {
+	public Dept(String deptNo, String deptName, String highDept, String deptLevel, int count) {
 		super();
 		this.deptNo = deptNo;
 		this.deptName = deptName;
 		this.highDept = highDept;
 		this.deptLevel = deptLevel;
+		this.count = count;
 	}
 
 	public String getDeptNo() {
@@ -49,11 +51,20 @@ public class Dept {
 		this.deptLevel = deptLevel;
 	}
 
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
 	@Override
 	public String toString() {
 		return "Dept [deptNo=" + deptNo + ", deptName=" + deptName + ", highDept=" + highDept + ", deptLevel="
-				+ deptLevel + "]";
+				+ deptLevel + ", count=" + count + "]";
 	}
+
 
 
 	
