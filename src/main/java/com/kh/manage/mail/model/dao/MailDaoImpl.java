@@ -176,5 +176,27 @@ public class MailDaoImpl implements MailDao{
 		return sqlSession.update("Mail.updateRead",mail);
 	}
 
+	@Override
+	public void deleteMail(SqlSessionTemplate sqlSession, String mNo) {
+
+		sqlSession.update("Mail.deleteMail",mNo);
+	}
+
+	@Override
+	public int getListCount5(SqlSessionTemplate sqlSession, Mail mail) {
+
+		return sqlSession.insert("Mail.listCount5", mail);
+	}
+
+	@Override
+	public List<Mail> nReadMailList(SqlSessionTemplate sqlSession, Mail mail, PageInfo pi) {
+
+		int offset = (pi.getCurrentPage()-1) * pi.getLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+		
+		return sqlSession.selectList("Mail.nReadMailList" ,mail , rowBounds);
+	}
+
 
 }

@@ -571,7 +571,7 @@
 		}
 	});
 	<%}else {%>
-	$("#task").text("No data available");
+	$("#task").text("데이터가 존재하지않습니다.");
 	<%}%>
 </script>
 <script>
@@ -637,7 +637,7 @@
 	});
 	<%}else {%>
 	
-		$("#issue").text("No data available");
+		$("#issue").text("데이터가 존재하지않습니다.");
 	<%}%>
 </script>
 <script>
@@ -699,7 +699,7 @@
 	});
 	<%}else {%>
 	
-	$("#change").text("No data available");
+	$("#change").text("데이터가 존재하지않습니다.");
 	<%}%>
 </script>	
 </body>

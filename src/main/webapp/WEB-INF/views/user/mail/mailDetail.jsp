@@ -60,10 +60,10 @@
 	
 	
 	<div style="width: 100%; height: 50px;">
-		<button class="wjs_btn" style="width: 50px;">답장</button>
-		<button class="wjs_btn" style="width: 50px;">삭제</button>
-		<button class="wjs_btn" style="width: 50px;">읽음</button>
-		<button class="wjs_btn" style="width: 100px;">스팸 신고</button>
+		<button class="wjs_btn" style="width: 90px;"><i class="fas fa-envelope" style="margin-right: 7px;"></i>답장</button>
+		<button id="delete" class="wjs_btn" style="width: 90px;"><i class="fas fa-trash-alt" style="margin-right: 7px;"></i>삭제</button>
+		<button class="wjs_btn" style="width: 90px;"><i class="fas fa-envelope-open" style="margin-right: 7px;"></i>읽음</button>
+		<button class="wjs_btn" style="width: 110px;"><i class="fas fa-ban" style="margin-right: 7px;"></i>스팸 신고</button>
 	</div>
 	<br>
 	

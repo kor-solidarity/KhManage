@@ -24,6 +24,8 @@ public interface TemplateService {
 
 	List<TemplateWork> selectTwList(String tm);
 
+	void temDelete(String tNo);
+
 
 
 }

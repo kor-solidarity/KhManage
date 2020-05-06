@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.*, com.kh.manage.mail.model.vo.*, com.kh.manage.forum.model.vo.*"%>
+<%
+	List<Mail> list = (ArrayList<Mail>) request.getAttribute("list");
+%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -102,10 +105,10 @@
 	</div>
 	
 	<div id= "btn"style="width: 1620px;">
-		<button class="wjs_btn" style="width: 100px;">전체 선택</button>
-		<button class="wjs_btn" style="width: 50px;">답장</button>
-		<button class="wjs_btn" style="width: 50px;">삭제</button>
-		<button class="wjs_btn" style="width: 50px;">읽음</button>
+		<button class="wjs_btn" style="width: 110px;"><i class="fas fa-check" style="margin-right: 7px;"></i>  전체 선택</button>
+		<button class="wjs_btn" style="width: 90px;"><i class="fas fa-edit" style="margin-right: 7px;"></i>답장</button>
+		<button class="wjs_btn" style="width: 90px;"><i class="fas fa-trash-alt" style="margin-right: 7px;"></i>삭제</button>
+		<button class="wjs_btn" style="width: 90px;"><i class="fas fa-envelope-open" style="margin-right: 7px;"></i>읽음</button>
 			
 	</div>
 		<form class="navbar-form navbar-left" style="float: left; margin-left: 20px;">
@@ -128,17 +131,17 @@
 			<td class="datetd">날짜</td>
 		</tr>
 		
-			<c:forEach var="m" items="${list}">
-				<tr class="tr">
-					<td style="display: none;"><input type="hidden" value="${m.mailNo }"></td>
-					<td class="chktd"><input type="checkbox"></td>
-					<td class="startd"><img  class="star ${m.mailNo }"></td>
-					<td class="mailtd"><img  src="resources/img/mail.png" class="mail"></td>
-					<td class="sendtd">${m.receiver }</td>
-					<td class="titletd">${m.subject }</td>
-					<td class="datetd">${m.enrollDate }</td>
-				</tr>		
-			</c:forEach>
+			<c:forEach var="m" items="${list }">
+			<tr class="tr">
+				<td style="display: none;"><input type="hidden" value="${m.mailNo }"></td>
+				<td class="chktd"><input type="checkbox"></td>
+				<td class="startd"><img  src="resources/img/star.png" class="star ${m.mailNo} }"></td>
+				<td class="mailtd"><img  src="resources/img/ma.png" class="mail" id="${m.mailNo}"></td>
+				<td class="sendtd"><p class="p p${m.mailNo}">${m.from }</p></td>
+				<td class="titletd"><p class="p p${m.mailNo}">${m.subject }</p></td>
+				<td class="datetd">${m.enrollDate }</td>
+			</tr>
+		</c:forEach>
 		
 		<tr class="pagingArea">
 								<td colspan="6">
@@ -195,11 +198,26 @@ $(function(){
 	 console.log(num);
 	 
  	 location.href="mailDetail.ma?no=" +num;
+	});
+	
+	
+	<%for(int i = 0 ; i < list.size(); i ++ ){
+	 	Mail m = (Mail)list.get(i);
+	%>
+		if("<%=m.getImportant()%>" ==  'Y'){
+			$(".<%=m.getMailNo()%>").prop("src" , "resources/img/star3.png");
+		}else{
+			$(".<%=m.getMailNo()%>").prop("src" , "resources/img/star.png");
+		}		
 		
-	}); 
-	
-	
-	console.log(${list})
+		if("<%=m.getRead()%>" ==  'Y'){
+			$("#<%=m.getMailNo()%>").prop("src" , "resources/img/op.png");
+			$(".p<%=m.getMailNo()%>").css("color","black");
+		}else{
+			$("#<%=m.getMailNo()%>").prop("src" , "resources/img/ma.png");
+		}	
+		
+	<%}%>
 	
 	
 	

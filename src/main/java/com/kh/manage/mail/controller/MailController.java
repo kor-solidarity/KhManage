@@ -404,6 +404,7 @@ public class MailController {
 		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
 		Mail mail = new Mail();
 		mail.setMemberNo(loginUser.getMemberNo());
+		mail.setFrom(loginUser.getEmail());
 		
 		int currentPage = 1;
 
@@ -431,8 +432,36 @@ public class MailController {
 
 		return "user/mail//mailSpam";
 	}
+	
+	
+	
 	@RequestMapping("/mailNread.ma")
-	public String mailNread() {
+	public String mailNread(Model m, HttpServletRequest request) {
+		
+		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
+		Mail mail = new Mail();
+		mail.setMemberNo(loginUser.getMemberNo());
+		mail.setFrom(loginUser.getEmail());
+		
+		int currentPage = 1;
+
+		if(request.getParameter("currentPage") != null) {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+
+		int listCount = ms.getListCount5(mail);
+		
+		System.out.println(listCount);
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		
+		List<Mail> list = ms.nReadMailList(mail,pi);
+		
+		m.addAttribute("list", list);
+		m.addAttribute("pi", pi);
+		
+		System.out.println(list);
+		
 
 		return "user/mail//mailNread";
 	}
@@ -445,7 +474,7 @@ public class MailController {
 	}
 
 
-
+	//메일 보내기
 	@RequestMapping("/sendMail")
 	public String sendMail(Mail m ,  @RequestParam(required = false) MultipartFile[] file, HttpServletRequest request) throws Exception{
 
@@ -692,6 +721,21 @@ public class MailController {
 		return "user/mail/mailDetail";
 	}
 	
+	//보낸 메일함 상세보기
+		@RequestMapping("mailDetail2.ma")
+		public String mailDetail2(HttpServletRequest request, Model m) {
+			
+			String no = request.getParameter("no");
+			
+			System.out.println("no : " + no);
+			
+			Mail mail = ms.selectMailOne(no);
+			
+			m.addAttribute("mail", mail);
+			
+			return "user/mail/mailDetail2";
+		}
+	
 	@RequestMapping("download.ma")
 	public void download(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		
@@ -731,90 +775,6 @@ public class MailController {
 		
 	}
 	
-	
-	/*
-	 * // s3 버킷으로 들어오 메시지를 DB에 넣어주는 메소드
-	 * 
-	 * @RequestMapping("mail/s3.ma") public String runS3Method(HttpServletRequest
-	 * request) { s3 = new AwsS3(); // **** 프로세스 **** // 리스트를 조회할때 버킷을 조회해서 받은 파일이
-	 * 존재하면 -> eml파일로 복사후 삭제과정 // eml파일로 복사후 eml형식을 받아와 메시지 객체에 저장한다.
-	 * List<S3ObjectSummary> objects = s3.getObjects("manageee");
-	 * System.out.println("버킷 객체 리스트 가져오기 : " + objects);
-	 * 
-	 * if(objects.size() <= 0) { System.out.println("버킷에 객체가 존재하지 않습니다."); return
-	 * "redirect:/mailMain.ma"; }
-	 * 
-	 * for(S3ObjectSummary object : objects) { // 객체의 내용을 출력
-	 * s3.downloadObject(object.getBucketName(), object.getKey());
-	 * 
-	 * // eml파일로 복사 s3.updateObjectForEmlExt(object.getKey());
-	 * 
-	 * // 확인을 완료하면 버킷에서 삭제한다. s3.deleteObject(object.getBucketName(),
-	 * object.getKey()); }
-	 * 
-	 * List<S3ObjectSummary> emlObjects = s3.getObjects("manageee-eml");
-	 * System.out.println("eml 리스트 가져오기 : " + emlObjects);
-	 * 
-	 * for(S3ObjectSummary object : emlObjects) { // 객체의 내용을 출력
-	 * s3.downloadObject(object.getBucketName(), object.getKey());
-	 * 
-	 * // eml파일 처리하는 메소드 Message message= s3.getEmlFile(object.getKey()); //
-	 * System.out.println("\n\n\n\n\n메시지 객체 분석해보자 medssage:  " + message.toString()
-	 * + "\n\n\n\n");
-	 * 
-	 * Mail m = new Mail(); try {
-	 * 
-	 * //System.out.println(mb.getFileName()); // for(int i = 0; i <
-	 * message.getReplyTo().length; i++) { // System.out.println(i + "번째 : " +
-	 * message.getReplyTo()[i]); // } // System.out.println(); // for(int i = 0; i <
-	 * message.getFrom().length; i++) { // System.out.println(i + "번째 : " +
-	 * message.getFrom()[i]); // } System.out.println("message : " +
-	 * message.getContent());
-	 * 
-	 * MimeMultipart mm = (MimeMultipart) message.getContent();
-	 * System.out.println("카운트가 달라지나 ? : " + mm.getCount()); //MimeBodyPart mb =
-	 * (MimeBodyPart) mm.getBodyPart(1); //System.out.println("mb : " +
-	 * mb.getContent()); //System.out.println("내용 : " + mb.getContent());
-	 * //m.setMailContent((String) mb.getContent()); for(int i = 0; i <
-	 * mm.getCount(); i++) { System.out.println(i + " 번째인덱스 : " +
-	 * mm.getBodyPart(i).getContent()); }
-	 * 
-	 * System.out.println("중요한 부분!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-	 * 
-	 * String from; from = String.valueOf(message.getFrom()[0]);
-	 * 
-	 * System.out.println("String 변환 후 : " + from ); from =
-	 * from.substring(from.indexOf('<') + 1, from.indexOf('>'));
-	 * 
-	 * System.out.println("자른 후 from 보낸 사람: " + from);
-	 * 
-	 * //첨부파일은 내용이 잘 나오지 않는다! System.out.println("제목 : " + message.getSubject());
-	 * System.out.println("받은 날짜 : " + message.getSentDate());
-	 * System.out.println("받은 사람(나) : " + message.getAllRecipients()[0].toString());
-	 * 
-	 * 
-	 * //2군데 에다가 넣을꺼야 일단 첨부파일 없는 받은 메일 부터 //EMAIL_MAIL에 MAIL_SUBJECT,MAIL_CONTENT
-	 * //EMAIL_MAILBOX에 m.setSubject(message.getSubject());
-	 * m.setReceiver(message.getAllRecipients()[0].toString());
-	 * m.setEnrollDate((Date) message.getSentDate()); m.setFrom(from);
-	 * 
-	 * request.setAttribute("m", m);
-	 * 
-	 * ms.insertReciveMail(m); } catch (MessagingException e) { // TODO
-	 * Auto-generated catch block e.printStackTrace(); } catch (IOException e) { //
-	 * TODO Auto-generated catch block e.printStackTrace(); }
-	 * 
-	 * 
-	 * // 메시지 객체에 저장해서 데이터를 불러온 후에 데이터베이스에 맞춰서 저장
-	 * 
-	 * // eml파일 삭제 s3.deleteObject(object.getBucketName(), object.getKey());
-	 * 
-	 * System.out.
-	 * println("성공 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"); }
-	 * 
-	 * return "redirect:mailMain.ma"; }
-	 */
-		
 		//중요 메일함  
 		@RequestMapping("important.ma")
 		public void importantMail(HttpServletRequest request, HttpServletResponse response) {
@@ -863,6 +823,17 @@ public class MailController {
 			System.out.println(result);
 			
 			return "redirect:mailMain.ma";
+		}
+		
+		
+		@RequestMapping("deleteMail.ma")
+		public String deleteMail(HttpServletRequest request) {
+			
+			String mNo = request.getParameter("mNo");
+			
+			ms.deleteMail(mNo);
+			
+			return "redirect:mailTrash.ma";
 		}
 
 

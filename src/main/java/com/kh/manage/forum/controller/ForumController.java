@@ -332,10 +332,11 @@ public class ForumController {
 		
 		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
 		
+		
 		System.out.println(loginUser);
 		
 		n.setMemberNo(loginUser.getMemberNo());
-		if(upfile.getOriginalFilename() != null) {
+		if(upfile.getSize() > 0) {
 			
 			String originFileName = upfile.getOriginalFilename();//원본 파일 이름
 			String ext = originFileName.substring(originFileName.lastIndexOf("."));//.png , .jpg 

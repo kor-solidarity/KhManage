@@ -99,10 +99,10 @@
 	
 	
 	<div id= "btn"style="width: 1620px;">
-		<button class="wjs_btn" style="width: 100px;">전체 선택</button>
-		<button class="wjs_btn" style="width: 50px;">답장</button>
-		<button class="wjs_btn" style="width: 50px;">삭제</button>
-		<button class="wjs_btn" style="width: 50px;">읽음</button>
+		<button class="wjs_btn" style="width: 110px;"><i class="fas fa-check" style="margin-right: 7px;"></i>  전체 선택</button>
+		<button class="wjs_btn" style="width: 90px;"><i class="fas fa-edit" style="margin-right: 7px;"></i>답장</button>
+		<button class="wjs_btn" style="width: 90px;"><i class="fas fa-trash-alt" style="margin-right: 7px;"></i>삭제</button>
+		<button class="wjs_btn" style="width: 90px;"><i class="fas fa-envelope-open" style="margin-right: 7px;"></i>읽음</button>
 			
 	</div>
 		<form class="navbar-form navbar-left" style="float: left; margin-left: 20px;">

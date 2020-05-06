@@ -28,6 +28,8 @@ public interface TemplateDao {
 
 	List<TemplateWork> selectTwList(SqlSessionTemplate sqlSession, String tm);
 
+	void temDelete(SqlSessionTemplate sqlSession, String tNo);
+
 
 
 }

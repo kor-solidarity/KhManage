@@ -113,6 +113,7 @@ public class TemplateController {
 		System.out.println("list : " +list);
 		
 		m.addAttribute("list", list);
+		m.addAttribute("tm", tm);
 		
 		return "admin/templateManage/templateExcel";
 	}
@@ -175,6 +176,18 @@ public class TemplateController {
 		
 		System.out.println("result : " + result);
 			
+		return "redirect:/templateManage.am";
+	}
+	
+	@RequestMapping("templateDelete.am")
+	public String templateDelete(HttpServletRequest request) {
+		
+		String tNo = request.getParameter("tNo");
+		
+		ts.temDelete(tNo);
+		
+		System.out.println("DSadsadsadsad");
+		
 		return "redirect:/templateManage.am";
 	}
 	

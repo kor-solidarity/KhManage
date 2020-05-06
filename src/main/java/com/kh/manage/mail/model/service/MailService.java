@@ -45,5 +45,11 @@ public interface MailService {
 
 	int updateRead(Mail mail);
 
+	void deleteMail(String mNo);
+
+	int getListCount5(Mail mail);
+
+	List<Mail> nReadMailList(Mail mail, PageInfo pi);
+
 
 }
