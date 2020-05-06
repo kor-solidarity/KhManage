@@ -56,6 +56,7 @@
    	background: #f1d898;
    	color: #d5703d;
    	height: 32px;
+   	width: 230px;
    }
    .xbtn{
    	outline:none;
