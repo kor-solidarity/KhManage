@@ -516,7 +516,7 @@
                  LEFT OUTER JOIN SANCHUL S ON S.PROJECT_NO = P.PROJECT_PK
                  LEFT OUTER JOIN ISSUE_COUNT I ON I.PROJECT_NO = P.PROJECT_PK
         WHERE T.MEMBER_PK = #{memberNo}
-          and T.STATUS != '5'
+          and P.STATUS != '5'
         ORDER BY START_DATE
     </select>
 
