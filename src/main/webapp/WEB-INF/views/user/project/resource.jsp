@@ -96,9 +96,9 @@
                                        <i class="icon-refresh"></i>변경
                                    </button>
                                    
-                                   <button id="saveResourceBtn" type="submit" class="btn point-color" style="margin-top:50px; background: #1E2B44; color:white;">
+                                   <!-- <button id="saveResourceBtn" type="submit" class="btn point-color" style="margin-top:50px; background: #1E2B44; color:white;">
                                        <i class="icon-refresh"></i>저장
-                                   </button>
+                                   </button> -->
                                    
                            </div>
                         <!-- 현재 프로젝트에 소속되어 있거나 추가되는 인원 영역 -->   

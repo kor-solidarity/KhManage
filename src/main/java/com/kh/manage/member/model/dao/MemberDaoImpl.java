@@ -326,6 +326,12 @@ public class MemberDaoImpl implements MemberDao {
 		return sqlSession.selectList("Dept.selectDeptListChart");
 	}
 
+	@Override
+	public int myRequestApprovalCount(SqlSessionTemplate sqlSession, Member m) {
+
+		return sqlSession.selectOne("Member.myRequestApprovalCount", m);
+	}
+
 
 
 	

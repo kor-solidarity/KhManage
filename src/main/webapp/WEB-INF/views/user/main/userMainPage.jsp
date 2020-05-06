@@ -135,17 +135,17 @@
 								<!-- <div class="cellMenu1" style="font-weight:normal; font-size: 35px; margin-right: 10px; color:#8877A9">7!</div> -->
 								<div style="margin-right: 10px; font-size: 13px; color:#AAB5BC">이슈</div>
 								<div style="width: 100%">
-									<a href="issueList.iu" style="background:#F1F1F1; width: 100%">view more
+									<a href="issueList.iu" style="background:#F1F1F1; width: 100%">더 보기
 										<i class="m-icon-swapright m-icon-gray"></i>
 									</a>
 								</div>
 							</td>
 							<td class="td"></td>
 							<td class="tdTop requestApproval">
-								<div class="cellMenu1" style="font-weight:normal; font-size: 35px; margin-right: 10px; color:#F36A5A">16!</div>
+								<!-- <div class="cellMenu1" style="font-weight:normal; font-size: 35px; margin-right: 10px; color:#F36A5A">16!</div> -->
 								<div style="margin-right: 10px; font-size: 13px; color:#AAB5BC">승인요청</div>
 								<div style="width: 100%">
-									<a href="#" style="background:#F1F1F1; width: 100%">view more
+									<a href="myWorkList.wk" style="background:#F1F1F1; width: 100%">더 보기
 										<i class="m-icon-swapright m-icon-gray"></i>
 									</a>
 								</div>
@@ -155,7 +155,7 @@
 								<!-- <div class="cellMenu1" style="font-weight:normal; font-size: 35px; margin-right: 10px; color:#1BA39C">19!</div> -->
 								<div style="margin-right: 10px; font-size: 13px; color:#AAB5BC">산출물</div>
 								<div style="width: 100%">
-									<a href="#" style="background:#F1F1F1; width: 100%">view more
+									<a href="#" style="background:#F1F1F1; width: 100%">더 보기
 										<i class="m-icon-swapright m-icon-gray"></i>
 									</a>
 								</div>
@@ -165,7 +165,7 @@
 								<!-- <div class="cellMenu1" style="font-weight:normal; font-size: 35px; margin-right: 10px; color:#5E738B">19</div> -->
 								<div style="margin-right: 10px; font-size: 13px; color:#AAB5BC">프로젝트</div>
 								<div style="width: 100%">
-									<a href="projectCenter.pr" style="background:#F1F1F1; width: 100%">view more
+									<a href="projectCenter.pr" style="background:#F1F1F1; width: 100%">더 보기
 										<i class="m-icon-swapright m-icon-gray"></i>
 									</a>
 								</div>
@@ -236,6 +236,18 @@
 		});
 		
 		//4. 승인요청 count
+		$.ajax({
+			url: 'myRequestApprovalCount.me',
+			type: 'post',
+			data: {
+			 memberNo : memberNo
+			},
+			success: function(data){
+				$(".requestApproval").prepend(     
+					  "<div class='cellMenu1' style='font-weight:normal; font-size: 35px; margin-right: 10px; color:#F36A5A'>" + data + "</div>"
+				);
+			}
+		});
 
 		//5. 산춞물 count
 		$.ajax({
