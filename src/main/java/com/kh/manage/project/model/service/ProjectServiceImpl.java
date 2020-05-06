@@ -307,4 +307,10 @@ public class ProjectServiceImpl implements ProjectService {
 	public int updateWorkLevel(ProjectWork work) {
 		return pd.updateWorkLevel(sqlSession, work);
 	}
+
+	@Override
+	public String selectEnrollDate(String pid) {
+		
+		return pd.selectEnrollDate(sqlSession, pid);
+	}
 }

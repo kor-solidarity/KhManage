@@ -151,14 +151,17 @@
 										    <progress class="progressTag" value="${sum+(1-(sum%1))%1}" max="100" style="width:70px;"/>
 										  </div>
 									</td>
-									<c:if test="${d.dDay >0 and d.status != '완료'}">
+									<c:if test="${d.dDay >0 and d.status != '납품완료'}">
 									<td class="tdmidTable td"><a href="#" style="color:#F3565D; font-weight: 600;">${d.dDay}일 지연</a></td>
 									</c:if>
-									<c:if test="${d.dDay <=0 and d.status != '완료' }">
+									<c:if test="${d.dDay ==0 and d.status != '납품완료' }">
+										<td class="tdmidTable td"><a href="#" style="color:#1E2B44; font-weight: 600;">마감임박</a></td>
+									</c:if>
+									<c:if test="${d.dDay <0 and d.status != '납품완료' }">
 									<td class="tdmidTable td"><a href="#" style="color:#1E2B44; font-weight: 600;">${fn:substring(d.dDay,1,8)}일 남음</a></td>
 									</c:if>
-									<c:if test="${d.status == '완료' }">
-									<td class="tdmidTable td"><a href="#" style="color:#1E2B44; font-weight: 600;">-</a></td>
+									<c:if test="${d.status == '납품완료' }">
+									<td class="tdmidTable td"><a href="#" style="color:green; font-weight: 600;">완료</a></td>
 									</c:if>
 								</tr>
 						</c:forEach>

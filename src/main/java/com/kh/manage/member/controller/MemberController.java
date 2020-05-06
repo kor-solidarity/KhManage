@@ -337,6 +337,28 @@ public class MemberController {
 
     }
     
+    //멤버 메인페이지 내 승인요청 Count
+    @RequestMapping("myRequestApprovalCount.me")
+    public void myRequestApprovalCount(Member m, Model model, HttpServletRequest request, HttpServletResponse response) {
+      
+    	int myRequestApproval = ms.myRequestApprovalCount(m);
+    	System.out.println("내 이슈 갯수 result : " + myRequestApproval);
+
+    	response.setContentType("application/json");
+    	response.setCharacterEncoding("UTF-8");
+
+    	String gson = new Gson().toJson(myRequestApproval);
+
+    	try {
+    		response.getWriter().write(gson);
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
+
+    }
+    
+    
+    
     //멤버 메인페이지 내 변경요쳥 Count *
     @RequestMapping("myChangeCount.me")
     public void myChangeCount(Member m, Model model, HttpServletRequest request, HttpServletResponse response) {

@@ -116,4 +116,6 @@ public interface ProjectService {
 	int selectProjectListNumCount(Member member);
 	
 	int updateWorkLevel(ProjectWork work);
+
+	String selectEnrollDate(String pid);
 }

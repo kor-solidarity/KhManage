@@ -288,6 +288,12 @@ public class ProjectDaoImpl implements ProjectDao {
 	public int updateWorkLevel(SqlSessionTemplate sqlSession, ProjectWork work) {
 		return sqlSession.selectOne("Project.updateWorkLevel", work);
 	}
+
+	@Override
+	public String selectEnrollDate(SqlSessionTemplate sqlSession, String pid) {
+		
+		return sqlSession.selectOne("Project.selectEnrollDate", pid);
+	}
 }
 
 

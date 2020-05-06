@@ -621,6 +621,13 @@
 		WHERE TEAMWORKER = #{memberNo}
    </select>
    
+   <select id="myRequestApprovalCount" resultType="_int">
+   		SELECT COUNT(*)
+		FROM WORK
+		WHERE MEMBER_NO = #{memberNo}
+		AND STATUS = 'PL검토요청'
+   </select>
+   
    <select id="myChangeCount" resultType="_int">
 		SELECT COUNT(*)
 		FROM CHANGE_REQUEST C

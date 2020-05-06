@@ -14,6 +14,8 @@ import com.kh.manage.member.model.vo.AllDashBoard;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.project.model.vo.*;
 
+import oracle.net.aso.e;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -316,7 +318,7 @@ public class ProjectController {
 			
 			
 			// 사실 리다렉트를 쓰면 안됨....
-			return "redirect:/projectCenter.pr";
+			return "redirect:projectList.am";
 		} else {
 			return "user/project/projectSelectAll";
 		}
@@ -853,12 +855,13 @@ public class ProjectController {
 		
 		List<Statistics> list3 = ps.statisticsList2(pid);
 		List<ProjectHistory> hList = ps.selectHistory(pid);
-		
+		String enrollDate = ps.selectEnrollDate(pid);
 		model.addAttribute("hList", hList);
 		model.addAttribute("project", ad);
 		model.addAttribute("list3", list3);
 		model.addAttribute("project", ad);
 		model.addAttribute("pid", pid);
+		model.addAttribute("enrollDate", enrollDate);
 		
 		return "user/project/projectSummary";
 	}

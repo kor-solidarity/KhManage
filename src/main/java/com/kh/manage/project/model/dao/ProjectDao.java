@@ -116,4 +116,6 @@ public interface ProjectDao {
 	int selectProjectListNumCount(SqlSessionTemplate sqlSession, Member member);
 	
 	int updateWorkLevel(SqlSessionTemplate sqlSession, ProjectWork work);
+
+	String selectEnrollDate(SqlSessionTemplate sqlSession, String pid);
 }

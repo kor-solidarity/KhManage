@@ -859,6 +859,12 @@
         INSERT INTO PROJECT_HISTORY
         VALUES ('PH' || TO_CHAR(SEQ_HISTORY.NEXTVAL, 'FM0000'), #{projectPk}, #{memberNo}, SYSDATE, '개발완료')
     </insert>
+    
+    <select id="selectEnrollDate" parameterType="java.lang.String" resultType="java.lang.String">
+    	SELECT TO_CHAR(ENROLL_DATE ,'YY-MM-DD HH24:MI') AS ENROLL_DATE
+		FROM PROJECT
+		WHERE PROJECT_PK = #{pid}
+    </select>
 
 </mapper>
 
