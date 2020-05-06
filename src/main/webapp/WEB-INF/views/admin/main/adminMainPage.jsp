@@ -164,22 +164,26 @@
 					
 					labels : [ 
 						
-						<%for(int i =0; i < dlist.size(); i++){
+						<% for(int i =0; i < dlist.size(); i++){
 							 Dept dept = (Dept)dlist.get(i);
 						%> 
 						
 							'<%= dept.getDeptName() %>',
-						<%
-						}
-						%>
 						
+						<% } %>
 						
 					],
 					datasets : [ {
 						label : '',
 						data : [ 
 							
-							22, 13, 35, 34, 11, 56, 33, 23, 21, 22, 44, 12, 22
+							<% for(int i =0; i < dlist.size(); i++){
+							 Dept dept = (Dept)dlist.get(i);
+							%> 
+							
+								'<%= dept.getCount() %>',
+							
+							<% } %>
 							
 						],
 						backgroundColor : [ 
@@ -225,6 +229,15 @@
 						display: false,
 						position: 'left'
 					}
+				/* dynamicColors : function() {
+				    var r = Math.floor(Math.random() * 255);
+				    var g = Math.floor(Math.random() * 255);
+				    var b = Math.floor(Math.random() * 255);
+				    return "rgba(" + r + "," + g + "," + b + ",0.8)";
+				} */
+
+				
+				
 				  /*   tooltips: {
 				      displayColors: true,
 				      callbacks:{

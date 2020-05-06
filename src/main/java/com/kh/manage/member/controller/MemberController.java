@@ -82,8 +82,14 @@ public class MemberController {
 		System.out.println("관리자 메인 차트1 : " + monthlyProject);
 		
 		//관리자 메인페이지 차트2
+			//부서리스트 조회
 		List<Dept> dlist = ms.selectDeptListChart();
 		request.setAttribute("dlist", dlist);
+			//부서리스트별 프로젝트 갯수 조회
+//		List<MemberWorkProduct> myWorkList = ms.myWorkList(member);
+//		model.addAttribute("myWorkList", myWorkList);
+//		List<Pr>
+		
 		
 		
 		return "admin/main/adminMainPage";
@@ -653,7 +659,7 @@ public class MemberController {
 	
 	//회원정보 수정 프로필사진 
 	@RequestMapping("insertProfileImage.me")
-	public String insertProfileImage(Model model, Member m, HttpServletRequest request, 
+	public String insertProfileImage(Model model, Member m, HttpServletRequest request, HttpSession session, 
 			@RequestParam MultipartFile profileImage) {
 		
 		System.out.println("이미지 변경요청");
@@ -697,6 +703,21 @@ public class MemberController {
 			try {
 				profileImage.transferTo(new File(filePath + "\\" + changeName + ext));
 //				profileImage.transferTo(new File(filePath + changeName + ext)); // Mac
+				
+				
+				try {
+		               Member updateMember = ms.loginMember(m);
+		               session.setAttribute("loginUser", updateMember);
+		               
+		               System.out.println("updateMember : " + updateMember); 
+		               
+		            } catch (LoginException e) {
+		               // TODO Auto-generated catch block
+		               e.printStackTrace();
+		            }
+
+				
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -718,7 +739,11 @@ public class MemberController {
 			
 		}
 		
-//		return "user/myProfile/myProfileMain";
+		
+		
+		
+		
+		
 		return "redirect:myProfile.me";
 	}
 	
