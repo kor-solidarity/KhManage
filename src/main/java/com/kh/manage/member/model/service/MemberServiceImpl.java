@@ -379,6 +379,12 @@ public class MemberServiceImpl implements MemberService {
 		return md.selectDeptListChart(sqlSession);
 	}
 
+	@Override
+	public int myRequestApprovalCount(Member m) {
+
+		return md.myRequestApprovalCount(sqlSession, m);
+	}
+
 
 	
 	

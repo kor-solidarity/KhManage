@@ -121,6 +121,8 @@ public interface MemberDao {
 
 	List<Dept> selectDeptListChart(SqlSessionTemplate sqlSession);
 
+	int myRequestApprovalCount(SqlSessionTemplate sqlSession, Member m);
+
 	
 
 

@@ -112,6 +112,8 @@ public interface MemberService {
 
 	List<Dept> selectDeptListChart();
 
+	int myRequestApprovalCount(Member m);
+
 
 	
 }
