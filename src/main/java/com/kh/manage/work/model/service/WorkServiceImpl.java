@@ -115,6 +115,11 @@ public class WorkServiceImpl implements WorkService{
 		return wd.selectHighWorkNoList2(sqlSession, w);
 	}
 
+	@Override
+	public List<Grantor> selectGrantorList2(String projectNo) {
+		return wd.selectGrantorList2(sqlSession, projectNo);
+	}
+
 	
 
 	

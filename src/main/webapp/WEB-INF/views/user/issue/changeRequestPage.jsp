@@ -210,9 +210,12 @@
 					<td class="thRange" colspan="2">
 					<input name="completeRate" type="number" class="inputMenu form-control completeRate" step="5" min="0" max="100">	
 					</td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
+					<td class="thRange">담당자</td>
+					<td class="thRange" colspan="2">
+					<select name="memberNo" id="memberNo" class="inputMenu form-control memberNo" required="required">
+						
+					</select>
+					</td>
 					<td class="thRange" colspan="6"></td>
 				</tr>
 				<tr>
@@ -305,9 +308,9 @@
 				</tr>
 				<tr>
 					<td class="thRange"></td>
-					<td class="thRange">승인자 1</td>
-					<td class="thRange" colspan="3">
-						<select id="deptList">
+					<td class="thRange">담당자</td>
+					<td class="thRange" colspan="5">
+						<select id="crGrantor1" name="crGrantor1" class="inputMenu form-control crGrantor1">
 							<option>선택하세요</option>
 							<option>부서명</option>
 							<option>부서명</option>
@@ -316,16 +319,10 @@
 							<option>부서명</option>
 						</select>
 					</td>
-					<td class="thRange" colspan="6">
-						<select id="userList">
-							<option>선택하세요</option>
-							<option>부서명</option>
-							<option>부서명</option>
-							<option>부서명</option>
-							<option>부서명</option>
-							<option>부서명</option>
-						</select>
-					</td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
 					<td class="thRange"></td>
 					<td class="thRange"></td>
 					<td class="thRange"></td>
@@ -356,9 +353,9 @@
 				</tr>
 				<tr>
 					<td class="thRange"></td>
-					<td class="thRange">승인자 2</td>
-					<td class="thRange" colspan="3">
-						<select id="deptList">
+					<td class="thRange">승인자 </td>
+					<td class="thRange" colspan="5">
+						<select id="crGrantor2" name="crGrantor2" class="inputMenu form-control crGrantor2">
 							<option>선택하세요</option>
 							<option>부서명</option>
 							<option>부서명</option>
@@ -367,16 +364,10 @@
 							<option>부서명</option>
 						</select>
 					</td>
-					<td class="thRange" colspan="6">
-						<select id="userList">
-							<option>선택하세요</option>
-							<option>부서명</option>
-							<option>부서명</option>
-							<option>부서명</option>
-							<option>부서명</option>
-							<option>부서명</option>
-						</select>
-					</td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
 					<td class="thRange"></td>
 					<td class="thRange"></td>
 					<td class="thRange"></td>
@@ -470,6 +461,9 @@
 			var workNo = $(this).val();
 			$("#grantorNo").empty();
 			$("#highWorkNo").empty();
+			$("#memberNo").empty();
+			$("#crGrantor1").empty();
+			$("#crGrantor2").empty();
 			$.ajax({
 				url:"selectWork.wk",
 				type:"post",
@@ -482,13 +476,28 @@
 					console.log(data.work.completeDate);
 					console.log(data.work.status);
 					btnNum = data.work.workAttachment.length;
+					
+					
 					for(var i = 0; i < data.gt.length; i++){
 						$("#grantorNo").append("<option value='" + data.gt[i]['memberPk'] + "'>" +data.gt[i]['deptName'] + " " + data.gt[i]['rankName'] + " " + data.gt[i]['memberName']  + "</option>");
 					};
 					
 					for(var j= 0; j < data.hw.length; j++){
-						$("#highWorkNo").append("<option value='" + data.hw[j]['workNo'] + "'>"+ data.hw[j]['workName'] + "</option>")
+						$("#highWorkNo").append("<option value='" + data.hw[j]['workNo'] + "'>"+ data.hw[j]['workName'] + "</option>");
 					}
+					
+					for(var k= 0; k < data.mn.length; k++){
+						$("#memberNo").append("<option value='" + data.mn[k]['memberPk'] + "'>" +data.mn[k]['deptName'] + " " + data.mn[k]['rankName'] + " " + data.mn[k]['memberName']  + "</option>");
+					}
+					
+					for(var o = 0; o < data.mn1.length; o++){
+						$("#crGrantor1").append("<option value='" + data.mn1[o]['memberPk'] + "'>" +data.mn1[o]['deptName'] + " " + data.mn1[o]['rankName'] + " " + data.mn1[o]['memberName']  + "</option>");
+					};
+					
+					for(var z = 0; z < data.gt1.length; z++){
+						$("#crGrantor2").append("<option value='" + data.gt1[z]['memberPk'] + "'>" +data.gt1[z]['deptName'] + " " + data.gt1[z]['rankName'] + " " + data.gt1[z]['memberName']  + "</option>");
+					};
+					
 					
 					$(".workNo").val(data.work.workNo);
 					$(".workName").val(data.work.workName);

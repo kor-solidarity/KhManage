@@ -126,6 +126,11 @@ public class WorkDaoImpl implements WorkDao{
 		return sqlSession.selectList("Work.selectHighWorkNoList2", w);
 	}
 
+	@Override
+	public List<Grantor> selectGrantorList2(SqlSessionTemplate sqlSession, String projectNo) {
+		return sqlSession.selectList("Work.selectGrantorList2", projectNo);
+	}
+
 	
 
 }

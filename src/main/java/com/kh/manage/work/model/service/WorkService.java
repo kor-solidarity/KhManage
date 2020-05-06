@@ -49,6 +49,8 @@ public interface WorkService {
 
 	List<Work> selectHighWorkNoList2(Work w);
 
+	List<Grantor> selectGrantorList2(String projectNo);
+
 	
 
 }

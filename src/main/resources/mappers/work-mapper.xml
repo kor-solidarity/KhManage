@@ -313,6 +313,15 @@
 		AND ROLE IN ('PM', 'PSM')
 	</select>
 	
+	<select id="selectGrantorList2" parameterType="java.lang.String" resultMap="selectGrantorList">
+		SELECT PT.MEMBER_PK, M.MEMBER_NAME, D.DEPT_NAME, R.RANK_NAME
+		FROM PROJECT_TEAM PT
+		JOIN MEMBER M ON (PT.MEMBER_PK = M.MEMBER_NO)
+	    JOIN DEPT D ON (M.DEPT_NO = D.DEPT_NO)
+	    JOIN RANK R ON (M.RANK_NO = R.RANK_NO)
+		WHERE PROJECT_PK = #{projectNo}
+	</select>
+	
 	<select id="selectHighWorkNoList" parameterType="hashmap" resultMap="workResultSet">
 		SELECT 
 				WORK_NO
