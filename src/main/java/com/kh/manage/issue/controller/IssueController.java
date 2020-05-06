@@ -301,11 +301,11 @@ public class IssueController {
 		
 		System.out.println(ih);
 		
-		LocalDateTime dateAndtime = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-		String time = dateAndtime.format(formatter);
+//		LocalDateTime dateAndtime = LocalDateTime.now();
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+//		String time = dateAndtime.format(formatter);
 		
-		ih.setDateAndTime(ih.getIhDate()+time);
+//		ih.setDateAndTime(ih.getIhDate()+time);
 		
 		
 		int result = is.insertIssueComplete(ih);

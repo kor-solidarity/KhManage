@@ -106,13 +106,18 @@ public class WorkController {
 		map.put("workLevel", workLevel1);
 		map.put("pno", w.getProjectNo());
 		
-		
 		List<Grantor> gt = ws.selectGrantorList(w.getProjectNo());
+		List<Grantor> gt1 = ws.selectGrantorList(w.getProjectNo());
+		List<Grantor> mn = ws.selectGrantorList2(w.getProjectNo());
+		List<Grantor> mn1 = ws.selectGrantorList2(w.getProjectNo());
 		List<Work> hw = ws.selectHighWorkNoList(map);
 		
 		
 		
 		mv.addObject("gt", gt);
+		mv.addObject("mn", mn);
+		mv.addObject("gt1", gt1);
+		mv.addObject("mn1", mn1);
 		mv.addObject("work", w);
 		mv.addObject("loginUser", member);
 		mv.addObject("hw", hw);

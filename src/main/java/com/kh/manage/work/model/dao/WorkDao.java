@@ -51,4 +51,6 @@ public interface WorkDao {
 
 	List<Work> selectHighWorkNoList2(SqlSessionTemplate sqlSession, Work w);
 
+	List<Grantor> selectGrantorList2(SqlSessionTemplate sqlSession, String projectNo);
+
 }
