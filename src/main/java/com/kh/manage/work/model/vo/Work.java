@@ -13,9 +13,9 @@ public class Work implements java.io.Serializable{
 	private String status;
 	private String projectNo;
 	private String projectName;
-	@JsonFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern="yyyy-MM-dd", timezone="Asia/Seoul")
 	private Date beginDate;
-	@JsonFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern="yyyy-MM-dd", timezone="Asia/Seoul")
 	private Date completeDate;
 	private String precedeNo;
 	private String completeRate;
