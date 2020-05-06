@@ -153,15 +153,15 @@
 									</select> -->
 								</td>
 								<td style="width:50%"></td>
-								<td><label class="issueOpen">오픈</label></td>
+								<td><label class="issueOpen">확인중</label></td>
 								<td>&nbsp;&nbsp;</td>
-								<td><label class="issueCpl">완료</label></td>
+								<td><label class="issueCpl">조치중</label></td>
 								<td>&nbsp;&nbsp;</td>
-								<td><label class="issueAll">전체</label></td>
-								<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+								<td><label class="issueEnd">조치완료</label></td>
+								<td>&nbsp;&nbsp;</td>
 								<td><label class="issueCancel">취소</label></td>
 								<td>&nbsp;&nbsp;</td>
-								<td><label class="issueEnd">종료</label></td>
+								<td></td>
 							</tr>	
 							</table>
 						<table id="projectTable" align="center">
@@ -199,7 +199,18 @@
 								<td class="tdText">${l.registerDate }</td>
 								<td class="tdText">${l.issueType }</td>
 								<td class="tdText">${l.registerName }</td>
+								<c:if test="${l.status == '확인중' }">
 								<td class="tdText"><label class="issueOpen">${l.status }</label></td>
+								</c:if>
+								<c:if test="${l.status == '조치중' }">
+								<td class="tdText"><label class="issueCpl">${l.status }</label></td>
+								</c:if>
+								<c:if test="${l.status == '조치완료' }">
+								<td class="tdText"><label class="issueEnd">${l.status }</label></td>
+								</c:if>
+								<c:if test="${l.status == '취소' }">
+								<td class="tdText"><label class="issueCancel">${l.status }</label></td>
+								</c:if>
 								<td class="tdText">${l.teamWorkerName }</td>
 								<td class="tdText">${l.actionDate }</td>
 								<td class="tdText">${l.ihDate }</td>

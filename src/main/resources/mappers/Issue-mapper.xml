@@ -249,7 +249,7 @@
 	
 	<insert id="insertIssueComplete" parameterType="IssueHistory">
 		INSERT INTO ISSUE_HISTORY
-		VALUES ('IH' || TO_CHAR(SEQ_IH_NO.NEXTVAL, 'FM000'), #{issueNo}, #{ihContent}, TO_DATE(#{dateAndTime},'YYYY/MM/DD HH24:MI:SS'), '조치완료')
+		VALUES ('IH' || TO_CHAR(SEQ_IH_NO.NEXTVAL, 'FM000'), #{issueNo}, #{ihContent}, #{ihDate}, '조치완료')
 	</insert>
 	
 	<select id="selectAttachment" resultMap="attachmentResultSet" parameterType="Attachment">
