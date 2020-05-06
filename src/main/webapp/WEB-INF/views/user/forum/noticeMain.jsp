@@ -132,25 +132,27 @@
 				style="width: 100%; height: 700px; margin: 0 auto; overflow: auto;">
 				<table align="left" style="margin-bottom: 10px;">
 					<tr>
+					<c:if test="${loginUser.memberId eq 'admin' }">
 						<td><button class="projectBtn"
 								onclick="location.href='insertNPage.fo'">
 								<i class="fas fa-edit"></i> &nbsp;공지사항 등록
-							</button>
+							</button></td>
+						</c:if>
+					
 						<td colspan="6">
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 						<td style="width: 65%"></td>
-						
 						<td style="width: 30%">
 							<form class="navbar-form navbar-left"
 								style="float: right; margin-left: 20px;">
-								<div class="input-group">
+								<!-- <div class="input-group">
 									<input type="text" value="" class="form-control"
 										> <span class="input-group-btn"><button
 											type="button" style="background: #1E2B44;"
 											class="btn btn-primary">
 											<i class="fas fa-search"></i>
 										</button></span>
-								</div>
+								</div> -->
 							</form>						
 						</td>
 					</tr>
