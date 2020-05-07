@@ -122,32 +122,32 @@
 
 	</style>
 	<!-- demo stylesheet -->
-	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/helpers/demo.css" />
-	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/helpers/media/layout.css" />
-	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/helpers/media/elements.css" />
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/helpers/demo.css"/>
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/helpers/media/layout.css"/>
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/helpers/media/elements.css"/>
 	<!-- helper libraries -->
 	<!-- daypilot themes -->
-	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/areas.css" />
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/areas.css"/>
 
-	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/month_white.css" />
-	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/month_green.css" />
-	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/month_transparent.css" />
-	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/month_traditional.css" />
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/month_white.css"/>
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/month_green.css"/>
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/month_transparent.css"/>
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/month_traditional.css"/>
 
-	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/navigator_8.css" />
-	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/navigator_white.css" />
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/navigator_8.css"/>
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/navigator_white.css"/>
 
-	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/calendar_transparent.css" />
-	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/calendar_white.css" />
-	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/calendar_green.css" />
-	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/calendar_traditional.css" />
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/calendar_transparent.css"/>
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/calendar_white.css"/>
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/calendar_green.css"/>
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/calendar_traditional.css"/>
 
-	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/scheduler_8.css" />
-	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/scheduler_white.css" />
-	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/scheduler_green.css" />
-	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/scheduler_blue.css" />
-	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/scheduler_traditional.css" />
-	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/scheduler_transparent.css" />
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/scheduler_8.css"/>
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/scheduler_white.css"/>
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/scheduler_green.css"/>
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/scheduler_blue.css"/>
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/scheduler_traditional.css"/>
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/scheduler_transparent.css"/>
 
 	<script src="resources/daypilot/demo/helpers/jquery-1.12.2.min.js" type="text/javascript"></script>
 	<!-- daypilot libraries -->
@@ -401,11 +401,12 @@
 				</table>
 			</div>
 			<%--차트 우측: 간트차트--%>
-			<div class="gantt-div" style="overflow: hidden;">
+			<div class="gantt-div" style="overflow-y: hidden;">
 				<div id="chart-div">
 					<%--날짜 표기부분. 너비는 일수에 따라 유동적으로 움직이게끔.--%>
 					<%--위아래 오버플로우 히든은 중간발표로 부득이한 임시방편--%>
-					<div class="gantt-date" style="width: 2760px ; min-height: 898px; overflow: hidden; " id="gantt">
+					<div class="gantt-date" style="width: 2760px ; min-height: 898px; /*overflow: hidden;*/ "
+						 id="gantt">
 						<style>
 							.gantt-table tr {
 								height: 30px;
@@ -564,11 +565,14 @@
 						--%>
 					</div>
 				</div>
+				<style>
+					.gantt_default_tree_image_collapse, .gantt_default_tree_image_no_children {
+						display: none;
+					}
+				</style>
 				<script>
-					// 간트차트
 
-				</script>
-				<script>
+                    var gantt = undefined;
 
                     // 작업 추가를 누르면 어떤거든간에 우선 테이블 맨위에 띄우게끔.
                     function add_project_work (location) {
@@ -861,52 +865,118 @@
                             $("#chart-left-table tr:not(tr:first-of-type)").remove()
                             // todo 우측도 이거 끝나면 제거해야함. 당장은 좌측이 더 급하니 이거부터 하는걸로.
 
+                            projectWorkList = data['projectWorkList']
                             // 돌아가면서 넘긴다.
-                            for (key in data) {
-                                target_id = "#" + data[key]['workNo'];
+                            for (key in projectWorkList) {
+                                target_id = "#" + projectWorkList[key]['workNo'];
                                 // 상위작업 이름
-                                highWorkName = data[key]['highWorkName'];
+                                highWorkName = projectWorkList[key]['highWorkName'];
                                 if (highWorkName == undefined) {
                                     highWorkName = "";
                                 }
                                 // 단계에 따른 상하위작업 들여쓰기
                                 workLevelTab = '&nbsp;'
-                                if (data[key].workLevel == 2) {
+                                if (projectWorkList[key].workLevel == 2) {
                                     workLevelTab = '&nbsp;&nbsp;&nbsp;&nbsp;└&nbsp;';
-                                } else if (data[key].workLevel == 3) {
+                                } else if (projectWorkList[key].workLevel == 3) {
                                     workLevelTab = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└&nbsp;';
                                 }
                                 // 상태값 관련
-                                memberName = data[key]['memberName'];
+                                memberName = projectWorkList[key]['memberName'];
                                 if (memberName == undefined) {
                                     memberName = "";
                                 }
 
                                 $("#chart-left-table tr:last-of-type").after(
-                                    // ' + data[key][''] + '
-                                    '<tr id="' + data[key]['workNo'] + '">' +
+                                    // ' + projectWorkList[key][''] + '
+                                    '<tr id="' + projectWorkList[key]['workNo'] + '">' +
                                     // 작업아이디
-                                    '<td>' + data[key]['workNo'] + '</td>' +
-                                    '<td style="text-align: left">' + workLevelTab + data[key]['workName'] + '</td>' +
+                                    '<td>' + projectWorkList[key]['workNo'] + '</td>' +
+                                    '<td style="text-align: left">' + workLevelTab + projectWorkList[key]['workName'] + '</td>' +
                                     // 상태
                                     // '<td><span style="" class="fa fa-circle" data-toggle="tooltip" title="대기중"></span></td>' +
-                                    '<td>' + data[key]['status'] + '</td>' +
+                                    '<td>' + projectWorkList[key]['status'] + '</td>' +
                                     // 기간
-                                    '<td>' + data[key]['days'] + '</td>' +
-                                    '<td>' + data[key]['beginDate'] + '</td>' +
-                                    '<td>' + data[key]['completeDate'] + '</td>' +
+                                    '<td>' + projectWorkList[key]['days'] + '</td>' +
+                                    '<td>' + projectWorkList[key]['beginDate'] + '</td>' +
+                                    '<td>' + projectWorkList[key]['completeDate'] + '</td>' +
                                     // 상위작업 이름
                                     '<td>' + highWorkName + '</td>' +
-                                    '<td>' + data[key]['completeRate'] + '%' + '</td>' +
+                                    '<td>' + projectWorkList[key]['completeRate'] + '%' + '</td>' +
                                     // 작업에 배정된 인원
                                     '<td>' + memberName + '</td>' +
                                     '<td><i class="fas fa-search" data-toggle="modal" ' +
                                     'data-target="#workDetails" ' +
-                                    "onclick='clickedWorkDetails(\"" + data[key]['workNo'] + "\")' ></i></td>" +
+                                    "onclick='clickedWorkDetails(\"" + projectWorkList[key]['workNo'] + "\")' ></i></td>" +
                                     // 우선 여기까지 채우고 추가내용은 값에따라 바뀌기 때문에 별도추가?
                                     '</tr>'
                                 );
                             }
+
+                            // undefined 면 초기화부터.
+                            if (gantt == undefined) {
+                                // 간트차트
+                                gantt = new DayPilot.Gantt("gantt", {
+                                    cellWidthSpec: "Fixed",
+                                    cellWidth: 30,
+                                    timeHeaders: [
+                                        {
+                                            "groupBy": "Month"
+                                        },
+                                        {
+                                            "groupBy": "Day",
+                                            "format": "d"
+                                        }
+                                    ],
+                                    scale: "Day",
+                                    days: DayPilot.Date.today().daysInMonth(),
+                                    startDate: DayPilot.Date.today().firstDayOfMonth(),
+                                    taskHeight: 28,
+                                    rowHeaderHideIconEnabled: false,
+                                    rowMoveHandling: "Disabled",
+                                    taskMoveHandling: "Disabled",
+                                    linkCreateHandling: "Disabled",
+                                    rowCreateHandling: "Disabled",
+                                    tasks: [
+                                        {
+                                            "id": 1,
+                                            "text": "Group 1",
+                                            "complete": 35,
+                                            "children": [],
+                                            "start": "2020-05-04T00:00:00",
+                                            "end": "2020-05-16T00:00:00"
+                                        },
+                                        {
+                                            "id": 5,
+                                            "start": "2020-05-04T00:00:00",
+                                            "end": "2020-05-11T00:00:00",
+                                            "text": "Task 1",
+                                            "complete": 60
+                                        },
+                                        {
+                                            "id": 3,
+                                            "start": "2020-05-11T00:00:00",
+                                            "end": "2020-05-16T00:00:00",
+                                            "text": "Task 2",
+                                            "complete": 0
+                                        }
+                                    ]
+                                    /*
+									links: [
+										{
+											"from": 2,
+											"to": 3,
+											"type": "FinishToStart"
+										}
+									]
+									*/
+                                });
+                                // alert('boo');
+                                // gantt.
+                                gantt.init();
+                            }
+
+
                         }
                     })
                 }

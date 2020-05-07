@@ -41,24 +41,26 @@
     </resultMap>
 
     <resultMap id="projectWorkListResultSet" type="ProjectWork">
-        <id property="workNo" column="work_No"/>
-        <result property="workName" column="work_name"/>
-        <result property="status" column="status"/>
-        <result property="projectNo" column="project_no"/>
-        <result property="beginDate" column="begin_date"/>
-        <result property="completeDate" column="complete_date"/>
+        <id property="workNo" column="WORK_NO"/>
+        <result property="workName" column="WORK_NAME"/>
+        <result property="status" column="STATUS"/>
+        <result property="projectNo" column="PROJECT_NO"/>
+        <result property="beginDate" column="BEGIN_DATE"/>
+        <result property="completeDate" column="COMPLETE_DATE"/>
         <result property="precedeNo" column="PRECEDE_NO"/>
-        <result property="completeRate" column="complete_rate"/>
-        <result property="grantorNo" column="grantor_no"/>
-        <result property="workLevel" column="work_level"/>
-        <result property="highWorkNo" column="high_work_no"/>
+        <result property="completeRate" column="COMPLETE_RATE"/>
+        <result property="grantorNo" column="GRANTOR_NO"/>
+        <result property="workLevel" column="WORK_LEVEL"/>
+        <result property="highWorkNo" column="HIGH_WORK_NO"/>
         <result property="highWorkName" column="HIGH_WORK_NAME"/>
-        <result property="memo" column="memo"/>
-        <result property="workType" column="work_type"/>
-        <result property="workStatus" column="work_status"/>
+        <result property="memo" column="MEMO"/>
+        <result property="workType" column="WORK_TYPE"/>
+        <result property="workStatus" column="WORK_STATUS"/>
         <result property="memberName" column="MEMBER_NAME"/>
-        <result property="memberNo" column="member_no"/>
-        <result property="days" column="days"/>
+        <result property="memberNo" column="MEMBER_NO"/>
+        <result property="days" column="DAYS"/>
+        <result property="rowNum" column="ROW_NUM"/>
+        <result property="highRowNum" column="HIGH_ROW_NUM"/>
     </resultMap>
 
     <resultMap id="projectTypeResultSet" type="ProjectType">
@@ -256,23 +258,55 @@
 
     <!--프로젝트 센터에 프로젝트 작업 목록 조회 -->
     <select id="selectProjectWorkList" resultMap="projectWorkListResultSet" parameterType="String">
-        SELECT /*LPAD(' ', 2 * (LEVEL - 1)) ||*/ W.WORK_NAME AS WORK_NAME
-             , W.WORK_NO                                     AS WORK_NO
-             , W.STATUS                                      AS STATUS
-             , W.PROJECT_NO                                  AS PROJECT_NO
-             , W.BEGIN_DATE                                  AS BEGIN_DATE
-             , W.COMPLETE_DATE                               AS COMPLETE_DATE
-             , W.PRECEDE_NO                                  AS PRECEDE_NO
-             , W.COMPLETE_RATE                               AS COMPLETE_RATE
-             , W.WORK_LEVEL                                  AS WORK_LEVEL
-             , W.HIGH_WORK_NO                                AS HIGH_WORK_NO
-             , W2.WORK_NAME                                  AS HIGH_WORK_NAME
-             , W.WORK_TYPE                                   AS WORK_TYPE
-             , W.MEMBER_NO                                   AS MEMBER_NO
-             , W.WORK_STATUS                                 AS WORK_STATUS
-             , M.MEMBER_NAME                                 AS MEMBER_NAME
-             , M.MEMBER_TYPE                                 AS MEMBER_TYPE
-             , (W.COMPLETE_DATE - W.BEGIN_DATE)              AS DAYS
+        WITH DW AS (SELECT W.WORK_NAME                      AS WORK_NAME
+                         , ROWNUM                           AS ROW_NUM
+                         , W.WORK_NO                        AS WORK_NO
+                         , W.STATUS                         AS STATUS
+                         , W.PROJECT_NO                     AS PROJECT_NO
+                         , W.BEGIN_DATE                     AS BEGIN_DATE
+                         , W.COMPLETE_DATE                  AS COMPLETE_DATE
+                         , W.PRECEDE_NO                     AS PRECEDE_NO
+                         , W.COMPLETE_RATE                  AS COMPLETE_RATE
+                         , W.WORK_LEVEL                     AS WORK_LEVEL
+                         , W.HIGH_WORK_NO                   AS HIGH_WORK_NO
+                         , W2.WORK_NAME                     AS HIGH_WORK_NAME
+                         , W.WORK_TYPE                      AS WORK_TYPE
+                         , W.MEMBER_NO                      AS MEMBER_NO
+                         , W.WORK_STATUS                    AS WORK_STATUS
+                         , M.MEMBER_NAME                    AS MEMBER_NAME
+                         , M.MEMBER_TYPE                    AS MEMBER_TYPE
+                         , (W.COMPLETE_DATE - W.BEGIN_DATE) AS DAYS
+                    FROM WORK W
+                             LEFT JOIN MEMBER M
+                                       ON W.MEMBER_NO = M.MEMBER_NO
+                             LEFT OUTER JOIN WORK W2 ON W.HIGH_WORK_NO = W2.WORK_NO
+                    WHERE W.PROJECT_NO = #{value}
+                      AND W.WORK_TYPE = '프로젝트'
+                      AND W.WORK_STATUS = 'Y'
+                    START WITH W.HIGH_WORK_NO IS NULL
+                    CONNECT BY PRIOR W.WORK_NO = W.HIGH_WORK_NO
+                    ORDER SIBLINGS BY W.BEGIN_DATE)
+        SELECT W.WORK_NAME                         AS WORK_NAME
+             , ROWNUM                              AS ROW_NUM
+             , (SELECT ROW_NUM
+                FROM DW
+                WHERE DW.WORK_NO = W.HIGH_WORK_NO) AS HIGH_WORK_NUM
+             , W.WORK_NO                           AS WORK_NO
+             , W.STATUS                            AS STATUS
+             , W.PROJECT_NO                        AS PROJECT_NO
+             , W.BEGIN_DATE                        AS BEGIN_DATE
+             , W.COMPLETE_DATE                     AS COMPLETE_DATE
+             , W.PRECEDE_NO                        AS PRECEDE_NO
+             , W.COMPLETE_RATE                     AS COMPLETE_RATE
+             , W.WORK_LEVEL                        AS WORK_LEVEL
+             , W.HIGH_WORK_NO                      AS HIGH_WORK_NO
+             , W2.WORK_NAME                        AS HIGH_WORK_NAME
+             , W.WORK_TYPE                         AS WORK_TYPE
+             , W.MEMBER_NO                         AS MEMBER_NO
+             , W.WORK_STATUS                       AS WORK_STATUS
+             , M.MEMBER_NAME                       AS MEMBER_NAME
+             , M.MEMBER_TYPE                       AS MEMBER_TYPE
+             , (W.COMPLETE_DATE - W.BEGIN_DATE)    AS DAYS
         FROM WORK W
                  LEFT JOIN MEMBER M
                            ON W.MEMBER_NO = M.MEMBER_NO
