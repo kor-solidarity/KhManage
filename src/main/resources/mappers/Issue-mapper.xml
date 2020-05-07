@@ -88,7 +88,33 @@
 		<result property="projectName" column="PROJECT_NAME"/>
 	</resultMap>
 
-	
+	<resultMap type="ChangeRequest" id="insertChangeRequest">
+		<id property="changeNo" column="CHANGE_NO"/>
+		<result property="requestTitle" column="REQUEST_TITLE"/>
+		<result property="requestContent" column="REQUEST_CONTENT"/>
+		<result property="requestDate" column="REQUEST_DATE"/>
+		<result property="workNo" column="WORK_NO"/>
+		<result property="workName" column="WORK_NAME"/>
+		<result property="status" column="STATUS"/>
+		<result property="projectNo" column="PROJECT_NO"/>
+		<result property="projectName" column="PROJECT_Name"/>
+		<result property="beginDate" column="BEGIN_DATE"/>
+		<result property="completeDate" column="COMPLETE_DATE"/>
+		<result property="precedeNo" column="PRECEDE_NO"/>
+		<result property="completeRate" column="COMPLETE_RATE"/>
+		<result property="grantorNo" column="GRANTOR_NO"/>
+		<result property="workLevel" column="WORK_LEVEL"/>
+		<result property="highWorkNo" column="HIGH_WORK_NO"/>
+		<result property="highWorkName" column="HIGH_WORK_NAME"/>
+		<result property="workType" column="WORK_TYPE"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="crStatus" column="CR_STATUS"/>
+		<result property="crGrantor1" column="CR_GRANTOR_1"/>
+		<result property="crGrantor2" column="CR_GRANTOR_2"/>
+		<result property="crConfirm1" column="CR_CONFIRM1"/>
+		<result property="crConfirm2" column="CR_CONFIRM2"/>
+		<result property="registerNo" column="REGISTER_NO"/>
+	</resultMap>
 
 	
 	<resultMap type="WorkAttachment" id="selectWorkAttachment">
@@ -266,23 +292,15 @@
 	WHERE PT.MEMBER_PK = #{memberNo}
 	</select>
 	
+	<insert id="insertChangeRequest" parameterType="ChangeRequest">
+	INSERT INTO CHANGE_REQUEST
+	VALUES ('CR' || TO_CHAR(SEQ_CR.NEXTVAL, 'FM000'), #{requestTitle}, #{requestContent}, SYSDATE, 
+			#{workNo}, #{workName}, #{status}, #{projectNo}, #{beginDate}, #{completeDate}, #{precedeNo}, 
+			#{completeRate}, #{grantorNo}, #{workLevel}, #{highWorkNo}, #{workType}, 'Y', #{memberNo},
+			DEFAULT, #{crGrantor1}, #{crGrantor2}, DEFAULT, DEFAULT, #{registerNo})
+	</insert>
 	
-	
-<!-- 	<select id="selectHighWorkNoList" parameterType="Work" resultMap="workResultSet">
-		SELECT 
-				WORK_NO
-			  , WORK_NAME
-			  , STATUS
-			  , PROJECT_NO
-			  , HIGH_WORK_NO
-			  , WORK_LEVEL
-			FROM WORK
-			WHERE WORK_LEVEL = #{workLevel}
-    		AND PROJECT_NO = #{projectNo}
-    		AND WORK_TYPE != '개인'
-			ORDER BY WORK_NO ASC
-	</select> -->
-	
+
 </mapper>
 
 

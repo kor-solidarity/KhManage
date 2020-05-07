@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.issue.model.dao.IssueDao;
+import com.kh.manage.issue.model.vo.ChangeRequest;
 import com.kh.manage.issue.model.vo.Issue;
 import com.kh.manage.issue.model.vo.IssueHistory;
 import com.kh.manage.issue.model.vo.IssueList;
@@ -128,6 +129,11 @@ public class IssueServiceImpl implements IssueService{
 	@Override
 	public List<Work> selectHighWorkNoList(Work w) {
 		return id.selectHighWorkNoList(sqlSession, w);
+	}
+
+	@Override
+	public int insertChangeRequest(ChangeRequest cr) {
+		return id.insertChangeRequest(sqlSession, cr);
 	}
 
 	

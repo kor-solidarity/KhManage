@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
+import com.kh.manage.issue.model.vo.ChangeRequest;
 import com.kh.manage.issue.model.vo.Issue;
 import com.kh.manage.issue.model.vo.IssueHistory;
 import com.kh.manage.issue.model.vo.IssueList;
@@ -125,6 +126,11 @@ public class IssueDaoImpl implements IssueDao{
 	@Override
 	public List<Work> selectHighWorkNoList(SqlSessionTemplate sqlSession, Work w) {
 		return sqlSession.selectList("Issue.selectHighWorkNoList", w);
+	}
+
+	@Override
+	public int insertChangeRequest(SqlSessionTemplate sqlSession, ChangeRequest cr) {
+		return sqlSession.insert("Issue.insertChangeRequest", cr);
 	}
 
 }

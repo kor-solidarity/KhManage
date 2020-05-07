@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
+import com.kh.manage.issue.model.vo.ChangeRequest;
 import com.kh.manage.issue.model.vo.Issue;
 import com.kh.manage.issue.model.vo.IssueHistory;
 import com.kh.manage.issue.model.vo.IssueList;
@@ -59,5 +60,7 @@ public interface IssueDao {
 	List<Grantor> selectGrantorList(SqlSessionTemplate sqlSession, String projectNo);
 
 	List<Work> selectHighWorkNoList(SqlSessionTemplate sqlSession, Work w);
+
+	int insertChangeRequest(SqlSessionTemplate sqlSession, ChangeRequest cr);
 
 }

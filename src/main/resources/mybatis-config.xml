@@ -67,6 +67,8 @@
         <typeAlias type="com.kh.manage.member.model.vo.MyStatic" alias="MyStatic"/>
         <typeAlias type="com.kh.manage.member.model.vo.MemberWorkProduct" alias="MemberWorkProduct"/>
         <typeAlias type="com.kh.manage.admin.adminManage.vo.ProjectHistory" alias="ProjectHistory"/>
+        <typeAlias type="com.kh.manage.issue.model.vo.ChangeRequest" alias="ChangeRequest"/>
+        <typeAlias type="com.kh.manage.timeLine.model.vo.TimeLine" alias="TimeLine"/>
   	</typeAliases>
   
   
@@ -89,6 +91,7 @@
         <mapper resource="mappers/chat-mapper.xml"/>
         <mapper resource="mappers/report-mapper.xml"/>
         <mapper resource="mappers/mail-mapper.xml"/>
+        <mapper resource="mappers/timeLine-mapper.xml"/>
   	</mappers>
   		
   

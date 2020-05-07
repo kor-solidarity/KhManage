@@ -161,7 +161,7 @@
 	
 	.workLabel7{
 		min-width:10px;
-		background:#FD3A0F;
+		background:black;
 		color:white;
 		float:right;
 	}
@@ -294,7 +294,7 @@
 					<c:if test="${l8.workType == '일반' }">
 					<label class="typeLabel3"><c:out value="${l8.workType }"/></label>
 					</c:if>
-					<label class="workLabel7"><c:out value="${l8.status }"/></label>
+					<label class="workLabel4"><c:out value="${l8.status }"/></label>
 					<br>
 					<div class="clear"></div>
 					<label style="font-size:17px; line-height:280%;"><c:out value="${l8.workName }"/></label>
@@ -626,10 +626,7 @@
 						<ul class="nav nav-tabs">
 							<li class="active">
 								<a data-toggle="tab" href="#home">작업정보</a></li>
-							<li><a data-toggle="tab" href="#menu1">상위작업</a></li>
 							<li><a data-toggle="tab" href="#menu2">산출물</a></li>
-							<li><a data-toggle="tab" href="#menu3">가이드</a></li>
-							<li><a data-toggle="tab" href="#menu3">히스토리</a></li>
 						</ul>
 
 						<div class="tab-content"><br>
@@ -674,7 +671,7 @@
 									</td>
 									<td class="modalTd_T">작업유형</td>
 									<td class="modalTd" colspan="2">
-									<select name="workType" class="inputMenu form-control" required="required">
+									<select name="workType" id="workType" class="inputMenu form-control" required="required">
 										<option value="#" >선택하세요</option>
 										<option value="개인">개인</option>
 										<option value="프로젝트">프로젝트</option>
@@ -711,7 +708,7 @@
 									
 									<td class="modalTd_T">완료율</td>
 									<td class="modalTd" colspan="2">
-									<input name="completeRate" type="number" class="inputMenu form-control" min="0" max="100">	
+									<input name="completeRate" type="number" class="inputMenu form-control" step="5" min="0" max="100">	
 									</td>
 									<td class="modalTd2"></td>
 									<td class="modalTd2"></td>
@@ -765,7 +762,7 @@
 									</select>
 									
 									</td>
-									<td class="modalTd_T">승인자</td>
+									<td class="modalTd_T" id="grantorTd">승인자</td>
 									<td class="modalTd" colspan="2">
 										<select name="grantorNo" id="grantorList" style="padding-left:0px;" class="inputMenu form-control" required="required">
 											
@@ -950,10 +947,7 @@
 						<ul class="nav nav-tabs">
 							<li class="active">
 								<a data-toggle="tab" href="#homeInfo">작업정보</a></li>
-							<li><a data-toggle="tab" href="#menuInfo1">상위작업</a></li>
 							<li><a data-toggle="tab" href="#menuInfo2">산출물</a></li>
-							<li><a data-toggle="tab" href="#menuInfo3">가이드</a></li>
-							<li><a data-toggle="tab" href="#menuInfo4">히스토리</a></li>
 						</ul>
 
 						<div class="tab-content"><br>
@@ -1092,7 +1086,7 @@
 									<input type="hidden" name="highWorkNo" class="highWorkNo">
 									<input type="text" name="highWorkName" class="inputMenu form-control highWorkName" required="required" readOnly>
 									</td>
-									<td class="modalTd_T">승인자</td>
+									<td class="modalTd_T" id="grantorNoTd">승인자</td>
 									<td class="modalTd" colspan="2">
 										<select name="grantorNo" id="grantorNo" style="padding-left:0px;" class="inputMenu form-control grantorNo" required="required" readOnly
 										onFocus="this.initialSelect = this.selectedIndex;" onChange="this.selectedIndex = this.initialSelect;">
@@ -1332,6 +1326,21 @@
 			});
 		});
 		
+		
+		$("#workType").change(function(){
+			var workType = $(this).val();
+			if(workType == '개인'){
+				$("#grantorList").attr('style', 'display:none;');
+				$("#grantorList").empty();
+				$("#grantorTd").attr('style', 'display:none;');
+			}else{
+				$("#grantorList").attr('style', "display:;");
+				$("#projectNo").trigger("change");
+				$("#grantorTd").attr('style', "display:;");
+			}
+			
+		});
+		
 		$("#workLevel").change(function(){
 			var workLevel = $(this).val();
 			var pno = $("#projectNo").val();
@@ -1421,6 +1430,9 @@
 			$("#memoTr").remove();
 			$("#grantorNo").empty();
 			$("#statusSelect").attr("readOnly", false);
+			$("#grantorNo").attr('style', "display:;");
+			$("#grantorNoTd").attr('style', "display:;");
+
 			$.ajax({
 				url:"selectWork.wk",
 				type:"post",
@@ -1436,6 +1448,15 @@
 					for(var i = 0; i < data.gt.length; i++){
 						$("#grantorNo").append("<option value='" + data.gt[i]['memberPk'] + "'>" +data.gt[i]['deptName'] + " " + data.gt[i]['rankName'] + " " + data.gt[i]['memberName']  + "</option>");
 					};
+					
+					if(data.work.workType == "개인"){
+						$("#grantorNo").attr('style', 'display:none;');
+						$("#grantorNoTd").attr('style', 'display:none;');
+						$(".workName").attr('readOnly', false);
+					}else{
+						$(".workName").attr('readOnly', true);
+					}
+						
 					
 					$(".workNo").val(data.work.workNo);
 					$(".workName").val(data.work.workName);

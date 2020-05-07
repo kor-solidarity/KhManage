@@ -103,13 +103,13 @@
 		<div class="panel-heading">
 			<div style="width:100%; height:700px; margin:0 auto; overflow:auto;">
 			<b>변경요청 등록 정보</b>
-			<hr>
-			<form>
+			<hr style="border:solid 1px lightgray;">
+			<form id="insertChangeRequestForm" action="insertChangeRequest.iu" method="post">
 			<table id="issueTable">	
 				
 				<tr>
 					<td class="thRange" colspan="2">프로젝트
-					<input type="hidden" name="memberNo" class="memberNo">
+					<input type="hidden" name="registerNo" value="${sessionScope.loginUser.memberNo }">
 					</td>
 					<td class="thRange" colspan="9">
 						<select name="projectNo" id="projectNo" class="projectList" required="required">
@@ -122,7 +122,7 @@
 					</td>
 					<td class="thRange" align="left">작업</td>
 					<td class="thRange" colspan="6">
-						<select id="taskList">
+						<select id="taskList" name="workNo">
 							<option>작업을 선택하세요</option>
 							<option>---------</option>
 							<option>---------</option>
@@ -157,7 +157,7 @@
 				</tr>
 				<tr>
 					<td class="thRange" colspan="18">
-					<hr>
+					<hr style="border:solid 1px lightgray;">
 					</td>
 				</tr>
 				<tr>
@@ -303,7 +303,7 @@
 				
 				<tr>
 					<td class="thRange" colspan="18">
-					<hr>
+					<hr style="border:solid 1px lightgray;">
 					</td>
 				</tr>
 				<tr>
@@ -381,7 +381,7 @@
 				</tr>
 				<tr>
 					<td class="thRange"></td>
-					<td class="thRange"><button class="okBtn"><i class="fas fa-check"></i>&nbsp;저장</button></td>
+					<td class="thRange"><button class="okBtn" type="button" id="insertRequest"><i class="fas fa-check"></i>&nbsp;저장</button></td>
 					<td class="thRange"><button class="cancleBtn"><i class="fas fa-ban"></i>&nbsp;취소</button></td>
 					<td class="thRange"></td>
 					<td class="thRange"></td>
@@ -554,6 +554,12 @@
 				});	
 			}
 			
+		});
+		
+		
+		
+		$("#insertRequest").click(function(){
+			$("#insertChangeRequestForm").submit();
 		});
 		
 		
