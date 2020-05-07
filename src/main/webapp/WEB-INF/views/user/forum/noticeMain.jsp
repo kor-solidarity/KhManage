@@ -88,12 +88,13 @@
 	.sendtd{
 		text-align: center;
 		height: 45px;
-		width: 130px;
+		width: 220px;
 	}
 	.titletd{
-		height: 45px;
+		height: 20px;
 		text-align: left;
-		width: 800px;
+		width: 700px;
+		padding-left: 30px;
 	}
 	.datetd{
 		height: 45px;
@@ -102,25 +103,42 @@
 	}
 	.sendtd2{
 		text-align: center;
-		height: 65px;
+		height: 30px;
 		width: 130px;
 	}
 	.titletd2{
-		height: 65px;
+		height: 45px;
 		text-align: left;
 		width: 800px;
+		padding-left: 30px;
 	}
 	.datetd2{
-		height: 65px;
+		height: 22px;
 		text-align: center;
 		width: 250px;
 	}
-	#noticeTable #tr:hover{
+	#boardTable #tr:hover{
 		background : #F3F3F3;
+		cursor: pointer;
+		color: black;
 	}
 	.td{
 		width: 10px;
 	}	
+	
+	#tr {
+		height: 30px;
+	}
+	
+	.tr {
+		background: #F3F3F3;
+		border-top: 1px solid gray;
+	}
+	
+	#noticeTable #tr:hover{
+		background : #F3F3F3;
+	}
+	
 </style>
 </head>
 <body onload="$('#route1').text('공지사항')">
@@ -132,12 +150,11 @@
 				style="width: 100%; height: 700px; margin: 0 auto; overflow: auto;">
 				<table align="left" style="margin-bottom: 10px;">
 					<tr>
-					<c:if test="${loginUser.memberId eq 'admin' }">
-						<td><button class="projectBtn"
-								onclick="location.href='insertNPage.fo'">
+					<%-- <c:if test="${loginUser.memberId eq 'admin' }"> --%>
+						<td><button class="projectBtn" id="insertN">
 								<i class="fas fa-edit"></i> &nbsp;공지사항 등록
 							</button></td>
-						</c:if>
+						<%-- </c:if> --%>
 					
 						<td colspan="6">
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -159,7 +176,7 @@
 				</table>
 
 				<table id="noticeTable" align="center">
-					<tr>
+					<tr style="background:#F3F3F3 ">
 						<td class="titletd">제목</td>
 						<td class="sendtd">조회수</td>
 						<td class="sendtd">등록날짜</td>
@@ -223,9 +240,21 @@
 		
 		location.href = "selectNotice.fo?num="+num;
 	});
+	
+	$("#insertN").click(function(){
+		
+		if('${loginUser.memberId}' == 'admin'){
+			
+			location.href="insertNPage.fo";
+			
+		}else{
+			alert("공지사항은 관리자만 등록하실 수 있습니다.")
+		}
+		
+		
+	});
+
 </script>
-
-
 </html>
 
 
