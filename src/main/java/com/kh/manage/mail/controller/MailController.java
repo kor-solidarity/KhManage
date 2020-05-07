@@ -478,9 +478,13 @@ public class MailController {
 
 	//메일 보내기
 	@RequestMapping("/sendMail")
-	public String sendMail(Mail m ,Model mo , @RequestParam(required = false) MultipartFile[] file, HttpServletRequest request) throws Exception{
-
-		System.out.println(m);
+	public String sendMail(Mail m ,String[] receiver, Model mo , @RequestParam(required = false) MultipartFile[] file, HttpServletRequest request) throws Exception{
+		
+		System.out.println("asdsad" + m);
+		
+		System.out.println(m.getReceiver());
+		
+		
 		
 		request.setCharacterEncoding("UTF-8");
 
@@ -497,6 +501,8 @@ public class MailController {
 	      //위에 걸로 바꿔야 해 
 	      //String email = "test11@groupwhale.com";
 	      String to = m.getReceiver();
+	      
+	      System.out.println(to);
 	      String subject = m.getSubject();
 	      //String content = String.join(System.getProperty("line.separator"), m.getMailContent());
 	      String content = m.getContent();
@@ -510,7 +516,12 @@ public class MailController {
 	      List<AttachmentMail> fileList = new ArrayList<AttachmentMail>();
 	      System.out.println("file.length : " + file.length);
 	      
-	      if(to.contains("@managee.net")) {
+	      if(receiver[0].contains("@managee.net")) {
+	    	  
+	    	  for(int k = 0; k < receiver.length; k++) {
+	  			
+	  			m.setReceiver(receiver[k]);
+	  			
 	    	  
 	    	  for(int i = 0; i < file.length; i++) {
 	 	    	 AttachmentMail attachment = new AttachmentMail();
@@ -525,7 +536,9 @@ public class MailController {
 	 	         attachment.setEaSize(Long.toString(file[i].getSize()));
 	 	         attachment.setFilePath(filePath +"\\" + changeName + ext);
 	 	         
-	 	         System.out.println(attachment);
+	 	         System.out.println("kkkky: " + attachment);
+	 	         System.out.println("11111111111111111111111");
+	 	         System.out.println(attachment.getFilePath());
 	 	         
 	 	         try {
 	 	            file[i].transferTo(new File(attachment.getFilePath()));
@@ -534,6 +547,7 @@ public class MailController {
 	 	            
 	 	         } catch (Exception e) {
 	 	            new File(filePath + "\\" + changeName + ext).delete();
+	 	            System.out.println("에러");
 	 	            
 	 	         }
 	 	       }
@@ -543,9 +557,10 @@ public class MailController {
 	    	  
 	    	  request.setAttribute("to", to);
 		      
-		      System.out.println(fileList);
+		      System.out.println("fileList : " + fileList);
 		      
 		      mo.addAttribute("mail", m);
+	    	  }
 		      
 		      return "user/mail/mailComplete";
 	    	  
@@ -564,6 +579,7 @@ public class MailController {
 
 	        // Create a multipart/alternative child container.
 	        MimeMultipart msg_body = new MimeMultipart("alternative");
+	        
 	        
 	        
 	        // Create a wrapper for the HTML and text parts.        
@@ -608,7 +624,10 @@ public class MailController {
 	        msg.addBodyPart(wrap);
 	        
 	        
-	        
+	        for(int k = 0; k < receiver.length; k++) {
+	  			
+	  			m.setReceiver(receiver[k]);
+	  			
 	      
 	      for(int i = 0; i < file.length; i++) {
 	    	 AttachmentMail attachment = new AttachmentMail();
@@ -646,7 +665,7 @@ public class MailController {
 	            
 	         } catch (Exception e) {
 	            new File(filePath + "\\" + changeName + ext).delete();
-	            
+	            System.out.println("에러2");
 	         }
 
 	      }
@@ -703,9 +722,10 @@ public class MailController {
 	      System.out.println(fileList);
 	      mo.addAttribute("mail", m);
 	      
+	      }
 	      return "user/mail/mailComplete";
 		
-	   }//else 끝
+	  }//else 끝
 	      
 	      
 	}
