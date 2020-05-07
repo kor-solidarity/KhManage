@@ -526,17 +526,17 @@ a {
                     <div class="card-body">
                         <div class="text-muted h7 mb-2" style="margin-bottom: 20px;"> 
                         <c:if test="${t.sec < 60}">
-                        	<i class="far fa-clock"></i>${t.sec }초 전
+                        	<i class="far fa-clock"></i>&nbsp;${t.sec }초 전
                         </c:if>	
                         <c:if test="${t.sec >= 60}">
                         	<c:if test="${t.min < 60}">
-                        		<i class="far fa-clock"></i>${t.min }분 전
+                        		<i class="far fa-clock"></i>&nbsp;${t.min }분 전
                         	</c:if>
                         	<c:if test="${t.min >= 60 and t.hour <= 24}">
-                        		<i class="far fa-clock"></i>${t.hour }시간 전
+                        		<i class="far fa-clock"></i>&nbsp;${t.hour }시간 전
                         	</c:if>
                         	<c:if test="${t.min >= 60 and t.hour > 24}">
-                        		<i class="far fa-clock"></i>${t.day }일 전
+                        		<i class="far fa-clock"></i>&nbsp;${t.day }일 전
                         	</c:if>
                         </c:if>
                         
@@ -594,7 +594,7 @@ a {
 				</div>
 		</div>			
 		<script>
-		/* $(document).ready(function() {
+		 $(document).ready(function() {
 
 			// 기존 css에서 플로팅 배너 위치(top)값을 가져와 저장한다.
 			var floatPosition = parseInt($("#floatMenu").css('top'));
@@ -608,12 +608,12 @@ a {
 				
 				$("#floatMenu").stop().animate({
 					"top" : newPosition
-				}, 100);
+				}, 500);
 
 			}).scroll();
 
 		}); 
-		 */
+		 
 		/* $(window).scroll(function( ){  //스크롤이 움직일때마다 이벤트 발생 
 			
 		      var position = $(window).scrollTop(); // 현재 스크롤바의 위치값을 반환합니다.
@@ -631,7 +631,7 @@ a {
 	</script>
 	
 	<script>
-		$(".card-link").click(function(){
+		/* $(".card-link").click(function(){
 			console.log($(this).parent().parent());
 			$(this).parent().parent().append("<div class='commentArea' style='width:300px; height:50px;'> sss</div>")
 		});
@@ -639,7 +639,7 @@ a {
 		$(".active").click(function(){
 			console.log("삭제");
 			$(this).parent().parent().append("<div class='commentArea' style='width:300px; height:50px;'> sss</div>")
-		});
+		}); */
 	</script>
 
 

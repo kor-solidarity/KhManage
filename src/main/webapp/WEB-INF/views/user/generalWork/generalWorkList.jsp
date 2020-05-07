@@ -78,7 +78,7 @@
 	<jsp:include page="/WEB-INF/views/user/common/sidebar2.jsp" />
 		<div class="panel panel-headline">
 				<div class="panel-heading">
-					<div style="width:100%; height:400px; margin:0 auto; overflow:auto;">
+					<div style="width:100%; height:700px; margin:0 auto; overflow:auto; ">
 						<table align="left" style="margin-bottom:10px;">	
 							<tr>
 								<td><a href="showInsertGeneralWorkPage.gw"><button class="projectBtn"><i class="far fa-plus-square"></i> &nbsp;일반작업 등록</button></a>
@@ -124,35 +124,36 @@
 								<td colspan="6">
 									<div class="paging">
 										<c:if test="${pi.currentPage <= 1 }">
-												[이전] &nbsp;
+												이전 &nbsp;
 												</c:if>
 												<c:if test="${ pi.currentPage > 1 }">
-												<c:url var="alistBack" value="accessManage.am">
+												<c:url var="alistBack" value="showGeneralWorkMain.gw">
 													<c:param name="currentPage" value="${pi.currentPage - 1 }"/>
 												</c:url>
-													<a href="${ alistBack }">[이전]</a>&nbsp;
+													<a href="${ alistBack }">이전</a>&nbsp;
 												</c:if>
 												<c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage }">
 													<c:if test="${p eq pi.currentPage }">
-														<font color="red" size="4"><b>[${p }]</b></font>
+														<font color="#1E2B44" size="4"><b>${p }</b></font>
 													</c:if>
 													<c:if test="${p ne pi.currentPage }">
-														<c:url var="alistCheck" value="accessManage.am">
+														<c:url var="alistCheck" value="showGeneralWorkMain.gw">
 															<c:param name="currentPage" value="${p }"/>
 														</c:url>
 														
 														<a href="${alistCheck }"> ${p}</a>
 													</c:if>
+													&nbsp;
 												</c:forEach>
 												
 												<c:if test="${pi.currentPage >= pi.endPage }">
-													[다음] &nbsp;
+													다음&nbsp;
 												</c:if>
 												<c:if test="${pi.currentPage < pi.endPage }">
-												<c:url var="alistEnd" value="accessManage.am">
+												<c:url var="alistEnd" value="showGeneralWorkMain.gw">
 													<c:param name="currentPage" value="${pi.currentPage + 1 }"/>
 												</c:url>
-													<a href="${alistEnd}">[다음]</a>
+													<a href="${alistEnd}">다음</a>
 												</c:if>									
 									</div>
 								</td>

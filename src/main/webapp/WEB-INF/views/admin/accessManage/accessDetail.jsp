@@ -268,7 +268,7 @@
 										
 										<tr class="pagingArea">
 											<td colspan="5">
-												<div class="paging"><< < 1 2 > >></div>
+												<div class="paging"></div>
 											</td>
 										</tr>
 										<tr height="10px;"></tr>
@@ -301,7 +301,7 @@
 									</button>
 									<h4 class="modal-title" id="gridSystemModalLabel">
 										<i class="fas fa-th-large"></i>&nbsp;권한그룹 사용자
-									</h4>
+									</h4> 
 								</div>
 								<div class="modal-body">
 									<div class="container-fluid">
@@ -335,7 +335,7 @@
 												
 												<tr class="pagingArea">
 													<td colspan="5">
-												<div class="paging"><< < 1 2 > >></div>
+												<div class="paging"></div>
 														</td>
 												</tr>
 													
