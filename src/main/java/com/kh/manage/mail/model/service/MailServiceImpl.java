@@ -33,7 +33,7 @@ public class MailServiceImpl implements MailService{
 		int	result3 = md.insertMailBox(sqlSession, m);
 			
 		int	result4 = md.insertReceiver(sqlSession, m);
-		
+		System.out.println("filelsitdㅣ이쌴 : " + fileList);
 		if(result1 > 0 && result2 > 0 && result3 > 0 && result4 > 0) {
 			
 			result = 1;

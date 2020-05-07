@@ -7,12 +7,17 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	body {
+   body {
     background-color: #f0f6ff;
     color: #28384d;
     overflow: scroll;
 
 }
+html, body {
+			margin: 0;
+			padding: 0;
+			height: 100%;
+		}
 .card-one {
     position: relative;
     width: 300px;
@@ -394,15 +399,15 @@ a {
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 .main{
-	height: auto;
+   height: auto;
 }
 </style>
 </head>
 <body onload="$('#route1').text('타임라인')">
-	<jsp:include page="/WEB-INF/views/user/common/header.jsp" />
-	<jsp:include page="/WEB-INF/views/user/common/sidebar2.jsp" />
-		<div class="panel panel-headline" style="height: auto;">
-				<div class="panel-heading" style="height: auto;">
+   <jsp:include page="/WEB-INF/views/user/common/header.jsp" />
+   <jsp:include page="/WEB-INF/views/user/common/sidebar2.jsp" />
+      <div class="panel panel-headline" style="height: auto;">
+            <div class="panel-heading" style="height: auto;">
 <main>
     <div class="container" style="width:1300px;">
         <div class="row">
@@ -453,10 +458,10 @@ a {
                     </div>
                 </div>
             </div>
-            <div class="col-lg-9 gedf-main">
+            <div class="col-lg-9 gedf-main" style="display: inline-block;">
                 <!--- \\\\\\\Post-->
-                <div class="card social-timeline-card">
-                    <div class="card-header">
+                <div class="card social-timeline-card" style="height: auto;">
+                    <div class="card-header" style="height: auto">
                         <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts" aria-selected="true">작성</a>
@@ -486,6 +491,7 @@ a {
                             </div>
                         </div>
                         <div class="btn-toolbar justify-content-between">
+                			<i class="fas fa-sync-alt" onclick="location.reload();" style="float:right; margin-top: 10px; margin-bottom:10px; margin-right: 10px; color:green; font-size: 18px; cursor: pointer;"></i>
                             <div class="btn-group">
                                 <button type="submit" class="btn btn-theme-primary" style="background: #1E2B44; color:white;">등록</button>
                             </div>
@@ -495,8 +501,8 @@ a {
                         </div>
                          </form>   
                     </div>
-                <i class="fas fa-sync-alt" onclick="location.reload();" style="float:right; margin-top: 10px; margin-right: 10px; color:green; font-size: 18px; cursor: pointer;"></i>
                 </div>
+                
                 <!-- Post /////-->
                 <!--- \\\\\\\Post-->
                 <c:forEach var="t" items="${tList }">
@@ -523,27 +529,27 @@ a {
                             </div>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <div class="text-muted h7 mb-2" style="margin-bottom: 20px;"> 
+                    <div class="card-body" style="width: 50%;" >
+                        <div class="text-muted h7 mb-2" style="margin-bottom: 20px; width: 50%;"> 
                         <c:if test="${t.sec < 60}">
-                        	<i class="far fa-clock"></i>&nbsp;${t.sec }초 전
-                        </c:if>	
+                           <i class="far fa-clock"></i>&nbsp;${t.sec }초 전
+                        </c:if>   
                         <c:if test="${t.sec >= 60}">
-                        	<c:if test="${t.min < 60}">
-                        		<i class="far fa-clock"></i>&nbsp;${t.min }분 전
-                        	</c:if>
-                        	<c:if test="${t.min >= 60 and t.hour <= 24}">
-                        		<i class="far fa-clock"></i>&nbsp;${t.hour }시간 전
-                        	</c:if>
-                        	<c:if test="${t.min >= 60 and t.hour > 24}">
-                        		<i class="far fa-clock"></i>&nbsp;${t.day }일 전
-                        	</c:if>
+                           <c:if test="${t.min < 60}">
+                              <i class="far fa-clock"></i>&nbsp;${t.min }분 전
+                           </c:if>
+                           <c:if test="${t.min >= 60 and t.hour <= 24}">
+                              <i class="far fa-clock"></i>&nbsp;${t.hour }시간 전
+                           </c:if>
+                           <c:if test="${t.min >= 60 and t.hour > 24}">
+                              <i class="far fa-clock"></i>&nbsp;${t.day }일 전
+                           </c:if>
                         </c:if>
-                        
                         </div>
-                        	<c:if test="${t.changeName != null}">
-                     		 <img width="300" height="200" src="<c:url value="/resources/uploadFiles/${t.changeName}"/>" class="user-profile">
-                     		 </c:if>
+                           <c:if test="${t.changeName != null}">
+                            <img width="300" height="200" src="<c:url value="/resources/uploadFiles/${t.changeName}"/>" class="user-profile">
+                           
+                            </c:if>
                         <a class="card-link" href="#">
                             <h5 class="card-title">${t.content}</h5>
                             <h6>${t.enrollDate }</h6>
@@ -551,11 +557,73 @@ a {
                         <img src="img/gallery/1a.jpg" alt="" class="img-fluid">
 
                     </div>
-                    <div class="card-footer">
-                        <a class="card-link"><i class="fa fa-comment" style="color: #1E2B44;"></i> 댓글</a> &nbsp;&nbsp;
-                        <a href="#" class="card-link"><i class="fa fa-mail-forward"></i>공유</a>
+                    <div class="card-footer" style="width: 50%;">
+                        <a onclick="$('#${t.timeLineNo}').modal('show');" class="card-link"><i class="fa fa-comment" style="color: #1E2B44;"></i> 댓글</a> &nbsp;&nbsp;
+                        <a class="card-link"><i class="fa fa-mail-forward"></i>공유</a>
                     </div>
                 </div>
+                
+      		<div class="modal fade" id="${t.timeLineNo}" role="dialog"
+						aria-labelledby="gridSystemModalLabel" aria-hidden="true">
+						<div class="modal-dialog" style="margin: 0 auto;">
+							<div class="modal-content" style="width: 1200px; right: 250px; top: 100px;">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+									<h4 class="modal-title" id="gridSystemModalLabel">
+										<i class="fab fa-instagram" style="font-size:24px;"></i>&nbsp;
+									</h4> 
+								</div>
+								<div class="modal-body">
+									<div class="container-fluid">
+										<div  style="display:inline-block;width:500px; height: 500px; margin-left: 10px;">
+										<div class="d-flex justify-content-between align-items-center">
+			                                <div class="mr-2">
+			                                    <img class="rounded-circle" width="60" style="border-radius: 40px;margin-right: 20px;" height="50" src="<c:url value="/resources/uploadFiles/${t.userChangeName}"/>" alt="">
+			                                	<!-- 태그 -->
+			                                	<button type="button" style="background: gray; border:none; color: white; border-radius: 10px; font-size: 12px;">#인스타</button>
+			                                	<button type="button" style="background: pink; border:none; color: white; border-radius: 10px; font-size: 12px;">#타임라인</button>
+			                                    <div class="h5 m-0 text-blue">@${t.memberName }</div>
+			                                </div>
+			                              </div>  
+			                              <br>
+										 <div class="text-muted h7 mb-2" style="margin-bottom: 20px; width: 50%;"> 
+					                        <c:if test="${t.sec < 60}">
+					                           <i class="far fa-clock"></i>&nbsp;${t.sec }초 전
+					                        </c:if>   
+					                        <c:if test="${t.sec >= 60}">
+					                           <c:if test="${t.min < 60}">
+					                              <i class="far fa-clock"></i>&nbsp;${t.min }분 전
+					                           </c:if>
+					                           <c:if test="${t.min >= 60 and t.hour <= 24}">
+					                              <i class="far fa-clock"></i>&nbsp;${t.hour }시간 전
+					                           </c:if>
+					                           <c:if test="${t.min >= 60 and t.hour > 24}">
+					                              <i class="far fa-clock"></i>&nbsp;${t.day }일 전
+					                           </c:if>
+					                        </c:if>
+					                        </div>
+										 <img width="300" height="200" style="border-radius: 15px; margin: 0 auto;" src="<c:url value="/resources/uploadFiles/${t.changeName}"/>" class="user-profile">
+										 	<br><br>
+										   <h5 class="card-title" style="color:#1E2B44; font-weight: 600;">${t.content}</h5>
+										   <br><br>
+										   <button type="button" style="background: skyblue; border:none; color: white; border-radius: 10px; font-size: 12px;">등록일</button>
+										    <h6 class="card-title" style="color:#777777; font-weight: 400; margin-top: 3px;"><i class="far fa-calendar-plus"></i>&nbsp;&nbsp;${t.enrollDate}</h6>
+										</div>
+										<div  style="float:right; height:500px; width:600px; margin-left:20px; border: 3px solid lightgray; border-radius: 10px; ">
+										ssss
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+								</div>
+							</div>
+							<!-- /.modal-content -->
+						</div>
+						<!-- /.modal-dialog -->
+					</div>
                 </c:forEach>
                 <!-- Post /////-->
                 <!--- \\\\\\\Post-->
@@ -570,11 +638,11 @@ a {
                         <c:forEach var="m" items="${mList }">
                             <li>
                                 <div class="left">
-                                	<c:if test="${m.changeName != null }">
-                                    	<img src="<c:url value="/resources/uploadFiles/${m.changeName}"/>" alt="">
+                                   <c:if test="${m.changeName != null }">
+                                       <img src="<c:url value="/resources/uploadFiles/${m.changeName}"/>" alt="">
                                     </c:if>
-                                	<c:if test="${m.changeName == null}">
-                                    	<img src="<c:url value="/resources/img/people.png"/>" alt="">
+                                   <c:if test="${m.changeName == null}">
+                                       <img src="<c:url value="/resources/img/people.png"/>" alt="">
                                     </c:if>
                                 </div>
                                 <div class="right">
@@ -590,57 +658,55 @@ a {
             </div>
     </div>
 </main>
+            </div>
+      </div>         
+      <script>
+       $(document).ready(function() {
 
-				</div>
-		</div>			
-		<script>
-		 $(document).ready(function() {
+         // 기존 css에서 플로팅 배너 위치(top)값을 가져와 저장한다.
+         var floatPosition = parseInt($("#floatMenu").css('top'));
+         // 250px 이런식으로 가져오므로 여기서 숫자만 가져온다. parseInt( 값 );
+         console.log("확인 스크롤 : " + $(".panel-heading").scrollTop());
+         $(window).scroll(function() {
+            // 현재 스크롤 위치를 가져온다.
+            var scrollTop = $(window).scrollTop();
+            var newPosition = scrollTop + floatPosition + "px";
+            
+            
+            $("#floatMenu").stop().animate({
+               "top" : newPosition
+            }, 500);
 
-			// 기존 css에서 플로팅 배너 위치(top)값을 가져와 저장한다.
-			var floatPosition = parseInt($("#floatMenu").css('top'));
-			// 250px 이런식으로 가져오므로 여기서 숫자만 가져온다. parseInt( 값 );
-			console.log("확인 스크롤 : " + $(".panel-heading").scrollTop());
-			$(window).scroll(function() {
-				// 현재 스크롤 위치를 가져온다.
-				var scrollTop = $(window).scrollTop();
-				var newPosition = scrollTop + floatPosition + "px";
-				
-				
-				$("#floatMenu").stop().animate({
-					"top" : newPosition
-				}, 500);
+         }).scroll();
 
-			}).scroll();
-
-		}); 
-		 
-		/* $(window).scroll(function( ){  //스크롤이 움직일때마다 이벤트 발생 
-			
-		      var position = $(window).scrollTop(); // 현재 스크롤바의 위치값을 반환합니다.
-		      
-		      if(position <400){
-		    	  position = 0;
-		    	  $("#floatMenu").stop().animate({top:position+"px"}, 1); //해당 오브젝트 위치값 재설정
-		    	  
-		      }else{
-		     	 $("#floatMenu").stop().animate({top:position+"px"}, 1); //해당 오브젝트 위치값 재설정
-		    	  
-		      }
-		      
-		 }); */
-	</script>
-	
-	<script>
-		/* $(".card-link").click(function(){
-			console.log($(this).parent().parent());
-			$(this).parent().parent().append("<div class='commentArea' style='width:300px; height:50px;'> sss</div>")
-		});
-		
-		$(".active").click(function(){
-			console.log("삭제");
-			$(this).parent().parent().append("<div class='commentArea' style='width:300px; height:50px;'> sss</div>")
-		}); */
-	</script>
+      }); 
+       
+      /* $(window).scroll(function( ){  //스크롤이 움직일때마다 이벤트 발생 
+         
+            var position = $(window).scrollTop(); // 현재 스크롤바의 위치값을 반환합니다.
+            
+            if(position <400){
+               position = 0;
+               $("#floatMenu").stop().animate({top:position+"px"}, 1); //해당 오브젝트 위치값 재설정
+               
+            }else{
+               $("#floatMenu").stop().animate({top:position+"px"}, 1); //해당 오브젝트 위치값 재설정
+               
+            }
+            
+       }); */
+   </script>
+   
+   <script>
+    /*    $(".card-link").click(function(){
+    	   $('#myModal').modal('show');
+      }); */
+      
+      /* $(".active").click(function(){
+         console.log("삭제");
+         $(this).parent().parent().append("<div class='commentArea' style='width:300px; height:50px;'> sss</div>")
+      }); */
+   </script>
 
 
 </body>
