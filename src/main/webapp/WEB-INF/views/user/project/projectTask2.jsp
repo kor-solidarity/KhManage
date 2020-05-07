@@ -121,6 +121,40 @@
 		}
 
 	</style>
+	<!-- demo stylesheet -->
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/helpers/demo.css" />
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/helpers/media/layout.css" />
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/helpers/media/elements.css" />
+	<!-- helper libraries -->
+	<!-- daypilot themes -->
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/areas.css" />
+
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/month_white.css" />
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/month_green.css" />
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/month_transparent.css" />
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/month_traditional.css" />
+
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/navigator_8.css" />
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/navigator_white.css" />
+
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/calendar_transparent.css" />
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/calendar_white.css" />
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/calendar_green.css" />
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/calendar_traditional.css" />
+
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/scheduler_8.css" />
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/scheduler_white.css" />
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/scheduler_green.css" />
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/scheduler_blue.css" />
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/scheduler_traditional.css" />
+	<link type="text/css" rel="stylesheet" href="resources/daypilot/demo/themes/scheduler_transparent.css" />
+
+	<script src="resources/daypilot/demo/helpers/jquery-1.12.2.min.js" type="text/javascript"></script>
+	<!-- daypilot libraries -->
+	<script src="resources/daypilot/demo/js/daypilot-all.min.js" type="text/javascript"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"
+			integrity="sha256-qE/6vdSYzQu9lgosKxhFplETvWvqAAlmAuR+yPh/0SI=" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body onload="$('#route1').text('프로젝트 센터')">
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
@@ -367,10 +401,11 @@
 				</table>
 			</div>
 			<%--차트 우측: 간트차트--%>
-			<div class="gantt-div" style="">
+			<div class="gantt-div" style="overflow: hidden;">
 				<div id="chart-div">
 					<%--날짜 표기부분. 너비는 일수에 따라 유동적으로 움직이게끔.--%>
-					<div class="gantt-date" style="width: 2760px ; min-height: 898px;">
+					<%--위아래 오버플로우 히든은 중간발표로 부득이한 임시방편--%>
+					<div class="gantt-date" style="width: 2760px ; min-height: 898px; overflow: hidden; " id="gantt">
 						<style>
 							.gantt-table tr {
 								height: 30px;
@@ -390,14 +425,15 @@
 							}
 
 						</style>
+						<%--
 						<table class="gantt-table">
-							<%--월 표기--%>
+							&lt;%&ndash;월 표기&ndash;%&gt;
 							<tr>
 								<th colspan="31">2020년 3월</th>
 								<th colspan="30">2020년 4월</th>
 							</tr>
 							<tr>
-								<%--3월--%>
+								&lt;%&ndash;3월&ndash;%&gt;
 								<td>1</td>
 								<td>2</td>
 								<td>3</td>
@@ -429,7 +465,7 @@
 								<td>29</td>
 								<td>30</td>
 								<td>31</td>
-								<%--4월--%>
+								&lt;%&ndash;4월&ndash;%&gt;
 								<td>1</td>
 								<td>2</td>
 								<td>3</td>
@@ -461,7 +497,7 @@
 								<td>29</td>
 								<td>30</td>
 							</tr>
-							<%--여기 아이디에는 프로젝트작업 아이디 식별자가 필요할듯--%>
+							&lt;%&ndash;여기 아이디에는 프로젝트작업 아이디 식별자가 필요할듯&ndash;%&gt;
 							<tr id="">
 								<td></td>
 								<td></td>
@@ -474,15 +510,15 @@
 								<td></td>
 								<td colspan="10" style="background: blue; text-align: center; color: whitesmoke">무슨작업
 								</td>
-								<%--								<td></td>--%>
-								<%--								<td></td>--%>
-								<%--								<td></td>--%>
-								<%--								<td></td>--%>
-								<%--								<td></td>--%>
-								<%--								<td></td>--%>
-								<%--								<td></td>--%>
-								<%--								<td></td>--%>
-								<%--								<td></td>--%>
+								&lt;%&ndash;								<td></td>&ndash;%&gt;
+								&lt;%&ndash;								<td></td>&ndash;%&gt;
+								&lt;%&ndash;								<td></td>&ndash;%&gt;
+								&lt;%&ndash;								<td></td>&ndash;%&gt;
+								&lt;%&ndash;								<td></td>&ndash;%&gt;
+								&lt;%&ndash;								<td></td>&ndash;%&gt;
+								&lt;%&ndash;								<td></td>&ndash;%&gt;
+								&lt;%&ndash;								<td></td>&ndash;%&gt;
+								&lt;%&ndash;								<td></td>&ndash;%&gt;
 								<td></td>
 								<td></td>
 								<td></td>
@@ -525,8 +561,13 @@
 								<td></td>
 							</tr>
 						</table>
+						--%>
 					</div>
 				</div>
+				<script>
+					// 간트차트
+
+				</script>
 				<script>
 
                     // 작업 추가를 누르면 어떤거든간에 우선 테이블 맨위에 띄우게끔.
