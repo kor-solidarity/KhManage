@@ -32,6 +32,12 @@ public class ProjectWork {
 	// 총 몇일짜리 프로젝트?: completeDate - beginDate + 1
 	private int days;
 	
+	// 간트차트때문에.
+	// projectWorkListResultSet 를 썼을 경우 순서배정을 위한거임.
+	private int rowNum;
+	// 상위때문..
+	private int highRowNum;
+	
 	public ProjectWork() {
 	}
 	
@@ -220,5 +226,21 @@ public class ProjectWork {
 	
 	public void setWorkStatus(String workStatus) {
 		this.workStatus = workStatus;
+	}
+	
+	public int getRowNum() {
+		return rowNum;
+	}
+	
+	public void setRowNum(int rowNum) {
+		this.rowNum = rowNum;
+	}
+	
+	public int getHighRowNum() {
+		return highRowNum;
+	}
+	
+	public void setHighRowNum(int highRowNum) {
+		this.highRowNum = highRowNum;
 	}
 }

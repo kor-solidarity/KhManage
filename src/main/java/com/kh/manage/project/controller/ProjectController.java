@@ -81,7 +81,7 @@ public class ProjectController {
 			double all = Double.parseDouble(p.getAllWork());
 			double res = clear / all;
 			int perc = (int) Math.round(res * 100);
-		    p.setPercentage(String.valueOf(perc));
+			p.setPercentage(String.valueOf(perc));
 		}
 		
 		System.out.println("teamList: " + teamList);
@@ -330,8 +330,6 @@ public class ProjectController {
 		String pid = request.getParameter("pid");
 		
 		// 표면상 보일 목록: 작업 아이디, 작업명 상태 기간 시작일 완료일 상위작업 완료율 담당자이름
-		
-		// TODO: 2020-04-18 정렬은?? 우선은 시작일자 순으로 하되 추후 수정을 해야할 거.
 		List<ProjectWork> projectWorkList = ps.selectProjectWorkList(pid);
 		
 		// 작업 담당자는 별도에서 뽑아와야 한다.
@@ -364,8 +362,44 @@ public class ProjectController {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		
-		String gson = new Gson().toJson(projectWorkList);
+		HashMap<String , Object> map = new HashMap<>();
 		
+		// 차트에 넣을 목록
+		GanttInfo ganttInfo = new GanttInfo();
+		Date startDate = null;
+		Date endDate = null;
+		
+		for (ProjectWork p : projectWorkList) {
+			// 초기화
+			if (startDate == null) {
+				startDate = p.getBeginDate();
+			}
+			if (endDate == null) {
+				endDate = p.getCompleteDate();
+			}
+			// 시작일보다 빠르면 갱신
+			if (startDate.getTime() > p.getBeginDate().getTime()) {
+				startDate = p.getBeginDate();
+			}
+			// 종료일보다 느리면 갱신
+			if (endDate.getTime() < p.getCompleteDate().getTime()) {
+				endDate = p.getCompleteDate();
+			}
+		}
+		long dateGap = endDate.getTime() - startDate.getTime();
+		long gap = dateGap / (24 * 60 * 60 * 1000);
+		// int dateGap = endDate.compareTo(startDate);
+		System.out.println(startDate.compareTo(endDate));
+		
+		// java.util.Date date  = new java.util.Date(endDate.getTime() - startDate.getTime());
+		// date.compareTo()
+		ganttInfo.setStartDate(startDate.toString());
+		ganttInfo.setTotalDays((int) Math.abs(gap));
+		System.out.println(startDate.toString());
+		map.put("ganttInfo", ganttInfo);
+		map.put("projectWorkList", projectWorkList);
+		
+		String gson = new Gson().toJson(map);
 		try {
 			response.getWriter().write(gson);
 		} catch (IOException e) {
@@ -420,13 +454,13 @@ public class ProjectController {
 		System.out.println("highWork : " + highWorkNo);
 		ProjectWork projectWork = null;
 		
-		if(highWorkNo != null) {
+		if (highWorkNo != null) {
 			projectWork =
 					new ProjectWork(null, workName, "시작전", pid,
 							beginDate, endDate, null, "0",
 							grantor, "2", highWorkNo, null,
 							"프로젝트", memberNo, "Y");
-		}else {
+		} else {
 			projectWork =
 					new ProjectWork(null, workName, "시작전", pid,
 							beginDate, endDate, null, "0",
@@ -880,7 +914,7 @@ public class ProjectController {
 		String pid = request.getParameter("pid");
 		Member m = (Member) session.getAttribute("loginUser");
 		m.setProjectPk(pid);
-		AllDashBoard  ad = ps.selectOneProjectDetail(pid);
+		AllDashBoard ad = ps.selectOneProjectDetail(pid);
 		
 		int result = ps.updateProjectStatus(pid);
 		int result2 = ps.insertProjectHistory(m);
@@ -888,7 +922,7 @@ public class ProjectController {
 		model.addAttribute("project", ad);
 		model.addAttribute("pid", pid);
 		
-		return "redirect:showProjectSummary.pr?="+pid;
+		return "redirect:showProjectSummary.pr?=" + pid;
 	}
 	
 	//TW
