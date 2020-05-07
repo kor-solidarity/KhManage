@@ -892,7 +892,8 @@
                                     '<tr id="' + projectWorkList[key]['workNo'] + '">' +
                                     // 작업아이디
                                     '<td>' + projectWorkList[key]['workNo'] + '</td>' +
-                                    '<td style="text-align: left">' + workLevelTab + projectWorkList[key]['workName'] + '</td>' +
+                                    '<td style="text-align: left">' + workLevelTab + projectWorkList[key]['workName'] +
+                                    '</td>' +
                                     // 상태
                                     // '<td><span style="" class="fa fa-circle" data-toggle="tooltip" title="대기중"></span></td>' +
                                     '<td>' + projectWorkList[key]['status'] + '</td>' +
@@ -907,14 +908,48 @@
                                     '<td>' + memberName + '</td>' +
                                     '<td><i class="fas fa-search" data-toggle="modal" ' +
                                     'data-target="#workDetails" ' +
-                                    "onclick='clickedWorkDetails(\"" + projectWorkList[key]['workNo'] + "\")' ></i></td>" +
+                                    "onclick='clickedWorkDetails(\"" + projectWorkList[key]['workNo'] +
+                                    "\")' ></i></td>" +
                                     // 우선 여기까지 채우고 추가내용은 값에따라 바뀌기 때문에 별도추가?
                                     '</tr>'
                                 );
                             }
 
+                            // 간트차트용
+                            ganttInfo = data.ganttInfo;
+
+                            chartList = [
+                                /*
+                                {   "id": 1,
+                                    "text": "Group 1",
+                                    "complete": 35,
+                                    "children": [],
+                                    "start": "2020-05-04T00:00:00",
+                                    "end": "2020-05-16T00:00:00"}
+								*/
+                            ];
+                            for (key in projectWorkList) {
+                                console.log('key' + key);
+                                // projectWorkList[key].
+                                workName = projectWorkList[key]['workName']
+                                workLevelTab = "";
+                                if (projectWorkList[key].workLevel == 2) {
+                                    workLevelTab = '&nbsp;&nbsp;&nbsp;&nbsp;└&nbsp;';
+                                } else if (projectWorkList[key].workLevel == 3) {
+                                    workLevelTab = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└&nbsp;';
+                                }
+                                chartList.push({
+                                    'id': projectWorkList[key]['workNo'],
+                                    'text': workLevelTab + projectWorkList[key]['workName'],
+                                    'complete': projectWorkList[key]['completeRate'],
+                                    'start': parseKrDate(projectWorkList[key]['beginDate']),
+                                    'end': parseKrDate(projectWorkList[key]['completeDate'])
+                                })
+
+                            }
                             // undefined 면 초기화부터.
                             if (gantt == undefined) {
+
                                 // 간트차트
                                 gantt = new DayPilot.Gantt("gantt", {
                                     cellWidthSpec: "Fixed",
@@ -929,38 +964,41 @@
                                         }
                                     ],
                                     scale: "Day",
-                                    days: DayPilot.Date.today().daysInMonth(),
-                                    startDate: DayPilot.Date.today().firstDayOfMonth(),
-                                    taskHeight: 28,
+                                    days: ganttInfo.totalDays,
+                                    startDate: ganttInfo.startDate,
+                                    taskHeight: 26,
                                     rowHeaderHideIconEnabled: false,
                                     rowMoveHandling: "Disabled",
                                     taskMoveHandling: "Disabled",
                                     linkCreateHandling: "Disabled",
                                     rowCreateHandling: "Disabled",
-                                    tasks: [
-                                        {
-                                            "id": 1,
-                                            "text": "Group 1",
-                                            "complete": 35,
-                                            "children": [],
-                                            "start": "2020-05-04T00:00:00",
-                                            "end": "2020-05-16T00:00:00"
-                                        },
-                                        {
-                                            "id": 5,
-                                            "start": "2020-05-04T00:00:00",
-                                            "end": "2020-05-11T00:00:00",
-                                            "text": "Task 1",
-                                            "complete": 60
-                                        },
-                                        {
-                                            "id": 3,
-                                            "start": "2020-05-11T00:00:00",
-                                            "end": "2020-05-16T00:00:00",
-                                            "text": "Task 2",
-                                            "complete": 0
-                                        }
-                                    ]
+                                    tasks: chartList
+                                    /*
+										[
+										{
+											"id": 1,
+											"text": "Group 1",
+											"complete": 35,
+											"children": [],
+											"start": "2020-05-04T00:00:00",
+											"end": "2020-05-16T00:00:00"
+										},
+										{
+											"id": 5,
+											"start": "2020-05-04T00:00:00",
+											"end": "2020-05-11T00:00:00",
+											"text": "Task 1",
+											"complete": 60
+										},
+										{
+											"id": 3,
+											"start": "2020-05-11T00:00:00",
+											"end": "2020-05-16T00:00:00",
+											"text": "Task 2",
+											"complete": 0
+										}
+									]
+									*/
                                     /*
 									links: [
 										{
@@ -974,8 +1012,13 @@
                                 // alert('boo');
                                 // gantt.
                                 gantt.init();
-                            }
+                            } else {
 
+                                gantt.days = ganttInfo.totalDays;
+                                gantt.startDate = ganttInfo.startDate;
+                                gantt.tasks = chartList;
+                                gantt.update();
+                            }
 
                         }
                     })
@@ -1164,6 +1207,7 @@
                 // 0월 00, 0000 인 날짜를 인풋에 드갈수 있게끔
                 // 0000-00-00 로 변경
                 function parseKrDate (krDate) {
+                    console.log('krDate: ' + krDate);
                     var dateArray = krDate.split(/월 |, /);
                     let month = dateArray[0];
                     let day = dateArray[1];
