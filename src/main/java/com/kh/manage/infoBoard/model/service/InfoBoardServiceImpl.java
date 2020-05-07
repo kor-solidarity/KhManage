@@ -130,6 +130,22 @@ public class InfoBoardServiceImpl implements InfoBoardService {
 
 
 
+	@Override
+	public Attachment selectAttachment(Attachment at) {
+
+		return id.selectAttachment(sqlSession, at);
+	}
+
+
+
+	@Override
+	public Attachment downAttachment(String no) {
+
+		return id.downAttachment(sqlSession, no);
+	}
+
+
+
 	
 
 

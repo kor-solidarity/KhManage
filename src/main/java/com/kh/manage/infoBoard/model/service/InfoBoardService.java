@@ -29,6 +29,10 @@ public interface InfoBoardService {
 
 	int updateReply(BoReply rp);
 
+	Attachment selectAttachment(Attachment at);
+
+	Attachment downAttachment(String no);
+
 	
 
 

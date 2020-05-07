@@ -37,6 +37,10 @@ public interface InfoBoardDao {
 
 	int updateReply(SqlSessionTemplate sqlSession, BoReply rp);
 
+	Attachment selectAttachment(SqlSessionTemplate sqlSession, Attachment at);
+
+	Attachment downAttachment(SqlSessionTemplate sqlSession, String no);
+
 
 
 

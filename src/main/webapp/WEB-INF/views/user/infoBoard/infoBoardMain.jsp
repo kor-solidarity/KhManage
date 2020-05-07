@@ -94,9 +94,9 @@
 	}
 	.titletd{
 		height: 20px;
-		text-align: left;
+		text-align: center;
 		width: 700px;
-		padding-left: 30px;
+		padding-right: 100px;
 	}
 	.datetd{
 		height: 45px;
@@ -120,7 +120,7 @@
 		width: 250px;
 	}
 	#boardTable #tr:hover{
-		background : #F3F3F3;
+		background : #f5f8ff;
 		cursor: pointer;
 		color: black;
 	}
@@ -175,20 +175,20 @@
 				</table>
 
 				<table id="boardTable" align="center">
-					<tr class="tr">
+					<tr class="tr" style="background: #1E2B44; color: white;">
 						<th class="titletd">제목</th>
+						<th class="datetd">작성자</th>
 						<th class="sendtd">조회수</th>
 						<th class="sendtd">등록일</th>
-						<th class="datetd">글쓴이</th>
 						<th></th>
 					</tr>
 					<c:forEach var="ib" items="${blist}">
 					<tr id="tr" style="border-bottom: 1px solid #d2d2d2; border-top: 1px solid #d2d2d2; height:30px;">
 						<%-- <td class="titletd2">${ib.boardTitle} &nbsp;&nbsp;<span><b>[${rlist.size()}]</b></span></td> --%>
-						<td class="titletd2">${ib.boardTitle}</td>
-						<td class="sendtd2">${ib.viewCount}</td>
-						<td class="sendtd2"><fmt:formatDate value="${ib.createDate}" pattern="yyyy-MM-dd hh-mm:SS"/></td>
+						<td class="titletd2">${ib.boardTitle} &nbsp;&nbsp;&nbsp; </td>
 						<td class="datetd2">${ib.memberName}</td>
+						<td class="sendtd2">${ib.viewCount}</td>
+						<td class="sendtd2"><fmt:formatDate value="${ib.createDate}" pattern="yyyy-MM-dd HH-mm:SS"/></td>
 						<td class="td">
 							<input type="hidden" value="${ib.boardNo}">
 						</td>

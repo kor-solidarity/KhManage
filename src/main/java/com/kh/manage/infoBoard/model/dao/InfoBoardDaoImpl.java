@@ -97,6 +97,18 @@ public class InfoBoardDaoImpl implements InfoBoardDao {
 		return sqlSession.update("InfoBoard.updateReply", rp);
 	}
 
+	@Override
+	public Attachment selectAttachment(SqlSessionTemplate sqlSession, Attachment at) {
+
+		return sqlSession.selectOne("Attachment.selectAttach",at);
+	}
+
+	@Override
+	public Attachment downAttachment(SqlSessionTemplate sqlSession, String no) {
+
+		return sqlSession.selectOne("Attachment.downAttach", no);
+	}
+
 
 
 

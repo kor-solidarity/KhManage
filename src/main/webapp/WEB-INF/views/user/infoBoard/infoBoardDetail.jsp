@@ -6,6 +6,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
+<script src="https://kit.fontawesome.com/510b7d5cc3.js" crossorigin="anonymous"></script>
+
 <title>Insert title here</title>
 <style>
 
@@ -266,6 +269,12 @@
 	margin-top: 10px;
 }
 
+#download:hover {
+	cursor: pointer;
+	font-weight: bold;
+	color: blue;
+}
+
 
 </style>
 </head>
@@ -307,11 +316,35 @@
 				<div id="" class="content" style="">${board.boardContent}</div>
 			</div><br>
 			
-			<%-- <div class="" style="padding-left: 20px;">
-				<b>첨부파일</b>
-				<div id="download">${at.originName} dsd</div>
-				<input type="hidden" value="${at.atNo}">
-			</div> --%>			
+			<div class="" style="padding-left: 20px; border: 1px solid #f3f3f3; border-radius: 5px; background: #f3f3f3; padding: 20px;">
+				<i class="fas fa-paperclip"></i>&nbsp; <b>첨부파일</b>
+				<div id="download" style="color: gray;">${at.originName}
+					<input class="" type="hidden" value="${at.atNo}">
+				</div>
+			</div>
+			
+			<script>
+			
+			
+			$(function() {
+				
+				//첨부파일 다운로드
+				var downNo = "${at.atNo}";
+				var boardNo = "${board.boardNo}";
+				
+				$("#download").click(function() {
+					
+					console.log("downNo : " + downNo);
+					console.log("boardNo : " + boardNo);
+					
+					location.href = "download.ib?no=" + downNo;
+					
+				});
+				
+			});
+			
+			
+			</script>
 			
 			
 			<div id="" class="replyDivArea">

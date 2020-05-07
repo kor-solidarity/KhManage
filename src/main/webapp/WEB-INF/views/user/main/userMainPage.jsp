@@ -631,6 +631,8 @@
 								<th class="thmidTable2" style="width:25%">파일이름</th>
 								<th class="thmidTable2" style="width:20%">등록일자</th>
 							</tr>
+							
+							
 							<c:forEach var="w" items="${wpList}">
 							<tr>
 								<td class="tdmidTable td">${w.projectName}</td>
@@ -639,6 +641,7 @@
 								<td class="tdmidTable td">${w.enrollDate}</td>
 							</tr>
 							</c:forEach>
+							
 						</table>
 					</div>
 				</div>

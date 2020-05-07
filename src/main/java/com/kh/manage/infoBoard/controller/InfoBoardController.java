@@ -1,10 +1,13 @@
 package com.kh.manage.infoBoard.controller;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -106,44 +109,6 @@ public class InfoBoardController {
 		return "redirect:infoBoard.ib"; 
 	}
 			
-			
-			
-			
-			
-			
-//		}
-//		
-//		Member loginUser = (Member) session.getAttribute("loginUser");
-//		
-//		at.setDivision(loginUser.getMemberNo());
-//		ib.setMemberNo(loginUser.getMemberNo());
-//		
-//		
-//		try {
-//			
-//			int result = is.insertBoard(ib, at);
-//			System.out.println("result : " + result);
-//			attachmentFile.transferTo(new File(filePath + "\\" + changeName + ext));
-//			
-//		} catch (Exception e) {
-//
-//			new File(filePath + "\\" + changeName + ext).delete();
-//		}
-//		
-//		return "redirect:infoBoard.ib";
-//		
-//		
-////		if(result > 0) {
-////			
-////			return "redirect:infoBoard.ib";
-////		} else {
-////			
-////			model.addAttribute("msg", "게시글 등록실패");
-////			
-////			return "common/errorPage";
-////		}
-//		
-//	}
 
 	
 	
@@ -167,8 +132,20 @@ public class InfoBoardController {
 		System.out.println("rlist : " + rlist);
 		
 		request.setAttribute("rlist", rlist);
-			
 		
+		
+		//
+		
+		
+		//첨부파일 select
+		Attachment at = new Attachment();
+		at.setDivision(boardNo);
+		
+		at = is.selectAttachment(at);
+		System.out.println("첨부파일 select확인 at : " + at);
+		
+		model.addAttribute("board", board);
+		model.addAttribute("at", at);
 		
 		return "user/infoBoard/infoBoardDetail";
 	}
@@ -325,6 +302,45 @@ public class InfoBoardController {
 		int result = is.updateReply(rp);
 		
 		System.out.println("댓글수정 result : " + result);
+		
+	}
+	
+	
+	//첨부파일 다운로드
+	@RequestMapping("download.ib")
+	public void download(Model m, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		String no = request.getParameter("no");
+		System.out.println("파일 no : " + no);
+		
+		Attachment file = is.downAttachment(no);
+		System.out.println("file : " + file);
+		
+		
+		//폴더에서 파일을 읽을 스트림 생성
+		BufferedInputStream buf = null;
+		
+		//클라이언트로 내보낼 출력 스트림 생성
+		ServletOutputStream downOut = response.getOutputStream();
+		
+		//스트림으로 전송할 파일 객체 생성
+		File downFile = new File(file.getFilePath() +"\\"+ file.getChangeName() + file.getExt());
+		
+		//응당 헤더 설정
+		response.setContentType("text/plain; charset=UTF-8");
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + new String(file.getOriginName().getBytes("UTF-8"), "ISO-8859-1") + "\"");
+		response.setContentLength((int) downFile.length());
+		
+		FileInputStream fin = new FileInputStream(downFile);
+		buf = new BufferedInputStream(fin);
+		
+		int readBytes = 0;
+		while((readBytes = buf.read()) != -1){
+			downOut.write(readBytes);
+		}
+		
+		downOut.close();
+		buf.close();
 		
 	}
 	

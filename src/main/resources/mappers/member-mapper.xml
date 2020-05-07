@@ -650,31 +650,38 @@
 		FROM (SELECT COUNT(*) AS BEFORE
 			  FROM WORK
 			  WHERE STATUS LIKE '시작전'
-			      AND MEMBER_NO = #{memberNo}),
+			      AND MEMBER_NO = #{memberNo}
+			      AND WORK_STATUS = 'Y'),
 			   (SELECT COUNT(*) AS DEVELOPING
 			    FROM WORK
 			    WHERE STATUS LIKE '개발중'
-			      AND MEMBER_NO = #{memberNo}),
+			      AND MEMBER_NO = #{memberNo}
+			      AND WORK_STATUS = 'Y'),
 			   (SELECT COUNT(*) AS COMPLETED
 			    FROM WORK
 			    WHERE STATUS LIKE '개발완료'
-			      AND MEMBER_NO = #{memberNo}),
+			      AND MEMBER_NO = #{memberNo}
+			      AND WORK_STATUS = 'Y'),
 			   (SELECT COUNT(*) AS TESTCOMPLETED
 			    FROM WORK
 			    WHERE STATUS LIKE '테스트완료'
-			      AND MEMBER_NO = #{memberNo}),
+			      AND MEMBER_NO = #{memberNo}
+			      AND WORK_STATUS = 'Y'),
 			   (SELECT COUNT(*) AS PLCHECKING
 			    FROM WORK
 			    WHERE STATUS LIKE 'PL검토중'
-			      AND MEMBER_NO = #{memberNo}),
+			      AND MEMBER_NO = #{memberNo}
+			      AND WORK_STATUS = 'Y'),
 			   (SELECT COUNT(*) AS PLCHECKED
 			    FROM WORK
 			    WHERE STATUS LIKE 'PL승인완료'
-			      AND MEMBER_NO = #{memberNo}),
+			      AND MEMBER_NO = #{memberNo}
+			      AND WORK_STATUS = 'Y'),
 			   (SELECT COUNT(*) AS DELAYED
 			    FROM WORK
 			    WHERE STATUS LIKE '개발지연'
-			      AND MEMBER_NO = #{memberNo})
+			      AND MEMBER_NO = #{memberNo}
+			      AND WORK_STATUS = 'Y')
    </select>
    
    <!-- 200503_태원 -->
