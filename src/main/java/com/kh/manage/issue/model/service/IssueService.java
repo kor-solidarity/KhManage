@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.kh.manage.common.Attachment;
 import com.kh.manage.common.PageInfo;
+import com.kh.manage.issue.model.vo.ChangeRequest;
 import com.kh.manage.issue.model.vo.Issue;
 import com.kh.manage.issue.model.vo.IssueHistory;
 import com.kh.manage.issue.model.vo.IssueList;
@@ -57,6 +58,8 @@ public interface IssueService {
 	List<Grantor> selectGrantorList(String projectNo);
 
 	List<Work> selectHighWorkNoList(Work w);
+
+	int insertChangeRequest(ChangeRequest cr);
 
 
 }

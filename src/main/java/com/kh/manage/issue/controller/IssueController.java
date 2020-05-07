@@ -25,6 +25,7 @@ import com.kh.manage.common.CommonsUtils;
 import com.kh.manage.common.PageInfo;
 import com.kh.manage.common.Pagination;
 import com.kh.manage.issue.model.service.IssueService;
+import com.kh.manage.issue.model.vo.ChangeRequest;
 import com.kh.manage.issue.model.vo.Issue;
 import com.kh.manage.issue.model.vo.IssueHistory;
 import com.kh.manage.issue.model.vo.IssueList;
@@ -326,6 +327,19 @@ public class IssueController {
 		
 	}
 	
+	@RequestMapping("/insertChangeRequest.iu")
+	public String insertChangeRequest(ChangeRequest cr, HttpServletRequest request) {
+		
+		System.out.println(cr);
+		int result = is.insertChangeRequest(cr);
+		
+		if(result > 0) {
+			return "redirect:changeRequestList.iu";
+		}else {
+			request.setAttribute("msg", "변경요청 등록 오류");
+			return "common/errorPage";
+		}
+	}
 	
 //	@RequestMapping("/selectWork.iu")
 //	public ModelAndView selectWork(@RequestParam String workNo, ModelAndView mv, HttpSession session) {
