@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TimeLine">
+	
+	<insert id="insertTimeLine" parameterType="TimeLine">
+		INSERT INTO TIMELINE VALUES('TI'|| TO_CHAR(SEQ_TIME.NEXTVAL, 'FM000'), #{content}, #{memberNo}, SYSDATE, 'Y', #{aStatus})
+	</insert>
+	
+	<insert id="insertTimeAttachment" parameterType="Attachment">
+		INSERT INTO ATTACHMENT
+		VALUES('AT'|| TO_CHAR(SEQ_AT_NO.NEXTVAL, 'FM000'), 'TI'|| TO_CHAR(SEQ_TIME.CURRVAL, 'FM000'), #{originName}, #{changeName} , #{filePath}, #{ext})
+	</insert>
+		
+</mapper>

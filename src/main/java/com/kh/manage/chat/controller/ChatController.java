@@ -31,6 +31,7 @@ import com.kh.manage.chat.model.vo.SearchKeyWord;
 import com.kh.manage.common.Attachment;
 import com.kh.manage.common.CommonsUtils;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.timeLine.model.vo.TimeLine;
 
 @Controller
 public class ChatController {
@@ -57,8 +58,10 @@ public class ChatController {
 	public String showTimeLine(Model model) {
 		
 		List<Member> mList = cs.selectAllMember();
+		List<TimeLine> tList = cs.selectAllTimeLine();
 		
 		model.addAttribute("mList", mList);
+		model.addAttribute("tList", tList);
 		
 		return "user/chat/timeLine";
 	}
@@ -434,5 +437,6 @@ public class ChatController {
     	}
     
 	}
+
         
 }

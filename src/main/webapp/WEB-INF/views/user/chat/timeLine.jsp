@@ -467,17 +467,18 @@ a {
                         </ul>
                     </div>
                     <div class="card-body">
+                    <form action="insertTimeLine.ti" method="post" enctype="multipart/form-data" encoding="multipart/form-data" novalidate="true">
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade active show" id="posts" role="tabpanel" aria-labelledby="posts-tab">
                                 <div class="form-group">
                                     <label class="sr-only" for="message">post</label>
-                                    <textarea class="form-control" id="message" rows="3" ></textarea>
+                                    <textarea class="form-control" name="content" id="message" rows="3" ></textarea>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
                                 <div class="form-group">
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="customFile">
+                                        <input type="file" class="custom-file-input" id="customFile" name="file">
                                         <label class="custom-file-label" for="customFile">Upload image</label>
                                     </div>
                                 </div>
@@ -492,20 +493,22 @@ a {
                              
                             </div>
                         </div>
+                         </form>   
                     </div>
                 <i class="fas fa-sync-alt" onclick="location.reload();" style="float:right; margin-top: 10px; margin-right: 10px; color:green; font-size: 18px; cursor: pointer;"></i>
                 </div>
                 <!-- Post /////-->
                 <!--- \\\\\\\Post-->
+                <c:forEach var="t" items="${tList }">
                 <div class="card social-timeline-card" >
                     <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="mr-2">
-                                    <img class="rounded-circle" width="60" height="50" src="<c:url value="/resources/uploadFiles/${loginUser.changeName}"/>" alt="">
+                                    <img class="rounded-circle" width="60" height="50" src="<c:url value="/resources/uploadFiles/${t.userChangeName}"/>" alt="">
                                 </div>
                                 <div class="ml-2">
-                                    <div class="h5 m-0 text-blue">@${loginUser.memberName }</div>
+                                    <div class="h5 m-0 text-blue">@${t.memberName }</div>
                                 </div>
                             </div>
                             <div>
@@ -521,98 +524,45 @@ a {
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="text-muted h7 mb-2"> <i class="far fa-clock"></i>10 min ago</div>
-                      <img width="300" height="200" src="/manage/resources/uploadFiles/피곤.jpg" class="user-profile">
+                        <div class="text-muted h7 mb-2" style="margin-bottom: 20px;"> 
+                        <c:if test="${t.sec < 60}">
+                        	<i class="far fa-clock"></i>${t.sec }초 전
+                        </c:if>	
+                        <c:if test="${t.sec >= 60}">
+                        	<c:if test="${t.min < 60}">
+                        		<i class="far fa-clock"></i>${t.min }분 전
+                        	</c:if>
+                        	<c:if test="${t.min >= 60 and t.hour <= 24}">
+                        		<i class="far fa-clock"></i>${t.hour }시간 전
+                        	</c:if>
+                        	<c:if test="${t.min >= 60 and t.hour > 24}">
+                        		<i class="far fa-clock"></i>${t.day }일 전
+                        	</c:if>
+                        </c:if>
+                        
+                        </div>
+                        	<c:if test="${t.changeName != null}">
+                     		 <img width="300" height="200" src="<c:url value="/resources/uploadFiles/${t.changeName}"/>" class="user-profile">
+                     		 </c:if>
                         <a class="card-link" href="#">
-                            <h5 class="card-title">안녕하세요~      피곤합니다</h5>
+                            <h5 class="card-title">${t.content}</h5>
+                            <h6>${t.enrollDate }</h6>
                         </a>
                         <img src="img/gallery/1a.jpg" alt="" class="img-fluid">
 
                     </div>
                     <div class="card-footer">
-                        <a href="#" class="card-link"><i class="fa fa-comment" style="color: #1E2B44;"></i> 댓글</a> &nbsp;&nbsp;
+                        <a class="card-link"><i class="fa fa-comment" style="color: #1E2B44;"></i> 댓글</a> &nbsp;&nbsp;
                         <a href="#" class="card-link"><i class="fa fa-mail-forward"></i>공유</a>
                     </div>
                 </div>
+                </c:forEach>
                 <!-- Post /////-->
                 <!--- \\\\\\\Post-->
-                     <div class="card social-timeline-card" >
-                    <div class="card-header">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="mr-2">
-                                    <img class="rounded-circle" width="60" height="50" src="<c:url value="/resources/uploadFiles/${loginUser.changeName}"/>" alt="">
-                                </div>
-                                <div class="ml-2">
-                                    <div class="h5 m-0 text-blue">@${loginUser.memberName }</div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="dropdown">
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop11">
-                                        <div class="h6 dropdown-header">Configuration</div>
-                                        <a class="dropdown-item" href="#">Save</a>
-                                        <a class="dropdown-item" href="#">Hide</a>
-                                        <a class="dropdown-item" href="#">Report</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="text-muted h7 mb-2"> <i class="far fa-clock"></i>10 min ago</div>
-                      <img width="300" height="200" src="/manage/resources/uploadFiles/피곤.jpg" class="user-profile">
-                        <a class="card-link" href="#">
-                            <h5 class="card-title">안녕하세요~      피곤합니다</h5>
-                        </a>
-                        <img src="img/gallery/1a.jpg" alt="" class="img-fluid">
-
-                    </div>
-                    <div class="card-footer">
-                        <a href="#" class="card-link"><i class="fa fa-comment" style="color: #1E2B44;"></i> 댓글</a> &nbsp;&nbsp;
-                        <a href="#" class="card-link"><i class="fa fa-mail-forward"></i>공유</a>
-                    </div>
-                </div>
-                     <div class="card social-timeline-card" >
-                    <div class="card-header">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="mr-2">
-                                    <img class="rounded-circle" width="60" height="50" src="<c:url value="/resources/uploadFiles/${loginUser.changeName}"/>" alt="">
-                                </div>
-                                <div class="ml-2">
-                                    <div class="h5 m-0 text-blue">@${loginUser.memberName }</div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="dropdown">
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop11">
-                                        <div class="h6 dropdown-header">Configuration</div>
-                                        <a class="dropdown-item" href="#">Save</a>
-                                        <a class="dropdown-item" href="#">Hide</a>
-                                        <a class="dropdown-item" href="#">Report</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="text-muted h7 mb-2"> <i class="far fa-clock"></i>10 min ago</div>
-                      <img width="300" height="200" src="/manage/resources/uploadFiles/피곤.jpg" class="user-profile">
-                        <a class="card-link" href="#">
-                            <h5 class="card-title">안녕하세요~      피곤합니다</h5>
-                        </a>
-                        <img src="img/gallery/1a.jpg" alt="" class="img-fluid">
-
-                    </div>
-                    <div class="card-footer">
-                        <a href="#" class="card-link"><i class="fa fa-comment" style="color: #1E2B44;"></i> 댓글</a> &nbsp;&nbsp;
-                        <a href="#" class="card-link"><i class="fa fa-mail-forward"></i>공유</a>
-                    </div>
-                </div>
+              
               
         </div>
-            <div class="col-lg-3"  id="floatMenu" style="display: inline-block !important; float: right; height:800px; overflow: auto;" >
+          <div class="col-lg-3"  id="floatMenu" style="display: inline-block !important; float: right; height:800px; overflow: auto;" >
                 <div class="card social-timeline-card">
                     <div class="card-body">
                         <h5 class="card-title">PLANNING HUB 인원목록</h5>
@@ -623,7 +573,7 @@ a {
                                 	<c:if test="${m.changeName != null }">
                                     	<img src="<c:url value="/resources/uploadFiles/${m.changeName}"/>" alt="">
                                     </c:if>
-                                	<c:if test="${m.changeName == null }">
+                                	<c:if test="${m.changeName == null}">
                                     	<img src="<c:url value="/resources/img/people.png"/>" alt="">
                                     </c:if>
                                 </div>
@@ -640,31 +590,55 @@ a {
             </div>
     </div>
 </main>
+
 				</div>
 		</div>			
 		<script>
-		$(document).ready(function() {
+		/* $(document).ready(function() {
 
 			// 기존 css에서 플로팅 배너 위치(top)값을 가져와 저장한다.
 			var floatPosition = parseInt($("#floatMenu").css('top'));
 			// 250px 이런식으로 가져오므로 여기서 숫자만 가져온다. parseInt( 값 );
-
+			console.log("확인 스크롤 : " + $(".panel-heading").scrollTop());
 			$(window).scroll(function() {
 				// 현재 스크롤 위치를 가져온다.
 				var scrollTop = $(window).scrollTop();
 				var newPosition = scrollTop + floatPosition + "px";
 				
 				
-				/* 애니메이션 없이 바로 따라감
-				 $("#floatMenu").css('top', newPosition);
-				 */ 
-
 				$("#floatMenu").stop().animate({
 					"top" : newPosition
-				}, 50);
+				}, 100);
 
 			}).scroll();
 
+		}); 
+		 */
+		/* $(window).scroll(function( ){  //스크롤이 움직일때마다 이벤트 발생 
+			
+		      var position = $(window).scrollTop(); // 현재 스크롤바의 위치값을 반환합니다.
+		      
+		      if(position <400){
+		    	  position = 0;
+		    	  $("#floatMenu").stop().animate({top:position+"px"}, 1); //해당 오브젝트 위치값 재설정
+		    	  
+		      }else{
+		     	 $("#floatMenu").stop().animate({top:position+"px"}, 1); //해당 오브젝트 위치값 재설정
+		    	  
+		      }
+		      
+		 }); */
+	</script>
+	
+	<script>
+		$(".card-link").click(function(){
+			console.log($(this).parent().parent());
+			$(this).parent().parent().append("<div class='commentArea' style='width:300px; height:50px;'> sss</div>")
+		});
+		
+		$(".active").click(function(){
+			console.log("삭제");
+			$(this).parent().parent().append("<div class='commentArea' style='width:300px; height:50px;'> sss</div>")
 		});
 	</script>
 

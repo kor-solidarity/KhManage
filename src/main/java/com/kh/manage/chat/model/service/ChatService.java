@@ -11,6 +11,7 @@ import com.kh.manage.chat.model.vo.Message;
 import com.kh.manage.chat.model.vo.SearchKeyWord;
 import com.kh.manage.common.Attachment;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.timeLine.model.vo.TimeLine;
 
 public interface ChatService {
 
@@ -65,6 +66,8 @@ public interface ChatService {
 	Attachment selectChatAtt(ChatMessageList chatMessageList);
 
 	List<Member> selectAllMember();
+
+	List<TimeLine> selectAllTimeLine();
 
 
 }

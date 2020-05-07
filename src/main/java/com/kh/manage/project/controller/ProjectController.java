@@ -417,11 +417,22 @@ public class ProjectController {
 		System.out.println("pid: " + pid);
 		System.out.println("beginDate: " + beginDate);
 		System.out.println("endDate: " + endDate);
-		ProjectWork projectWork =
-				new ProjectWork(null, workName, "시작전", pid,
-						beginDate, endDate, null, "0",
-						grantor, "1", highWorkNo, null,
-						"프로젝트", memberNo, "Y");
+		System.out.println("highWork : " + highWorkNo);
+		ProjectWork projectWork = null;
+		
+		if(highWorkNo != null) {
+			projectWork =
+					new ProjectWork(null, workName, "시작전", pid,
+							beginDate, endDate, null, "0",
+							grantor, "2", highWorkNo, null,
+							"프로젝트", memberNo, "Y");
+		}else {
+			projectWork =
+					new ProjectWork(null, workName, "시작전", pid,
+							beginDate, endDate, null, "0",
+							grantor, "1", highWorkNo, null,
+							"프로젝트", memberNo, "Y");
+		}
 		int result = ps.insertProjectWork(projectWork);
 		
 		System.out.println(result);

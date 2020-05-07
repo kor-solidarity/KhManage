@@ -656,7 +656,7 @@ body {
 							async: false,
 							data:{message:text},
 						 success:function(data){
-							 $("#chatAreaTable").append("<tr height='10px;'></tr><tr><br><td colspan='2'><div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send' align='center' style='width:100%; font-size:10px; margin-right: 40px; background:orange; color:black; font-weight:600; font-size:13px; height:15px; padding: 0px;'>"+ date.substring(0, 8) +"<span class='msg_time_send'></span></div></div></td></tr>")
+							 $("#chatAreaTable").append("<tr height='10px;'></tr><tr><br><td colspan='2'><div class='d-flex justify-content-end mb-4'> <div class='msg_cotainer_send' align='center' style='width:100%; font-size:10px; margin-right: 60px; background:orange; color:black; font-weight:600; font-size:13px; height:15px; padding: 0px;'>"+ date.substring(0, 8) +"<span class='msg_time_send'></span></div></div></td></tr>")
 							 var text= date.substring(0, 8) + "`" + "${cr.chatRoomNo}"+ "`" + "${loginUser.memberNo}" + "`" + "텍스트" + "`" + "${loginUser.memberName}" + "`" +"sss" + "`" + "M999";
 							 console.log("날짜 : " + text);
 							 ws.send(text);
