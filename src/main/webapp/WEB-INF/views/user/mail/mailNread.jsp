@@ -12,6 +12,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <style>
+.p{
+		margin: 0 auto;
+		color : #1478FF;
+		
+	}
 	.pagingArea{
 		margin: 0 auto;
 	}
@@ -140,16 +145,16 @@
 			<td class="titletd">제목</td>
 			<td class="datetd">날짜</td>
 		</tr>
-		<c:forEach var="m" items="${list}">
+		<c:forEach var="m" items="${list }">
 			<tr class="tr">
 				<td style="display: none;"><input type="hidden" value="${m.mailNo }"></td>
 				<td class="chktd"><input type="checkbox"></td>
-				<td class="startd"><img  class="star ${m.mailNo }" src="resources/img/star.png"></td>
-				<td class="mailtd"><img  src="resources/img/op.png" class="mail"></td>
-				<td class="sendtd">${m.receiver }</td>
-				<td class="titletd">${m.subject }</td>
+				<td class="startd"><img  src="resources/img/star.png" class="star ${m.mailNo} }"></td>
+				<td class="mailtd"><img  src="resources/img/ma.png" class="mail" id="${m.mailNo}"></td>
+				<td class="sendtd"><p class="p p${m.mailNo}">${m.from }</p></td>
+				<td class="titletd"><p class="p p${m.mailNo}">${m.subject }</p></td>
 				<td class="datetd">${m.enrollDate }</td>
-			</tr>		
+			</tr>
 		</c:forEach>
 		
 		<tr class="pagingArea">
@@ -223,6 +228,31 @@
 	
  	 
 });
+ 
+ $(function(){
+		
+		<%for(int i = 0 ; i < list.size(); i ++ ){
+		 	Mail m = (Mail)list.get(i);
+		%>
+			if("<%=m.getImportant()%>" ==  'Y'){
+				$(".<%=m.getMailNo()%>").prop("src" , "resources/img/star3.png");
+			}else{
+				$(".<%=m.getMailNo()%>").prop("src" , "resources/img/star.png");
+			}		
+			
+			if("<%=m.getRead()%>" ==  'Y'){
+				$("#<%=m.getMailNo()%>").prop("src" , "resources/img/op.png");
+				$(".p<%=m.getMailNo()%>").css("color","black");
+			}else{
+				$("#<%=m.getMailNo()%>").prop("src" , "resources/img/ma.png");
+			}	
+			
+		<%}%>
+		
+		
+		
+		
+	});
 
 </script>
 </html>

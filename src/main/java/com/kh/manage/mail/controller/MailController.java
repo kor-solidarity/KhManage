@@ -464,20 +464,21 @@ public class MailController {
 		System.out.println(list);
 		
 
-		return "user/mail//mailNread";
+		return "user/mail/mailNread";
 	}
 	@RequestMapping("/mailComplete.ma")
 	public String mailComplete() {
 		
 		
 
-		return "user/mail//mailComplete";
+		return "user/mail/mailComplete";
 	}
 
+	
 
 	//메일 보내기
 	@RequestMapping("/sendMail")
-	public String sendMail(Mail m ,  @RequestParam(required = false) MultipartFile[] file, HttpServletRequest request) throws Exception{
+	public String sendMail(Mail m ,Model mo , @RequestParam(required = false) MultipartFile[] file, HttpServletRequest request) throws Exception{
 
 		System.out.println(m);
 		
@@ -544,7 +545,9 @@ public class MailController {
 		      
 		      System.out.println(fileList);
 		      
-		      return "redirect:mailComplete.ma";
+		      mo.addAttribute("mail", m);
+		      
+		      return "user/mail/mailComplete";
 	    	  
 	      }else {
 	    	  
@@ -698,8 +701,9 @@ public class MailController {
 	      request.setAttribute("to", to);
 	      
 	      System.out.println(fileList);
+	      mo.addAttribute("mail", m);
 	      
-		return "redirect:mailComplete.ma";
+	      return "user/mail/mailComplete";
 		
 	   }//else 끝
 	      

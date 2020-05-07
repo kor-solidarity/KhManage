@@ -396,7 +396,7 @@
 	            } else {
 	                
 	                html += "<div>";
-	                html += "<div><table class='table'><h6><strong>등록된 댓글이 없습니다.</strong></h6>";
+	                html += "<div><table class='table'><h5><strong>등록된 댓글이 없습니다.</strong></h5>";
 	                html += "</table></div>";
 	                html += "</div>";
 	                
