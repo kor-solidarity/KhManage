@@ -349,13 +349,13 @@
 									<td class="tdText thRange"><input type="text" id="search-email"
 																	  class="inputCss" style="width: 170px;"></td>
 								</tr>
-
+								<%--
 								<tr class="pagingArea">
 									<td colspan="5">
 										<div class="paging"><< < 1 2 > >></div>
 									</td>
 								</tr>
-
+								--%>
 							</table>
 
 						</div>
