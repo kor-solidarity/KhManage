@@ -14,6 +14,7 @@ import com.kh.manage.chat.model.vo.Message;
 import com.kh.manage.chat.model.vo.SearchKeyWord;
 import com.kh.manage.common.Attachment;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.timeLine.model.vo.TimeLine;
 
 @Repository
 public class ChatDaoImpl implements ChatDao {
@@ -209,6 +210,12 @@ public class ChatDaoImpl implements ChatDao {
 	public List<Member> selectAllMember(SqlSessionTemplate sqlSession) {
 		
 		return sqlSession.selectList("Chat.selectAllMember");
+	}
+
+	@Override
+	public List<TimeLine> selectAllTimeLine(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectList("Chat.selectAllTimeLine");
 	}
 
 }

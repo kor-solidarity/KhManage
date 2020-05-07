@@ -17,6 +17,7 @@ import com.kh.manage.chat.model.vo.Message;
 import com.kh.manage.chat.model.vo.SearchKeyWord;
 import com.kh.manage.common.Attachment;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.timeLine.model.vo.TimeLine;
 
 @Service
 public class ChatServiceImpl implements ChatService {
@@ -216,6 +217,13 @@ public class ChatServiceImpl implements ChatService {
 	public List<Member> selectAllMember() {
 	
 		return cd.selectAllMember(sqlSession);
+	}
+	
+	//타임라인 selectAll
+	@Override
+	public List<TimeLine> selectAllTimeLine() {
+
+		return cd.selectAllTimeLine(sqlSession);
 	}
 
 

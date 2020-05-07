@@ -95,7 +95,21 @@
 		<result property="ext" column="EXT"/>
 		<result property="status" column="STATUS"/>
 	</resultMap>
-
+	
+	<resultMap type="TimeLine" id="timeLineResultSet">
+		<id property="timeLineNo" column="TIMELINE_NO"></id>
+		<result property="content" column="T_CONTENT"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="memberName" column="MEMBER_NAME"/>
+		<result property="changeName" column="CHANGE_NAME"/>
+		<result property="userChangeName" column="USER_CHANGE_NAME"/>
+		<result property="enrollDate" column="ENROLL_DATE"/>
+		<result property="sec" column="SEC"/>
+		<result property="min" column="MIN"/>
+		<result property="hour" column="HOUR"/>
+		<result property="day" column="day"/>
+	</resultMap>
+	
 	
 	<select id="selectAllDeptList" resultMap="departResultSet">
 		SELECT DEPT_NO
@@ -430,6 +444,28 @@
         JOIN RANK R ON(M.RANK_NO = R.RANK_NO)
         JOIN DEPT D ON(D.DEPT_NO = M.DEPT_NO)
         LEFT JOIN ATTACHMENT A ON(M.MEMBER_NO = A.DIVISION)
+	</select>
+	
+	<select id="selectAllTimeLine" resultMap="timeLineResultSet">
+		SELECT T.TIMELINE_NO
+		     , T.T_CONTENT
+		     , T.MEMBER_NO
+		     , M.MEMBER_NAME
+		     , T.STATUS
+		     , T.A_STATUS
+		     , A.CHANGE_NAME
+		     , TO_CHAR(T.ENROLL_DATE,'YY-MM-DD HH24:MI') AS ENROLL_DATE
+		     , A1.CHANGE_NAME AS USER_CHANGE_NAME
+		     , ROUND((SYSDATE- T.ENROLL_DATE)*24*60*60) AS SEC
+		     , ROUND((SYSDATE- T.ENROLL_DATE)*24*60) AS MIN
+		     , ROUND((SYSDATE- T.ENROLL_DATE)*24) AS HOUR
+		     , ROUND((SYSDATE- T.ENROLL_DATE)) AS DAY
+		FROM TIMELINE T
+		LEFT JOIN ATTACHMENT A ON (A.DIVISION = T.TIMELINE_NO)
+		LEFT JOIN ATTACHMENT A1 ON(A1.DIVISION = T.MEMBER_NO)
+		LEFT JOIN MEMBER M ON(T.MEMBER_NO = M.MEMBER_NO)
+		WHERE T.STATUS = 'Y'
+		ORDER BY T.ENROLL_DATE DESC
 	</select>
 </mapper>
 
