@@ -133,4 +133,16 @@ public class IssueDaoImpl implements IssueDao{
 		return sqlSession.insert("Issue.insertChangeRequest", cr);
 	}
 
+	@Override
+	public List<ChangeRequest> selectChangeRequestList(SqlSessionTemplate sqlSession, String pno, PageInfo pi) {
+		int offset = (pi.getCurrentPage()-1) * pi.getLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getLimit());
+		return sqlSession.selectList("Issue.selectChangeRequestList", pno, rowBounds);
+	}
+
+	@Override
+	public ChangeRequest selectChangeRequestOne(SqlSessionTemplate sqlSession, String changeNo) {
+		return sqlSession.selectOne("Issue.selectChangeRequestOne", changeNo);
+	}
+
 }

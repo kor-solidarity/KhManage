@@ -136,6 +136,16 @@ public class IssueServiceImpl implements IssueService{
 		return id.insertChangeRequest(sqlSession, cr);
 	}
 
+	@Override
+	public List<ChangeRequest> selectChangeRequestList(String pno, PageInfo pi) {
+		return id.selectChangeRequestList(sqlSession, pno, pi);
+	}
+
+	@Override
+	public ChangeRequest selectChangeRequestOne(String changeNo) {
+		return id.selectChangeRequestOne(sqlSession, changeNo);
+	}
+
 	
 
 	

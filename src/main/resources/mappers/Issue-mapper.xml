@@ -88,7 +88,7 @@
 		<result property="projectName" column="PROJECT_NAME"/>
 	</resultMap>
 
-	<resultMap type="ChangeRequest" id="insertChangeRequest">
+	<resultMap type="ChangeRequest" id="selectChangeRequest">
 		<id property="changeNo" column="CHANGE_NO"/>
 		<result property="requestTitle" column="REQUEST_TITLE"/>
 		<result property="requestContent" column="REQUEST_CONTENT"/>
@@ -110,10 +110,13 @@
 		<result property="memberNo" column="MEMBER_NO"/>
 		<result property="crStatus" column="CR_STATUS"/>
 		<result property="crGrantor1" column="CR_GRANTOR_1"/>
+		<result property="grantorName1" column="GRANTOR_NAME_1"/>
 		<result property="crGrantor2" column="CR_GRANTOR_2"/>
+		<result property="grantorName2" column="GRANTOR_NAME_2"/>
 		<result property="crConfirm1" column="CR_CONFIRM1"/>
 		<result property="crConfirm2" column="CR_CONFIRM2"/>
 		<result property="registerNo" column="REGISTER_NO"/>
+		<result property="registerName" column="REGISTER_NAME"/>
 	</resultMap>
 
 	
@@ -300,7 +303,37 @@
 			DEFAULT, #{crGrantor1}, #{crGrantor2}, DEFAULT, DEFAULT, #{registerNo})
 	</insert>
 	
+ 	<select id="selectChangeRequestList" parameterType="java.lang.String" resultMap="selectChangeRequest">
+	SELECT 
+	        CR.CHANGE_NO
+	      , CR.REQUEST_TITLE
+	      , CR.REQUEST_DATE
+	      , CR.WORK_NO
+	      , CR.WORK_NAME
+	      , CR.STATUS
+	      , CR.PROJECT_NO
+	      , P.PROJECT_NAME
+	      , CR.CR_GRANTOR_1
+	      , M2.MEMBER_NAME AS GRANTOR_NAME_1
+	      , CR.CR_GRANTOR_2
+	      , M3.MEMBER_NAME AS GRANTOR_NAME_2
+	      , CR.REGISTER_NO
+	      , M.MEMBER_NAME AS REGISTER_NAME
+	      , CR.CR_STATUS
+FROM CHANGE_REQUEST CR
+JOIN PROJECT P ON (CR.PROJECT_NO = P.PROJECT_PK)
+JOIN MEMBER M ON (CR.REGISTER_NO = M.MEMBER_NO)
+JOIN MEMBER M2 ON (CR.CR_GRANTOR_1 = M2.MEMBER_NO)
+JOIN MEMBER M3 ON (CR.CR_GRANTOR_2 = M3.MEMBER_NO)
+WHERE CR.PROJECT_NO = #{pno}
+ORDER BY CR.CHANGE_NO DESC
+	
+	</select>
 
+
+<!-- 	<select id="selectChangeRequestOne" parameterType="java.lange.String" resultMap="selectChangeRequest">
+	
+	</select> -->
 </mapper>
 
 

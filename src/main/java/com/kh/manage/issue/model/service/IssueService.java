@@ -61,5 +61,9 @@ public interface IssueService {
 
 	int insertChangeRequest(ChangeRequest cr);
 
+	List<ChangeRequest> selectChangeRequestList(String pno, PageInfo pi);
+
+	ChangeRequest selectChangeRequestOne(String changeNo);
+
 
 }

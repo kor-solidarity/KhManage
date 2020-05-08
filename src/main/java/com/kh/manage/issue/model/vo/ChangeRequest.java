@@ -25,10 +25,13 @@ public class ChangeRequest implements java.io.Serializable{
 	private String memberNo;
 	private String crStatus;
 	private String crGrantor1;
+	private String grantorName1;
 	private String crGrantor2;
+	private String grantorName2;
 	private String crConfirm1;
 	private String crConfirm2;
 	private String registerNo;
+	private String registerName;
 	
 	public ChangeRequest() {}
 
@@ -36,7 +39,8 @@ public class ChangeRequest implements java.io.Serializable{
 			String workName, String status, String projectNo, String projectName, Date beginDate, Date completeDate,
 			String precedeNo, String completeRate, String grantorNo, String workLevel, String highWorkNo,
 			String highWorkName, String workType, String workStatus, String memberNo, String crStatus,
-			String crGrantor1, String crGrantor2, String crConfirm1, String crConfirm2, String registerNo) {
+			String crGrantor1, String grantorName1, String crGrantor2, String grantorName2, String crConfirm1,
+			String crConfirm2, String registerNo, String registerName) {
 		super();
 		this.changeNo = changeNo;
 		this.requestTitle = requestTitle;
@@ -60,10 +64,13 @@ public class ChangeRequest implements java.io.Serializable{
 		this.memberNo = memberNo;
 		this.crStatus = crStatus;
 		this.crGrantor1 = crGrantor1;
+		this.grantorName1 = grantorName1;
 		this.crGrantor2 = crGrantor2;
+		this.grantorName2 = grantorName2;
 		this.crConfirm1 = crConfirm1;
 		this.crConfirm2 = crConfirm2;
 		this.registerNo = registerNo;
+		this.registerName = registerName;
 	}
 
 	public String getChangeNo() {
@@ -242,12 +249,28 @@ public class ChangeRequest implements java.io.Serializable{
 		this.crGrantor1 = crGrantor1;
 	}
 
+	public String getGrantorName1() {
+		return grantorName1;
+	}
+
+	public void setGrantorName1(String grantorName1) {
+		this.grantorName1 = grantorName1;
+	}
+
 	public String getCrGrantor2() {
 		return crGrantor2;
 	}
 
 	public void setCrGrantor2(String crGrantor2) {
 		this.crGrantor2 = crGrantor2;
+	}
+
+	public String getGrantorName2() {
+		return grantorName2;
+	}
+
+	public void setGrantorName2(String grantorName2) {
+		this.grantorName2 = grantorName2;
 	}
 
 	public String getCrConfirm1() {
@@ -266,12 +289,20 @@ public class ChangeRequest implements java.io.Serializable{
 		this.crConfirm2 = crConfirm2;
 	}
 
-	public String getregisterNo() {
+	public String getRegisterNo() {
 		return registerNo;
 	}
 
-	public void setregisterNo(String registerNo) {
+	public void setRegisterNo(String registerNo) {
 		this.registerNo = registerNo;
+	}
+
+	public String getRegisterName() {
+		return registerName;
+	}
+
+	public void setRegisterName(String registerName) {
+		this.registerName = registerName;
 	}
 
 	@Override
@@ -282,9 +313,10 @@ public class ChangeRequest implements java.io.Serializable{
 				+ beginDate + ", completeDate=" + completeDate + ", precedeNo=" + precedeNo + ", completeRate="
 				+ completeRate + ", grantorNo=" + grantorNo + ", workLevel=" + workLevel + ", highWorkNo=" + highWorkNo
 				+ ", highWorkName=" + highWorkName + ", workType=" + workType + ", workStatus=" + workStatus
-				+ ", memberNo=" + memberNo + ", crStatus=" + crStatus + ", crGrantor1=" + crGrantor1 + ", crGrantor2="
-				+ crGrantor2 + ", crConfirm1=" + crConfirm1 + ", crConfirm2=" + crConfirm2 + ", registerNo="
-				+ registerNo + "]";
+				+ ", memberNo=" + memberNo + ", crStatus=" + crStatus + ", crGrantor1=" + crGrantor1 + ", grantorName1="
+				+ grantorName1 + ", crGrantor2=" + crGrantor2 + ", grantorName2=" + grantorName2 + ", crConfirm1="
+				+ crConfirm1 + ", crConfirm2=" + crConfirm2 + ", registerNo=" + registerNo + ", registerName="
+				+ registerName + "]";
 	}
 
 	
