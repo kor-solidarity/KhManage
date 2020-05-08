@@ -226,4 +226,10 @@ public class ChatDaoImpl implements ChatDao {
 		return sqlSession.selectList("Chat.selectOneTag", timeLineNo);
 	}
 
+	@Override
+	public List<TimeLine> selectOneHart(SqlSessionTemplate sqlSession, String timeLineNo) {
+		
+		return sqlSession.selectList("Chat.selectOneHart", timeLineNo);
+	}
+
 }

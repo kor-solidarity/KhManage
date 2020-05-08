@@ -64,6 +64,13 @@ public class ChatController {
 		
 		for(int i=0; i< tList.size(); i++) {
 			List<Tag> tg = cs.selectOneTag(tList.get(i).getTimeLineNo());
+			List<TimeLine> tl = cs.selectOneHart(tList.get(i).getTimeLineNo());
+			
+			if(tl == null) {
+				tList.get(i).setTimeLine(null);
+			}else {
+				tList.get(i).setTimeLine(tl);
+			}
 			tList.get(i).setTagList(tg);
 		}
 		

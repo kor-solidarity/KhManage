@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.manage.common.Attachment;
 import com.kh.manage.timeLine.model.dao.TimeLineDao;
+import com.kh.manage.timeLine.model.vo.Tag;
 import com.kh.manage.timeLine.model.vo.TimeLine;
 
 @Service
@@ -45,5 +46,25 @@ public class TimeLineServiceImpl implements TimeLineService {
 		
 		return td.insertTimeLineTag(sqlSession);
 	}
+
+	@Override
+	public int insertTagName(String tagNo) {
+		
+		return td.insertTagName(sqlSession, tagNo);
+	}
+
+	@Override
+	public int insertTimeLineHart(TimeLine tl) {
+		
+		return td.insertTimeListHart(sqlSession, tl);
+	}
+
+	@Override
+	public int deleteHart(TimeLine tl) {
+		
+		return td.deleteHart(sqlSession, tl);
+	}
+
+	
 
 }

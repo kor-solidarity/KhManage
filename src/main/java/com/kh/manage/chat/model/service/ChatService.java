@@ -73,5 +73,7 @@ public interface ChatService {
 
 	List<Tag> selectOneTag(String timeLineNo);
 
+	List<TimeLine> selectOneHart(String timeLineNo);
+
 
 }

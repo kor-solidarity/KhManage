@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>	
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,10 +15,10 @@
 
 }
 html, body {
-			margin: 0;
-			padding: 0;
-			height: 100%;
-		}
+         margin: 0;
+         padding: 0;
+         height: 100%;
+      }
 .card-one {
     position: relative;
     width: 300px;
@@ -402,13 +403,13 @@ a {
    height: auto;
 }
 .tag{
-	border:1px solid lightgray;
-	border-radius: 10px;
+   border:1px solid lightgray;
+   border-radius: 10px;
 }
 
 .tagLabel{
-	outline:none;
-	cursor:pointer;
+   outline:none;
+   cursor:pointer;
 }
 </style>
 </head>
@@ -484,10 +485,10 @@ a {
                     <form id="insertForm" action="insertTimeLine.ti" method="post"  enctype="multipart/form-data" encoding="multipart/form-data" novalidate="true">
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade active show" id="posts" role="tabpanel" aria-labelledby="posts-tab">
-                                <div class="form-group">
+                                <div class="form-group" id="plusTest">
                                     <label class="sr-only" for="message">post</label>
                                     <textarea class="form-control" name="content" id="message" rows="3" ></textarea>
-                                    <label style="background: skyblue; border-radius:5px; font-size:12px; margin-top:5px; margin-bottom:1px; margin-left:2px; color:white;">태그등록</label>
+                                    <label style="background: skyblue; border-radius:5px; font-size:14px; margin-top:5px; margin-bottom:1px; margin-left:2px; color:white; padding-left: 5px; padding-right: 5px;">#태그</label>
                                     <br>
                                     <input hidden="hidden" name="tagName11"/>
                                     <input type="text" class="tag" name="tag" placeholder="#" >
@@ -496,7 +497,7 @@ a {
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
-                                <div class="form-group">
+                                <div class="form-group" >
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" id="customFile" name="file">
                                         <label class="custom-file-label" for="customFile">Upload image</label>
@@ -506,7 +507,7 @@ a {
                             </div>
                         </div>
                         <div class="btn-toolbar justify-content-between">
-                			<i class="fas fa-sync-alt" onclick="location.reload();" style="float:right; margin-top: 10px; margin-bottom:10px; margin-right: 10px; color:green; font-size: 18px; cursor: pointer;"></i>
+                         <i class="fas fa-sync-alt" onclick="location.reload();" style="float:right; margin-top: 10px; margin-bottom:10px; margin-right: 10px; color:green; font-size: 18px; cursor: pointer;"></i>
                             <div class="btn-group">
                                 <button type="button" id="submitBtn" class="btn btn-theme-primary" style="background: #1E2B44; color:white;">등록</button>
                             </div>
@@ -521,7 +522,7 @@ a {
                 <!-- Post /////-->
                 <!--- \\\\\\\Post-->
                 <c:forEach var="t" items="${tList }">
-                <div class="card social-timeline-card" >
+                <div class="card social-timeline-card"  onclick="$('#${t.timeLineNo}').modal('show');" >
                     <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="d-flex justify-content-between align-items-center">
@@ -573,72 +574,101 @@ a {
 
                     </div>
                     <div class="card-footer" style="width: 50%;">
-                        <a onclick="$('#${t.timeLineNo}').modal('show');" class="card-link"><i class="fa fa-comment" style="color: #1E2B44;"></i> 댓글</a> &nbsp;&nbsp;
+                        <a class="card-link"><i class="fa fa-comment" style="color: #1E2B44;"></i> 댓글</a> &nbsp;&nbsp;
                         <a class="card-link"><i class="fa fa-mail-forward"></i>공유</a>
                     </div>
                 </div>
                 
-      		<div class="modal fade" id="${t.timeLineNo}" role="dialog"
-						aria-labelledby="gridSystemModalLabel" aria-hidden="true">
-						<div class="modal-dialog" style="margin: 0 auto;">
-							<div class="modal-content" style="width: 1200px; right: 250px; top: 100px;">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-									<h4 class="modal-title" id="gridSystemModalLabel">
-										<i class="fab fa-instagram" style="font-size:24px;"></i>&nbsp;
-									</h4> 
-								</div>
-								<div class="modal-body">
-									<div class="container-fluid">
-										<div  style="display:inline-block;width:500px; height: 500px; margin-left: 10px;">
-										<div class="d-flex justify-content-between align-items-center">
-			                                <div class="mr-2">
-			                                    <img class="rounded-circle" width="60" style="border-radius: 40px;margin-right: 20px;" height="50" src="<c:url value="/resources/uploadFiles/${t.userChangeName}"/>" alt="">
-			                                	<!-- 태그 -->
-			                                	<button type="button" style="background: gray; border:none; color: white; border-radius: 10px; font-size: 12px;">#인스타</button>
-			                                	<button type="button" style="background: pink; border:none; color: white; border-radius: 10px; font-size: 12px;">#타임라인</button>
-			                                    <div class="h5 m-0 text-blue">@${t.memberName }</div>
-			                                </div>
-			                              </div>  
-			                              <br>
-										 <div class="text-muted h7 mb-2" style="margin-bottom: 20px; width: 50%;"> 
-					                        <c:if test="${t.sec < 60}">
-					                           <i class="far fa-clock"></i>&nbsp;${t.sec }초 전
-					                        </c:if>   
-					                        <c:if test="${t.sec >= 60}">
-					                           <c:if test="${t.min < 60}">
-					                              <i class="far fa-clock"></i>&nbsp;${t.min }분 전
-					                           </c:if>
-					                           <c:if test="${t.min >= 60 and t.hour <= 24}">
-					                              <i class="far fa-clock"></i>&nbsp;${t.hour }시간 전
-					                           </c:if>
-					                           <c:if test="${t.min >= 60 and t.hour > 24}">
-					                              <i class="far fa-clock"></i>&nbsp;${t.day }일 전
-					                           </c:if>
-					                        </c:if>
-					                        </div>
-										 <img width="300" height="200" style="border-radius: 15px; margin: 0 auto;" src="<c:url value="/resources/uploadFiles/${t.changeName}"/>" class="user-profile">
-										 	<br><br>
-										   <h5 class="card-title" style="color:#1E2B44; font-weight: 600;">${t.content}</h5>
-										   <br><br>
-										   <button type="button" style="background: skyblue; border:none; color: white; border-radius: 10px; font-size: 12px;">등록일</button>
-										    <h6 class="card-title" style="color:#777777; font-weight: 400; margin-top: 3px;"><i class="far fa-calendar-plus"></i>&nbsp;&nbsp;${t.enrollDate}</h6>
-										</div>
-										<div  style="float:right; height:500px; width:600px; margin-left:20px; border: 3px solid lightgray; border-radius: 10px; ">
-										ssss
-										</div>
-									</div>
-								</div>
-								<div class="modal-footer">
-								</div>
-							</div>
-							<!-- /.modal-content -->
-						</div>
-						<!-- /.modal-dialog -->
-					</div>
+            <div class="modal fade" id="${t.timeLineNo}" role="dialog"
+                  aria-labelledby="gridSystemModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" style="margin: 0 auto;">
+                     <div class="modal-content" style="width: 1000px; right: 250px; top: 100px;">
+                        <div class="modal-header">
+                           <button type="button" class="close" data-dismiss="modal"
+                              aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                           </button>
+                           <h4 class="modal-title" id="gridSystemModalLabel">
+                              <i class="fab fa-instagram" style="font-size:24px;"></i>&nbsp;
+                           </h4> 
+                        </div>
+                        <div class="modal-body">
+                           <div class="container-fluid">
+                              <div  style="display:inline-block;width:500px; height: 500px; margin-left: 10px;">
+                              <div class="d-flex justify-content-between align-items-center">
+                                         <div class="mr-2">
+                                             <img class="rounded-circle" width="60" style="border-radius: 40px;margin-right: 20px;" height="50" src="<c:url value="/resources/uploadFiles/${t.userChangeName}"/>" alt="">
+                                            <!-- 태그 -->
+                                            <c:forEach var ="tg" items="${t.tagList }">
+                                            	<c:if test="${fn:length(tg.tagName) == 5}">
+                                               		<button type="button" style="background: skyblue; border:none; color: white; border-radius: 10px; font-size: 12px;">${tg.tagName }</button>
+                                               </c:if>
+                                            	<c:if test="${fn:length(tg.tagName) == 6}">
+                                               		<button type="button" style="background: purple; border:none; color: white; border-radius: 10px; font-size: 12px;">${tg.tagName }</button>
+                                               </c:if>
+                                            	<c:if test="${fn:length(tg.tagName) >= 7}">
+                                               		<button type="button" style="background: orange; border:none; color: white; border-radius: 10px; font-size: 12px;">${tg.tagName }</button>
+                                               </c:if>
+                                               <c:if test="${fn:length(tg.tagName) ==4}">
+                                               		<button type="button" style="background: pink; border:none; color: white; border-radius: 10px; font-size: 12px;">${tg.tagName }</button>
+                                               </c:if>
+                                               <c:if test="${fn:length(tg.tagName) <=3}">
+                                               		<button type="button" style="background: #FFCD5E; border:none; color: white; border-radius: 10px; font-size: 12px;">${tg.tagName }</button>
+                                               </c:if>
+                                               </c:forEach>   
+                                             <div class="h5 m-0 text-blue">@${t.memberName }</div>
+                                         </div>
+                                       </div>  
+                                       <br>
+                               <div class="text-muted h7 mb-2" style="margin-bottom: 20px; width: 50%;"> 
+                                       <c:if test="${t.sec < 60}">
+                                          <i class="far fa-clock"></i>&nbsp;${t.sec }초 전
+                                       </c:if>   
+                                       <c:if test="${t.sec >= 60}">
+                                          <c:if test="${t.min < 60}">
+                                             <i class="far fa-clock"></i>&nbsp;${t.min }분 전
+                                          </c:if>
+                                          <c:if test="${t.min >= 60 and t.hour <= 24}">
+                                             <i class="far fa-clock"></i>&nbsp;${t.hour }시간 전
+                                          </c:if>
+                                          <c:if test="${t.min >= 60 and t.hour > 24}">
+                                             <i class="far fa-clock"></i>&nbsp;${t.day }일 전
+                                          </c:if>
+                                       </c:if>
+                                       </div>
+                               <img width="300" height="200" style="border-radius: 15px; margin: 0 auto;" src="<c:url value="/resources/uploadFiles/${t.changeName}"/>" class="user-profile">
+                                  <br><br>
+                                 <h5 class="card-title" style="color:#1E2B44; font-weight: 600;">${t.content}</h5>
+                                 <br><br>
+                                 <button type="button" style="background: skyblue; border:none; color: white; border-radius: 10px; font-size: 12px;">등록일</button>
+                                  <c:if test="${t.timeLine ne null}">
+                                  <label>asdsad</label>
+                                  <c:forEach var="h" items="${t.timeLine}">
+	                                  	<c:if test="${h.memberNo eq loginUser.memberNo}">
+	                                    	<label style="float: right;  margin-right:20px; line-height:15px;">좋아요</label><i class="fas fa-heart plus" id="hart" style="float: right; color:red; margin-right: 3px;"></i>&nbsp;
+	                                    </c:if>
+	                                    <c:if test="${h.memberNo != loginUser.memberNo}">
+	                                    	<label style="float: right;  margin-right:20px; line-height:15px;">좋아요</label><i class="far fa-heart" id="hart" style="float: right; color:red; margin-right: 3px;"></i>&nbsp;
+	                                    </c:if>
+                                   </c:forEach> 
+									</c:if>   
+									 <c:if test="${empty t.timeLine}">
+										<label style="float: right;  margin-right:20px; line-height:15px;">좋아요</label><i class="far fa-heart" id="hart" style="float: right; color:red; margin-right: 3px;"></i>&nbsp;
+										</c:if>
+                                  <h6 class="card-title" style="color:#777777; font-weight: 400; margin-top: 3px;"><i class="far fa-calendar-plus"></i>&nbsp;&nbsp;${t.enrollDate}</h6>
+                              </div>
+                              <div  style="float:right; height:500px; width:400px; margin-left:20px; border: 3px solid lightgray; border-radius: 10px; ">
+                              	ssss
+                              </div>
+                           </div>
+                        </div>
+                        <div class="modal-footer">
+                        </div>
+                     </div>
+                     <!-- /.modal-content -->
+                  </div>
+                  <!-- /.modal-dialog -->
+               </div>
                 </c:forEach>
                 <!-- Post /////-->
                 <!--- \\\\\\\Post-->
@@ -676,54 +706,91 @@ a {
      </div>
       </div>
       <script>
+      $(document).on('click', '#hart', function(){
+			var id = $(this).parent().parent().parent().parent().parent().parent().attr('id');
+			 $(this).removeClass("far fa-heart");
+				$(this).addClass("fas fa-heart");
+				$(this).addClass("plus");
+				$(this).css("color", "red");
+			 $.ajax({
+					url:'insertHart.ti',
+					type: 'post',
+					async: false,
+					data:{
+						timeLineNo:id
+					},
+				 success:function(data){
+				 }
+			 });
+      });
+      
+      $(document).on('click', '.plus', function(){
+    	    var id = $(this).parent().parent().parent().parent().parent().parent().attr('id');
+    	  
+			$(this).removeClass("fas fa-heart");
+			$(this).removeClass("plus");
+			$(this).addClass("far fa-heart");
+			$.ajax({
+				url:'deleteHart.ti',
+				type: 'post',
+				async: false,
+				data:{
+					timeLineNo:id
+				},
+			 success:function(data){
+			 }
+		 });
+    });
+      
+      
       var count = 0;
       
-      	$(document).on('click', '#submitBtn', function(){
-      		console.log("ssss");
-      		 $("#insertForm").submit();
-	      });
+         $(document).on('click', '#submitBtn', function(){
+            console.log("ssss");
+             $("#insertForm").submit();
+         });
  
-	      $(".tag").keydown(function(event){
-	    	  var val = $(".tag").val();
-	    	  var pattern1 = /[#]/g;
-	    	  var check = true;
-	    	  
-	      	if(event.keyCode == '13'){
-	      		if(pattern1.test(val)){
-	      			$(".shap").hide();
-	      		}else{
-	      			$(".shap").show(); 
-	      			check=false;
-	      		}
-	      		
-				if(count ==0 && check== true){
-	      			$(".form-group").append("<div id='tag1' style='display:inline-block'><input type='hidden' name='tagName' value='"+val+"'><label class='tagLabel'style='background:green; border-radius:10px; color:white; font-size:12px; margin-left:10px; line-height:25px; padding-left:6px; padding-right:8px; height:25px;'>"+val+"</label></div>");
-	      			 count++;
-	      			$(".tag").val("#");
-	      		}else if(count ==1 && check== true){
-	      			$(".form-group").append("<div id='tag1' style='display:inline-block'><input type='hidden' name='tagName' value='"+val+"'><label class='tagLabel' style='background:skyblue; border-radius:10px; color:white; font-size:12px; margin-left:10px; line-height:25px; padding-left:6px; padding-right:8px; height:25px;'>"+val+"</label></div>");
-	      			count++;
-	      			$(".tag").val("#");
-	      		}else if(count ==2 && check== true){
-	      			$(".form-group").append("<div id='tag1' style='display:inline-block'><input type='hidden' name='tagName' value='"+val+"'><label class='tagLabel' style='background:purple; border-radius:10px; color:white; font-size:12px; margin-left:10px; line-height:25px; padding-left:6px; padding-right:8px; height:25px;'>"+val+"</label></div>");
-	      			count++;
-	      			$(".tag").val("#");
-	      		}else if(count ==3 && check== true){
-	      			$(".form-group").append("<div id='tag1' style='display:inline-block'><input type='hidden' name='tagName' value='"+val+"'><label class='tagLabel' style='background:orange; border-radius:10px; color:white; font-size:12px; margin-left:10px; line-height:25px; padding-left:6px; padding-right:8px; height:25px;'>"+val+"</label></div>");
-	      			count =0;
-	      			$(".tag").val("#");
-	      		}
-	    	  }
-	      });
-	      
-	      $(document).on('click', '#tag1', function(){
-	    	  $(this).remove();
-	      });
-	      
-	      $(function(){
-	    	 $(".tag").val("#");
-	    	 $(".shap").hide(); 
-	      });
+         $(".tag").keydown(function(event){
+            var val = $(".tag").val();
+            var pattern1 = /[#]/g;
+            var check = true;
+            
+            if(event.keyCode == '13'){
+               if(pattern1.test(val)){
+                  $(".shap").hide();
+               }else{
+                  $(".shap").show(); 
+                  check=false;
+               }
+               
+            if(count ==0 && check== true){
+                  $("#plusTest").append("<div id='tag1' style='display:inline-block'><input type='hidden' name='tagName' value='"+val+"'><label class='tagLabel'style='background:green; border-radius:10px; color:white; font-size:12px; margin-left:10px; line-height:25px; padding-left:6px; padding-right:8px; height:25px;'>"+val+"</label></div>");
+                   count++;
+                  $(".tag").val("#");
+               }else if(count ==1 && check== true){
+                  $("#plusTest").append("<div id='tag1' style='display:inline-block'><input type='hidden' name='tagName' value='"+val+"'><label class='tagLabel' style='background:skyblue; border-radius:10px; color:white; font-size:12px; margin-left:10px; line-height:25px; padding-left:6px; padding-right:8px; height:25px;'>"+val+"</label></div>");
+                  count++;
+                  $(".tag").val("#");
+               }else if(count ==2 && check== true){
+                  $("#plusTest").append("<div id='tag1' style='display:inline-block'><input type='hidden' name='tagName' value='"+val+"'><label class='tagLabel' style='background:purple; border-radius:10px; color:white; font-size:12px; margin-left:10px; line-height:25px; padding-left:6px; padding-right:8px; height:25px;'>"+val+"</label></div>");
+                  count++;
+                  $(".tag").val("#");
+               }else if(count ==3 && check== true){
+                  $("#plusTest").append("<div id='tag1' style='display:inline-block'><input type='hidden' name='tagName' value='"+val+"'><label class='tagLabel' style='background:orange; border-radius:10px; color:white; font-size:12px; margin-left:10px; line-height:25px; padding-left:6px; padding-right:8px; height:25px;'>"+val+"</label></div>");
+                  count =0;
+                  $(".tag").val("#");
+               }
+            }
+         });
+         
+         $(document).on('click', '#tag1', function(){
+            $(this).remove();
+         });
+         
+         $(function(){
+           $(".tag").val("#");
+           $(".shap").hide(); 
+         });
       </script>
                
       <script>
@@ -764,7 +831,7 @@ a {
    
    <script>
     /*    $(".card-link").click(function(){
-    	   $('#myModal').modal('show');
+          $('#myModal').modal('show');
       }); */
       
       /* $(".active").click(function(){
