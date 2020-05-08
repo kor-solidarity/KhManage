@@ -401,6 +401,15 @@ a {
 .main{
    height: auto;
 }
+.tag{
+	border:1px solid lightgray;
+	border-radius: 10px;
+}
+
+.tagLabel{
+	outline:none;
+	cursor:pointer;
+}
 </style>
 </head>
 <body onload="$('#route1').text('타임라인')">
@@ -472,12 +481,18 @@ a {
                         </ul>
                     </div>
                     <div class="card-body">
-                    <form action="insertTimeLine.ti" method="post" enctype="multipart/form-data" encoding="multipart/form-data" novalidate="true">
+                    <form id="insertForm" action="insertTimeLine.ti" method="post"  enctype="multipart/form-data" encoding="multipart/form-data" novalidate="true">
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade active show" id="posts" role="tabpanel" aria-labelledby="posts-tab">
                                 <div class="form-group">
                                     <label class="sr-only" for="message">post</label>
                                     <textarea class="form-control" name="content" id="message" rows="3" ></textarea>
+                                    <label style="background: skyblue; border-radius:5px; font-size:12px; margin-top:5px; margin-bottom:1px; margin-left:2px; color:white;">태그등록</label>
+                                    <br>
+                                    <input hidden="hidden" name="tagName11"/>
+                                    <input type="text" class="tag" name="tag" placeholder="#" >
+                                    <label class="shap" style="display:none; color:#1E2B44; margin-bottom:0px; font-size: 12px;">'#'을 붙여주세요</label>
+                                    <br><br>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
@@ -493,7 +508,7 @@ a {
                         <div class="btn-toolbar justify-content-between">
                 			<i class="fas fa-sync-alt" onclick="location.reload();" style="float:right; margin-top: 10px; margin-bottom:10px; margin-right: 10px; color:green; font-size: 18px; cursor: pointer;"></i>
                             <div class="btn-group">
-                                <button type="submit" class="btn btn-theme-primary" style="background: #1E2B44; color:white;">등록</button>
+                                <button type="button" id="submitBtn" class="btn btn-theme-primary" style="background: #1E2B44; color:white;">등록</button>
                             </div>
                             <div class="btn-group">
                              
@@ -658,11 +673,61 @@ a {
             </div>
     </div>
 </main>
-            </div>
-      </div>         
+     </div>
+      </div>
+      <script>
+      var count = 0;
+      
+      	$(document).on('click', '#submitBtn', function(){
+      		console.log("ssss");
+      		 $("#insertForm").submit();
+	      });
+ 
+	      $(".tag").keydown(function(event){
+	    	  var val = $(".tag").val();
+	    	  var pattern1 = /[#]/g;
+	    	  var check = true;
+	    	  
+	      	if(event.keyCode == '13'){
+	      		if(pattern1.test(val)){
+	      			$(".shap").hide();
+	      		}else{
+	      			$(".shap").show(); 
+	      			check=false;
+	      		}
+	      		
+				if(count ==0 && check== true){
+	      			$(".form-group").append("<div id='tag1' style='display:inline-block'><input type='hidden' name='tagName' value='"+val+"'><label class='tagLabel'style='background:green; border-radius:10px; color:white; font-size:12px; margin-left:10px; line-height:25px; padding-left:6px; padding-right:8px; height:25px;'>"+val+"</label></div>");
+	      			 count++;
+	      			$(".tag").val("#");
+	      		}else if(count ==1 && check== true){
+	      			$(".form-group").append("<div id='tag1' style='display:inline-block'><input type='hidden' name='tagName' value='"+val+"'><label class='tagLabel' style='background:skyblue; border-radius:10px; color:white; font-size:12px; margin-left:10px; line-height:25px; padding-left:6px; padding-right:8px; height:25px;'>"+val+"</label></div>");
+	      			count++;
+	      			$(".tag").val("#");
+	      		}else if(count ==2 && check== true){
+	      			$(".form-group").append("<div id='tag1' style='display:inline-block'><input type='hidden' name='tagName' value='"+val+"'><label class='tagLabel' style='background:purple; border-radius:10px; color:white; font-size:12px; margin-left:10px; line-height:25px; padding-left:6px; padding-right:8px; height:25px;'>"+val+"</label></div>");
+	      			count++;
+	      			$(".tag").val("#");
+	      		}else if(count ==3 && check== true){
+	      			$(".form-group").append("<div id='tag1' style='display:inline-block'><input type='hidden' name='tagName' value='"+val+"'><label class='tagLabel' style='background:orange; border-radius:10px; color:white; font-size:12px; margin-left:10px; line-height:25px; padding-left:6px; padding-right:8px; height:25px;'>"+val+"</label></div>");
+	      			count =0;
+	      			$(".tag").val("#");
+	      		}
+	    	  }
+	      });
+	      
+	      $(document).on('click', '#tag1', function(){
+	    	  $(this).remove();
+	      });
+	      
+	      $(function(){
+	    	 $(".tag").val("#");
+	    	 $(".shap").hide(); 
+	      });
+      </script>
+               
       <script>
        $(document).ready(function() {
-
          // 기존 css에서 플로팅 배너 위치(top)값을 가져와 저장한다.
          var floatPosition = parseInt($("#floatMenu").css('top'));
          // 250px 이런식으로 가져오므로 여기서 숫자만 가져온다. parseInt( 값 );

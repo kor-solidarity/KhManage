@@ -11,4 +11,10 @@ public interface TimeLineDao {
 
 	int insertTimeAttachment(SqlSessionTemplate sqlSession, Attachment at);
 
+	TimeLine selectOneTag(SqlSessionTemplate sqlSession, String tagName);
+
+	int insertTag(SqlSessionTemplate sqlSession, String tagName);
+
+	int insertTimeLineTag(SqlSessionTemplate sqlSession);
+
 }

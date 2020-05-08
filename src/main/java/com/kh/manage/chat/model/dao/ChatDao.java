@@ -1,6 +1,7 @@
 package com.kh.manage.chat.model.dao;
 
 import java.sql.Date;
+
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -13,6 +14,7 @@ import com.kh.manage.chat.model.vo.Message;
 import com.kh.manage.chat.model.vo.SearchKeyWord;
 import com.kh.manage.common.Attachment;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.timeLine.model.vo.Tag;
 import com.kh.manage.timeLine.model.vo.TimeLine;
 
 public interface ChatDao {
@@ -82,6 +84,8 @@ public interface ChatDao {
 	List<Member> selectAllMember(SqlSessionTemplate sqlSession);
 
 	List<TimeLine> selectAllTimeLine(SqlSessionTemplate sqlSession);
+
+	List<Tag> selectOneTag(SqlSessionTemplate sqlSession, String timeLineNo);
 
 
 

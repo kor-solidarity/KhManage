@@ -1,6 +1,7 @@
 package com.kh.manage.chat.controller;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ import com.kh.manage.chat.model.vo.SearchKeyWord;
 import com.kh.manage.common.Attachment;
 import com.kh.manage.common.CommonsUtils;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.timeLine.model.vo.Tag;
 import com.kh.manage.timeLine.model.vo.TimeLine;
 
 @Controller
@@ -60,6 +62,12 @@ public class ChatController {
 		List<Member> mList = cs.selectAllMember();
 		List<TimeLine> tList = cs.selectAllTimeLine();
 		
+		for(int i=0; i< tList.size(); i++) {
+			List<Tag> tg = cs.selectOneTag(tList.get(i).getTimeLineNo());
+			tList.get(i).setTagList(tg);
+		}
+		
+		System.out.println(tList);
 		model.addAttribute("mList", mList);
 		model.addAttribute("tList", tList);
 		

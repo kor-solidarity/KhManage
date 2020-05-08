@@ -1,6 +1,7 @@
 package com.kh.manage.chat.model.service;
 
 import java.sql.Date;
+
 import java.util.List;
 
 import com.kh.manage.admin.adminManage.vo.DepartMent;
@@ -11,6 +12,7 @@ import com.kh.manage.chat.model.vo.Message;
 import com.kh.manage.chat.model.vo.SearchKeyWord;
 import com.kh.manage.common.Attachment;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.timeLine.model.vo.Tag;
 import com.kh.manage.timeLine.model.vo.TimeLine;
 
 public interface ChatService {
@@ -68,6 +70,8 @@ public interface ChatService {
 	List<Member> selectAllMember();
 
 	List<TimeLine> selectAllTimeLine();
+
+	List<Tag> selectOneTag(String timeLineNo);
 
 
 }
