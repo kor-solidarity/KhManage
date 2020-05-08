@@ -929,7 +929,7 @@
 								*/
                             ];
                             for (key in projectWorkList) {
-                                console.log('key' + key);
+                                // console.log('key' + key);
                                 // projectWorkList[key].
                                 workName = projectWorkList[key]['workName']
                                 workLevelTab = "";
@@ -947,9 +947,10 @@
                                 })
 
                             }
+
                             // undefined 면 초기화부터.
                             if (gantt == undefined) {
-
+                                console.log('gantt init');
                                 // 간트차트
                                 gantt = new DayPilot.Gantt("gantt", {
                                     cellWidthSpec: "Fixed",
@@ -967,7 +968,7 @@
                                     days: ganttInfo.totalDays,
                                     startDate: ganttInfo.startDate,
                                     taskHeight: 26,
-                                    rowHeaderHideIconEnabled: false,
+                                    rowHeaderHideIconEnabled: true,
                                     rowMoveHandling: "Disabled",
                                     taskMoveHandling: "Disabled",
                                     linkCreateHandling: "Disabled",
@@ -1012,11 +1013,16 @@
                                 // alert('boo');
                                 // gantt.
                                 gantt.init();
+                                $(".gantt_default_header_icon").click();
+                                // $('.gantt_default_corner').attr('style', 'display: none');
+                                // $('.gantt_default_rowheader_scroll').attr('style', 'display: none');
+                            $('.gantt_default_scrollable').attr('style', 'height: 1200px');
                             } else {
 
-                                gantt.days = ganttInfo.totalDays;
-                                gantt.startDate = ganttInfo.startDate;
-                                gantt.tasks = chartList;
+                                // gantt.days = ganttInfo.totalDays;
+                                // gantt.startDate = ganttInfo.startDate;
+                                gantt.tasks.list = chartList;
+                                // console.log('chartList ' + chartList);
                                 gantt.update();
                             }
 
@@ -1207,7 +1213,7 @@
                 // 0월 00, 0000 인 날짜를 인풋에 드갈수 있게끔
                 // 0000-00-00 로 변경
                 function parseKrDate (krDate) {
-                    console.log('krDate: ' + krDate);
+                    // console.log('krDate: ' + krDate);
                     var dateArray = krDate.split(/월 |, /);
                     let month = dateArray[0];
                     let day = dateArray[1];

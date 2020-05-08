@@ -366,26 +366,25 @@ public class ProjectController {
 		
 		// 차트에 넣을 목록
 		GanttInfo ganttInfo = new GanttInfo();
-		Date startDate = null;
-		Date endDate = null;
+		Date startDate = new Date(System.currentTimeMillis());
+		Date endDate = new Date(System.currentTimeMillis());
 		
 		for (ProjectWork p : projectWorkList) {
-			// 초기화
-			if (startDate == null) {
-				startDate = p.getBeginDate();
-			}
-			if (endDate == null) {
-				endDate = p.getCompleteDate();
-			}
+			
 			// 시작일보다 빠르면 갱신
 			if (startDate.getTime() > p.getBeginDate().getTime()) {
-				startDate = p.getBeginDate();
+				startDate.setTime(p.getBeginDate().getTime());
 			}
 			// 종료일보다 느리면 갱신
 			if (endDate.getTime() < p.getCompleteDate().getTime()) {
-				endDate = p.getCompleteDate();
+				endDate.setTime(p.getCompleteDate().getTime());
 			}
 		}
+		
+		// 간격 넓히게.
+		startDate.setTime(startDate.getTime() - (24 * 60 * 60 * 1000));
+		endDate.setTime(endDate.getTime() + (24 * 60 * 60 * 1000));
+		
 		long dateGap = endDate.getTime() - startDate.getTime();
 		long gap = dateGap / (24 * 60 * 60 * 1000);
 		// int dateGap = endDate.compareTo(startDate);
