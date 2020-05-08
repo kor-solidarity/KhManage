@@ -158,11 +158,15 @@
         <result property="enrollDate" column="ENROLL_DATE"/>
         <result property="modifyDate" column="MODIFY_DATE"/>
         <result property="atNo" column="AT_NO"/>
-        <result property="division" column="division"/>
+        <result property="division" column="DIVISION"/>
         <result property="originName" column="ORIGIN_NAME"/>
         <result property="changeName" column="CHANGE_NAME"/>
         <result property="filePath" column="FILE_PATH"/>
-        <result property="ext" column="ext"/>
+        <result property="ext" column="EXT"/>
+        <result property="memberName" column="MEMBER_NAME"/>
+        <result property="workName" column="WORK_NAME"/>
+        <result property="projectPk" column="PROJECT_PK"/>
+        <result property="projectName" column="PROJECT_NAME"/>
     </resultMap>
 
     <resultMap id="workHistoryResultSet" type="WorkHistory">
@@ -396,6 +400,33 @@
                                 JOIN RANK R2 ON M.RANK_NO = R2.RANK_NO) M
                       ON T.MEMBER_PK = M.MEMBER_NO
         WHERE PROJECT_PK = #{value}
+    </select>
+
+    <select id="selectProjectWorkProductList" parameterType="String" resultMap="workProductResultSet">
+        SELECT WP.PRODUCT_NO
+             , WP.WORK_NO
+             , A.AT_NO
+             , A.DIVISION
+             , A.ORIGIN_NAME
+             , A.EXT
+             , A.FILEPATH
+             , P.PROJECT_PK
+             , P.PROJECT_NAME
+             , W.WORK_NAME
+             , WP.PRODUCT_TYPE
+             , WP.PRODUCT_TITLE
+             , M.MEMBER_NAME
+             , WP.ENROLL_DATE
+             , WP.MODIFY_DATE
+        FROM WORK_PRODUCT WP
+                 JOIN WORK W ON WP.WORK_NO = W.WORK_NO
+                 JOIN PROJECT P ON W.PROJECT_NO = P.PROJECT_PK
+                 JOIN MEMBER M ON W.MEMBER_NO = M.MEMBER_NO
+                 JOIN ATTACHMENT A ON A.DIVISION = WP.PRODUCT_NO
+        WHERE P.PROJECT_PK = #{value}
+          AND W.STATUS = 'Y'
+          AND WP.STATUS = 'Y'
+          AND P.STATUS = 'Y'
     </select>
 
     <update id="updateWork" parameterType="ProjectWork">

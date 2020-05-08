@@ -118,4 +118,6 @@ public interface ProjectService {
 	int updateWorkLevel(ProjectWork work);
 
 	String selectEnrollDate(String pid);
+	
+	List<WorkProduct> selectProjectWorkProductList(String pid);
 }

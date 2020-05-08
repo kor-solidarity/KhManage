@@ -17,13 +17,24 @@ public class WorkProduct implements Serializable {
 	private Date modifyDate;
 	// 여기까지가 테이블
 	
-	// 그냥 관련 파일정보도 다 뽑아버린다.
+	// 그냥 관련 파일정보도 다 뽑아버린다. attachment
 	private String atNo;
 	private String division;
 	private String originName;
 	private String changeName;
 	private String filePath;
 	private String ext;
+	
+	// 산출물 올린사람(작업 담당자)
+	private String memberName;
+	
+	// 프로젝트 작업 테이블 관련
+	private String workName;
+	
+	// 프로젝트 테이블
+	private String projectPk;
+	private String projectName;
+	
 	
 	public WorkProduct() {
 	}
@@ -63,6 +74,10 @@ public class WorkProduct implements Serializable {
 				", changeName='" + changeName + '\'' +
 				", filePath='" + filePath + '\'' +
 				", ext='" + ext + '\'' +
+				", memberName='" + memberName + '\'' +
+				", workName='" + workName + '\'' +
+				", projectPk='" + projectPk + '\'' +
+				", projectName='" + projectName + '\'' +
 				'}';
 	}
 	
@@ -168,5 +183,37 @@ public class WorkProduct implements Serializable {
 	
 	public void setExt(String ext) {
 		this.ext = ext;
+	}
+	
+	public String getMemberName() {
+		return memberName;
+	}
+	
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
+	
+	public String getWorkName() {
+		return workName;
+	}
+	
+	public void setWorkName(String workName) {
+		this.workName = workName;
+	}
+	
+	public String getProjectPk() {
+		return projectPk;
+	}
+	
+	public void setProjectPk(String projectPk) {
+		this.projectPk = projectPk;
+	}
+	
+	public String getProjectName() {
+		return projectName;
+	}
+	
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
 	}
 }

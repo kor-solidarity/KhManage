@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -75,19 +76,19 @@
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
 	<jsp:include page="/WEB-INF/views/user/common/sidebar2.jsp"/>
 	<jsp:include page="/WEB-INF/views/user/common/projectNav.jsp"/>
-	
+
 	<div id="wrap">
-	
+
 		<div class="panel panel-headline">
 				<div class="panel-heading">
 					<div style="width:100%; height:700px; margin:0 auto; overflow:auto;">
-						<table align="left" style="margin-bottom:10px;">	
+						<table align="left" style="margin-bottom:10px;">
 							<tr>
 								<%--이거 이대로 넣으면 프로젝트 번호(pid)와 projectNav 목록(navType) 선택이 정상적으로 진행되지 않음. --%>
 								<td><button class="projectBtn" onclick="location.href='outputReg.pr'"><i class="fas fa-edit"></i> &nbsp;산출물 등록</button>
 								<td><button class="projectBtn"><i class="fas fa-download"></i> &nbsp;액셀 다운로드</button>
 								<td colspan="6"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-							</tr>	
+							</tr>
 						</table>
 						<table id="projectTable" align="center">
 							<tr>
@@ -108,34 +109,39 @@
 								<td class="tdText thRange"><input type="date" class="inputCss" style="width:60px;"></td>
 								<td class="tdText thRange"><input type="date" class="inputCss" style="width:60px;"></td>
 							</tr>
+							<c:forEach var="i" items="${workProduct}">
 							<tr class="trRange">
+								<%--클릭하면 프로젝트 작업목록으로 보내자.--%>
 								<td class="td1"><a href="#">KH대학교 학사시스템 개발</a></td>
 								<td class="tdText">SW개발</td>
 								<td class="tdText">띠로리</td>
+								<%--제목 클릭하면 다운받게끔?--%>
 								<td class="tdText"><a href="#">제목제목제목제목제목</a></td>
 								<td class="tdText">원준성</td>
 								<td class="tdText">2020-04-02</td>
 								<td class="tdText">2020-04-02</td>
 							</tr>
-
+							</c:forEach>
+							<%--
 							<tr class="pagingArea">
 								<td colspan="7">
 									<div class="paging"><< < 1 2 > >></div>
 								</td>
 							</tr>
+							--%>
 						</table>
 					</div>
 				</div>
 			</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
 	</div>
 </body>
 </html>

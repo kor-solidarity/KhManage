@@ -313,4 +313,9 @@ public class ProjectServiceImpl implements ProjectService {
 		
 		return pd.selectEnrollDate(sqlSession, pid);
 	}
+	
+	@Override
+	public List<WorkProduct> selectProjectWorkProductList(String pid) {
+		return pd.selectProjectWorkProductList(sqlSession, pid);
+	}
 }

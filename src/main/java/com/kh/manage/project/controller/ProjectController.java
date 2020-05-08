@@ -844,8 +844,25 @@ public class ProjectController {
 		return "user/project/projectIssue";
 	}
 	
+	// 유저별 산출물 목록조회
 	@RequestMapping("/projectOutput.pr")
-	public String projectOutput() {
+	public String projectOutput(HttpServletRequest request, HttpSession session) {
+		// 프로젝트 내에서 산출물을 받으면 되는거임.
+		
+		// Member m = (Member) session.getAttribute("loginUser");
+		
+		String pid = request.getParameter("pid");
+		
+		
+		// 뽑아야 하는 목록:
+		// 프로젝트명, 작업명, 산출물 종류(product_type), 산출물 제목, 등록자 이름, 생성일, 수정일
+		// 파일명과 경로도 아마?
+		// 우선 목록 자체에 집중
+		List<WorkProduct> workProduct = ps.selectProjectWorkProductList(pid);
+		
+		
+		request.setAttribute("workProduct", workProduct);
+		
 		return "user/project/projectOutput";
 	}
 	
