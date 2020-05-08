@@ -411,7 +411,30 @@ a {
    outline:none;
    cursor:pointer;
 }
+
+.commentLabel{
+   font-family: 'Stylish', sans-serif;
+}
+.profile {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+	.box {
+	width: 40px;
+	height: 40px;
+	border-radius: 40%;
+	overflow: hidden;
+	margin-left: 5px;
+	margin-top:20px;
+	display: inline-block;
+}
+
+.nameDiv{
+	font-family: 'Stylish', sans-serif;
+}
 </style>
+<link href="https://fonts.googleapis.com/css2?family=Stylish&display=swap" rel="stylesheet">
 </head>
 <body onload="$('#route1').text('타임라인')">
    <jsp:include page="/WEB-INF/views/user/common/header.jsp" />
@@ -567,7 +590,7 @@ a {
                            
                             </c:if>
                         <a class="card-link" href="#">
-                            <h5 class="card-title">${t.content}</h5>
+                            <h5 class="card-title" style="font-family: 'Stylish', sans-serif;">${t.content}</h5>
                             <h6>${t.enrollDate }</h6>
                         </a>
                         <img src="img/gallery/1a.jpg" alt="" class="img-fluid">
@@ -601,26 +624,26 @@ a {
                                             <!-- 태그 -->
                                             <c:forEach var ="tg" items="${t.tagList }">
                                             	<c:if test="${fn:length(tg.tagName) == 5}">
-                                               		<button type="button" style="background: skyblue; border:none; color: white; border-radius: 10px; font-size: 12px;">${tg.tagName }</button>
+                                               		<button type="button" style="background: skyblue; border:none; font-family: 'Stylish', sans-serif; color: white; border-radius: 10px; font-size: 12px;">${tg.tagName }</button>
                                                </c:if>
                                             	<c:if test="${fn:length(tg.tagName) == 6}">
-                                               		<button type="button" style="background: purple; border:none; color: white; border-radius: 10px; font-size: 12px;">${tg.tagName }</button>
+                                               		<button type="button" style="background: purple; border:none; font-family: 'Stylish', sans-serif; color: white; border-radius: 10px; font-size: 12px;">${tg.tagName }</button>
                                                </c:if>
                                             	<c:if test="${fn:length(tg.tagName) >= 7}">
-                                               		<button type="button" style="background: orange; border:none; color: white; border-radius: 10px; font-size: 12px;">${tg.tagName }</button>
+                                               		<button type="button" style="background: orange; border:none; font-family: 'Stylish', sans-serif; color: white; border-radius: 10px; font-size: 12px;">${tg.tagName }</button>
                                                </c:if>
                                                <c:if test="${fn:length(tg.tagName) ==4}">
-                                               		<button type="button" style="background: pink; border:none; color: white; border-radius: 10px; font-size: 12px;">${tg.tagName }</button>
+                                               		<button type="button" style="background: pink; border:none;font-family: 'Stylish', sans-serif; color: white; border-radius: 10px; font-size: 12px;">${tg.tagName }</button>
                                                </c:if>
                                                <c:if test="${fn:length(tg.tagName) <=3}">
-                                               		<button type="button" style="background: #FFCD5E; border:none; color: white; border-radius: 10px; font-size: 12px;">${tg.tagName }</button>
+                                               		<button type="button" style="background: #FFCD5E; border:none; font-family: 'Stylish', sans-serif; color: white; border-radius: 10px; font-size: 12px;">${tg.tagName }</button>
                                                </c:if>
                                                </c:forEach>   
-                                             <div class="h5 m-0 text-blue">@${t.memberName }</div>
+                                             <div class="h5 m-0 text-blue" style="font-family: 'Stylish', sans-serif;">@${t.memberName }</div>
                                          </div>
                                        </div>  
                                        <br>
-                               <div class="text-muted h7 mb-2" style="margin-bottom: 20px; width: 50%;"> 
+                               <div class="text-muted h7 mb-2" style="margin-bottom: 20px; width: 50%; font-family: 'Stylish', sans-serif;"> 
                                        <c:if test="${t.sec < 60}">
                                           <i class="far fa-clock"></i>&nbsp;${t.sec }초 전
                                        </c:if>   
@@ -636,29 +659,40 @@ a {
                                           </c:if>
                                        </c:if>
                                        </div>
-                               <img width="300" height="200" style="border-radius: 15px; margin: 0 auto;" src="<c:url value="/resources/uploadFiles/${t.changeName}"/>" class="user-profile">
+                                       <div class="img-wrapper">
+                               <img width="300" height="200" onclick="doImgPop('<c:url value="/resources/uploadFiles/${t.changeName}"/>')"  style="border-radius: 15px; margin: 0 auto;" src="<c:url value="/resources/uploadFiles/${t.changeName}"/>" class="user-profile">
+                               </div>
                                   <br><br>
-                                 <h5 class="card-title" style="color:#1E2B44; font-weight: 600;">${t.content}</h5>
+                                 <h5 class="card-title" style="color:#1E2B44; font-weight: 600; font-family: 'Stylish', sans-serif;">${t.content}</h5>
                                  <br><br>
-                                 <button type="button" style="background: skyblue; border:none; color: white; border-radius: 10px; font-size: 12px;">등록일</button>
+                                 <button type="button" style="background: skyblue; border:none; color: white; font-family: 'Stylish', sans-serif; border-radius: 10px; font-size: 12px;">등록일</button>
+                                 <c:set var="check" value="안됨"/>
+                                  <c:forEach var="ck" items="${t.timeLine}">
+                                  		<c:if test="${ck.memberNo eq loginUser.memberNo}">
+                                  			<c:set var="check" value="하트"/>
+                                  		</c:if>
+                                  </c:forEach>
                                   <c:if test="${t.timeLine ne null}">
-                                  <label>asdsad</label>
-                                  <c:forEach var="h" items="${t.timeLine}">
-	                                  	<c:if test="${h.memberNo eq loginUser.memberNo}">
-	                                    	<label style="float: right;  margin-right:20px; line-height:15px;">좋아요</label><i class="fas fa-heart plus" id="hart" style="float: right; color:red; margin-right: 3px;"></i>&nbsp;
+	                                  	<c:if test="${check eq '하트'}">
+	                                    	<label id="count" style="float: right;  margin-right:30px; font-family: 'Stylish', sans-serif; line-height:16px;">${fn:length(t.timeLine)} </label><i class="fas fa-heart plus" id="hart" style="float: right; color:red; margin-right: 3px;"></i>&nbsp;
 	                                    </c:if>
-	                                    <c:if test="${h.memberNo != loginUser.memberNo}">
-	                                    	<label style="float: right;  margin-right:20px; line-height:15px;">좋아요</label><i class="far fa-heart" id="hart" style="float: right; color:red; margin-right: 3px;"></i>&nbsp;
+	                                    <c:if test="${check eq '안됨'}">
+	                                    	<label id="count" style="float: right;  margin-right:30px; font-family: 'Stylish', sans-serif; line-height:16px;">${fn:length(t.timeLine)}</label><i class="far fa-heart" id="hart" style="float: right; color:red; margin-right: 3px;"></i>&nbsp;
 	                                    </c:if>
-                                   </c:forEach> 
 									</c:if>   
-									 <c:if test="${empty t.timeLine}">
-										<label style="float: right;  margin-right:20px; line-height:15px;">좋아요</label><i class="far fa-heart" id="hart" style="float: right; color:red; margin-right: 3px;"></i>&nbsp;
-										</c:if>
-                                  <h6 class="card-title" style="color:#777777; font-weight: 400; margin-top: 3px;"><i class="far fa-calendar-plus"></i>&nbsp;&nbsp;${t.enrollDate}</h6>
+									<%--  <c:if test="${empty t.timeLine}">
+										<label style="float: right;  margin-right:20px; line-height:16px;">0</label><i class="far fa-heart" id="hart" style="float: right; color:red; margin-right: 3px;"></i>&nbsp;
+										</c:if> --%>
+                                  <h6 class="card-title" style="color:#777777; font-weight: 400; font-family: 'Stylish', sans-serif; margin-top: 3px;"><i class="far fa-calendar-plus"></i>&nbsp;&nbsp;${t.enrollDate}</h6>
                               </div>
-                              <div  style="float:right; height:500px; width:400px; margin-left:20px; border: 3px solid lightgray; border-radius: 10px; ">
-                              	ssss
+                              <div  style="float:right; height:500px; width:400px; margin-left:20px; border: 2px solid #1E2B44; border-radius: 10px; ">
+                              	<div id="commentArea" style="height: 92%; width:100%; overflow: auto;">
+                              		<table id="tableComment" style="width: 100%;"></table>
+                              	</div>
+                              	<div style="width: 100%; height: 8%; border-top: 3px solid #1E2B44;">
+                              		<input type="text" id="comment" placeholder=" 댓글입력..." style="border:none; width: 90%; font-family: 'Stylish', sans-serif; outline:none; height:100%; border-radius:10px; background: white;">
+                              		<i class="far fa-paper-plane" id="insertComment" style="color:#1E2B44; font-size: 18px;"></i>
+                              	</div>
                               </div>
                            </div>
                         </div>
@@ -706,16 +740,24 @@ a {
      </div>
       </div>
       <script>
+      $(document).on('click', '#insertComment', function(){
+		 var value = $(this).prev().val(); 
+		 $(this).parent().prev().children().append("<tr><td style='width:50px;'><div class='box' style='display:inline-block;'><img class='profile' src='/manage/resources/uploadFiles/${loginUser.changeName}'></div></td><td style='width:60px;'><div class='nameDiv' style='vertical-align:text-top;'>@김성준</div></td><td><br><lable class='commentLabel' style='line-height:10px; color:#1E2B44;'>"+ value +"</label></td></tr>")
+		 $(this).prev().val(""); 
+      });
+      
+      
       $(document).on('click', '#hart', function(){
+    	    var a = $(this).prev().text();
+    	    $(this).prev().text(Number(a)+1);
 			var id = $(this).parent().parent().parent().parent().parent().parent().attr('id');
 			 $(this).removeClass("far fa-heart");
 				$(this).addClass("fas fa-heart");
-				$(this).addClass("plus");
-				$(this).css("color", "red");
-			 $.ajax({
+				$(this).attr('id','chanHart');
+			
+				$.ajax({
 					url:'insertHart.ti',
 					type: 'post',
-					async: false,
 					data:{
 						timeLineNo:id
 					},
@@ -724,16 +766,18 @@ a {
 			 });
       });
       
-      $(document).on('click', '.plus', function(){
+      $(document).on('click', '#chanHart', function(){
     	    var id = $(this).parent().parent().parent().parent().parent().parent().attr('id');
-    	  
+    	    var a = $(this).prev().text();
+    	    console.log(a);
+    	    $(this).prev().text(Number(a)-1);
+    	    
 			$(this).removeClass("fas fa-heart");
-			$(this).removeClass("plus");
+			$(this).attr('id','hart');
 			$(this).addClass("far fa-heart");
 			$.ajax({
 				url:'deleteHart.ti',
 				type: 'post',
-				async: false,
 				data:{
 					timeLineNo:id
 				},
@@ -839,6 +883,34 @@ a {
          $(this).parent().parent().append("<div class='commentArea' style='width:300px; height:50px;'> sss</div>")
       }); */
    </script>
+   <script>
+   function doImgPop(img){
+	   img1= new Image();
+	   img1.src=(img);
+	   imgControll(img);
+	  }
+	   
+	  function imgControll(img){
+	   if((img1.width!=0)&&(img1.height!=0)){
+	      viewImage(img);
+	    }
+	    else{
+	       controller="imgControll('"+img+"')";
+	       intervalID=setTimeout(controller,20);
+	    }
+	  }
+
+	  function viewImage(img){
+	   W=img1.width;
+	   H=img1.height;
+	   O="width="+600+",height="+600+",scrollbars=yes";
+	   imgWin=window.open("","",O);
+	   imgWin.document.write("<html><head><title>이미지 확대</title></head>");
+	   imgWin.document.write("<body topmargin=0 leftmargin=0>");
+	   imgWin.document.write("<img src="+img+" style='width:600; height:600;'onclick='self.close()' style='cursor:pointer;' title ='클릭하시면 창이 닫힙니다.'>");
+	   imgWin.document.close();
+	  }
+	   </script>
 
 
 </body>
