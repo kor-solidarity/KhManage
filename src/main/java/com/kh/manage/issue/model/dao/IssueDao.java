@@ -67,4 +67,8 @@ public interface IssueDao {
 
 	ChangeRequest selectChangeRequestOne(SqlSessionTemplate sqlSession, String changeNo);
 
+	Work selectWorkOne(SqlSessionTemplate sqlSession, String workNo);
+
+	Grantor selectGrantorName(SqlSessionTemplate sqlSession, String grantorNo);
+
 }

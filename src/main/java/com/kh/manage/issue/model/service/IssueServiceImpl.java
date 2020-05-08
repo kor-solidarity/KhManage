@@ -146,6 +146,16 @@ public class IssueServiceImpl implements IssueService{
 		return id.selectChangeRequestOne(sqlSession, changeNo);
 	}
 
+	@Override
+	public Work selectWorkOne(String workNo) {
+		return id.selectWorkOne(sqlSession, workNo);
+	}
+
+	@Override
+	public Grantor selectGrantorName(String grantorNo) {
+		return id.selectGrantorName(sqlSession, grantorNo);
+	}
+
 	
 
 	

@@ -65,5 +65,9 @@ public interface IssueService {
 
 	ChangeRequest selectChangeRequestOne(String changeNo);
 
+	Work selectWorkOne(String workNo);
+
+	Grantor selectGrantorName(String grantorNo);
+
 
 }
