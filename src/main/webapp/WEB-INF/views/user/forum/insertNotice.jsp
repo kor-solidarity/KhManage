@@ -129,15 +129,13 @@
 					<tr>
 						<td colspan="4">
 							<div class="div">
-							<button class="okBtn" onclick="goWrite();" id="save">
-								<i class="fas fa-check"></i>&nbsp;저장
+							<button class="okBtn"  id="save">
+								<i class="fas fa-check"></i>&nbsp;작성
 							</button>
-								<a href="accessManage.am">
 								&nbsp;
 							<button class="delBtn">
 								<i class="fas fa-ban"></i>&nbsp;취소
 							</button>
-								</a>
 							</div>
 							</td>
 							
@@ -165,9 +163,8 @@
 		   });
 	});
 	
-/* 	$("#save").click(function(){
+ 	$("#save").click(function(){
 		
-		$("#noticeForm").submit();
 		
 		var title = frm.title.value;
 		var writer = frm.writer.value;
@@ -185,9 +182,10 @@
 			alert("내용을 입력해주세요");
 			return false;
 		}
-	}); */
+/* 		$("#noticeForm").submit(); */
+	}); 
 	
-	function goWrite(frm) {
+	/* function goWrite(frm) {
 		var title = frm.noticeTitle.value;
 		var content = frm.noticeContent.value;
 		
@@ -199,8 +197,8 @@
 			alert("내용을 입력해주세요");
 			return false;
 		}
-		frm.submit();
-	}
+		//frm.submit();
+	} */
 
 </script>
 </html>

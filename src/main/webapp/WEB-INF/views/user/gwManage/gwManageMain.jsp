@@ -25,6 +25,7 @@
 <script src="resources/fullcalendar/rrule/main.js"></script>
 <script src="resources/fullcalendar/core/locales/ko.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js" integrity="sha256-AdQN98MVZs44Eq2yTwtoKufhnU+uZ7v2kXnD5vqzZVo=" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style type="text/css">
    #calendar {
    height: 800px;
@@ -328,7 +329,7 @@
     
     
     <!-- 일정 상세보기 모달-->
-		            <form id="gwUpdate"  method="post">
+		<form id="gwUpdate"  method="post">
 		<div class="modal fade" id="selectModal" role="dialog" aria-labelledby="gridSystemModalLabel" aria-hidden="true">
 		    <div class="modal-dialog">
 		      <div class="modal-content">
@@ -402,7 +403,7 @@
 		          </div>
 		        </div>
 		        <div class="modal-footer">
-		          <button type="submit" class="btn btn-default" id="gwDelete" style="float: left;color:white; background: #F3565D;" formaction="delete.gwm">삭제</button>
+		          <button type="button" class="btn btn-default" id="gwDelete" style="float: left;color:white; background: #F3565D;">삭제</button>
 		          <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 		          <button type="submit" class="btn btn-primary" id="gwUpdate" style="background:#1E2B44; outline:none; border:none;" formaction="update.gwm">저장</button>
 		        </div>
@@ -500,7 +501,11 @@
 	  	var ed;
 	  	
 	  		$("#gwSubmit").click(function(){
-	  			
+	  		console.log("dddd")
+	  		
+		  	
+	  		
+	  		console.log("ddddfff")
 	  			var beginDate = $("#beginDate").val();
 	  			var bDate = beginDate.substring(0,10);
 	  			var bTime = beginDate.substring(11,16);
@@ -520,8 +525,18 @@
 	  			$("#eDate2").val(eDate);
 	  			$("#eTime2").val(eTime);
 	  			
+
+		        swal({
+				  		title: "일정이 등록되었습니다.",
+				  		icon: "success",
+				  		button : "확인",
+				  		}).then((확인) => {
+				  			$("#gwInsertForm").submit();
+				  });
+		        	
+	  			
 					
-		  		   $.ajax({
+		  		 /*   $.ajax({
 		  		        type:'post',
 		  		        url : "insertGw.gwm",
 		  		        dataType : "json",
@@ -530,11 +545,13 @@
 		  		        success : function(data){
 		  		        	console.log(data);
 		  		        	location.href = "gwManageMain.gwm";
+		  		        	
+		  		        	
 		  		        },
 		  		        error:function(request,status,error){
 		  		            
 		  		       }
-		  		   });
+		  		   }); */
 	  			
 	  		});
 	  		
@@ -623,10 +640,19 @@
 	  		});
 	  		
 	  		$("#gwDelete").click(function(){
+	  			var asd = $("#gno2").val();
 	  			
-/* 				$("#gwUpdate").attr("formaction", "delete.gwm");
-	  			
-	  			$("#gwUpdate").submit(); */
+	  			console.log(asd);
+
+		        swal({
+				  		title: "일정을 삭제하시겠습니까?",
+				  		icon: "info",
+				  		buttons :[ "아니오", "네" ],
+				  		}).then((네) => {
+				  			if(네){
+				  			location.href = "delete.gwm?gwNo="+asd
+				  			}
+				  });
 	  			
 	  		});
 	  		

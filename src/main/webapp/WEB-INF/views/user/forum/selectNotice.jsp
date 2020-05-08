@@ -324,7 +324,10 @@
 					},
 	        
 	        success: function(data){
-	            alert("댓글이 등록되었습니다.");
+	        	swal({
+			    	title: "댓글이 등록되었습니다.",
+			      	icon: "success"
+			    })
 	            console.log(data);
 	            
 	            $("#comment").val("");
@@ -346,7 +349,10 @@
 						},
 		        
 		        success: function(data){
-		            alert("댓글이 등록되었습니다.");
+		        	swal({
+				    	title: "댓글이 삭제되었습니다.",
+				      	icon: "error"
+				    })
 		            console.log(data);
 		            
 		            getCommentList();
@@ -417,13 +423,27 @@
 	
 	
 	$("#nDelete").click(function(){
-		
-		location.href = "deleteNotice.fo?nNo="+nNo;
+		 swal({
+		  		title: "공지사항을 삭제하시겠습니까?",
+		  		icon: "info",
+		  		buttons :[ "아니오", "네" ],
+		  		}).then((네) => {
+		  			if(네){
+					location.href = "deleteNotice.fo?nNo="+nNo;
+		  			}
+		  });
 	});
 	 
 	$("#nUpdate").click(function(){
-		
-		location.href = "updateNoticeSelect.fo?nNo="+nNo;
+		 swal({
+		  		title: "공지사항을 수정하시겠습니까?",
+		  		icon: "info",
+		  		buttons :[ "아니오", "네" ],
+		  		}).then((네) => {
+		  			if(네){
+		  				location.href = "updateNoticeSelect.fo?nNo="+nNo;
+		  			}
+		  });
 	}); 
 	 
 	 
@@ -445,7 +465,10 @@
  					},
  	        
  	        success: function(data){
- 	            alert("댓글이 삭제되었습니다.");
+ 	        	swal({
+			    	title: "댓글이 삭제되었습니다.",
+			      	icon: 'error'
+			    })
  	            console.log(data);
  	            
  	            getCommentList();
@@ -484,8 +507,8 @@
 		 	        
 		 	        success: function(data){
 		 	        	swal({
-					    	title: "댓글이 삭제되었습니다.",
-					      	icon: "success"
+					    	title: "댓글이 수정되었습니다.",
+					      	icon: 'success'
 					    })
 		 	            console.log(data);
 		 	            

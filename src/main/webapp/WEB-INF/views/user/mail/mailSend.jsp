@@ -49,22 +49,23 @@
    #div{
    	margin-left: 3px;
    	margin-right: 5px;
-   	margin-top : 3px;
+   	margin-top : 5px;
    	float: left;
    }
    #label{
    	float: left;
-   	background: #f1d898;
-   	color: #d5703d;
-   	height: 32px;
+   	background: #e5f3ff;
+   	height: 26px;
+   	border: 1px solid #cbe6ff;
    	width: 230px;
    }
    .xbtn{
    	outline:none;
-   	height: 32spx;
-   	background: #f1d898;
-   	margin-left:-28px;
-   	margin-top: 2px;
+   	height: 24px;
+   	border: 1px solid #cbe6ff;
+   	background: #e5f3ff;
+   	margin-left:-26px;
+   	margin-top: 1px;
    	
    }
 </style>
