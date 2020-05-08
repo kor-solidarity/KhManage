@@ -479,6 +479,13 @@
         JOIN TIMELINE_TAG TG ON (TG.TAG_NO = T.TAG_NO)
         WHERE T.TIMELINE_NO = #{timeLineNo}
 	</select>
+	
+	<select id="selectOneHart" resultMap="timeLineResultSet">
+		SELECT TIMELINE_NO
+		     , MEMBER_NO
+		 FROM TIMELINE_LIKE
+		 WHERE  TIMELINE_NO = #{timeLineNo}    
+	</select>
 </mapper>
 
 

@@ -87,6 +87,8 @@ public interface ChatDao {
 
 	List<Tag> selectOneTag(SqlSessionTemplate sqlSession, String timeLineNo);
 
+	List<TimeLine> selectOneHart(SqlSessionTemplate sqlSession, String timeLineNo);
+
 
 
 }

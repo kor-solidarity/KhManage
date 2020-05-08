@@ -234,6 +234,12 @@ public class ChatServiceImpl implements ChatService {
 		return cd.selectOneTag(sqlSession, timeLineNo);
 	}
 
+	@Override
+	public List<TimeLine> selectOneHart(String timeLineNo) {
+		
+		return cd.selectOneHart(sqlSession, timeLineNo);
+	}
+
 
 
 

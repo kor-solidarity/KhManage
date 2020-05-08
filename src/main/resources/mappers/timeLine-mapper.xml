@@ -31,4 +31,18 @@
 	<insert id="insertTimeLineTag">
 		INSERT INTO TIMELINE_TAGLIST VALUES('TAG'|| TO_CHAR(SEQ_TAG.CURRVAL, 'FM000'), 'TI'|| TO_CHAR(SEQ_TIME.CURRVAL, 'FM000'), 'Y')
 	</insert>
+	
+	<insert id="insertTagName" parameterType="java.lang.String">
+		INSERT INTO TIMELINE_TAGLIST VALUES(#{tagNo}, 'TI'|| TO_CHAR(SEQ_TIME.CURRVAL, 'FM000'), 'Y')
+	</insert>
+	
+	<insert id="insertTimeListHart" parameterType="TimeLine">
+		INSERT INTO TIMELINE_LIKE VALUES(#{memberNo}, #{timeLineNo})
+	</insert>
+	
+	<delete id="deleteHart" parameterType="TimeLine">
+		DELETE FROM TIMELINE_LIKE WHERE TIMELINE_NO = #{timeLineNo} AND MEMBER_NO = #{memberNo}
+	</delete>
+	
+	
 </mapper>

@@ -15,6 +15,7 @@ public class TimeLine {
 	private String tagNo;
 	private String tagName;
 	private List<Tag> tagList;
+	private List<TimeLine> timeLine;
 	private int sec;
 	private int min;
 	private int hour;
@@ -24,7 +25,7 @@ public class TimeLine {
 
 	public TimeLine(String timeLineNo, String memberNo, String memberName, String content, String enrollDate,
 			String status, String aStatus, String changeName, String userChangeName, String tagNo, String tagName,
-			List<Tag> tagList, int sec, int min, int hour, int day) {
+			List<Tag> tagList, List<TimeLine> timeLine, int sec, int min, int hour, int day) {
 		super();
 		this.timeLineNo = timeLineNo;
 		this.memberNo = memberNo;
@@ -38,6 +39,7 @@ public class TimeLine {
 		this.tagNo = tagNo;
 		this.tagName = tagName;
 		this.tagList = tagList;
+		this.timeLine = timeLine;
 		this.sec = sec;
 		this.min = min;
 		this.hour = hour;
@@ -140,6 +142,14 @@ public class TimeLine {
 		this.tagList = tagList;
 	}
 
+	public List<TimeLine> getTimeLine() {
+		return timeLine;
+	}
+
+	public void setTimeLine(List<TimeLine> timeLine) {
+		this.timeLine = timeLine;
+	}
+
 	public int getSec() {
 		return sec;
 	}
@@ -177,11 +187,10 @@ public class TimeLine {
 		return "TimeLine [timeLineNo=" + timeLineNo + ", memberNo=" + memberNo + ", memberName=" + memberName
 				+ ", content=" + content + ", enrollDate=" + enrollDate + ", status=" + status + ", aStatus=" + aStatus
 				+ ", changeName=" + changeName + ", userChangeName=" + userChangeName + ", tagNo=" + tagNo
-				+ ", tagName=" + tagName + ", tagList=" + tagList + ", sec=" + sec + ", min=" + min + ", hour=" + hour
-				+ ", day=" + day + "]";
+				+ ", tagName=" + tagName + ", tagList=" + tagList + ", timeLine=" + timeLine + ", sec=" + sec + ", min="
+				+ min + ", hour=" + hour + ", day=" + day + "]";
 	}
-	
-	
 
+	
 
 }

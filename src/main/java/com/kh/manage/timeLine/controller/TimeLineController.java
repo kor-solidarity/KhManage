@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
 import com.kh.manage.common.Attachment;
 import com.kh.manage.common.CommonsUtils;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.timeLine.model.service.TimeLineService;
+import com.kh.manage.timeLine.model.vo.Tag;
 import com.kh.manage.timeLine.model.vo.TimeLine;
 
 @Controller
@@ -65,13 +68,15 @@ public class TimeLineController {
 		
 		String[] tag = tm.getTagName().split(",");
 		
-		for(int i =0; i < tag.length; i++) {
+		System.out.println("문자 배열 크기 : " + tm.getTagName());
+		
+	    for(int i =0; i < tag.length; i++) {
 			System.out.println("태그 이름 : " + tag[i]);
 			
 			TimeLine ti = ts.selectOneTag(tag[i]);
 			
 			if(ti != null) {
-				
+				int result = ts.insertTagName(ti.getTagNo());
 			}else {
 				int result = ts.insertTag(tag[i]);
 				int result2 = ts.insertTimeLineTag();
@@ -80,5 +85,46 @@ public class TimeLineController {
 		
 		
 		return "redirect:showTimeLine.ct";
+	}
+	
+	@RequestMapping("/insertHart.ti")
+	public void insertHart(TimeLine tl, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+		System.out.println("타임라인 번호 : " +tl);
+		Member m = (Member) session.getAttribute("loginUser");
+		tl.setMemberNo(m.getMemberNo());
+		
+		
+		int result = ts.insertTimeLineHart(tl);
+		
+		request.setAttribute("true", true);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+
+		String gson = new Gson().toJson(true);
+
+		try {
+			response.getWriter().write(gson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("/deleteHart.ti")
+	public void deleteHart(TimeLine tl, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+		Member m = (Member) session.getAttribute("loginUser");
+		tl.setMemberNo(m.getMemberNo());
+		
+		int result = ts.deleteHart(tl);
+		request.setAttribute("true", true);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+
+		String gson = new Gson().toJson(true);
+
+		try {
+			response.getWriter().write(gson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

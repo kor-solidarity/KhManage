@@ -4,6 +4,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.manage.common.Attachment;
+import com.kh.manage.timeLine.model.vo.Tag;
 import com.kh.manage.timeLine.model.vo.TimeLine;
 
 @Repository
@@ -37,6 +38,24 @@ public class TimeLineDaoImpl implements TimeLineDao {
 	public int insertTimeLineTag(SqlSessionTemplate sqlSession) {
 		
 		return sqlSession.insert("TimeLine.insertTimeLineTag");
+	}
+
+	@Override
+	public int insertTagName(SqlSessionTemplate sqlSession, String tagNo) {
+		
+		return sqlSession.insert("TimeLine.insertTagName", tagNo);
+	}
+
+	@Override
+	public int insertTimeListHart(SqlSessionTemplate sqlSession, TimeLine tl) {
+		
+		return sqlSession.insert("TimeLine.insertTimeListHart", tl);
+	}
+
+	@Override
+	public int deleteHart(SqlSessionTemplate sqlSession, TimeLine tl) {
+		
+		return sqlSession.delete("TimeLine.deleteHart", tl);
 	}
 
 }
