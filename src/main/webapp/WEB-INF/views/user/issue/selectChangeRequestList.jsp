@@ -99,7 +99,7 @@
 	}
 	
 	.issueCpl{
-		width:70px;
+		width:100px;
 		height:25px;
 		background:#45B6AF;
 		color:white;
@@ -231,17 +231,16 @@
 								<td style="width:40%"></td>
 								<td><label class="issueOpen">승인중</label></td>
 								<td>&nbsp;&nbsp;</td>
-								<td><label class="issueCpl">승인완료</label></td>
+								<td colspan="2"><label class="issueCpl">1차승인완료</label></td>
 								<td>&nbsp;&nbsp;</td>
-								<td><label class="issueComp">처리완료</label></td>
+								<td><label class="issueComp">변경완료</label></td>
 								<td>&nbsp;&nbsp;</td>
-								<td><label class="issueAll">전체</label></td>
+								<td><label class="issueAll">반려</label></td>
 								<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-								<td><label class="issueReturn">반려</label></td>
+								<td><label class="issueReturn">취소</label></td>
 								<td>&nbsp;&nbsp;</td>
-								<td><label class="issueCancel">취소</label></td>
+								<td><label class="issueCancel">종료</label></td>
 								<td>&nbsp;&nbsp;</td>
-								<td><label class="issueEnd">종료</label></td>
 							</tr>	
 							</table>
 						<table id="projectTable" align="center">
@@ -266,17 +265,37 @@
 								<td class="tdText thRange"><input type="text" class="inputCss" style="visibility:hidden; width:60px;"></td>
 							</tr>
 							
-							
+							<c:forEach var="l" items="${list }">
 							<tr class="trRange">
-								<td class="td1">KH대학교 학사시스템 개발</td>
-								<td class="tdText">기능 개발</td>
-								<td class="tdText">수강-0001</td>
-								<td class="tdText"><a href="changeRequestDetail.iu">수강신청 오류 조치자 변경</a></td>
-								<td class="tdText">김태원</td>
-								<td class="tdText">심재우</td>
-								<td class="tdText"><label class="issueOpen">승인중</label></td>
-								<td class="tdText">2020-04-04</td>
+								<td style="display:none;">${l.changeNo }</td>
+								<td class="tdText">${l.projectName }</td>
+								<td class="tdText">${l.workName }</td>
+								<td class="td1" style="text-align:center">${l.requestTitle }</td>
+								<td class="tdText">${l.registerName }</td>
+								<td class="tdText">${l.grantorName1 }</td>
+								<td class="tdText">${l.grantorName2 }</td>
+								<c:if test="${l.crStatus == '승인중' }">
+								<td class="tdText"><label class="issueOpen">${l.crStatus }</label></td>
+								</c:if>
+								<c:if test="${l.crStatus == '1차승인완료' }">
+								<td class="tdText"><label class="issueCpl">${l.crStatus }</label></td>
+								</c:if>
+								<c:if test="${l.crStatus == '변경완료' }">
+								<td class="tdText"><label class="issueComp">${l.crStatus }</label></td>
+								</c:if>
+								<c:if test="${l.crStatus == '반려' }">
+								<td class="tdText"><label class="issueAll">${l.crStatus }</label></td>
+								</c:if>
+								<c:if test="${l.crStatus == '종료' }">
+								<td class="tdText"><label class="issueCancel">${l.crStatus }</label></td>
+								</c:if>
+								<c:if test="${l.crStatus == '취소' }">
+								<td class="tdText"><label class="issueReturn">${l.crStatus }</label></td>
+								</c:if>
+								<td class="tdText">${l.requestDate }</td>
 							</tr>
+							</c:forEach>
+							
 							<tr class="pagingArea">
                         		<td colspan="8">
                            			<div class="paging"><< < 1 2 > >></div>
@@ -295,6 +314,15 @@
 				console.log(pno);
 				location.href="selectChangeRequestList.iu?pno=" + pno;
 			});
+			
+			
+			$("#projectTable td").mouseenter(function(){
+		    	$(this).parent().css({"cursor":"pointer"});
+		    }).click(function(){
+		    	var num = $(this).parent().children().eq(0).text();
+		    	console.log(num);
+		    	location.href="selectChangeRequestOne.iu?changeNo="+num;
+		    }); 
 		});
 		</script>
 </body>

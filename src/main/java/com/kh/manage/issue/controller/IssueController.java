@@ -147,8 +147,20 @@ public class IssueController {
 	}
 	
 	@RequestMapping("/changeRequestList.iu")
-	public String changeRequestList() {
-		return "user/issue/changeRequestList";
+	public String changeRequestList(Model m, HttpServletRequest request) {
+		Member member = (Member) request.getSession().getAttribute("loginUser");
+		
+		List<IssueWPT> iwpt = is.selectProjectName(member);
+		
+		
+		if(iwpt != null) {
+			request.setAttribute("iwpt", iwpt);
+			return "user/issue/changeRequestList";
+		}else {
+			request.setAttribute("msg", "이슈 리스트 출력 오류");
+			return "common/errorPage";
+		}
+		
 	}
 	
 	@RequestMapping("/RequestApprovalList.iu")
@@ -340,6 +352,51 @@ public class IssueController {
 			return "common/errorPage";
 		}
 	}
+	
+	
+	@RequestMapping("/selectChangeRequestList.iu")
+	public String selectChangeRequestList(String pno, Model m, HttpServletRequest request) {
+		Member member = (Member) request.getSession().getAttribute("loginUser");
+		
+		int currentPage = 1;
+		
+		List<IssueWPT> iwpt = is.selectProjectName(member);
+		
+		
+		if(request.getParameter("currentPage") != null) {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+		
+		int listCount = is.getListCount(pno);
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		
+		List<ChangeRequest> list = is.selectChangeRequestList(pno, pi);
+		
+		if(list != null) {
+			m.addAttribute("iwpt", iwpt);
+			m.addAttribute("list", list);
+			m.addAttribute("pi", pi);
+			return "user/issue/selectChangeRequestList";
+		}else{
+			m.addAttribute("msg", "이슈 리스트 출력 오류");
+			
+			return "common/errorPage";
+		}
+		
+	}
+	
+	
+	@RequestMapping("/selectChangeRequestOne.iu")
+	public String selectChangeRequestOne(String changeNo, Model m) {
+		ChangeRequest cr = is.selectChangeRequestOne(changeNo);
+		
+		
+		
+		return "";
+	}
+	
+	
 	
 //	@RequestMapping("/selectWork.iu")
 //	public ModelAndView selectWork(@RequestParam String workNo, ModelAndView mv, HttpSession session) {

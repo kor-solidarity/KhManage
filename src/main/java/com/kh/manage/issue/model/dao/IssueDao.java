@@ -63,4 +63,8 @@ public interface IssueDao {
 
 	int insertChangeRequest(SqlSessionTemplate sqlSession, ChangeRequest cr);
 
+	List<ChangeRequest> selectChangeRequestList(SqlSessionTemplate sqlSession, String pno, PageInfo pi);
+
+	ChangeRequest selectChangeRequestOne(SqlSessionTemplate sqlSession, String changeNo);
+
 }
