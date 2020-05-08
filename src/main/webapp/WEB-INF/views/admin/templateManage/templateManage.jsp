@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
 	a:link {
 	 color: inherit;
@@ -381,15 +382,30 @@
 		});
 		
 	$("#delTem").click(function(){
-		console.log("dd");
-		location.href = "templateDelete.am?tNo="+tm2;
-		
+		 swal({
+		  		title: "템플릿을 삭제하시겠습니까?",
+		  		icon: "info",
+		  		buttons :[ "아니오", "네" ],
+		  		}).then((네) => {
+		  			if(네){
+		  				location.href = "templateDelete.am?tNo="+tm2;
+		  			}
+		  });
 	});
 	});
 	
 	$("#save").click(function(){
 		
-		$("#tempForm").submit();
+		swal({
+	  		title: "템플릿을 수정하시겠습니까?",
+	  		icon: "info",
+	  		buttons :[ "아니오", "네" ],
+	  		}).then((네) => {
+	  			if(네){
+				$("#tempForm").submit();
+	  			}
+	  });
+		
 	});
 	
 	

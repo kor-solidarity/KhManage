@@ -51,7 +51,7 @@ public class GwManageController {
 	}
 	
 	@RequestMapping("insertGw.gwm")
-	public void insertGw(GWork g, GwRepeat gr, Model m, HttpServletRequest request, HttpServletResponse response) {
+	public String insertGw(GWork g, GwRepeat gr, Model m, HttpServletRequest request, HttpServletResponse response) {
 		
 		String bDate = request.getParameter("bDate");
 		String bTime = request.getParameter("bTime");
@@ -91,18 +91,20 @@ public class GwManageController {
 		
 //		int result = gs.insertGw(g);
 //		
-		request.setAttribute("result", result);
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
-//		
-//		
-		String gson = new Gson().toJson(result);
-//
-		try {
-			response.getWriter().write(gson);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		request.setAttribute("result", result);
+//		response.setContentType("application/json");
+//		response.setCharacterEncoding("UTF-8");
+////		
+////		
+//		String gson = new Gson().toJson(result);
+////
+//		try {
+//			response.getWriter().write(gson);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+		
+		return "redirect:gwManageMain.gwm";
 		
 	}
 	
@@ -143,7 +145,9 @@ public class GwManageController {
 	@RequestMapping("delete.gwm")
 	public String deleteGw(GWork g) {
 		
-		System.out.println(g);
+		System.out.println("삭제?" + g);
+		
+		
 		
 		int result = gs.deleteGw(g);
 			
