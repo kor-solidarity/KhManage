@@ -145,4 +145,14 @@ public class IssueDaoImpl implements IssueDao{
 		return sqlSession.selectOne("Issue.selectChangeRequestOne", changeNo);
 	}
 
+	@Override
+	public Work selectWorkOne(SqlSessionTemplate sqlSession, String workNo) {
+		return sqlSession.selectOne("Issue.selectWorkOne", workNo);
+	}
+
+	@Override
+	public Grantor selectGrantorName(SqlSessionTemplate sqlSession, String grantorNo) {
+		return sqlSession.selectOne("Issue.selectGrantorName", grantorNo);
+	}
+
 }

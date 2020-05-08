@@ -390,10 +390,38 @@ public class IssueController {
 	@RequestMapping("/selectChangeRequestOne.iu")
 	public String selectChangeRequestOne(String changeNo, Model m) {
 		ChangeRequest cr = is.selectChangeRequestOne(changeNo);
+		System.out.println("출력확인" + cr);
 		
 		
+		if(cr != null) {
+			Grantor gn1 = is.selectGrantorName(cr.getGrantorNo());
+			Grantor gn2 = is.selectGrantorName(cr.getMemberNo());
+			Grantor gn3 = is.selectGrantorName(cr.getCrGrantor1());
+			Grantor gn4 = is.selectGrantorName(cr.getCrGrantor2());
+			Grantor gn5 = is.selectGrantorName(cr.getRegisterNo());
+			
+			Work wk = is.selectWorkOne(cr.getWorkNo());
+			
+			Grantor wn1 = is.selectGrantorName(wk.getGrantorNo());
+			Grantor wn2 = is.selectGrantorName(wk.getMemberNo());
+			
+			m.addAttribute("cr", cr);
+			m.addAttribute("gn1", gn1);
+			m.addAttribute("gn2", gn2);
+			m.addAttribute("gn3", gn3);
+			m.addAttribute("gn4", gn4);
+			m.addAttribute("gn5", gn5);
+			
+			m.addAttribute("wk", wk);
+			m.addAttribute("wn1", wn1);
+			m.addAttribute("wn2", wn2);
+			return "user/issue/changeRequestDetail";
+		}else {
+			m.addAttribute("msg", "변경요청 상세내역 출력 오류");
+			
+			return "common/errorPage";
+		}
 		
-		return "";
 	}
 	
 	

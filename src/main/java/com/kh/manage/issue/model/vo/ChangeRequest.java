@@ -17,12 +17,14 @@ public class ChangeRequest implements java.io.Serializable{
 	private String precedeNo;
 	private String completeRate;
 	private String grantorNo;
+	private String workGrantorName;
 	private String workLevel;
 	private String highWorkNo;
 	private String highWorkName;
 	private String workType;
 	private String workStatus;
 	private String memberNo;
+	private String workMemberName;
 	private String crStatus;
 	private String crGrantor1;
 	private String grantorName1;
@@ -37,10 +39,10 @@ public class ChangeRequest implements java.io.Serializable{
 
 	public ChangeRequest(String changeNo, String requestTitle, String requestContent, Date requestDate, String workNo,
 			String workName, String status, String projectNo, String projectName, Date beginDate, Date completeDate,
-			String precedeNo, String completeRate, String grantorNo, String workLevel, String highWorkNo,
-			String highWorkName, String workType, String workStatus, String memberNo, String crStatus,
-			String crGrantor1, String grantorName1, String crGrantor2, String grantorName2, String crConfirm1,
-			String crConfirm2, String registerNo, String registerName) {
+			String precedeNo, String completeRate, String grantorNo, String workGrantorName, String workLevel,
+			String highWorkNo, String highWorkName, String workType, String workStatus, String memberNo,
+			String workMemberName, String crStatus, String crGrantor1, String grantorName1, String crGrantor2,
+			String grantorName2, String crConfirm1, String crConfirm2, String registerNo, String registerName) {
 		super();
 		this.changeNo = changeNo;
 		this.requestTitle = requestTitle;
@@ -56,12 +58,14 @@ public class ChangeRequest implements java.io.Serializable{
 		this.precedeNo = precedeNo;
 		this.completeRate = completeRate;
 		this.grantorNo = grantorNo;
+		this.workGrantorName = workGrantorName;
 		this.workLevel = workLevel;
 		this.highWorkNo = highWorkNo;
 		this.highWorkName = highWorkName;
 		this.workType = workType;
 		this.workStatus = workStatus;
 		this.memberNo = memberNo;
+		this.workMemberName = workMemberName;
 		this.crStatus = crStatus;
 		this.crGrantor1 = crGrantor1;
 		this.grantorName1 = grantorName1;
@@ -185,6 +189,14 @@ public class ChangeRequest implements java.io.Serializable{
 		this.grantorNo = grantorNo;
 	}
 
+	public String getWorkGrantorName() {
+		return workGrantorName;
+	}
+
+	public void setWorkGrantorName(String workGrantorName) {
+		this.workGrantorName = workGrantorName;
+	}
+
 	public String getWorkLevel() {
 		return workLevel;
 	}
@@ -231,6 +243,14 @@ public class ChangeRequest implements java.io.Serializable{
 
 	public void setMemberNo(String memberNo) {
 		this.memberNo = memberNo;
+	}
+
+	public String getWorkMemberName() {
+		return workMemberName;
+	}
+
+	public void setWorkMemberName(String workMemberName) {
+		this.workMemberName = workMemberName;
 	}
 
 	public String getCrStatus() {
@@ -311,12 +331,12 @@ public class ChangeRequest implements java.io.Serializable{
 				+ requestContent + ", requestDate=" + requestDate + ", workNo=" + workNo + ", workName=" + workName
 				+ ", status=" + status + ", projectNo=" + projectNo + ", projectName=" + projectName + ", beginDate="
 				+ beginDate + ", completeDate=" + completeDate + ", precedeNo=" + precedeNo + ", completeRate="
-				+ completeRate + ", grantorNo=" + grantorNo + ", workLevel=" + workLevel + ", highWorkNo=" + highWorkNo
-				+ ", highWorkName=" + highWorkName + ", workType=" + workType + ", workStatus=" + workStatus
-				+ ", memberNo=" + memberNo + ", crStatus=" + crStatus + ", crGrantor1=" + crGrantor1 + ", grantorName1="
-				+ grantorName1 + ", crGrantor2=" + crGrantor2 + ", grantorName2=" + grantorName2 + ", crConfirm1="
-				+ crConfirm1 + ", crConfirm2=" + crConfirm2 + ", registerNo=" + registerNo + ", registerName="
-				+ registerName + "]";
+				+ completeRate + ", grantorNo=" + grantorNo + ", workGrantorName=" + workGrantorName + ", workLevel="
+				+ workLevel + ", highWorkNo=" + highWorkNo + ", highWorkName=" + highWorkName + ", workType=" + workType
+				+ ", workStatus=" + workStatus + ", memberNo=" + memberNo + ", workMemberName=" + workMemberName
+				+ ", crStatus=" + crStatus + ", crGrantor1=" + crGrantor1 + ", grantorName1=" + grantorName1
+				+ ", crGrantor2=" + crGrantor2 + ", grantorName2=" + grantorName2 + ", crConfirm1=" + crConfirm1
+				+ ", crConfirm2=" + crConfirm2 + ", registerNo=" + registerNo + ", registerName=" + registerName + "]";
 	}
 
 	

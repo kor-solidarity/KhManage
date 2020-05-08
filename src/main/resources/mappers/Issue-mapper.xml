@@ -103,11 +103,14 @@
 		<result property="precedeNo" column="PRECEDE_NO"/>
 		<result property="completeRate" column="COMPLETE_RATE"/>
 		<result property="grantorNo" column="GRANTOR_NO"/>
+		<result property="workGrantorName" column="WORK_GRANTOR_NAME"/>
 		<result property="workLevel" column="WORK_LEVEL"/>
 		<result property="highWorkNo" column="HIGH_WORK_NO"/>
 		<result property="highWorkName" column="HIGH_WORK_NAME"/>
 		<result property="workType" column="WORK_TYPE"/>
+		<result property="workStatus" column="WORK_STATUS"/>
 		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="workMemberName" column="WORK_MEMBER_NAME"/>
 		<result property="crStatus" column="CR_STATUS"/>
 		<result property="crGrantor1" column="CR_GRANTOR_1"/>
 		<result property="grantorName1" column="GRANTOR_NAME_1"/>
@@ -135,7 +138,33 @@
 		<result property="ext" column="EXT"/>
 	</resultMap>
 	
+	<resultMap type="Grantor" id="selectGrantorName">
+		<id property="memberPk" column="MEMBER_NO"/>
+		<result property="memberName" column="MEMBER_NAME"/>
+		<result property="deptName" column="DEPT_NAME"/>
+		<result property="rankName" column="RANK_NAME"/>
+	</resultMap>
 
+
+	<resultMap type="Work" id="workResultSelect">
+		<id property="workNo" column="WORK_NO"/>
+		<result property="workName" column="WORK_NAME"/>
+		<result property="status" column="STATUS"/>
+		<result property="projectNo" column="PROJECT_NO"/>
+		<result property="projectName" column="PROJECT_Name"/>
+		<result property="beginDate" column="BEGIN_DATE"/>
+		<result property="completeDate" column="COMPLETE_DATE"/>
+		<result property="precedeNo" column="PRECEDE_NO"/>
+		<result property="completeRate" column="COMPLETE_RATE"/>
+		<result property="grantorNo" column="GRANTOR_NO"/>
+		<result property="workLevel" column="WORK_LEVEL"/>
+		<result property="highWorkNo" column="HIGH_WORK_NO"/>
+		<result property="highWorkName" column="HIGH_WORK_NAME"/>
+		<result property="memo" column="MEMO"/>
+		<result property="workType" column="WORK_TYPE"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="workStatus" column="WORK_STATUS"/>
+	</resultMap>
 
 	<select id="selectProjectName" parameterType="Member" resultMap="selectIssueTeamProject">
 		SELECT PT.TEAM_PK, PT.PROJECT_PK, PT.MEMBER_PK, PT.ROLE, P.PROJECT_NAME
@@ -305,35 +334,106 @@
 	
  	<select id="selectChangeRequestList" parameterType="java.lang.String" resultMap="selectChangeRequest">
 	SELECT 
-	        CR.CHANGE_NO
-	      , CR.REQUEST_TITLE
-	      , CR.REQUEST_DATE
-	      , CR.WORK_NO
-	      , CR.WORK_NAME
-	      , CR.STATUS
-	      , CR.PROJECT_NO
-	      , P.PROJECT_NAME
-	      , CR.CR_GRANTOR_1
-	      , M2.MEMBER_NAME AS GRANTOR_NAME_1
-	      , CR.CR_GRANTOR_2
-	      , M3.MEMBER_NAME AS GRANTOR_NAME_2
-	      , CR.REGISTER_NO
-	      , M.MEMBER_NAME AS REGISTER_NAME
-	      , CR.CR_STATUS
-FROM CHANGE_REQUEST CR
-JOIN PROJECT P ON (CR.PROJECT_NO = P.PROJECT_PK)
-JOIN MEMBER M ON (CR.REGISTER_NO = M.MEMBER_NO)
-JOIN MEMBER M2 ON (CR.CR_GRANTOR_1 = M2.MEMBER_NO)
-JOIN MEMBER M3 ON (CR.CR_GRANTOR_2 = M3.MEMBER_NO)
-WHERE CR.PROJECT_NO = #{pno}
-ORDER BY CR.CHANGE_NO DESC
-	
+		        CR.CHANGE_NO
+		      , CR.REQUEST_TITLE
+		      , CR.REQUEST_DATE
+		      , CR.WORK_NO
+		      , CR.WORK_NAME
+		      , CR.STATUS
+		      , CR.PROJECT_NO
+		      , P.PROJECT_NAME
+		      , CR.CR_GRANTOR_1
+		      , M2.MEMBER_NAME AS GRANTOR_NAME_1
+		      , CR.CR_GRANTOR_2
+		      , M3.MEMBER_NAME AS GRANTOR_NAME_2
+		      , CR.REGISTER_NO
+		      , M.MEMBER_NAME AS REGISTER_NAME
+		      , CR.CR_STATUS
+	FROM CHANGE_REQUEST CR
+	JOIN PROJECT P ON (CR.PROJECT_NO = P.PROJECT_PK)
+	JOIN MEMBER M ON (CR.REGISTER_NO = M.MEMBER_NO)
+	JOIN MEMBER M2 ON (CR.CR_GRANTOR_1 = M2.MEMBER_NO)
+	JOIN MEMBER M3 ON (CR.CR_GRANTOR_2 = M3.MEMBER_NO)
+	WHERE CR.PROJECT_NO = #{pno}
+	ORDER BY CR.CHANGE_NO DESC
+		
 	</select>
 
 
-<!-- 	<select id="selectChangeRequestOne" parameterType="java.lange.String" resultMap="selectChangeRequest">
+	<select id="selectChangeRequestOne" parameterType="java.lang.String" resultMap="selectChangeRequest">
+		SELECT 
+		        CR.CHANGE_NO
+		      , CR.REQUEST_TITLE
+	          , CR.REQUEST_CONTENT
+		      , CR.REQUEST_DATE
+		      , CR.WORK_NO
+		      , CR.WORK_NAME
+		      , CR.STATUS
+		      , CR.PROJECT_NO
+		      , P.PROJECT_NAME
+	          , CR.BEGIN_DATE
+	          , CR.COMPLETE_DATE
+	          , CR.PRECEDE_NO
+	          , CR.COMPLETE_RATE
+	          , CR.GRANTOR_NO
+	          , M4.MEMBER_NAME AS WORK_GRANTOR_NAME
+	          , CR.WORK_LEVEL
+	          , CR.HIGH_WORK_NO
+	          , W.WORK_NAME AS HIGH_WORK_NAME
+	          , CR.WORK_TYPE
+	          , CR.WORK_STATUS
+	          , CR.MEMBER_NO
+	          , M5.MEMBER_NAME AS WORK_MEMBER_NAME
+		      , CR.CR_GRANTOR_1
+		      , M2.MEMBER_NAME AS GRANTOR_NAME_1
+		      , CR.CR_GRANTOR_2
+		      , M3.MEMBER_NAME AS GRANTOR_NAME_2
+		      , CR.REGISTER_NO
+		      , M.MEMBER_NAME AS REGISTER_NAME
+		      , CR.CR_STATUS
+		FROM CHANGE_REQUEST CR
+		JOIN PROJECT P ON (CR.PROJECT_NO = P.PROJECT_PK)
+		JOIN MEMBER M ON (CR.REGISTER_NO = M.MEMBER_NO)
+		JOIN MEMBER M2 ON (CR.CR_GRANTOR_1 = M2.MEMBER_NO)
+		JOIN MEMBER M3 ON (CR.CR_GRANTOR_2 = M3.MEMBER_NO)
+		JOIN MEMBER M4 ON (CR.GRANTOR_NO = M4.MEMBER_NO)
+		JOIN MEMBER M5 ON (CR.MEMBER_NO = M5.MEMBER_NO)
+		JOIN WORK W ON (CR.HIGH_WORK_NO = W.WORK_NO)
+		WHERE CR.CHANGE_NO = #{changeNo}
+	</select>
 	
-	</select> -->
+	<select id="selectGrantorName" parameterType="java.lang.String" resultMap="selectGrantorName">
+	SELECT M.MEMBER_NO, M.MEMBER_NAME, D.DEPT_NAME, R.RANK_NAME
+		FROM MEMBER M
+		JOIN DEPT D ON (M.DEPT_NO = D.DEPT_NO)
+		JOIN RANK R ON (M.RANK_NO = R.RANK_NO)
+		WHERE M.MEMBER_NO = #{grantorNo}
+	</select>
+	
+	<select id="selectWorkOne" parameterType="java.lang.String" resultMap="workResultSelect">
+	SELECT 
+	        W.WORK_NO
+	      , W.WORK_NAME
+	      , W.STATUS
+	      , W.PROJECT_NO
+	      , P.PROJECT_NAME
+	      , W.BEGIN_DATE
+	      , W.COMPLETE_DATE
+	      , W.PRECEDE_NO
+	      , W.COMPLETE_RATE
+	      , W.GRANTOR_NO
+	      , W.WORK_LEVEL
+	      , W.HIGH_WORK_NO
+	      , W2.WORK_NAME AS HIGH_WORK_NAME
+	      , W.WORK_TYPE
+	      , W.MEMBER_NO
+	      , W.WORK_STATUS
+	FROM WORK W
+	LEFT OUTER JOIN WORK W2 ON (W.HIGH_WORK_NO = W2.WORK_NO)
+	JOIN PROJECT P ON (W.PROJECT_NO = P.PROJECT_PK)
+	WHERE W.WORK_NO = #{workNo}
+	</select>
+	
 </mapper>
 
 

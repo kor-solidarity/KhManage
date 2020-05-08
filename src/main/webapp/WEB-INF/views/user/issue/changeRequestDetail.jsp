@@ -207,7 +207,7 @@
 				</tr>
 				<tr>
 					<td class="thRange" align="center" colspan="2">변경요청 번호</td>
-					<td class="thRange2" colspan="16">수강-0001</td>
+					<td class="thRange2" colspan="16">${cr.changeNo }</td>
 				</tr>
 				<tr>
 					<td class="thRange" colspan="18"></td>
@@ -216,11 +216,11 @@
 					<td class="thRange"></td>
 					<td class="thRange">프로젝트</td>
 					<td class="thRange2" colspan="9">
-						KH대학교 학사시스템 개발
+						${cr.projectName }
 					</td>
-					<td class="thRange" align="left">작업</td>
+					<td class="thRange" align="left">작업명</td>
 					<td class="thRange2" colspan="6">
-						수강신청 작업
+						${cr.workName }
 					</td>
 				</tr>
 				<tr>
@@ -229,7 +229,7 @@
 				<tr>
 					<td class="thRange"></td>
 					<td class="thRange">제목</td>
-					<td class="thRange2" colspan="16">수강신청 오류 조치자 변경</td>
+					<td class="thRange2" colspan="16">${cr.requestTitle }</td>
 				</tr>
 				<tr>
 					<td class="thRange" colspan="18"></td>
@@ -237,7 +237,7 @@
 				<tr>
 					<td class="thRange"></td>
 					<td class="thRange">이슈 내용</td>
-					<td class="thRange2" rowspan="5" colspan="16"><textarea id="requestContent">수강신청 오류 조치자에 대한 변경요청건입니다.</textarea></td>
+					<td class="thRange2" rowspan="5" colspan="16"><textarea id="requestContent">${cr.requestContent }</textarea></td>
 					
 				</tr>
 				<tr>
@@ -257,18 +257,217 @@
 					<td class="thRange"></td>
 				</tr>
 				<tr>
-					<td class="thRange"></td>
-					<td class="thRange">첨부파일</td>
-					<td class="thRange3" colspan="7">파일명</td>
-					<td class="thRange3" colspan="2">버전</td>
-					<td class="thRange3" colspan="2">등록자</td>
-					<td class="thRange3" colspan="2">등록일</td>
-					<td class="thRange3" colspan="2">삭제</td>
-					<td class="thRange"></td>
+					<td class="thRange" colspan="18">
+					<hr style="border:solid 1px lightgray;">
+					</td>
 				</tr>
 				<tr>
-					<td class="thRange" colspan="18"></td>
+					<td class="thRange" colspan="2"></td>
+					<td class="thRange">작업명</td>
+					<td class="thRange" colspan="2" >
+					<input type="text" name="workName" class="inputMenu form-control workName">
+					</td>
+					<td class="thRange">작업유형</td>
+					<td class="thRange" colspan="2">
+					<input type="text" name="workType" class="inputMenu form-control workType" required="required">
+					</td>
+					<td class="thRange" colspan="2"></td>
+					<td class="thRange">작업명</td>
+					<td class="thRange" colspan="2" >
+					<input type="text" name="workName" class="inputMenu form-control workName">
+					</td>
+					<td class="thRange">작업유형</td>
+					<td class="thRange" colspan="2">
+					<input type="text" name="workType" class="inputMenu form-control workType" required="required">
+					</td>
+					<td class="thRange" colspan="2"></td>
 				</tr>
+				<tr>
+					<td class="thRange" colspan="6"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange" colspan="6"></td>
+				</tr>
+				<tr>
+					<td class="thRange" colspan="2"></td>
+					<td class="thRange">시작일</td>
+					<td class="thRange" colspan="2">
+					<input name="beginDate" type="date" class="inputMenu form-control beginDate" required="required">
+					</td>
+					<td class="thRange">완료일</td>
+					<td class="thRange" colspan="2">
+					<input name="completeDate" type="date" class="inputMenu form-control completeDate" required="required">
+					</td>
+					<td class="thRange" colspan="2"></td>
+					<td class="thRange">시작일</td>
+					<td class="thRange" colspan="2">
+					<input name="beginDate" type="date" class="inputMenu form-control beginDate" required="required">
+					</td>
+					<td class="thRange">완료일</td>
+					<td class="thRange" colspan="2">
+					<input name="completeDate" type="date" class="inputMenu form-control completeDate" required="required">
+					</td>
+					<td class="thRange" colspan="2"></td>
+				</tr>
+				<tr>
+				<td class="thRange" colspan="6"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange" colspan="6"></td>
+				</tr>
+				<tr>
+					<td class="thRange" colspan="2"></td>
+					<td class="thRange">완료율</td>
+					<td class="thRange" colspan="2">
+					<input name="completeRate" type="number" class="inputMenu form-control completeRate" step="5" min="0" max="100">	
+					</td>
+					<td class="thRange">담당자</td>
+					<td class="thRange" colspan="2">
+					<select name="memberNo" id="memberNo" class="inputMenu form-control memberNo" required="required">
+						
+					</select>
+					</td>
+					<td class="thRange" colspan="2"></td>
+					<td class="thRange">완료율</td>
+					<td class="thRange" colspan="2">
+					<input name="completeRate" type="number" class="inputMenu form-control completeRate" step="5" min="0" max="100">	
+					</td>
+					<td class="thRange">담당자</td>
+					<td class="thRange" colspan="2">
+					<select name="memberNo" id="memberNo" class="inputMenu form-control memberNo" required="required">
+						
+					</select>
+					</td>
+					<td class="thRange" colspan="2"></td>
+				</tr>
+				<tr>
+				<td class="thRange" colspan="6"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+				<td class="thRange" colspan="6"></td>
+				</tr>
+				<tr>
+				<td class="thRange" colspan="2"></td>
+					<td class="thRange">작업단계</td>
+					<td class="thRange" colspan="2" >
+					<select name="workLevel" id="workLevel" class="inputMenu form-control workLevel" required="required">
+						<option value="#" >선택하세요</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+					</select>
+					</td>
+					<td class="thRange">작업상태</td>
+					<td class="thRange" colspan="2">
+					<select name="status" id="statusSelect" class="inputMenu form-control status" required="required">
+						<option value="#" >선택하세요</option>
+						<option value="시작전">시작전</option>
+						<option value="개발중">개발중</option>
+						<option value="개발완료">개발완료</option>
+						<option value="테스트완료">테스트완료</option>
+						<option value="PL검토중">PL검토중</option>
+						<option value="PL승인완료">PL승인완료</option>
+						<option value="개발지연">개발지연</option>
+					</select>
+					</td>
+					<td class="thRange" colspan="2"></td>
+					<td class="thRange">작업단계</td>
+					<td class="thRange" colspan="2" >
+					<select name="workLevel" id="workLevel" class="inputMenu form-control workLevel" required="required">
+						<option value="#" >선택하세요</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+					</select>
+					</td>
+					<td class="thRange">작업상태</td>
+					<td class="thRange" colspan="2">
+					<select name="status" id="statusSelect" class="inputMenu form-control status" required="required">
+						<option value="#" >선택하세요</option>
+						<option value="시작전">시작전</option>
+						<option value="개발중">개발중</option>
+						<option value="개발완료">개발완료</option>
+						<option value="테스트완료">테스트완료</option>
+						<option value="PL검토중">PL검토중</option>
+						<option value="PL승인완료">PL승인완료</option>
+						<option value="개발지연">개발지연</option>
+					</select>
+					</td>
+					<td class="thRange" colspan="2"></td>
+				</tr>
+				<tr>
+				<td class="thRange" colspan="6"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange" colspan="6"></td>
+				</tr>
+				<tr>
+				<td class="thRange" colspan="2"></td>
+					<td class="thRange">상위작업</td>
+					<td class="thRange" colspan="2" >
+						<select name="highWorkNo" id="highWorkNo" class="inputMenu form-control highWorkNo" required="required">
+											
+						</select>
+					</td>
+					<td class="thRange">승인자</td>
+					<td class="thRange" colspan="2">
+						<select name="grantorNo" id="grantorNo" style="padding-left:0px;" class="inputMenu form-control grantorNo" required="required">
+											
+						</select>
+					</td>
+					<td class="thRange" colspan="2"></td>
+					<td class="thRange">상위작업</td>
+					<td class="thRange" colspan="2" >
+						<select name="highWorkNo" id="highWorkNo" class="inputMenu form-control highWorkNo" required="required">
+											
+						</select>
+					</td>
+					<td class="thRange">승인자</td>
+					<td class="thRange" colspan="2">
+						<select name="grantorNo" id="grantorNo" style="padding-left:0px;" class="inputMenu form-control grantorNo" required="required">
+											
+						</select>
+					</td>
+					<td class="thRange" colspan="2"></td>
+				</tr>
+				<tr>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+					<td class="thRange"></td>
+				</tr>
+				
+				
 				<tr>
 					<td class="thRange"></td>
 					<td class="thRange">변경요청자</td>
@@ -290,7 +489,9 @@
 					<td class="thRange"></td>
 				</tr>
 				<tr>
-					<td class="thRange" colspan="18"><hr></td>
+					<td class="thRange" colspan="18">
+					<hr style="border:solid 1px lightgray;">
+					</td>
 				</tr>
 				<tr>
 					<td class="thRange"></td>
