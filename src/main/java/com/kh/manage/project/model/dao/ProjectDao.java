@@ -118,4 +118,6 @@ public interface ProjectDao {
 	int updateWorkLevel(SqlSessionTemplate sqlSession, ProjectWork work);
 
 	String selectEnrollDate(SqlSessionTemplate sqlSession, String pid);
+	
+	List<WorkProduct> selectProjectWorkProductList(SqlSessionTemplate sqlSession, String pid);
 }

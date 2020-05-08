@@ -14,7 +14,6 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -288,11 +287,17 @@ public class ProjectDaoImpl implements ProjectDao {
 	public int updateWorkLevel(SqlSessionTemplate sqlSession, ProjectWork work) {
 		return sqlSession.update("Project.updateWorkLevel", work);
 	}
-
+	
 	@Override
 	public String selectEnrollDate(SqlSessionTemplate sqlSession, String pid) {
 		
 		return sqlSession.selectOne("Project.selectEnrollDate", pid);
+	}
+	
+	@Override
+	public List<WorkProduct> selectProjectWorkProductList(SqlSessionTemplate sqlSession, String pid) {
+		return sqlSession.selectList("Project.selectProjectWorkProductList",
+				pid);
 	}
 }
 
