@@ -28,4 +28,22 @@ public class TimeLineServiceImpl implements TimeLineService {
 		return td.insertTimeAttachment(sqlSession, at);
 	}
 
+	@Override
+	public TimeLine selectOneTag(String tagName) {
+	
+		return td.selectOneTag(sqlSession, tagName);
+	}
+
+	@Override
+	public int insertTag(String tagName) {
+		
+		return td.insertTag(sqlSession, tagName);
+	}
+
+	@Override
+	public int insertTimeLineTag() {
+		
+		return td.insertTimeLineTag(sqlSession);
+	}
+
 }

@@ -21,4 +21,22 @@ public class TimeLineDaoImpl implements TimeLineDao {
 		return sqlSession.insert("TimeLine.insertTimeAttachment", at);
 	}
 
+	@Override
+	public TimeLine selectOneTag(SqlSessionTemplate sqlSession, String tagName) {
+		
+		return sqlSession.selectOne("TimeLine.selectOneTag", tagName);
+	}
+
+	@Override
+	public int insertTag(SqlSessionTemplate sqlSession, String tagName) {
+		
+		return sqlSession.insert("TimeLine.insertTag", tagName);
+	}
+
+	@Override
+	public int insertTimeLineTag(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.insert("TimeLine.insertTimeLineTag");
+	}
+
 }

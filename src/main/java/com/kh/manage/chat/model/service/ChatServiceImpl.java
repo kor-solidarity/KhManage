@@ -1,6 +1,7 @@
 package com.kh.manage.chat.model.service;
 
 import java.sql.Date;
+
 import java.util.List;
 
 
@@ -17,6 +18,7 @@ import com.kh.manage.chat.model.vo.Message;
 import com.kh.manage.chat.model.vo.SearchKeyWord;
 import com.kh.manage.common.Attachment;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.timeLine.model.vo.Tag;
 import com.kh.manage.timeLine.model.vo.TimeLine;
 
 @Service
@@ -224,6 +226,12 @@ public class ChatServiceImpl implements ChatService {
 	public List<TimeLine> selectAllTimeLine() {
 
 		return cd.selectAllTimeLine(sqlSession);
+	}
+
+	@Override
+	public List<Tag> selectOneTag(String timeLineNo) {
+		
+		return cd.selectOneTag(sqlSession, timeLineNo);
 	}
 
 

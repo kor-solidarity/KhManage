@@ -3,6 +3,10 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="TimeLine">
+	<resultMap type="TimeLine" id="tagResultSet">
+		<id property="tagNo" column="TAG_NO"></id>
+		<result property="tagName" column="TAG_NAME"/>
+	</resultMap>
 	
 	<insert id="insertTimeLine" parameterType="TimeLine">
 		INSERT INTO TIMELINE VALUES('TI'|| TO_CHAR(SEQ_TIME.NEXTVAL, 'FM000'), #{content}, #{memberNo}, SYSDATE, 'Y', #{aStatus})
@@ -12,5 +16,19 @@
 		INSERT INTO ATTACHMENT
 		VALUES('AT'|| TO_CHAR(SEQ_AT_NO.NEXTVAL, 'FM000'), 'TI'|| TO_CHAR(SEQ_TIME.CURRVAL, 'FM000'), #{originName}, #{changeName} , #{filePath}, #{ext})
 	</insert>
-		
+	
+	<select id="selectOneTag" parameterType="java.lang.String" resultMap="tagResultSet">
+		SELECT TAG_NO
+		     , TAG_NAME
+		FROM TIMELINE_TAG
+		WHERE TAG_NAME = #{tagName}
+	</select>	
+	
+	<insert id="insertTag"  parameterType="java.lang.String">
+		INSERT INTO TIMELINE_TAG VALUES('TAG'|| TO_CHAR(SEQ_TAG.NEXTVAL, 'FM000'), #{tagName})
+	</insert>
+	
+	<insert id="insertTimeLineTag">
+		INSERT INTO TIMELINE_TAGLIST VALUES('TAG'|| TO_CHAR(SEQ_TAG.CURRVAL, 'FM000'), 'TI'|| TO_CHAR(SEQ_TIME.CURRVAL, 'FM000'), 'Y')
+	</insert>
 </mapper>

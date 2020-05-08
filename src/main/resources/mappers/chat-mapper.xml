@@ -110,6 +110,10 @@
 		<result property="day" column="day"/>
 	</resultMap>
 	
+	<resultMap type="Tag" id="tagResultSet">
+		<id property="tagNo" column="TAG_NO"></id>
+		<result property="tagName" column="TAG_NAME"/>
+	</resultMap>
 	
 	<select id="selectAllDeptList" resultMap="departResultSet">
 		SELECT DEPT_NO
@@ -466,6 +470,14 @@
 		LEFT JOIN MEMBER M ON(T.MEMBER_NO = M.MEMBER_NO)
 		WHERE T.STATUS = 'Y'
 		ORDER BY T.ENROLL_DATE DESC
+	</select>
+	
+	<select id="selectOneTag" parameterType="java.lang.String" resultMap="tagResultSet">
+		SELECT T.TAG_NO
+             , TG.TAG_NAME
+        FROM TIMELINE_TAGLIST T
+        JOIN TIMELINE_TAG TG ON (TG.TAG_NO = T.TAG_NO)
+        WHERE T.TIMELINE_NO = #{timeLineNo}
 	</select>
 </mapper>
 

@@ -8,5 +8,11 @@ public interface TimeLineService {
 	int insertTimeLine(TimeLine tm);
 
 	int insertTimeAttachment(Attachment at);
+
+	TimeLine selectOneTag(String string);
+
+	int insertTag(String string);
+
+	int insertTimeLineTag();
 	
 }

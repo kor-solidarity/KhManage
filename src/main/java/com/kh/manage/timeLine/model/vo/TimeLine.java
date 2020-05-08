@@ -1,5 +1,7 @@
 package com.kh.manage.timeLine.model.vo;
 
+import java.util.List;
+
 public class TimeLine {
 	private String timeLineNo;
 	private String memberNo;
@@ -10,6 +12,9 @@ public class TimeLine {
 	private String aStatus;
 	private String changeName;
 	private String userChangeName;
+	private String tagNo;
+	private String tagName;
+	private List<Tag> tagList;
 	private int sec;
 	private int min;
 	private int hour;
@@ -18,8 +23,8 @@ public class TimeLine {
 	public TimeLine() {}
 
 	public TimeLine(String timeLineNo, String memberNo, String memberName, String content, String enrollDate,
-			String status, String aStatus, String changeName, String userChangeName, int sec, int min, int hour,
-			int day) {
+			String status, String aStatus, String changeName, String userChangeName, String tagNo, String tagName,
+			List<Tag> tagList, int sec, int min, int hour, int day) {
 		super();
 		this.timeLineNo = timeLineNo;
 		this.memberNo = memberNo;
@@ -30,6 +35,9 @@ public class TimeLine {
 		this.aStatus = aStatus;
 		this.changeName = changeName;
 		this.userChangeName = userChangeName;
+		this.tagNo = tagNo;
+		this.tagName = tagName;
+		this.tagList = tagList;
 		this.sec = sec;
 		this.min = min;
 		this.hour = hour;
@@ -108,6 +116,30 @@ public class TimeLine {
 		this.userChangeName = userChangeName;
 	}
 
+	public String getTagNo() {
+		return tagNo;
+	}
+
+	public void setTagNo(String tagNo) {
+		this.tagNo = tagNo;
+	}
+
+	public String getTagName() {
+		return tagName;
+	}
+
+	public void setTagName(String tagName) {
+		this.tagName = tagName;
+	}
+
+	public List<Tag> getTagList() {
+		return tagList;
+	}
+
+	public void setTagList(List<Tag> tagList) {
+		this.tagList = tagList;
+	}
+
 	public int getSec() {
 		return sec;
 	}
@@ -144,9 +176,12 @@ public class TimeLine {
 	public String toString() {
 		return "TimeLine [timeLineNo=" + timeLineNo + ", memberNo=" + memberNo + ", memberName=" + memberName
 				+ ", content=" + content + ", enrollDate=" + enrollDate + ", status=" + status + ", aStatus=" + aStatus
-				+ ", changeName=" + changeName + ", userChangeName=" + userChangeName + ", sec=" + sec + ", min=" + min
-				+ ", hour=" + hour + ", day=" + day + "]";
+				+ ", changeName=" + changeName + ", userChangeName=" + userChangeName + ", tagNo=" + tagNo
+				+ ", tagName=" + tagName + ", tagList=" + tagList + ", sec=" + sec + ", min=" + min + ", hour=" + hour
+				+ ", day=" + day + "]";
 	}
-
 	
+	
+
+
 }

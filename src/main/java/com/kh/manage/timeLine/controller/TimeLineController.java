@@ -63,6 +63,21 @@ public class TimeLineController {
 			int result = ts.insertTimeLine(tm);
 		}
 		
+		String[] tag = tm.getTagName().split(",");
+		
+		for(int i =0; i < tag.length; i++) {
+			System.out.println("태그 이름 : " + tag[i]);
+			
+			TimeLine ti = ts.selectOneTag(tag[i]);
+			
+			if(ti != null) {
+				
+			}else {
+				int result = ts.insertTag(tag[i]);
+				int result2 = ts.insertTimeLineTag();
+			}
+		}
+		
 		
 		return "redirect:showTimeLine.ct";
 	}
