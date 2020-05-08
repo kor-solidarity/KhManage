@@ -165,6 +165,16 @@
     <load-on-startup>1</load-on-startup>
   </servlet> 
   
+  <servlet>
+    <servlet-name>Servey</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>/WEB-INF/config/servey-servlet.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet> 
+  
   <servlet-mapping>
     <servlet-name>Report</servlet-name>
     <url-pattern>*.re</url-pattern>
@@ -238,6 +248,11 @@
   <servlet-mapping>
     <servlet-name>GwManage</servlet-name>
     <url-pattern>*.gwm</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>Servey</servlet-name>
+    <url-pattern>*.se</url-pattern>
   </servlet-mapping>
   
   
