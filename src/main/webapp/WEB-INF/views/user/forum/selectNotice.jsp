@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 <jsp:include page="/WEB-INF/views/user/common/header.jsp" />
 <jsp:include page="/WEB-INF/views/user/common/sidebar2.jsp" />
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
 .rupdate{
 		width: 70px;
@@ -482,7 +483,10 @@
 		 					},
 		 	        
 		 	        success: function(data){
-		 	            alert("댓글이 수정되었습니다.");
+		 	        	swal({
+					    	title: "댓글이 삭제되었습니다.",
+					      	icon: "success"
+					    })
 		 	            console.log(data);
 		 	            
 		 	            getCommentList();

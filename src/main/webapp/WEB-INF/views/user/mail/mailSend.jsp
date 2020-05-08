@@ -9,6 +9,7 @@
 <jsp:include page="/WEB-INF/views/user/common/mailSidebar.jsp"/>
   <link href="${ path }/resources/summernote/summernote-lite.css" rel="stylesheet">
   <script src="${ path }/resources/summernote/summernote-lite.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
 	.wjs_btn{
       height:30px;
@@ -68,7 +69,7 @@
    }
 </style>
 </head>
-<body>
+<body >
 	
 	<div class="panel panel-headline">
 		<div class="panel-heading">
@@ -190,6 +191,32 @@
 		
 		location.href = "${path}/mailComplete.ma";
 	}
+	
+	function save(){
+		
+		  swal({
+			  title: 'Are you sure?',
+			  text: "It will permanently deleted !",
+			  type: 'warning',
+			  showCancelButton: true,
+			  confirmButtonColor: '#3085d6',
+			  cancelButtonColor: '#d33',
+			  confirmButtonText: 'Yes, delete it!'
+			}).then(function() {
+			  swal(
+			    'Deleted!',
+			    'Your file has been deleted.',
+			    'success'
+			  );
+			})
+		//location.href = "mailStorage.ma";
+	}
+	
+	 var checkUnload = true;
+	    $(window).on("beforeunload", function(){
+	        if(checkUnload) return "이 페이지를 벗어나면 작성된 내용은 저장되지 않습니다.";
+	    });
+
 
 	</script>
 </body>
