@@ -165,7 +165,7 @@ summernote{
 						<div class="">
 							<button type="submit" class="okBtn" onclick="goWrite();"><i class="fas fa-check"></i>&nbsp;등록</button>
 								&nbsp;&nbsp;&nbsp;&nbsp;
-							<button type="reset" class="cancleBtn"><i class="fas fa-ban" onclick="goBack()"></i>&nbsp;취소</button>
+							<button type="reset" class="cancleBtn"><i class="fas fa-ban" onclick="goBack();"></i>&nbsp;취소</button>
 						</div>
 						<br><br><br><br>
 					</form>
@@ -178,7 +178,12 @@ summernote{
 	
 	
 	<script>
-		
+	
+	//취소버튼
+	function goBack(){
+      window.history.back();
+   	}
+	
 	//summernote 설정
 	$(document).ready(function() {
 	   //여기 아래 부분

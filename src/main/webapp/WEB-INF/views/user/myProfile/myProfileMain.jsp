@@ -248,6 +248,7 @@
 
                         <div class="tab-pane active" id="profile" aria-expanded="true">
 
+                            <!-- <form class="form-horizontal form-material" id="formProfile" action="updateMemberInfo.me" method="post" data-toggle="validator" novalidate="true"> -->
                             <form class="form-horizontal form-material" id="formProfile" action="updateMemberInfo.me" method="post" data-toggle="validator" novalidate="true">
 								<br>
 
@@ -283,33 +284,33 @@
                                         <span class="help-block with-errors"></span>
                                     </div>
                                 </div>
-
-
-                                <%-- <div class="form-group">
-                                    <label class="col-md-12 required">부서</label>
-                                    <div class="col-md-12">
-                                        <select class="select2me form-control select2-offscreen" id="DEPT_CODE" name="DEPT_CODE" style="width:250px; float:left;" tabindex="-1" title="">
-                                        	<option class="form-control" value="#">선택하세요</option>
-												<c:forEach var="a" items="${list}">
-													<option class="form-control" value="${a.deptNo}">
-														<c:out value="${a.deptName}"/>
-													</option>
-												</c:forEach>
-										</select>
-                                        <span class="help-block with-errors"></span>
-                                    </div>
-                                </div> --%>
 								
 								<br>
                                 <div class="form-group">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                	<button type="submit" class="profileBtn"><i class="fas fa-check"></i>&nbsp;프로필수정</button>
+                                	<!-- <button type="submit" class="profileBtn"><i class="fas fa-check"></i>&nbsp;프로필수정</button> -->
+                                	<button type="button" class="profileBtn"><i class="fas fa-check"></i>&nbsp;프로필수정</button>
                                 </div>
                             </form>
-
+                            <script>
+	                            $(".profileBtn").click(function() {
+	                            	
+	                            	swal({
+	                                    title: "회원정보가 변경되었습니다.",
+	                                    icon: "success"
+	                                 });
+	                                   	
+	                            	$("#formProfile").submit();
+	                            	
+	                            });
+                            </script>
+                            
+                            
+                            
                         </div>
 
                         <div class="tab-pane" id="changePassword">
 
+                            <!-- <form class="form-horizontal form-material" id="formChangePassword" action="updatePassword.me" method="post" data-toggle="validator" novalidate="true"> -->
                             <form class="form-horizontal form-material" id="formChangePassword" action="updatePassword.me" method="post" data-toggle="validator" novalidate="true">
                                 <div class="form-group">
                                 	<br>
@@ -336,15 +337,22 @@
 								</div>
                                 
                                 <div class="form-group" style="margin-left: 5px;">
-                                    <button type="submit" id="updatePassword" class="updatePassword"><i class="fas fa-check"></i>&nbsp;패스워드 수정</button>
+                                    <button type="button" id="updatePassword" class="updatePassword"><i class="fas fa-check"></i>&nbsp;패스워드 수정</button>
                                 </div>
                             </form>
                             
                             <script>
-                            	$(function() {
-                            		
-                            	});
-                            
+	                            $(".updatePassword").click(function() {
+	                            	
+	                            	swal({
+	                                    title: "비밀번호가 변경되었습니다.",
+	                                    text: "로그인 페이지로 이동합니다.",
+	                                    icon: "success"
+	                                 }).then((value) => {
+	                                   	$("#formChangePassword").submit();
+	                                 });
+	                            	
+	                            });
                             </script>
                             
 
@@ -352,7 +360,7 @@
 
                         <div class="tab-pane" id="changeProfileImage">
 
-                            <form class="form-horizontal form-material" id="formChangePassword" action="insertProfileImage.me" method="post" data-toggle="validator" enctype="multipart/form-data" encoding="multipart/form-data" novalidate="true">
+                            <form class="form-horizontal form-material" id="formProfileImage" action="insertProfileImage.me" method="post" data-toggle="validator" enctype="multipart/form-data" encoding="multipart/form-data" novalidate="true">
                                 <div class="form-group">
                                 	<br>
                                     <label class="col-md-12 required">프로필 이미지</label>
@@ -373,10 +381,25 @@
 
                                 <div class="form-group">
                                     <div class="col-sm-12">
-                                    	<button type="submit" class="profileImg"><i class="fas fa-check" onclick=""></i>&nbsp;프로필이미지 수정</button>
+                                    	<button type="button" class="profileImg"><i class="fas fa-check" onclick=""></i>&nbsp;프로필이미지 수정</button>
                                     </div>
                                 </div>
                             </form>
+                            
+                            <!-- <script>
+	                            $(".profileImg").click(function() {
+	                            	
+	                            	swal({
+	                                    title: "프로필 이미지가 등록(변경)되었습니다.",
+	                                    icon: "success"
+	                                 });
+	                                   	
+	                            	$("#formProfileImage").submit();
+	                            	
+	                            });
+                            </script> -->
+                            
+                            
                         </div>
                     </div>
                 </div>
@@ -393,21 +416,6 @@
 	
 	
 	<script>
-	/* 
-	//비밀번호
-	$(function () {
-        $('#password_confirm').on('blur', function () {
-            if ($("#password").val() != $('#password_confirm').val()) {
-                /* UIkit.modal.alert("패스워드와 패스워드 재확인 값이 일치하지 않습니다.");
-                sweetalert.alert("패스워드와 패스워드 재확인 값이 일치하지 않습니다.");
-                $("#password").val("");
-                $('#password_confirm').val("");
-            }
-        });
-    });
-	
-	 */
-	
 	 
  	// 비밀번호 유효성 검사
 	$("#correctPassword").hide();
@@ -439,12 +447,11 @@
 		}
 		
 	});
-    
 	
+	</script>
 	
+	<script>
 	//최종 폼전송 시 모든 input 부분 작성되었는 지 유효성 검사진행 !!@@
-    
-	
 	
 	
 	</script>

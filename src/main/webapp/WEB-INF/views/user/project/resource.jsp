@@ -278,8 +278,14 @@
     	  console.log("i : " + i);
           $("#addedMemberTable tr").filter(function(){
              if(str[i] == $(this).find(".memberNo").val()){
-                alert("중복된 인원이 있습니다");
+                
                 i = str.length;
+                
+                swal({
+                    title: "중복되는 회원입니다.",  
+                    text: "",
+                    icon: "warning"
+              	});
                 
                 //서블릿 동작 안 되게 !!
                 check = false;
@@ -309,7 +315,14 @@
 	    		   
 	    	   });
 			}
-			location.reload();
+			
+			swal({
+                title: "팀원에 추가되었습니다.",
+                icon: "success"
+             }).then((value) => {
+				location.reload();
+             });
+			
 			
 		}
       
@@ -384,9 +397,15 @@
 									
 									i = str1.length;
 									result = false;
-									alert("삭제할 수 없습니다." + "\n" + "프로젝트내 " + data + "님에게 배정된 작업이 있습니다.");
 									
-									//location.reload();
+									swal({
+						                 title: "프로젝트내 " + data + "님에게" + "\n" + "배정된 작업이 있어 삭제할 수 없습니다.",  
+						                 text: "",
+						                 icon: "warning"
+						           });
+									
+									//alert("삭제할 수 없습니다." + "\n" + "프로젝트내 " + data + "님에게 배정된 작업이 있습니다.");
+									
 									
 								} 
 				    	   		
@@ -420,8 +439,14 @@
 		    			  
 		    			  i = str1.length;
 		    			  
-		    			  location.reload();
-		    			  
+		    			  swal({
+		                         title: "삭제되었습니다.",
+		                         icon: "success"
+		                      }).then((value) => {
+
+		                    	  location.reload();
+		                    	  
+		                      });
 		    		  }
 		    		   
 		    	   }); 
@@ -429,7 +454,6 @@
 	       	   }
        		   
        	   }
-       	   
        	   
        } 
        
