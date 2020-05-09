@@ -144,12 +144,28 @@ summernote{
 						
 						<br>
 						<div class="">
-							<button type="submit" class="okBtn" onclick="goWrite();"><i class="fas fa-check"></i>&nbsp;수정</button>
+							<button type="button" class="okBtn" onclick="goWrite();"><i class="fas fa-check"></i>&nbsp;수정</button>
 								&nbsp;&nbsp;&nbsp;&nbsp;
 							<button type="reset" class="cancleBtn"><i class="fas fa-ban" onclick="goBack()"></i>&nbsp;취소</button>
 						</div>
 						<br><br><br><br>
 					</form>
+					
+					<script>
+					$(".okBtn").click(function() {
+						
+						swal({
+	                         title: "게시물이 수정되었습니다.",
+	                         icon: "success"
+	                      }).then((value) => {
+	                         $("#form").submit();
+	                      });
+					});
+					
+					</script>
+					
+					
+					
 				</div>
 			</div>
 		</div>
@@ -160,6 +176,10 @@ summernote{
 	
 	
 	<script>
+	
+	//뒤로가기
+	
+	
 		
 	//summernote 설정
 	$(document).ready(function() {

@@ -452,23 +452,13 @@
 			},
 			success: function(data) {
 				
-				alert("댓글이 등록되었습니다.");
-				
-				
-				if(replyContent.value() == "") {
+				if(replyContent === "") {
 					
 					alert("댓글을 입력하세요.")
 					replyContent.focus();
 					return false;
 					
-				} else {
-										
-					alert("댓글이 등록되었습니다.");
-					console.log(data);
-					 
-					
 				}
-				
 			}
 			
 		});
@@ -519,35 +509,39 @@
 		
 		//게시글 수정
 		$("#modifyBoBtn").click(function(){
-		
-			var result = confirm("게시글을 수정하시겠습니까?");
 			
-			if(result) {
-
-				location.href = "modifyBoardSelect.ib?boardNo=" + boardNo;
-				
-				console.log(boardNo);
-				
-			}			
+			location.href = "modifyBoardSelect.ib?boardNo=" + boardNo;
+			
+			console.log(boardNo);
 			
 		});
 		 
 		
 		//게시글 삭제
 		$("#deleteBoBtn").click(function(){
-			
-			var result = confirm("삭제하시겠습니까?");
-			
-			console.log(boardNo);
-			
-			if(result) {
 
-				location.href = "deleteBoard.ib?boardNo=" + boardNo;
-				alert("게시글이 삭제되었습니다.");
-				
-				
-			}
-			
+			swal({
+                title: "삭제하시겠습니까?",
+                text: "",
+                icon: "warning",
+                buttons: ["취소", "확인"],
+                dangerMode: true,
+              })
+              .then((willDelete) => {
+                  if (willDelete) {
+                      swal({
+                         title: "게시물을 삭제하였습니다.",
+                         icon: "success"
+                      }).then((value) => {
+                    	  location.href = "deleteBoard.ib?boardNo=" + boardNo;
+                      });
+                    } else {
+                       /* swal({
+                         title: "취소 하셨습니다.",
+                         icon: "error"
+                       }); */
+                    }
+              });
 		});
 		
 	});

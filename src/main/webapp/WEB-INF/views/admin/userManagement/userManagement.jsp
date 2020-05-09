@@ -366,32 +366,32 @@
 	 
 	 
 	//패스워드 초기화
-/* 	$("#projectTable tr").children().find("#pwdResetBtn").on("click", function(){
-
-		var result = confirm("해당인원의 패스워드 정보를 초기화 하시겠습니까?");
-	    
-		var memberNo = $($(this).parent().find("#inputMemberNo").val());
-		   	console.log(memberNo);
-	   	
-	   	
-	   	if(result) {
-
-	   		//location.href="userManagement.me?memberNo=" + memberNo;
-	   		
-	   	} */
-	   	
-	   	
     $("#projectTable tr").children().find("#pwdResetBtn").on("click", function(){
-     
-    	var result = confirm("해당인원의 패스워드 정보를 초기화 하시겠습니까?");
-        
-     	var memberNo = $(this).parent().find("#inputMemberNo").val();
-        console.log(memberNo);
-        
-        if(result) {
-        	location.href="userManagement.me?memberNo=" + memberNo;
-        }
-        
+
+    	var memberNo = $(this).parent().find("#inputMemberNo").val();
+
+    	swal({
+            title: "해당인원의 패스워드를 초기화합니다.",
+            text: "",
+            icon: "warning",
+            buttons: ["취소", "확인"],
+            dangerMode: true,
+          }).then((willDelete) => {
+                  if (willDelete) {
+                      swal({
+                         title: "비밀번호를 초기화하였습니다.",
+                         icon: "success"
+                      }).then((value) => {
+                    	  
+				        	location.href="userManagement.me?memberNo=" + memberNo;
+                      });
+                    } else {
+                       swal({
+                         title: "취소하셨습니다.",
+                         icon: "error"
+                       });
+                    }
+             });
         
     });
 	
