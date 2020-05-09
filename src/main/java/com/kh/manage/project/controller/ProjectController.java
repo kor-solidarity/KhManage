@@ -862,6 +862,7 @@ public class ProjectController {
 		
 		
 		request.setAttribute("workProduct", workProduct);
+		request.setAttribute("pid", pid);
 		
 		return "user/project/projectOutput";
 	}
