@@ -152,7 +152,7 @@
         <id property="memberNo" column="MEMBER_NO"/>
         <result property="productNo" column="PRODUCT_NO"/>
         <result property="workNo" column="WORK_NO"/>
-        <result property="productType" column="PRODUCT_TYPE_E"/>
+        <result property="productType" column="PRODUCT_TYPE"/>
         <result property="productTitle" column="PRODUCT_TITLE"/>
         <result property="productContent" column="PRODUCT_CONTENT"/>
         <result property="enrollDate" column="ENROLL_DATE"/>
@@ -424,9 +424,7 @@
                  JOIN MEMBER M ON W.MEMBER_NO = M.MEMBER_NO
                  JOIN ATTACHMENT A ON A.DIVISION = WP.PRODUCT_NO
         WHERE P.PROJECT_PK = #{value}
-          AND W.STATUS = 'Y'
           AND WP.STATUS = 'Y'
-          AND P.STATUS = 'Y'
     </select>
 
     <update id="updateWork" parameterType="ProjectWork">

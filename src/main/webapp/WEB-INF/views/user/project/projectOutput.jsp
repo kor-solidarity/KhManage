@@ -112,14 +112,16 @@
 							<c:forEach var="i" items="${workProduct}">
 							<tr class="trRange">
 								<%--클릭하면 프로젝트 작업목록으로 보내자.--%>
-								<td class="td1"><a href="#">KH대학교 학사시스템 개발</a></td>
-								<td class="tdText">SW개발</td>
-								<td class="tdText">띠로리</td>
+								<td class="td1">${i.projectName}</td>
+									<td class="tdText">
+										<a href="${path}/projectTask.pr?pid=${pid}&navType=3">${i.workName}</a>
+									</td>
+								<td class="tdText">${i.productType}</td>
 								<%--제목 클릭하면 다운받게끔?--%>
-								<td class="tdText"><a href="#">제목제목제목제목제목</a></td>
-								<td class="tdText">원준성</td>
-								<td class="tdText">2020-04-02</td>
-								<td class="tdText">2020-04-02</td>
+								<td class="tdText"><a href="#">${i.productTitle}</a></td>
+								<td class="tdText">${i.memberName}</td>
+								<td class="tdText">${i.enrollDate}</td>
+								<td class="tdText">${i.modifyDate}</td>
 							</tr>
 							</c:forEach>
 							<%--
