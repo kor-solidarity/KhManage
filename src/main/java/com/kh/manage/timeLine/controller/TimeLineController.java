@@ -18,6 +18,7 @@ import com.kh.manage.common.Attachment;
 import com.kh.manage.common.CommonsUtils;
 import com.kh.manage.member.model.vo.Member;
 import com.kh.manage.timeLine.model.service.TimeLineService;
+import com.kh.manage.timeLine.model.vo.Comment;
 import com.kh.manage.timeLine.model.vo.Tag;
 import com.kh.manage.timeLine.model.vo.TimeLine;
 
@@ -126,5 +127,35 @@ public class TimeLineController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@RequestMapping("/insertComment.ti")
+	public void insertComment(Comment comm, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+		Member m = (Member) session.getAttribute("loginUser");
+		
+		comm.setMemberNo(m.getMemberNo());
+		comm.setTcLevel(1);
+		comm.setHighComment(null);
+		int result = ts.insertHighComment(comm);
+		
+		String timeLineNo = ts.selectOneTimeLineNo();
+		
+		request.setAttribute("timeLineNo", timeLineNo);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+
+		String gson = new Gson().toJson(timeLineNo);
+
+		try {
+			response.getWriter().write(gson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	@RequestMapping("/insertDownComment.ti")
+	public void insertDownComment(Comment comm) {
+		System.out.println(comm);
 	}
 }

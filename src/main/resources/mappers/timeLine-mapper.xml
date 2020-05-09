@@ -44,5 +44,13 @@
 		DELETE FROM TIMELINE_LIKE WHERE TIMELINE_NO = #{timeLineNo} AND MEMBER_NO = #{memberNo}
 	</delete>
 	
+	<insert id="insertHighComment" parameterType="Comment">
+		INSERT INTO TIMELINE_COMMENT VALUES('TC'|| TO_CHAR(SEQ_COMM.NEXTVAL, 'FM0000'), #{timeLineNo}, #{highComment}, #{tcLevel}, #{tcContent}, #{memberNo}, SYSDATE, 'Y')
+	</insert>
+	
+	<select id="selectOneTimeLineOne" resultType="java.lang.String">
+		SELECT 'TC'|| TO_CHAR(SEQ_COMM.CURRVAL, 'FM0000')
+		FROM DUAL
+	</select>
 	
 </mapper>
