@@ -433,6 +433,35 @@ a {
 .nameDiv{
 	font-family: 'Stylish', sans-serif;
 }
+
+#answer{
+	font-family: 'Stylish', sans-serif;
+	font-size: 12px;
+	margin-left: 5px;
+}
+#answerComment{
+	margin-left: 3px;
+	margin-right:3px;
+	border:1px solid lightgray;
+	border-radius: 10px;
+	width:250px;
+	font-family: 'Stylish', sans-serif;
+ 	font-size: 12px;
+ 	outline: none;
+}
+.commentName{
+	font-size:12px;
+	font-family: 'Stylish', sans-serif;
+	margin-left: 40px;
+}
+#close{
+	margin-left: 5px;
+}
+.valueAnswer{
+	margin-left: 10px;
+	font-family: 'Stylish', sans-serif;
+	font-size: 12px;
+}
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Stylish&display=swap" rel="stylesheet">
 </head>
@@ -674,7 +703,7 @@ a {
                                   </c:forEach>
                                   <c:if test="${t.timeLine ne null}">
 	                                  	<c:if test="${check eq '하트'}">
-	                                    	<label id="count" style="float: right;  margin-right:30px; font-family: 'Stylish', sans-serif; line-height:16px;">${fn:length(t.timeLine)} </label><i class="fas fa-heart plus" id="hart" style="float: right; color:red; margin-right: 3px;"></i>&nbsp;
+	                                    	<label id="count" style="float: right;  margin-right:30px; font-family: 'Stylish', sans-serif; line-height:16px;">${fn:length(t.timeLine)} </label><i class="fas fa-heart plus" id="chanHart" style="float: right; color:red; margin-right: 3px;"></i>&nbsp;
 	                                    </c:if>
 	                                    <c:if test="${check eq '안됨'}">
 	                                    	<label id="count" style="float: right;  margin-right:30px; font-family: 'Stylish', sans-serif; line-height:16px;">${fn:length(t.timeLine)}</label><i class="far fa-heart" id="hart" style="float: right; color:red; margin-right: 3px;"></i>&nbsp;
@@ -740,10 +769,68 @@ a {
      </div>
       </div>
       <script>
+      var text;
+      var noComm;
+      $(document).on('click', '#close', function(){
+    	  $(this).parent().prev().append(text);
+  		  $(this).parent().parent().prev().find("#answer").text(text);
+    	  $(this).parent().parent().remove();
+			    	  
+      })
+      //답글 클릭
+      $(document).on('click', '#answer', function(){
+			text = $(this).html();
+			console.log($(this).parent().parent().parent());
+			noComm = $(this).parent().parent().parent().find("#hiddenTimeNo").val();
+    		$(this).parent().parent().parent().after("<tr><td colspan='3'><label class='commentName'>@${loginUser.memberName}</label><input type='text' id='answerComment' name='answerComment' placeholder='답글입력...'><i class='far fa-paper-plane' id='inserAnswerComment' style='color:#1E2B44; font-size: 14px;'></i><i class='far fa-times-circle' id='close'></i></td></tr>");    	  
+      })
+      
+      $(document).on('click', '#inserAnswerComment', function(){
+			var textValue = $(this).prev().val();
+			var timeLineNo = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().attr('id'); 
+			console.log(timeLineNo);
+			console.log(noComm);
+		 	 $.ajax({
+					url:'insertDownComment.ti',
+					type: 'post',
+					async: false,
+					data:{
+						timeLineNo:timeLineNo,
+						highComment:noComm,
+						tcContent:textValue
+					},
+				 success:function(data){
+				 }
+			 });  
+			console.log($(this).parent().parent().parent());
+			
+    	    $(this).parent().parent().after("<tr><td colspan='3'><label class='commentName'>@${loginUser.memberName}</label><label class='valueAnswer'>"+textValue+"</label></td></tr>")
+			$(this).parent().parent().remove();
+    })
+      
+      </script>
+      <script>
+      //댓글 입력
       $(document).on('click', '#insertComment', function(){
 		 var value = $(this).prev().val(); 
-		 $(this).parent().prev().children().append("<tr><td style='width:50px;'><div class='box' style='display:inline-block;'><img class='profile' src='/manage/resources/uploadFiles/${loginUser.changeName}'></div></td><td style='width:60px;'><div class='nameDiv' style='vertical-align:text-top;'>@김성준</div></td><td><br><lable class='commentLabel' style='line-height:10px; color:#1E2B44;'>"+ value +"</label></td></tr>")
-		 $(this).prev().val(""); 
+		 var comm ;
+		 console.log($(this).parent().parent().parent().parent().parent().parent().parent());
+	 	 var timeLineNo = $(this).parent().parent().parent().parent().parent().parent().parent().attr('id'); 
+		   $.ajax({
+				url:'insertComment.ti',
+				type: 'post',
+				async: false,
+				data:{
+					timeLineNo:timeLineNo,
+					tcContent:value
+				},
+			 success:function(data){
+				 comm= data;
+			 }
+		 });  
+				 $(this).parent().prev().children().prepend("<tr><td style='width:50px;'><div class='box' style='display:inline-block;'><img class='profile' src='/manage/resources/uploadFiles/${loginUser.changeName}'></div></td><td style='width:60px;'><div class='nameDiv' style='vertical-align:text-top;'>@${loginUser.memberName}</div></td><td><br><lable class='commentLabel' style='line-height:10px; color:#1E2B44;'>"+ value +"</label><input type='hidden' id='hiddenTimeNo' name='hiddenTimeNo' value='"+comm+"'><br><label id='answer'>답글</label></td></tr>")
+				 $(this).prev().val(""); 
+		 
       });
       
       

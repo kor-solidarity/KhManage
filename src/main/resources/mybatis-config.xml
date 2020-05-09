@@ -70,6 +70,7 @@
         <typeAlias type="com.kh.manage.issue.model.vo.ChangeRequest" alias="ChangeRequest"/>
         <typeAlias type="com.kh.manage.timeLine.model.vo.TimeLine" alias="TimeLine"/>
         <typeAlias type="com.kh.manage.timeLine.model.vo.Tag" alias="Tag"/>
+        <typeAlias type="com.kh.manage.timeLine.model.vo.Comment" alias="Comment"/>
   	</typeAliases>
   
   

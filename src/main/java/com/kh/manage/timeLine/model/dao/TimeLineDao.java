@@ -3,6 +3,7 @@ package com.kh.manage.timeLine.model.dao;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.manage.common.Attachment;
+import com.kh.manage.timeLine.model.vo.Comment;
 import com.kh.manage.timeLine.model.vo.Tag;
 import com.kh.manage.timeLine.model.vo.TimeLine;
 
@@ -23,6 +24,10 @@ public interface TimeLineDao {
 	int insertTimeListHart(SqlSessionTemplate sqlSession, TimeLine tl);
 
 	int deleteHart(SqlSessionTemplate sqlSession, TimeLine tl);
+
+	int insertHighComment(SqlSessionTemplate sqlSession, Comment comm);
+
+	String selectOneTimeLineNo(SqlSessionTemplate sqlSession);
 
 
 }

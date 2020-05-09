@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.manage.common.Attachment;
 import com.kh.manage.timeLine.model.dao.TimeLineDao;
+import com.kh.manage.timeLine.model.vo.Comment;
 import com.kh.manage.timeLine.model.vo.Tag;
 import com.kh.manage.timeLine.model.vo.TimeLine;
 
@@ -63,6 +64,18 @@ public class TimeLineServiceImpl implements TimeLineService {
 	public int deleteHart(TimeLine tl) {
 		
 		return td.deleteHart(sqlSession, tl);
+	}
+
+	@Override
+	public int insertHighComment(Comment comm) {
+		
+		return td.insertHighComment(sqlSession, comm);
+	}
+
+	@Override
+	public String selectOneTimeLineNo() {
+		
+		return td.selectOneTimeLineNo(sqlSession);
 	}
 
 	
