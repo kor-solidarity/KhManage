@@ -540,6 +540,7 @@
                          title: "취소 하셨습니다.",
                          icon: "error"
                        }); */
+                       
                     }
               });
 		});
@@ -610,10 +611,14 @@
     		},
     		success: function(data) {
     			
-    			alert("댓글이 삭제되었습니다.");
     			console.log(data);
     			
-    			location.reload();
+    			swal({
+                    title: "댓글이 삭제되었습니다.",
+                    icon: "success"
+                 }).then((value) => {
+	    			location.reload();
+                 });
     			
     		}
     		
