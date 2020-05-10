@@ -297,9 +297,9 @@
 	                            	swal({
 	                                    title: "회원정보가 변경되었습니다.",
 	                                    icon: "success"
+	                                 }).then((value) => {
+		                            	$("#formProfile").submit();
 	                                 });
-	                                   	
-	                            	$("#formProfile").submit();
 	                            	
 	                            });
                             </script>
@@ -386,18 +386,18 @@
                                 </div>
                             </form>
                             
-                            <!-- <script>
+                            <script>
 	                            $(".profileImg").click(function() {
 	                            	
 	                            	swal({
-	                                    title: "프로필 이미지가 등록(변경)되었습니다.",
+	                                    title: "프로필 이미지가 등록되었습니다.",
 	                                    icon: "success"
+	                                 }).then((value) => {
+		                            	$("#formProfileImage").submit();
 	                                 });
-	                                   	
-	                            	$("#formProfileImage").submit();
 	                            	
 	                            });
-                            </script> -->
+                            </script>
                             
                             
                         </div>
