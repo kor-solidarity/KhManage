@@ -9,6 +9,7 @@
 <jsp:include page="/WEB-INF/views/user/common/sidebar2.jsp" />
 <link href="${ path }/resources/summernote/summernote-lite.css" rel="stylesheet">
 <script src="${ path }/resources/summernote/summernote-lite.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
 
 .projectBtn {
@@ -104,7 +105,7 @@
 				<p class="p">공지사항 작성</p>
 				
 				<hr>
-				<form method="post" action="insertNotice.fo" id="noticeForm" enctype="multipart/form-data">
+				<form  method="post" action="insertNotice.fo" id="noticeForm"  enctype="multipart/form-data">
 				<table id="noticeTable" align="center">
 					<tr>
 						<td class="title"><div class="div"><p style="color:  #5e738b;">공지사항 제목</p></div></td>
@@ -129,7 +130,7 @@
 					<tr>
 						<td colspan="4">
 							<div class="div">
-							<button class="okBtn"  id="save">
+							<button type="button" class="okBtn"  id="save">
 								<i class="fas fa-check"></i>&nbsp;작성
 							</button>
 								&nbsp;
@@ -165,40 +166,16 @@
 	
  	$("#save").click(function(){
 		
-		
-		var title = frm.title.value;
-		var writer = frm.writer.value;
-		var content = frm.content.value;
-		
-		if (title.trim() == ''){
-			alert("제목을 입력해주세요");
-			return false;
-		}
-		if (writer.trim() == ''){
-			alert("작성자를 입력해주세요");
-			return false;
-		}
-		if (content.trim() == ''){
-			alert("내용을 입력해주세요");
-			return false;
-		}
-/* 		$("#noticeForm").submit(); */
+ 		swal({
+	  		title: "일정이 등록되었습니다.",
+	  		icon: "success",
+	  		button : "확인",
+	  		}).then((확인) => {
+	  			$("#noticeForm").submit();
+	 	 });
+ 		
 	}); 
 	
-	/* function goWrite(frm) {
-		var title = frm.noticeTitle.value;
-		var content = frm.noticeContent.value;
-		
-		if (title.trim() == ''){
-			alert("제목을 입력해주세요");
-			return false;
-		}
-		if (content.trim() == ''){
-			alert("내용을 입력해주세요");
-			return false;
-		}
-		//frm.submit();
-	} */
 
 </script>
 </html>

@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
 .titleText {
 	padding-top: 13px;
@@ -135,11 +136,9 @@
 									<i class="fas fa-check"></i>&nbsp;저장
 								</button>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<a href="accessManage.am">
 								<button class="cancleBtn">
 									<i class="fas fa-ban"></i>&nbsp;취소
 								</button>
-								</a>
 							</td>
 						</tr>
 						</table>
@@ -151,6 +150,11 @@
 </body>
 <script>
 	$("#save").click(function(){
+		swal({
+	    	title: "템플릿이 등록되었습니다.",
+	      	icon: "success"
+	    })
+		
 		$("#tempForm").submit();
 	})
 </script>

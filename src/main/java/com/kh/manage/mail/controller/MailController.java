@@ -860,6 +860,25 @@ public class MailController {
 			
 			return "redirect:mailTrash.ma";
 		}
+		
+		
+		@RequestMapping("reply.ma")
+		public String replyMail(HttpServletRequest request, Model m) {
+			
+			String mNo = request.getParameter("mNo");
+			
+			System.out.println(mNo);
+			
+			Mail mail = new Mail();
+			mail.setMailNo(mNo);
+			
+			Mail mail2 = ms.reciveMailOne(mNo);
+			
+			m.addAttribute("m", mail2);
+
+			return "user/mail/mailSend2";
+		}
+		
 
 
 }

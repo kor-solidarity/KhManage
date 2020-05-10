@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
 
 .projectBtn {
@@ -128,10 +129,10 @@
 	
 	#tr {
 		height: 30px;
+		background: #
 	}
 	
 	.tr {
-		background: #F3F3F3;
 		border-top: 1px solid gray;
 	}
 	
@@ -162,21 +163,21 @@
 						<td style="width: 30%">
 							<form class="navbar-form navbar-left"
 								style="float: right; margin-left: 20px;">
-								<!-- <div class="input-group">
+								 <div class="input-group">
 									<input type="text" value="" class="form-control"
 										> <span class="input-group-btn"><button
 											type="button" style="background: #1E2B44;"
 											class="btn btn-primary">
 											<i class="fas fa-search"></i>
 										</button></span>
-								</div> -->
+								</div>
 							</form>						
 						</td>
 					</tr>
 				</table>
 
 				<table id="noticeTable" align="center">
-					<tr style="background:#F3F3F3 ">
+					<tr style="background:#1E2B44 ; color: white; font-weight: bold;" >
 						<td class="titletd">제목</td>
 						<td class="sendtd">조회수</td>
 						<td class="sendtd">등록날짜</td>
@@ -249,7 +250,10 @@
 			location.href="insertNPage.fo";
 			
 		}else{
-			alert("공지사항은 관리자만 등록하실 수 있습니다.")
+			swal({
+		    	title: "공지사항을 작성하실 수 없습니다.",
+		      	icon: "info"
+		    })
 		}
 		
 		

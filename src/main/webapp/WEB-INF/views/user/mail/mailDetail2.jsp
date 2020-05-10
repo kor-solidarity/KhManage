@@ -67,11 +67,11 @@
 	</div>
 	<br>
 	
-	<hr align="left" style="border: solid 1px #C7C5C5; width:90%;  ">
+	<hr align="left" style="border: solid 1px #C7C5C5; width:100%;  ">
 		<table id="mailTable">
 			<tr>
 				<td class="mailtd"><img class="star" src="resources/img/star.png"></td>
-				<td class="mailtd2">${mail.subject }</td>
+				<td class="mailtd2" style="font-size: 18px; font-weight: bold;">${mail.subject}</td>
 			</tr>
 			<tr>
 				<td class="mailtd">보낸 사람</td>
@@ -95,7 +95,7 @@
 			</c:if>
 		</table>
 		
-	<hr align="left" style="border: solid 1px #C7C5C5; width:90%;  ">	
+	<hr align="left" style="border: solid 1px #C7C5C5; width:100%;  ">	
 	
 	<table>
 	<tr>
@@ -111,7 +111,7 @@
 	
 	
 	
-	<hr align="left" style="border: solid 1px #C7C5C5; width:90%;  ">
+	<hr align="left" style="border: solid 1px #C7C5C5; width:100%;  ">
 	</div>
 	</div>
 </body>

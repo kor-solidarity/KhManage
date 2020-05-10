@@ -9,8 +9,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Base64;
+import java.util.Base64.Decoder;
 import java.util.List;
 import java.util.Properties;
 
@@ -201,20 +204,41 @@ public class AwsS3 {
     }
 
     public String decodeName( String name ) throws Exception {
-        if(name == null || name.length() == 0){
-            return "unknown";
-        }
-        String ret = java.net.URLDecoder.decode( name, "UTF-8" );
+            if(name == null || name.length() == 0){
+                return "unknown";
+            }
+            System.out.println("name : " + name);
+            
+            
+            String ret =  name;
+            System.out.println("ret : " +  ret);
 
-        // also check for a few other things in the string:
-        ret = ret.replaceAll("=\\?", "");
-        ret = ret.replaceAll("utf-8\\?B\\?", "");
-        ret = ret.replaceAll("\\?=", "");
-        ret = ret.replaceAll("=20", " ");
-        ret = java.net.URLDecoder.decode( ret, "UTF-8" );
-        
-        
-        return ret;
+            // also check for a few other things in the string:
+            ret = ret.replaceAll("=\\?", "");
+            ret = ret.replaceAll("utf-8\\?B\\?", "");
+            ret = ret.replaceAll("\\?=", "");
+            ret = ret.replaceAll("=20", "");
+            ret = ret.replaceAll(" ", "");
+            System.out.println("ret : " +  ret);
+          System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+          
+          Decoder decoder = Base64.getDecoder();
+          
+          try {
+             String filename = ret;
+             System.out.println("ret : " + ret);
+             System.out.println("filename: " + filename);
+             byte[] decodeFile = decoder.decode(filename);
+             System.out.println("디코딩 테스트  1 : " + new String(decodeFile, "UTF-8" ));
+             
+             ret = new String(decodeFile, "UTF-8" );
+             System.out.println("디코딩 테스트 : " + ret);
+               
+          } catch (UnsupportedEncodingException e) {
+             e.printStackTrace();
+          }
+          
+            return ret;
     }
    
  // 버킷 내부에 존재하는 객체 삭제 메소드
@@ -243,9 +267,16 @@ public class AwsS3 {
                 Mail mr =  new Mail();
                 ArrayList<AttachmentMail> maList = new ArrayList<AttachmentMail>();
                 
-                System.out.println(messages.getFrom()[0].toString());
-                String from = decodeName(messages.getFrom()[0].toString());
-                mr.setFrom(from.substring(from.indexOf("<")+1, from.lastIndexOf(">")));
+                String from = messages.getFrom()[0].toString();
+                
+                System.out.println("from : " + from);
+                
+                String fromName = decodeName(from.substring(0, from.indexOf("<")));
+                
+                String fromAddress = from.substring(from.indexOf("<")+1, from.lastIndexOf(">"));
+
+
+                mr.setFrom(fromAddress);
                 
                 
                 Address[] to = messages.getRecipients(Message.RecipientType.TO);

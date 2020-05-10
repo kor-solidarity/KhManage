@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -121,7 +122,7 @@
 				<td class="mailtd">제목</td>
 				<td class="mailtd2">
 				<div id="mailr" style="width: 100%;">
-					<input class="tdinput" style="width: 100%" type="text" name="subject">
+					<input class="tdinput" style="width: 100%" type="text" name="subject" value="RE: ${m.subject }">
 				</div>
 				</td>
 				<td><div></div></td>
@@ -132,7 +133,14 @@
 				<td><div></div></td>
 			</tr>
 		</table><br><br>			
-	<textarea cols="80" rows="14" id="summernote" name="content"></textarea>
+	<textarea cols="80" rows="14" id="summernote" name="content">
+	-----Original Message----- <br>
+	From :< ${m.from } ><br> 
+	To : <${m.receiver }> <br>
+	Cc : <br> 
+	Sent : ${m.enrollDate } <br> 
+	Subject : ${m.content }
+	</textarea>
 	</form>
 	</div>
 	</div>
@@ -169,6 +177,8 @@
 </script>
    <script>
 	$(document).ready(function() {
+		
+		$("#ul").append("<div id='div' style='display: inline-block; '>" + "<input id='label' name='receiver' value='${m.from}' >  <button class='xbtn'  type='button' name='delbtn'><i class='fas fa-times'></i> </button> </div>")
 	   //여기 아래 부분
 	   $('#summernote').summernote({
 	        height: 300,                 // 에디터 높이
@@ -179,6 +189,9 @@
 	        lang: "ko-KR",               // 한글 설정
 	        placeholder: '최대 2048자까지 쓸 수 있습니다'   //placeholder 설정
 		   });
+		
+		
+		
 	});
 	
 	
@@ -213,7 +226,13 @@
 		//location.href = "mailStorage.ma";
 	}
 	
-
+	/*  var checkUnload = true;
+	    $(window).on("beforeunload", function(){
+	        if(checkUnload) return "이 페이지를 벗어나면 작성된 내용은 저장되지 않습니다.";
+	    }); */
+	
+	    
+		
 
 	</script>
 </body>
