@@ -157,6 +157,18 @@
 		
 		
 		<script>
+		
+		function getRandomColorHex() {
+		    var hex = "0123456789ABCDEF",
+		        color = "#";
+		    for (var i = 1; i <= 6; i++) {
+		      color += hex[Math.floor(Math.random() * 16)];
+		    }
+		    return color;
+		  }
+		
+		
+		
 			/* var deptName = $("#deptName").val(); */	
 			<% if(dlist.size() > 0) { %>
 			var ctx = document.getElementById('myBarChart2').getContext('2d');
@@ -190,18 +202,38 @@
 						],
 						backgroundColor : [
 							
-							'rgba(255, 99, 132, 1)',
-							'rgba(54, 162, 235, 1)',
-							'rgba(54, 162, 235, 1)',
-							'rgba(54, 162, 235, 1)',
-							'rgba(54, 162, 235, 1)',
-							'rgba(54, 162, 235, 1)',
-							'rgba(54, 162, 235, 1)',
-							'rgba(54, 162, 235, 1)',
-							'rgba(255, 206, 86, 1)',
-							'rgba(75, 192, 192, 1)',
-							'rgba(153, 102, 255, 1)',
-							'rgba(255, 159, 64, 1)'
+							//var colorCode = "#" + Math.round(Math.random() * 0xffffff).toStirng(16);
+							 getRandomColorHex(),
+							 getRandomColorHex(),
+							 getRandomColorHex(),
+							 getRandomColorHex(),
+							 getRandomColorHex(),
+							 getRandomColorHex(),
+							 getRandomColorHex(),
+							 getRandomColorHex(),
+							 getRandomColorHex(),
+							 getRandomColorHex(),
+							 getRandomColorHex(),
+							 getRandomColorHex(),
+							 getRandomColorHex(),
+							 getRandomColorHex(),
+							 getRandomColorHex(),
+							 getRandomColorHex(),
+							 getRandomColorHex(),
+							 getRandomColorHex(),
+							 getRandomColorHex(),
+							 getRandomColorHex(),
+							 getRandomColorHex(),
+							 getRandomColorHex(),
+							 getRandomColorHex(),
+							 getRandomColorHex(),
+							 getRandomColorHex(),
+							 getRandomColorHex(),
+							 getRandomColorHex(),
+							 getRandomColorHex(),
+							 getRandomColorHex(),
+							 getRandomColorHex(),
+							 getRandomColorHex()
 							
 							
 						],
@@ -234,14 +266,6 @@
 						display: false,
 						position: 'left'
 					}
-				/* dynamicColors : function() {
-				    var r = Math.floor(Math.random() * 255);
-				    var g = Math.floor(Math.random() * 255);
-				    var b = Math.floor(Math.random() * 255);
-				    return "rgba(" + r + "," + g + "," + b + ",0.8)";
-				} */
-
-				
 				
 				  /*   tooltips: {
 				      displayColors: true,
