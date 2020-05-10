@@ -237,7 +237,7 @@
 				<tr>
 					<td class="thRange"></td>
 					<td class="thRange">이슈 내용</td>
-					<td class="thRange2" rowspan="5" colspan="16"><textarea id="requestContent">${cr.requestContent }</textarea></td>
+					<td class="thRange2" rowspan="5" colspan="16"><textarea id="requestContent" readOnly>${cr.requestContent }</textarea></td>
 					
 				</tr>
 				<tr>
@@ -265,20 +265,20 @@
 					<td class="thRange" colspan="2"></td>
 					<td class="thRange">작업명</td>
 					<td class="thRange" colspan="2" >
-					<input type="text" name="workName" class="inputMenu form-control workName">
+					<input type="text" name="workName" class="inputMenu form-control workName" readOnly value="${wk.workName }">
 					</td>
-					<td class="thRange">작업유형</td>
+					<td class="thRange">&nbsp;&nbsp;&nbsp;작업유형</td>
 					<td class="thRange" colspan="2">
-					<input type="text" name="workType" class="inputMenu form-control workType" required="required">
+					<input type="text" name="workType" class="inputMenu form-control workType" required="required" readOnly value="${wk.workType }">
 					</td>
 					<td class="thRange" colspan="2"></td>
 					<td class="thRange">작업명</td>
 					<td class="thRange" colspan="2" >
-					<input type="text" name="workName" class="inputMenu form-control workName">
+					<input type="text" name="workName" class="inputMenu form-control workName" readOnly value="${cr.workName }">
 					</td>
-					<td class="thRange">작업유형</td>
+					<td class="thRange">&nbsp;&nbsp;작업유형</td>
 					<td class="thRange" colspan="2">
-					<input type="text" name="workType" class="inputMenu form-control workType" required="required">
+					<input type="text" name="workType" class="inputMenu form-control workType" required="required" readOnly value="${cr.workType }">
 					</td>
 					<td class="thRange" colspan="2"></td>
 				</tr>
@@ -296,20 +296,20 @@
 					<td class="thRange" colspan="2"></td>
 					<td class="thRange">시작일</td>
 					<td class="thRange" colspan="2">
-					<input name="beginDate" type="date" class="inputMenu form-control beginDate" required="required">
+					<input name="beginDate" type="date" class="inputMenu form-control beginDate" required="required" readOnly value="${wk.beginDate }">
 					</td>
 					<td class="thRange">완료일</td>
 					<td class="thRange" colspan="2">
-					<input name="completeDate" type="date" class="inputMenu form-control completeDate" required="required">
+					<input name="completeDate" type="date" class="inputMenu form-control completeDate" required="required" readOnly value="${wk.completeDate }">
 					</td>
 					<td class="thRange" colspan="2"></td>
 					<td class="thRange">시작일</td>
 					<td class="thRange" colspan="2">
-					<input name="beginDate" type="date" class="inputMenu form-control beginDate" required="required">
+					<input name="beginDate" type="date" class="inputMenu form-control beginDate" required="required" readOnly value="${cr.beginDate }">
 					</td>
 					<td class="thRange">완료일</td>
 					<td class="thRange" colspan="2">
-					<input name="completeDate" type="date" class="inputMenu form-control completeDate" required="required">
+					<input name="completeDate" type="date" class="inputMenu form-control completeDate" required="required" readOnly value="${cr.completeDate }">
 					</td>
 					<td class="thRange" colspan="2"></td>
 				</tr>
@@ -327,24 +327,20 @@
 					<td class="thRange" colspan="2"></td>
 					<td class="thRange">완료율</td>
 					<td class="thRange" colspan="2">
-					<input name="completeRate" type="number" class="inputMenu form-control completeRate" step="5" min="0" max="100">	
+					<input name="completeRate" type="number" class="inputMenu form-control completeRate" step="5" min="0" max="100" readOnly value="${wk.completeRate }">	
 					</td>
 					<td class="thRange">담당자</td>
 					<td class="thRange" colspan="2">
-					<select name="memberNo" id="memberNo" class="inputMenu form-control memberNo" required="required">
-						
-					</select>
+					<input type="text" name="memberNo" id="memberNo" class="inputMenu form-control memberNo" required="required" readOnly value="${wn1.deptName } ${wn1.rankName } ${wn1.memberName }">
 					</td>
 					<td class="thRange" colspan="2"></td>
 					<td class="thRange">완료율</td>
 					<td class="thRange" colspan="2">
-					<input name="completeRate" type="number" class="inputMenu form-control completeRate" step="5" min="0" max="100">	
+					<input name="completeRate" type="number" class="inputMenu form-control completeRate" step="5" min="0" max="100" readOnly value="${cr.completeRate }">	
 					</td>
 					<td class="thRange">담당자</td>
 					<td class="thRange" colspan="2">
-					<select name="memberNo" id="memberNo" class="inputMenu form-control memberNo" required="required">
-						
-					</select>
+					<input type="text" name="memberNo" id="memberNo" class="inputMenu form-control memberNo" required="required" readOnly value="${gn2.deptName } ${gn2.rankName} ${cr.workMemberName }">
 					</td>
 					<td class="thRange" colspan="2"></td>
 				</tr>
@@ -362,48 +358,20 @@
 				<td class="thRange" colspan="2"></td>
 					<td class="thRange">작업단계</td>
 					<td class="thRange" colspan="2" >
-					<select name="workLevel" id="workLevel" class="inputMenu form-control workLevel" required="required">
-						<option value="#" >선택하세요</option>
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-					</select>
+					<input type="text" name="workLevel" id="workLevel" class="inputMenu form-control workLevel" required="required" readOnly value="${wk.workLevel }">
 					</td>
 					<td class="thRange">작업상태</td>
 					<td class="thRange" colspan="2">
-					<select name="status" id="statusSelect" class="inputMenu form-control status" required="required">
-						<option value="#" >선택하세요</option>
-						<option value="시작전">시작전</option>
-						<option value="개발중">개발중</option>
-						<option value="개발완료">개발완료</option>
-						<option value="테스트완료">테스트완료</option>
-						<option value="PL검토중">PL검토중</option>
-						<option value="PL승인완료">PL승인완료</option>
-						<option value="개발지연">개발지연</option>
-					</select>
+					<input type="text" name="status" id="statusSelect" class="inputMenu form-control status" required="required" readOnly value="${wk.status }">
 					</td>
 					<td class="thRange" colspan="2"></td>
 					<td class="thRange">작업단계</td>
 					<td class="thRange" colspan="2" >
-					<select name="workLevel" id="workLevel" class="inputMenu form-control workLevel" required="required">
-						<option value="#" >선택하세요</option>
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-					</select>
+					<input type="text" name="workLevel" id="workLevel" class="inputMenu form-control workLevel" required="required" readOnly value="${cr.workLevel }">
 					</td>
 					<td class="thRange">작업상태</td>
 					<td class="thRange" colspan="2">
-					<select name="status" id="statusSelect" class="inputMenu form-control status" required="required">
-						<option value="#" >선택하세요</option>
-						<option value="시작전">시작전</option>
-						<option value="개발중">개발중</option>
-						<option value="개발완료">개발완료</option>
-						<option value="테스트완료">테스트완료</option>
-						<option value="PL검토중">PL검토중</option>
-						<option value="PL승인완료">PL승인완료</option>
-						<option value="개발지연">개발지연</option>
-					</select>
+					<input type="text" name="status" id="statusSelect" class="inputMenu form-control status" required="required" readOnly value="${cr.status }">
 					</td>
 					<td class="thRange" colspan="2"></td>
 				</tr>
@@ -421,28 +389,20 @@
 				<td class="thRange" colspan="2"></td>
 					<td class="thRange">상위작업</td>
 					<td class="thRange" colspan="2" >
-						<select name="highWorkNo" id="highWorkNo" class="inputMenu form-control highWorkNo" required="required">
-											
-						</select>
+						<input type="text" name="highWorkNo" id="highWorkNo" class="inputMenu form-control highWorkNo" required="required" readOnly value="${wk.highWorkNo }">
 					</td>
 					<td class="thRange">승인자</td>
 					<td class="thRange" colspan="2">
-						<select name="grantorNo" id="grantorNo" style="padding-left:0px;" class="inputMenu form-control grantorNo" required="required">
-											
-						</select>
+						<input type="text" name="grantorNo" id="grantorNo" style="padding-left:0px;" class="inputMenu form-control grantorNo" required="required" readOnly value="${wn1.deptName } ${wn1.rankName} ${wn1.memberName}">
 					</td>
 					<td class="thRange" colspan="2"></td>
 					<td class="thRange">상위작업</td>
 					<td class="thRange" colspan="2" >
-						<select name="highWorkNo" id="highWorkNo" class="inputMenu form-control highWorkNo" required="required">
-											
-						</select>
+						<input type="text" name="highWorkNo" id="highWorkNo" class="inputMenu form-control highWorkNo" required="required" readOnly value="${cr.highWorkNo }">
 					</td>
 					<td class="thRange">승인자</td>
 					<td class="thRange" colspan="2">
-						<select name="grantorNo" id="grantorNo" style="padding-left:0px;" class="inputMenu form-control grantorNo" required="required">
-											
-						</select>
+						<input type="text" name="grantorNo" id="grantorNo" style="padding-left:0px;" class="inputMenu form-control grantorNo" required="required" readOnly value="${gn1.deptName } ${gn1.rankName} ${gn1.memberName}">
 					</td>
 					<td class="thRange" colspan="2"></td>
 				</tr>
@@ -472,7 +432,7 @@
 					<td class="thRange"></td>
 					<td class="thRange">변경요청자</td>
 					<td class="thRange2" colspan="3">
-						연구소 PMO01 과장
+						${gn5.deptName } ${gn5.rankName } ${gn5.memberName }
 					</td>
 					<td class="thRange"></td>
 					<td class="thRange"></td>
@@ -497,27 +457,7 @@
 					<td class="thRange"></td>
 					<td class="thRange">승인자 1</td>
 					<td class="thRange2" colspan="3">
-						연구소 PMO01 과장 - 승인중
-					</td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-				</tr>
-				<tr>
-					<td class="thRange"></td>
-					<td class="thRange">코멘트 1</td>
-					<td class="thRange2" colspan="3">
-						확인완료
+						${gn3.deptName } ${gn3.rankName } ${gn3.memberName }
 					</td>
 					<td class="thRange"></td>
 					<td class="thRange"></td>
@@ -540,27 +480,7 @@
 					<td class="thRange"></td>
 					<td class="thRange">승인자 2</td>
 					<td class="thRange2" colspan="3">
-						연구소 PMO02 과장 - 승인중
-					</td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-				</tr>
-				<tr>
-					<td class="thRange"></td>
-					<td class="thRange">코멘트 2</td>
-					<td class="thRange2" colspan="3">
-						확인완료
+						${gn4.deptName } ${gn4.rankName } ${gn4.memberName }
 					</td>
 					<td class="thRange"></td>
 					<td class="thRange"></td>
@@ -578,26 +498,6 @@
 				</tr>
 				<tr>
 					<td class="thRange" colspan="18"><hr></td>
-				</tr>
-				<tr>
-					<td class="thRange"></td>
-					<td class="thRange">담당자</td>
-					<td class="thRange2" colspan="3">
-						연구소 PMO01 부장
-					</td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
 				</tr>
 				<tr>
 					<td class="thRange"></td>

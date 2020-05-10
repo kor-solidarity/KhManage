@@ -155,4 +155,9 @@ public class IssueDaoImpl implements IssueDao{
 		return sqlSession.selectOne("Issue.selectGrantorName", grantorNo);
 	}
 
+	@Override
+	public int insertChangeRequestHistory(SqlSessionTemplate sqlSession, ChangeRequest cr) {
+		return sqlSession.insert("Issue.insertChangeRequestHistory", cr);
+	}
+
 }

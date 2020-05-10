@@ -332,6 +332,11 @@
 			DEFAULT, #{crGrantor1}, #{crGrantor2}, DEFAULT, DEFAULT, #{registerNo})
 	</insert>
 	
+	<insert id="insertChangeRequestHistory" parameterType="ChangeRequest">
+	INSERT INTO CHANGE_REQUEST_HISTORY
+	VALUES('CRH' || TO_CHAR(SEQ_CRH_NO.NEXTVAL, 'FM000'), 'CR' || TO_CHAR(SEQ_CR.CURRVAL, 'FM000'), SYSDATE, DEFAULT)
+	</insert>
+	
  	<select id="selectChangeRequestList" parameterType="java.lang.String" resultMap="selectChangeRequest">
 	SELECT 
 		        CR.CHANGE_NO

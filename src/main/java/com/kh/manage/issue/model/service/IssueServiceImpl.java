@@ -156,6 +156,11 @@ public class IssueServiceImpl implements IssueService{
 		return id.selectGrantorName(sqlSession, grantorNo);
 	}
 
+	@Override
+	public int insertChangeRequestHistory(ChangeRequest cr) {
+		return id.insertChangeRequestHistory(sqlSession, cr);
+	}
+
 	
 
 	

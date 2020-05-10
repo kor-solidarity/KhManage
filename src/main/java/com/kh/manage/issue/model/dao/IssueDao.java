@@ -71,4 +71,6 @@ public interface IssueDao {
 
 	Grantor selectGrantorName(SqlSessionTemplate sqlSession, String grantorNo);
 
+	int insertChangeRequestHistory(SqlSessionTemplate sqlSession, ChangeRequest cr);
+
 }
