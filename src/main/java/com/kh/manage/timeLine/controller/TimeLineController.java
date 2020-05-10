@@ -205,4 +205,29 @@ public class TimeLineController {
 			e.printStackTrace();
 		}
 	}
+	
+	@RequestMapping("/deleteTimeLine.ti")
+	public String deleteTimeLine(TimeLine tl) {
+		int result = ts.deleteTimeLine(tl);
+		
+		return "redirect:showTimeLine.ct";
+	}
+	
+	@RequestMapping("/updateHighComment.ti")
+	public void updateHighComment(Comment comm, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+		
+		int result = ts.updateHighComment(comm);
+		
+		request.setAttribute("true", true);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+
+		String gson = new Gson().toJson(true);
+
+		try {
+			response.getWriter().write(gson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

@@ -90,6 +90,18 @@ public class TimeLineServiceImpl implements TimeLineService {
 		return td.deleteHighComment(sqlSession, comm);
 	}
 
+	@Override
+	public int updateHighComment(Comment comm) {
+		
+		return td.updateHighComment(sqlSession, comm);
+	}
+
+	@Override
+	public int deleteTimeLine(TimeLine tl) {
+		
+		return td.deleteTimeLine(sqlSession, tl);
+	}
+
 	
 
 }

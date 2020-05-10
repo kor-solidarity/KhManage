@@ -61,4 +61,12 @@
 	<select id="deleteHighComment" parameterType="Comment">
 		UPDATE TIMELINE_COMMENT SET STATUS = 'N' WHERE T_COMMENT_NO = #{tCommentNo}
 	</select>
+	
+	<update id="updateHighComment" parameterType="Comment">
+		UPDATE TIMELINE_COMMENT SET TC_CONTENT = #{tcContent} WHERE T_COMMENT_NO = #{tCommentNo}
+	</update>
+	
+	<update id="deleteTimeLine" parameterType="TimeLine">
+		UPDATE TIMELINE SET STATUS ='N' WHERE TIMELINE_NO = #{timeLineNo}
+	</update>
 </mapper>

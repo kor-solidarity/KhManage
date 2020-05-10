@@ -83,4 +83,16 @@ public class TimeLineDaoImpl implements TimeLineDao {
 		return sqlSession.update("TimeLine.deleteHighComment", comm);
 	}
 
+	@Override
+	public int updateHighComment(SqlSessionTemplate sqlSession, Comment comm) {
+		
+		return sqlSession.update("TimeLine.updateHighComment", comm);
+	}
+
+	@Override
+	public int deleteTimeLine(SqlSessionTemplate sqlSession, TimeLine tl) {
+		
+		return sqlSession.update("TimeLine.deleteTimeLine", tl);
+	}
+
 }
