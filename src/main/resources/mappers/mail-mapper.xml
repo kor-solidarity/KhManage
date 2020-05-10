@@ -165,7 +165,7 @@
 		AND MB.TRASH = 'N'
         AND RECEIVER_EMAIL = #{receiver}
 		AND M.MAIL_STATUS = 'Y'
-		ORDER BY M.MAIL_NO DESC
+		ORDER BY MAIL_ENROLLDATE DESC
 	</select>
 	
 	<select id="impMailList" parameterType="Mail" resultMap="mailResultSet">
@@ -177,7 +177,7 @@
 		AND MB.IMPORTANT = 'Y'
 		AND MB.TRASH = 'N'
 		AND M.MAIL_STATUS = 'Y'
-		ORDER BY M.MAIL_NO DESC
+		ORDER BY MAIL_ENROLLDATE DESC
 	</select>
 	
 	<select id="trashMailList" parameterType="Mail" resultMap="mailResultSet">
@@ -188,7 +188,7 @@
 		WHERE M.MEMBER_NO = #{memberNo}
 		AND MB.TRASH = 'Y'
 		AND M.MAIL_STATUS = 'Y'
-		ORDER BY M.MAIL_NO DESC
+		ORDER BY MAIL_ENROLLDATE DESC
 	</select>
 	
 	<select id="nReadMailList" parameterType="Mail" resultMap="mailResultSet">
@@ -200,7 +200,7 @@
 		AND MB.TRASH = 'N'
 		AND M.MAIL_STATUS = 'Y'
 		AND READ = 'N'
-		ORDER BY M.MAIL_NO DESC
+		ORDER BY MAIL_ENROLLDATE DESC
 	</select>
 	
 	<select id="reciveMailOne" parameterType="java.lang.String" resultMap="mailResultSet">

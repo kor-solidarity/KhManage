@@ -42,7 +42,8 @@
 	}
 	#mailtext{
 		width: 100%;
-		height: 300px;
+		height: 250px;
+		margin-left: 15px;
 	}
 </style>
 </head>
@@ -59,24 +60,24 @@
 	
 	
 	<div style="width: 100%; height: 50px;">
-		<button class="wjs_btn" style="width: 90px;"><i class="fas fa-envelope" style="margin-right: 7px;"></i>답장</button>
+		<button id="reply" class="wjs_btn" style="width: 90px;"><i class="fas fa-envelope" style="margin-right: 7px;"></i>답장</button>
 		<button id="delete" class="wjs_btn" style="width: 90px;"><i class="fas fa-trash-alt" style="margin-right: 7px;"></i>삭제</button>
 		<button class="wjs_btn" style="width: 90px;"><i class="fas fa-envelope-open" style="margin-right: 7px;"></i>읽음</button>
 		<button class="wjs_btn" style="width: 110px;"><i class="fas fa-ban" style="margin-right: 7px;"></i>스팸 신고</button>
 	</div>
 	<br>
 	
-	<hr align="left" style="border: solid 1px #C7C5C5; width:90%;  ">
+	<hr align="left" style="border: solid 1px #C7C5C5; width:100%;  ">
 		<table id="mailTable">
 			<tr>
 				<td class="mailtd">
 					<img class="star">
 				</td>
-				<td class="mailtd2">${mail.subject}</td>
+				<td class="mailtd2" style="font-size: 18px; font-weight: bold;">${mail.subject}</td>
 			</tr>
 			<tr>
 				<td class="mailtd">보낸 사람</td>
-				<td class="mailtd2">${mail.from }</td>
+				<td class="mailtd2"><c:out value="${mail.from  }"></c:out> </td>
 			</tr>
 			<tr>
 				<td class="mailtd">받는 사람</td>
@@ -96,7 +97,7 @@
 			</c:if>
 		</table>
 		
-	<hr align="left" style="border: solid 1px #C7C5C5; width:90%;  ">	
+	<hr align="left" style="border: solid 1px #C7C5C5; width:100%;  ">	
 	
 	<table>
 	<tr>
@@ -112,7 +113,7 @@
 	
 	
 	
-	<hr align="left" style="border: solid 1px #C7C5C5; width:90%;  ">
+	<hr align="left" style="border: solid 1px #C7C5C5; width:100%;  ">
 	</div>
 	</div>
 </body>
@@ -168,6 +169,12 @@
 	$("#delete").click(function(){
 		
 		location.href = "trash.ma?mNo="+mNo;
+		
+	});
+	
+	$("#reply").click(function(){
+		
+		location.href = "reply.ma?mNo="+mNo;
 		
 	});
 	
