@@ -94,11 +94,8 @@
 								<span id="chatCount" class="badge bg-danger" style="background:red; padding-left:0px; padding-right:0px; left:32px; top:20px; font-size:12px; width:auto; height:18px;"></span>
 						</a></li>
 						
-						<li class="dropdown"><a id="chat" href="showTimeLine.ct" class="dropdown-toggle icon-menu" >
+						<li class="dropdown"><a href="showTimeLine.ct" class="dropdown-toggle icon-menu" >
 							<i class="fab fa-instagram"  style="font-size: 27px; font-weight:600; color: #1E2B44;"></i>
-							<span id="chatCount" class="badge bg-danger" style="background:white; padding-left:0px; padding-right:0px; left:32px; top:20px; font-size:14px; width:auto; height:18px;">
-								<i class="fas fa-exclamation-triangle" style="color:orange;"></i>
-							</span>
 						</a></li>
 
 						<!-- 메일 -->

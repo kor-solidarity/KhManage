@@ -18,6 +18,7 @@ import com.kh.manage.chat.model.vo.Message;
 import com.kh.manage.chat.model.vo.SearchKeyWord;
 import com.kh.manage.common.Attachment;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.timeLine.model.vo.Comment;
 import com.kh.manage.timeLine.model.vo.Tag;
 import com.kh.manage.timeLine.model.vo.TimeLine;
 
@@ -238,6 +239,12 @@ public class ChatServiceImpl implements ChatService {
 	public List<TimeLine> selectOneHart(String timeLineNo) {
 		
 		return cd.selectOneHart(sqlSession, timeLineNo);
+	}
+
+	@Override
+	public List<Comment> selectOneComment(String timeLineNo) {
+		
+		return cd.selectOneComment(sqlSession, timeLineNo);
 	}
 
 

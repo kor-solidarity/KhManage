@@ -10,11 +10,12 @@ public class Comment {
 	private String memberName;
 	private String enrollDate;
 	private String status;
+	private String changeName;
 	
 	public Comment() {}
 
 	public Comment(String timeLineNo, String tCommentNo, String highComment, int tcLevel, String tcContent,
-			String memberNo, String memberName, String enrollDate, String status) {
+			String memberNo, String memberName, String enrollDate, String status, String changeName) {
 		super();
 		this.timeLineNo = timeLineNo;
 		this.tCommentNo = tCommentNo;
@@ -25,6 +26,7 @@ public class Comment {
 		this.memberName = memberName;
 		this.enrollDate = enrollDate;
 		this.status = status;
+		this.changeName = changeName;
 	}
 
 	public String getTimeLineNo() {
@@ -99,12 +101,20 @@ public class Comment {
 		this.status = status;
 	}
 
+	public String getChangeName() {
+		return changeName;
+	}
+
+	public void setChangeName(String changeName) {
+		this.changeName = changeName;
+	}
+
 	@Override
 	public String toString() {
 		return "Comment [timeLineNo=" + timeLineNo + ", tCommentNo=" + tCommentNo + ", highComment=" + highComment
 				+ ", tcLevel=" + tcLevel + ", tcContent=" + tcContent + ", memberNo=" + memberNo + ", memberName="
-				+ memberName + ", enrollDate=" + enrollDate + ", status=" + status + "]";
+				+ memberName + ", enrollDate=" + enrollDate + ", status=" + status + ", changeName=" + changeName + "]";
 	}
 
-	
+		
 }
