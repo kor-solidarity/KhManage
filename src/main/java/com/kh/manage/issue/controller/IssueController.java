@@ -346,6 +346,7 @@ public class IssueController {
 		int result = is.insertChangeRequest(cr);
 		
 		if(result > 0) {
+			int result2 = is.insertChangeRequestHistory(cr);
 			return "redirect:changeRequestList.iu";
 		}else {
 			request.setAttribute("msg", "변경요청 등록 오류");
@@ -415,6 +416,7 @@ public class IssueController {
 			m.addAttribute("wk", wk);
 			m.addAttribute("wn1", wn1);
 			m.addAttribute("wn2", wn2);
+			
 			return "user/issue/changeRequestDetail";
 		}else {
 			m.addAttribute("msg", "변경요청 상세내역 출력 오류");

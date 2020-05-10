@@ -69,5 +69,7 @@ public interface IssueService {
 
 	Grantor selectGrantorName(String grantorNo);
 
+	int insertChangeRequestHistory(ChangeRequest cr);
+
 
 }
