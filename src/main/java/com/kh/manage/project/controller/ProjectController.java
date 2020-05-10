@@ -529,6 +529,8 @@ public class ProjectController {
 		List<ProjectTeam> teamList = ps.selectProjectTeamList(pid);
 		// 승인 담당 대상자 목록
 		List<ProjectTeam> grantorList = ps.selectProjectTeamGrantorList(pid);
+		// 가이드 목록: 프로젝트 기본정보에서 업로드 한 파일 목록임.
+		List<Attachment> projectAttachment = ps.selectAttachmentList(pid);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("projectWork", projectWork);
@@ -539,6 +541,7 @@ public class ProjectController {
 		map.put("teamList", teamList);
 		map.put("grantorList", grantorList);
 		map.put("highWorkList", highWorkList);
+		map.put("projectAttachment", projectAttachment);
 		
 		
 		response.setContentType("application/json");
@@ -686,8 +689,7 @@ public class ProjectController {
 	public String updateProject(HttpServletRequest request,
 								@RequestParam MultipartFile[] file) {
 		
-		// 변경대상:
-		// 관리자 / PMO / 서브관리자 / 시작·종료일 / 첨부파일 / 설명
+		// 변경대상: 관리자 / PMO / 서브관리자 / 시작·종료일 / 첨부파일 / 설명
 		
 		String pid = request.getParameter("pid");
 		String project_manager = request.getParameter("project_manager");

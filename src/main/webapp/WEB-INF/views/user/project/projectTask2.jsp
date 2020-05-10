@@ -1016,7 +1016,7 @@
                                 $(".gantt_default_header_icon").click();
                                 // $('.gantt_default_corner').attr('style', 'display: none');
                                 // $('.gantt_default_rowheader_scroll').attr('style', 'display: none');
-                            $('.gantt_default_scrollable').attr('style', 'height: 1200px');
+                                $('.gantt_default_scrollable').attr('style', 'height: 1200px');
                             } else {
 
                                 // gantt.days = ganttInfo.totalDays;
@@ -1072,6 +1072,8 @@
                             workProduct = data.workProduct;
                             // history
                             workHistory = data.workHistory;
+                            // 가이드
+                            projectAttachment = data.projectAttachment;
 
                             // 이 창에서 수정이 가능한건 인원뿐. 그것도 시작전일때만.
                             console.log("이 창에서 수정이 가능한건 인원뿐. 그것도 시작전일때만.")
@@ -1203,11 +1205,37 @@
                                     "</tr>"
                                 );
                             }
+
+                            // 가이드: 프로젝트에 등록된 첨부파일을 넣는거임. 
+
+                            $("#projectAttachmentTable tbody").empty();
+
+                            for (let i = 0; i < projectAttachment.length; i++) {
+                                $("#projectAttachmentTable tbody").append(
+                                    "<tr>" +
+                                    // 파일명
+                                    "<td> <a onclick='down_stuff(\"" + projectAttachment[i].atNo + "\")'>" +
+                                    projectAttachment[i].originName + "</a></td>" +
+                                    // 등록일
+                                    // "<td>" +  + "</td>" +
+                                    // 등록자 - 등록자가 테이블에 없음
+                                    // "<td>" +workProduct[i].productType + "</td>" +
+                                    // 삭제창?
+                                    // "<td>" + "</td>" +
+                                    "</tr>"
+                                );
+                            }
                         },
                         error: function (xhr, status, error) {
                             alert("wut");
                         }
                     })
+                }
+
+                function down_stuff (downNo) {
+                    console.log(downNo);
+                    // alert(downNo)
+                    location.href = "download.fo?no=" + downNo;
                 }
 
                 // 0월 00, 0000 인 날짜를 인풋에 드갈수 있게끔
@@ -1375,30 +1403,6 @@
 							<%--산출물--%>
 							<div id="menu2" class="tab-pane fade">
 								<div class="tab-pane active" id="tab_1_4">
-									<%--여기선 조회만 하지 보는건 안됨. --%>
-									<%--<div class="row" style="margin-bottom: 0px; display: block;" id="div_file_upload">
-										<div class="col-md-2">
-											<label class="control-label font-blue-dark"
-												   style="float:left; text-align:left; width:100px;padding-left:15px;">
-												산출물 등록</label>
-										</div>
-										<div class="col-md-4" style="padding-bottom:10px;">
-											<select class="select2me approvers select2-offscreen"
-													id="task_document_classify_check"
-													name="task_document_classify_check" tabindex="-1" title="">
-												<option value="UI보고서">UI보고서</option>
-												<option value="요구사항정의서">요구사항정의서</option>
-												<option value="프로세스 정의서">프로세스 정의서</option>
-												<option value="테이블 정의서">테이블 정의서</option>
-												<option value="통합테스트 시나리오">통합테스트 시나리오</option>
-											</select>
-										</div>
-										<div class="col-md-6">
-											<div class="">
-												<input id="attFiles" name="attFiles" type="file" autocomplete="off">
-											</div>
-										</div>
-									</div>--%>
 									<div id="fileList" style="width:100%;">
 										<%--
 										산출물 목록에 들어가 있어야 할 목록:
@@ -1467,9 +1471,59 @@
 							</div>
 							<%--가이드--%>
 							<div id="menu3" class="tab-pane fade">
-								<%--<h3>Menu 3</h3>
-								<p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta
-									sunt explicabo.</p>--%>
+								<table class="table table-striped table-bordered table-advance table-hover"
+									   id="projectAttachmentTable">
+									<thead>
+									<tr>
+										<th style="text-align: center; width: 40%;">
+											파일명
+										</th>
+										<%--
+										<th style="text-align: center; width: 20%;">
+											등록일
+										</th>
+										--%>
+										<%--테이블에 등록자가 없음...--%>
+										<%--<th style="text-align: center; width: 10%;">
+											등록자
+										</th>--%>
+										<%--
+										<th style="text-align: center; width: 7%;">
+											삭제
+										</th>
+										--%>
+									</tr>
+									</thead>
+									<tbody>
+									<tr id="d726674b-be83-4317-8f1f-4b984fc4890c">
+										<td class="hidden-xs">
+											설계검토결과
+										</td>
+										<td class="highlight">
+											<img src="/Images/Files/jpg.png" style="width: 20px; float:left;">
+											<a href="/File/FileDownloadByFileUid?fileUid=d726674b-be83-4317-8f1f-4b984fc4890c">★부록자료
+												사용안내★.jpg</a>
+										</td>
+										<td class="hidden-xs" style="text-align: center;">
+											v1
+										</td>
+										<td class="hidden-xs" style="text-align: center;">
+											pmo01
+										</td>
+
+
+										<td style="text-align: center;">
+											<button onclick="FileDelete('d726674b-be83-4317-8f1f-4b984fc4890c');"
+													file_uid="d726674b-be83-4317-8f1f-4b984fc4890c"
+													class="k-upload-action k-button-bare"
+													style="display: inline-block;" type="button">
+												<span class="glyphicon glyphicon-trash"> </span>
+											</button>
+										</td>
+									</tr>
+
+									</tbody>
+								</table>
 							</div>
 							<%--히스토리--%>
 							<div id="menu4" class="tab-pane fade">

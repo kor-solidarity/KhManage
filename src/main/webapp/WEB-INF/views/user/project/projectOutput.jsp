@@ -159,7 +159,7 @@
             console.log(obj);
             downNo = obj.parent().children('input').val();
             // alert(downNo)
-            location.href = "download.mo?no=" + downNo;
+            location.href = "download.fo?no=" + downNo;
         }
 	</script>
 </body>
