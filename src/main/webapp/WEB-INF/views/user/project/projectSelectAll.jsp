@@ -179,7 +179,6 @@
 									</c:otherwise>
 								</c:choose>
 
-								<%--todo 페이징 처리 10단위좀...--%>
 								<c:forEach var="i" begin="1" end="${pi.maxPage}">
 									<c:if test="${i == pi.currentPage}">
 										<span style="color: red ; font-weight: bold">${i}</span>
