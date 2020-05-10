@@ -29,5 +29,9 @@ public interface TimeLineDao {
 
 	String selectOneTimeLineNo(SqlSessionTemplate sqlSession);
 
+	String selectSysdate(SqlSessionTemplate sqlSession);
+
+	int deleteHighComment(SqlSessionTemplate sqlSession, Comment comm);
+
 
 }

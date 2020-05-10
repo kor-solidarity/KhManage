@@ -27,4 +27,8 @@ public interface TimeLineService {
 
 	String selectOneTimeLineNo();
 
+	String selectSysdate();
+
+	int deleteHighComment(Comment comm);
+
 }

@@ -53,4 +53,12 @@
 		FROM DUAL
 	</select>
 	
+	<select id="selectSysdate" resultType="java.lang.String">
+		SELECT TO_CHAR(SYSDATE,'MM"월"DD"일" HH24:MI') 
+        FROM DUAL
+	</select>
+	
+	<select id="deleteHighComment" parameterType="Comment">
+		UPDATE TIMELINE_COMMENT SET STATUS = 'N' WHERE T_COMMENT_NO = #{tCommentNo}
+	</select>
 </mapper>

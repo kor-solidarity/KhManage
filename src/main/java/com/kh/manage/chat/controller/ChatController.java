@@ -32,6 +32,7 @@ import com.kh.manage.chat.model.vo.SearchKeyWord;
 import com.kh.manage.common.Attachment;
 import com.kh.manage.common.CommonsUtils;
 import com.kh.manage.member.model.vo.Member;
+import com.kh.manage.timeLine.model.vo.Comment;
 import com.kh.manage.timeLine.model.vo.Tag;
 import com.kh.manage.timeLine.model.vo.TimeLine;
 
@@ -65,12 +66,20 @@ public class ChatController {
 		for(int i=0; i< tList.size(); i++) {
 			List<Tag> tg = cs.selectOneTag(tList.get(i).getTimeLineNo());
 			List<TimeLine> tl = cs.selectOneHart(tList.get(i).getTimeLineNo());
+			List<Comment> tc = cs.selectOneComment(tList.get(i).getTimeLineNo());
 			
 			if(tl == null) {
 				tList.get(i).setTimeLine(null);
 			}else {
 				tList.get(i).setTimeLine(tl);
 			}
+			
+			if(tc == null) {
+				tList.get(i).setTc(null);
+			}else {
+				tList.get(i).setTc(tc);
+			}
+			
 			tList.get(i).setTagList(tg);
 		}
 		

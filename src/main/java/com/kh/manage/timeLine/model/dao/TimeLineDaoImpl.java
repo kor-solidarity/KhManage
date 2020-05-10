@@ -71,4 +71,16 @@ public class TimeLineDaoImpl implements TimeLineDao {
 		return sqlSession.selectOne("TimeLine.selectOneTimeLineOne");
 	}
 
+	@Override
+	public String selectSysdate(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectOne("TimeLine.selectSysdate");
+	}
+
+	@Override
+	public int deleteHighComment(SqlSessionTemplate sqlSession, Comment comm) {
+		
+		return sqlSession.update("TimeLine.deleteHighComment", comm);
+	}
+
 }

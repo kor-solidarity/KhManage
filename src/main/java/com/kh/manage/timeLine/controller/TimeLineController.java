@@ -139,12 +139,17 @@ public class TimeLineController {
 		int result = ts.insertHighComment(comm);
 		
 		String timeLineNo = ts.selectOneTimeLineNo();
+		String enrollDate = ts.selectSysdate();
 		
-		request.setAttribute("timeLineNo", timeLineNo);
+		Comment cm = new Comment();
+		cm.settCommentNo(timeLineNo);
+		cm.setEnrollDate(enrollDate);
+		
+		request.setAttribute("cm", cm);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 
-		String gson = new Gson().toJson(timeLineNo);
+		String gson = new Gson().toJson(cm);
 
 		try {
 			response.getWriter().write(gson);
@@ -155,7 +160,49 @@ public class TimeLineController {
 	}
 	
 	@RequestMapping("/insertDownComment.ti")
-	public void insertDownComment(Comment comm) {
+	public void insertDownComment(Comment comm, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+		Member m = (Member) session.getAttribute("loginUser");
+		comm.setMemberNo(m.getMemberNo());
+		comm.setTcLevel(2);
+		
+		int result = ts.insertHighComment(comm);
+		
+		String timeLineNo = ts.selectOneTimeLineNo();
+		String enrollDate = ts.selectSysdate();
+		
+		Comment cm = new Comment();
+		cm.settCommentNo(timeLineNo);
+		cm.setEnrollDate(enrollDate);
+
+		request.setAttribute("cm", cm);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+
+		String gson = new Gson().toJson(cm);
+
+		try {
+			response.getWriter().write(gson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	@RequestMapping("/deleteHighComment.ti")
+	public void deleteHighComment(Comment comm, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		System.out.println(comm);
+		int result = ts.deleteHighComment(comm);
+		
+		request.setAttribute("true", true);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+
+		String gson = new Gson().toJson(true);
+
+		try {
+			response.getWriter().write(gson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

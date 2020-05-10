@@ -114,6 +114,19 @@
 		<id property="tagNo" column="TAG_NO"></id>
 		<result property="tagName" column="TAG_NAME"/>
 	</resultMap>
+
+	<resultMap type="Comment" id="commentResultSet">
+		<id property="tCommentNo" column="T_COMMENT_NO"/>
+		<result property="timeLineNo" column="TIMELINE_NO"/>
+		<result property="highComment" column="HIGH_COMMENT"/>
+		<result property="tcLevel" column="TC_LEVEL"/>
+		<result property="tcContent" column="TC_CONTENT"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="changeName" column="CHANGE_NAME"/>
+		<result property="memberName" column="MEMBER_NAME"/>
+		<result property="enrollDate" column="ENROLL_DATE"/>
+		<result property="status" column="STATUS"/>
+	</resultMap>
 	
 	<select id="selectAllDeptList" resultMap="departResultSet">
 		SELECT DEPT_NO
@@ -485,6 +498,27 @@
 		     , MEMBER_NO
 		 FROM TIMELINE_LIKE
 		 WHERE  TIMELINE_NO = #{timeLineNo}    
+	</select>
+	
+	<select id="selectOneComment" parameterType="java.lang.String" resultMap="commentResultSet">
+		SELECT LPAD(' ', 2*(LEVEL-1)) || T.T_COMMENT_NO AS T_COMMENT_NO, 
+			   T.TC_CONTENT,
+			   T.MEMBER_NO ,
+			   M.MEMBER_NAME, 
+			   T.TC_LEVEL,
+			   A.CHANGE_NAME,
+			   T.TIMELINE_NO,
+			   T.HIGH_COMMENT,
+			   TO_CHAR(T.ENROLL_DATE,'MM"월"DD"일" HH24:MI') AS ENROLL_DATE,
+			   T.STATUS,
+			   LEVEL
+		FROM TIMELINE_COMMENT T
+		JOIN MEMBER M ON(M.MEMBER_NO = T.MEMBER_NO)
+		LEFT JOIN ATTACHMENT A ON(A.DIVISION = M.MEMBER_NO)
+		WHERE T.TIMELINE_NO = #{timeLineNo}
+		START WITH T.HIGH_COMMENT IS NULL 
+		CONNECT BY PRIOR T.T_COMMENT_NO = T.HIGH_COMMENT
+		ORDER SIBLINGS BY T.ENROLL_DATE DESC
 	</select>
 </mapper>
 

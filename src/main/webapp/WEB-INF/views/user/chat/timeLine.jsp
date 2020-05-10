@@ -414,6 +414,7 @@ a {
 
 .commentLabel{
    font-family: 'Stylish', sans-serif;
+   font-weight: 600;
 }
 .profile {
 	width: 100%;
@@ -437,14 +438,15 @@ a {
 #answer{
 	font-family: 'Stylish', sans-serif;
 	font-size: 12px;
-	margin-left: 5px;
+	color:skyblue;
+	cursor: pointer;
 }
 #answerComment{
 	margin-left: 3px;
 	margin-right:3px;
 	border:1px solid lightgray;
 	border-radius: 10px;
-	width:250px;
+	width:230px;
 	font-family: 'Stylish', sans-serif;
  	font-size: 12px;
  	outline: none;
@@ -452,7 +454,8 @@ a {
 .commentName{
 	font-size:12px;
 	font-family: 'Stylish', sans-serif;
-	margin-left: 40px;
+	margin-left: 60px;
+	font-weight: 400;
 }
 #close{
 	margin-left: 5px;
@@ -461,6 +464,50 @@ a {
 	margin-left: 10px;
 	font-family: 'Stylish', sans-serif;
 	font-size: 12px;
+	font-weight: 600;
+}
+.enrollDateClass{
+	font-family: 'Stylish', sans-serif;
+	font-size: 10px;
+	margin-left: 2px;
+	color:orange;
+}
+.dateClass{
+	font-size: 8px;
+	font-family: 'Stylish', sans-serif;
+	color:lightgray;
+	margin-left: 2px;
+}
+#clock{
+	font-size: 10px;
+	margin-left: 15px;
+}
+
+#delete{
+	font-size: 13px;
+	color:#F3565D;
+	cursor: pointer;
+}
+#deleteDown{
+	font-size: 11px;
+	color:#F3565D;
+	cursor: pointer;
+}
+#correct{
+    font-family: 'Stylish', sans-serif;
+    color:green;
+    font-size: 13px;
+}
+.updateComment{
+	border:1px solid lightgray;
+	border-radius: 10px;
+	width:160px;
+	font-family: 'Stylish', sans-serif;
+ 	font-size: 12px;
+ 	outline: none;
+}
+#commentArea::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
 }
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Stylish&display=swap" rel="stylesheet">
@@ -715,8 +762,78 @@ a {
                                   <h6 class="card-title" style="color:#777777; font-weight: 400; font-family: 'Stylish', sans-serif; margin-top: 3px;"><i class="far fa-calendar-plus"></i>&nbsp;&nbsp;${t.enrollDate}</h6>
                               </div>
                               <div  style="float:right; height:500px; width:400px; margin-left:20px; border: 2px solid #1E2B44; border-radius: 10px; ">
-                              	<div id="commentArea" style="height: 92%; width:100%; overflow: auto;">
-                              		<table id="tableComment" style="width: 100%;"></table>
+                              	<div id="commentArea" style="height: 92%; width:100%; overflow: auto;  scrollbar-width: none;">
+                              		<table id="tableComment" style="width: 100%;">
+                              			<c:forEach var="co" items="${t.tc}">
+                              				<c:if test="${co.tcLevel eq 1}">
+                              					<c:if test="${co.status eq 'Y'}">
+                              					<tr>
+                              						<td style='width:50px;'>
+	                              						<div class='box' style='display:inline-block;'>
+	                              							<img class='profile' src='/manage/resources/uploadFiles/${co.changeName}'>
+	                              						</div>
+                              						</td>
+                              						<td style='width:60px;'>
+                              							<div class='nameDiv' style='vertical-align:text-top; vertical-align:top'>@${co.memberName}</div>
+                              						</td>
+                              						<td><br>
+	                              						<label class='commentLabel' style='line-height:10px;  vertical-align:bottom; color:#1E2B44;'>${co.tcContent }</label>
+	                              						<input type='hidden' id='hiddenTimeNo' name='hiddenTimeNo' value="${co.tCommentNo}">
+	                              						<i class="far fa-clock" id='clock'></i>
+	                              							<label class='enrollDateClass'>${co.enrollDate }</label>
+	                              						<c:if test="${co.memberNo  eq loginUser.memberNo}">
+	                              							<i id="delete" class="fas fa-trash-alt"></i>
+	                              							<i id="correct" class="fas fa-edit"></i>
+	                              						</c:if>
+	                              						<br>
+	                              						<label id='answer'>답글</label>
+                              						</td>
+                              					</tr>
+                              					</c:if>
+                              					<c:if test="${co.status eq 'N'}">
+                              					<tr>
+                              						<td style='width:50px;'>
+	                              						<div class='box' style='display:inline-block;'>
+	                              							<img class='profile' src='/manage/resources/uploadFiles/${co.changeName}'>
+	                              						</div>
+                              						</td>
+                              						<td style='width:60px;'>
+                              							<div class='nameDiv' style='vertical-align:text-top;'>@${co.memberName}</div>
+                              						</td>
+                              						<td><br>
+	                              						<label class='commentLabel' style='line-height:10px; color:gray;'>삭제 된 댓글입니다.</label>
+	                              						<input type='hidden' id='hiddenTimeNo' name='hiddenTimeNo' value="${co.tCommentNo}">
+	                              						<i class="far fa-clock" id='clock'></i>
+	                              							<label class='enrollDateClass'>${co.enrollDate }</label>
+	                              						<c:if test="${co.memberNo  eq loginUser.memberNo}">
+	                              						</c:if>
+	                              						<br>
+                              						</td>
+                              					</tr>
+                              					</c:if>
+                              				</c:if>
+                              				<c:if test="${co.tcLevel eq 2}">
+                              					<c:if test="${co.status eq 'Y'}">
+                              					<tr><td colspan='3'><label class='commentName'>└ @${co.memberName}</label><label class='valueAnswer'>${co.tcContent }</label><input type='hidden' id='hiddenDownNo' value='${co.tCommentNo}'>
+                              						<i class="far fa-clock" id='clock'></i>
+	                              					<label class='dateClass'>${co.enrollDate }</label>
+	                              					<c:if test="${co.memberNo  eq loginUser.memberNo}">
+	                              							<i id="deleteDown" class="fas fa-trash-alt"></i>
+	                              					</c:if>
+                              					</td></tr>
+                              					</c:if>
+                              					<c:if test="${co.status eq 'N'}">
+                              					<tr><td colspan='3'><label class='commentName'>└ @${co.memberName}</label><label class='valueAnswer' style="color: gray">삭제된 답글입니다.</label><input type='hidden' id='hiddenDownNo' value='${co.tCommentNo}'>
+                              						<i class="far fa-clock" id='clock'></i>
+	                              					<label class='dateClass'>${co.enrollDate }</label>
+	                              					<c:if test="${co.memberNo  eq loginUser.memberNo}">
+	                              							<i id="deleteDown" class="fas fa-trash-alt"></i>
+	                              					</c:if>
+                              					</td></tr>
+                              					</c:if>
+                              				</c:if>
+                              			</c:forEach>
+                              		</table>
                               	</div>
                               	<div style="width: 100%; height: 8%; border-top: 3px solid #1E2B44;">
                               		<input type="text" id="comment" placeholder=" 댓글입력..." style="border:none; width: 90%; font-family: 'Stylish', sans-serif; outline:none; height:100%; border-radius:10px; background: white;">
@@ -771,6 +888,109 @@ a {
       <script>
       var text;
       var noComm;
+      var commentLabel;
+      
+      $(document).on('keydown', '.updateComment', function(event){
+    	  if(event.keyCode == '13'){
+    		  var tCommentNo = $(this).parent().find("#hiddenTimeNo").val();
+    		  var tcContent = $(this).val();
+    		  
+    		  $.ajax({
+					url:'updateHighComment.ti',
+					type: 'post',
+					async: false,
+					data:{
+						tCommentNo:tCommentNo,
+						tcContent:tcContent
+					},
+				 success:function(data){
+					
+				 }
+			 });  
+    		  
+    		  
+    		  
+    		  $(this).parent().find(".updateComment").after("<label class='commentLabel' style='line-height:10px;  vertical-align:bottom; color:#1E2B44;'>"+ $(this).val() +"</label>");
+    		  $(this).parent().find("#reset").remove();
+    		  $(this).parent().find(".enrollDateClass").after("<i id='correct' class='fas fa-edit' style='margin-left:3px;'></i>");
+        	  $(this).parent().find(".enrollDateClass").after("&nbsp;<i id='delete' class='fas fa-trash-alt'></i>");
+    		  $(this).remove();
+    		  
+    	  }
+      });
+      
+      
+      
+      $(document).on('click', '#reset', function(){
+    	  $("#correct").end();
+    	  
+    	  $(this).parent().find(".updateComment").after("<label class='commentLabel' style='line-height:10px;  vertical-align:bottom; color:#1E2B44;'>"+ commentLabel +"</label>");
+    	  $(this).parent().find(".updateComment").remove();
+    	  $(this).after("<i id='correct' class='fas fa-edit' style='margin-left:3px;'></i>");
+    	  $(this).after("&nbsp;<i id='delete' class='fas fa-trash-alt'></i>");
+    	  $(this).remove();
+      });
+      
+      
+      //상위 댓글 수정
+      $(document).on('click', '#correct', function(){
+    	  var tCommentNo = $(this).parent().find("#hiddenTimeNo").val();	
+
+    	  var text = $(this).parent().find(".commentLabel").text();
+    	  commentLabel = $(this).parent().find(".commentLabel").html();
+    	  
+    	  $(this).parent().find(".commentLabel").after("<input class='updateComment' type='text' value='"+text+"'>");
+    	  $(this).parent().find(".commentLabel").remove();
+    	  $(this).after("<i id='reset' class='far fa-times-circle'></i>");
+    	  $(this).prev().remove();
+		  $(this).remove();
+      })
+      
+      //하위 답글 삭제
+      $(document).on('click', '#deleteDown', function(){
+    	  var tCommentNo = $(this).parent().find("#hiddenDownNo").val();	
+    	  
+    	  $.ajax({
+				url:'deleteHighComment.ti',
+				type: 'post',
+				data:{
+					tCommentNo:$.trim(tCommentNo)
+				},
+			 success:function(data){
+				 
+			 }
+		 });  
+     	 $(this).parent().find(".valueAnswer").text("삭제된 답글 입니다.");
+     	 $(this).parent().find(".valueAnswer").css("color", "gray");
+    	  
+      })
+      
+      //상위 댓글 삭제
+      $(document).on('click', '#delete', function(){
+    	 var tCommentNo = $(this).parent().find("#hiddenTimeNo").val();
+    	 
+    	 $.ajax({
+				url:'deleteHighComment.ti',
+				type: 'post',
+				data:{
+					tCommentNo:tCommentNo
+				},
+			 success:function(data){
+				 
+			 }
+		 });  
+    	 
+
+    	 $(this).parent().find("#answer").remove();
+    	 $(this).parent().find(".commentLabel").text("삭제된 댓글 입니다.");
+    	 $(this).parent().find(".commentLabel").css("color", "gray");
+    	 $(this).next().remove();
+    	 $(this).remove();
+  	
+			    	  
+      })
+      
+      //답글 닫기
       $(document).on('click', '#close', function(){
     	  $(this).parent().prev().append(text);
   		  $(this).parent().parent().prev().find("#answer").text(text);
@@ -780,11 +1000,13 @@ a {
       //답글 클릭
       $(document).on('click', '#answer', function(){
 			text = $(this).html();
-			console.log($(this).parent().parent().parent());
-			noComm = $(this).parent().parent().parent().find("#hiddenTimeNo").val();
-    		$(this).parent().parent().parent().after("<tr><td colspan='3'><label class='commentName'>@${loginUser.memberName}</label><input type='text' id='answerComment' name='answerComment' placeholder='답글입력...'><i class='far fa-paper-plane' id='inserAnswerComment' style='color:#1E2B44; font-size: 14px;'></i><i class='far fa-times-circle' id='close'></i></td></tr>");    	  
+			noComm = $(this).parent().parent().find("#hiddenTimeNo").val();
+			console.log(noComm);
+		
+    		$(this).parent().parent().after("<tr><td colspan='3'><label class='commentName'>@${loginUser.memberName}</label><input type='text' id='answerComment' name='answerComment' placeholder='답글입력...'><i class='far fa-paper-plane' id='inserAnswerComment' style='color:#1E2B44; font-size: 14px;'></i><i class='far fa-times-circle' id='close'></i></td></tr>");    	  
       })
-      
+      //답글 등록
+      var downCommNo;
       $(document).on('click', '#inserAnswerComment', function(){
 			var textValue = $(this).prev().val();
 			var timeLineNo = $(this).parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().parent().attr('id'); 
@@ -800,16 +1022,19 @@ a {
 						tcContent:textValue
 					},
 				 success:function(data){
+					 downCommNo=data['tCommentNo'];
+					 enrollDate = data['enrollDate'];
 				 }
 			 });  
-			console.log($(this).parent().parent().parent());
 			
-    	    $(this).parent().parent().after("<tr><td colspan='3'><label class='commentName'>@${loginUser.memberName}</label><label class='valueAnswer'>"+textValue+"</label></td></tr>")
+    	    $(this).parent().parent().after("<tr><td colspan='3'><label class='commentName'>└ @${loginUser.memberName}</label><label class='valueAnswer'>"+textValue+"</label><input type='hidden' id='hiddenDownNo' value='"+downCommNo+"'></td></tr>")
 			$(this).parent().parent().remove();
     })
       
       </script>
       <script>
+      var enrollDate;
+      
       //댓글 입력
       $(document).on('click', '#insertComment', function(){
 		 var value = $(this).prev().val(); 
@@ -825,15 +1050,17 @@ a {
 					tcContent:value
 				},
 			 success:function(data){
-				 comm= data;
+				 console.log(data);
+				 comm= data['tCommentNo'];
+				 enrollDate = data['enrollDate'];
 			 }
 		 });  
-				 $(this).parent().prev().children().prepend("<tr><td style='width:50px;'><div class='box' style='display:inline-block;'><img class='profile' src='/manage/resources/uploadFiles/${loginUser.changeName}'></div></td><td style='width:60px;'><div class='nameDiv' style='vertical-align:text-top;'>@${loginUser.memberName}</div></td><td><br><lable class='commentLabel' style='line-height:10px; color:#1E2B44;'>"+ value +"</label><input type='hidden' id='hiddenTimeNo' name='hiddenTimeNo' value='"+comm+"'><br><label id='answer'>답글</label></td></tr>")
+				 $(this).parent().prev().children().prepend("<tr><td style='width:50px;'><div class='box' style='display:inline-block;'><img class='profile' src='/manage/resources/uploadFiles/${loginUser.changeName}'></div></td><td style='width:60px;'><div class='nameDiv' style='vertical-align:text-top;'>@${loginUser.memberName}</div></td><td><br><lable class='commentLabel' style='line-height:10px; color:#1E2B44;'>"+ value +"</label><input type='hidden' id='hiddenTimeNo' name='hiddenTimeNo' value='"+comm+"'><i class='far fa-clock' id='clock'></i><label class='enrollDateClass'>"+ enrollDate+"</label><br><label id='answer'>답글</label></td></tr>")
 				 $(this).prev().val(""); 
 		 
       });
       
-      
+      //좋아요 클릭
       $(document).on('click', '#hart', function(){
     	    var a = $(this).prev().text();
     	    $(this).prev().text(Number(a)+1);
@@ -852,7 +1079,7 @@ a {
 				 }
 			 });
       });
-      
+      //좋아요 해제
       $(document).on('click', '#chanHart', function(){
     	    var id = $(this).parent().parent().parent().parent().parent().parent().attr('id');
     	    var a = $(this).prev().text();

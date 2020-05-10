@@ -78,6 +78,18 @@ public class TimeLineServiceImpl implements TimeLineService {
 		return td.selectOneTimeLineNo(sqlSession);
 	}
 
+	@Override
+	public String selectSysdate() {
+		
+		return td.selectSysdate(sqlSession);
+	}
+
+	@Override
+	public int deleteHighComment(Comment comm) {
+		
+		return td.deleteHighComment(sqlSession, comm);
+	}
+
 	
 
 }
