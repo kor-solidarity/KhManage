@@ -239,4 +239,16 @@ public class ChatDaoImpl implements ChatDao {
 		return sqlSession.selectList("Chat.selectOneComment", timeLineNo);
 	}
 
+	@Override
+	public List<TimeLine> selectTagTimeLine(SqlSessionTemplate sqlSession, Tag tg) {
+		
+		return sqlSession.selectList("Chat.selectTagTimeLine", tg);
+	}
+
+	@Override
+	public List<TimeLine> searchTimeLineNo(SqlSessionTemplate sqlSession, TimeLine tl) {
+		
+		return sqlSession.selectList("Chat.searchTimeLineNo", tl);
+	}
+
 }

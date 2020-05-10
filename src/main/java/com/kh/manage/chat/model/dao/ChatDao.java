@@ -92,6 +92,10 @@ public interface ChatDao {
 
 	List<Comment> selectOneComment(SqlSessionTemplate sqlSession, String timeLineNo);
 
+	List<TimeLine> selectTagTimeLine(SqlSessionTemplate sqlSession, Tag tg);
+
+	List<TimeLine> searchTimeLineNo(SqlSessionTemplate sqlSession, TimeLine tl);
+
 
 
 }

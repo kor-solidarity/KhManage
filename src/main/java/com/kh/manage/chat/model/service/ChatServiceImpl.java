@@ -247,6 +247,18 @@ public class ChatServiceImpl implements ChatService {
 		return cd.selectOneComment(sqlSession, timeLineNo);
 	}
 
+	@Override
+	public List<TimeLine> selectTagTimeLine(Tag tg) {
+		
+		return cd.selectTagTimeLine(sqlSession, tg);
+	}
+
+	@Override
+	public List<TimeLine> searchTimeLineNo(TimeLine tl) {
+		
+		return cd.searchTimeLineNo(sqlSession, tl);
+	}
+
 
 
 

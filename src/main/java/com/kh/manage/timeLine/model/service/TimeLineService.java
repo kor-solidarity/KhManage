@@ -31,4 +31,8 @@ public interface TimeLineService {
 
 	int deleteHighComment(Comment comm);
 
+	int updateHighComment(Comment comm);
+
+	int deleteTimeLine(TimeLine tl);
+
 }

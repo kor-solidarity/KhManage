@@ -33,5 +33,9 @@ public interface TimeLineDao {
 
 	int deleteHighComment(SqlSessionTemplate sqlSession, Comment comm);
 
+	int updateHighComment(SqlSessionTemplate sqlSession, Comment comm);
+
+	int deleteTimeLine(SqlSessionTemplate sqlSession, TimeLine tl);
+
 
 }

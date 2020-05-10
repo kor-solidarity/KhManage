@@ -509,10 +509,23 @@ a {
 #commentArea::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/
 }
+
+#timeLineDelete{
+	background:#F3565D;
+	border-radius: 10px;
+	color:white;
+	border:none;
+}
+#sh-link{
+	background:#1E2B44;
+	border-radius: 10px;
+	color:white;
+	border:none;
+}
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Stylish&display=swap" rel="stylesheet">
 </head>
-<body onload="$('#route1').text('타임라인')">
+<body onload="$('#route1').text('PH_LINE')">
    <jsp:include page="/WEB-INF/views/user/common/header.jsp" />
    <jsp:include page="/WEB-INF/views/user/common/sidebar2.jsp" />
       <div class="panel panel-headline" style="height: auto;">
@@ -532,13 +545,13 @@ a {
             <div class="card-body">
                 <div class="wrapper">
                     <img src="<c:url value="/resources/uploadFiles/${loginUser.changeName}"/>" class="user-profile">
-                    <h3>${loginUser.memberName }</h3>
-                    <p>${loginUser.deptName } / ${loginUser.rankName }</p>
+                    <h3 style="font-family: 'Stylish', sans-serif;">${loginUser.memberName }</h3>
+                    <p style="font-family: 'Stylish', sans-serif;">${loginUser.deptName } / ${loginUser.rankName }</p>
                 </div>
                 <div class="row ">
                     <div class="col-lg-12">
                         <ul class=" nav nav-tabs justify-content-center s-nav">
-                            <li><a class="active" href="#" style="background: #1E2B44;">타임라인</a></li>
+                            <li><a class="active" href="showTimeLine.ct" style="background: #1E2B44; font-family: 'Stylish', sans-serif;">PH_LINE</a></li>
                          
                         </ul>
                     </div>
@@ -573,10 +586,10 @@ a {
                     <div class="card-header" style="height: auto">
                         <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts" aria-selected="true">작성</a>
+                                <a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts" aria-selected="true" style="font-family: 'Stylish', sans-serif;">작성</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="images-tab" data-toggle="tab" role="tab" aria-controls="images" aria-selected="false" href="#images">이미지 등록</a>
+                                <a class="nav-link" id="images-tab" data-toggle="tab" role="tab" aria-controls="images" aria-selected="false" href="#images" style="font-family: 'Stylish', sans-serif;">이미지 등록</a>
                             </li>
                         </ul>
                     </div>
@@ -587,11 +600,11 @@ a {
                                 <div class="form-group" id="plusTest">
                                     <label class="sr-only" for="message">post</label>
                                     <textarea class="form-control" name="content" id="message" rows="3" ></textarea>
-                                    <label style="background: skyblue; border-radius:5px; font-size:14px; margin-top:5px; margin-bottom:1px; margin-left:2px; color:white; padding-left: 5px; padding-right: 5px;">#태그</label>
+                                    <label style="background: skyblue; border-radius:5px; font-size:14px; margin-top:5px; margin-bottom:1px; font-family: 'Stylish', sans-serif; margin-left:2px; color:white; padding-left: 5px; padding-right: 5px;">#태그</label>
                                     <br>
                                     <input hidden="hidden" name="tagName11"/>
                                     <input type="text" class="tag" name="tag" placeholder="#" >
-                                    <label class="shap" style="display:none; color:#1E2B44; margin-bottom:0px; font-size: 12px;">'#'을 붙여주세요</label>
+                                    <label class="shap" style="display:none; color:#1E2B44; margin-bottom:0px; font-size: 12px; font-family: 'Stylish', sans-serif;">'#'을 붙여주세요</label>
                                     <br><br>
                                 </div>
                             </div>
@@ -599,7 +612,7 @@ a {
                                 <div class="form-group" >
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" id="customFile" name="file">
-                                        <label class="custom-file-label" for="customFile">Upload image</label>
+                                        <label class="custom-file-label" for="customFile" style="font-family: 'Stylish', sans-serif;">이미지를 등록해주세요.</label>
                                     </div>
                                 </div>
                                 <div class="py-4"></div>
@@ -608,7 +621,7 @@ a {
                         <div class="btn-toolbar justify-content-between">
                          <i class="fas fa-sync-alt" onclick="location.reload();" style="float:right; margin-top: 10px; margin-bottom:10px; margin-right: 10px; color:green; font-size: 18px; cursor: pointer;"></i>
                             <div class="btn-group">
-                                <button type="button" id="submitBtn" class="btn btn-theme-primary" style="background: #1E2B44; color:white;">등록</button>
+                                <button type="button" id="submitBtn" class="btn btn-theme-primary" style="background: #1E2B44; color:white; font-family: 'Stylish', sans-serif;">등록</button>
                             </div>
                             <div class="btn-group">
                              
@@ -629,7 +642,7 @@ a {
                                     <img class="rounded-circle" width="60" height="50" src="<c:url value="/resources/uploadFiles/${t.userChangeName}"/>" alt="">
                                 </div>
                                 <div class="ml-2">
-                                    <div class="h5 m-0 text-blue">@${t.memberName }</div>
+                                    <div class="h5 m-0 text-blue" style="font-family: 'Stylish', sans-serif;">@${t.memberName }</div>
                                 </div>
                             </div>
                             <div>
@@ -645,7 +658,7 @@ a {
                         </div>
                     </div>
                     <div class="card-body" style="width: 50%;" >
-                        <div class="text-muted h7 mb-2" style="margin-bottom: 20px; width: 50%;"> 
+                        <div class="text-muted h7 mb-2" style="margin-bottom: 20px; width: 50%; font-family: 'Stylish', sans-serif;"> 
                         <c:if test="${t.sec < 60}">
                            <i class="far fa-clock"></i>&nbsp;${t.sec }초 전
                         </c:if>   
@@ -667,14 +680,30 @@ a {
                             </c:if>
                         <a class="card-link" href="#">
                             <h5 class="card-title" style="font-family: 'Stylish', sans-serif;">${t.content}</h5>
-                            <h6>${t.enrollDate }</h6>
+                             <button type="button" style="background: #1E2B44; border:none; color: white; font-family: 'Stylish', sans-serif; border-radius: 10px; font-size: 12px;">등록일</button>
+                            <h6 style="font-family: 'Stylish', sans-serif; margin-top: 1px;">${t.enrollDate }</h6>
                         </a>
                         <img src="img/gallery/1a.jpg" alt="" class="img-fluid">
 
                     </div>
                     <div class="card-footer" style="width: 50%;">
-                        <a class="card-link"><i class="fa fa-comment" style="color: #1E2B44;"></i> 댓글</a> &nbsp;&nbsp;
-                        <a class="card-link"><i class="fa fa-mail-forward"></i>공유</a>
+                       <c:forEach var ="tg" items="${t.tagList }">
+                          	<c:if test="${fn:length(tg.tagName) == 5}">
+                             		<button type="button" id="tag2" style="background: skyblue; border:none; font-family: 'Stylish', sans-serif; color: white; border-radius: 10px; font-size: 12px;">${tg.tagName }</button>
+                             </c:if>
+                          	<c:if test="${fn:length(tg.tagName) == 6}">
+                             		<button type="button" id="tag2" style="background: purple; border:none; font-family: 'Stylish', sans-serif; color: white; border-radius: 10px; font-size: 12px;">${tg.tagName }</button>
+                             </c:if>
+                          	<c:if test="${fn:length(tg.tagName) >= 7}">
+                             		<button type="button" id="tag2" style="background: orange; border:none; font-family: 'Stylish', sans-serif; color: white; border-radius: 10px; font-size: 12px;">${tg.tagName }</button>
+                             </c:if>
+                             <c:if test="${fn:length(tg.tagName) ==4}">
+                             		<button type="button" id="tag2" style="background: pink; border:none;font-family: 'Stylish', sans-serif; color: white; border-radius: 10px; font-size: 12px;">${tg.tagName }</button>
+                             </c:if>
+                             <c:if test="${fn:length(tg.tagName) <=3}">
+                             		<button type="button" id="tag2" style="background: #FFCD5E; border:none; font-family: 'Stylish', sans-serif; color: white; border-radius: 10px; font-size: 12px;">${tg.tagName }</button>
+                             </c:if>
+                        </c:forEach>   
                     </div>
                 </div>
                 
@@ -700,22 +729,22 @@ a {
                                             <!-- 태그 -->
                                             <c:forEach var ="tg" items="${t.tagList }">
                                             	<c:if test="${fn:length(tg.tagName) == 5}">
-                                               		<button type="button" style="background: skyblue; border:none; font-family: 'Stylish', sans-serif; color: white; border-radius: 10px; font-size: 12px;">${tg.tagName }</button>
+                                               		<button type="button" id="tag" style="background: skyblue; border:none; font-family: 'Stylish', sans-serif; color: white; border-radius: 10px; font-size: 12px;">${tg.tagName }</button>
                                                </c:if>
                                             	<c:if test="${fn:length(tg.tagName) == 6}">
-                                               		<button type="button" style="background: purple; border:none; font-family: 'Stylish', sans-serif; color: white; border-radius: 10px; font-size: 12px;">${tg.tagName }</button>
+                                               		<button type="button" id="tag" style="background: purple; border:none; font-family: 'Stylish', sans-serif; color: white; border-radius: 10px; font-size: 12px;">${tg.tagName }</button>
                                                </c:if>
                                             	<c:if test="${fn:length(tg.tagName) >= 7}">
-                                               		<button type="button" style="background: orange; border:none; font-family: 'Stylish', sans-serif; color: white; border-radius: 10px; font-size: 12px;">${tg.tagName }</button>
+                                               		<button type="button" id="tag" style="background: orange; border:none; font-family: 'Stylish', sans-serif; color: white; border-radius: 10px; font-size: 12px;">${tg.tagName }</button>
                                                </c:if>
                                                <c:if test="${fn:length(tg.tagName) ==4}">
-                                               		<button type="button" style="background: pink; border:none;font-family: 'Stylish', sans-serif; color: white; border-radius: 10px; font-size: 12px;">${tg.tagName }</button>
+                                               		<button type="button" id="tag" style="background: pink; border:none;font-family: 'Stylish', sans-serif; color: white; border-radius: 10px; font-size: 12px;">${tg.tagName }</button>
                                                </c:if>
                                                <c:if test="${fn:length(tg.tagName) <=3}">
-                                               		<button type="button" style="background: #FFCD5E; border:none; font-family: 'Stylish', sans-serif; color: white; border-radius: 10px; font-size: 12px;">${tg.tagName }</button>
+                                               		<button type="button" id="tag" style="background: #FFCD5E; border:none; font-family: 'Stylish', sans-serif; color: white; border-radius: 10px; font-size: 12px;">${tg.tagName }</button>
                                                </c:if>
                                                </c:forEach>   
-                                             <div class="h5 m-0 text-blue" style="font-family: 'Stylish', sans-serif;">@${t.memberName }</div>
+                                             <div class="h5 m-0 text-blue" id="tag" style="font-family: 'Stylish', sans-serif;">@${t.memberName }</div>
                                          </div>
                                        </div>  
                                        <br>
@@ -759,7 +788,12 @@ a {
 									<%--  <c:if test="${empty t.timeLine}">
 										<label style="float: right;  margin-right:20px; line-height:16px;">0</label><i class="far fa-heart" id="hart" style="float: right; color:red; margin-right: 3px;"></i>&nbsp;
 										</c:if> --%>
-                                  <h6 class="card-title" style="color:#777777; font-weight: 400; font-family: 'Stylish', sans-serif; margin-top: 3px;"><i class="far fa-calendar-plus"></i>&nbsp;&nbsp;${t.enrollDate}</h6>
+                                  <h6 class="card-title" style="color:#777777; font-weight: 400; font-family: 'Stylish', sans-serif; margin-top: 3px;"><i class="far fa-calendar-plus"></i>&nbsp;&nbsp;${t.enrollDate}  
+                              <c:if test="${t.memberNo eq loginUser.memberNo}">
+                                 <button id="timeLineDelete" onclick="location.href='deleteTimeLine.ti?timeLineNo=${t.timeLineNo}'" type="button" style="float: right;">글 내리기</button>
+                              </c:if>    
+                                  <button type="button" id="sh-link">링크복사</button>
+                                  </h6>
                               </div>
                               <div  style="float:right; height:500px; width:400px; margin-left:20px; border: 2px solid #1E2B44; border-radius: 10px; ">
                               	<div id="commentArea" style="height: 92%; width:100%; overflow: auto;  scrollbar-width: none;">
@@ -890,6 +924,17 @@ a {
       var noComm;
       var commentLabel;
       
+      //태그 클릭
+      $(document).on('click', '#tag', function(event){
+    	  var tagName = $(this).text().substring(1, $(this).text().length);
+    	  console.log(tagName);
+    	  
+    	  
+    	  location.href='searchTagNameList.ct?tagName='+tagName;
+      });
+      
+      
+      //상위 댓글 업데이트
       $(document).on('keydown', '.updateComment', function(event){
     	  if(event.keyCode == '13'){
     		  var tCommentNo = $(this).parent().find("#hiddenTimeNo").val();
@@ -908,8 +953,6 @@ a {
 				 }
 			 });  
     		  
-    		  
-    		  
     		  $(this).parent().find(".updateComment").after("<label class='commentLabel' style='line-height:10px;  vertical-align:bottom; color:#1E2B44;'>"+ $(this).val() +"</label>");
     		  $(this).parent().find("#reset").remove();
     		  $(this).parent().find(".enrollDateClass").after("<i id='correct' class='fas fa-edit' style='margin-left:3px;'></i>");
@@ -920,7 +963,7 @@ a {
       });
       
       
-      
+      //상위 댓글 수정 취소
       $(document).on('click', '#reset', function(){
     	  $("#correct").end();
     	  
@@ -1001,7 +1044,7 @@ a {
       $(document).on('click', '#answer', function(){
 			text = $(this).html();
 			noComm = $(this).parent().parent().find("#hiddenTimeNo").val();
-			console.log(noComm);
+			console.log($(this).parent().parent());
 		
     		$(this).parent().parent().after("<tr><td colspan='3'><label class='commentName'>@${loginUser.memberName}</label><input type='text' id='answerComment' name='answerComment' placeholder='답글입력...'><i class='far fa-paper-plane' id='inserAnswerComment' style='color:#1E2B44; font-size: 14px;'></i><i class='far fa-times-circle' id='close'></i></td></tr>");    	  
       })
@@ -1026,7 +1069,7 @@ a {
 					 enrollDate = data['enrollDate'];
 				 }
 			 });  
-			
+		 	 
     	    $(this).parent().parent().after("<tr><td colspan='3'><label class='commentName'>└ @${loginUser.memberName}</label><label class='valueAnswer'>"+textValue+"</label><input type='hidden' id='hiddenDownNo' value='"+downCommNo+"'></td></tr>")
 			$(this).parent().parent().remove();
     })
@@ -1039,7 +1082,6 @@ a {
       $(document).on('click', '#insertComment', function(){
 		 var value = $(this).prev().val(); 
 		 var comm ;
-		 console.log($(this).parent().parent().parent().parent().parent().parent().parent());
 	 	 var timeLineNo = $(this).parent().parent().parent().parent().parent().parent().parent().attr('id'); 
 		   $.ajax({
 				url:'insertComment.ti',
@@ -1055,8 +1097,8 @@ a {
 				 enrollDate = data['enrollDate'];
 			 }
 		 });  
-				 $(this).parent().prev().children().prepend("<tr><td style='width:50px;'><div class='box' style='display:inline-block;'><img class='profile' src='/manage/resources/uploadFiles/${loginUser.changeName}'></div></td><td style='width:60px;'><div class='nameDiv' style='vertical-align:text-top;'>@${loginUser.memberName}</div></td><td><br><lable class='commentLabel' style='line-height:10px; color:#1E2B44;'>"+ value +"</label><input type='hidden' id='hiddenTimeNo' name='hiddenTimeNo' value='"+comm+"'><i class='far fa-clock' id='clock'></i><label class='enrollDateClass'>"+ enrollDate+"</label><br><label id='answer'>답글</label></td></tr>")
-				 $(this).prev().val(""); 
+			 $(this).parent().prev().children().prepend("<tr><td style='width:50px;'><div class='box' style='display:inline-block;'><img class='profile' src='/manage/resources/uploadFiles/${loginUser.changeName}'></div></td><td style='width:60px;'><div class='nameDiv' style='vertical-align:text-top;'>@${loginUser.memberName}</div></td><td><br><label class='commentLabel' style='line-height:10px; color:#1E2B44;'>"+ value +"</label><input type='hidden' id='hiddenTimeNo' name='hiddenTimeNo' value='"+comm+"'><i class='far fa-clock' id='clock'></i><label class='enrollDateClass'>"+ enrollDate+"</label>&nbsp;<i id='delete' class='fas fa-trash-alt'></i>&nbsp;<i id='correct' class='fas fa-edit'></i><br><label id='answer'>답글</label></td></tr>")
+			 $(this).prev().val(""); 
 		 
       });
       
@@ -1225,7 +1267,66 @@ a {
 	   imgWin.document.close();
 	  }
 	   </script>
+	
+	<script>
+	//클립 보드 복사
+	$(document).on("click", "#sh-link", function(e) {
+	    // 링크복사 시 화면 크기 고정
+	    $('html').find('meta[name=viewport]').attr('content', 'width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no');
+	    var html = "<input id='clip_target' type='text' value='' style='position:absolute;top:-9999em;'/>";
+	    $(this).append(html);
 
+	    var input_clip = document.getElementById("clip_target");    
+		//현재 url 가져오기
+		var _url = $(location).attr('href'); 
+		var id = $(this).parent().parent().parent().parent().parent().parent().parent().attr("id");
+		console.log(id);
+	    $("#clip_target").val('http://127.0.0.1:8001/manage/searchTimeLineNo.ct?timeLineNo='+id);
 
+	    if (navigator.userAgent.match(/(iPod|iPhone|iPad)/)) {
+
+	        var editable = input_clip.contentEditable;
+	        var readOnly = input_clip.readOnly;
+
+	        input_clip.contentEditable = true;
+	        input_clip.readOnly = false;
+
+	        var range = document.createRange();
+	        range.selectNodeContents(input_clip);
+
+	        var selection = window.getSelection();
+	        selection.removeAllRanges();
+	        selection.addRange(range);
+	        input_clip.setSelectionRange(0, 999999);
+
+	        input_clip.contentEditable = editable;
+	        input_clip.readOnly = readOnly;
+	    } else {
+	        input_clip.select();
+	    }
+	    try {
+	        var successful = document.execCommand('copy');
+	        input_clip.blur();
+	        if (successful) {
+	        	swal({
+	                 title: "링크가 복사되었습니다.",
+	                icon: "success"
+	              });
+	            // 링크복사 시 화면 크기 고정
+	            $('html').find('meta[name=viewport]').attr('content', 'width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=yes');
+	        } else {
+	            alert('이 브라우저는 지원하지 않습니다.');
+	        }
+	    } catch (err) {
+	        alert('이 브라우저는 지원하지 않습니다.');
+	    }
+	})
+	</script>
+	
+	<script>
+	jQuery(function() {
+		$(".btn-toggle-fullwidth").trigger("click");
+	});
+	</script>
 </body>
 </html>

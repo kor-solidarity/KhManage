@@ -78,5 +78,9 @@ public interface ChatService {
 
 	List<Comment> selectOneComment(String timeLineNo);
 
+	List<TimeLine> selectTagTimeLine(Tag tg);
+
+	List<TimeLine> searchTimeLineNo(TimeLine tl);
+
 
 }

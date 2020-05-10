@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.tools.ant.types.CommandlineJava.SysProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,6 +58,79 @@ public class ChatController {
 		
 		return "user/chat/chatMainPage";
 	}
+	
+	@RequestMapping("/searchTagNameList.ct")
+	public String searchTagNameList(Tag tg, Model model) {
+		tg.setTagName("#"+tg.getTagName());
+		
+		List<Member> mList = cs.selectAllMember();
+		List<TimeLine> tList = cs.selectTagTimeLine(tg);
+		
+		for(int i=0; i< tList.size(); i++) {
+			List<Tag> tg2 = cs.selectOneTag(tList.get(i).getTimeLineNo());
+			List<TimeLine> tl = cs.selectOneHart(tList.get(i).getTimeLineNo());
+			List<Comment> tc = cs.selectOneComment(tList.get(i).getTimeLineNo());
+			
+			if(tl == null) {
+				tList.get(i).setTimeLine(null);
+			}else {
+				tList.get(i).setTimeLine(tl);
+			}
+			
+			if(tc == null) {
+				tList.get(i).setTc(null);
+			}else {
+				tList.get(i).setTc(tc);
+			}
+			
+			tList.get(i).setTagList(tg2);
+		}
+		
+		System.out.println(tList);
+		model.addAttribute("mList", mList);
+		model.addAttribute("tList", tList);
+		
+		return "user/chat/timeLine";
+	}
+	
+	@RequestMapping("/searchTimeLineNo.ct")
+	public String searchTimeLineNo(TimeLine tl, Model model, HttpSession session) {
+		List<Member> mList = cs.selectAllMember();
+		List<TimeLine> tList = cs.searchTimeLineNo(tl);
+		
+		Member m = (Member) session.getAttribute("loginUser");
+		
+		if(m == null) {
+			return "redirect:index.jsp";
+		}
+		
+		for(int i=0; i< tList.size(); i++) {
+			List<Tag> tg = cs.selectOneTag(tList.get(i).getTimeLineNo());
+			List<TimeLine> tl2 = cs.selectOneHart(tList.get(i).getTimeLineNo());
+			List<Comment> tc = cs.selectOneComment(tList.get(i).getTimeLineNo());
+			
+			if(tl == null) {
+				tList.get(i).setTimeLine(null);
+			}else {
+				tList.get(i).setTimeLine(tl2);
+			}
+			
+			if(tc == null) {
+				tList.get(i).setTc(null);
+			}else {
+				tList.get(i).setTc(tc);
+			}
+			
+			tList.get(i).setTagList(tg);
+		}
+		
+		System.out.println(tList);
+		model.addAttribute("mList", mList);
+		model.addAttribute("tList", tList);
+		
+		return "user/chat/timeLine";
+	}
+	
 	@RequestMapping("/showTimeLine.ct")
 	public String showTimeLine(Model model) {
 		
