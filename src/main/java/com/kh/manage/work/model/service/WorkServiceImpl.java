@@ -120,6 +120,11 @@ public class WorkServiceImpl implements WorkService{
 		return wd.selectGrantorList2(sqlSession, projectNo);
 	}
 
+	@Override
+	public Attachment downAttachment(String no) {
+		return wd.downAttachment(sqlSession, no);
+	}
+
 	
 
 	

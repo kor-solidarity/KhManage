@@ -206,12 +206,12 @@
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
 	<jsp:include page="/WEB-INF/views/user/common/sidebar2.jsp"/>
 		<div class="changePanel">
-			<ul class="changeList">
+			<!-- <ul class="changeList">
 				<li id="requestLi"><a href="changeRequestList.iu">변경요청</a>
 				</li>
 				<li id="approveLi"><a href="RequestApprovalList.iu">변경요청 승인</a>
 				</li>
-			</ul>
+			</ul> -->
 			<div class="panel panel-headline">
 				<div class="panel-heading">
 					<div style="width:100%; height:670px; margin:0 auto; overflow:auto;">

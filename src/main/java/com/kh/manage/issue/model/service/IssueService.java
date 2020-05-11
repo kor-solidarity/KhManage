@@ -71,5 +71,15 @@ public interface IssueService {
 
 	int insertChangeRequestHistory(ChangeRequest cr);
 
+	int updateRequestConfirm1(ChangeRequest cr);
+
+	int insertChangeRequestHistory1(ChangeRequest cr);
+
+	int updateRequestConfirm2(ChangeRequest cr);
+
+	int updateWorkChangeRequest(ChangeRequest updateWork);
+
+	int insertChangeRequestHistory2(ChangeRequest cr);
+
 
 }

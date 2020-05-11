@@ -1422,6 +1422,7 @@
 			
 		});
 	
+		
 		var btnNum;
 		
 		$(".workArea").find("div").click(function(){
@@ -1479,13 +1480,13 @@
 					if(data.work.workAttachment[0].atNo != null){
 						for(var i = 0; i < data.work.workAttachment.length; i++){
 							$("#workProductTable").append("<tr>" + "<td class='hidden-xs'> "+
-																"<input type='hidden' value='" + data.work.workAttachment[i].atNo + "'>" + 
+																"<input type='hidden' id='atNo' value='" + data.work.workAttachment[i].atNo + "'>" + 
 																"<input type='hidden' value='" + data.work.workNo + "'>" + 
 																"<input type='hidden' value='" + data.work.workAttachment[i].changeName + "'>" + 
 																"<input type='hidden' value='" + data.work.workAttachment[i].filePath + "'>" + 
 																"<input type='hidden' value='" + data.work.workAttachment[i].ext + "'>" + 
 																data.work.workAttachment[i].productType + "</td>" + 
-																"<td class='highlight'>" + data.work.workAttachment[i].originName + "</td>" + 
+																"<td class='highlight originName'>" + data.work.workAttachment[i].originName + "</td>" + 
 																"<td class='hidden-xs' style='text-align: center;'>" + data.work.workAttachment[i].enrollDate + "</td>" + 
 																"<td style='text-align: center;'> <button style='display: inline-block; border:none;' id='productDeleteBtn" + i + "' type='button'><span class='glyphicon glyphicon-trash'> </span> </button> </td>")
 						}
@@ -1577,7 +1578,10 @@
 		});
 		
 	});
-	
+		$(document).on("click", ".originName", function(){
+			var atNo = $(this).parent().parent().children().find('input[type=hidden]').eq(0).val();
+			location.href = "download.wk?atNo=" + atNo;
+		});
 		
 			
 		$(document).on("click","[id^=productDeleteBtn]",function(){
@@ -1612,14 +1616,13 @@
 					if(data.work.workAttachment[0].atNo != null)
 						for(var i = 0; i < data.work.workAttachment.length; i++){
 							$("#workProductTable").append("<tr>" + "<td class='hidden-xs'> "+
-																"<input type='hidden' value='" + data.work.workAttachment[i].atNo + "'>" + 
+																"<input type='hidden' id='atNo' value='" + data.work.workAttachment[i].atNo + "'>" + 
 																"<input type='hidden' value='" + data.work.workNo + "'>" + 
 																"<input type='hidden' value='" + data.work.workAttachment[i].changeName + "'>" + 
 																"<input type='hidden' value='" + data.work.workAttachment[i].filePath + "'>" + 
 																"<input type='hidden' value='" + data.work.workAttachment[i].ext + "'>" + 
 																data.work.workAttachment[i].productType + "</td>" + 
-																"<td class='highlight'>" + data.work.workAttachment[i].productTitle + "</td>" + 
-																"<td class='highlight'>" + data.work.workAttachment[i].originName + "</td>" + 
+																"<td class='highlight originName'>" + data.work.workAttachment[i].originName + "</td>" + 
 																"<td class='hidden-xs' style='text-align: center;'>" + data.work.workAttachment[i].enrollDate + "</td>" + 
 																"<td style='text-align: center;'> <button style='display: inline-block; border:none;' id='productDeleteBtn" + i + "' type='button'><span class='glyphicon glyphicon-trash'> </span> </button> </td>")
 						}else{

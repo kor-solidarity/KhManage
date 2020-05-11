@@ -281,10 +281,10 @@
 				</tr>
 				<c:forEach var="at" items="${at }">
 				<tr>
+					<td class="thRange"><input type="hidden" id="atNo" value="${at.atNo }"></td>
 					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange" colspan="8">${at.originName }</td>
-					<td class="thRange" colspan="2">버전</td>
+					<td class="thRange originName" colspan="8">${at.originName }</td>
+					<td class="thRange" colspan="2">1</td>
 					<td class="thRange" colspan="2">${issue.registerName }(${issue.registerType })</td>
 					<td class="thRange" colspan="2">${issue.registerDate }</td>
 					<td class="thRange" colspan="2">삭제</td>
@@ -347,23 +347,6 @@
 					<td class="thRange"></td>
 					<td class="thRange"></td>
 				</tr>
-				<tr>
-					<td class="thRange"></td>
-					<td class="thRange">첨부파일</td>
-					<td class="thRange3" colspan="8">파일명</td>
-					<td class="thRange3" colspan="2">버전</td>
-					<td class="thRange3" colspan="2">등록자</td>
-					<td class="thRange3" colspan="2">등록일</td>
-					<td class="thRange3" colspan="2">삭제</td>
-				</tr>
-				<tr>
-					<td class="thRange" colspan="18"></td>
-				</tr>
-				<tr>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange2" colspan="16"></td>
-				</tr>
 				</c:when>
 				<c:when test="${issue.status eq '조치중' && issue.teamWorker eq loginUser.memberNo}">
 				<tr>
@@ -386,23 +369,6 @@
 					<td class="thRange"></td>
 					<td class="thRange"></td>
 				</tr>
-				<tr>
-					<td class="thRange"></td>
-					<td class="thRange">첨부파일</td>
-					<td class="thRange3" colspan="8">파일명</td>
-					<td class="thRange3" colspan="2">버전</td>
-					<td class="thRange3" colspan="2">등록자</td>
-					<td class="thRange3" colspan="2">등록일</td>
-					<td class="thRange3" colspan="2">삭제</td>
-				</tr>
-				<tr>
-					<td class="thRange" colspan="18"></td>
-				</tr>
-				<tr>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange2" colspan="16"></td>
-				</tr>
 				</c:when>
 				<c:otherwise>
 				<tr>
@@ -424,23 +390,6 @@
 				<tr>
 					<td class="thRange"></td>
 					<td class="thRange"></td>
-				</tr>
-				<tr>
-					<td class="thRange"></td>
-					<td class="thRange">첨부파일</td>
-					<td class="thRange3" colspan="8">파일명</td>
-					<td class="thRange3" colspan="2">버전</td>
-					<td class="thRange3" colspan="2">등록자</td>
-					<td class="thRange3" colspan="2">등록일</td>
-					<td class="thRange3" colspan="2">삭제</td>
-				</tr>
-				<tr>
-					<td class="thRange" colspan="18"></td>
-				</tr>
-				<tr>
-					<td class="thRange"></td>
-					<td class="thRange"></td>
-					<td class="thRange2" colspan="16"></td>
 				</tr>
 				</c:otherwise>
 				</c:choose>
@@ -499,6 +448,12 @@
 		 clearInterval(timer)
     }, 300)
 	
+    
+    
+	/* $(document).on("click", ".originName", function(){
+			var atNo = $(this).parent().parent().children().find('input[type=hidden]').eq(0).val();
+			location.href = "download.wk?atNo=" + atNo;
+	}); */
 	
 	$(function(){
 		$("#issueAgreeBtn").click(function(){
@@ -507,6 +462,11 @@
 		
 		$("#issueComBtn").click(function(){
 			$("#issueRegForm").attr('action', "issueComplete.iu")
+		});
+		
+		$(".originName").click(function(){
+			var atNo = $(this).parent().children().find('input[type=hidden]').eq(0).val();
+			location.href = "download.wk?atNo=" + atNo;
 		});
 	});
 	

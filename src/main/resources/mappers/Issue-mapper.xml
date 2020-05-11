@@ -171,6 +171,7 @@
 		FROM PROJECT_TEAM PT
 		JOIN PROJECT P ON (P.PROJECT_PK = PT.PROJECT_PK)
 		WHERE PT.MEMBER_PK = #{memberNo}
+		AND P.STATUS != '5'
 	</select>
 	
 	
@@ -256,6 +257,7 @@
                               GROUP BY ISSUE_NO)) IH ON (I.ISSUE_NO = IH.ISSUE_NO)
 		JOIN MEMBER M2 ON (I.TEAMWORKER = M2.MEMBER_NO)
 		WHERE I.PROJECT_NO = #{pno}
+		AND P.STATUS != '5'
 		ORDER BY I.ISSUE_NO DESC
 		
 	</select>
@@ -360,6 +362,7 @@
 	JOIN MEMBER M2 ON (CR.CR_GRANTOR_1 = M2.MEMBER_NO)
 	JOIN MEMBER M3 ON (CR.CR_GRANTOR_2 = M3.MEMBER_NO)
 	WHERE CR.PROJECT_NO = #{pno}
+	AND P.STATUS != '5'
 	ORDER BY CR.CHANGE_NO DESC
 		
 	</select>
@@ -396,6 +399,8 @@
 		      , CR.REGISTER_NO
 		      , M.MEMBER_NAME AS REGISTER_NAME
 		      , CR.CR_STATUS
+		      , CR.CR_CONFIRM1
+              , CR.CR_CONFIRM2
 		FROM CHANGE_REQUEST CR
 		JOIN PROJECT P ON (CR.PROJECT_NO = P.PROJECT_PK)
 		JOIN MEMBER M ON (CR.REGISTER_NO = M.MEMBER_NO)
@@ -403,7 +408,7 @@
 		JOIN MEMBER M3 ON (CR.CR_GRANTOR_2 = M3.MEMBER_NO)
 		JOIN MEMBER M4 ON (CR.GRANTOR_NO = M4.MEMBER_NO)
 		JOIN MEMBER M5 ON (CR.MEMBER_NO = M5.MEMBER_NO)
-		JOIN WORK W ON (CR.HIGH_WORK_NO = W.WORK_NO)
+		LEFT OUTER JOIN WORK W ON (CR.HIGH_WORK_NO = W.WORK_NO)
 		WHERE CR.CHANGE_NO = #{changeNo}
 	</select>
 	
@@ -438,6 +443,49 @@
 	JOIN PROJECT P ON (W.PROJECT_NO = P.PROJECT_PK)
 	WHERE W.WORK_NO = #{workNo}
 	</select>
+	
+	
+	<update id="updateRequestConfirm1" parameterType="ChangeRequest">
+	UPDATE CHANGE_REQUEST
+	SET CR_CONFIRM1 = 'Y',
+		CR_STATUS = '1차승인완료'
+	WHERE CHANGE_NO = #{changeNo}
+	</update>
+	
+	<insert id="insertChangeRequestHistory1" parameterType="ChangeRequest">
+	INSERT INTO CHANGE_REQUEST_HISTORY
+	VALUES('CRH' || TO_CHAR(SEQ_CRH_NO.NEXTVAL, 'FM000'), #{changeNo}, SYSDATE, '1차승인완료')
+	</insert>
+	
+	<update id="updateRequestConfirm2" parameterType="ChangeRequest">
+	UPDATE CHANGE_REQUEST
+	SET CR_CONFIRM2 = 'Y',
+		CR_STATUS = '변경완료'
+	WHERE CHANGE_NO = #{changeNo}
+	</update>
+	
+	<update id="updateWorkChangeRequest" parameterType="ChangeRequest">
+	UPDATE WORK
+	SET WORK_NAME = #{workName},
+		STATUS = #{status},
+		PROJECT_NO = #{projectNo},
+		BEGIN_DATE = #{beginDate},
+		COMPLETE_DATE = #{completeDate},
+		PRECEDE_NO = #{precedeNo},
+		COMPLETE_RATE = #{completeRate},
+		GRANTOR_NO = #{grantorNo},
+		WORK_LEVEL = #{workLevel},
+		HIGH_WORK_NO = #{highWorkNo},
+		WORK_TYPE = #{workType},
+		MEMBER_NO = #{memberNo},
+		WORK_STATUS = 'Y'
+	WHERE WORK_NO = #{workNo}
+	</update>
+	
+	<insert id="insertChangeRequestHistory2" parameterType="ChangeRequest">
+	INSERT INTO CHANGE_REQUEST_HISTORY
+	VALUES('CRH' || TO_CHAR(SEQ_CRH_NO.NEXTVAL, 'FM000'), #{changeNo}, SYSDATE, '변경완료')
+	</insert>
 	
 </mapper>
 

@@ -53,4 +53,6 @@ public interface WorkDao {
 
 	List<Grantor> selectGrantorList2(SqlSessionTemplate sqlSession, String projectNo);
 
+	Attachment downAttachment(SqlSessionTemplate sqlSession, String no);
+
 }
