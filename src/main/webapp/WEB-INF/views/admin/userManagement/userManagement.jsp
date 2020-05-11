@@ -126,7 +126,7 @@
 						<th class="tdText thRange">진행중인<br>프로젝트</th>
 						<th class="tdText thRange">이메일</th>
 						<th class="tdText thRange">사용여부</th>
-						<th class="tdText thRange">최근접속일</th>
+						<th class="tdText thRange">등록일</th>
 						<th class="tdText thRange"></th>
 					</tr>
 					<tr class="front">
@@ -149,7 +149,7 @@
 						<td class="tdText">${m.countProject}</td>
 						<td class="tdText" style="text-align:left; padding-left: 25px;">${m.email}</td>
 						<td class="tdText">${m.status}</td>
-						<td class="tdText">2020-04-03 추가</td>
+						<td class="tdText">${m.enrollDate}</td>
 						<td class="tdText">
 							<button type="button" id="pwdResetBtn" class="pwdResetBtn">패스워드 초기화</button>
 							<input type="hidden" id="inputMemberNo" class="" name="memberNo" value="${m.memberNo}">

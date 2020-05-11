@@ -9,8 +9,8 @@ public class BoReply implements java.io.Serializable {
 	
 	private String replyNo;
 	private String replyContent;
-	private Date createDate;
-	private Date modifyDate;
+	private String createDate;
+	private String modifyDate;
 	private String status;
 	private String memberNo;
 	private String memberName;
@@ -18,7 +18,7 @@ public class BoReply implements java.io.Serializable {
 	
 	public BoReply() {}
 
-	public BoReply(String replyNo, String replyContent, Date createDate, Date modifyDate, String status,
+	public BoReply(String replyNo, String replyContent, String createDate, String modifyDate, String status,
 			String memberNo, String memberName, String forumNo) {
 		super();
 		this.replyNo = replyNo;
@@ -47,19 +47,19 @@ public class BoReply implements java.io.Serializable {
 		this.replyContent = replyContent;
 	}
 
-	public Date getCreateDate() {
+	public String getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
 
-	public Date getModifyDate() {
+	public String getModifyDate() {
 		return modifyDate;
 	}
 
-	public void setModifyDate(Date modifyDate) {
+	public void setModifyDate(String modifyDate) {
 		this.modifyDate = modifyDate;
 	}
 
@@ -102,7 +102,6 @@ public class BoReply implements java.io.Serializable {
 				+ memberName + ", forumNo=" + forumNo + "]";
 	}
 
-	
-	
+		
 	
 }

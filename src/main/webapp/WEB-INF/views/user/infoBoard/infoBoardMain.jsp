@@ -188,7 +188,8 @@
 						<td class="titletd2">${ib.boardTitle} &nbsp;&nbsp;&nbsp; </td>
 						<td class="datetd2">${ib.memberName}</td>
 						<td class="sendtd2">${ib.viewCount}</td>
-						<td class="sendtd2"><fmt:formatDate value="${ib.createDate}" pattern="yyyy-MM-dd HH-mm:SS"/></td>
+						<%-- <td class="sendtd2"><fmt:formatDate value="" pattern="yyyy-MM-dd HH-mm:SS"/></td> --%>
+						<td class="sendtd2">${ib.createDate}</td>
 						<td class="td">
 							<input type="hidden" value="${ib.boardNo}">
 						</td>

@@ -290,7 +290,8 @@
 			<div id="" class="titleArea">
 				<div id="" class="title"><b>${board.boardTitle}</b></div>
 				<%-- <div id="" class="date"><span>${board.createDate}</span></div> --%>
-				<div id="" class="date"><span><fmt:formatDate value="${board.createDate}" pattern="yyyy-MM-dd a HH-mm:SS"/></span></div>
+<%-- 				<div id="" class="date"><span><fmt:formatDate value="${board.createDate}" pattern="yyyy-MM-dd a HH-mm:SS"/></span></div> --%>
+				<div id="" class="date"><span>${board.createDate}</span></div>
 				
 			</div>
 			
