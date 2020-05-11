@@ -57,13 +57,13 @@
 	</select>
 	
 	<select id="boardSelectAll" resultMap="boardResultSet2">
-		SELECT I.INFO_PK
-		      ,I.TITLE
-		      ,I.CONTENT
-		      ,I.CREATE_DATE
-		      ,I.EDIT_DATE
-		      ,I.VIEW_COUNT
-		      ,M.MEMBER_NAME
+		SELECT  I.INFO_PK
+		      , I.TITLE
+		      , I.CONTENT
+		      , TO_CHAR(I.CREATE_DATE, 'YYYY-MM-DD HH24:MI') AS CREATE_DATE
+		      <!-- , TO_CHAR(I.EDIT_DATE, 'YY-MM-DD HH24:MI') AS EDIT_DATE -->
+		      , I.VIEW_COUNT
+		      , M.MEMBER_NAME
 		FROM INFO_TABLE I
 		JOIN MEMBER M ON(M.MEMBER_NO = I.MEMBER_PK)
 		WHERE I.STATUS = 'Y'
@@ -74,8 +74,8 @@
 		SELECT I.INFO_PK
 		      ,I.TITLE
 		      ,I.CONTENT
-		      ,I.CREATE_DATE
-		      ,I.EDIT_DATE
+		      ,TO_CHAR(I.CREATE_DATE, 'YYYY-MM-DD HH24:MI') AS CREATE_DATE
+		      ,TO_CHAR(I.EDIT_DATE, 'YYYY-MM-DD HH24:MI') AS EDIT_DATE
 		      ,I.VIEW_COUNT
 		      ,M.MEMBER_NAME
 		FROM INFO_TABLE I
@@ -110,7 +110,7 @@
 		SELECT M.MEMBER_NAME
 			  ,R.REPLY_NO
 		      ,R.REPLY_CONTENT
-		      ,R.CREATE_DATE
+		      ,TO_CHAR(R.CREATE_DATE, 'YYYY-MM-DD HH24:MI') AS CREATE_DATE
 		FROM REPLY R
 		JOIN MEMBER M ON(M.MEMBER_NO = R.MEMBER_NO)
 		WHERE R.FORUM_NO = #{boardNo}

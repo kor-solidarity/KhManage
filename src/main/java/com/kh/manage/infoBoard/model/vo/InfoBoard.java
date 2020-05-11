@@ -7,8 +7,8 @@ public class InfoBoard implements java.io.Serializable {
 	private String boardNo;
 	private String boardTitle;
 	private String boardContent;
-	private Date createDate;
-	private Date modifyDate;
+	private String createDate;
+	private String modifyDate;
 	private int viewCount;
 	private String memberNo;
 	private String memberName;
@@ -16,7 +16,7 @@ public class InfoBoard implements java.io.Serializable {
 	
 	public InfoBoard() {}
 
-	public InfoBoard(String boardNo, String boardTitle, String boardContent, Date createDate, Date modifyDate,
+	public InfoBoard(String boardNo, String boardTitle, String boardContent, String createDate, String modifyDate,
 			int viewCount, String memberNo, String memberName, String status) {
 		super();
 		this.boardNo = boardNo;
@@ -54,19 +54,19 @@ public class InfoBoard implements java.io.Serializable {
 		this.boardContent = boardContent;
 	}
 
-	public Date getCreateDate() {
+	public String getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
 
-	public Date getModifyDate() {
+	public String getModifyDate() {
 		return modifyDate;
 	}
 
-	public void setModifyDate(Date modifyDate) {
+	public void setModifyDate(String modifyDate) {
 		this.modifyDate = modifyDate;
 	}
 
@@ -107,10 +107,8 @@ public class InfoBoard implements java.io.Serializable {
 		return "InfoBoard [boardNo=" + boardNo + ", boardTitle=" + boardTitle + ", boardContent=" + boardContent
 				+ ", createDate=" + createDate + ", modifyDate=" + modifyDate + ", viewCount=" + viewCount
 				+ ", memberNo=" + memberNo + ", memberName=" + memberName + ", status=" + status + "]";
-	} 
-	
-	
-	
+	}
+
 	
 
 }

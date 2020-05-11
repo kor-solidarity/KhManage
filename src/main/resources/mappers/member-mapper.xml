@@ -250,6 +250,7 @@
 		      ,R.RANK_NAME
 		      ,COUNT(P.PROJECT_PK)
 		      ,M.EMAIL
+		      ,M.ENROLL_DATE
 		      ,M.STATUS
 		FROM MEMBER M
 		JOIN DEPT D ON(M.DEPT_NO = D.DEPT_NO)
@@ -262,6 +263,7 @@
 		         ,D.DEPT_NAME
 		         ,R.RANK_NAME
 		         ,M.EMAIL
+		         ,M.ENROLL_DATE
 		         ,M.STATUS
 		ORDER BY MEMBER_NO DESC
 	</select>
