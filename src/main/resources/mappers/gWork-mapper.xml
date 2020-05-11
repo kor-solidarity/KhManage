@@ -177,7 +177,7 @@
 	<select id="statisticList3" parameterType="java.lang.String" resultMap="statisticsResultSet">
 		SELECT CR.STATUS ,  COUNT(*) AS cnt3
 		FROM CHANGE_REQUEST_HISTORY CR
-		WHERE CHANGE_NO = 
+		WHERE CHANGE_NO IN
 		(SELECT MEMBER_NO
 		FROM MEMBER M
 		JOIN PROJECT_TEAM PT ON(M.MEMBER_NO = PT.MEMBER_PK)

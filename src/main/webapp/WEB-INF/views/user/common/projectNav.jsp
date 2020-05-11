@@ -47,7 +47,6 @@
 		<li role="presentation"><a href="showAssignment.fo?pid=${pid }&navType=4">배정현황</a></li>
 		<li role="presentation"><a href="projectIssue.pr?pid=${pid}&navType=5">이슈</a></li>
 		<li role="presentation"><a href="projectOutput.pr?pid=${pid}&navType=6">산출물</a></li>
-		<li role="presentation"><a href="#">히스토리</a></li>
 	</ul>
 	<%--
 	도는 방식:

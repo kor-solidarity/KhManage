@@ -67,14 +67,14 @@
 		width:50%;
 	}
 	.delete{
-	width: 70px;
+	width: 50px;
 	height: 20px;
 	border: none;
 	background: #F3565D;
 	color: white;
 	font-weight: 400;
 	border-radius: 5px;
-	font-size: 14px;
+	font-size: 12px;
 	}
 </style>
 
