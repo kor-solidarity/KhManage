@@ -166,7 +166,7 @@
 					<td class="thRange" colspan="2" >
 					<input type="text" name="workName" class="inputMenu form-control workName">
 					</td>
-					<td class="thRange">작업유형</td>
+					<td class="thRange">&nbsp;&nbsp;&nbsp;작업유형</td>
 					<td class="thRange" colspan="2">
 					<input type="text" name="workType" class="inputMenu form-control workType" required="required">
 					</td>
@@ -188,7 +188,7 @@
 					<td class="thRange" colspan="2">
 					<input name="beginDate" type="date" class="inputMenu form-control beginDate" required="required">
 					</td>
-					<td class="thRange">완료일</td>
+					<td class="thRange">&nbsp;&nbsp;&nbsp;완료일</td>
 					<td class="thRange" colspan="2">
 					<input name="completeDate" type="date" class="inputMenu form-control completeDate" required="required">
 					</td>
@@ -210,7 +210,7 @@
 					<td class="thRange" colspan="2">
 					<input name="completeRate" type="number" class="inputMenu form-control completeRate" step="5" min="0" max="100">	
 					</td>
-					<td class="thRange">담당자</td>
+					<td class="thRange">&nbsp;&nbsp;&nbsp;담당자</td>
 					<td class="thRange" colspan="2">
 					<select name="memberNo" id="memberNo" class="inputMenu form-control memberNo" required="required">
 						
@@ -239,7 +239,7 @@
 						<option value="3">3</option>
 					</select>
 					</td>
-					<td class="thRange">작업상태</td>
+					<td class="thRange">&nbsp;&nbsp;&nbsp;작업상태</td>
 					<td class="thRange" colspan="2">
 					<select name="status" id="statusSelect" class="inputMenu form-control status" required="required">
 						<option value="#" >선택하세요</option>
@@ -272,7 +272,7 @@
 											
 						</select>
 					</td>
-					<td class="thRange">승인자</td>
+					<td class="thRange">&nbsp;&nbsp;&nbsp;승인자</td>
 					<td class="thRange" colspan="2">
 						<select name="grantorNo" id="grantorNo" style="padding-left:0px;" class="inputMenu form-control grantorNo" required="required">
 											
@@ -382,7 +382,7 @@
 				<tr>
 					<td class="thRange"></td>
 					<td class="thRange"><button class="okBtn" type="button" id="insertRequest"><i class="fas fa-check"></i>&nbsp;저장</button></td>
-					<td class="thRange"><button class="cancleBtn"><i class="fas fa-ban"></i>&nbsp;취소</button></td>
+					<td class="thRange"><button class="cancleBtn" type="button" id="cancelBtn"><i class="fas fa-ban"></i>&nbsp;취소</button></td>
 					<td class="thRange"></td>
 					<td class="thRange"></td>
 					<td class="thRange"></td>
@@ -455,6 +455,9 @@
 			});
 		});
 		
+		$("#cancelBtn").click(function(){
+    		location.href="changeRequestList.iu";
+    	});
 		
 		
 		$("#taskList").change(function(){
@@ -559,7 +562,30 @@
 		
 		
 		$("#insertRequest").click(function(){
-			$("#insertChangeRequestForm").submit();
+			swal({
+				  title: "변경요청을 등록하시겠습니까?",
+				  text: "",
+				  icon: "warning",
+				  buttons: ["취소", "확인"],
+				  dangerMode: true,
+				})
+				.then((willDelete) => {
+				  if (willDelete) {
+				    swal({
+				    	title: "변경요청 등록 완료!",
+				    	text: "",
+				      	icon: "success"
+				    }).then((value) => {	// 애니메이션 V 나오는 부분!
+				    	$("#insertChangeRequestForm").submit();
+				    });
+				  } else {
+					  swal({
+					  	title: "취소 하셨습니다.",
+					    icon: "error"
+					  });
+				  }
+			});
+			
 		});
 		
 		

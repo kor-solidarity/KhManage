@@ -391,7 +391,7 @@
 				<td class="thRange" colspan="2"></td>
 					<td class="thRange">상위작업</td>
 					<td class="thRange" colspan="2" >
-						<input type="text" id="highWorkNo" class="inputMenu form-control highWorkNo" required="required" readOnly value="${wk.highWorkNo }">
+						<input type="text" id="highWorkNo" class="inputMenu form-control highWorkNo" required="required" readOnly value="${wk.highWorkName }">
 					</td>
 					<td class="thRange">&nbsp;&nbsp;&nbsp;승인자</td>
 					<td class="thRange" colspan="2">
@@ -400,7 +400,7 @@
 					<td class="thRange" colspan="2"></td>
 					<td class="thRange">상위작업</td>
 					<td class="thRange" colspan="2" >
-						<input type="text" name="highWorkNo" id="highWorkNo" class="inputMenu form-control highWorkNo" required="required" readOnly value="${cr.highWorkNo }">
+						<input type="text" name="highWorkNo" id="highWorkNo" class="inputMenu form-control highWorkNo" required="required" readOnly value="${cr.highWorkName }">
 					</td>
 					<td class="thRange">&nbsp;&nbsp;&nbsp;승인자</td>
 					<td class="thRange" colspan="2">
@@ -457,7 +457,7 @@
 				</tr>
 				<tr>
 					<td class="thRange"></td>
-					<td class="thRange">승인자 1</td>
+					<td class="thRange">변경담당자</td>
 					<td class="thRange2" colspan="3">
 						${gn3.deptName } ${gn3.rankName } ${gn3.memberName }
 					</td>
@@ -490,7 +490,7 @@
 				</tr>
 				<tr>
 					<td class="thRange"></td>
-					<td class="thRange">승인자 2</td>
+					<td class="thRange">승인자</td>
 					<td class="thRange2" colspan="3">
 						${gn4.deptName } ${gn4.rankName } ${gn4.memberName }
 					</td>
@@ -574,12 +574,58 @@
 $(function(){
 	$("#updateChangeRequest1").click(function(){
 		$("#requestUpdateFrom").attr('action', "requestUpdate1.iu");
-		$("#requestUpdateFrom").submit();
+		swal({
+			  title: "변경요청을 수락 하시겠습니까?",
+			  text: "",
+			  icon: "warning",
+			  buttons: ["취소", "확인"],
+			  dangerMode: true,
+			})
+			.then((willDelete) => {
+			  if (willDelete) {
+			    swal({
+			    	title: "변경요청 수락 완료!",
+			    	text: "",
+			      	icon: "success"
+			    }).then((value) => {	// 애니메이션 V 나오는 부분!
+			    	$("#requestUpdateFrom").submit();
+			    });
+			  } else {
+				  swal({
+				  	title: "취소 하셨습니다.",
+				    icon: "error"
+				  });
+			  }
+		});
+		
 	});
 	
 	$("#updateChangeRequest2").click(function(){
 		$("#requestUpdateFrom").attr('action', "requestUpdate2.iu");
-		$("#requestUpdateFrom").submit();
+		swal({
+			  title: "변경요청을 승인 하시겠습니까?",
+			  text: "",
+			  icon: "warning",
+			  buttons: ["취소", "확인"],
+			  dangerMode: true,
+			})
+			.then((willDelete) => {
+			  if (willDelete) {
+			    swal({
+			    	title: "변경요청 승인 완료!",
+			    	text: "",
+			      	icon: "success"
+			    }).then((value) => {	// 애니메이션 V 나오는 부분!
+			    	$("#requestUpdateFrom").submit();
+			    });
+			  } else {
+				  swal({
+				  	title: "취소 하셨습니다.",
+				    icon: "error"
+				  });
+			  }
+		});
+		
 	});
 	
 	$("#cancelBtn1, #cancelBtn2").click(function(){

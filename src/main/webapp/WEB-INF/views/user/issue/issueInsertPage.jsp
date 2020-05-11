@@ -244,8 +244,8 @@
 						</c:if>
 					</td>  --%>
 					<td class="thRange"></td>
-					<td class="thRange"><button id="submitBtn" class="okBtn"><i class="fas fa-check"></i>&nbsp;저장</button></td>
-					<td class="thRange"><button class="cancleBtn"><i class="fas fa-ban"></i>&nbsp;취소</button></td>
+					<td class="thRange"><button type="button" id="submitBtn" class="okBtn"><i class="fas fa-check"></i>&nbsp;저장</button></td>
+					<td class="thRange"><button type="button" id="cancelBtn" class="cancleBtn"><i class="fas fa-ban"></i>&nbsp;취소</button></td>
 					<td class="thRange"></td>
 					<td class="thRange"></td>
 					<td class="thRange"></td>
@@ -329,8 +329,35 @@
             fn_fileAdd();
         });
         
+        $("#cancelBtn").click(function(){
+    		location.href="issueList.iu";
+    	});
+        
         $("#submitBtn").click(function(){
-        	$("#insertIssue").submit();
+        	swal({
+				  title: "이슈를 등록하시겠습니까?",
+				  text: "",
+				  icon: "warning",
+				  buttons: ["취소", "확인"],
+				  dangerMode: true,
+				})
+				.then((willDelete) => {
+				  if (willDelete) {
+				    swal({
+				    	title: "이슈 등록 완료!",
+				    	text: "",
+				      	icon: "success"
+				    }).then((value) => {	// 애니메이션 V 나오는 부분!
+				    	$("#insertIssue").submit();
+				    });
+				  } else {
+					  swal({
+					  	title: "취소 하셨습니다.",
+					    icon: "error"
+					  });
+				  }
+			});
+        	
         });
         
 		

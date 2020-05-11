@@ -199,22 +199,22 @@
 					<c:choose>
 					<c:when test="${issue.status eq '확인중' && issue.teamWorker eq loginUser.memberNo}">
 					<td class="thRange" colspan="2">현재 상태는 <font color="red">${issue.status }</font> 입니다.</td>
-					<td class="thRange"><button id="issueAgreeBtn" class="okBtn"><i class="fas fa-check"></i>&nbsp;승인</button></td>
-					<td class="thRange"><button class="cancleBtn"><i class="fas fa-ban"></i>&nbsp;취소</button></td>
+					<td class="thRange"><button type="button" id="issueAgreeBtn" class="okBtn"><i class="fas fa-check"></i>&nbsp;승인</button></td>
+					<td class="thRange"><button class="cancleBtn" type="button" id="cancelBtn1" ><i class="fas fa-ban"></i>&nbsp;취소</button></td>
 					</c:when>
 					<c:when test="${issue.status eq '조치중' && issue.teamWorker eq loginUser.memberNo}">
 					<td class="thRange" colspan="2">현재 상태는 <font color="red">${issue.status }</font> 입니다.</td>
-					<td class="thRange"><button id="issueComBtn" class="okBtn"><i class="fas fa-check"></i>&nbsp;완료</button></td>
-					<td class="thRange"><button class="cancleBtn"><i class="fas fa-ban"></i>&nbsp;취소</button></td>
+					<td class="thRange"><button type="button" id="issueComBtn" class="okBtn"><i class="fas fa-check"></i>&nbsp;완료</button></td>
+					<td class="thRange"><button class="cancleBtn" type="button" id="cancelBtn1" ><i class="fas fa-ban"></i>&nbsp;취소</button></td>
 					</c:when>
 					<c:when test="${issue.status eq '조치완료'}">
 					<td class="thRange" colspan="3">현재 상태는 <font color="red">${issue.status }</font> 입니다.</td>
-					<td class="thRange"><button class="cancleBtn"><i class="fas fa-ban"></i>&nbsp;취소</button></td>
+					<td class="thRange"><button class="cancleBtn" type="button" id="cancelBtn1" ><i class="fas fa-ban"></i>&nbsp;취소</button></td>
 					</c:when>
 					<c:otherwise>
 					<td class="thRange"></td>
 					<td class="thRange" colspan="2">현재 상태는 <font color="red">${issue.status }</font> 입니다.</td>
-					<td class="thRange"><button class="cancleBtn"><i class="fas fa-ban"></i>&nbsp;취소</button></td>
+					<td class="thRange"><button class="cancleBtn" type="button" id="cancelBtn1" ><i class="fas fa-ban"></i>&nbsp;취소</button></td>
 					</c:otherwise>
 					</c:choose>
 				</tr>
@@ -398,7 +398,7 @@
 				</tr>
 				<tr>
 					<td class="thRange"></td>
-					<td class="thRange"><button class="cancleBtn"><i class="fas fa-ban"></i>&nbsp;취소</button></td>
+					<td class="thRange"><button type="button" id="cancelBtn2" class="cancleBtn"><i class="fas fa-ban"></i>&nbsp;취소</button></td>
 					<td class="thRange"></td>
 					<td class="thRange"></td>
 					<td class="thRange"></td>
@@ -458,10 +458,61 @@
 	$(function(){
 		$("#issueAgreeBtn").click(function(){
 			$("#issueRegForm").attr('action', "issueAgree.iu")
+			swal({
+				  title: "조치요청을 승인하시겠습니까?",
+				  text: "",
+				  icon: "warning",
+				  buttons: ["취소", "확인"],
+				  dangerMode: true,
+				})
+				.then((willDelete) => {
+				  if (willDelete) {
+				    swal({
+				    	title: "조치요청 승인 완료!",
+				    	text: "",
+				      	icon: "success"
+				    }).then((value) => {	// 애니메이션 V 나오는 부분!
+				    	$("#issueRegForm").submit();
+				    });
+				  } else {
+					  swal({
+					  	title: "취소 하셨습니다.",
+					    icon: "error"
+					  });
+				  }
+			});
+		});
+		
+		
+		$("#cancelBtn1, #cancelBtn2").click(function(){
+			location.href="issueList.iu";
 		});
 		
 		$("#issueComBtn").click(function(){
 			$("#issueRegForm").attr('action', "issueComplete.iu")
+			swal({
+				  title: "조치내용을 등록하시겠습니까?",
+				  text: "",
+				  icon: "warning",
+				  buttons: ["취소", "확인"],
+				  dangerMode: true,
+				})
+				.then((willDelete) => {
+				  if (willDelete) {
+				    swal({
+				    	title: "조치내용 등록 완료!",
+				    	text: "",
+				      	icon: "success"
+				    }).then((value) => {	// 애니메이션 V 나오는 부분!
+				    	$("#issueRegForm").submit();
+				    });
+				  } else {
+					  swal({
+					  	title: "취소 하셨습니다.",
+					    icon: "error"
+					  });
+				  }
+			});
 		});
 		
 		$(".originName").click(function(){
