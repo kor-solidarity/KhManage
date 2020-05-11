@@ -1377,11 +1377,58 @@
 		});  
 	
 		$("#workRegSubmit").click(function(){
-			$('#workRegForm').submit();
+			swal({
+				  title: "작업을 등록하시겠습니까?",
+				  text: "",
+				  icon: "warning",
+				  buttons: ["취소", "확인"],
+				  dangerMode: true,
+				})
+				.then((willDelete) => {
+				  if (willDelete) {
+				    swal({
+				    	title: "작업 등록 완료!",
+				    	text: "",
+				      	icon: "success"
+				    }).then((value) => {	// 애니메이션 V 나오는 부분!
+				    	$('#workRegForm').submit();
+				    });
+				  } else {
+					  swal({
+					  	title: "취소 하셨습니다.",
+					    icon: "error"
+					  });
+				  }
+			});
+			
 		}); 
 		
 		$("#workChangeSubmit").click(function(){
-			$('#workRegChange').submit();
+			swal({
+				  title: "작업 진행상태를 변경 하시겠습니까?",
+				  text: "",
+				  icon: "warning",
+				  buttons: ["취소", "확인"],
+				  dangerMode: true,
+				})
+				.then((willDelete) => {
+				  if (willDelete) {
+				    swal({
+				    	title: "진행상태 변경 완료!",
+				    	text: "",
+				      	icon: "success"
+				    }).then((value) => {	// 애니메이션 V 나오는 부분!
+				    	$('#workRegChange').submit();
+				    });
+				  } else {
+					  swal({
+					  	title: "취소 하셨습니다.",
+					    icon: "error"
+					  });
+				  }
+			});
+			
+			
 		}); 
 		
 		$("#workFileSubmit").click(function(){

@@ -222,7 +222,7 @@
                            			<div class="paging">
                            				<%-- <c:if test="${pi.currentPage <= 1 }"> --%>
                            				
-                           			<< < 1 2 > >></div>
+                           			<< < 1 > >></div>
                         		</td>
                      		</tr>
 						</table>

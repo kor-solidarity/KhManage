@@ -298,7 +298,7 @@
 							
 							<tr class="pagingArea">
                         		<td colspan="8">
-                           			<div class="paging"><< < 1 2 > >></div>
+                           			<div class="paging"><< < 1 > >></div>
                         		</td>
                      		</tr>
 						</table>
