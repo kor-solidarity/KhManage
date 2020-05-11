@@ -99,7 +99,6 @@
 										class="fas fa-edit"></i> &nbsp;산출물 등록
 								</button>
 							<td>
-								<button class="projectBtn"><i class="fas fa-download"></i> &nbsp;액셀 다운로드</button>
 							<td colspan="6"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 						</tr>
 					</table>
@@ -119,8 +118,8 @@
 							<td class="tdText thRange"><input type="search" class="inputCss" style="width:80px;"></td>
 							<td class="tdText thRange"><input type="search" class="inputCss" style="width:200px;"></td>
 							<td class="tdText thRange"><input type="search" class="inputCss" style="width:60px;"></td>
-							<td class="tdText thRange"><input type="date" class="inputCss" style="width:60px;"></td>
-							<td class="tdText thRange"><input type="date" class="inputCss" style="width:60px;"></td>
+							<td class="tdText thRange"><input type="text" class="inputCss" style="width:60px;"></td>
+							<td class="tdText thRange"><input type="text" class="inputCss" style="width:60px;"></td>
 						</tr>
 						<c:forEach var="i" items="${workProduct}">
 							<tr class="trRange">
@@ -132,7 +131,7 @@
 								<td class="tdText">${i.productType}</td>
 									<%--제목 클릭하면 다운받게끔?--%>
 								<td class="tdText">
-									<div onclick="down_stuff($(this))">${i.productTitle}</div>
+									<div onclick="down_stuff($(this))" style="cursor: pointer;">${i.productTitle}</div>
 									<input type="hidden" value="${i.atNo}">
 								</td>
 								<td class="tdText">${i.memberName}</td>
