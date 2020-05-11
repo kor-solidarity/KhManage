@@ -73,4 +73,14 @@ public interface IssueDao {
 
 	int insertChangeRequestHistory(SqlSessionTemplate sqlSession, ChangeRequest cr);
 
+	int updateRequestConfirm1(SqlSessionTemplate sqlSession, ChangeRequest cr);
+
+	int insertChangeRequestHistory1(SqlSessionTemplate sqlSession, ChangeRequest cr);
+
+	int updateRequestConfirm2(SqlSessionTemplate sqlSession, ChangeRequest cr);
+
+	int updateWorkChangeRequest(SqlSessionTemplate sqlSession, ChangeRequest updateWork);
+
+	int insertChangeRequestHistory2(SqlSessionTemplate sqlSession, ChangeRequest cr);
+
 }

@@ -426,6 +426,57 @@ public class IssueController {
 		
 	}
 	
+	@RequestMapping("/requestUpdate1.iu")
+	public String requestUpdate1(ChangeRequest cr, Model m) {
+		System.out.println("넘김 확인 : " + cr);
+		
+		int result = is.updateRequestConfirm1(cr);
+		int result1 = 0;
+		
+		if(result > 0) {
+			result1 = is.insertChangeRequestHistory1(cr);
+		}
+		
+		if(result1 > 0) {
+			return "redirect:selectChangeRequestOne.iu?changeNo=" + cr.getChangeNo();
+		}else {
+			m.addAttribute("msg", "변경요청 1차 승인 오류");
+			
+			return "common/errorPage";
+		}
+		
+	}
+	
+	@RequestMapping("/requestUpdate2.iu")
+	public String requestUpdate2(ChangeRequest cr, Model m) {
+		
+		int result = is.updateRequestConfirm2(cr);
+		int result2 = 0;
+		int result3 = 0;
+		ChangeRequest updateWork = null;
+		
+		if(result > 0) {
+			updateWork = is.selectChangeRequestOne(cr.getChangeNo()); 
+		}
+		
+		if(updateWork != null) {
+			result2 = is.updateWorkChangeRequest(updateWork);
+		}
+		
+		if(result2 > 0){
+			result3 = is.insertChangeRequestHistory2(cr);
+		}
+		
+		if(result > 0 && updateWork != null && result2 > 0 && result3 > 0) {
+			return "redirect:selectChangeRequestOne.iu?changeNo=" + cr.getChangeNo();
+		}else {
+			m.addAttribute("msg", "변경요청 2차 승인 오류");
+			
+			return "common/errorPage";
+		}
+		
+	}
+	
 	
 	
 //	@RequestMapping("/selectWork.iu")

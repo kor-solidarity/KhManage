@@ -206,12 +206,12 @@
 	<jsp:include page="/WEB-INF/views/user/common/header.jsp"/>
 	<jsp:include page="/WEB-INF/views/user/common/sidebar2.jsp"/>
 		<div class="changePanel">
-			<ul class="changeList">
+			<!-- <ul class="changeList">
 				<li id="requestLi"><a href="changeRequestList.iu">변경요청</a>
 				</li>
 				<li id="approveLi"><a href="RequestApprovalList.iu">변경요청 승인</a>
 				</li>
-			</ul>
+			</ul> -->
 			<div class="panel panel-headline">
 				<div class="panel-heading">
 					<div style="width:100%; height:670px; margin:0 auto; overflow:auto;">
@@ -268,14 +268,14 @@
 							
 							
 							<tr class="trRange">
-								<td class="td1">KH대학교 학사시스템 개발</td>
-								<td class="tdText">기능 개발</td>
-								<td class="tdText">수강-0001</td>
-								<td class="tdText"><a href="changeRequestDetail.iu">수강신청 오류 조치자 변경</a></td>
-								<td class="tdText">김태원</td>
-								<td class="tdText">심재우</td>
-								<td class="tdText"><label class="issueOpen">승인중</label></td>
-								<td class="tdText">2020-04-04</td>
+								<td class="td1"></td>
+								<td class="tdText"></td>
+								<td class="tdText"></td>
+								<td class="tdText"></td>
+								<td class="tdText"></td>
+								<td class="tdText"></td>
+								<td class="tdText"></td>
+								<td class="tdText"></td>
 							</tr>
 							<tr class="pagingArea">
                         		<td colspan="8">

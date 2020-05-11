@@ -160,4 +160,29 @@ public class IssueDaoImpl implements IssueDao{
 		return sqlSession.insert("Issue.insertChangeRequestHistory", cr);
 	}
 
+	@Override
+	public int updateRequestConfirm1(SqlSessionTemplate sqlSession, ChangeRequest cr) {
+		return sqlSession.update("Issue.updateRequestConfirm1", cr);
+	}
+
+	@Override
+	public int insertChangeRequestHistory1(SqlSessionTemplate sqlSession, ChangeRequest cr) {
+		return sqlSession.insert("Issue.insertChangeRequestHistory1", cr);
+	}
+
+	@Override
+	public int updateRequestConfirm2(SqlSessionTemplate sqlSession, ChangeRequest cr) {
+		return sqlSession.update("Issue.updateRequestConfirm2", cr);
+	}
+
+	@Override
+	public int updateWorkChangeRequest(SqlSessionTemplate sqlSession, ChangeRequest updateWork) {
+		return sqlSession.update("Issue.updateWorkChangeRequest", updateWork);
+	}
+
+	@Override
+	public int insertChangeRequestHistory2(SqlSessionTemplate sqlSession, ChangeRequest cr) {
+		return sqlSession.update("Issue.insertChangeRequestHistory2", cr);
+	}
+
 }

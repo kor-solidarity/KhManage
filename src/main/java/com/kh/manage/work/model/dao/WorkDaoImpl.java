@@ -131,6 +131,11 @@ public class WorkDaoImpl implements WorkDao{
 		return sqlSession.selectList("Work.selectGrantorList2", projectNo);
 	}
 
+	@Override
+	public Attachment downAttachment(SqlSessionTemplate sqlSession, String no) {
+		return sqlSession.selectOne("Attachment.downAttach", no);
+	}
+
 	
 
 }

@@ -239,9 +239,7 @@
 			});
 			
 			$("#projectTable td").mouseenter(function(){
-		    	$(this).parent().css({"background":"darkgray", "cursor":"pointer", "color":"white"});
-		    }).mouseout(function(){
-		    	$(this).parent().css({"background":"white", "color":"black"});
+		    	$(this).parent().css({"cursor":"pointer"});
 		    }).click(function(){
 		    	 var num = $(this).parent().children().eq(0).text();
 		    	

@@ -51,6 +51,8 @@ public interface WorkService {
 
 	List<Grantor> selectGrantorList2(String projectNo);
 
+	Attachment downAttachment(String no);
+
 	
 
 }

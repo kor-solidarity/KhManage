@@ -161,6 +161,31 @@ public class IssueServiceImpl implements IssueService{
 		return id.insertChangeRequestHistory(sqlSession, cr);
 	}
 
+	@Override
+	public int updateRequestConfirm1(ChangeRequest cr) {
+		return id.updateRequestConfirm1(sqlSession, cr);
+	}
+
+	@Override
+	public int insertChangeRequestHistory1(ChangeRequest cr) {
+		return id.insertChangeRequestHistory1(sqlSession, cr);
+	}
+
+	@Override
+	public int updateRequestConfirm2(ChangeRequest cr) {
+		return id.updateRequestConfirm2(sqlSession, cr);
+	}
+
+	@Override
+	public int updateWorkChangeRequest(ChangeRequest updateWork) {
+		return id.updateWorkChangeRequest(sqlSession, updateWork);
+	}
+
+	@Override
+	public int insertChangeRequestHistory2(ChangeRequest cr) {
+		return id.insertChangeRequestHistory2(sqlSession, cr);
+	}
+
 	
 
 	

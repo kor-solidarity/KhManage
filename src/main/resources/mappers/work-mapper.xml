@@ -176,6 +176,7 @@
 	JOIN PROJECT P ON (W.PROJECT_NO = P.PROJECT_PK)
 	WHERE W.MEMBER_NO = #{memberNo}
 	AND W.WORK_STATUS = 'Y'
+	AND P.STATUS != '5'
 	ORDER BY (CASE STATUS
 				   WHEN '시작전' THEN 1
                    WHEN '개발중' THEN 2
@@ -196,6 +197,7 @@
 	WHERE W.MEMBER_NO = #{memberNo}
 	AND W.WORK_STATUS = 'Y'
 	AND W.STATUS = '개발중'
+	AND P.STATUS != '5'
 	ORDER BY WORK_NO ASC
 	</select>
 	
@@ -207,6 +209,7 @@
 	WHERE W.MEMBER_NO = #{memberNo}
 	AND W.WORK_STATUS = 'Y'
 	AND W.STATUS = '개발완료'
+	AND P.STATUS != '5'
 	ORDER BY WORK_NO ASC
 	</select>
 	
@@ -218,6 +221,7 @@
 	WHERE W.MEMBER_NO = #{memberNo}
 	AND W.WORK_STATUS = 'Y'
 	AND W.STATUS = '테스트완료'
+	AND P.STATUS != '5'
 	ORDER BY WORK_NO ASC
 	</select>
 	
@@ -229,6 +233,7 @@
 	WHERE W.MEMBER_NO = #{memberNo}
 	AND W.WORK_STATUS = 'Y'
 	AND W.STATUS = 'PL검토중'
+	AND P.STATUS != '5'
 	ORDER BY WORK_NO ASC
 	</select>
 	
@@ -240,6 +245,7 @@
 	WHERE W.MEMBER_NO = #{memberNo}
 	AND W.WORK_STATUS = 'Y'
 	AND W.STATUS = 'PL승인완료'
+	AND P.STATUS != '5'
 	ORDER BY WORK_NO ASC
 	</select>
 	
@@ -251,6 +257,7 @@
 	WHERE W.MEMBER_NO = #{memberNo}
 	AND W.WORK_STATUS = 'Y'
 	AND W.STATUS IN ('시작전', '개발지연')
+	AND P.STATUS != '5'
 	ORDER BY (CASE STATUS
 				   WHEN '시작전' THEN 1
                    ELSE 2
@@ -267,6 +274,7 @@
 		AND W.WORK_STATUS = 'Y'
 		AND W.STATUS IN ('PL검토중')
 		AND W.WORK_TYPE != '개인'
+		AND P.STATUS != '5'
 		ORDER BY WORK_NO ASC
 	</select>
 	
