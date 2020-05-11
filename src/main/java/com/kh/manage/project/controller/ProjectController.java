@@ -73,7 +73,6 @@ public class ProjectController {
 		// 	실적 산출물 과 이슈 수
 		
 		// 우선 프로젝트명 뽑는다...
-		
 		List<ProjectList> teamList = ps.selectProjectList(pi, loginUser);
 		
 		for (ProjectList p : teamList) {

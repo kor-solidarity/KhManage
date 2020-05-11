@@ -707,7 +707,7 @@
         select PROJECT_PK
         from PROJECT
         where to_date(sysdate) > END_DATE
-          and (STATUS != '3' and STATUS != '4')
+          and (STATUS != '3' and STATUS != '4' and STATUS != '5')
         ]]>
     </select>
     <update id="updateOutdatedProject" parameterType="String">
