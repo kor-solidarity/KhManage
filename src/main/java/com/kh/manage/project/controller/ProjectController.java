@@ -101,8 +101,6 @@ public class ProjectController {
 		List<ProjectType> projectTypes = ps.selectProjectTypeList();
 		System.out.println("projectTypes: " + projectTypes);
 		
-		// 개발등급 목록... 은 디비가 없다, 우선은 통과가능.
-		
 		// 프로젝트 관리자 - 소속부서만 뽑고 실제 사원목록은 부서를 눌렀을때 추가하면서 넣는걸로.
 		List<Dept> deptList = ps.selectDeptList();
 		System.out.println("deptList: " + deptList);
@@ -170,8 +168,7 @@ public class ProjectController {
 	
 	// 프로젝트 등록 실시
 	@RequestMapping(value = "/registerProject.pr", method = RequestMethod.POST)
-	public String registerProject(MultipartHttpServletRequest request,
-								  HttpServletResponse response,
+	public String registerProject(MultipartHttpServletRequest request, HttpServletResponse response,
 								  @RequestParam MultipartFile project_excel) {
 		System.out.println("registerProject");
 		try {
@@ -199,11 +196,6 @@ public class ProjectController {
 		// 폼에 똑같은 네임의 인풋이 여럿이면 전부 알아서 통합돼 어레이로 가져온다.
 		String[] memberNo = request.getParameterValues("memberNo");
 		
-		// System.out.println("memberNo: " + memberNo);
-		// for (String m : memberNo) {
-		// 	System.out.println(m);
-		// }
-		// List<String> subManagerList = Arrays.asList(sub_manager.split(","));
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Date startDate = null;
 		Date endDate = null;
@@ -901,15 +893,15 @@ public class ProjectController {
 								null, null, null, null);
 				teamPk = ps.selectProjectTeamNo(team);
 			}
-			
-			int result = ps.updateOutdatedWork(workNo);
-			WorkHistory workHistory =
-					new WorkHistory(null, workNo, "개발지연",
-							"기한 초과로 인한 자동조치", null, teamPk,
-							null, null, null);
-			if (result > 0) {
-				int result2 = ps.insertWorkHistory(workHistory);
-			}
+			// 오류가 나는데 seq 번호 초과로 인한 것이니 NULLIFY 로 때움.
+			// int result = ps.updateOutdatedWork(workNo);
+			// WorkHistory workHistory =
+			// 		new WorkHistory(null, workNo, "개발지연",
+			// 				"기한 초과로 인한 자동조치", null, teamPk,
+			// 				null, null, null);
+			// if (result > 0) {
+			// 	int result2 = ps.insertWorkHistory(workHistory);
+			// }
 		}
 		
 		AllDashBoard ad = ps.selectOneProjectDetail(pid);
